@@ -20,8 +20,8 @@ class SetPasscodeVC: THPinViewController {
     var needTransactionConfirmation: Bool!
     var error: NSError?
 
-    lazy var buttonFaceID = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 50.0), height: CGFloat.adaptive(width: 50.0))))
-    lazy var buttonTouchID = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 43.33), height: CGFloat.adaptive(width: 43.31))))
+    lazy var buttonFaceID = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 50.0), height: .adaptive(width: 50.0))))
+    lazy var buttonTouchID = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 43.33), height: .adaptive(width: 43.31))))
     lazy var context = LAContext()
 
     // MARK: - Class Initialization
@@ -75,10 +75,10 @@ class SetPasscodeVC: THPinViewController {
     // MARK: - Custom Functions
     private func addActionButton() {
         // Add Close button
-        let closeButton = UIButton.circle(size: CGFloat.adaptive(width: 24.0), backgroundColor: #colorLiteral(red: 0.953, green: 0.961, blue: 0.98, alpha: 1), imageName: "icon-round-close-grey-default")
+        let closeButton = UIButton.circle(size: .adaptive(width: 24.0), backgroundColor: #colorLiteral(red: 0.953, green: 0.961, blue: 0.98, alpha: 1), imageName: "icon-round-close-grey-default")
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         view.addSubview(closeButton)
-        closeButton.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 55.0), xInset: CGFloat.adaptive(width: 15.0))
+        closeButton.autoPinTopAndTrailingToSuperView(inset: .adaptive(height: 55.0), xInset: .adaptive(width: 15.0))
         // Add Face/Touch ID button
         buttonFaceID.setImage(UIImage(named: "icon-face-id-grey-default"), for: .normal)
         buttonFaceID.addTarget(self, action: #selector(faceIdButtonTapped), for: .touchUpInside)
@@ -88,7 +88,7 @@ class SetPasscodeVC: THPinViewController {
         buttonTouchID.isHidden = !isTouchIdEnable()
         let buttonsStackView = UIStackView(arrangedSubviews: [buttonFaceID, buttonTouchID], axis: .horizontal, spacing: 0.0, alignment: .center, distribution: .fill)
         view.addSubview(buttonsStackView)
-        buttonsStackView.autoPinBottomAndTrailingToSuperView(inset: CGFloat.adaptive(height: 63.0), xInset: CGFloat.adaptive(width: 63.0))
+        buttonsStackView.autoPinBottomAndTrailingToSuperView(inset: .adaptive(height: 63.0), xInset: .adaptive(width: 63.0))
     }
 
     private func didShowVerifyButton(_ value: Bool) {

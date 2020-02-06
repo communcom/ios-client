@@ -102,7 +102,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
     
     @objc func infoButtonTapped() {
         AnalyticsManger.shared.userNameHelp()
-        let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 355.0), height: CGFloat.adaptive(height: 386.0))))
+        let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 386.0))))
         showCardWithView(userNameRulesView)
         
         userNameRulesView.completionDismissWithAction = { _ in

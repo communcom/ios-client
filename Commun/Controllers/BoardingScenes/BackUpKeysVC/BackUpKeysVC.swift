@@ -105,7 +105,7 @@ class BackUpKeysVC: BoardingVC {
     }
     
     @objc func iSavedItButtonDidTouch() {
-        let masterPasswordAttentionView = MasterPasswordAttention(withFrame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 355.0), height: CGFloat.adaptive(height: 581.0))))
+        let masterPasswordAttentionView = MasterPasswordAttention(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 581.0))))
             //MasterPasswordAttention(forAutoLayout: ())
         masterPasswordAttentionView.ignoreSavingAction = {
             self.next()

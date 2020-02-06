@@ -91,7 +91,7 @@ class TransactionCompletedVC: BaseViewController {
         transactionCompletedView.updateBuyerInfo(fromTransaction: dataModel.transaction)
         
         view.addSubview(transactionCompletedView)
-        transactionCompletedView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 40.0), vertical: CGFloat.adaptive(height: 20.0)), excludingEdge: .top)
+        transactionCompletedView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 40.0), vertical: .adaptive(height: 20.0)), excludingEdge: .top)
         transactionCompletedView.heightAnchor.constraint(equalToConstant: transactionCompletedView.bounds.height).isActive = true
         
         // Actions

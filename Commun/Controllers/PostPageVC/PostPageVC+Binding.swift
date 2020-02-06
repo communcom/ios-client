@@ -126,7 +126,7 @@ extension PostPageVC {
         // bind post
         let post = viewModel.post
         post
-            .subscribe(onNext: {post in
+            .subscribe(onNext: { post in
                 guard let post = post else {return}
                 self.navigationBar.setUp(with: post)
                 self.commentForm.post = post

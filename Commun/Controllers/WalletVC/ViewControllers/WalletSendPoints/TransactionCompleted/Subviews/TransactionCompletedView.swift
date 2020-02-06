@@ -23,13 +23,13 @@ class TransactionCompletedView: UIView {
     private var isHistoryMode: Bool = false
     var mode: TransActionType!
 
-    var buyerAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
+    var buyerAvatarImageView: UIImageView = UIImageView.circle(size: .adaptive(width: 40.0), imageName: "tux")
 
     var boldLabels = [UILabel]() {
         didSet {
             boldLabels.forEach({ $0.tune(withText: "",
                                          hexColors: blackWhiteColorPickers,
-                                         font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17.0), weight: .bold),
+                                         font: UIFont.systemFont(ofSize: .adaptive(width: 17.0), weight: .bold),
                                          alignment: .center,
                                          isMultiLines: false)})
         }
@@ -39,7 +39,7 @@ class TransactionCompletedView: UIView {
         didSet {
             semiboldLabels.forEach({ $0.tune(withText: "",
                                          hexColors: grayishBluePickers,
-                                         font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 12.0), weight: .semibold),
+                                         font: UIFont.systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold),
                                          alignment: .center,
                                          isMultiLines: false)})
         }
@@ -52,7 +52,7 @@ class TransactionCompletedView: UIView {
         let transactionAmountLabelInstance = UILabel()
         transactionAmountLabelInstance.tune(withText: "",
                                             hexColors: blackWhiteColorPickers,
-                                            font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 20.0), weight: .bold),
+                                            font: UIFont.systemFont(ofSize: .adaptive(width: 20.0), weight: .bold),
                                             alignment: .right,
                                             isMultiLines: false)
         
@@ -63,7 +63,7 @@ class TransactionCompletedView: UIView {
         let transactionCurrencyLabelInstance = UILabel()
         transactionCurrencyLabelInstance.tune(withText: "",
                                               hexColors: grayishBluePickers,
-                                              font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 20.0), weight: .regular),
+                                              font: UIFont.systemFont(ofSize: .adaptive(width: 20.0), weight: .regular),
                                               alignment: .left,
                                               isMultiLines: false)
         
@@ -75,13 +75,13 @@ class TransactionCompletedView: UIView {
     var burnedPercentLabel: UILabel = UILabel()
 
     let sellerNameLabel = UILabel()
-    var sellerAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 30.0))
+    var sellerAvatarImageView: UIImageView = UIImageView.circle(size: .adaptive(width: 30.0))
 
     var sellerAmountLabel: UILabel = {
         let sellerAmountLabelInstance = UILabel()
         sellerAmountLabelInstance.tune(withText: "",
                                        hexColors: whiteColorPickers,
-                                       font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
+                                       font: UIFont.systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
                                        alignment: .right,
                                        isMultiLines: false)
 
@@ -89,11 +89,11 @@ class TransactionCompletedView: UIView {
     }()
     
     let homeButton: UIButton = {
-        let height = CGFloat.adaptive(height: 50.0)
-        let homeButtonInstance = UIButton(width: CGFloat.adaptive(width: 335.0),
+        let height: CGFloat = .adaptive(height: 50.0)
+        let homeButtonInstance = UIButton(width: .adaptive(width: 335.0),
                                           height: height,
                                           label: "home".localized().uppercaseFirst,
-                                          labelFont: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
+                                          labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
                                           backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1),
                                           textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                           cornerRadius: height / 2)
@@ -102,11 +102,11 @@ class TransactionCompletedView: UIView {
     }()
 
     let backToWalletButton: UIButton = {
-        let height = CGFloat.adaptive(height: 50.0)
-        let backToWalletButtonInstance = UIButton(width: CGFloat.adaptive(width: 335.0),
+        let height: CGFloat = .adaptive(height: 50.0)
+        let backToWalletButtonInstance = UIButton(width: .adaptive(width: 335.0),
                                                   height: height,
                                                   label: "back to wallet".localized().uppercaseFirst,
-                                                  labelFont: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
+                                                  labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
                                                   backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                                   textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
                                                   cornerRadius: height / 2)
@@ -115,11 +115,11 @@ class TransactionCompletedView: UIView {
     }()
 
     let repeatButton: UIButton = {
-        let height = CGFloat.adaptive(height: 50.0)
-        let repeatButtonInstance = UIButton(width: CGFloat.adaptive(width: 335.0),
+        let height: CGFloat = .adaptive(height: 50.0)
+        let repeatButtonInstance = UIButton(width: .adaptive(width: 335.0),
                                             height: height,
                                             label: "repeat".localized().uppercaseFirst,
-                                            labelFont: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
+                                            labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
                                             backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                             textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
                                             cornerRadius: height / 2)
@@ -133,7 +133,7 @@ class TransactionCompletedView: UIView {
         self.mode = mode
         self.isHistoryMode = !["buy", "sell", "send"].contains(mode.rawValue)
         
-        super.init(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 335.0), height: CGFloat.adaptive(height: isHistoryMode ? 567.0 : 641.0))))
+        super.init(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 335.0), height: .adaptive(height: isHistoryMode ? 567.0 : 641.0))))
         setupView()
     }
     
@@ -158,9 +158,9 @@ class TransactionCompletedView: UIView {
         semiboldLabels = [transactionDateLabel, buyerBalanceOrFriendIDLabel, burnedPercentLabel]
         
         // Add content view
-        let contentView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: bounds.width, height: CGFloat.adaptive(height: 497.0))))
+        let contentView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: bounds.width, height: .adaptive(height: 497.0))))
         contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = CGFloat.adaptive(width: 20.0)
+        contentView.layer.cornerRadius = .adaptive(width: 20.0)
         contentView.clipsToBounds = true
         contentView.tag = 99
         
@@ -170,7 +170,7 @@ class TransactionCompletedView: UIView {
         contentView.heightAnchor.constraint(equalToConstant: contentView.bounds.height).isActive = true
         
         // Add ready checkmark
-        let readyCheckMarkButton = CommunButton.circle(size: CGFloat.adaptive(width: 60.0),
+        let readyCheckMarkButton = CommunButton.circle(size: .adaptive(width: 60.0),
                                                        backgroundColor: #colorLiteral(red: 0.3125971854, green: 0.8584119678, blue: 0.6879913807, alpha: 1),
                                                        tintColor: UIColor.white,
                                                        imageName: "icon-checkmark-white",
@@ -179,31 +179,31 @@ class TransactionCompletedView: UIView {
         readyCheckMarkButton.isUserInteractionEnabled = false
         contentView.addSubview(readyCheckMarkButton)
         readyCheckMarkButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        readyCheckMarkButton.autoPinEdge(.top, to: .top, of: contentView, withOffset: CGFloat.adaptive(height: 20.0))
+        readyCheckMarkButton.autoPinEdge(.top, to: .top, of: contentView, withOffset: .adaptive(height: 20.0))
         
         // Add shadow
         readyCheckMarkButton.addShadow(ofColor: #colorLiteral(red: 0.732, green: 0.954, blue: 0.886, alpha: 1),
-                                       radius: CGFloat.adaptive(height: 24.0),
-                                       offset: CGSize(width: 0.0, height: CGFloat.adaptive(height: 8.0)),
+                                       radius: .adaptive(height: 24.0),
+                                       offset: CGSize(width: 0.0, height: .adaptive(height: 8.0)),
                                        opacity: 1.0)
         
         // Add titles
-        let titlesStackView = UIStackView(axis: NSLayoutConstraint.Axis.vertical, spacing: CGFloat.adaptive(height: 8.0))
+        let titlesStackView = UIStackView(axis: NSLayoutConstraint.Axis.vertical, spacing: .adaptive(height: 8.0))
         titlesStackView.alignment = .center
         titlesStackView.distribution = .fillProportionally
         
         contentView.addSubview(titlesStackView)
         titlesStackView.addArrangedSubviews([transactionTitleLabel, transactionDateLabel])
-        titlesStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 44.0), vertical: CGFloat.adaptive(height: 190.0)), excludingEdge: .bottom)
+        titlesStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 44.0), vertical: .adaptive(height: 190.0)), excludingEdge: .bottom)
         
         // Draw first dashed line
-        let dashedLine1 = UIView(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 291.0), height: CGFloat.adaptive(height: 2.0))))
+        let dashedLine1 = UIView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 291.0), height: .adaptive(height: 2.0))))
         draw(dashedLine: dashedLine1)
         contentView.addSubview(dashedLine1)
-        dashedLine1.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 44.0), vertical: CGFloat.adaptive(height: 330.0)), excludingEdge: .bottom)
+        dashedLine1.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 44.0), vertical: .adaptive(height: 330.0)), excludingEdge: .bottom)
 
         // Add Recipient data
-        let recipientStackView = UIStackView(axis: NSLayoutConstraint.Axis.horizontal, spacing: CGFloat.adaptive(width: 8.0))
+        let recipientStackView = UIStackView(axis: NSLayoutConstraint.Axis.horizontal, spacing: .adaptive(width: 8.0))
         recipientStackView.alignment = .fill
         recipientStackView.distribution = .fill
         
@@ -211,74 +211,74 @@ class TransactionCompletedView: UIView {
         
         burnedPercentLabel.text = String(format: "%.1f%% %@ 🔥", 0.1, "was burned".localized())
 
-        let recipientDataStackView = UIStackView(axis: NSLayoutConstraint.Axis.vertical, spacing: CGFloat.adaptive(height: 8.0))
+        let recipientDataStackView = UIStackView(axis: NSLayoutConstraint.Axis.vertical, spacing: .adaptive(height: 8.0))
         recipientDataStackView.alignment = .center
         recipientDataStackView.distribution = .fillProportionally
         
         contentView.addSubview(recipientDataStackView)
         recipientDataStackView.addArrangedSubviews([recipientStackView, burnedPercentLabel])
         recipientDataStackView.autoAlignAxis(toSuperviewAxis: .vertical)
-        recipientDataStackView.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: CGFloat.adaptive(height: 32))
+        recipientDataStackView.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: .adaptive(height: 32))
 
         contentView.addSubview(buyerAvatarImageView)
         buyerAvatarImageView.autoAlignAxis(toSuperviewAxis: .vertical)
-        buyerAvatarImageView.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: CGFloat.adaptive(height: 92.0))
+        buyerAvatarImageView.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: .adaptive(height: 92.0))
 
-        let namesStackView = UIStackView(axis: NSLayoutConstraint.Axis.vertical, spacing: CGFloat.adaptive(height: 8.0))
+        let namesStackView = UIStackView(axis: NSLayoutConstraint.Axis.vertical, spacing: .adaptive(height: 8.0))
         titlesStackView.alignment = .center
         titlesStackView.distribution = .fillProportionally
         
         contentView.addSubview(namesStackView)
         namesStackView.addArrangedSubviews([buyerNameLabel, buyerBalanceOrFriendIDLabel])
         namesStackView.autoAlignAxis(toSuperviewAxis: .vertical)
-        namesStackView.autoPinEdge(.top, to: .bottom, of: buyerAvatarImageView, withOffset: CGFloat.adaptive(height: 10.0))
+        namesStackView.autoPinEdge(.top, to: .bottom, of: buyerAvatarImageView, withOffset: .adaptive(height: 10.0))
 
         // Draw second dashed line
         if let dashedLine2 = dashedLine1.copyView() {
             draw(dashedLine: dashedLine2)
             contentView.addSubview(dashedLine2)
-            dashedLine2.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 44.0), vertical: CGFloat.adaptive(height: 218.0)), excludingEdge: .top)
+            dashedLine2.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 44.0), vertical: .adaptive(height: 218.0)), excludingEdge: .top)
         }
         
         // Add circles
-        let leftTopCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: CGFloat.adaptive(width: 24.0))
+        let leftTopCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: .adaptive(width: 24.0))
         contentView.addSubview(leftTopCircle)
-        leftTopCircle.autoPinTopAndLeadingToSuperView(inset: CGFloat.adaptive(height: 154.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
+        leftTopCircle.autoPinTopAndLeadingToSuperView(inset: .adaptive(height: 154.0), xInset: .adaptive(width: -24.0 / 2))
 
-        let leftBottomCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: CGFloat.adaptive(width: 24.0))
+        let leftBottomCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: .adaptive(width: 24.0))
         contentView.addSubview(leftBottomCircle)
-        leftBottomCircle.autoPinBottomAndLeadingToSuperView(inset: CGFloat.adaptive(height: 97.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
+        leftBottomCircle.autoPinBottomAndLeadingToSuperView(inset: .adaptive(height: 97.0), xInset: .adaptive(width: -24.0 / 2))
 
-        let rightTopCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: CGFloat.adaptive(width: 24.0))
+        let rightTopCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: .adaptive(width: 24.0))
         contentView.addSubview(rightTopCircle)
-        rightTopCircle.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 154.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
+        rightTopCircle.autoPinTopAndTrailingToSuperView(inset: .adaptive(height: 154.0), xInset: .adaptive(width: -24.0 / 2))
 
-        let rightBottomCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: CGFloat.adaptive(width: 24.0))
+        let rightBottomCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: .adaptive(width: 24.0))
         contentView.addSubview(rightBottomCircle)
-        rightBottomCircle.autoPinBottomAndTrailingToSuperView(inset: CGFloat.adaptive(height: 97.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
+        rightBottomCircle.autoPinBottomAndTrailingToSuperView(inset: .adaptive(height: 97.0), xInset: .adaptive(width: -24.0 / 2))
         
         // Add 'Debited from' label
         let debitedFromLabel = UILabel()
         debitedFromLabel.tune(withText: "debited from".localized().uppercaseFirst,
                               hexColors: grayishBluePickers,
-                              font: .systemFont(ofSize: CGFloat.adaptive(width: 12.0), weight: .semibold),
+                              font: .systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold),
                               alignment: .center,
                               isMultiLines: false)
         
         contentView.addSubview(debitedFromLabel)
         debitedFromLabel.autoAlignAxis(toSuperviewAxis: .vertical)
-        debitedFromLabel.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: CGFloat.adaptive(height: 254.0))
+        debitedFromLabel.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: .adaptive(height: 254.0))
         
         // Add blue bottom view
-        let blueBottomView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 289.0), height: CGFloat.adaptive(height: 50.0))))
+        let blueBottomView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 289.0), height: .adaptive(height: 50.0))))
         blueBottomView.backgroundColor = #colorLiteral(red: 0.558, green: 0.629, blue: 1, alpha: 1)
-        blueBottomView.roundCorners(UIRectCorner(arrayLiteral: [.topLeft, .topRight]), radius: CGFloat.adaptive(width: 15.0))
+        blueBottomView.roundCorners(UIRectCorner(arrayLiteral: [.topLeft, .topRight]), radius: .adaptive(width: 15.0))
         
         contentView.addSubview(blueBottomView)
-        blueBottomView.heightAnchor.constraint(equalToConstant: CGFloat.adaptive(height: 50.0)).isActive = true
-        blueBottomView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 46.0), vertical: 0.0), excludingEdge: .top)
+        blueBottomView.heightAnchor.constraint(equalToConstant: .adaptive(height: 50.0)).isActive = true
+        blueBottomView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 46.0), vertical: 0.0), excludingEdge: .top)
         
-        let senderStackView = UIStackView(axis: NSLayoutConstraint.Axis.horizontal, spacing: CGFloat.adaptive(width: 10.0))
+        let senderStackView = UIStackView(axis: NSLayoutConstraint.Axis.horizontal, spacing: .adaptive(width: 10.0))
         senderStackView.alignment = .fill
         senderStackView.distribution = .fill
                 
@@ -286,16 +286,16 @@ class TransactionCompletedView: UIView {
         sellerNameLabel.setContentHuggingPriority(249.0, for: NSLayoutConstraint.Axis.horizontal)
         
         blueBottomView.addSubview(senderStackView)
-        senderStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 30.0), vertical: CGFloat.adaptive(height: 20.0)))
+        senderStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 20.0)))
         
         // Add action buttons
-        let actionButtonsStackView = UIStackView(axis: NSLayoutConstraint.Axis.vertical, spacing: CGFloat.adaptive(height: 10.0))
+        let actionButtonsStackView = UIStackView(axis: NSLayoutConstraint.Axis.vertical, spacing: .adaptive(height: 10.0))
         actionButtonsStackView.alignment = .center
         actionButtonsStackView.distribution = .fillEqually
         
         self.addSubview(actionButtonsStackView)
         actionButtonsStackView.addArrangedSubviews(isHistoryMode ? [repeatButton] : [homeButton, backToWalletButton])
-        actionButtonsStackView.autoPinEdge(.top, to: .bottom, of: contentView, withOffset: CGFloat.adaptive(width: isHistoryMode ? 20.0 : 34.0))
+        actionButtonsStackView.autoPinEdge(.top, to: .bottom, of: contentView, withOffset: .adaptive(width: isHistoryMode ? 20.0 : 34.0))
         actionButtonsStackView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     }
     
@@ -331,9 +331,9 @@ class TransactionCompletedView: UIView {
     
     private func draw(dashedLine: UIView) {
         dashedLine.draw(lineColor: .e2e6e8,
-                        lineWidth: CGFloat.adaptive(height: 2.0),
-                        startPoint: CGPoint(x: 0.0, y: CGFloat.adaptive(height: 2.0) / 2),
-                        endPoint: CGPoint(x: CGFloat.adaptive(width: 291.0), y: CGFloat.adaptive(height: 2.0) / 2),
+                        lineWidth: .adaptive(height: 2.0),
+                        startPoint: CGPoint(x: 0.0, y: .adaptive(height: 2.0) / 2),
+                        endPoint: CGPoint(x: .adaptive(width: 291.0), y: .adaptive(height: 2.0) / 2),
                         withDashPattern: [10, 6])
         
         dashedLine.heightAnchor.constraint(equalToConstant: dashedLine.bounds.height).isActive = true
@@ -349,7 +349,7 @@ class TransactionCompletedView: UIView {
         if let sellBalance = transaction.sellBalance, let avatarURL = sellBalance.avatarURL {
             sellerAvatarImageView.setAvatar(urlString: avatarURL, namePlaceHolder: "icon-select-user-grey-cyrcle-default")
         } else {
-            let communLogo = UIView.transparentCommunLogo(size: CGFloat.adaptive(width: 30.0), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2))
+            let communLogo = UIView.transparentCommunLogo(size: .adaptive(width: 30.0), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2))
             sellerAvatarImageView.addSubview(communLogo)
             communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
             communLogo.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -361,7 +361,7 @@ class TransactionCompletedView: UIView {
 
         sellerNameLabel.tune(withText: transaction.sellBalance!.name,
                              hexColors: whiteColorPickers,
-                             font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .semibold),
+                             font: UIFont.systemFont(ofSize: .adaptive(width: 15.0), weight: .semibold),
                              alignment: .left,
                              isMultiLines: false)
     }

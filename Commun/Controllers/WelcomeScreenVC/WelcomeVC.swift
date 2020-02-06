@@ -21,14 +21,14 @@ class WelcomeVC: UIViewController {
     
     @IBOutlet weak var buttonsStackView: UIStackView! {
         didSet {
-            self.buttonsStackView.spacing = CGFloat.adaptive(height: 15.0)
+            self.buttonsStackView.spacing = .adaptive(height: 15.0)
         }
     }
     
     @IBOutlet weak var bottomSignInButton: StepButton! {
         didSet {
             self.bottomSignInButton.commonInit(backgroundColor: UIColor(hexString: "#F3F5FA"),
-                                               font: .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
+                                               font: .boldSystemFont(ofSize: .adaptive(width: 15.0)),
                                                cornerRadius: self.bottomSignInButton.height / 2)
             
             self.bottomSignInButton.setTitleColor(UIColor(hexString: "#6A80F5"), for: .normal)
@@ -39,7 +39,7 @@ class WelcomeVC: UIViewController {
     @IBOutlet weak var topSignInButton: BlankButton! {
         didSet {
             self.topSignInButton.commonInit(hexColors: [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
-                                            font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .medium),
+                                            font: UIFont.systemFont(ofSize: .adaptive(width: 15.0), weight: .medium),
                                             alignment: .right)
         }
     }
@@ -48,7 +48,7 @@ class WelcomeVC: UIViewController {
         didSet {
             self.actionButtonsCollection.forEach {
                 $0.commonInit(backgroundColor: .appMainColor,
-                              font: .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
+                              font: .boldSystemFont(ofSize: .adaptive(width: 15.0)),
                               cornerRadius: $0.height / 2)
             }
         }
