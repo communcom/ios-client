@@ -18,7 +18,7 @@ class PostMetaView: MyView {
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 40)
     lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var timeAgoLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor)
+    lazy var timeAgoLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .a5a7bd)
     lazy var byUserLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appMainColor)
 
     // MARK: - Properties
@@ -38,13 +38,6 @@ class PostMetaView: MyView {
         comunityNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         comunityNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
         comunityNameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        
-        // timeAgoLabel
-        timeAgoLabel.tune(withText: "",
-                          hexColors: grayishBluePickers,
-                          font: UIFont(name: "SFProText-Semibold", size: CGFloat.adaptive(width: 12.0)),
-                          alignment: .left,
-                          isMultiLines: false)
         
         addSubview(timeAgoLabel)
         timeAgoLabel.autoPinEdge(.top, to: .bottom, of: comunityNameLabel, withOffset: 3)

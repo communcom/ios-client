@@ -20,11 +20,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         UILabel.with(textSize: CGFloat.adaptive(width: 12.0), weight: .medium, textColor: #colorLiteral(red: 0.6470588235, green: 0.6549019608, blue: 0.7411764706, alpha: 1), numberOfLines: 1)
     }
     
-    lazy var metaView: PostMetaView = {
-        // headerView for actionSheet
-        let headerView = PostMetaView(height: 40)
-        return headerView
-    }()
+    lazy var metaView = PostMetaView(height: 40)
 
     lazy var stateActionButton: UIButton = {
         let stateActionButtonInstance = UIButton(width: CGFloat.adaptive(width: 208.0),
@@ -101,7 +97,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
         
         return button
     }()
-    
     
     // MARK: - Layout
     override func setUpViews() {
