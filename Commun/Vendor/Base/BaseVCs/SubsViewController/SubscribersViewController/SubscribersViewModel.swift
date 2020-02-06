@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-class SubscribersViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
+class SubscribersViewModel: ListViewModel<ResponseAPIContentGetProfile> {
     convenience init(userId: String? = nil, communityId: String? = nil) {
         let fetcher = SubscribersListFetcher()
         fetcher.userId = userId
@@ -25,7 +25,7 @@ class SubscribersViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
         super.observeItemChange()
         
         ResponseAPIContentGetLeader.observeItemChanged()
-            .map {ResponseAPIContentResolveProfile(leader: $0)}
+            .map {ResponseAPIContentGetProfile(leader: $0)}
             .subscribe(onNext: { (profile) in
                 self.updateItem(profile)
             })

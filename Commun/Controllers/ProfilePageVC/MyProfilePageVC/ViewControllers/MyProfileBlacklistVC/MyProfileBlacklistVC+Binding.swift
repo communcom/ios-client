@@ -83,7 +83,7 @@ extension MyProfileBlacklistVC: BlacklistCellDelegate {
                         self.showProfileWithUserId(profile.userId)
                     }
                 case .community(let community):
-                    if community.isBlocked == false, !(community.isBeingUnblocked ?? false) {
+                    if community.isInBlacklist == false, !(community.isBeingUnblocked ?? false) {
                         self.showCommunityWithCommunityId(community.communityId)
                     }
                 }

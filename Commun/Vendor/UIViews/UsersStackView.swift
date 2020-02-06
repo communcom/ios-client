@@ -32,7 +32,7 @@ class UsersStackView: MyView {
     }
     
     // MARK: - Methods
-    func setUp(with friends: [ResponseAPIContentResolveProfile]) {
+    func setUp(with friends: [ResponseAPIContentGetProfile]) {
         // remove all labels
         for subview in subviews {
             if subview is UILabel {

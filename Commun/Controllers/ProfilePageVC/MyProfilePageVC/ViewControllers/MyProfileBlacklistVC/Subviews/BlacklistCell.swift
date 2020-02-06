@@ -27,9 +27,9 @@ extension BlacklistCellDelegate where Self: BaseViewController {
             user.isInBlacklist = !originIsBlocked
             user.notifyChanged()
         case .community(var community):
-            originIsBlocked = community.isBlocked ?? true
+            originIsBlocked = community.isInBlacklist ?? true
             community.isBeingUnblocked = true
-            community.isBlocked = !originIsBlocked
+            community.isInBlacklist = !originIsBlocked
             community.notifyChanged()
         }
         
@@ -63,7 +63,7 @@ extension BlacklistCellDelegate where Self: BaseViewController {
                     user.isBeingUnblocked = false
                     user.notifyChanged()
                 case .community(var community):
-                    community.isBlocked = !originIsBlocked
+                    community.isInBlacklist = !originIsBlocked
                     community.isBeingUnblocked = false
                     community.notifyChanged()
                 }
@@ -106,9 +106,9 @@ class BlacklistCell: SubsItemCell, ListItemCellType {
             avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
             nameLabel.text = community.name
             actionButton.isEnabled = !(community.isBeingUnblocked ?? false)
-            actionButton.setTitle((community.isBlocked ?? true) ? "unhide".localized().uppercaseFirst : "hide".localized().uppercaseFirst, for: .normal)
-            actionButton.backgroundColor = !(community.isBlocked ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
-            actionButton.setTitleColor(!(community.isBlocked ?? true) ? .appMainColor : .white, for: .normal)
+            actionButton.setTitle((community.isInBlacklist ?? true) ? "unhide".localized().uppercaseFirst : "hide".localized().uppercaseFirst, for: .normal)
+            actionButton.backgroundColor = !(community.isInBlacklist ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
+            actionButton.setTitleColor(!(community.isInBlacklist ?? true) ? .appMainColor : .white, for: .normal)
         }
         statsLabel.text = nil
     }
