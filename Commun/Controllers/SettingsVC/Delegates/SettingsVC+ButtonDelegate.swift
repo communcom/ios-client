@@ -61,7 +61,7 @@ extension SettingsVC: SettingsButtonCellDelegate {
                     RestAPIManager.instance.logout()
                         .subscribe(onCompleted: {
                             self.hideHud()
-                            AppDelegate.reloadSubject.onNext(true)
+                            AuthorizationManager.shared.forceReAuthorize()
                         }, onError: { (error) in
                             self.hideHud()
                             self.showError(error)

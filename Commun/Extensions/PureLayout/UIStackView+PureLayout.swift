@@ -10,10 +10,10 @@ import Foundation
 import PureLayout
 
 extension UIStackView {
-    convenience init(axis: NSLayoutConstraint.Axis, spacing: CGFloat? = nil) {
+    convenience init(axis: NSLayoutConstraint.Axis, spacing: CGFloat? = nil, alignment: UIStackView.Alignment = .center) {
         self.init(forAutoLayout: ())
         self.axis = axis
-        alignment = .center
+        self.alignment = alignment
         distribution = .fillEqually
         if let spacing = spacing {
             self.spacing = spacing

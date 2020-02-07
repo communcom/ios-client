@@ -20,7 +20,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         UILabel.with(textSize: .adaptive(width: 12.0), weight: .medium, textColor: #colorLiteral(red: 0.6470588235, green: 0.6549019608, blue: 0.7411764706, alpha: 1), numberOfLines: 1)
     }
     
-    lazy var metaView = PostMetaView(height: .adaptive(height: 40.0))
+    lazy var metaView = PostMetaView(height: 40.0)
     
     lazy var moreActionButton: UIButton = {
         let moreActionButtonInstance = UIButton(width: .adaptive(width: 40.0), height: .adaptive(width: 40.0))
@@ -135,12 +135,5 @@ class PostCell: MyTableViewCell, ListItemCellType {
         // Shares count
         // TODO: change this number later
         self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
-        
-        // State action button: set value & button width
-        metaView.stateButton.isHidden = true
-        
-        if let mosaic = post.mosaic {
-            metaView.set(mosaic: mosaic)
-        }
     }
 }

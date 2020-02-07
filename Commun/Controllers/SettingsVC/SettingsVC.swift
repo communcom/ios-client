@@ -117,7 +117,7 @@ class SettingsVC: UIViewController {
                         vc.didChangeLanguage
                             .subscribe(onNext: { (language) in
                                 self.viewModel.currentLanguage.accept(language)
-                                AppDelegate.reloadSubject.onNext(true)
+                                AuthorizationManager.shared.forceReAuthorize()
                             })
                             .disposed(by: self.bag)
                     case 1:

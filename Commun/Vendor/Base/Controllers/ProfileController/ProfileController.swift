@@ -38,7 +38,6 @@ extension ProfileType {
 }
 
 extension ResponseAPIContentGetProfile: ProfileType {}
-extension ResponseAPIContentGetSubscriptionsUser: ProfileType {}
 
 protocol ProfileController: class {
     associatedtype Profile: ProfileType
@@ -53,6 +52,7 @@ extension ProfileController {
         Profile.observeItemChanged()
             .filter {$0.identity == self.profile?.identity}
             .subscribe(onNext: {newProfile in
+                guard let newProfile = self.profile?.newUpdatedItem(from: newProfile) else {return}
                 self.setUp(with: newProfile)
             })
             .disposed(by: disposeBag)

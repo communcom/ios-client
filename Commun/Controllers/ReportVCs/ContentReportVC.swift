@@ -26,8 +26,6 @@ class ContentReportVC<T: ListItemType>: ReportVC {
     
     // MARK: - Methods
     override func sendButtonDidTouch() {
-        let choosedReasons = actions.filter {$0.isSelected == true}
-            .compactMap {BlockchainManager.ReportReason(rawValue: $0.title)}
         guard choosedReasons.count > 0 else {
             showAlert(title: "reason needed".localized().uppercaseFirst, message: "you must choose at least one reason".localized().uppercaseFirst)
             return
@@ -49,7 +47,7 @@ class ContentReportVC<T: ListItemType>: ReportVC {
         }
         
         showIndetermineHudWithMessage("reporting".localized().uppercaseFirst + "...")
-        BlockchainManager.instance.report(communityID: communityId ?? "", autorID: authorId ?? "", permlink: permlink ?? "", reasons: choosedReasons)
+        BlockchainManager.instance.report(communityID: communityId ?? "", autorID: authorId ?? "", permlink: permlink ?? "", reasons: choosedReasons, message: otherReason)
 //            .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { (_) in
                 self.hideHud()

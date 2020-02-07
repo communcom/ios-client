@@ -64,7 +64,7 @@ class SplashViewController: UIViewController {
     func reloadApp() {
         hideErrorView()
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            AppDelegate.reloadSubject.onNext(true)
+            AuthorizationManager.shared.forceReAuthorize()
         }
     }
     

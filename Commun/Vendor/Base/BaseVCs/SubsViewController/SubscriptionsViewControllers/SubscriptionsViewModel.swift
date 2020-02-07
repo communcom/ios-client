@@ -32,7 +32,7 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
     }
     
     override func observeItemDeleted() {
-        ResponseAPIContentGetSubscriptionsUser.observeItemDeleted()
+        ResponseAPIContentGetProfile.observeItemDeleted()
             .subscribe(onNext: { (deletedUser) in
                 self.deleteItem(ResponseAPIContentGetSubscriptionsItem.user(deletedUser))
             })
@@ -46,7 +46,7 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
     }
     
     override func observeItemChange() {
-        ResponseAPIContentGetSubscriptionsUser.observeItemChanged()
+        ResponseAPIContentGetProfile.observeItemChanged()
             .subscribe(onNext: { (newItem) in
                 self.updateItem(ResponseAPIContentGetSubscriptionsItem.user(newItem))
             })

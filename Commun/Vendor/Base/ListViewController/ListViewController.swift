@@ -196,7 +196,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     func modelSelected(_ item: T) {
         if let post = item as? ResponseAPIContentGetPost {
             let postPageVC = PostPageVC(post: post)
-            postPageVC.navigationBar.postMetaView.set(mosaic: post.mosaic)
             show(postPageVC, sender: nil)
             return
         }

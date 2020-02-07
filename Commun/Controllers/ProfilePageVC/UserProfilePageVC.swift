@@ -78,6 +78,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         ResponseAPIContentGetProfile.observeItemChanged()
             .filter {$0.identity == self.viewModel.profile.value?.identity}
             .subscribe(onNext: { [weak self] (profile) in
+                let profile = self?.viewModel.profile.value?.newUpdatedItem(from: profile)
                 self?.viewModel.profile.accept(profile)
             })
             .disposed(by: disposeBag)

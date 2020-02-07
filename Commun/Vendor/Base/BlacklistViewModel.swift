@@ -29,9 +29,6 @@ class BlacklistViewModel: ListViewModel<ResponseAPIContentGetBlacklistItem> {
                 self.updateItem(.community(newCommunity))
             })
             .disposed(by: disposeBag)
-        
-//        ResponseAPIContentGetProfile.observeItemChanged()
-//            .map {ResponseAPIContentGetBlacklistItem.user(ResponseAPIContentGetBlacklistUser()}
     }
     
     override func observeItemDeleted() {

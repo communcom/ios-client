@@ -277,7 +277,7 @@ class TabBarVC: UITabBarController {
         SocketManager.shared.newNotificationsRelay
             .filter {$0.count > 0}
             .subscribe(onNext: { (items) in
-                guard let notif = items.last else {return}
+                guard let notif = items.first else {return}
                 self.showNotificationViewWithNotification(notif)
             })
             .disposed(by: disposeBag)

@@ -24,9 +24,9 @@ class WalletConvertViewModel: BalancesViewModel {
     let rate = BehaviorRelay<Double>(value: 0)
     
     // Prevent duplicating
-    private var currentBuyPriceSymbol: String?
-    private var currentBuyPriceQuantity: String?
-    private var currentSellPriceQuantity: String?
+    var currentBuyPriceSymbol: String?
+    var currentBuyPriceQuantity: String?
+    var currentSellPriceQuantity: String?
     
     func getBuyPrice(symbol: String, quantity: String) {
         // prevent dupplicating
