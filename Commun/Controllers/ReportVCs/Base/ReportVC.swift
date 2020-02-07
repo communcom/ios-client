@@ -84,6 +84,13 @@ class ReportVC: BaseVerticalStackViewController {
         
         actions[index].isSelected = !actions[index].isSelected
         (viewForActionAtIndex(index) as! ReportOptionView).checkBox.isSelected = actions[index].isSelected
+        
+        // other reason
+        if index == actions.count - 1, actions[index].isSelected
+        {
+            // open vc for entering text
+            show(ReportOtherVC(), sender: nil)
+        }
     }
     
     @objc func sendButtonDidTouch() {
