@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 
 class SubscriptionsUserCell: SubsItemCell, ListItemCellType {
-    var profile: ResponseAPIContentGetSubscriptionsUser?
+    var profile: ResponseAPIContentGetProfile?
     var followButton: CommunButton {
         get {
             return actionButton
@@ -21,7 +21,7 @@ class SubscriptionsUserCell: SubsItemCell, ListItemCellType {
     }
     weak var delegate: ProfileCellDelegate?
     
-    func setUp(with profile: ResponseAPIContentGetSubscriptionsUser) {
+    func setUp(with profile: ResponseAPIContentGetProfile) {
         self.profile = profile
         avatarImageView.setAvatar(urlString: profile.avatarUrl, namePlaceHolder: profile.username)
         nameLabel.text = profile.username

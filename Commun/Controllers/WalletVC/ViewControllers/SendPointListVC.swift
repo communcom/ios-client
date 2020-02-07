@@ -10,10 +10,10 @@ import Foundation
 
 class SendPointListVC: SubscriptionsVC {
     // MARK: - Properties
-    var completion: ((ResponseAPIContentGetSubscriptionsUser) -> Void)?
+    var completion: ((ResponseAPIContentGetProfile) -> Void)?
     
     // MARK: - Initializers
-    init(completion: ((ResponseAPIContentGetSubscriptionsUser) -> Void)?) {
+    init(completion: ((ResponseAPIContentGetProfile) -> Void)?) {
         self.completion = completion
         super.init(title: "send points".localized().uppercaseFirst, type: .user)
     }

@@ -109,7 +109,7 @@ class WalletSendPointsVC: BaseViewController {
     }()
 
     // MARK: - Class Initialization
-    init(withSelectedBalanceSymbol symbol: String, andUser user: ResponseAPIContentGetSubscriptionsUser?) {
+    init(withSelectedBalanceSymbol symbol: String, andUser user: ResponseAPIContentGetProfile?) {
         self.dataModel = SendPointsModel()
         self.dataModel.transaction.symbol = Symbol(sell: symbol, buy: symbol)
         

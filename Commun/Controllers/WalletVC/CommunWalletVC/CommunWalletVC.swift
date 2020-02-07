@@ -198,7 +198,7 @@ class CommunWalletVC: TransferHistoryVC {
             .disposed(by: disposeBag)
         
         (viewModel as! WalletViewModel).subscriptionsVM.items
-            .map({ (items) -> [ResponseAPIContentGetSubscriptionsUser?] in
+            .map({ (items) -> [ResponseAPIContentGetProfile?] in
                 let items = items.compactMap {$0.userValue}
                 return items//[nil] + items // Temp hide Add friends
             })
@@ -305,11 +305,11 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     // Select recipient from friends
-    func sendPoint(to user: ResponseAPIContentGetSubscriptionsUser) {
+    func sendPoint(to user: ResponseAPIContentGetProfile) {
         routeToSendPointsScene(withUser: user)
     }
 
-    private func routeToSendPointsScene(withUser user: ResponseAPIContentGetSubscriptionsUser? = nil) {
+    private func routeToSendPointsScene(withUser user: ResponseAPIContentGetProfile? = nil) {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
 
         if let baseNC = navigationController as? BaseNavigationController {
