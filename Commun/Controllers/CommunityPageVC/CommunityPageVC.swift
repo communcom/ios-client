@@ -47,6 +47,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     
     // MARK: - Subviews
     lazy var headerView = CommunityHeaderView(tableView: tableView)
+    
     override var _headerView: ProfileHeaderView! {
         return headerView
     }
@@ -135,6 +136,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         
         // header
         headerView.setUp(with: profile)
+        headerView.walletButton.addTarget(self, action: #selector(getPointsButtonTapped), for: .touchUpInside)
         
         (viewModel as! CommunityPageViewModel).walletGetBuyPriceRequest
             .subscribe(onSuccess: { (buyPrice) in

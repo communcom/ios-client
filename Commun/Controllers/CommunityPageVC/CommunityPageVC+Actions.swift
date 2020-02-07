@@ -55,4 +55,18 @@ extension CommunityPageVC {
             }
             .disposed(by: disposeBag)
     }
+    
+    @objc func getPointsButtonTapped(_ sender: UIButton) {
+        guard let userID = Config.currentUser?.id, let viewModel = viewModel as? CommunityPageViewModel, let communityID = viewModel.communityId else { return }
+
+        viewModel.loadBalances(byUserID: userID)
+            .subscribe(onSuccess: { balances in
+                if let currentBalance = balances.first(where: { $0.symbol == communityID }) {
+                    print(currentBalance)
+                }
+            }, onError: { error in
+                self.showError(error)
+            })
+            .disposed(by: disposeBag)
+    }
 }
