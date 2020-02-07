@@ -15,7 +15,6 @@ end
 def extensions_pods
     pod 'RxSwift'
     pod 'RxCocoa'
-    
 end
 
 def common_pods_commun
@@ -63,7 +62,6 @@ def common_pods_commun
   pod 'SDURLCache', '~> 1.3'
   pod 'UITextView+Placeholder'
   
-  pod "ESPullToRefresh"
   pod 'SubviewAttachingTextView', :git => "https://github.com/communcom/SubviewAttachingTextView.git"
   
   pod "ReCaptcha"
@@ -77,8 +75,6 @@ def cyberswift_common_pods
   common_pods
   # EOS framework
   pod 'eosswift', :git => "git@github.com:communcom/eos-swift.git"
-  
-
   
   pod 'Checksum'
   pod 'Locksmith'

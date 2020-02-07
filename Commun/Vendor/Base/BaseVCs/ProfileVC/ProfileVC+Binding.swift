@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ESPullToRefresh
 
 extension ProfileVC {
     func bindControls() {
@@ -19,14 +18,6 @@ extension ProfileVC {
         offSetY
             .subscribe(onNext: {_ in
                 self.updateHeaderView()
-            })
-            .disposed(by: disposeBag)
-        
-        // hide pull to refresh
-        offSetY
-            .map {$0 < -179}
-            .subscribe(onNext: { (show) in
-                self.tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = show ? 1 : 0
             })
             .disposed(by: disposeBag)
         

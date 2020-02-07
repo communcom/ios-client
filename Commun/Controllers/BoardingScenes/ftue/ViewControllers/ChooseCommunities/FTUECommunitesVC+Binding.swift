@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ESPullToRefresh
 
 extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDelegate {
     func bindControl() {
@@ -20,14 +19,6 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .map { $0 > 30 }
             .distinctUntilChanged()
             .bind(to: headerView.rx.isHidden)
-            .disposed(by: disposeBag)
-        
-        offsetY
-            .map {$0 < -20}
-            .distinctUntilChanged()
-            .subscribe(onNext: { (show) in
-                self.communitiesCollectionView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = show ? 1 : 0
-            })
             .disposed(by: disposeBag)
     }
     
