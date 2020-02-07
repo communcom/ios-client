@@ -7,12 +7,18 @@
 //
 
 import Foundation
+import CyberSwift
 
 class ReportVC: BaseVerticalStackViewController {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
     
     // MARK: - Properties
+    var choosedReasons: [BlockchainManager.ReportReason] {
+        actions.filter {$0.isSelected == true}
+            .compactMap {BlockchainManager.ReportReason(rawValue: $0.title)}
+    }
+    var otherReason: String?
     
     // MARK: - Initializers
     init() {
@@ -89,7 +95,13 @@ class ReportVC: BaseVerticalStackViewController {
         if index == actions.count - 1, actions[index].isSelected
         {
             // open vc for entering text
-            show(ReportOtherVC(), sender: nil)
+            let vc = ReportOtherVC()
+            vc.completion = { otherReason in
+                vc.back()
+                self.otherReason = otherReason
+                self.sendButtonDidTouch()
+            }
+            show(vc, sender: nil)
         }
     }
     

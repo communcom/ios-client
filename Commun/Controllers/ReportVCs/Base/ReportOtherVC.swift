@@ -13,6 +13,7 @@ class ReportOtherVC: BaseViewController {
     lazy var closeButton = UIButton.close()
     lazy var textView = UITextView(forAutoLayout: ())
     lazy var sendButton = CommunButton.default(height: .adaptive(height: 50), label: "send".localized().uppercaseFirst, cornerRadius: .adaptive(height: 25), isHuggingContent: false, isDisableGrayColor: true)
+    var completion: ((String) -> Void)?
     
     // MARK: - Methods
     override func setUp() {
@@ -32,5 +33,19 @@ class ReportOtherVC: BaseViewController {
         sendButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         sendButton.autoPinEdge(.top, to: .bottom, of: textView, withOffset: 10)
         sendButton.autoPinBottomToSuperViewSafeAreaAvoidKeyboard(inset: 10)
+        
+        sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
+    }
+    
+    override func bind() {
+        super.bind()
+        textView.rx.text.orEmpty
+            .map {!$0.isEmpty}
+            .bind(to: sendButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+    }
+    
+    @objc func sendButtonDidTouch() {
+        completion?(textView.text)
     }
 }
