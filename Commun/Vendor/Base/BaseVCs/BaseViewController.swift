@@ -66,7 +66,6 @@ class BaseViewController: UIViewController {
 //    }
 }
 
-
 // MARK: - SFSafariViewControllerDelegate
 extension BaseViewController: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {

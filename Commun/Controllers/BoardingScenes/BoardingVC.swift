@@ -84,7 +84,7 @@ class BoardingVC: BaseViewController {
         try? KeychainManager.save([
             Config.settingStepKey: CurrentUserSettingStep.completed.rawValue
         ])
-        AppDelegate.reloadSubject.onNext(true)
+        AuthorizationManager.shared.forceReAuthorize()
     }
     
 }

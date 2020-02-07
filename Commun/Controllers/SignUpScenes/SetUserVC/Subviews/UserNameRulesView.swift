@@ -13,7 +13,6 @@ class UserNameRulesView: MyCardView {
     lazy var actionButton = CommunButton.default(height: .adaptive(height: 50.0), label: "".localized().uppercaseFirst, isHuggingContent: false)
     lazy var closeButton = UIButton.close(size: .adaptive(width: 24.0))
     
-    
     // MARK: - Custom Functions
     override func commonInit() {
         super.commonInit()

@@ -74,7 +74,7 @@ class MyProfileSettingsVC: BaseViewController {
         stackView = stackViewWithActions(actions: [
             CommunActionSheet.Action(title: "notifications".localized().uppercaseFirst, icon: UIImage(named: "profile_options_notifications"), handle: {
                 self.showNotificationSettings()
-            }),
+            })
 //            CommunActionSheet.Action(title: "interface language".localized().uppercaseFirst, icon: UIImage(named: "profile_options_interface_language"), handle: {
 //                self.selectLanguage()
 //            }),

@@ -109,7 +109,7 @@ class WalletSendPointsVC: BaseViewController {
     }()
 
     // MARK: - Class Initialization
-    init(withSelectedBalanceSymbol symbol: String, andUser user: ResponseAPIContentGetSubscriptionsUser?) {
+    init(withSelectedBalanceSymbol symbol: String, andUser user: ResponseAPIContentGetProfile?) {
         self.dataModel = SendPointsModel()
         self.dataModel.transaction.symbol = Symbol(sell: symbol, buy: symbol)
         
@@ -178,7 +178,6 @@ class WalletSendPointsVC: BaseViewController {
         
         pointsToolbar.frame.size = CGSize(width: .adaptive(width: 375.0), height: .adaptive(height: 50.0))
     }
-
     
     // MARK: - Custom Functions
     override func bind() {
@@ -436,7 +435,6 @@ class WalletSendPointsVC: BaseViewController {
     }
 }
 
-
 // MARK: - UITextFieldDelegate
 extension WalletSendPointsVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -472,7 +470,6 @@ extension WalletSendPointsVC: UITextFieldDelegate {
         return true
     }
 }
-
 
 // MARK: - CircularCarouselDataSource
 extension WalletSendPointsVC: CircularCarouselDataSource {
@@ -512,7 +509,6 @@ extension WalletSendPointsVC: CircularCarouselDataSource {
         return dataModel.balances.firstIndex(where: { $0.symbol == dataModel.transaction.symbol.sell }) ?? 0
     }
 }
-
 
 // MARK: - CircularCarouselDelegate
 extension WalletSendPointsVC: CircularCarouselDelegate {

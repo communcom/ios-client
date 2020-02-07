@@ -42,7 +42,6 @@ class MyCardView: MyView {
     // MARK: - Properties
     var viewParameters: CMCardViewParameters!
     var completionDismissWithAction: ((Bool) -> Void)?
-
     
     // MARK: - Class Initialization
     init(withFrame frame: CGRect, andParameters viewParameters: CMCardViewParameters = .user) {

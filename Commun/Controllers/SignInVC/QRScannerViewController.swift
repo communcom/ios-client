@@ -15,7 +15,6 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
     }
 
-
     override func setUp() {
         super.setUp()
         AnalyticsManger.shared.startQRScanner()

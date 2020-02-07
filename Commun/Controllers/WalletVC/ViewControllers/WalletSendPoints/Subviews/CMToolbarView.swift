@@ -50,7 +50,6 @@ class CMToolbarView: UIView {
         
         return stackViewInstance
     }()
-
     
     // MARK: - Class Initialization
     override init(frame: CGRect) {
@@ -62,7 +61,6 @@ class CMToolbarView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     // MARK: - Custom Functions
     func setupView() {
@@ -103,7 +101,6 @@ class CMToolbarView: UIView {
 
         layer.insertSublayer(gradientLayer, at: 0)
     }
-    
     
     // MARK: - Actions
     @objc func selectPointTapped(_ sender: UIButton) {

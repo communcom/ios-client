@@ -120,10 +120,6 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                     .map {$0.items ?? []}
     }
     
-    override func filter(items: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
-        items.filter {!self.items.value.contains($0)}
-    }
-    
     override func join(newItems items: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
         var newList = super.join(newItems: items)
         // sort

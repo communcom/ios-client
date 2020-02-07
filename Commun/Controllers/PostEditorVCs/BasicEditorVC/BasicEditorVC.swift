@@ -208,7 +208,7 @@ class BasicEditorVC: PostEditorVC {
 
     // MARK: - Actions
     @objc func cancelButtonTapped(_ sender: UIBarButtonItem) {
-        self.hideExtensionWithCompletionHandler(completion: { (Bool) -> Void in
+        self.hideExtensionWithCompletionHandler(completion: { (_) -> Void in
             self.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
         })
     }

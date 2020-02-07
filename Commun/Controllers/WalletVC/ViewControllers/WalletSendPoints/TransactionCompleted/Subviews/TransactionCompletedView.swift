@@ -126,7 +126,6 @@ class TransactionCompletedView: UIView {
         repeatButtonInstance.heightAnchor.constraint(equalToConstant: height).isActive = true
         return repeatButtonInstance
     }()
-
     
     // MARK: - Class Initialization
     init(withMode mode: TransActionType) {
@@ -145,7 +144,6 @@ class TransactionCompletedView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-       
     
     // MARK: - Custom Functions
     private func setupView() {
@@ -408,4 +406,3 @@ class TransactionCompletedView: UIView {
         transactionCurrencyLabel.theme_textColor = amount > 0 ? softCyanLimeGreenColorPickers : blackWhiteColorPickers
     }
 }
-

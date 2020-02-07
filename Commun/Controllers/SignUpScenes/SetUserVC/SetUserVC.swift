@@ -142,7 +142,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 return RestAPIManager.instance.toBlockChain()
             })
             .subscribe(onCompleted: {
-                AppDelegate.reloadSubject.onNext(true)
+                AuthorizationManager.shared.forceReAuthorize()
             }, onError: {error in
                 self.hideHud()
                 self.showError(error)
