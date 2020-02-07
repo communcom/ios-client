@@ -452,6 +452,7 @@
 		BCD3BC8D23AC66740036C947 /* UICollectionView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */; };
 		BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */; };
 		BCD453AF2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */; };
+		BCDEE77323ED389F00DD3EB3 /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE77223ED389F00DD3EB3 /* AuthorizationManager.swift */; };
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
 		BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */; };
 		BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */; };
@@ -979,6 +980,7 @@
 		BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+PureLayout.swift"; sourceTree = "<group>"; };
 		BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
+		BCDEE77223ED389F00DD3EB3 /* AuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentBlock.swift; sourceTree = "<group>"; };
 		BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+Actions.swift"; sourceTree = "<group>"; };
@@ -1193,6 +1195,7 @@
 			children = (
 				3B6CB72F23432D6F0097B2A1 /* FavouritesList.swift */,
 				ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */,
+				BCDEE77223ED389F00DD3EB3 /* AuthorizationManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -3177,6 +3180,7 @@
 				BC4071AA23CF09B2000027A3 /* NotificationsPageViewModel.swift in Sources */,
 				3B6CB732234331830097B2A1 /* Array.swift in Sources */,
 				3BB48AD322D6432200F11B6A /* BoardingRouter.swift in Sources */,
+				BCDEE77323ED389F00DD3EB3 /* AuthorizationManager.swift in Sources */,
 				3B289B9E2346EB0400598407 /* UIView+PureLayout.swift in Sources */,
 				3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */,
 				BC4071AD23CF0AFA000027A3 /* NotificationCell.swift in Sources */,

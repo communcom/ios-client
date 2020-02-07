@@ -33,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Properties
     var window: UIWindow?
     
-    static var reloadSubject = PublishSubject<Bool>()
     let notificationCenter = UNUserNotificationCenter.current()
     let notificationTappedRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
     
@@ -99,29 +98,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
         // handle connected
-        SocketManager.shared.connected
-            .filter {$0}
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .take(1)
-            .asSingle()
-            .timeout(10, scheduler: MainScheduler.instance)
-            .subscribe(onSuccess: { (_) in
-                AppDelegate.reloadSubject.onNext(false)
-                self.window?.makeKeyAndVisible()
-            }, onError: { error in
-                print(error)
-                if let vc = self.window?.rootViewController as? SplashViewController {
-                    vc.showErrorScreen()
-                }
+        AuthorizationManager.shared.status
+            .distinctUntilChanged()
+            .subscribe(onNext: { (status) in
+                self.navigateWithAuthorizationStatus(status)
             })
-            .disposed(by: bag)
-        
-        // Reload app
-        AppDelegate.reloadSubject
-            .subscribe(onNext: {force in
-                self.navigateWithRegistrationStep(force: force)
-            })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         // cache
         if let urlCache = SDURLCache(memoryCapacity: 0, diskCapacity: 2*1024*1024*1024, diskPath: SDURLCache.defaultCachePath(), enableForIOS5AndUp: true) {
@@ -138,99 +120,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func navigateWithRegistrationStep(force: Bool = false) {
-        let completion = {
-            let step = KeychainManager.currentUser()?.registrationStep ?? .firstStep
-            // Registered user
-            if step == .registered || step == .relogined {
-                // If first setting is uncompleted
-                let settingStep = KeychainManager.currentUser()?.settingStep ?? .backUpICloud
-                if settingStep != .completed {
-                    if !force,
-                        let nc = self.window?.rootViewController as? UINavigationController,
-                        (nc.viewControllers.first is BackUpKeysVC || nc.viewControllers.first is BoardingSetPasscodeVC)
-                    {
-                        return
-                    }
-                    
-                    let vc: UIViewController
-                    
-                    if KeychainManager.currentUser()?.registrationStep == .relogined {
-                        vc = BoardingSetPasscodeVC()
-                    } else {
-                        vc = BackUpKeysVC()
-                    }
-                    
-                    let nc = UINavigationController(rootViewController: vc)
-                    
-                    self.changeRootVC(nc)
-                    return
-                }
-                
-                // if all set
-                RestAPIManager.instance.authorize()
-                    .subscribe(onSuccess: { (_) in
-                        // Retrieve favourites
-                        FavouritesList.shared.retrieve()
-                        
-                        // show feed
-                        if !force && (self.window?.rootViewController is TabBarVC) {return}
-                        self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
-                        
-                        // set info
-                        self.deviceSetInfo()
-                    }, onError: { (error) in
-                        if let error = error as? ErrorAPI {
-                            switch error.caseInfo.message {
-                            case "Cannot get such account from BC",
-                                 _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
-                                do {
-                                    try KeychainManager.deleteUser()
-                                    AppDelegate.reloadSubject.onNext(true)
-                                } catch {
-                                    print("Could not delete user from key chain")
-                                }
-                                return
-                            default:
-                                break
-                            }
-                        }
-                        if let splashVC = self.window?.rootViewController as? SplashViewController {
-                            splashVC.showErrorScreen()
-                        }
-                        
-                    })
-                    .disposed(by: self.bag)
-                
-                // New user
-            } else {
-                if !force,
-                    let nc = self.window?.rootViewController as? UINavigationController,
-                    nc.viewControllers.first is WelcomeVC {
-                    return
-                }
-                
-                let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
-                let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
-                self.changeRootVC(welcomeNav)
-                
-                let navigationBarAppearace = UINavigationBar.appearance()
-                navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-                navigationBarAppearace.largeTitleTextAttributes =   [
-                                                                        NSAttributedString.Key.foregroundColor: UIColor.black,
-                                                                        NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold",
-                                                                                                                           size: 30.0 * Config.widthRatio)!
-                ]
-            }
-        }
-        
-        if force, let vc = window?.rootViewController, !(vc is SplashViewController) {
+    func navigateWithAuthorizationStatus(_ status: AuthorizationManager.Status) {
+        switch status {
+        case .authorizing:
             // Closing animation
             let vc = controllerContainer.resolve(SplashViewController.self)!
             self.window?.rootViewController = vc
-            completion()
-        } else {
-            completion()
+        case .boarding:
+            let vc: UIViewController
+            
+            if KeychainManager.currentUser()?.registrationStep == .relogined {
+                vc = BoardingSetPasscodeVC()
+            } else {
+                vc = BackUpKeysVC()
+            }
+            
+            let nc = UINavigationController(rootViewController: vc)
+            
+            self.changeRootVC(nc)
+        case .authorized:
+            // Retrieve favourites
+            FavouritesList.shared.retrieve()
+            
+            self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+        case .registering:
+            let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
+            let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+            self.changeRootVC(welcomeNav)
+            
+            let navigationBarAppearace = UINavigationBar.appearance()
+            navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+            navigationBarAppearace.largeTitleTextAttributes =   [
+                                                                    NSAttributedString.Key.foregroundColor: UIColor.black,
+                                                                    NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold",
+                                                                                                                       size: 30.0 * Config.widthRatio)!
+            ]
+        case .authorizingError(let error):
+            if let error = error as? ErrorAPI {
+                switch error.caseInfo.message {
+                case "Cannot get such account from BC",
+                     _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
+                    do {
+                        try AuthorizationManager.shared.logout()
+                    } catch {
+                        print("Could not delete user from key chain")
+                    }
+                    return
+                default:
+                    break
+                }
+            }
+            if let splashVC = self.window?.rootViewController as? SplashViewController {
+                splashVC.showErrorScreen()
+            }
         }
     }
     
@@ -309,34 +251,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.notificationCenter.getNotificationSettings(completionHandler: { (settings) in
             Logger.log(message: "Notification settings: \(settings)", event: .debug)
         })
-    }
-    
-    private func deviceSetInfo() {
-        // set info
-        let key = "AppDelegate.setInfo"
-        if !UserDefaults.standard.bool(forKey: key) {
-            let offset = -TimeZone.current.secondsFromGMT() / 60
-            RestAPIManager.instance.deviceSetInfo(timeZoneOffset: offset)
-                .subscribe(onSuccess: { (_) in
-                    UserDefaults.standard.set(true, forKey: key)
-                })
-                .disposed(by: bag)
-        }
-        
-        // fcm token
-        if !UserDefaults.standard.bool(forKey: Config.currentDeviceDidSendFCMToken)
-        {
-            UserDefaults.standard.rx.observe(String.self, Config.currentDeviceFcmTokenKey)
-                .filter {$0 != nil}
-                .map {$0!}
-                .take(1)
-                .asSingle()
-                .flatMap {RestAPIManager.instance.deviceSetFcmToken($0)}
-                .subscribe(onSuccess: { (_) in
-                    UserDefaults.standard.set(true, forKey: Config.currentDeviceDidSendFCMToken)
-                })
-                .disposed(by: bag)
-        }
     }
 
     private func scheduleLocalNotification(userInfo: [AnyHashable: Any]) {

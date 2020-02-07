@@ -39,7 +39,7 @@ extension MyProfileSettingsVC {
                 RestAPIManager.instance.logout()
                     .subscribe(onCompleted: {
                         self.navigationController?.hideHud()
-                        AppDelegate.reloadSubject.onNext(true)
+                        AuthorizationManager.shared.forceReAuthorize()
                     }, onError: { (error) in
                         self.navigationController?.hideHud()
                         self.navigationController?.showError(error)

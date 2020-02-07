@@ -181,7 +181,7 @@ class SignInVC: BaseViewController {
             )
             .subscribe(onCompleted: {
                 AnalyticsManger.shared.signInStatus(success: true)
-                AppDelegate.reloadSubject.onNext(true)
+                AuthorizationManager.shared.forceReAuthorize()
             }, onError: { [weak self] (error) in
                 AnalyticsManger.shared.signInStatus(success: false)
                 self?.configure(signingIn: false)
