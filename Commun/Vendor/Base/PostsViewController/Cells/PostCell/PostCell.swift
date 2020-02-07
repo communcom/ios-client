@@ -135,12 +135,5 @@ class PostCell: MyTableViewCell, ListItemCellType {
         // Shares count
         // TODO: change this number later
         self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
-        
-        // State action button: set value & button width
-        metaView.stateButton.isHidden = true
-        
-        if let mosaic = post.mosaic {
-            metaView.set(mosaic: mosaic)
-        }
     }
 }

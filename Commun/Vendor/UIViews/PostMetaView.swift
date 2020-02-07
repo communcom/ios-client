@@ -14,12 +14,16 @@ class PostMetaView: MyView {
     class TapGesture: UITapGestureRecognizer {
         var post: ResponseAPIContentGetPost!
     }
+    
+    // MARK: - Properties
+    var stackViewTrailingConstraint: NSLayoutConstraint?
+    var trailingConstraint: NSLayoutConstraint?
 
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 40)
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 3, alignment: .leading)
     lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var timeAgoLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .a5a7bd)
-    lazy var byUserLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appMainColor)
+    lazy var subtitleLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .a5a7bd)
     lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .white)
 
     lazy var stateButton: UIView = {
@@ -41,6 +45,8 @@ class PostMetaView: MyView {
         view.tag = 0
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(stateButtonTapped(_:))))
         
+        view.widthAnchor.constraint(lessThanOrEqualToConstant: .adaptive(width: 208.0)).isActive = true
+        
         return view
     }()
 
@@ -56,48 +62,27 @@ class PostMetaView: MyView {
         addSubview(avatarImageView)
         avatarImageView.autoPinTopAndLeadingToSuperView()
         
-        // communityNameLabel
-        addSubview(comunityNameLabel)
-        comunityNameLabel.autoPinEdge(.top, to: .top, of: avatarImageView)
-        comunityNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        comunityNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        comunityNameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        addSubview(stackView)
+        stackView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        stackView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        addSubview(timeAgoLabel)
-        timeAgoLabel.autoPinEdge(.top, to: .bottom, of: comunityNameLabel, withOffset: 3)
-        timeAgoLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        
-        // byUserLabel
-        addSubview(byUserLabel)
-        byUserLabel.autoPinEdge(.top, to: .bottom, of: comunityNameLabel, withOffset: 3)
-        byUserLabel.autoPinEdge(.leading, to: .trailing, of: timeAgoLabel)
-        byUserLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        byUserLabel.removeGestureRecognizers()
-        
-        comunityNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor)
-            .isActive = true
-        byUserLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor)
-            .isActive = true
-    }
-    
-    private func addMosaic() {
-        addSubview(stateButton)
-        stateButton.widthAnchor.constraint(lessThanOrEqualToConstant: .adaptive(width: 208.0)).isActive = true
-        stateButton.autoPinTopAndTrailingToSuperView(inset: .adaptive(height: 5.0), xInset: .adaptive(width: 0.0))
+        stackView.addArrangedSubview(comunityNameLabel)
+        stackView.addArrangedSubview(subtitleLabel)
     }
     
     func setUp(post: ResponseAPIContentGetPost) {
         avatarImageView.setAvatar(urlString: post.community?.avatarUrl, namePlaceHolder: post.community?.name ?? "C")
         comunityNameLabel.text = post.community?.name
-        timeAgoLabel.text = Date.timeAgo(string: post.meta.creationTime) + " • "
-        byUserLabel.text = post.author?.username ?? post.author?.userId
+        subtitleLabel.attributedText = NSMutableAttributedString()
+            .text(Date.timeAgo(string: post.meta.creationTime) + " • ", size: 12, weight: .semibold, color: .a5a7bd)
+            .text(post.author?.username ?? post.author?.userId ?? "", size: 12, weight: .semibold, color: .appMainColor)
         
         // add gesture
         if isUserNameTappable {
             let tap = TapGesture(target: self, action: #selector(userNameTapped(_:)))
             tap.post = post
-            byUserLabel.isUserInteractionEnabled = true
-            byUserLabel.addGestureRecognizer(tap)
+            subtitleLabel.isUserInteractionEnabled = true
+            subtitleLabel.addGestureRecognizer(tap)
         }
         
         if isCommunityNameTappable {
@@ -111,19 +96,35 @@ class PostMetaView: MyView {
             comunityNameLabel.isUserInteractionEnabled = true
             comunityNameLabel.addGestureRecognizer(tapLabel)
         }
+        
+        setMosaic(post.mosaic)
     }
     
-    func set(mosaic: ResponseAPIRewardsGetStateBulkMosaic?) {
+    private func setMosaic(_ mosaic: ResponseAPIRewardsGetStateBulkMosaic?) {
+        // clean
+        stateButton.removeFromSuperview()
+        stackViewTrailingConstraint?.isActive = false
+        trailingConstraint?.isActive = false
+        trailingConstraint = nil
+        
         guard let mosaicItem = mosaic, mosaicItem.topCount > 0, let rewardString = mosaicItem.reward.components(separatedBy: " ").first, let rewardDouble = Double(rewardString), rewardDouble > 0 else {
+            stackViewTrailingConstraint = stackView.autoPinEdge(toSuperviewEdge: .trailing)
+            stackViewTrailingConstraint?.isActive = true
             return
         }
+        
+        addSubview(stateButton)
+        stateButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        stackViewTrailingConstraint = stackView.autoPinEdge(.trailing, to: .leading, of: stateButton, withOffset: -4)
+        stackViewTrailingConstraint?.isActive = true
+        
+        trailingConstraint = stateButton.autoPinEdge(toSuperviewEdge: .trailing)
+        trailingConstraint?.isActive = true
         
         let isRewardState = mosaicItem.isClosed
         stateButton.isHidden = false
         stateButtonLabel.text = isRewardState ? rewardDouble.currencyValueFormatted : "top".localized().uppercaseFirst
         stateButton.tag = Int(isRewardState.int)
-        
-        addMosaic()
     }
     
     // MARK: - Actions
