@@ -50,7 +50,11 @@ extension ResponseAPIGetNotificationItem {
                 .normal("as a reward".localized())
             
         case "transfer":
-            if from?.username.lowercased() != "bounty" {
+            if from?.username == nil {
+                aStr.normal("You recived")
+                    .normal(" ")
+                    .normal("\(amount ?? "0") \(community?.communityId ?? "points")")
+            } else if from?.username?.lowercased() != "bounty" {
                 aStr.semibold(from?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
                     .normal("sent you".localized())
