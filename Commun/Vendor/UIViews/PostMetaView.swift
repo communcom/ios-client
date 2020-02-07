@@ -122,7 +122,6 @@ class PostMetaView: MyView {
         trailingConstraint?.isActive = true
         
         let isRewardState = mosaicItem.isClosed
-        stateButton.isHidden = false
         stateButtonLabel.text = isRewardState ? rewardDouble.currencyValueFormatted : "top".localized().uppercaseFirst
         stateButton.tag = Int(isRewardState.int)
     }
