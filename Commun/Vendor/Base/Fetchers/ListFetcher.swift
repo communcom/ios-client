@@ -126,21 +126,32 @@ class ListFetcher<T: ListItemType> {
             .disposed(by: disposeBag)
     }
     
-    func filter(items: [T]) -> [T] {
-        items.filter { (item) -> Bool in
-            !self.items.value.contains {$0.identity == item.identity}
-        }
-    }
-    
     func join(newItems items: [T]) -> [T] {
-        var newList = filter(items: items)
+        var updatedItems = [T]()
+        
+        // add new items
         if !reloadClearedResult {
             reloadClearedResult = true
-            newList = newList + self.items.value
+            updatedItems = items
+            updatedItems.joinUnique(self.items.value)
         } else {
-            newList = self.items.value + newList
+            updatedItems = self.items.value
+            updatedItems.joinUnique(items)
         }
         
-        return newList
+        // update current items
+        updatedItems = updatedItems.map {
+            var mutableItem = $0
+            
+            // if item exists in list, update it
+            if let newItem = items.first(where: {$0.identity == mutableItem.identity}),
+                let updatedItem = mutableItem.newUpdatedItem(from: newItem)
+            {
+                mutableItem = updatedItem
+            }
+            return mutableItem
+        }
+        
+        return updatedItems
     }
 }
