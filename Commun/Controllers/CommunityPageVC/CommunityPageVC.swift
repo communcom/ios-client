@@ -340,8 +340,21 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             
         }
     }
+    
+    func openOther(balances: [ResponseAPIWalletGetBalance], withSymbol symbol: String) {
+        let vc = OtherBalancesWalletVC(balances: balances, symbol: symbol)
+//                                       subscriptions: viewModel.subscriptionsVM.items.value,
+//                                       history: viewModel.items.value)
+        
+        let nc = navigationController as? BaseNavigationController
+        nc?.shouldResetNavigationBarOnPush = false
+        show(vc, sender: nil)
+        nc?.shouldResetNavigationBarOnPush = true
+    }
 }
 
+
+// MARK: - UITableViewDelegate
 extension CommunityPageVC: UITableViewDelegate {
     // MARK: - Sorting
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

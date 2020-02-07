@@ -61,9 +61,7 @@ extension CommunityPageVC {
 
         viewModel.loadBalances(byUserID: userID)
             .subscribe(onSuccess: { balances in
-                if let currentBalance = balances.first(where: { $0.symbol == communityID }) {
-                    print(currentBalance)
-                }
+                self.openOther(balances: balances, withSymbol: communityID)
             }, onError: { error in
                 self.showError(error)
             })
