@@ -42,6 +42,7 @@ extension PostController {
         ResponseAPIContentGetPost.observeItemChanged()
             .filter {$0.identity == self.post?.identity}
             .subscribe(onNext: {newPost in
+                guard let newPost = self.post?.newUpdatedItem(from: newPost) else {return}
                 self.setUp(with: newPost)
             })
             .disposed(by: disposeBag)

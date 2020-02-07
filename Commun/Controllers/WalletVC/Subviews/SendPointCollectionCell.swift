@@ -14,7 +14,7 @@ class SendPointCollectionCell: MyCollectionViewCell {
     static let height: CGFloat = 124
     
     // MARK: - Properties
-    var user: ResponseAPIContentGetSubscriptionsUser?
+    var user: ResponseAPIContentGetProfile?
     
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 50)
@@ -37,7 +37,7 @@ class SendPointCollectionCell: MyCollectionViewCell {
         nameLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
     }
     
-    func setUp(with user: ResponseAPIContentGetSubscriptionsUser?) {
+    func setUp(with user: ResponseAPIContentGetProfile?) {
         self.user = user
         if let user = user {
             avatarImageView.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)

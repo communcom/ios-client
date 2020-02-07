@@ -182,7 +182,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         ResponseAPIContentGetCommunity.observeItemChanged()
             .filter {$0.identity == self.viewModel.profile.value?.identity}
             .subscribe(onNext: {newCommunity in
-                self.viewModel.profile.accept(newCommunity)
+                let community = self.viewModel.profile.value?.newUpdatedItem(from: newCommunity)
+                self.viewModel.profile.accept(community)
             })
             .disposed(by: disposeBag)
     }

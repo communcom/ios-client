@@ -40,7 +40,8 @@ extension CommunityController {
         ResponseAPIContentGetCommunity.observeItemChanged()
             .filter {$0.identity == self.community?.identity}
             .subscribe(onNext: {newCommunity in
-                self.setUp(with: newCommunity)
+                guard let community = self.community?.newUpdatedItem(from: newCommunity) else {return}
+                self.setUp(with: community)
             })
             .disposed(by: disposeBag)
     }
