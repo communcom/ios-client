@@ -7,12 +7,18 @@
 //
 
 import Foundation
+import CyberSwift
 
 class ReportVC: BaseVerticalStackViewController {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
     
     // MARK: - Properties
+    var choosedReasons: [BlockchainManager.ReportReason] {
+        actions.filter {$0.isSelected == true}
+            .compactMap {BlockchainManager.ReportReason(rawValue: $0.title)}
+    }
+    var otherReason: String?
     
     // MARK: - Initializers
     init() {
@@ -84,6 +90,19 @@ class ReportVC: BaseVerticalStackViewController {
         
         actions[index].isSelected = !actions[index].isSelected
         (viewForActionAtIndex(index) as! ReportOptionView).checkBox.isSelected = actions[index].isSelected
+        
+        // other reason
+        if index == actions.count - 1, actions[index].isSelected
+        {
+            // open vc for entering text
+            let vc = ReportOtherVC()
+            vc.completion = { otherReason in
+                vc.back()
+                self.otherReason = otherReason
+                self.sendButtonDidTouch()
+            }
+            show(vc, sender: nil)
+        }
     }
     
     @objc func sendButtonDidTouch() {
