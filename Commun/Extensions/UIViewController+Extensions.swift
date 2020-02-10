@@ -203,7 +203,11 @@ extension UIViewController {
                 break
             }
         case "transfer":
-            if let id = item.from?.userId {
+            if item.from?.username == nil {
+                if let id = item.community?.communityId {
+                    showCommunityWithCommunityId(id)
+                }
+            } else if let id = item.from?.userId {
                 showProfileWithUserId(id)
             }
         case "reward":

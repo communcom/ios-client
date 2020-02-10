@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import ESPullToRefresh
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
     // MARK: - Constants
@@ -16,6 +15,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     let coverVisibleHeight: CGFloat = 150
     var coverImageHeightConstraint: NSLayoutConstraint!
     var coverImageWidthConstraint: NSLayoutConstraint!
+    let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // MARK: - Properties
     lazy var viewModel: ProfileViewModel<ProfileType> = self.createViewModel()
@@ -96,11 +96,11 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         tableView.setContentOffset(CGPoint(x: 0, y: -coverHeight), animated: true)
         
         // pull to refresh
-        tableView.es.addPullToRefresh { [unowned self] in
-            self.tableView.es.stopPullToRefresh()
-            self.reload()
-        }
-        tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = 0
+
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+        refreshControl.tintColor = .white
+        refreshControl.subviews.first?.bounds.origin.y = 112
         
         tableView.rx.endUpdatesEvent
             .subscribe(onNext: { _ in
@@ -113,7 +113,12 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         
         _headerView.segmentedControl.delegate = self
     }
-    
+
+    @objc func refresh() {
+        self.reload()
+        refreshControl.endRefreshing()
+    }
+
     override func bind() {
         super.bind()
         bindControls()

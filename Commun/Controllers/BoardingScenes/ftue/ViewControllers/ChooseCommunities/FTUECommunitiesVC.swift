@@ -49,6 +49,7 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
     }()
     
     let viewModel = FTUECommunitiesViewModel(type: .all)
+    let refreshControl = UIRefreshControl(forAutoLayout: ())
 
     // bottomBar
     private lazy var shadowView = UIView(height: bottomBarHeight)
@@ -88,10 +89,12 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         communitiesCollectionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         communitiesCollectionView.register(FTUECommunityCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomBarHeight, right: 0)
-        communitiesCollectionView.es.addPullToRefresh {
-            self.communitiesCollectionView.es.stopPullToRefresh()
-            self.viewModel.reload()
-        }
+
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        communitiesCollectionView.addSubview(refreshControl)
+        refreshControl.tintColor = .appGrayColor
+        refreshControl.subviews.first?.bounds.origin.y = 15
+
         view.addSubview(communitiesCollectionView)
         communitiesCollectionView.autoPinEdge(.top, to: .top, of: headerView)
         communitiesCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), excludingEdge: .top)
@@ -115,6 +118,11 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         chosenCommunitiesCollectionView.autoPinEdge(.trailing, to: .leading, of: nextButton, withOffset: -10)
         chosenCommunitiesCollectionView.register(FTUEChosenCommunityCell.self, forCellWithReuseIdentifier: "FTUEChosenCommunityCell")
         chosenCommunitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+    }
+
+    @objc func refresh() {
+        viewModel.reload()
+        refreshControl.endRefreshing()
     }
     
     override func bind() {

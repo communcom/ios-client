@@ -29,6 +29,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     // MARK: - Properties
     var selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem
     var viewModel: CommunityMembersViewModel
+    let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // MARK: - Subviews
     lazy var topTabBar = CMTopTabBar(
@@ -95,10 +96,14 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         tableView.separatorStyle = .none
         
         // pull to refresh
-        tableView.es.addPullToRefresh { [unowned self] in
-            self.tableView.es.stopPullToRefresh()
-            self.reload()
-        }
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+        refreshControl.tintColor = .appGrayColor
+    }
+
+    @objc func refresh() {
+        reload()
+        refreshControl.endRefreshing()
     }
     
     override func bind() {

@@ -12,6 +12,7 @@ import RxSwift
 class MyProfileBlacklistVC: BaseViewController {
     // MARK: - Properties
     let viewModel: MyProfileBlacklistViewModel
+    let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // MARK: - Subviews
     
@@ -73,10 +74,14 @@ class MyProfileBlacklistVC: BaseViewController {
         tableView.separatorStyle = .none
         
         // pull to refresh
-        tableView.es.addPullToRefresh { [unowned self] in
-            self.tableView.es.stopPullToRefresh()
-            self.reload()
-        }
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+        refreshControl.tintColor = .appGrayColor
+    }
+
+    @objc func refresh() {
+        reload()
+        refreshControl.endRefreshing()
     }
     
     override func bind() {

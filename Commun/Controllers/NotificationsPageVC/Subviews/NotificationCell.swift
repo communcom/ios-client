@@ -110,7 +110,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
 //            
 //            contentTrailingConstraint?.isActive = false
 //            contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: actionButton, withOffset: -4)
-            
+
         case "upvote":
             iconImageView.image = UIImage(named: "notifications-page-upvote")
             
@@ -127,19 +127,18 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
             
         case "reply":
             iconImageView.image = UIImage(named: "notifications-page-reply")
-            
         case "reward":
             avatarUrl = item.community?.avatarUrl
             avatarPlaceholder = item.community?.name ?? "Community"
-            iconImageView.image = UIImage(named: "notifications-page-reward")
-            
         case "transfer":
             avatarUrl = item.from?.avatarUrl
             avatarPlaceholder = item.from?.username ?? "User"
-                
-            if item.from?.username.lowercased() != "bounty" {
+            if item.from?.username == nil {
                 iconImageView.isHidden = true
-                
+                avatarUrl = "https://commun.com/apple-touch-icon.png"
+                userId = nil
+            } else if item.from?.username?.lowercased() != "bounty" {
+                iconImageView.isHidden = true
             } else {
                 iconImageView.setAvatar(urlString: item.community?.avatarUrl, namePlaceHolder: item.community?.name ?? "C")
                 iconImageView.borderWidth = 2
@@ -154,8 +153,6 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
             avatarImageView.addTapToOpenUserProfile(profileId: userId)
         }
 
-        avatarImageView.setAvatar(
-            urlString: avatarUrl,
-            namePlaceHolder: avatarPlaceholder)
+        avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: avatarPlaceholder)
     }
 }
