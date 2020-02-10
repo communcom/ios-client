@@ -160,6 +160,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             case "Cannot get such account from BC",
                  _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
                 try! RestAPIManager.instance.logout()
+                AuthorizationManager.shared.forceReAuthorize()
                 return
             default:
                 break

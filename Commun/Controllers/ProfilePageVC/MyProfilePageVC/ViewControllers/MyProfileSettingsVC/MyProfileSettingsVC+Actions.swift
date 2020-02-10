@@ -36,6 +36,7 @@ extension MyProfileSettingsVC {
             
             if index == 0 {
                 try! RestAPIManager.instance.logout()
+                AuthorizationManager.shared.forceReAuthorize()
             }
         }
     }
