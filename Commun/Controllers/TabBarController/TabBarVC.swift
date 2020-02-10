@@ -268,7 +268,7 @@ class TabBarVC: UITabBarController {
                     let vc = nc.topViewController as? NotificationsPageVC
                 {
                     let vm = vc.viewModel as? NotificationsPageViewModel
-                    vm?.markAllAsViewed(timestamp: Date().string())
+                    vm?.markAllAsViewed(timestamp: Date().iso8601String)
                 }
             })
             .disposed(by: bag)
