@@ -47,11 +47,6 @@ class AuthorizationManager {
             .disposed(by: disposeBag)
     }
     
-    func logout() throws {
-        try KeychainManager.deleteUser()
-        forceReAuthorize()
-    }
-    
     func forceReAuthorize() {
         self.status.accept(.authorizing)
         authorize()
@@ -82,12 +77,11 @@ class AuthorizationManager {
     
     private func deviceSetInfo() {
         // set info
-        let key = "AppDelegate.setInfo"
-        if !UserDefaults.standard.bool(forKey: key) {
+        if !UserDefaults.standard.bool(forKey: Config.currentDeviceDidSetInfo) {
             let offset = -TimeZone.current.secondsFromGMT() / 60
             RestAPIManager.instance.deviceSetInfo(timeZoneOffset: offset)
                 .subscribe(onSuccess: { (_) in
-                    UserDefaults.standard.set(true, forKey: key)
+                    UserDefaults.standard.set(true, forKey: Config.currentDeviceDidSetInfo)
                 })
                 .disposed(by: disposeBag)
         }
