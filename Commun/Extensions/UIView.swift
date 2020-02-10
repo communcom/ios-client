@@ -149,5 +149,5 @@ extension UIView {
         self.layer.cornerRadius = radius
         self.layer.borderColor = color.cgColor
         self.clipsToBounds = true
-    }
+    }    
 }

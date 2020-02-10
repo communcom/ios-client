@@ -27,7 +27,7 @@ class PostPageVC: CommentsViewController {
     
     // MARK: - Subviews
     lazy var navigationBar = PostPageNavigationBar(height: navigationBarHeight)
-    lazy var postView = PostHeaderView(tableView: tableView)
+    lazy var postHeaderView = PostHeaderView(tableView: tableView)
 
     lazy var shadowView = UIView(forAutoLayout: ())
     lazy var commentForm = CommentForm(backgroundColor: .white)
@@ -97,7 +97,7 @@ class PostPageVC: CommentsViewController {
         tableView.keyboardDismissMode = .onDrag
         
         // postView
-        postView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
+        postHeaderView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
@@ -115,7 +115,7 @@ class PostPageVC: CommentsViewController {
         
         shadowView.addSubview(commentForm)
         commentForm.autoPinEdgesToSuperviewEdges()
-    }
+ }
     
     override func bind() {
         super.bind()
@@ -137,6 +137,7 @@ class PostPageVC: CommentsViewController {
                 })
                 .disposed(by: disposeBag)
         }
+        
 //        else if let comment = commentThatNeedsScrollTo {
 //            //TODO: scroll to comment
 //        }
@@ -283,7 +284,7 @@ class PostPageVC: CommentsViewController {
     }
     
     @objc func openMorePostActions() {
-        postView.openMorePostActions()
+        postHeaderView.openMorePostActions()
     }
     
     @objc func sortButtonDidTouch() {
