@@ -13,28 +13,11 @@ import RxCocoa
 class AuthorizationManager {
     // MARK: - Nested type
     enum Status: Equatable {
-        static func == (lhs: AuthorizationManager.Status, rhs: AuthorizationManager.Status) -> Bool {
-            switch (lhs, rhs) {
-            case (.authorizing, .authorizing):
-                return true
-            case (.boarding(let step1), .boarding(let step2)):
-                return step1 == step2
-            case (.authorized, .authorized):
-                return true
-            case (.registering(let step1), .registering(let step2)):
-                return step1 == step2
-            case (.authorizingError(let error1), .authorizingError(let error2)):
-                return error1.localizedDescription == error2.localizedDescription
-            default:
-                return false
-            }
-        }
-        
         case authorizing
         case boarding(step: CurrentUserSettingStep)
         case authorized
         case registering(step: CurrentUserRegistrationStep)
-        case authorizingError(error: Error)
+        case authorizingError(error: ErrorAPI)
     }
     
     // MARK: - Properties
@@ -88,7 +71,7 @@ class AuthorizationManager {
                         self.deviceSetInfo()
                         self.status.accept(.authorized)
                     }) { (error) in
-                        self.status.accept(.authorizingError(error: error))
+                        self.status.accept(.authorizingError(error: error.toErrorAPI()))
                     }
                     .disposed(by: disposeBag)
             }
