@@ -48,11 +48,18 @@ class AuthorizationManager {
     }
     
     private func bind() {
-        SocketManager.shared.signed
-            .filter {$0}
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .subscribe(onNext: { (_) in
-                self.authorize()
+        SocketManager.shared.state
+            .debounce(1, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (event) in
+                switch event {
+                case .signed:
+                    self.authorize()
+                case .disconnected(let error):
+                    let error = error ?? ErrorAPI.socketDisconnected
+                    self.status.accept(.authorizingError(error: error))
+                default:
+                    return
+                }
             })
             .disposed(by: disposeBag)
     }
