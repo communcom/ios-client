@@ -26,6 +26,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     
     func bindFilter() {
         filter.distinctUntilChanged()
+            .filter {$0.communityId != nil && $0.permlink != nil && $0.userId != nil}
             .subscribe(onNext: {filter in
                 self.fetcher.reset(clearResult: false)
                 (self.fetcher as! CommentsListFetcher).filter = filter

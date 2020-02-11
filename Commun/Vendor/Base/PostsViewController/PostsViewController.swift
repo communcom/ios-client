@@ -10,7 +10,7 @@ import UIKit
 import CyberSwift
 
 class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCell>, PostCellDelegate {
-    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .time)) {
+    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time, userId: Config.currentUser?.id)) {
         let viewModel = PostsViewModel(filter: filter)
         super.init(viewModel: viewModel)
         defer {
@@ -80,10 +80,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     
     func filterChanged(filter: PostsListFetcher.Filter) {
 
-    }
-
-    override func refresh() {
-        super.refresh()
     }
 }
 

@@ -12,6 +12,7 @@ protocol CommentCellDelegate: class {
 //    var replyingComment: ResponseAPIContentGetComment? {get set}
     var expandedComments: [ResponseAPIContentGetComment] {get set}
     var tableView: UITableView {get set}
+    var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {get}
     func cell(_ cell: CommentCell, didTapUpVoteForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapDownVoteForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapMoreActionFor comment: ResponseAPIContentGetComment)
@@ -31,6 +32,7 @@ extension CommentCellDelegate where Self: BaseViewController {
         if !expandedComments.contains(where: {$0.identity == comment.identity}) {
             expandedComments.append(comment)
         }
+        commentsListViewModel.rowHeights[comment.identity] = nil
         tableView.reloadRows(at: [indexPath], with: .fade)
     }
     

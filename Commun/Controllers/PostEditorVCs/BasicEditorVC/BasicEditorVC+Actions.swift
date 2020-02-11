@@ -11,17 +11,12 @@ import Foundation
 extension BasicEditorVC {
     // MARK: - overriding actions
     override func chooseFromGallery() {
-        let pickerVC = CustomTLPhotosPickerVC.singleImage
+        let pickerVC = SinglePhotoPickerVC()
+        pickerVC.completion = { image in
+            self.didChooseImageFromGallery(image)
+            pickerVC.dismiss(animated: true, completion: nil)
+        }
         self.present(pickerVC, animated: true, completion: nil)
-        
-        pickerVC.rx.didSelectAnImage
-            .subscribe(onNext: {[weak self] image in
-                guard let strongSelf = self else {return}
-                guard let image = image else {return}
-                strongSelf.didChooseImageFromGallery(image)
-                pickerVC.dismiss(animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
     }
 
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
@@ -31,7 +26,7 @@ extension BasicEditorVC {
         )
         attributes.type = "image"
         
-        let attachment = TextAttachment(attributes: attributes, localImage: image, size: CGSize(width: view.size.width, height: attachmentHeight))
+        let attachment = TextAttachment(attributes: attributes, localImage: image, size: CGSize(width: view.size.width, height: view.size.width / image.size.width * image.size.height))
         attachment.delegate = self
         
         // Add embeds

@@ -72,8 +72,7 @@ class CMTopTabBar: MyView {
             button.addTarget(self, action: #selector(changeSelection(_:)), for: .touchUpInside)
             
             scrollView.contentView.addSubview(button)
-            button.autoPinEdge(toSuperviewEdge: .top)
-            button.autoPinEdge(toSuperviewEdge: .bottom)
+            button.autoAlignAxis(toSuperviewAxis: .horizontal)
             
             if i == 0 {
                 scrollView.contentView.heightAnchor.constraint(equalTo: button.heightAnchor)
@@ -83,7 +82,7 @@ class CMTopTabBar: MyView {
                 button.autoPinEdge(.leading, to: .trailing, of: buttons[i-1], withOffset: spacing)
             }
             
-            if i == buttons.count - 1 {
+            if i == labels.count - 1 {
                 button.autoPinEdge(toSuperviewEdge: .trailing)
             }
             

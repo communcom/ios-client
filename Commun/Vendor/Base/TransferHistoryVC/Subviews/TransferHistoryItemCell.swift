@@ -26,7 +26,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         return imageView
     }()
     lazy var contentLabel = UILabel.with(text: "Ivan Bilin\nTransaction", textSize: 15, weight: .semibold, numberOfLines: 0)
-    lazy var amountStatusLabel = UILabel.with(text: "-500 Commun\nOn hold", textSize: 15, weight: .semibold, numberOfLines: 2, textAlignment: .right)
+    lazy var amountStatusLabel = UILabel.with(text: "-500 Commun\nOn hold", textSize: 15, weight: .semibold, numberOfLines: 0, textAlignment: .right)
     
     // MARK: - Methods
     override func setUpViews() {
@@ -36,7 +36,9 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         
         containerView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 0), excludingEdge: .trailing)
+        avatarImageView.autoPinTopAndLeadingToSuperView(inset: 10, xInset: 16)
+        avatarImageView.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
+            .isActive = true
         
         containerView.addSubview(iconImageView)
         iconImageView.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: 2)
@@ -45,12 +47,21 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         containerView.addSubview(contentLabel)
         contentLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         contentLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        contentLabel.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 10)
+            .isActive = true
+        contentLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
+            .isActive = true
+        contentLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
         containerView.addSubview(amountStatusLabel)
         amountStatusLabel.autoPinEdge(.leading, to: .trailing, of: contentLabel, withOffset: 10)
         amountStatusLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         amountStatusLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        amountStatusLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        amountStatusLabel.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 10)
+            .isActive = true
+        amountStatusLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
+            .isActive = true
+        amountStatusLabel.setContentHuggingPriority(.required, for: .horizontal)
     }
     
     func setUp(with item: ResponseAPIWalletGetTransferHistoryItem) {
@@ -59,6 +70,9 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         var username: String
         var memo: NSAttributedString
         
+        var pointName = item.point.name ?? item.symbol
+        if pointName == "CMN" {pointName = "Commun"}
+        
         switch item.meta.actionType {
         case "transfer":
             var avatarUrl: String?
@@ -66,12 +80,12 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 avatarUrl = item.receiver.avatarUrl
                 username = item.receiver.username ?? item.receiver.userId
                 memo = NSMutableAttributedString()
-                    .semibold("-\(item.quantityValue.currencyValueFormatted) \(item.point.name ?? item.symbol)", font: .systemFont(ofSize: 15, weight: .semibold))
+                    .semibold("-\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold))
             } else {
                 avatarUrl = item.sender.avatarUrl
                 username = item.sender.username ?? item.sender.userId
                 memo = NSMutableAttributedString()
-                    .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name ?? item.symbol)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                    .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             }
             
             avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: username)
@@ -83,7 +97,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             username = "refill".localized().uppercaseFirst
             if item.meta.transferType == "token" {
                 memo = NSMutableAttributedString()
-                    .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                    .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
                 iconImageView.isHidden = false
                 avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: item.point.name ?? "C")
                 iconImageView.image = UIImage(named: "tux")
@@ -95,18 +109,25 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 avatarImageView.image = UIImage(named: "tux")
             }
         case "reward":
-            username = "reward".localized().uppercaseFirst
+            username = item.point.name ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
             avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
             iconImageView.isHidden = true
         case "hold":
             username = item.meta.holdType?.localized().uppercaseFirst ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
             avatarImageView.image = UIImage(named: "wallet-like")
+            iconImageView.isHidden = true
+        case "unhold":
+            username = item.point.name ?? ""
+            memo = NSMutableAttributedString()
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+            
+            avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
             iconImageView.isHidden = true
         default:
             username = ""
@@ -117,12 +138,10 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         let content = NSMutableAttributedString()
             .semibold(username)
         
-        if item.meta.actionType != "reward" {
-            content
-                .normal("\n")
-                .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
-        }
-        
+        content
+            .normal("\n")
+            .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+    
         contentLabel.attributedText = content
         
         let dateString = Date.from(string: item.timestamp).string(withFormat: "HH:mm")

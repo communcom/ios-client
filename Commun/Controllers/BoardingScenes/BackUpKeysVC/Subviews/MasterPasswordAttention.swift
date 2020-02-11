@@ -54,7 +54,7 @@ class MasterPasswordAttention: MyCardView {
         secondDescriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.heightRatio)
         secondDescriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.heightRatio)
         
-        let backButton = CommunButton.default(height: 50, label: "back".localized().uppercaseFirst, isHuggingContent: false)
+        let backButton = CommunButton.default(height: 50 * Config.heightRatio, label: "back".localized().uppercaseFirst, isHuggingContent: false)
         addSubview(backButton)
         backButton.autoPinEdge(.top, to: .bottom, of: secondDescriptionLabel, withOffset: 30 * Config.heightRatio)
         backButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.heightRatio)
@@ -62,7 +62,7 @@ class MasterPasswordAttention: MyCardView {
         
         backButton.addTarget(self, action: #selector(closeButtonTapped(_:)), for: .touchUpInside)
         
-        let ignoreButton = CommunButton.default(height: 50, label: "continue without backup".localized().uppercaseFirst, isHuggingContent: false)
+        let ignoreButton = CommunButton.default(height: 50 * Config.heightRatio, label: "continue without backup".localized().uppercaseFirst, isHuggingContent: false)
         ignoreButton.backgroundColor = .f3f5fa
         ignoreButton.setTitleColor(.appMainColor, for: .normal)
         addSubview(ignoreButton)

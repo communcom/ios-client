@@ -10,8 +10,15 @@ TEAM_ID_RELEASE = "E23BKKUH5D"
 ITC_TEAM_ID = "118820022"
 
 APPLICATION_NAME = "Commun"
+
 BUNDLE_ID_DEV = "io.commun.eos.ios"
+BUNDLE_ID_SHARE_DEV = "io.commun.eos.ios.share"
+GROUP_ID_DEV = "group.io.commun.eos.ios"
+
 BUNDLE_ID_RELEASE = "com.commun.ios"
+BUNDLE_ID_SHARE_RELEASE = "com.commun.ios.share"
+GROUP_ID_RELEASE = "group.com.commun.ios"
+
 INFO_PLIST_PATH = "./Commun/Info.plist"
 SUBXCODEPROJ = "/cyberSwift/CyberSwift.xcodeproj"
 
@@ -35,9 +42,11 @@ lane :beta do |options|
 		app_name: APPLICATION_NAME,
 		plist_path: INFO_PLIST_PATH,
 		bundle_id: BUNDLE_ID_DEV,
+		share_ext_bundle_id: BUNDLE_ID_SHARE_DEV,
 		icon_name: "AppIcon",
-		profile_name: "match Development #{BUNDLE_ID_DEV}",
-		team_id: TEAM_ID_DEV
+		app_group: GROUP_ID_DEV,
+		team_id: TEAM_ID_DEV,
+		codesigning_identity: "Apple Development: Artem Shilin (N3VJ3M7H43)"
 	)
 
 	build_path = ENV['BUILD_PATH']
@@ -49,6 +58,15 @@ lane :beta do |options|
 		groups: FABRIC_TESTERS_GROUP,
 		notifications: "false"
 	)
+
+	appcenter_upload(
+	  api_token: "5544f8df69750ae5a545f4b1bb8f9c5a4040c8f5",
+	  owner_name: "antihype",
+	  owner_type: "user",
+	  app_name: "commun-ios",
+	  file: build_path,
+	  notify_testers: true
+	)	
 
     slack_upload(
         slack_api_token: SLACK_API_TOKEN,
@@ -71,10 +89,12 @@ lane :release do
 		app_name: APPLICATION_NAME,
 		plist_path: INFO_PLIST_PATH,
 		bundle_id: BUNDLE_ID_RELEASE,
+		share_ext_bundle_id: BUNDLE_ID_SHARE_RELEASE,
 		icon_name: "AppIcon-PROD",
-		profile_name: "match AppStore #{BUNDLE_ID_RELEASE}",
+		app_group: GROUP_ID_RELEASE,
 		team_id: TEAM_ID_RELEASE,
-		subxcodeproj: SUBXCODEPROJ
+		subxcodeproj: SUBXCODEPROJ,
+		codesigning_identity: "Apple Distribution: CHEINARTSOFT, OOO (E23BKKUH5D)"
 	)
 
 	build_path = ENV['BUILD_PATH']
@@ -91,38 +111,48 @@ end
 
 private_lane :build do |options|
 	# options
-	subxcodeproj = 			options[:subxcodeproj]
-	appstore = 				options[:appstore]
-	app_name = 				options[:app_name]
-	plist_path = 			options[:plist_path]
-	bundle_id = 			options[:bundle_id]
-	build_number = 			options[:build_number] || number_of_commits(all: true)
-	profile_name = 			options[:profile_name]
-	icon_name = 			options[:icon_name]
-	ipa_name = 				options[:ipa_name] || "#{app_name}-#{build_number}.ipa"
-	team_id = 				options[:team_id]
+	subxcodeproj = options[:subxcodeproj]
+	appstore = options[:appstore]
+	app_name = options[:app_name]
+	plist_path = options[:plist_path]
+	bundle_id = options[:bundle_id]
+	build_number = options[:build_number] || number_of_commits(all: true)
+	icon_name = options[:icon_name]
+	ipa_name = options[:ipa_name] || "#{app_name}-#{build_number}.ipa"
+	team_id = options[:team_id]
+	signature_app_name = options[:signature_app_name]
+	signature_app_udid = options[:signature_app_udid]
+	signature_share_name = options[:signature_share_name]
+	signature_share_udid = options[:signature_share_udid]
+	app_group = options[:app_group]
+	share_ext_bundle_id = options[:share_ext_bundle_id]
+	codesigning_identity = options[:codesigning_identity]
 
 	# props
 	xcodeproj = 			"#{app_name}.xcodeproj"
-	build_version = 		get_version_number(xcodeproj: xcodeproj)
 	swift_flags = 			appstore ? '$(inherited) -D COCOAPODS -D APPSTORE' : '$(inherited) -D COCOAPODS'
 	output_directory = 		"build"
 	export_method = 		appstore ? "app-store" : "development"
 	build_path = 			File.join(File.expand_path("..").shellescape, output_directory ,"#{ipa_name}")
 	scheme = 				"#{app_name}"
+	share_ext_scheme = 		"CommunShare"
 	workspace = 			"#{app_name}.xcworkspace"
 	archive_path = 			"#{output_directory}/#{app_name}.xcarchive"
 	match_git_branch =		appstore ? MATCH_GIT_BRANCH_RELEASE : MATCH_GIT_BRANCH_DEV
 	match_type = 			appstore ? MATCH_TYPE_RELEASE : MATCH_TYPE_DEV
 	provisioning_profile =  "match #{match_type} #{bundle_id}"
+	build_version = get_version_number(xcodeproj: xcodeproj, target: scheme)
 
 	# Log
+	UI.success "app_group: #{app_group}"
+	UI.success "share_ext_bundle_id: #{share_ext_bundle_id}"
+	UI.success "codesigning_identity: #{codesigning_identity}"
+
 	UI.success "appstore: #{appstore}"
 	UI.success "app_name: #{app_name}"
 	UI.success "plist_path: #{plist_path}"
 	UI.success "build_number: #{build_number}"
 	UI.success "bundle_id: #{bundle_id}"
-	UI.success "profile_name: #{profile_name}"
 	UI.success "icon_name: #{icon_name}"
 	UI.success "ipa_name: #{ipa_name}"
 	UI.success "team_id: #{team_id}"
@@ -143,21 +173,30 @@ private_lane :build do |options|
 	if icon_name 
 		change_app_icon(
 			xcodeproj: xcodeproj,
-			icon_name: icon_name
+			icon_name: icon_name,
+			scheme: scheme
 		)
 	end
 
 	# change other swift flags
 	change_other_swift_flag(
 		xcodeproj: xcodeproj,
-		new_flags: swift_flags
+		new_flags: swift_flags,
+		scheme: scheme
+	)
+
+	change_other_swift_flag(
+		xcodeproj: xcodeproj,
+		new_flags: swift_flags,
+		scheme: share_ext_scheme
 	)
 
 	#change subproject other swift flags
 	if subxcodeproj
 		change_other_swift_flag(
 			xcodeproj: subxcodeproj,
-			new_flags: swift_flags
+			new_flags: swift_flags,
+			scheme: scheme
 		)
 	end
 
@@ -165,7 +204,13 @@ private_lane :build do |options|
 	update_app_identifier(
 		xcodeproj: xcodeproj,
 		plist_path: plist_path,
-		app_identifier: bundle_id
+		app_identifier: bundle_id,
+	)
+
+	update_app_identifier(
+		xcodeproj: xcodeproj,
+		plist_path: "./CommunShare/Info.plist",
+		app_identifier: share_ext_bundle_id,
 	)
 
 	# change build number
@@ -174,22 +219,55 @@ private_lane :build do |options|
     	build_number: build_number
     )
 
-	# add cert
-	match(
+    match(
 		git_branch: match_git_branch,
 		generate_apple_certs: true,
-		app_identifier: bundle_id,
+		app_identifier: [bundle_id, share_ext_bundle_id],
 		type: match_type,
 		readonly: true
 	)
+
+	update_app_group_identifiers(
+		entitlements_file: "./Commun/Commun.entitlements",
+		app_group_identifiers: [app_group]
+	)
+
+	update_app_group_identifiers(
+		entitlements_file: "./CommunShare/CommunShare.entitlements",
+		app_group_identifiers: [app_group]
+	)
+
+	signature_app_name = ENV["sigh_#{bundle_id}_development_profile-name"]
+	signature_app_udid = ENV["sigh_#{bundle_id}_development"]
+	signature_share_name = ENV["sigh_#{share_ext_bundle_id}_development_profile-name"]
+	signature_share_udid = ENV["sigh_#{share_ext_bundle_id}_development"]
+
+	if appstore
+		signature_app_name = ENV["sigh_#{bundle_id}_appstore_profile-name"]
+		signature_app_udid = ENV["sigh_#{bundle_id}_appstore"]
+		signature_share_name = ENV["sigh_#{share_ext_bundle_id}_appstore_profile-name"]
+		signature_share_udid = ENV["sigh_#{share_ext_bundle_id}_appstore"]
+	end
 
 	# manual signing
 	automatic_code_signing(
 		team_id: team_id,
 		bundle_identifier: bundle_id,
 		use_automatic_signing: false,
+		targets: scheme,
 		code_sign_identity: appstore ? "iPhone Distribution" : "iPhone Developer",
+		profile_name: signature_app_name,
+		profile_uuid: signature_app_udid,
+	)
 
+	automatic_code_signing(
+		team_id: team_id,
+		bundle_identifier: share_ext_bundle_id,
+		use_automatic_signing: false,
+		targets: share_ext_scheme,
+		code_sign_identity: appstore ? "iPhone Distribution" : "iPhone Developer",
+		profile_name: signature_share_name,
+		profile_uuid: signature_share_udid,
 	)
 
 	# pod install
@@ -207,11 +285,7 @@ private_lane :build do |options|
 		output_name: ipa_name,
 		include_bitcode: false,
 		export_method: export_method,
-		xcargs: {
-			:BUNDLE_IDENTIFIER => bundle_id,
-			:PROVISIONING_PROFILE_SPECIFIER => profile_name,
-			:DEVELOPMENT_TEAM => team_id
-		}
+		codesigning_identity: codesigning_identity
     )
 
     # create build path
@@ -244,28 +318,28 @@ end
 desc 'Update profiles and add new devices'
 lane :update_profiles do 
 
-	# match(
-	# 	git_branch: MATCH_GIT_BRANCH_RELEASE,
-	# 	username: APPLE_ID,
-	# 	team_id: TEAM_ID_RELEASE,
-	# 	app_identifier: BUNDLE_ID_RELEASE,
-	# 	generate_apple_certs: true,
-	# 	type: MATCH_TYPE_RELEASE,
-	# 	readonly: false,
-	# 	force: true
-	# )
-
 	match(
-		git_branch: MATCH_GIT_BRANCH_DEV,
+		git_branch: MATCH_GIT_BRANCH_RELEASE,
 		username: APPLE_ID,
-		team_id: TEAM_ID_DEV,
-		app_identifier: BUNDLE_ID_DEV,
+		team_id: TEAM_ID_RELEASE,
+		app_identifier: [BUNDLE_ID_RELEASE, BUNDLE_ID_SHARE_RELEASE],
 		generate_apple_certs: true,
-		type: MATCH_TYPE_DEV,
+		type: MATCH_TYPE_RELEASE,
 		readonly: false,
-		force_for_new_devices: true,
 		force: true
 	)
+
+	# match(
+	# 	git_branch: MATCH_GIT_BRANCH_DEV,
+	# 	username: APPLE_ID,
+	# 	team_id: TEAM_ID_DEV,
+	# 	app_identifier: [BUNDLE_ID_DEV, BUNDLE_ID_SHARE_DEV],
+	# 	generate_apple_certs: true,
+	# 	type: MATCH_TYPE_DEV,
+	# 	readonly: false,
+	# 	force_for_new_devices: true,
+	# 	force: true
+	# )
 end
 
 

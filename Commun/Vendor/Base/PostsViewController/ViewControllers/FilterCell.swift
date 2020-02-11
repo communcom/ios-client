@@ -33,6 +33,7 @@ class FilterCell: MyTableViewCell {
         checkBox.autoPinEdge(toSuperviewEdge: .trailing, withInset: CGFloat.adaptive(width: 15.0))
         checkBox.autoAlignAxis(toSuperviewAxis: .horizontal)
         checkBox.isUserInteractionEnabled = false
+        checkBox.notShowOffCheckbox = true
         
         contentView.addSubview(separator)
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)

@@ -51,26 +51,31 @@ extension MyProfilePageVC {
     }
     
     func bindBalances() {
+        let walletView = (headerView as! MyProfileHeaderView).walletShadowView
         let label = (headerView as! MyProfileHeaderView).communValueLabel
         (viewModel as! MyProfilePageViewModel).balancesVM.state
-            .subscribe(onNext: {(state) in
+            .subscribe(onNext: {[weak self] (state) in
                 switch state {
                 case .loading(let isLoading):
                     if isLoading {
-                        label.showLoader()
+                        (self?.headerView as? MyProfileHeaderView)?.setUpWalletView()
+                        walletView.showLoading(cover: false, spinnerColor: .white, size: 20, centerYOffset: 10)
+                    } else {
+                        walletView.hideLoading()
                     }
                 case .listEnded:
-                    label.hideLoader()
+                    walletView.hideLoading()
                 case .listEmpty:
-                    label.hideLoader()
+                    walletView.hideLoading()
                 case .error:
-                    label.text = "Error! Please refresh the page!"
+                    walletView.hideLoading()
+                    (self?.headerView as? MyProfileHeaderView)?.setUpWalletView(withError: true)
                 }
             })
             .disposed(by: disposeBag)
         
         (viewModel as! MyProfilePageViewModel).balancesVM.items
-            .map {$0.first(where: {$0.symbol == "CMN"})?.balanceValue.currencyValueFormatted}
+            .map {$0.enquityCommunValue.currencyValueFormatted}
             .bind(to: label.rx.text)
             .disposed(by: disposeBag)
     }

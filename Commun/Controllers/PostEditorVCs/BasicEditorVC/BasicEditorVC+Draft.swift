@@ -10,6 +10,10 @@ import Foundation
 
 extension BasicEditorVC {
     // MARK: - Draft
+    override func shouldSaveDraft() -> Bool {
+        viewModel.postForEdit == nil && (!contentTextView.text.isEmpty || _viewModel.attachment.value != nil)
+    }
+    
     override var hasDraft: Bool {
         return super.hasDraft ||
             UserDefaults.standard.dictionaryRepresentation().keys.contains(attachmentDraftKey)

@@ -25,8 +25,8 @@ import SwiftTheme
     }
     
     // MARK: - Custom Functions
-    func commonInit(hexColors: [ThemeColorPicker]? = [softBlueColorPickers, softBlueColorPickers, softBlueColorPickers, communGrayColorPickers],
-                    font: UIFont? = UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .semibold),
+    func commonInit(hexColors: [ThemeColorPicker]? = [softBlueColorPickers, softBlueColorPickers, softBlueColorPickers, grayishBluePickers],
+                    font: UIFont? = UIFont.systemFont(ofSize: .adaptive(width: 15.0), weight: .semibold),
                     alignment: NSTextAlignment? = .center) {
         if let text = self.titleLabel?.text {
             self.tune(withTitle: text.localized().uppercaseFirst,

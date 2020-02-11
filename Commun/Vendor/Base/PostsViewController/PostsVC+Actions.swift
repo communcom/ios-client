@@ -12,7 +12,7 @@ extension PostsViewController {
     @objc func toggleFeedType() {
         guard let viewModel = viewModel as? PostsViewModel else {return}
         if viewModel.filter.value.feedTypeMode == .subscriptions {
-            viewModel.changeFilter(feedTypeMode: .new)
+            viewModel.changeFilter(feedTypeMode: .hot)
         } else {
             viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .time)
         }

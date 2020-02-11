@@ -24,4 +24,8 @@ extension UIResponder {
                 ])
             .merge()
     }
+    
+    static var isKeyboardShowed: Observable<Bool> {
+        return keyboardHeightObservable.map {$0 > 0}
+    }
 }

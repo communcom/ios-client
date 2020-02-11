@@ -10,7 +10,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-class PostsFilterVC: SwipeDownDismissViewController {
+class PostsFilterVC: BaseViewController {
     // MARK: - Properties
     var isTimeFrameMode: Bool
     var isTrending: Bool
@@ -77,11 +77,8 @@ class PostsFilterVC: SwipeDownDismissViewController {
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
-        tableView.autoPinEdgesToSuperviewSafeArea(with:             UIEdgeInsets(top:       CGFloat.adaptive(height: (58.0 + 20.0)),
-                                                                                 left:      CGFloat.adaptive(width: 15.0),
-                                                                                 bottom:    0.0,
-                                                                                 right:     CGFloat.adaptive(width: 15.0)),
-                                                  excludingEdge:    .bottom)
+        tableView.isScrollEnabled = false
+        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
         
         // Add Save button
         view.addSubview(saveButton)

@@ -15,9 +15,9 @@ extension BasicEditorVC {
         
         // Parse link inside text
         contentTextView.rx.text
-            .filter {_ in !self.isParsingPost}
             .debounce(0.3, scheduler: MainScheduler.instance)
             .subscribe(onNext: { (text) in
+                if text == self.contentTextView.originalAttributedString?.string {return}
                 // ignore if one or more attachment existed
                 if self._viewModel.attachment.value != nil ||
                     self.link != nil {return}
@@ -57,22 +57,17 @@ extension BasicEditorVC {
     func bindAttachments() {
         _viewModel.attachment
             .subscribe(onNext: { [weak self] (attachment) in
+                self?.attachmentView.removeSubviews()
+                
                 guard let attachment = attachment,
                     let attributes = attachment.attributes,
                     let type = attributes.type
                 else {
-                    self?.attachmentView.removeSubviews()
-                    self?.attachmentView.autoSetDimension(.height, toSize: 300)
-                    self?.attachmentView.isHidden = true
                     return
                 }
-                self?.attachmentView.removeSubviews()
-                self?.attachmentView.heightConstraint?.isActive = false
-                self?.attachmentView.isHidden = false
                 
                 let attachmentView = AttachmentView(forAutoLayout: ())
                 attachmentView.attachment = attachment
-                attachmentView.isUserInteractionEnabled = true
                 attachmentView.tag = 0
                 attachmentView.delegate = self
                 self?.attachmentView.addSubview(attachmentView)
@@ -86,8 +81,8 @@ extension BasicEditorVC {
                     attachmentView.expandButton.isHidden = true
                 } else {
                     attachmentView.setUp(image: attachment.localImage, url: attachment.attributes?.url, description: attachment.attributes?.title ?? attachment.attributes?.description)
-                    attachmentView.autoSetDimension(.height, toSize: 200)
-                    attachmentView.expandButton.isHidden = false
+                    attachmentView.autoSetDimension(.height, toSize: attachment.size?.height ?? 300)
+                    attachmentView.expandButton.isHidden = true
                 }
                 
             })

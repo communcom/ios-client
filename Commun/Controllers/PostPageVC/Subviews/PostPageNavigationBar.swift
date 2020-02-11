@@ -18,17 +18,12 @@ class PostPageNavigationBar: MyView, CommunityController {
     // MARK: - Subviews
     lazy var backButton: UIButton = .back(tintColor: .a5a7bd)
     
-    lazy var postMetaView: PostMetaView = {
-        let view = PostMetaView(height: 40)
-        return view
-    }()
-    
-    lazy var joinButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
+    lazy var postMetaView = PostMetaView(height: 40)
     
     lazy var moreButton: UIButton = {
-        let button = UIButton(width: 36, height: 40, contentInsets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
-        button.tintColor = .black
-        button.setImage(UIImage(named: "postpage-more"), for: .normal)
+        let button = UIButton(width: 36, height: 40, contentInsets: UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6))
+        button.tintColor = .appGrayColor
+        button.setImage(UIImage(named: "icon-post-cell-more-center-default"), for: .normal)
         return button
     }()
     
@@ -43,23 +38,14 @@ class PostPageNavigationBar: MyView, CommunityController {
         
         addSubview(postMetaView)
         postMetaView.autoPinEdge(.leading, to: .trailing, of: backButton)
+
         postMetaView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         addSubview(moreButton)
-        moreButton.autoPinEdge(toSuperviewEdge: .trailing)
+        moreButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 15)
         moreButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        addSubview(joinButton)
-        joinButton.autoPinEdge(.trailing, to: .leading, of: moreButton)
-        joinButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        joinButton.autoPinEdge(.leading, to: .trailing, of: postMetaView, withOffset: 8)
-        
-        joinButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
-        
-//        postMetaView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        joinButton.leadingAnchor.constraint(greaterThanOrEqualTo: postMetaView.trailingAnchor, constant: 8)
-            .isActive = true
-        
+        moreButton.autoPinEdge(.leading, to: .trailing, of: postMetaView, withOffset: 8)
+
         observeCommunityChange()
     }
     
@@ -72,9 +58,9 @@ class PostPageNavigationBar: MyView, CommunityController {
     func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
         // joinButton
-        let joined = community.isSubscribed ?? false
-        joinButton.setHightLight(joined, highlightedLabel: "following", unHighlightedLabel: "follow")
-        joinButton.isEnabled = !(community.isBeingJoined ?? false)
+//        let joined = community.isSubscribed ?? false
+//        joinButton.setHightLight(joined, highlightedLabel: "following", unHighlightedLabel: "follow")
+//        joinButton.isEnabled = !(community.isBeingJoined ?? false)
     }
     
     @objc func backButtonDidTouch() {

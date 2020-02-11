@@ -35,7 +35,7 @@ class CommentForm: MyView {
     
     // MARK: - Subviews
     var constraintTop: NSLayoutConstraint?
-    lazy var stackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 5.0))
+    lazy var stackView = UIStackView(axis: .horizontal, spacing: .adaptive(width: 5.0))
     lazy var textView: CommentTextView = {
         let textView = CommentTextView(forExpandable: ())
         textView.placeholder = "write a comment".localized().uppercaseFirst + "..."
@@ -45,13 +45,13 @@ class CommentForm: MyView {
         return textView
     }()
 
-    lazy var imageButton = CommunButton.circle(size: CGFloat.adaptive(width: 35.0),
+    lazy var imageButton = CommunButton.circle(size: .adaptive(width: 35.0),
                                                backgroundColor: .white,
                                                tintColor: UIColor(hexString: "#A5A7BD"),
                                                imageName: "icon-send-comment-gray-default",
                                                imageEdgeInsets: .zero)
 
-    lazy var sendButton = CommunButton.circle(size: CGFloat.adaptive(width: 35.0),
+    lazy var sendButton = CommunButton.circle(size: .adaptive(width: 35.0),
                                               backgroundColor: UIColor(hexString: "#6A80F5")!,
                                               tintColor: .white,
                                               imageName: "send",
@@ -66,8 +66,8 @@ class CommentForm: MyView {
         stackView.distribution = .fillProportionally
         
         addSubview(stackView)
-        stackView.autoPinBottomAndLeadingToSuperView(inset: CGFloat.adaptive(height: 10.0), xInset: CGFloat.adaptive(width: 10.0))
-        stackView.autoPinEdge(toSuperviewEdge: .right, withInset: CGFloat.adaptive(width: 10.0))
+        stackView.autoPinBottomAndLeadingToSuperView(inset: .adaptive(height: 10.0), xInset: .adaptive(width: 10.0))
+        stackView.autoPinEdge(toSuperviewEdge: .right, withInset: .adaptive(width: 10.0))
         
         // Add subviews
         stackView.addArrangedSubview(imageButton)
@@ -117,12 +117,12 @@ class CommentForm: MyView {
         // mode
         var imageView: UIImageView?
         if (localImage.value != nil) || (mode == .edit && url != nil) {
-            imageView = MyImageView(width: CGFloat.adaptive(height: 80), height: CGFloat.adaptive(height: 80), cornerRadius: CGFloat.adaptive(height: 15))
+            imageView = MyImageView(width: .adaptive(height: 80), height: .adaptive(height: 80), cornerRadius: .adaptive(height: 15))
             imageView?.contentMode = .scaleAspectFill
             addSubview(imageView!)
-            constraintTop = imageView!.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
-            imageView!.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(height: 10.0))
-            imageView!.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: CGFloat.adaptive(height: -10.0))
+            constraintTop = imageView!.autoPinEdge(toSuperviewEdge: .top, withInset: .adaptive(height: 10.0))
+            imageView!.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(height: 10.0))
+            imageView!.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: .adaptive(height: -10.0))
             
             let closeButton = UIButton.close(size: 24)
             closeButton.borderColor = .white
@@ -141,17 +141,17 @@ class CommentForm: MyView {
         
         if mode == .new {
             if imageView == nil {
-                constraintTop = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
+                constraintTop = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: .adaptive(height: 10.0))
             }
         } else {
             let parentCommentView = createParentCommentView()
             addSubview(parentCommentView)
             
             if imageView == nil {
-                constraintTop = parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
+                constraintTop = parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: .adaptive(height: 10.0))
                 parentCommentView.autoPinEdge(.leading, to: .leading, of: textView)
             } else {
-                parentCommentView.autoPinEdge(.leading, to: .trailing, of: imageView!, withOffset: CGFloat.adaptive(height: 16))
+                parentCommentView.autoPinEdge(.leading, to: .trailing, of: imageView!, withOffset: .adaptive(height: 16))
             }
             
             parentCommentView.autoPinEdge(.trailing, to: .trailing, of: stackView, withOffset: -6)
@@ -192,7 +192,7 @@ class CommentForm: MyView {
         stackView.autoPinEdge(toSuperviewEdge: .top)
         stackView.autoPinEdge(toSuperviewEdge: .bottom)
         
-        let parentCommentTitleLabel = UILabel.with(textSize: CGFloat.adaptive(width: 15.0), weight: .semibold, textColor: .appMainColor)
+        let parentCommentTitleLabel = UILabel.with(textSize: .adaptive(width: 15.0), weight: .semibold, textColor: .appMainColor)
         
         if mode == .edit {
             parentCommentTitleLabel.text = "edit comment".localized().uppercaseFirst
@@ -202,7 +202,7 @@ class CommentForm: MyView {
             parentCommentTitleLabel.text = "reply to comment".localized().uppercaseFirst
         }
         
-        let parentCommentLabel = UILabel.with(textSize: CGFloat.adaptive(width: 13.0))
+        let parentCommentLabel = UILabel.with(textSize: .adaptive(width: 13.0))
         
         parentCommentLabel.attributedText = parentComment?.document?.toAttributedString(
             currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
@@ -210,12 +210,12 @@ class CommentForm: MyView {
         
         stackView.addArrangedSubviews([parentCommentTitleLabel, parentCommentLabel])
         
-        let closeParentCommentButton = UIButton.circle(size: CGFloat.adaptive(width: 20.0), backgroundColor: .white, imageName: "icon-close-black-default")
+        let closeParentCommentButton = UIButton.circle(size: .adaptive(width: 20.0), backgroundColor: .white, imageName: "icon-close-black-default")
         closeParentCommentButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
         
         view.addSubview(closeParentCommentButton)
         closeParentCommentButton.autoPinEdge(toSuperviewEdge: .trailing)
-        closeParentCommentButton.autoPinEdge(.leading, to: .trailing, of: stackView, withOffset: CGFloat.adaptive(width: 21.0))
+        closeParentCommentButton.autoPinEdge(.leading, to: .trailing, of: stackView, withOffset: .adaptive(width: 21.0))
         closeParentCommentButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         return view
@@ -273,15 +273,12 @@ extension CommentForm {
     }
     
     @objc func commentAddImage() {
-        let pickerVC = CustomTLPhotosPickerVC.singleImage
+        let pickerVC = SinglePhotoPickerVC()
+        pickerVC.completion = { image in
+            self.localImage.accept(image)
+            pickerVC.dismiss(animated: true, completion: nil)
+        }
         self.parentViewController?.present(pickerVC, animated: true, completion: nil)
-        
-        pickerVC.rx.didSelectAnImage
-            .subscribe(onNext: {[weak self] image in
-                self?.localImage.accept(image)
-                pickerVC.dismiss(animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
     }
     
     @objc func commentSend() {

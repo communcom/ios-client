@@ -26,17 +26,6 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
         fatalError("init(coder:) has not been implemented")
     }
 
-    init() {
-        self.isNeedHideCloseButton = true
-        let viewModel = SubscriptionsViewModel(type: .user)
-        super.init(viewModel: viewModel)
-        defer {self.title = "followings".localized().uppercaseFirst}
-    }
-
-    deinit {
-        Logger.log(message: "Success", event: .severe)
-    }
-
     // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -77,7 +77,7 @@ extension ResponseAPIContentBlock {
         }
     }
     
-    func toAttributedString<Attachment: SubviewTextAttachment & TextAttachmentType>(currentAttributes: [NSAttributedString.Key: Any], attachmentSize: CGSize = .zero, attachmentType: Attachment.Type) -> NSAttributedString {
+    func toAttributedString<Attachment: SubviewTextAttachment & TextAttachmentType>(currentAttributes: [NSAttributedString.Key: Any], attachmentSize: CGSize = .zero, attachmentType: Attachment.Type, viewMode: Bool = false) -> NSAttributedString {
         let child = NSMutableAttributedString()
         switch content {
         case .array(let array):
@@ -95,7 +95,9 @@ extension ResponseAPIContentBlock {
         
         switch type {
         case "paragraph":
-            child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
+            if !viewMode {
+                child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
+            }
         case "text":
             var attr = currentAttributes
             if let textColor = attributes?.textColor {
@@ -117,27 +119,23 @@ extension ResponseAPIContentBlock {
                 }
             }
             child.addAttributes(attr, range: NSRange(location: 0, length: child.length))
-            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "tag":
             let link = child.string
             child.insert(NSAttributedString(string: "#"), at: 0)
             var attr = currentAttributes
             attr[.link] = "\(URL.appURL)/#\(link)"
             child.addAttributes(attr, range: NSRange(location: 0, length: child.length))
-            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "mention":
             let link = child.string
             child.insert(NSAttributedString(string: "@"), at: 0)
             var attr = currentAttributes
             attr[.link] = "\(URL.appURL)/@\(link)"
             child.addAttributes(attr, range: NSRange(location: 0, length: child.length))
-            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "link":
             let url = attributes?.url ?? ""
             var attr = currentAttributes
             attr[.link] = url
             child.addAttributes(attr, range: NSRange(location: 0, length: child.length))
-            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "image", "video", "website", "embed":
             if attachmentSize == .zero { break }
             // get url

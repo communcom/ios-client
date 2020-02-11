@@ -18,11 +18,14 @@ class SignInVC: BaseViewController {
     let viewModel = SignInViewModel()
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(forAutoLayout: ())
+    lazy var scrollView = ContentHuggingScrollView(axis: .horizontal)
     
     lazy var loginTextField: UITextField = {
         let textField = createTextField()
-        textField.placeholder = "login".localized().uppercaseFirst
+        textField.textContentType = .username
+        textField.attributedPlaceholder = NSAttributedString(string: "login".localized().uppercaseFirst, attributes: [
+            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.3)
+        ])
         textField.rx.controlEvent(.editingChanged)
             .subscribe(onNext: { _ in
                 textField.text = textField.text?.lowercased()
@@ -33,7 +36,10 @@ class SignInVC: BaseViewController {
     
     lazy var passwordTextField: UITextField = {
         let textField = createTextField()
-        textField.placeholder = "key".localized().uppercaseFirst
+        textField.textContentType = .password
+        textField.attributedPlaceholder = NSAttributedString(string: "key".localized().uppercaseFirst, attributes: [
+            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.3)
+        ])
         textField.textContentType = .password
         textField.isSecureTextEntry = true
         return textField
@@ -41,15 +47,15 @@ class SignInVC: BaseViewController {
     
     lazy var pasteFromClipboardButton = UIButton(labelFont: .systemFont(ofSize: 15), textColor: .appMainColor)
     
-    lazy var signInButton = CommunButton.default(height: 56, label: "sign in".localized().uppercaseFirst, cornerRadius: 8)
-    lazy var signUpButton = UIButton(label: "don't have an account?".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15 * Config.heightRatio), textColor: .appMainColor)
+    lazy var signInButton = CommunButton.default(height: 56 * Config.heightRatio, label: "sign in".localized().uppercaseFirst, cornerRadius: 8, isDisableGrayColor: true)
+    lazy var signUpButton = UIButton(label: "don't have an account?".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15 * Config.heightRatio), textColor: .appMainColor)
     
     lazy var scanQrCodeButton = UIButton.roundedCorner(8, size: 56 * Config.heightRatio, backgroundColor: .appMainColor, tintColor: .white, imageName: "scan-qr-code")
     
     // MARK: - Methods
     private func createTextField() -> UITextField {
-        let textField = UITextField(height: 56 * Config.heightRatio, backgroundColor: .f3f5fa, cornerRadius: 12 * Config.heightRatio)
-        textField.font = .systemFont(ofSize: 17 * Config.heightRatio)
+        let textField = UITextField(height: 56, backgroundColor: .f3f5fa, cornerRadius: 12)
+        textField.font = .systemFont(ofSize: 17)
         let paddingView: UIView = UIView(width: 16, height: 20)
         textField.leftView = paddingView
         textField.leftViewMode = .always
@@ -175,7 +181,7 @@ class SignInVC: BaseViewController {
             )
             .subscribe(onCompleted: {
                 AnalyticsManger.shared.signInStatus(success: true)
-                AppDelegate.reloadSubject.onNext(true)
+                AuthorizationManager.shared.forceReAuthorize()
             }, onError: { [weak self] (error) in
                 AnalyticsManger.shared.signInStatus(success: false)
                 self?.configure(signingIn: false)

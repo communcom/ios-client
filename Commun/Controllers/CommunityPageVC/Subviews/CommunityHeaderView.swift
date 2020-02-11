@@ -31,7 +31,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     lazy var friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
 
     lazy var membersCountLabel: UILabel = {
-        let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
+        let label = UILabel.with(text: 10000000.kmFormatted, textSize: 15, weight: .bold)
         return label
     }()
     
@@ -179,13 +179,13 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             CMSegmentedControl.Item(name: "about".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst)
         ]
-        
-        // observe
-        observeCommunityChange()
     }
     
     func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
+        if self.community?.isInBlacklist == true {
+            self.community?.isSubscribed = false
+        }
         
         // avatar
         avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
@@ -231,7 +231,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         // membersCount
         let aStr = NSMutableAttributedString()
-            .bold(Double(community.subscribersCount ?? 0).kmFormatted, font: .boldSystemFont(ofSize: 15))
+            .bold((community.subscribersCount ?? 0).kmFormatted, font: .boldSystemFont(ofSize: 15))
             .bold(" ")
             .bold("members".localized().uppercaseFirst, font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
         
@@ -239,7 +239,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         // leadsCount
         let aStr2 = NSMutableAttributedString()
-            .bold("\(community.leadersCount ?? 0)", font: .boldSystemFont(ofSize: 15))
+            .bold("\((community.leadersCount ?? 0).kmFormatted)", font: .boldSystemFont(ofSize: 15))
             .bold(" ")
             .bold("leaders".localized().uppercaseFirst, font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
         leadersCountLabel.attributedText = aStr2

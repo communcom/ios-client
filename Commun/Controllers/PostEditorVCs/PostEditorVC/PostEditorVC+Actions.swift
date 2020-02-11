@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 import RxSwift
 import SafariServices
-import AppImageViewer
+import ImageViewer_swift
 
 extension PostEditorVC {
     // MARK: - Communities
@@ -36,9 +36,11 @@ extension PostEditorVC {
     }
     
     // MARK: - Immutable actions
+    @objc func shouldSaveDraft() -> Bool {
+        viewModel.postForEdit == nil && !contentTextView.text.isEmpty
+    }
     @objc override func close() {
-        guard viewModel.postForEdit == nil,
-            !contentTextView.text.isEmpty else {
+        guard shouldSaveDraft() else {
             back()
             return
         }
@@ -82,30 +84,25 @@ extension PostEditorVC {
     }
     
     @objc func chooseFromGallery() {
-        let pickerVC = CustomTLPhotosPickerVC.singleImage
+        let pickerVC = SinglePhotoPickerVC()
+        pickerVC.completion = { image in
+            let alert = UIAlertController(
+                title: "description".localized().uppercaseFirst,
+                message: "add a description for your image".localized().uppercaseFirst,
+                preferredStyle: .alert)
+            
+            alert.addTextField { field in
+                field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
+            }
+            
+            alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: { _ in
+                self.didChooseImageFromGallery(image, description: alert.textFields?.first?.text)
+                pickerVC.dismiss(animated: true, completion: nil)
+            }))
+            
+            pickerVC.present(alert, animated: true, completion: nil)
+        }
         self.present(pickerVC, animated: true, completion: nil)
-        
-        pickerVC.rx.didSelectAnImage
-            .subscribe(onNext: {[weak self] image in
-                guard let strongSelf = self else {return}
-                let alert = UIAlertController(
-                    title: "description".localized().uppercaseFirst,
-                    message: "add a description for your image".localized().uppercaseFirst,
-                    preferredStyle: .alert)
-                
-                alert.addTextField { field in
-                    field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
-                }
-                
-                alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: { _ in
-                    guard let image = image else {return}
-                    strongSelf.didChooseImageFromGallery(image, description: alert.textFields?.first?.text)
-                    pickerVC.dismiss(animated: true, completion: nil)
-                }))
-                
-                pickerVC.present(alert, animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
     }
     
     //    func selectImageFromUrl() {
@@ -240,6 +237,7 @@ extension PostEditorVC {
                     // show post page
                     guard let communityId = self.viewModel.community.value?.communityId else {return}
                     let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+
                     self.dismiss(animated: true) {
                         UIApplication.topViewController()?.show(postPageVC, sender: nil)
                     }
@@ -272,22 +270,24 @@ extension PostEditorVC {
             let safariVC = SFSafariViewController(url: url)
             present(safariVC, animated: true, completion: nil)
         case "image":
-            if let localImage = attachment.localImage {
-                let appImage = ViewerImage.appImage(forImage: localImage)
-                let viewer = AppImageViewer(photos: [appImage])
-                present(viewer, animated: false, completion: nil)
-            } else if let imageUrl = attachment.attributes?.url,
-                let url = URL(string: imageUrl) {
-                NetworkService.shared.downloadImage(url)
-                    .subscribe(onSuccess: { [weak self] (image) in
-                        let appImage = ViewerImage.appImage(forImage: image)
-                        let viewer = AppImageViewer(photos: [appImage])
-                        self?.present(viewer, animated: false, completion: nil)
-                        }, onError: {[weak self] (error) in
-                            self?.showError(error)
-                    })
-                    .disposed(by: self.disposeBag)
-            }
+//            if let localImage = attachment.localImage {
+//                let appImage = ViewerImage.appImage(forImage: localImage)
+//                let viewer = AppImageViewer(photos: [appImage])
+//                present(viewer, animated: false, completion: nil)
+//            } else if let imageUrl = attachment.attributes?.url,
+//                let url = URL(string: imageUrl) {
+//                NetworkService.shared.downloadImage(url)
+//                    .subscribe(onSuccess: { [weak self] (image) in
+//                        let appImage = ViewerImage.appImage(forImage: image)
+//                        let viewer = AppImageViewer(photos: [appImage])
+//
+//                        self?.present(viewer, animated: false, completion: nil)
+//                        }, onError: {[weak self] (error) in
+//                            self?.showError(error)
+//                    })
+//                    .disposed(by: self.disposeBag)
+//            }
+            break
         default:
             break
         }

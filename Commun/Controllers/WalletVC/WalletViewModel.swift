@@ -10,12 +10,25 @@ import Foundation
 
 class WalletViewModel: TransferHistoryViewModel {
     // MARK: - Properties
-    lazy var balancesVM = BalancesViewModel()
-    lazy var subscriptionsVM = SubscriptionsViewModel(type: .user)
+    var initialBalances: [ResponseAPIWalletGetBalance]?
+    var initialSubscriptionItems: [ResponseAPIContentGetSubscriptionsItem]?
+    lazy var balancesVM = BalancesViewModel(balances: initialBalances)
+    lazy var subscriptionsVM = SubscriptionsViewModel(type: .user, initialItems: initialSubscriptionItems)
 
-    override func reload() {
-        balancesVM.reload()
-        subscriptionsVM.reload()
-        super.reload()
+    // MARK: - Initializers
+    init(
+        balances: [ResponseAPIWalletGetBalance]? = nil,
+        subscriptions: [ResponseAPIContentGetSubscriptionsItem]? = nil,
+        symbol: String
+    ) {
+        self.initialBalances = balances
+        self.initialSubscriptionItems = subscriptions
+        super.init(symbol: symbol)
+    }
+    
+    override func reload(clearResult: Bool = true) {
+        balancesVM.reload(clearResult: clearResult)
+        subscriptionsVM.reload(clearResult: clearResult)
+        super.reload(clearResult: clearResult)
     }
 }

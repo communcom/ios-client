@@ -45,11 +45,15 @@ enum ListFetcherState: Equatable {
 }
 
 class ListFetcher<T: ListItemType> {
+    // MARK: - Constants
+    var isPaginationEnabled: Bool {true}
     
     // MARK: - Parammeters
     var limit = UInt(Config.paginationLimit)
     var offset: UInt = 0
     var search: String?
+    
+    private var reloadClearedResult = true
     
     // MARK: - Properties
     let disposeBag = DisposeBag()
@@ -64,7 +68,10 @@ class ListFetcher<T: ListItemType> {
         state.accept(.loading(false))
         if clearResult {
             items.accept([])
+        } else {
+            items.accept(Array(items.value.prefix(Int(limit))))
         }
+        reloadClearedResult = clearResult
         offset = 0
     }
     
@@ -90,18 +97,24 @@ class ListFetcher<T: ListItemType> {
                 self.items.accept(self.join(newItems: items))
                 
                 // resign state
-                if items.count == 0 {
-                    if self.offset == 0 {
-                        self.state.accept(.listEmpty)
-                    } else {
-                        if self.items.value.count > 0 {
-                            self.state.accept(.listEnded)
+                if self.isPaginationEnabled {
+                    if items.count == 0 {
+                        if self.offset == 0 {
+                            self.state.accept(.listEmpty)
+                        } else {
+                            if self.items.value.count > 0 {
+                                self.state.accept(.listEnded)
+                            }
                         }
+                    } else if items.count < self.limit {
+                        self.state.accept(.listEnded)
+                    } else if items.count > self.limit {
+                        self.state.accept(.listEnded)
+                    } else {
+                        self.state.accept(.loading(false))
                     }
-                } else if items.count < self.limit {
-                    self.state.accept(.listEnded)
                 } else {
-                    self.state.accept(.loading(false))
+                    self.state.accept(items.count == 0 ? .listEmpty: .listEnded)
                 }
                 
                 // get next offset
@@ -114,10 +127,31 @@ class ListFetcher<T: ListItemType> {
     }
     
     func join(newItems items: [T]) -> [T] {
-        var newList = items.filter { (item) -> Bool in
-            !self.items.value.contains {$0.identity == item.identity}
+        var updatedItems = [T]()
+        
+        // add new items
+        if !reloadClearedResult {
+            reloadClearedResult = true
+            updatedItems = items
+            updatedItems.joinUnique(self.items.value)
+        } else {
+            updatedItems = self.items.value
+            updatedItems.joinUnique(items)
         }
-        newList = self.items.value + newList
-        return newList
+        
+        // update current items
+        updatedItems = updatedItems.map {
+            var mutableItem = $0
+            
+            // if item exists in list, update it
+            if let newItem = items.first(where: {$0.identity == mutableItem.identity}),
+                let updatedItem = mutableItem.newUpdatedItem(from: newItem)
+            {
+                mutableItem = updatedItem
+            }
+            return mutableItem
+        }
+        
+        return updatedItems
     }
 }

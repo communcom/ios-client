@@ -9,7 +9,7 @@
 import Foundation
 
 class ReportOptionView: MyView {
-    lazy var titleLabel = UILabel.with(text: "", textSize: 15, weight: .bold)
+    lazy var titleLabel = UILabel.with(text: "", textSize: 15, weight: .semibold)
     lazy var checkBox = CommunCheckbox(width: 24, height: 24, cornerRadius: 6)
     
     override func commonInit() {

@@ -24,6 +24,16 @@ class SplashViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        if UserDefaults.appGroups.object(forKey: appShareExtensionKey) != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(5)) {
+                UIApplication.shared.open(URL(string: "commun://createPost")!)
+            }
+        }
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -54,7 +64,7 @@ class SplashViewController: UIViewController {
     func reloadApp() {
         hideErrorView()
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            AppDelegate.reloadSubject.onNext(true)
+            AuthorizationManager.shared.forceReAuthorize()
         }
     }
     

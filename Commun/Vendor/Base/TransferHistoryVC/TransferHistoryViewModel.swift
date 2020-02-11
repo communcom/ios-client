@@ -13,8 +13,8 @@ import RxCocoa
 class TransferHistoryViewModel: ListViewModel<ResponseAPIWalletGetTransferHistoryItem> {
     var filter: BehaviorRelay<TransferHistoryListFetcher.Filter>
     
-    init() {
-        let filter = TransferHistoryListFetcher.Filter(userId: Config.currentUser?.id, direction: "all", transferType: nil, symbol: nil, rewards: nil)
+    init(symbol: String? = nil) {
+        let filter = TransferHistoryListFetcher.Filter(userId: Config.currentUser?.id, direction: "all", transferType: nil, symbol: symbol, rewards: nil)
         self.filter = BehaviorRelay<TransferHistoryListFetcher.Filter>(value: filter)
         super.init(fetcher: TransferHistoryListFetcher(filter: filter))
         defer {

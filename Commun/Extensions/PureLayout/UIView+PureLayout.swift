@@ -31,6 +31,33 @@ extension UIView {
         }
     }
     
+    static func transparentCommunLogo(size: CGFloat, backgroundColor: UIColor? = nil) -> UIView {
+        let view = UIView(width: size, height: size, backgroundColor: backgroundColor ?? UIColor.white.withAlphaComponent(0.2), cornerRadius: size / 2)
+        let slash = UIImageView(width: 6.43 / 40 * size, height: 15.71 / 40 * size, imageNamed: "slash")
+        view.addSubview(slash)
+        slash.autoCenterInSuperview()
+        return view
+    }
+    
+    static func createCircleCommunLogo(side: CGFloat, backgroundColor: UIColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)) -> UIView {
+        let view = UIView(width: side, height: side, backgroundColor: backgroundColor, cornerRadius: side / 2)
+        let slash = UIImageView(width: 6.43 / 40 * side, height: 15.71 / 40 * side, imageNamed: "slash")
+
+         view.addSubview(slash)
+        slash.autoCenterInSuperview()
+
+         return view
+    }
+
+     func addCircleImage(byURL imageURL: String?, withPlaceholderName placeholderName: String, andSide side: CGFloat) {
+        self.removeSubviews()
+
+         let imageView = UIImageView.circle(size: side)
+        imageView.setAvatar(urlString: imageURL, namePlaceHolder: placeholderName)
+
+         addSubview(imageView)
+    }
+
     func autoPinTopAndLeadingToSuperView(inset: CGFloat = 0, xInset: CGFloat? = nil) {
         autoPinEdge(toSuperviewEdge: .leading, withInset: xInset ?? inset)
         autoPinEdge(toSuperviewEdge: .top, withInset: inset)

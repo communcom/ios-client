@@ -38,9 +38,9 @@ class MyEmptyPlaceHolderView: MyView {
     var buttonAction: (() -> Void)?
   
     // MARK: - Subviews
-    lazy var emojiLabel = UILabel.with(text: "😿", textSize: CGFloat.adaptive(width: 32.0))
-    lazy var titleLabel = UILabel.with(text: "Nothing", textSize: CGFloat.adaptive(width: 15.0), weight: .semibold)
-    lazy var descriptionLabel = UILabel.with(text: "Nothing's here", textSize: CGFloat.adaptive(width: 15.0), weight: .medium, textColor: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1))
+    lazy var emojiLabel = UILabel.with(text: "😿", textSize: .adaptive(width: 32.0))
+    lazy var titleLabel = UILabel.with(text: "Nothing", textSize: .adaptive(width: 15.0), weight: .semibold)
+    lazy var descriptionLabel = UILabel.with(text: "Nothing's here", textSize: .adaptive(width: 15.0), weight: .medium, textColor: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1))
     lazy var button = CommunButton.default(label: "retry")
     
     // MARK: - Initializers
@@ -70,8 +70,8 @@ class MyEmptyPlaceHolderView: MyView {
         let containerView = UIView(forAutoLayout: ())
         addSubview(containerView)
 
-        containerView.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(width: 16.0))
-        containerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: CGFloat.adaptive(width: 16.0))
+        containerView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16.0))
+        containerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 16.0))
         containerView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         containerView.addSubview(emojiLabel)
@@ -79,16 +79,16 @@ class MyEmptyPlaceHolderView: MyView {
         emojiLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         containerView.addSubview(titleLabel)
-        titleLabel.autoPinEdge(.top, to: .bottom, of: emojiLabel, withOffset: CGFloat.adaptive(height: 10.0))
+        titleLabel.autoPinEdge(.top, to: .bottom, of: emojiLabel, withOffset: .adaptive(height: 10.0))
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         containerView.addSubview(descriptionLabel)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: CGFloat.adaptive(height: 5.0))
+        descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: .adaptive(height: 5.0))
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         if let buttonLabel = buttonLabel {
             containerView.addSubview(button)
-            button.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: CGFloat.adaptive(height: 15.0))
+            button.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: .adaptive(height: 15.0))
             button.autoAlignAxis(toSuperviewAxis: .vertical)
             button.autoPinEdge(toSuperviewEdge: .bottom)
             button.setTitle(buttonLabel, for: .normal)

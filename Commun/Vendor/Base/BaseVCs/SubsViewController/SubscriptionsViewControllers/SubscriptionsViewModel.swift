@@ -11,7 +11,7 @@ import CyberSwift
 
 class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsItem> {
     let type: GetSubscriptionsType
-    init(userId: String? = nil, type: GetSubscriptionsType) {
+    init(userId: String? = nil, type: GetSubscriptionsType, initialItems: [ResponseAPIContentGetSubscriptionsItem]? = nil) {
         var userId = userId
         if userId == nil {
             userId = Config.currentUser?.id ?? ""
@@ -21,12 +21,18 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
         super.init(fetcher: fetcher)
         
         defer {
-            fetchNext()
+            if let initItems = initialItems {
+                items.accept(initItems)
+            } else {
+                fetchNext()
+            }
+            
+            observeProfileBlocked()
         }
     }
     
     override func observeItemDeleted() {
-        ResponseAPIContentGetSubscriptionsUser.observeItemDeleted()
+        ResponseAPIContentGetProfile.observeItemDeleted()
             .subscribe(onNext: { (deletedUser) in
                 self.deleteItem(ResponseAPIContentGetSubscriptionsItem.user(deletedUser))
             })
@@ -40,7 +46,7 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
     }
     
     override func observeItemChange() {
-        ResponseAPIContentGetSubscriptionsUser.observeItemChanged()
+        ResponseAPIContentGetProfile.observeItemChanged()
             .subscribe(onNext: { (newItem) in
                 self.updateItem(ResponseAPIContentGetSubscriptionsItem.user(newItem))
             })
@@ -49,6 +55,20 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
         ResponseAPIContentGetCommunity.observeItemChanged()
             .subscribe(onNext: {newCommunity in
                 self.updateItem(ResponseAPIContentGetSubscriptionsItem.community(newCommunity))
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeProfileBlocked() {
+        ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+            .subscribe(onNext: { (blockedProfile) in
+                self.deleteItemWithIdentity(blockedProfile.identity)
+            })
+            .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetCommunity.observeEvent(eventName: ResponseAPIContentGetCommunity.blockedEventName)
+            .subscribe(onNext: { (blockedProfile) in
+                self.deleteItemWithIdentity(blockedProfile.identity)
             })
             .disposed(by: disposeBag)
     }

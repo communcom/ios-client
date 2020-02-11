@@ -9,26 +9,47 @@
 import Foundation
 
 extension Double {
-    var kmFormatted: String {
-
-        if self >= 10000, self <= 999999 {
-            return String(format: "%.1fK", locale: Locale.current, self/1000).replacingOccurrences(of: ".0", with: "")
+    func kmFormatted(maximumFractionDigit: Int = 1) -> String {
+        if self.isNaN {
+            return "NaN"
         }
-
-        if self > 999999 {
-            return String(format: "%.1fM", locale: Locale.current, self/1000000).replacingOccurrences(of: ".0", with: "")
+        if self.isInfinite {
+            return "\(self < 0.0 ? "-" : "+")Infinity"
         }
-
-        return String(format: "%.0f", locale: Locale.current, self)
+        let units = ["", "k", "M"]
+        var interval = self
+        var i = 0
+        while i < units.count - 1 {
+            if interval.abs < 1000 {
+                break
+            }
+            i += 1
+            interval /= 1000.0
+        }
+        // + 2 to have one digit after the comma, + 1 to not have any.
+        // Remove the * and the number of digits argument to display all the digits after the comma.
+        if interval <= 0 {
+            return "0"
+        }
+        
+        return "\(String(format: "%0.*g", Int(log10(interval.abs)) + maximumFractionDigit + 1, interval))\(units[i])"
     }
     
     var currencyValueFormatted: String {
         let formatter = NumberFormatter()
-        formatter.usesGroupingSeparator = true
         formatter.groupingSize = 3
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = (self < 1000) ? 4 : 2
+        formatter.usesGroupingSeparator = true
+        formatter.locale = Locale(identifier: "en")
+
+        if self > 1000 {
+            formatter.maximumFractionDigits = 2
+        } else if self < 100 {
+            formatter.maximumFractionDigits = 3
+        } else {
+            formatter.maximumFractionDigits = 8
+        }
         
-        return formatter.string(from: self as NSNumber) ?? "0"
+        return (formatter.string(from: self as NSNumber) ?? "0").replacingOccurrences(of: ",", with: " ")
     }
 }

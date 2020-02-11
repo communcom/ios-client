@@ -9,7 +9,14 @@
 import Foundation
 
 class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
-    init(userId: String? = nil) {
+    // MARK: - Properties
+    var canChooseCommun: Bool
+    var completion: ((ResponseAPIWalletGetBalance) -> Void)?
+    
+    // MARK: - Initializers
+    init(userId: String? = nil, canChooseCommun: Bool = true, completion: ((ResponseAPIWalletGetBalance) -> Void)? = nil) {
+        self.canChooseCommun = canChooseCommun
+        self.completion = completion
         super.init(viewModel: BalancesViewModel(userId: userId))
     }
     
@@ -19,7 +26,7 @@ class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     
     override func setUp() {
         super.setUp()
-        title = "balances".localized().uppercaseFirst
+        title = "points".localized().uppercaseFirst
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
     }
@@ -38,6 +45,8 @@ class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     }
     
     override func modelSelected(_ item: ResponseAPIWalletGetBalance) {
-        // Do nothing
+        if !canChooseCommun && item.symbol == Config.defaultSymbol {return}
+        self.completion?(item)
+        self.dismiss(animated: true, completion: nil)
     }
 }

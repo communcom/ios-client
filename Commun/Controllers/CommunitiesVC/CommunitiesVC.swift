@@ -10,7 +10,7 @@ import Foundation
 
 class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, CommunityCell>, CommunityCellDelegate {
     // MARK: - Properties
-    override var isSearchEnabled: Bool {false}
+    override var isSearchEnabled: Bool {true}
     
     // MARK: - Initializers
     init(type: GetCommunitiesType, userId: String? = nil) {
@@ -19,19 +19,28 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
         defer {self.title = "communities".localized().uppercaseFirst}
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        baseNavigationController?.changeStatusBarStyle(.default)
-    }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Methods
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        baseNavigationController?.changeStatusBarStyle(.default)
+        extendedLayoutIncludesOpaqueBars = true
+    }
+    
     override func setUp() {
         super.setUp()
         navigationItem.rightBarButtonItem = nil
+    }
+    
+    override func bindItemsWithSearchResult() {
+        // search result replace items itself
+        viewModel.items
+            .map {[ListSection(model: "", items: $0)]}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     override func configureCell(with community: ResponseAPIContentGetCommunity, indexPath: IndexPath) -> UITableViewCell {
@@ -56,5 +65,21 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
         let title = "no communities"
         let description = "no communities found"
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
+    }
+    
+    // MARK: - Search manager
+    override func search(_ keyword: String?) {
+        guard let keyword = keyword, !keyword.isEmpty else {
+            if self.viewModel.fetcher.search != nil {
+                self.viewModel.fetcher.search = nil
+                self.viewModel.reload()
+            }
+            return
+        }
+        
+        if self.viewModel.fetcher.search != keyword {
+            self.viewModel.fetcher.search = keyword.uppercaseFirst
+            self.viewModel.reload(clearResult: false)
+        }
     }
 }

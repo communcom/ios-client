@@ -85,10 +85,10 @@ extension UIButton {
         return button
     }
     
-    static func circleGray(size: CGFloat = 24, imageName: String) -> UIButton {
+    static func circleGray(size: CGFloat = 24, imageName: String, imageEdgeInsets: UIEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)) -> UIButton {
         let button = UIButton(width: size, height: size, backgroundColor: UIColor(hexString: "#F7F7F9"), cornerRadius: size / 2)
         button.setImage(UIImage(named: imageName), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+        button.imageEdgeInsets = imageEdgeInsets
         button.tintColor = UIColor(hexString: "#A5A7BD")
         if size < 44 {
             button.touchAreaEdgeInsets = UIEdgeInsets(inset: (size - 44) / 2)
@@ -117,18 +117,18 @@ extension UIButton {
         return button
     }
     
-    static func back(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 30)) -> UIButton {
-        let button = UIButton(width: 40, height: 40)
+    static func back(width: CGFloat = 40, height: CGFloat = 40, tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 30)) -> UIButton {
+        let button = UIButton(width: width, height: height)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "back-button"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(inset: -2)
         return button
     }
     
-    static func option(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)) -> UIButton {
+    static func option(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6)) -> UIButton {
         let button = UIButton(width: 36, height: 40, contentInsets: contentInsets)
         button.tintColor = tintColor
-        button.setImage(UIImage(named: "postpage-more"), for: .normal)
+        button.setImage(UIImage(named: "icon-post-cell-more-center-default"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(inset: -2)
         button.contentEdgeInsets = contentInsets
         return button

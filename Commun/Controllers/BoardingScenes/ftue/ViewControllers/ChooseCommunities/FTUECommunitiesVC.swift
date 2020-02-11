@@ -22,7 +22,7 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         return searchBar
     }()
     
-    lazy var nextButton = CommunButton.circle(size: 50, backgroundColor: .appMainColor, tintColor: .white, imageName: "next-arrow", imageEdgeInsets: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12))
+    lazy var nextButton = CommunButton.circle(size: 50, backgroundColor: .appMainColor, tintColor: .white, imageName: "next-arrow", imageEdgeInsets: UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 7))
     
     lazy var communitiesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -49,6 +49,7 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
     }()
     
     let viewModel = FTUECommunitiesViewModel(type: .all)
+    let refreshControl = UIRefreshControl(forAutoLayout: ())
 
     // bottomBar
     private lazy var shadowView = UIView(height: bottomBarHeight)
@@ -84,12 +85,16 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         
         // collection view
         communitiesCollectionView.keyboardDismissMode = .onDrag
+        communitiesCollectionView.isUserInteractionEnabled = true
+        communitiesCollectionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         communitiesCollectionView.register(FTUECommunityCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomBarHeight, right: 0)
-        communitiesCollectionView.es.addPullToRefresh {
-            self.communitiesCollectionView.es.stopPullToRefresh()
-            self.viewModel.reload()
-        }
+
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        communitiesCollectionView.addSubview(refreshControl)
+        refreshControl.tintColor = .appGrayColor
+        refreshControl.subviews.first?.bounds.origin.y = 15
+
         view.addSubview(communitiesCollectionView)
         communitiesCollectionView.autoPinEdge(.top, to: .top, of: headerView)
         communitiesCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), excludingEdge: .top)
@@ -114,19 +119,36 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         chosenCommunitiesCollectionView.register(FTUEChosenCommunityCell.self, forCellWithReuseIdentifier: "FTUEChosenCommunityCell")
         chosenCommunitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     }
+
+    @objc func refresh() {
+        viewModel.reload()
+        refreshControl.endRefreshing()
+    }
     
     override func bind() {
         super.bind()
         bindControl()
         bindCommunities()
         observeCommunityFollowed()
+        
+        searchBar.rx.text.orEmpty
+            .distinctUntilChanged()
+            .skip(1)
+            .debounce(0.3, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (string) in
+                if string.isEmpty {
+                    self.viewModel.fetcher.search = nil
+                } else {
+                    self.viewModel.fetcher.search = string.uppercaseFirst
+                }
+                self.viewModel.reload()
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        var contentInset = communitiesCollectionView.contentInset
-        contentInset.top = headerView.height + 20
-        communitiesCollectionView.contentInset = contentInset
+        communitiesCollectionView.contentInset.top = headerView.height + 20
         
         shadowView.layoutIfNeeded()
         bottomBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
@@ -145,5 +167,9 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
                 self.showError(error)
             }
             .disposed(by: disposeBag)
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
     }
 }
