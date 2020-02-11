@@ -26,7 +26,7 @@ class SubscriptionsCommunityCell: SubsItemCell {
         avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
         
         nameLabel.text = community.name
-        statsLabel.text = "\(Double(community.subscribersCount ?? 0).kmFormatted) " + "followers".localized().uppercaseFirst + " • " + "\(Double(community.postsCount ?? 0).kmFormatted) " + "posts".localized().uppercaseFirst
+        statsLabel.text = "\((community.subscribersCount ?? 0).kmFormatted) " + "followers".localized().uppercaseFirst + " • " + "\((community.postsCount ?? 0).kmFormatted) " + "posts".localized().uppercaseFirst
 
         // joinButton
         let joined = community.isSubscribed ?? false

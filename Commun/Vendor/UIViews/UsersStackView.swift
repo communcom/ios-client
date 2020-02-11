@@ -65,7 +65,7 @@ class UsersStackView: MyView {
                 avatarsStackView.addArrangedSubview(imageView)
                 imageView.setAvatar(urlString: friends[i].avatarUrl, namePlaceHolder: friends[i].username)
             }
-            text = "+\(Double(friends.count - 3).kmFormatted)"
+            text = "+\((friends.count - 3).kmFormatted)"
         }
         
         let label = UILabel.with(text: text, textSize: 15, weight: .bold)
@@ -112,7 +112,7 @@ class UsersStackView: MyView {
                 avatarsStackView.addArrangedSubview(imageView)
             }
             
-            let label1 = UILabel.with(text: "+\(Double(i - 3).kmFormatted)", textSize: 15, weight: .bold)
+            let label1 = UILabel.with(text: "+\((i - 3).kmFormatted)", textSize: 15, weight: .bold)
             let label2 = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
             
             addSubview(label1)

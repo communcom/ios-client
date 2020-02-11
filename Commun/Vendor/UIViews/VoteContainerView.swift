@@ -37,7 +37,7 @@ class VoteContainerView: MyView {
     
     func setUp(with votes: ResponseAPIContentVotes, userID: String?) {
         upVoteButton.tintColor         = votes.hasUpVote ?? false ? .appMainColor : .a5a7bd
-        likeCountLabel.text            = "\(Double((votes.upCount ?? 0) - (votes.downCount ?? 0)).kmFormatted)"
+        likeCountLabel.text            = "\(((votes.upCount ?? 0) - (votes.downCount ?? 0)).kmFormatted)"
         downVoteButton.tintColor       = votes.hasDownVote ?? false ? .appMainColor : .a5a7bd
         upVoteButton.isEnabled         = !(votes.isBeingVoted ?? false)
         downVoteButton.isEnabled       = !(votes.isBeingVoted ?? false)

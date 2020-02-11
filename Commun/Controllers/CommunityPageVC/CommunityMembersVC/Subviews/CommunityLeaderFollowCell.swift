@@ -56,7 +56,7 @@ class CommunityLeaderFollowCell: MyTableViewCell {
         
         // point
         statsLabel.attributedText = NSMutableAttributedString()
-            .text(leader.rating.kmFormatted + " " + "points".localized().uppercaseFirst + " • ", size: 12, weight: .medium, color: .a5a7bd)
+            .text(leader.rating.kmFormatted() + " " + "points".localized().uppercaseFirst + " • ", size: 12, weight: .medium, color: .a5a7bd)
             .text("\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)%", size: 12, weight: .medium, color: .appMainColor)
         
         // voteButton

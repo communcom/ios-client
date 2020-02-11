@@ -10,12 +10,12 @@ import Foundation
 
 extension Int {
     var kmFormatted: String {
-        Double(self).kmFormatted
+        Double(self).kmFormatted()
     }
 }
 
 extension Int64 {
     var kmFormatted: String {
-        Double(self).kmFormatted
+        Double(self).kmFormatted()
     }
 }

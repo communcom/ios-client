@@ -17,7 +17,7 @@ class MyPointCollectionCell: MyCollectionViewCell {
     
     // MARK: - Subviews
     lazy var logoImageView = MyAvatarImageView(size: 50)
-    lazy var nameLabel = UILabel.with(text: "Commun", textSize: 17, weight: .semibold, numberOfLines: 1)
+    lazy var nameLabel = UILabel.with(text: "Commun", textSize: 17, weight: .semibold)
     lazy var pointLabel = UILabel.with(textSize: 15, numberOfLines: 1)
     
     // MARK: - Methods
@@ -45,7 +45,7 @@ class MyPointCollectionCell: MyCollectionViewCell {
             logoImageView.image = UIImage(named: "tux")
             nameLabel.attributedText = NSAttributedString(string: "Commun", attributes: [.font: UIFont.systemFont(ofSize: 17, weight: .semibold)])
             pointLabel.attributedText = NSMutableAttributedString()
-                .text("\(balance.balanceValue.currencyValueFormatted)", size: 16, weight: .semibold)
+                .text("\(balance.balanceValue.kmFormatted())", size: 16, weight: .semibold)
                 .text(" " + "token".localized().uppercaseFirst, size: 12, weight: .semibold, color: .a5a7bd)
                 .withParagraphSpacing(4)
             pointLabel.numberOfLines = 1
@@ -56,9 +56,9 @@ class MyPointCollectionCell: MyCollectionViewCell {
                 .text("\n\(balance.frozenValue.currencyValueFormatted) " + "on hold".localized(), size: 12, weight: .semibold, color: .a5a7bd)
                 .withParagraphSpacing(4)
             pointLabel.attributedText = NSMutableAttributedString()
-                .text("\(balance.balanceValue.currencyValueFormatted)", size: 16, weight: .semibold)
+                .text("\(balance.balanceValue.kmFormatted())", size: 16, weight: .semibold)
                 .text(" " + "points".localized().uppercaseFirst, size: 12, weight: .semibold, color: .a5a7bd)
-                .text("\n= \(balance.communValue.currencyValueFormatted) Commun", size: 12, weight: .semibold, color: .a5a7bd)
+                .text("\n= \(balance.communValue.kmFormatted()) Commun", size: 12, weight: .semibold, color: .a5a7bd)
                 .withParagraphSpacing(4)
             pointLabel.numberOfLines = 2
         }
