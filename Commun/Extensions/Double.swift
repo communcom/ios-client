@@ -9,7 +9,7 @@
 import Foundation
 
 extension Double {
-    var kmFormatted: String {
+    func kmFormatted(maximumFractionDigit: Int = 1) -> String {
         if self.isNaN {
             return "NaN"
         }
@@ -31,7 +31,8 @@ extension Double {
         if interval <= 0 {
             return "0"
         }
-        return "\(String(format: "%0.*g", Int(log10(interval.abs)) + 2, interval))\(units[i])"
+        
+        return "\(String(format: "%0.*g", Int(log10(interval.abs)) + maximumFractionDigit + 1, interval))\(units[i])"
     }
     
     var currencyValueFormatted: String {

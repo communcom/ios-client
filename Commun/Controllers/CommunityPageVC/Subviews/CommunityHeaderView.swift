@@ -31,7 +31,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     lazy var friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
 
     lazy var membersCountLabel: UILabel = {
-        let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
+        let label = UILabel.with(text: 10000000.kmFormatted, textSize: 15, weight: .bold)
         return label
     }()
     
