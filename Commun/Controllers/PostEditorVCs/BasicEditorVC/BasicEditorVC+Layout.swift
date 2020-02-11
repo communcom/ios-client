@@ -17,6 +17,10 @@ extension BasicEditorVC {
         contentView.addSubview(attachmentView)
         attachmentView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         attachmentView.autoPinEdge(.top, to: .bottom, of: contentTextViewCountLabel, withOffset: 16)
-        attachmentView.autoPinEdge(toSuperviewEdge: .bottom)
+        attachmentView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: 16)
+            .isActive = true
+        
+        contentTextView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: 16)
+            .isActive = true
     }
 }

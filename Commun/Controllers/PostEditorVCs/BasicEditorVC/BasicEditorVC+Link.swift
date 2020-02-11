@@ -10,38 +10,38 @@ import Foundation
 
 extension BasicEditorVC {
     func parseLink(_ link: String) {
+        // embed loading placeholder view
+        let loadingView: UIView = {
+            let view = UIView(backgroundColor: .f3f5fa)
+            
+            let loadingEmbedLabel = UILabel.with(text: "loading embed".localized().uppercaseFirst + "...", textSize: 15, weight: .semibold)
+            view.addSubview(loadingEmbedLabel)
+            loadingEmbedLabel.autoPinTopAndLeadingToSuperView(inset: 16)
+            
+            let linkLabel = UILabel.with(text: link, textSize: 15)
+            view.addSubview(linkLabel)
+            linkLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
+            linkLabel.autoPinEdge(.top, to: .bottom, of: loadingEmbedLabel, withOffset: 16)
+            
+            return view
+        }()
+        
+        self.attachmentView.removeSubviews()
+        self.attachmentView.addSubview(loadingView)
+        loadingView.autoPinEdgesToSuperviewEdges()
+        
         // detect link type
         NetworkService.shared.getEmbed(url: link)
-            .do(onSubscribe: {
-                self.attachmentView.showLoading()
-            })
-            .subscribe(onSuccess: {[weak self] embed in
-                self?.attachmentView.hideLoading()
-                self?.addEmbed(embed)
+            .flatMap {
+                $0.toTextAttachmentSingle(withSize: CGSize(width: self.contentTextView.size.width, height: self.attachmentHeight), forTextView: self._contentTextView) ?? .error(ErrorAPI.unknown)
+            }
+            .subscribe(onSuccess: {[weak self] attachment in
+                self?.attachmentView.removeSubviews()
+                self?._viewModel.attachment.accept(attachment)
             }, onError: {[weak self] error in
-                self?.attachmentView.hideLoading()
+                self?.attachmentView.removeSubviews()
                 self?.showError(error)
             })
-            .disposed(by: disposeBag)
-    }
-    
-    private func addEmbed(_ embed: ResponseAPIFrameGetEmbed) {
-        guard let single = embed.toTextAttachmentSingle(withSize: CGSize(width: contentTextView.size.width, height: attachmentHeight), forTextView: _contentTextView) else {return}
-        
-        single
-            .do(onSubscribe: {
-                self.attachmentView.showLoading()
-            })
-            .subscribe(
-                onSuccess: { [weak self] (attachment) in
-                    self?.attachmentView.hideLoading()
-                    self?._viewModel.attachment.accept(attachment)
-                },
-                onError: {[weak self] error in
-                    self?.attachmentView.hideLoading()
-                    self?.showError(error)
-                }
-            )
             .disposed(by: disposeBag)
     }
 }
