@@ -310,7 +310,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
-        showCommunActionSheet(style: .profile, headerView: headerView, actions: [
+        showCommunActionSheet(headerView: headerView, actions: [
             CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
                 
                 self.showAlert(
@@ -325,7 +325,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                             self.hideCommunity()
                         }
                     }
-            })
+            }, tintColor: profile.isInBlacklist == true ? .black: .ed2c5b)
         ]) {
             
         }
