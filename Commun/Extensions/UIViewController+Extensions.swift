@@ -254,12 +254,20 @@ extension UIViewController {
         view.removeFromSuperview()
         removeFromParent()
     }
-    
+   
     @objc func back() {
         popOrDismissVC()
     }
-    
-    func backCompletion(_ completion: @escaping (() -> Void)) {
+
+    @objc func leftButtonTapped() {
+        popOrDismissVC()
+    }
+
+    @objc func rightButtonTapped() {
+        popOrDismissVC()
+    }
+
+    func backCompletion(_ completion: @escaping (()->Void)) {
         popOrDismissVC(completion)
     }
     
