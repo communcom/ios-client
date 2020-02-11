@@ -142,6 +142,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Retrieve favourites
             FavouritesList.shared.retrieve()
             
+            if let vc = window?.rootViewController,
+                vc is TabBarVC
+            {
+                return
+            }
             self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
         case .registering:
             let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
@@ -160,6 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             case "Cannot get such account from BC",
                  _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
                 try! RestAPIManager.instance.logout()
+                AuthorizationManager.shared.forceReAuthorize()
                 return
             default:
                 break

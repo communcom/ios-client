@@ -24,6 +24,7 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
     }()
     lazy var avatarImageView: MyAvatarImageView = {
         let avatar = MyAvatarImageView(size: 50)
+        avatar.backgroundColor = .white
         avatar.borderWidth = 2
         avatar.borderColor = .white
         return avatar

@@ -74,7 +74,6 @@ class PostPageVC: CommentsViewController {
         commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
         view.bringSubviewToFront(commentForm)
         startContentOffsetY = tableView.contentOffset.y
-        navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
     }
     
     // MARK: - Methods
@@ -141,14 +140,6 @@ class PostPageVC: CommentsViewController {
 //        else if let comment = commentThatNeedsScrollTo {
 //            //TODO: scroll to comment
 //        }
-
-        tableView.rx.contentOffset
-        .map { $0.y <= self.startContentOffsetY }
-        .distinctUntilChanged()
-        .subscribe(onNext: { (showShadow) in
-            self.navigationBar.addShadow(ofColor: showShadow ? .clear : .shadow, radius: 20, offset: CGSize(width: 0, height: 3), opacity: 0.07)
-        })
-        .disposed(by: disposeBag)
         
         // observer
         observePostDeleted()

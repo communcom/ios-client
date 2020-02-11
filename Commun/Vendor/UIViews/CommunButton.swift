@@ -30,7 +30,7 @@ class CommunButton: UIButton {
 
         button.isDisableGrayColor = isDisableGrayColor
         if isHuggingContent {
-            button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            button.setContentHuggingPriority(.required, for: .horizontal)
         }
         
         return button

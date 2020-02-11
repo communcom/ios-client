@@ -454,6 +454,7 @@
 		BCD453AF2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */; };
 		BCDEE77323ED389F00DD3EB3 /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE77223ED389F00DD3EB3 /* AuthorizationManager.swift */; };
 		BCDEE77723ED642600DD3EB3 /* ReportOtherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE77623ED642600DD3EB3 /* ReportOtherVC.swift */; };
+		BCDEE78C23F28D4400DD3EB3 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE78B23F28D4400DD3EB3 /* Int.swift */; };
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
 		BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */; };
 		BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */; };
@@ -983,6 +984,7 @@
 		BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCDEE77223ED389F00DD3EB3 /* AuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
 		BCDEE77623ED642600DD3EB3 /* ReportOtherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOtherVC.swift; sourceTree = "<group>"; };
+		BCDEE78B23F28D4400DD3EB3 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentBlock.swift; sourceTree = "<group>"; };
 		BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+Actions.swift"; sourceTree = "<group>"; };
@@ -1611,6 +1613,7 @@
 				3B3C8B83234779FE00D8BADB /* UIImage.swift */,
 				BCB2A6E52355536D00B3582B /* UITableViewCell.swift */,
 				BCA971252360883D00AE37E1 /* Double.swift */,
+				BCDEE78B23F28D4400DD3EB3 /* Int.swift */,
 				BCD3BC8A23AB313E0036C947 /* UIStackView.swift */,
 				BC18FA2623D56325005DC7E3 /* UITextField.swift */,
 				BC99B65923E17848004AA74E /* UISearchController.swift */,
@@ -3355,6 +3358,7 @@
 				BC40719923CEF801000027A3 /* PlaceholderNotificationCell.swift in Sources */,
 				BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */,
 				BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */,
+				BCDEE78C23F28D4400DD3EB3 /* Int.swift in Sources */,
 				BC561E82238B8BCE004C53EB /* ContentReportVC.swift in Sources */,
 				BC8F814723E27ECE0024C04A /* CommunWalletVC.swift in Sources */,
 				BC69F7D5236FDFCF0097F870 /* SubscriptionsVC.swift in Sources */,
@@ -3760,7 +3764,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.commun.eos.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3793,7 +3797,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.commun.eos.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3824,7 +3828,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.commun.eos.ios.share;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3854,7 +3858,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.commun.eos.ios.share;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
