@@ -18,6 +18,13 @@ extension BasicEditorVC {
             view.addSubview(loadingEmbedLabel)
             loadingEmbedLabel.autoPinTopAndLeadingToSuperView(inset: 16)
             
+            let indicator = UIActivityIndicatorView(forAutoLayout: ())
+            indicator.color = .a5a7bd
+            view.addSubview(indicator)
+            indicator.autoPinEdge(.leading, to: .trailing, of: loadingEmbedLabel, withOffset: 5)
+            indicator.autoAlignAxis(.horizontal, toSameAxisOf: loadingEmbedLabel)
+            indicator.startAnimating()
+            
             let closeButton = UIButton.close()
             view.addSubview(closeButton)
             closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
