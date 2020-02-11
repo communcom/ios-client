@@ -156,20 +156,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                                                                        size: 30.0 * Config.widthRatio)!
             ]
         case .authorizingError(let error):
-            if let error = error as? ErrorAPI {
-                switch error.caseInfo.message {
-                case "Cannot get such account from BC",
-                     _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
-                    do {
-                        try AuthorizationManager.shared.logout()
-                    } catch {
-                        print("Could not delete user from key chain")
-                    }
-                    return
-                default:
-                    break
-                }
+            switch error.caseInfo.message {
+            case "Cannot get such account from BC",
+                 _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
+                try! RestAPIManager.instance.logout()
+                AuthorizationManager.shared.forceReAuthorize()
+                return
+            default:
+                break
             }
+            
             if let splashVC = self.window?.rootViewController as? SplashViewController {
                 splashVC.showErrorScreen()
             }
@@ -186,19 +182,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         getConfig { (error) in
-            // Animation
-            rootVC.view.alpha = 0
-            UIView.animate(withDuration: 0.5, animations: {
-                rootVC.view.alpha = 1
-                if let error = error {
-                    if error.toErrorAPI().caseInfo.message == "Need update application version" {
-                        rootVC.view.showForceUpdate()
-                        return
-                    }
-
-                    print("getConfig = \(error)")
+            if let error = error {
+                if error.toErrorAPI().caseInfo.message == "Need update application version" {
+                    rootVC.view.showForceUpdate()
+                    return
                 }
-            })
+                print("getConfig = \(error)")
+            }
         }
     }
     

@@ -74,6 +74,16 @@ extension PostPageVC {
 //            })
 //            .disposed(by: disposeBag)
         
+        // Shadow on navigation bar
+        tableView.rx.contentOffset
+            .map { $0.y <= self.startContentOffsetY }
+            .distinctUntilChanged()
+            .skip(1)
+            .subscribe(onNext: { (showShadow) in
+                self.navigationBar.addShadow(ofColor: showShadow ? .clear : .shadow, radius: 20, offset: CGSize(width: 0, height: 3), opacity: 0.07)
+            })
+            .disposed(by: disposeBag)
+        
         commentForm.textView.rx.text.orEmpty
             .subscribe(onNext: { (text) in
                 

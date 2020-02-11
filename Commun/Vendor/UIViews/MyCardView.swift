@@ -56,10 +56,11 @@ class MyCardView: MyView {
     
     // MARK: - Actions
     @objc func close() {
-        completionDismissWithAction!(false)
+        completionDismissWithAction?(false)
+        parentViewController?.dismiss(animated: true, completion: nil)
     }
     
     @objc func openLink(_ sender: UIButton) {
-        completionDismissWithAction!(true)
+        completionDismissWithAction?(true)
     }
 }

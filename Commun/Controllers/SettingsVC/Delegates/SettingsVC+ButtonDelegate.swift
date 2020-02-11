@@ -58,15 +58,7 @@ extension SettingsVC: SettingsButtonCellDelegate {
                 
                 if index == 0 {
                     self.showIndetermineHudWithMessage("logging out".localized().uppercaseFirst)
-                    RestAPIManager.instance.logout()
-                        .subscribe(onCompleted: {
-                            self.hideHud()
-                            AuthorizationManager.shared.forceReAuthorize()
-                        }, onError: { (error) in
-                            self.hideHud()
-                            self.showError(error)
-                        })
-                        .disposed(by: self.bag)
+                    try! RestAPIManager.instance.logout()
                 }
             }
         }

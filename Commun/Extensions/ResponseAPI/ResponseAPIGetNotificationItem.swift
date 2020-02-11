@@ -51,7 +51,7 @@ extension ResponseAPIGetNotificationItem {
             
         case "transfer":
             if from?.username == nil {
-                aStr.normal("You recived")
+                aStr.normal("You received")
                     .normal(" ")
                     .normal("\(amount ?? "0") \(community?.communityId ?? "points")")
             } else if from?.username?.lowercased() != "bounty" {
