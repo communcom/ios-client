@@ -10,16 +10,28 @@ import Foundation
 
 extension Double {
     var kmFormatted: String {
-
-        if self >= 10000, self <= 999999 {
-            return String(format: "%.1fK", locale: Locale.current, self/1000).replacingOccurrences(of: ".0", with: "")
+        if self.isNaN {
+            return "NaN"
         }
-
-        if self > 999999 {
-            return String(format: "%.1fM", locale: Locale.current, self/1000000).replacingOccurrences(of: ".0", with: "")
+        if self.isInfinite {
+            return "\(self < 0.0 ? "-" : "+")Infinity"
         }
-
-        return String(format: "%.0f", locale: Locale.current, self)
+        let units = ["", "k", "M"]
+        var interval = self
+        var i = 0
+        while i < units.count - 1 {
+            if interval.abs < 1000 {
+                break
+            }
+            i += 1
+            interval /= 1000.0
+        }
+        // + 2 to have one digit after the comma, + 1 to not have any.
+        // Remove the * and the number of digits argument to display all the digits after the comma.
+        if interval <= 0 {
+            return "0"
+        }
+        return "\(String(format: "%0.*g", Int(log10(interval.abs)) + 2, interval))\(units[i])"
     }
     
     var currencyValueFormatted: String {
