@@ -18,6 +18,13 @@ extension BasicEditorVC {
             view.addSubview(loadingEmbedLabel)
             loadingEmbedLabel.autoPinTopAndLeadingToSuperView(inset: 16)
             
+            let closeButton = UIButton.close()
+            view.addSubview(closeButton)
+            closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+            closeButton.autoAlignAxis(.horizontal, toSameAxisOf: loadingEmbedLabel)
+            
+            closeButton.addTarget(self, action: #selector(forceDeleteEmbed), for: .touchUpInside)
+            
             let linkLabel = UILabel.with(text: link, textSize: 15)
             view.addSubview(linkLabel)
             linkLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
@@ -26,6 +33,10 @@ extension BasicEditorVC {
             return view
         }()
         
+        // for button
+        forcedDeleteEmbed = false
+        
+        // show loading
         self.attachmentView.removeSubviews()
         self.attachmentView.addSubview(loadingView)
         loadingView.autoPinEdgesToSuperviewEdges()
@@ -36,12 +47,20 @@ extension BasicEditorVC {
                 $0.toTextAttachmentSingle(withSize: CGSize(width: self.contentTextView.size.width, height: self.attachmentHeight), forTextView: self._contentTextView) ?? .error(ErrorAPI.unknown)
             }
             .subscribe(onSuccess: {[weak self] attachment in
+                if self?.forcedDeleteEmbed == true {return}
                 self?.attachmentView.removeSubviews()
                 self?._viewModel.attachment.accept(attachment)
             }, onError: {[weak self] error in
+                if self?.forcedDeleteEmbed == true {return}
                 self?.attachmentView.removeSubviews()
                 self?.showError(error)
             })
             .disposed(by: disposeBag)
+    }
+    
+    @objc func forceDeleteEmbed() {
+        forcedDeleteEmbed = true
+        self._viewModel.attachment.accept(nil)
+        self.link = nil
     }
 }
