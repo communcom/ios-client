@@ -164,18 +164,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         
     }
     
-    func setUp(profile: ProfileType) {}
-    
-    func handleListLoading() {}
-    
-    func handleListEnded() {}
-    
-    func handleListEmpty() {}
-    
-    func bindItems() {}
-    
-    func cellSelected(_ indexPath: IndexPath) {}
-    
     @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel,
             let text = label.text else {return}
@@ -192,7 +180,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.prefersLargeTitles = false
