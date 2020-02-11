@@ -27,7 +27,7 @@ class PostPageVC: CommentsViewController {
     
     // MARK: - Subviews
     lazy var navigationBar = PostPageNavigationBar(height: navigationBarHeight)
-    lazy var postView = PostHeaderView(tableView: tableView)
+    lazy var postHeaderView = PostHeaderView(tableView: tableView)
 
     lazy var shadowView = UIView(forAutoLayout: ())
     lazy var commentForm = CommentForm(backgroundColor: .white)
@@ -43,8 +43,8 @@ class PostPageVC: CommentsViewController {
         super.init(viewModel: viewModel)
     }
     
-    init(userId: String? = nil, username: String? = nil, permlink: String, communityId: String? = nil, communityAlias: String? = nil) {
-        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias)
+    init(userId: String? = nil, username: String? = nil, permlink: String, communityId: String? = nil, communityAlias: String? = nil, selectedComment: ResponseAPIContentGetComment? = nil) {
+        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias, selectedComment: selectedComment)
         super.init(viewModel: viewModel)
     }
     
@@ -96,7 +96,7 @@ class PostPageVC: CommentsViewController {
         tableView.keyboardDismissMode = .onDrag
         
         // postView
-        postView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
+        postHeaderView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
@@ -114,7 +114,7 @@ class PostPageVC: CommentsViewController {
         
         shadowView.addSubview(commentForm)
         commentForm.autoPinEdgesToSuperviewEdges()
-    }
+ }
     
     override func bind() {
         super.bind()
@@ -136,6 +136,7 @@ class PostPageVC: CommentsViewController {
                 })
                 .disposed(by: disposeBag)
         }
+        
 //        else if let comment = commentThatNeedsScrollTo {
 //            //TODO: scroll to comment
 //        }
@@ -273,8 +274,23 @@ class PostPageVC: CommentsViewController {
         })
     }
     
+    // MARK: - Custom Functions
+    func scrollTo(selectedComment: ResponseAPIContentGetComment) {
+        DispatchQueue.main.async {
+            // https://stackoverflow.com/a/16071589
+            var indexRow = 0
+            
+            if let viewModel = self.viewModel as? PostPageViewModel, let selectedComment = viewModel.selectedComment {
+                indexRow = viewModel.items.value.firstIndex(of: selectedComment) ?? 0
+            }
+            
+            self.tableView.safeScrollToRow(at: IndexPath(row: indexRow, section: 0), at: .top, animated: true)
+        }
+    }
+    
+    // MARK: - Actions
     @objc func openMorePostActions() {
-        postView.openMorePostActions()
+        postHeaderView.openMorePostActions()
     }
     
     @objc func sortButtonDidTouch() {

@@ -14,7 +14,6 @@ class FilterCell: MyTableViewCell {
     lazy var checkBox = CommunCheckbox(width: CGFloat.adaptive(width: 24.0), height: CGFloat.adaptive(width: 24.0), cornerRadius: CGFloat.adaptive(width: 6.0))
     lazy var separator = UIView(height: CGFloat.adaptive(height: 2.0), backgroundColor: .f7f7f9)
     
-    
     // MARK: - Custom Functions
     override var roundedCorner: UIRectCorner {
         didSet {

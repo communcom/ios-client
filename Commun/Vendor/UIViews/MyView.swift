@@ -22,7 +22,6 @@ class MyView: UIView {
         commonInit()
     }
     
-    
     // MARK: - Custom Functions
     func commonInit() {}
 }

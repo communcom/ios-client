@@ -82,6 +82,7 @@ class CommunWalletVC: TransferHistoryVC {
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
+        
         headerView.sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
         headerView.convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
 

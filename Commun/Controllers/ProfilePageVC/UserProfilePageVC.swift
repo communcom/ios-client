@@ -196,13 +196,17 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
             self.show(postPageVC, sender: nil)
         case is CommentCell:
             let comment = (viewModel as! UserProfilePageViewModel).commentsVM.items.value[indexPath.row]
+            
             guard let userId = comment.parents.post?.userId,
                 let permlink = comment.parents.post?.permlink,
                 let communityId = comment.parents.post?.communityId
             else {
                 return
             }
-            let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+            
+            let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId, selectedComment: comment)
+            postPageVC.scrollToTopAfterLoadingComment = true
+            
             self.show(postPageVC, sender: nil)
         default:
             break

@@ -267,7 +267,7 @@ extension UIViewController {
         popOrDismissVC()
     }
 
-    func backCompletion(_ completion: @escaping (()->Void)) {
+    func backCompletion(_ completion: @escaping (() -> Void)) {
         popOrDismissVC(completion)
     }
     
