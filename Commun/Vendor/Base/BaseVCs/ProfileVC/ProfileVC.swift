@@ -164,6 +164,18 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         
     }
     
+    func setUp(profile: ProfileType) {}
+    
+    func handleListLoading() {}
+    
+    func handleListEnded() {}
+    
+    func handleListEmpty() {}
+    
+    func bindItems() {}
+    
+    func cellSelected(_ indexPath: IndexPath) {}
+    
     @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel,
             let text = label.text else {return}
@@ -180,6 +192,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.prefersLargeTitles = false
@@ -188,6 +201,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
 
     func showTitle(_ show: Bool, animated: Bool = false) {
+        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: CGFloat.adaptive(width: 16.0), offset: CGSize(width: 0.0, height: CGFloat.adaptive(height: 6.0)), opacity: 0.05)
+        baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
         coverImageView.isHidden = show
         showNavigationBar(show, animated: animated) {
             self.optionsButton.tintColor = show ? .black: .white

@@ -34,6 +34,15 @@ class MyProfilePageVC: UserProfilePageVC {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    // MARK: - Class Functions
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.isTranslucent = tableView.contentOffset.y < -43.0
+    }
+
+    
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
@@ -76,6 +85,7 @@ class MyProfilePageVC: UserProfilePageVC {
             .subscribe(onNext: { showNavBar in
                 self.optionsButton.tintColor = !showNavBar ? .black : .white
                 self.title = !showNavBar ? self.userName : nil
+                self.navigationController?.navigationBar.isTranslucent = showNavBar
             })
             .disposed(by: disposeBag)
     }
