@@ -17,7 +17,6 @@ PODS:
     - BigInt (~> 3.1.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-  - ESPullToRefresh (2.9)
   - Fabric (1.10.2)
   - Firebase/Analytics (6.13.0):
     - Firebase/Core
@@ -170,7 +169,6 @@ DEPENDENCIES:
   - Crashlytics
   - CryptoSwift
   - "eosswift (from `git@github.com:communcom/eos-swift.git`)"
-  - ESPullToRefresh
   - Fabric
   - Firebase/Analytics
   - Firebase/Core
@@ -223,7 +221,6 @@ SPEC REPOS:
     - Crashlytics
     - CryptoSwift
     - Differentiator
-    - ESPullToRefresh
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -309,7 +306,6 @@ SPEC CHECKSUMS:
   CryptoSwift: 1283821600233bdbeb96d7b389c3288c3bf77211
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   eosswift: 3e1af4e3f7d5d5f255647e68eb869b08061777f5
-  ESPullToRefresh: ce058a36454a5032519cc9d8b45da217728cf104
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 458d109512200d1aca2e1b9b6cf7d68a869a4a46
   FirebaseAnalytics: 45f36d9c429fc91d206283900ab75390cd05ee8a
@@ -361,6 +357,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 5fb3e99408287fdb695fe130d3042ed4c738d904
+PODFILE CHECKSUM: 0a0a84a8cf4ddabe52eb87ac29231b500806ebf0
 
 COCOAPODS: 1.9.0.beta.2

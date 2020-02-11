@@ -86,6 +86,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         }
     }
     
+    
     func viewWillSetUpTableView() {
         
     }
@@ -258,6 +259,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     @objc func refresh() {
+        refreshControl.endRefreshing()
         viewModel.reload(clearResult: false)
     }
     
