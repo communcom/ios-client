@@ -34,14 +34,19 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     }
     
     // MARK: - Properties
-    let communityId: String
+    var communityId: String?
+    var communityAlias: String?
+    var dataSource: MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>!
     
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetCommunity> {
-        CommunityPageViewModel(communityId: communityId)
+        if let alias = communityAlias {
+            return CommunityPageViewModel(communityAlias: alias)
+        }
+        return CommunityPageViewModel(communityId: communityId)
     }
     
     // MARK: - Subviews
-    var headerView: CommunityHeaderView!
+    lazy var headerView = CommunityHeaderView(tableView: tableView)
     override var _headerView: ProfileHeaderView! {
         return headerView
     }
@@ -82,6 +87,11 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         super.init(nibName: nil, bundle: nil)
     }
     
+    init(communityAlias: String) {
+        self.communityAlias = communityAlias
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -97,17 +107,10 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         return tableView
     }
     
-    override func setUp() {
-        super.setUp()
-        
-        headerView = CommunityHeaderView(tableView: tableView)
-    }
-    
     override func bind() {
         super.bind()
        
         bindSelectedIndex()
-        bindProfileBlocked()
         
         // forward delegate
         tableView.rx.setDelegate(self)
@@ -171,8 +174,22 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
     }
     
+    override func bindProfile() {
+        super.bindProfile()
+        
+        bindProfileBlocked()
+        
+        ResponseAPIContentGetCommunity.observeItemChanged()
+            .filter {$0.identity == self.viewModel.profile.value?.identity}
+            .subscribe(onNext: {newCommunity in
+                let community = self.viewModel.profile.value?.newUpdatedItem(from: newCommunity)
+                self.viewModel.profile.accept(community)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     override func bindItems() {
-        let dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>(
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>(
             configureCell: { (_, tableView, indexPath, element) -> UITableViewCell in
                 switch element {
                 case .post(let post):
@@ -229,7 +246,30 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                     return nil
                 }
             }
-            .map {[AnimatableSectionModel<String, CustomElementType>(model: "", items: $0)]}
+            .map {items -> [AnimatableSectionModel<String, CustomElementType>] in
+                if (self.viewModel as! CommunityPageViewModel).segmentedItem.value == .leads {
+                    var leaders = [CustomElementType]()
+                    var nominees = [CustomElementType]()
+                    
+                    for item in items {
+                        switch item {
+                        case .leader(let leader):
+                            if leader.inTop {
+                                leaders.append(.leader(leader))
+                            } else {
+                                nominees.append(.leader(leader))
+                            }
+                        default:
+                            break
+                        }
+                    }
+                    return [
+                        AnimatableSectionModel<String, CustomElementType>(model: "leaders", items: leaders),
+                        AnimatableSectionModel<String, CustomElementType>(model: "nominees", items: nominees)
+                    ]
+                }
+                return [AnimatableSectionModel<String, CustomElementType>(model: "", items: items)]
+            }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -250,35 +290,40 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
+        guard let profile = viewModel.profile.value else {return}
         let headerView = UIView(height: 40)
         
         let avatarImageView = MyAvatarImageView(size: 40)
-        avatarImageView.setAvatar(urlString: viewModel.profile.value?.avatarUrl, namePlaceHolder: viewModel.profile.value?.name ?? "Community")
+        avatarImageView.setAvatar(urlString: profile.avatarUrl, namePlaceHolder: profile.name)
         headerView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
         
-        let userNameLabel = UILabel.with(text: viewModel.profile.value?.name, textSize: 15, weight: .semibold)
+        let userNameLabel = UILabel.with(text: profile.name, textSize: 15, weight: .semibold)
         headerView.addSubview(userNameLabel)
         userNameLabel.autoPinEdge(toSuperviewEdge: .top)
         userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
 
-        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.communityId ?? "")", textSize: 12, textColor: .appMainColor)
+        let userIdLabel = UILabel.with(text: profile.communityId, textSize: 12, textColor: .appMainColor)
         headerView.addSubview(userIdLabel)
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
         showCommunActionSheet(style: .profile, headerView: headerView, actions: [
-            CommunActionSheet.Action(title: "hide".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
+            CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
                 
                 self.showAlert(
-                    title: "hide community".localized().uppercaseFirst,
-                    message: "do you really want to hide all posts of".localized().uppercaseFirst + " \(self.viewModel.profile.value?.name ?? "this community")" + "?",
+                    title: (profile.isInBlacklist == true ? "unhide community": "hide community").localized().uppercaseFirst,
+                    message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of": "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
                     buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
                     highlightedButtonIndex: 1) { (index) in
                         if index != 0 {return}
-                        self.hideCommunity()
+                        if profile.isInBlacklist == true {
+                            self.unhideCommunity()
+                        } else {
+                            self.hideCommunity()
+                        }
                     }
             })
         ]) {
@@ -291,15 +336,32 @@ extension CommunityPageVC: UITableViewDelegate {
     // MARK: - Sorting
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let viewModel = self.viewModel as! CommunityPageViewModel
-        if viewModel.segmentedItem.value != .posts {
-            return 0
+        if viewModel.segmentedItem.value == .posts {
+            return 48
         }
-        return 48
+        if viewModel.segmentedItem.value == .leads {
+            return 42
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        updatePostSortingView()
-        return postSortingView
+        let viewModel = self.viewModel as! CommunityPageViewModel
+        if viewModel.segmentedItem.value == .posts {
+            updatePostSortingView()
+            return postSortingView
+        }
+        
+        if viewModel.segmentedItem.value == .leads {
+            let headerView = UIView(frame: .zero)
+            
+            let label = UILabel.with(text: dataSource.sectionModels[section].model.localized().uppercaseFirst, textSize: 17, weight: .semibold)
+            headerView.addSubview(label)
+            label.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+            label.autoAlignAxis(toSuperviewAxis: .horizontal)
+            return headerView
+        }
+        return nil
     }
     
     func updatePostSortingView() {
@@ -396,5 +458,15 @@ extension CommunityPageVC: UITableViewDelegate {
         default:
             break
         }
+    }
+    
+    // https://stackoverflow.com/questions/1074006/is-it-possible-to-disable-floating-headers-in-uitableview-with-uitableviewstylep
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        CGFloat.leastNormalMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        UIView(frame: .zero)
     }
 }

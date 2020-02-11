@@ -28,7 +28,6 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         var userId: String?
         var permlink: String?
         var communityId: String?
-        var communityAlias: String?
         var parentComment: ResponseAPIContentId?
         var resolveNestedComments: Bool = false
         
@@ -62,9 +61,6 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
             if let communityId = communityId {
                 newFilter.communityId = communityId
             }
-            if let communityAlias = communityAlias {
-                newFilter.communityAlias = communityAlias
-            }
             if let parentComment = parentComment {
                 newFilter.parentComment = parentComment
             }
@@ -97,8 +93,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                         limit: 30,
                         userId: filter.userId,
                         permlink: filter.permlink ?? "",
-                        communityId: filter.communityId,
-                        communityAlias: filter.communityAlias
+                        communityId: filter.communityId
                     )
                 
                 case .user:
@@ -116,7 +111,6 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                         limit: 30,
                         permlink: filter.permlink ?? "",
                         communityId: filter.communityId,
-                        communityAlias: filter.communityAlias,
                         parentCommentUserId: filter.parentComment?.userId,
                         parentCommentPermlink: filter.parentComment?.permlink
                     )
@@ -127,8 +121,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     }
     
     override func join(newItems items: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
-        var newList = items.filter {!self.items.value.contains($0)}
-        newList = self.items.value + newList
+        var newList = super.join(newItems: items)
         // sort
         newList = sortComments(newList)
         return newList

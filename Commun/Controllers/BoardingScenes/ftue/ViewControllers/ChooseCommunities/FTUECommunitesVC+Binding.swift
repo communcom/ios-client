@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ESPullToRefresh
 
 extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDelegate {
     func bindControl() {
@@ -21,14 +20,6 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .distinctUntilChanged()
             .bind(to: headerView.rx.isHidden)
             .disposed(by: disposeBag)
-        
-        offsetY
-            .map {$0 < -20}
-            .distinctUntilChanged()
-            .subscribe(onNext: { (show) in
-                self.communitiesCollectionView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = show ? 1 : 0
-            })
-            .disposed(by: disposeBag)
     }
     
     func bindCommunities() {
@@ -38,16 +29,16 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
                 switch state {
                 case .loading(let isLoading):
                     if isLoading && self?.viewModel.items.value.count == 0 {
-                        self?.view.showLoading()
+                        self?.communitiesCollectionView.showLoading(offsetTop: 20)
                     } else {
-                        self?.view.hideLoading()
+                        self?.communitiesCollectionView.hideLoading()
                     }
                 case .listEnded:
-                    self?.view.hideLoading()
+                    self?.communitiesCollectionView.hideLoading()
                 case .listEmpty:
-                    self?.view.hideLoading()
+                    self?.communitiesCollectionView.hideLoading()
                 case .error:
-                    self?.view.hideLoading()
+                    self?.communitiesCollectionView.hideLoading()
                     if self?.viewModel.items.value.count == 0 {
                         self?.view.showErrorView {
                             self?.view.hideErrorView()

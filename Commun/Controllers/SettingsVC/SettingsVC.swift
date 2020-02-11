@@ -23,7 +23,7 @@ class SettingsVC: UIViewController {
     let currentBiometryType = LABiometryType.current
     
     var sectionHeaders: [UIView]!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Configure views
@@ -117,7 +117,7 @@ class SettingsVC: UIViewController {
                         vc.didChangeLanguage
                             .subscribe(onNext: { (language) in
                                 self.viewModel.currentLanguage.accept(language)
-                                AppDelegate.reloadSubject.onNext(true)
+                                AuthorizationManager.shared.forceReAuthorize()
                             })
                             .disposed(by: self.bag)
                     case 1:

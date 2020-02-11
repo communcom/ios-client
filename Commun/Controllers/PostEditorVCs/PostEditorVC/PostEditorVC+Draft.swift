@@ -56,5 +56,6 @@ extension PostEditorVC {
     @objc func removeDraft() {
         contentTextView.removeDraft()
         UserDefaults.standard.removeObject(forKey: communityDraftKey)
+        UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
     }
 }

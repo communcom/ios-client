@@ -1,4 +1,4 @@
-warning_threshold: 200
+warning_threshold: 1000
 
 excluded:
  - Pods
@@ -12,7 +12,7 @@ disabled_rules:
   - force_cast
   - function_body_length
   - line_length
-  - type_body_length
+  - type_body_lengt10
   - multiple_closures_with_trailing_closure
   - redundant_string_enum_value
   - inert_defer
@@ -20,6 +20,7 @@ disabled_rules:
   - type_name
   - file_length
   - opening_brace
+  - shorthand_operator
 
 line_length:
   warning: 250
@@ -34,4 +35,3 @@ file_length:
 
 type_body_length:
   warning: 400
-  error: 450

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ESPullToRefresh
 
 extension ProfileVC {
     func bindControls() {
@@ -19,14 +18,6 @@ extension ProfileVC {
         offSetY
             .subscribe(onNext: {_ in
                 self.updateHeaderView()
-            })
-            .disposed(by: disposeBag)
-        
-        // hide pull to refresh
-        offSetY
-            .map {$0 < -179}
-            .subscribe(onNext: { (show) in
-                self.tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = show ? 1 : 0
             })
             .disposed(by: disposeBag)
         
@@ -83,19 +74,6 @@ extension ProfileVC {
         tableView.addLoadMoreAction { [weak self] in
             self?.viewModel.fetchNext()
         }
-            .disposed(by: disposeBag)
-    }
-    
-    func bindProfile() {
-        viewModel.profile
-            .filter {$0 != nil}
-            .map {$0!}
-            .do(onNext: { (_) in
-                self._headerView.selectedIndex.accept(0)
-            })
-            .subscribe(onNext: { [weak self] (item) in
-                self?.setUp(profile: item)
-            })
             .disposed(by: disposeBag)
     }
     

@@ -11,7 +11,7 @@ import Foundation
 /// Reusable itemcell for subscribers/subscriptions
 class SubsItemCell: MyTableViewCell {
     lazy var avatarImageView = MyAvatarImageView(size: 50)
-    lazy var nameLabel = UILabel.with(textSize: 15, weight: .semibold)
+    lazy var nameLabel = UILabel.with(textSize: 15, weight: .semibold, numberOfLines: 0)
     lazy var statsLabel = UILabel.descriptionLabel(numberOfLines: 0)
     lazy var actionButton = CommunButton.default()
     lazy var separator = UIView(height: 2, backgroundColor: .f3f5fa)
@@ -31,30 +31,26 @@ class SubsItemCell: MyTableViewCell {
         super.setUpViews()
         backgroundColor = .white
         selectionStyle = .none
-        contentView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 15, left: 15, bottom: 17, right: 0), excludingEdge: .trailing)
         
-        contentView.addSubview(nameLabel)
-        nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        nameLabel.autoPinEdge(.top, to: .top, of: avatarImageView, withOffset: 8)
-        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+        contentView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
         
-        contentView.addSubview(statsLabel)
-        statsLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        statsLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 3)
-        statsLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        // name, stats label
+        let vStack = UIStackView(axis: .vertical, spacing: 3, alignment: .leading, distribution: .fill)
+        nameLabel.setContentHuggingPriority(.required, for: .vertical)
+        vStack.addArrangedSubview(nameLabel)
+        vStack.addArrangedSubview(statsLabel)
         
-        contentView.addSubview(actionButton)
-        actionButton.addTarget(self, action: #selector(actionButtonDidTouch), for: .touchUpInside)
-        actionButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        actionButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        actionButton.leadingAnchor.constraint(greaterThanOrEqualTo: nameLabel.trailingAnchor, constant: 8)
-            .isActive = true
-        actionButton.leadingAnchor.constraint(greaterThanOrEqualTo: statsLabel.trailingAnchor, constant: 8)
-            .isActive = true
-
+        stackView.addArrangedSubview(avatarImageView)
+        stackView.addArrangedSubview(vStack)
+        stackView.addArrangedSubview(actionButton)
+        
+        // separator
         contentView.addSubview(separator)
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        
+        actionButton.addTarget(self, action: #selector(actionButtonDidTouch), for: .touchUpInside)
     }
     
     @objc func actionButtonDidTouch() {

@@ -25,6 +25,8 @@ class SetUserVC: BaseViewController, SignUpRouter {
         return tf
     }()
     
+    lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#F53D5B")!, numberOfLines: 0, textAlignment: .center)
+    
     lazy var nextButton = StepButton(height: 56 * Config.heightRatio, label: "next".localized().uppercaseFirst, labelFont: UIFont.boldSystemFont(ofSize: 17 * Config.heightRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 8)
     
     // MARK: - Methods
@@ -59,6 +61,11 @@ class SetUserVC: BaseViewController, SignUpRouter {
         textField.rightView = rightView
         textField.rightViewMode = .always
         
+        view.addSubview(errorLabel)
+        errorLabel.autoPinEdge(.top, to: .bottom, of: textField, withOffset: 10)
+        errorLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 32)
+        errorLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 32)
+        
         // button
         view.addSubview(nextButton)
         nextButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 42 * Config.widthRatio)
@@ -75,15 +82,32 @@ class SetUserVC: BaseViewController, SignUpRouter {
     override func bind() {
         super.bind()
         textField.rx.text.orEmpty
+            .observeOn(MainScheduler.asyncInstance)
+            .filter { text in
+                if text.lowercased() == text {
+                    return true
+                }
+                self.textField.text = text.lowercased()
+                self.textField.sendActions(for: .valueChanged)
+                return false
+            }
             .map {self.viewModel.isUserNameValid($0)}
             .bind(to: nextButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        viewModel.errorMessage
+            .bind(to: errorLabel.rx.text)
             .disposed(by: disposeBag)
     }
     
     @objc func infoButtonTapped() {
         AnalyticsManger.shared.userNameHelp()
-        let userNameRulesView = UserNameRulesView(forAutoLayout: ())
+        let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 386.0))))
         showCardWithView(userNameRulesView)
+        
+        userNameRulesView.completionDismissWithAction = { _ in
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc func buttonNextDidTouch(_ sender: Any) {
@@ -118,7 +142,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 return RestAPIManager.instance.toBlockChain()
             })
             .subscribe(onCompleted: {
-                AppDelegate.reloadSubject.onNext(true)
+                AuthorizationManager.shared.forceReAuthorize()
             }, onError: {error in
                 self.hideHud()
                 self.showError(error)

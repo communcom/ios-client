@@ -68,14 +68,14 @@ class NetworkService: NSObject {
 //    }
     
     func deletePost(communCode: String, permlink: String) -> Completable {
-        return RestAPIManager.instance.deleteMessage(communCode: communCode, permlink: permlink)
+        return BlockchainManager.instance.deleteMessage(communCode: communCode, permlink: permlink)
             .observeOn(MainScheduler.instance)
     }
     
     func deleteMessage<T: ResponseAPIContentMessageType>(
         message: T
     ) -> Completable {
-        return RestAPIManager.instance.deleteMessage(
+        return BlockchainManager.instance.deleteMessage(
             communCode: message.community?.communityId ?? "",
             permlink: message.contentId.permlink
         )
@@ -100,7 +100,7 @@ class NetworkService: NSObject {
         message.notifyChanged()
         
         // send request
-        return RestAPIManager.instance.vote(
+        return BlockchainManager.instance.vote(
             voteType: originHasUpVote ? .unvote: .upvote,
             communityId: message.community?.communityId ?? "",
             author: message.contentId.userId,
@@ -134,7 +134,7 @@ class NetworkService: NSObject {
         message.notifyChanged()
         
         // send request
-        return RestAPIManager.instance.vote(
+        return BlockchainManager.instance.vote(
             voteType: originHasDownVote ? .unvote: .downvote,
             communityId: message.community?.communityId ?? "",
             author: message.contentId.userId,
@@ -267,7 +267,7 @@ class NetworkService: NSObject {
     
     //  Update updatemeta
     func updateMeta(params: [String: String], waitForTransaction: Bool = true) -> Completable {
-        return RestAPIManager.instance.update(userProfile: params)
+        return BlockchainManager.instance.update(userProfile: params)
             .flatMapCompletable({ (transaction) -> Completable in
                 // update profile
                 if let url = params["avatar_url"] {
@@ -283,22 +283,33 @@ class NetworkService: NSObject {
     
     func triggerFollow<T: ProfileType>(user: T) -> Completable {
         let originIsFollowing = user.isSubscribed ?? false
+        let originIsInBlacklist = user.isInBlacklist ?? false
         
         // set value
         var user = user
         user.setIsSubscribed(!originIsFollowing)
+        user.isInBlacklist = false
         user.isBeingToggledFollow = true
         
         // notify changes
         user.notifyChanged()
         
         // send request
-        return RestAPIManager.instance.follow(user.userId, isUnfollow: originIsFollowing)
+        var request = BlockchainManager.instance.follow(user.userId, isUnfollow: originIsFollowing)
+        
+        if originIsInBlacklist
+        {
+            request = BlockchainManager.instance.unblock(user.userId)
+                .flatMap {_ in BlockchainManager.instance.follow(user.userId)}
+        }
+        
+        return request
             .flatMapCompletable { self.waitForTransactionWith(id: $0) }
             .do(onError: { (_) in
                 // reverse change
                 user.setIsSubscribed(originIsFollowing)
                 user.isBeingToggledFollow = false
+                user.isInBlacklist = originIsInBlacklist
                 user.notifyChanged()
             }, onCompleted: {
                 // re-enable state
@@ -322,9 +333,9 @@ class NetworkService: NSObject {
         let request: Single<String>
         
         if originIsSubscribed {
-            request = RestAPIManager.instance.unfollowCommunity(community.communityId)
+            request = BlockchainManager.instance.unfollowCommunity(community.communityId)
         } else {
-            request = RestAPIManager.instance.followCommunity(community.communityId)
+            request = BlockchainManager.instance.followCommunity(community.communityId)
         }
         
         return request
@@ -358,9 +369,9 @@ class NetworkService: NSObject {
 //            .delay(0.8, scheduler: MainScheduler.instance)
         if originIsVoted {
             // unvote
-            request = RestAPIManager.instance.unvoteLeader(communityId: leader.communityId ?? "", leader: leader.userId)
+            request = BlockchainManager.instance.unvoteLeader(communityId: leader.communityId ?? "", leader: leader.userId)
         } else {
-            request = RestAPIManager.instance.voteLeader(communityId: leader.communityId ?? "", leader: leader.userId)
+            request = BlockchainManager.instance.voteLeader(communityId: leader.communityId ?? "", leader: leader.userId)
         }
         
         return request
@@ -385,22 +396,8 @@ class NetworkService: NSObject {
     }
     
     // MARK: - Notifications
-    func getNotifications(fromId: String? = nil, markAsViewed: Bool = true, freshOnly: Bool = false) -> Single<ResponseAPIOnlineNotifyHistory> {
-        return RestAPIManager.instance.getOnlineNotifyHistory(fromId: fromId, freshOnly: false)
-    }
-    
     func getFreshNotifications() -> Single<ResponseAPIOnlineNotifyHistoryFresh> {
         return RestAPIManager.instance.getOnlineNotifyHistoryFresh()
-    }
-    
-    func markAllAsViewed() -> Single<ResponseAPIStatus> {
-        return RestAPIManager.instance.notifyMarkAllAsViewed()
-    }
-    
-    func markAsRead(ids: [String]) -> Completable {
-        if ids.isEmpty {return .empty()}
-        return RestAPIManager.instance.markAsRead(notifies: ids)
-            .flatMapToCompletable()
     }
     
     // MARK: - Other

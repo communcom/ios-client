@@ -38,11 +38,6 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         
         // bind
         bind()
-        
-        // actions
-        let tap = UITapGestureRecognizer(target: self, action: #selector(walletDidTouch))
-        walletView.isUserInteractionEnabled = true
-        walletView.addGestureRecognizer(tap)
     }
     
     override func setUp(with profile: ResponseAPIContentGetProfile) {
@@ -66,41 +61,93 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         walletShadowView.addSubview(walletView)
         walletView.autoPinEdgesToSuperviewEdges()
         
-        let imageView = UIImageView(width: 9, height: 20)
-        imageView.image = UIImage(named: "slash")
-        
-        let view = UIView(width: 50, height: 50, backgroundColor: UIColor.white.withAlphaComponent(0.2), cornerRadius: 25)
-        view.addSubview(imageView)
-        imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        imageView.autoAlignAxis(toSuperviewAxis: .vertical)
-        
-        walletView.addSubview(view)
-        view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)
-        
-        let label = UILabel.with(text: "enquity Commun Value".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .white)
-        walletView.addSubview(label)
-        label.autoPinEdge(.leading, to: .trailing, of: view, withOffset: 10)
-        label.autoPinEdge(.top, to: .top, of: view, withOffset: 4)
-        
-        walletView.addSubview(communValueLabel)
-        communValueLabel.autoPinEdge(.leading, to: .trailing, of: view, withOffset: 10)
-        communValueLabel.autoPinEdge(.bottom, to: .bottom, of: view)
-        
-        let nextView: UIView = {
-            let view = UIView(width: 35, height: 35, backgroundColor: UIColor.white.withAlphaComponent(0.1), cornerRadius: 35 / 2)
-            let nextArrow = UIImageView(width: 9, height: 15, imageNamed: "next-arrow")
-            nextArrow.tintColor = .white
-            view.addSubview(nextArrow)
-            nextArrow.autoAlignAxis(toSuperviewAxis: .horizontal)
-            nextArrow.autoAlignAxis(toSuperviewAxis: .vertical)
-            return view
-        }()
-        
-        walletView.addSubview(nextView)
-        nextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        nextView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        setUpWalletView()
         
         followersCountLabel.autoPinEdge(.top, to: .bottom, of: walletView, withOffset: 25)
+    }
+    
+    func setUpWalletView(withError: Bool = false) {
+        // clean
+        walletView.removeSubviews()
+        
+        // layout
+        if withError {
+            let label = UILabel.with(text: "loading failed".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .white)
+            walletView.addSubview(label)
+            label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+            label.autoAlignAxis(toSuperviewAxis: .horizontal)
+            
+            let retryButton = CommunButton.default(height: 35, label: "retry".localized().uppercaseFirst, cornerRadius: 35 / 2, isHuggingContent: true)
+            retryButton.backgroundColor = UIColor.white.withAlphaComponent(0.1)
+            walletView.addSubview(retryButton)
+            retryButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 22, left: 0, bottom: 22, right: 16), excludingEdge: .leading)
+        } else {
+            let imageContainerView: UIView = {
+                let imageView = UIImageView(width: 19.69 * Config.widthRatio, height: 18.05 * Config.widthRatio)
+                imageView.image = UIImage(named: "wallet-icon")
+                
+                let imageContainerView = UIView(width: 50 * Config.widthRatio, height: 50 * Config.widthRatio, backgroundColor: UIColor.white.withAlphaComponent(0.2), cornerRadius: 25 * Config.widthRatio)
+                imageContainerView.addSubview(imageView)
+                imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+                imageView.autoAlignAxis(toSuperviewAxis: .vertical)
+                return imageContainerView
+            }()
+            
+            walletView.addSubview(imageContainerView)
+            imageContainerView.autoAlignAxis(toSuperviewAxis: .horizontal)
+            imageContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+            imageContainerView.topAnchor.constraint(greaterThanOrEqualTo: walletView.topAnchor, constant: 16)
+                .isActive = true
+            imageContainerView.bottomAnchor.constraint(lessThanOrEqualTo: walletView.bottomAnchor, constant: -16)
+                .isActive = true
+            
+            // commun value
+            let communValueContainerView: UIView = {
+                let containerView = UIView(forAutoLayout: ())
+                let equityCommunValueLabel = UILabel.with(text: "equity Commun Value".localized().uppercaseFirst, textSize: 12 * Config.widthRatio, weight: .semibold, textColor: .white, numberOfLines: 0)
+                containerView.addSubview(equityCommunValueLabel)
+                equityCommunValueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+                
+                containerView.addSubview(self.communValueLabel)
+                self.communValueLabel.autoPinEdge(.top, to: .bottom, of: equityCommunValueLabel, withOffset: 4)
+                self.communValueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+                
+                return containerView
+            }()
+            
+            walletView.addSubview(communValueContainerView)
+            communValueContainerView.autoPinEdge(.leading, to: .trailing, of: imageContainerView, withOffset: 10)
+            communValueContainerView.autoAlignAxis(toSuperviewAxis: .horizontal)
+            communValueContainerView.topAnchor.constraint(greaterThanOrEqualTo: walletView.topAnchor, constant: 16)
+                .isActive = true
+            communValueContainerView.bottomAnchor.constraint(lessThanOrEqualTo: walletView.bottomAnchor, constant: -16)
+                .isActive = true
+            
+            let nextView: UIView = {
+                let view = UIView(height: 35, backgroundColor: UIColor.white.withAlphaComponent(0.1), cornerRadius: 35 / 2)
+                
+                let label = UILabel.with(text: "wallet".localized().uppercaseFirst, textSize: 15 * Config.widthRatio, weight: .medium, textColor: .white)
+                label.setContentHuggingPriority(.required, for: .horizontal)
+                view.addSubview(label)
+                label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16 * Config.widthRatio)
+                label.autoAlignAxis(toSuperviewAxis: .horizontal)
+                
+                let nextArrow = UIImageView(width: 7.5, height: 15, imageNamed: "next-arrow")
+                nextArrow.tintColor = .white
+                view.addSubview(nextArrow)
+                nextArrow.autoAlignAxis(toSuperviewAxis: .horizontal)
+                nextArrow.autoPinEdge(.leading, to: .trailing, of: label, withOffset: 10 * Config.widthRatio)
+                nextArrow.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16 * Config.widthRatio)
+                
+                return view
+            }()
+            
+            walletView.addSubview(nextView)
+            nextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+            nextView.autoAlignAxis(toSuperviewAxis: .horizontal)
+            
+            nextView.autoPinEdge(.leading, to: .trailing, of: communValueContainerView, withOffset: 4)
+        }
     }
     
     override func setUpFollowButton(isFollowing: Bool) {
@@ -131,10 +178,9 @@ final class MyProfileHeaderView: UserProfileHeaderView {
             .disposed(by: disposeBag)
     }
     
-    var hasFixedWalletView = false
     override func layoutSubviews() {
         super.layoutSubviews()
-        if !hasFixedWalletView, walletView.frame != .zero {
+        if walletView.frame != .zero {
             // gradient
             let gradient = CAGradientLayer()
             gradient.frame = walletView.bounds
@@ -148,12 +194,6 @@ final class MyProfileHeaderView: UserProfileHeaderView {
             
             // shadow
             walletShadowView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 24, offset: CGSize(width: 0, height: 14), opacity: 0.4)
-            hasFixedWalletView = true
         }
-    }
-    
-    @objc func walletDidTouch() {
-        let walletVC = WalletVC()
-        parentViewController?.show(walletVC, sender: nil)
     }
 }

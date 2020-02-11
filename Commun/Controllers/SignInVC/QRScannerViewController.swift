@@ -25,8 +25,8 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
     func setUpViews() {
         let scanQrArea = UIImageView(width: 260 * Config.heightRatio, height: 260 * Config.heightRatio, imageNamed: "scan-qr-area")
         view.addSubview(scanQrArea)
-        scanQrArea.autoAlignAxis(toSuperviewAxis: .horizontal)
         scanQrArea.autoAlignAxis(toSuperviewAxis: .vertical)
+        scanQrArea.autoAlignAxis(.horizontal, toSameAxisOf: view, withOffset: -50)
 
         let scanQrTitle = UILabel.with(text: "scan QR".localized().uppercaseFirst, textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
         view.addSubview(scanQrTitle)

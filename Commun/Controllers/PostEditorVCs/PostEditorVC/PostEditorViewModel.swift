@@ -12,15 +12,16 @@ import RxCocoa
 import CyberSwift
 
 class PostEditorViewModel {
+    // MARK: - Properties
     var postForEdit: ResponseAPIContentGetPost?
     let community = BehaviorRelay<ResponseAPIContentGetCommunity?>(value: nil)
-    
+
     func sendPost(title: String?, block: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
         // If editing post
         var request: Single<SendPostCompletion>!
         
         if let post = self.postForEdit {
-            request = RestAPIManager.instance.updateMessage(
+            request = BlockchainManager.instance.updateMessage(
                 originMessage: post,
                 communCode: community.value?.communityId ?? "",
                 permlink: post.contentId.permlink,
@@ -31,7 +32,7 @@ class PostEditorViewModel {
             
         // If creating new post
         else {
-            request = RestAPIManager.instance.createMessage(
+            request = BlockchainManager.instance.createMessage(
                 communCode: community.value?.communityId ?? "",
                 header: title ?? "",
                 block: block

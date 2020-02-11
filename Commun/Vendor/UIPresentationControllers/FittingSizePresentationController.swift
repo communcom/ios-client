@@ -31,7 +31,7 @@ class FittingSizePresentationController: DimmingPresentationController {
         frame.origin.x += inset
         frame.origin.y += frame.size.height - targetHeight - inset
         frame.size.width = targetWidth
-        frame.size.height = targetHeight
+        frame.size.height = targetHeight + containerView.safeAreaInsets.bottom
         
         return frame
     }

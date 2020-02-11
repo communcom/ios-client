@@ -18,13 +18,13 @@ class BlacklistViewModel: ListViewModel<ResponseAPIContentGetBlacklistItem> {
     }
     
     override func observeItemChange() {
-        ResponseAPIContentGetBlacklistUser.observeItemChanged()
+        ResponseAPIContentGetProfile.observeItemChanged()
             .subscribe(onNext: {newUser in
                 self.updateItem(.user(newUser))
             })
             .disposed(by: disposeBag)
         
-        ResponseAPIContentGetBlacklistCommunity.observeItemChanged()
+        ResponseAPIContentGetCommunity.observeItemChanged()
             .subscribe(onNext: {newCommunity in
                 self.updateItem(.community(newCommunity))
             })
@@ -32,13 +32,13 @@ class BlacklistViewModel: ListViewModel<ResponseAPIContentGetBlacklistItem> {
     }
     
     override func observeItemDeleted() {
-        ResponseAPIContentGetBlacklistUser.observeItemDeleted()
+        ResponseAPIContentGetProfile.observeItemDeleted()
             .subscribe(onNext: { (deletedItem) in
                 self.deleteItem(.user(deletedItem))
             })
             .disposed(by: disposeBag)
         
-        ResponseAPIContentGetBlacklistCommunity.observeItemDeleted()
+        ResponseAPIContentGetCommunity.observeItemDeleted()
             .subscribe(onNext: { (updatedCommunity) in
                 self.deleteItem(.community(updatedCommunity))
             })

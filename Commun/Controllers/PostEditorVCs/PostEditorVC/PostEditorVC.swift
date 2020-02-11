@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import PureLayout
 
 class PostEditorVC: EditorVC {
     // MARK: - Constants
@@ -37,8 +38,6 @@ class PostEditorVC: EditorVC {
         fatalError("Must override")
     }
     
-    var isParsingPost = false
-    
     var chooseCommunityAfterLoading = true
     
     // MARK: - Subviews
@@ -55,6 +54,7 @@ class PostEditorVC: EditorVC {
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // if editing post
         if let post = viewModel.postForEdit {
             communityView.removeGestureRecognizers()
@@ -155,12 +155,8 @@ class PostEditorVC: EditorVC {
         guard let document = post.document,
             let community = post.community
         else {return .empty()}
-        isParsingPost = true
         viewModel.community.accept(community)
         return contentTextView.parseContentBlock(document)
-            .do(onCompleted: {
-                self.isParsingPost = false
-            })
     }
     
     func getContentBlock() -> Single<ResponseAPIContentBlock> {

@@ -9,26 +9,28 @@
 import Foundation
 
 class CommunButton: UIButton {
+    var isDisableGrayColor = false
     enum AnimationType {
         case `default`
         case upVote
         case downVote
     }
     
-    static func `default`(height: CGFloat = 35.0, label: String? = nil, cornerRadius: CGFloat? = nil, isHuggingContent: Bool = true) -> CommunButton {
-        let button = CommunButton(height: CGFloat.adaptive(height: height),
+    static func `default`(height: CGFloat = 35.0, label: String? = nil, cornerRadius: CGFloat? = nil, isHuggingContent: Bool = true, isDisableGrayColor: Bool = false) -> CommunButton {
+        let button = CommunButton(height: height,
                                   label: label,
-                                  labelFont: .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
+                                  labelFont: .boldSystemFont(ofSize: 15.0),
                                   backgroundColor: .appMainColor,
                                   textColor: .white,
-                                  cornerRadius: cornerRadius ?? CGFloat.adaptive(height: height) / 2,
-                                  contentInsets: UIEdgeInsets(top: CGFloat.adaptive(height: 10.0),
-                                                                 left: CGFloat.adaptive(width: 15.0),
-                                                                 bottom: CGFloat.adaptive(height: 10.0),
-                                                                 right: CGFloat.adaptive(width: 15.0)))
-        
+                                  cornerRadius: cornerRadius ?? height / 2,
+                                  contentInsets: UIEdgeInsets(top: 10.0,
+                                                                 left: 15.0,
+                                                                 bottom: 10.0,
+                                                                 right: 15.0))
+
+        button.isDisableGrayColor = isDisableGrayColor
         if isHuggingContent {
-            button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            button.setContentHuggingPriority(.required, for: .horizontal)
         }
         
         return button
@@ -42,7 +44,11 @@ class CommunButton: UIButton {
     
     override var isEnabled: Bool {
         didSet {
-            alpha = isEnabled ? 1: 0.5
+            if isDisableGrayColor {
+                backgroundColor = isEnabled ? UIColor.appMainColor : .appGrayColor
+            } else {
+                alpha = isEnabled ? 1: 0.5
+            }
         }
     }
     
@@ -51,17 +57,12 @@ class CommunButton: UIButton {
         case .default:
             CATransaction.begin()
             CATransaction.setCompletionBlock(completion)
-            
-            let moveDownAnim = CABasicAnimation(keyPath: "transform.scale")
-            moveDownAnim.byValue = 1.2
-            moveDownAnim.autoreverses = true
-            layer.add(moveDownAnim, forKey: "transform.scale")
-            
+
             let fadeAnim = CABasicAnimation(keyPath: "opacity")
             fadeAnim.byValue = -1
             fadeAnim.autoreverses = true
             layer.add(fadeAnim, forKey: "Fade")
-            
+
             CATransaction.commit()
         case .upVote:
             CATransaction.begin()

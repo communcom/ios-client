@@ -65,43 +65,35 @@ extension ProfileEditViewController {
         }
         
         // If updating
-        let pickerVC = CustomTLPhotosPickerVC.singleImage
-        self.present(pickerVC, animated: true, completion: nil)
+        let pickerVC = SinglePhotoPickerVC()
+        pickerVC.completion = { image in
+            let coverEditVC = controllerContainer.resolve(ProfileEditCoverVC.self)!
             
-        pickerVC.rx.didSelectAnImage
-            .flatMap { image -> Observable<UIImage> in
-                let coverEditVC = controllerContainer.resolve(ProfileEditCoverVC.self)!
-                
-//                self.viewModel.profile.filter {$0 != nil}.map {$0!}
-//                    .bind(to: coverEditVC.profile)
-//                    .disposed(by: self.disposeBag)
-                
-                pickerVC.present(coverEditVC, animated: true, completion: {
-                        coverEditVC.coverImage.image = image
-                })
-                
-                return coverEditVC.didSelectImage
-                    .do(onNext: {_ in
-                        coverEditVC.dismiss(animated: true, completion: {
-                            pickerVC.dismiss(animated: true, completion: nil)
-                        })
-                    })
-            }
-            // Upload image
-            .flatMap {image -> Single<String> in
-                self.coverImageView.image = image
-                return NetworkService.shared.uploadImage(image)
-            }
-            // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["cover_url": $0])}
-            // Catch error and reverse image
-            .subscribe(onError: {[weak self] error in
-                self?.coverImageView.image = originalImage
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                    self?.showError(error)
-                }
+            pickerVC.present(coverEditVC, animated: true, completion: {
+                coverEditVC.coverImage.image = image
             })
-            .disposed(by: DisposeBag())
+            
+            coverEditVC.didSelectImage
+                .do(onNext: { image in
+                    self.coverImageView.image = image
+                    coverEditVC.dismiss(animated: true, completion: {
+                        pickerVC.dismiss(animated: true, completion: nil)
+                    })
+                })
+                // Upload image
+                .flatMap {NetworkService.shared.uploadImage($0)}
+                // Save to db
+                .flatMap {NetworkService.shared.updateMeta(params: ["cover_url": $0])}
+                // Catch error and reverse image
+                .subscribe(onError: {[weak self] error in
+                    self?.coverImageView.image = originalImage
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                        self?.showError(error)
+                    }
+                })
+                .disposed(by: DisposeBag())
+        }
+        self.present(pickerVC, animated: true, completion: nil)
     }
     
     func onUpdateAvatar(delete: Bool = false) {
@@ -111,8 +103,7 @@ extension ProfileEditViewController {
         
         // On deleting
         if delete {
-            self.avatarView.setNonAvatarImageWithId(UserDefaults.standard.string(forKey: Config.currentUserNameKey) ?? UserDefaults.standard.string(forKey: Config.currentUserIDKey) ?? "XXX")
-            
+            self.avatarView.image = UIImage(named: "empty-avatar")
             NetworkService.shared.updateMeta(params: ["avatar_url": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {
@@ -129,9 +120,7 @@ extension ProfileEditViewController {
         
         // On updating
         let chooseAvatarVC = controllerContainer.resolve(ProfileChooseAvatarVC.self)!
-        self.present(chooseAvatarVC, animated: true, completion: {
-            chooseAvatarVC.viewModel.avatar.accept(self.avatarView.image)
-        })
+        self.present(chooseAvatarVC, animated: true, completion: nil)
         
         return chooseAvatarVC.viewModel.didSelectImage
             .filter {$0 != nil}

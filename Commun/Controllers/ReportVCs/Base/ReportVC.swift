@@ -7,16 +7,22 @@
 //
 
 import Foundation
+import CyberSwift
 
 class ReportVC: BaseVerticalStackViewController {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
     
     // MARK: - Properties
+    var choosedReasons: [BlockchainManager.ReportReason] {
+        actions.filter {$0.isSelected == true}
+            .compactMap {BlockchainManager.ReportReason(rawValue: $0.title)}
+    }
+    var otherReason: String?
     
     // MARK: - Initializers
     init() {
-        super.init(actions: RestAPIManager.ReportReason.allCases.map({ (reason) -> Action in
+        super.init(actions: BlockchainManager.ReportReason.allCases.map({ (reason) -> Action in
             Action(title: reason.rawValue, icon: nil)
         }))
     }
@@ -60,7 +66,7 @@ class ReportVC: BaseVerticalStackViewController {
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
-        let sendButton = CommunButton.default(height: 50, label: "send".localized().uppercaseFirst)
+        let sendButton = CommunButton.default(height: 50 * Config.heightRatio, label: "send".localized().uppercaseFirst)
         scrollView.contentView.addSubview(sendButton)
         sendButton.autoPinEdge(.top, to: .bottom, of: alertView, withOffset: 30)
         sendButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -84,6 +90,19 @@ class ReportVC: BaseVerticalStackViewController {
         
         actions[index].isSelected = !actions[index].isSelected
         (viewForActionAtIndex(index) as! ReportOptionView).checkBox.isSelected = actions[index].isSelected
+        
+        // other reason
+        if index == actions.count - 1, actions[index].isSelected
+        {
+            // open vc for entering text
+            let vc = ReportOtherVC()
+            vc.completion = { otherReason in
+                vc.back()
+                self.otherReason = otherReason
+                self.sendButtonDidTouch()
+            }
+            show(vc, sender: nil)
+        }
     }
     
     @objc func sendButtonDidTouch() {

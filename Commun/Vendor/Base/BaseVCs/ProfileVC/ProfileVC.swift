@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import ESPullToRefresh
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
     // MARK: - Constants
@@ -16,9 +15,11 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     let coverVisibleHeight: CGFloat = 150
     var coverImageHeightConstraint: NSLayoutConstraint!
     var coverImageWidthConstraint: NSLayoutConstraint!
+    let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // MARK: - Properties
     lazy var viewModel: ProfileViewModel<ProfileType> = self.createViewModel()
+    var tableViewLastOffset: CGPoint?
     
     func createViewModel() -> ProfileViewModel<ProfileType> {
         fatalError("must override")
@@ -36,7 +37,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         return view
     }()
     
-    lazy var optionsButton = UIButton.option(tintColor: .white, contentInsets: UIEdgeInsets(top: 12, left: 32, bottom: 12, right: 0))
+    lazy var optionsButton = UIButton.option(tintColor: .white)
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
@@ -95,13 +96,29 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         tableView.setContentOffset(CGPoint(x: 0, y: -coverHeight), animated: true)
         
         // pull to refresh
-        tableView.es.addPullToRefresh { [unowned self] in
-            self.tableView.es.stopPullToRefresh()
-            self.reload()
-        }
-        tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = 0
+
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+        refreshControl.tintColor = .white
+        refreshControl.subviews.first?.bounds.origin.y = 112
+        
+        tableView.rx.endUpdatesEvent
+            .subscribe(onNext: { _ in
+                if let offset = self.tableViewLastOffset {
+                    self.tableView.layoutIfNeeded()
+                    self.tableView.contentOffset = offset
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        _headerView.segmentedControl.delegate = self
     }
-    
+
+    @objc func refresh() {
+        self.reload()
+        refreshControl.endRefreshing()
+    }
+
     override func bind() {
         super.bind()
         bindControls()
@@ -109,6 +126,42 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         bindProfile()
         
         bindList()
+    }
+    
+    func bindProfile() {
+        viewModel.profile
+            .filter {$0 != nil}
+            .map {$0!}
+            .do(onNext: { (_) in
+                self._headerView.selectedIndex.accept(0)
+            })
+            .subscribe(onNext: { [weak self] (item) in
+                self?.setUp(profile: item)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func setUp(profile: ProfileType) {
+    }
+    
+    func handleListLoading() {
+        
+    }
+    
+    func handleListEnded() {
+        
+    }
+    
+    func handleListEmpty() {
+        
+    }
+    
+    func bindItems() {
+        
+    }
+    
+    func cellSelected(_ indexPath: IndexPath) {
+        
     }
     
     func setUp(profile: ProfileType) {}
@@ -142,7 +195,9 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.isTranslucent = true
-        showTitle(tableView.contentOffset.y >= -43.0)
+        navigationController?.navigationBar.prefersLargeTitles = false
+
+        showTitle(tableView.contentOffset.y >= -43)
     }
 
     func showTitle(_ show: Bool, animated: Bool = false) {
@@ -151,10 +206,34 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         coverImageView.isHidden = show
         showNavigationBar(show, animated: animated) {
             self.optionsButton.tintColor = show ? .black: .white
+            self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
+            if !show {
+                self.optionsButton.layer.shadowRadius = 2
+                self.optionsButton.layer.shadowColor = UIColor.black.cgColor
+                self.optionsButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+                self.optionsButton.layer.shadowOpacity = 0.25
+                self.optionsButton.layer.masksToBounds = false
+            } else {
+                self.optionsButton.layer.shadowOpacity = 0
+            }
         }
     }
     
     @objc func reload() {
         viewModel.reload()
+    }
+}
+
+extension ProfileVC: CMSegmentedControlDelegate {
+    func segmentedControl(_ segmentedControl: CMSegmentedControl, didTapOptionAtIndex: Int) {
+        tableViewLastOffset = tableView.contentOffset
+        
+        tableView.rx.endUpdatesEvent
+            .subscribe(onNext: { (_) in
+                DispatchQueue.main.async {
+                    self.tableViewLastOffset = nil
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }

@@ -14,7 +14,6 @@ import Action
 import RxSwift
 
 struct ProfileChooseAvatarViewModel {
-    let avatar = BehaviorRelay<UIImage?>(value: nil)
     let authorizationStatus = BehaviorRelay<PHAuthorizationStatus>(value: PHPhotoLibrary.authorizationStatus())
     let phAssets = BehaviorRelay<[PHAsset]>(value: [])
     let didSelectImage = PublishSubject<UIImage?>()
@@ -44,6 +43,7 @@ struct ProfileChooseAvatarViewModel {
     
     func onSelected(with scrollView: UIScrollView, imageView: UIImageView) -> CocoaAction {
         return CocoaAction {_ in
+            if scrollView.isLoading {return .just(())}
             let image = ProfileEditCoverVC.cropImage(scrollVIew: scrollView, imageView: imageView, maxSize: 300)
             self.didSelectImage.onNext(image)
             return .just(())

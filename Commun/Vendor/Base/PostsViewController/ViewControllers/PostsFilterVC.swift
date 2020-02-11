@@ -10,7 +10,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-class PostsFilterVC: SwipeDownDismissViewController {
+class PostsFilterVC: BaseViewController {
     // MARK: - Properties
     var isTimeFrameMode: Bool
     var isTrending: Bool
@@ -22,7 +22,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
     lazy var backButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
     
     lazy var tableView = UITableView(forAutoLayout: ())
-    lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst)
+    lazy var saveButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save".localized().uppercaseFirst)
     
     // MARK: - Initializers
     init(filter: PostsListFetcher.Filter, isTimeFrameMode: Bool = false) {
@@ -54,6 +54,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
         tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
         
         view.addSubview(saveButton)

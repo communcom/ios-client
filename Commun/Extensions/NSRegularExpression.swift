@@ -11,7 +11,7 @@ import Foundation
 extension NSRegularExpression {
     
     static var nameRegexPattern: String {
-        return "[\\p{L}0-9-_]+"
+        return "[\\p{L}0-9-_.]+"
     }
     
     static var mentionRegexPattern: String {

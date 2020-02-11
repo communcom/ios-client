@@ -17,15 +17,19 @@ extension UserProfilePageVC {
         
 //        Completable.empty()
 //            .delay(0.8, scheduler: MainScheduler.instance)
-        RestAPIManager.instance.block(userId)
+        BlockchainManager.instance.block(userId)
             .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
             .subscribe(onCompleted: {
                 self.hideHud()
                 self.showAlert(
                     title: "user blocked".localized().uppercaseFirst,
-                    message: "You've blocked" + " \(self.viewModel.profile.value?.username ?? "this user")" + ".\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
-                        self.viewModel.profile.value?.notifyDeleted()
-                        self.viewModel.profile.value?.notifyEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+                    message: "you've blocked".localized().uppercaseFirst + " \(self.viewModel.profile.value?.username ?? "this user".localized())" + ".\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
+                        var profile = self.viewModel.profile.value
+                        profile?.isInBlacklist = true
+                        profile?.notifyChanged()
+                        
+                        profile?.notifyDeleted()
+                        profile?.notifyEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
                     }
             }) { (error) in
                 self.hideHud()
@@ -33,5 +37,29 @@ extension UserProfilePageVC {
             }
             .disposed(by: disposeBag)
         
+    }
+    
+    func unblockUser() {
+        guard let userId = viewModel.profile.value?.userId else {return}
+        showIndetermineHudWithMessage("unblocking".localized().uppercaseFirst + "...")
+        
+//        Completable.empty()
+//            .delay(0.8, scheduler: MainScheduler.instance)
+        BlockchainManager.instance.unblock(userId)
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+            .subscribe(onCompleted: {
+                self.hideHud()
+                self.showAlert(
+                    title: "user unblocked".localized().uppercaseFirst,
+                    message: "you've unblocked".localized().uppercaseFirst + " \(self.viewModel.profile.value?.username ?? "this user".localized().uppercaseFirst)" + ".") { _ in
+                        var user = self.viewModel.profile.value
+                        user?.isInBlacklist = false
+                        user?.notifyChanged()
+                    }
+            }) { (error) in
+                self.hideHud()
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }
