@@ -17,84 +17,61 @@ class PostsFilterVC: BaseViewController {
     var filter: BehaviorRelay<PostsListFetcher.Filter>
     var completion: ((PostsListFetcher.Filter) -> Void)?
     
-    
     // MARK: - Subview
-    lazy var closeButton    =   UIButton.circle(size:                 CGFloat.adaptive(height: 30.0),
-                                                backgroundColor:      .f7f7f9,
-                                                tintColor:            .a5a7bd,
-                                                imageName:            "icon-round-close-grey-default",
-                                                imageEdgeInsets:      .zero)
+    lazy var closeButton = UIButton.close()
+    lazy var backButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
     
-    lazy var backButton     =   UIButton.circle(size:                 CGFloat.adaptive(height: 30.0),
-                                                backgroundColor:      .f7f7f9,
-                                                tintColor:            .a5a7bd,
-                                                imageName:            "icon-round-back-grey-default",
-                                                imageEdgeInsets:      .zero)
-        
     lazy var tableView = UITableView(forAutoLayout: ())
-    lazy var saveButton = CommunButton.default(height: CGFloat.adaptive(height: 50.0), label: "save".localized().uppercaseFirst)
-    
+    lazy var saveButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save".localized().uppercaseFirst)
     
     // MARK: - Initializers
     init(filter: PostsListFetcher.Filter, isTimeFrameMode: Bool = false) {
         self.isTimeFrameMode = isTimeFrameMode
         self.isTrending = (filter.feedTypeMode == .hot || filter.feedTypeMode == .topLikes || filter.feedTypeMode == .new || filter.feedTypeMode == .community)
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
-
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
     
-    // MARK: - Class Functions
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
+    // MARK: - Method
     override func setUp() {
         super.setUp()
-        
         view.backgroundColor = .f7f7f9
+        title = "sort by".localized().uppercaseFirst
 
-        // Add navigation bar
-        let navigationBarView = MyNavigationBar(title:          "sort by".localized().uppercaseFirst,
-                                                leftButton:     isTimeFrameMode ? backButton : nil,
-                                                rightButton:    closeButton)
-        navigationBarView.backgroundColor = .white
-        view.addSubview(navigationBarView)
-        navigationBarView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        navigationBarView.heightAnchor.constraint(equalToConstant: CGFloat.adaptive(height: 58.0)).isActive = true
-        view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: CGFloat.adaptive(height: 20.0))
-
-        // Add table view
+        setRightNavBarButton(with: closeButton)
+        closeButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
+        
+        if isTimeFrameMode {
+            setLeftNavBarButton(with: backButton)
+            backButton.addTarget(self, action: #selector(backButtonDidTouch), for: .touchUpInside)
+        }
+        
         view.addSubview(tableView)
-        tableView.isScrollEnabled = false
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
         
-        // Add Save button
         view.addSubview(saveButton)
-        saveButton.autoPinEdge(.top, to: .bottom, of: tableView, withOffset: CGFloat.adaptive(height: 30.0))
-        saveButton.autoPinEdgesToSuperviewSafeArea(with:            UIEdgeInsets(top:       0.0,
-                                                                                 left:      CGFloat.adaptive(width: 16.0),
-                                                                                 bottom:    CGFloat.adaptive(height: 10.0),
-                                                                                 right:     CGFloat.adaptive(width: 16.0)),
-                                                   excludingEdge:   .top)
-        
+        saveButton.autoPinEdge(.top, to: .bottom, of: tableView, withOffset: 20)
+        saveButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16), excludingEdge: .top)
         saveButton.addTarget(self, action: #selector(saveButtonDidTouch), for: .touchUpInside)
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        navigationController?.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        navigationController?.navigationBar.frame.size.height = 58
     }
     
     override func bind() {
         super.bind()
-        
         tableView.register(FilterCell.self, forCellReuseIdentifier: "FilterCell")
         
         filter
@@ -124,8 +101,8 @@ class PostsFilterVC: BaseViewController {
                 if index == (self.isTimeFrameMode ? 3 : 2) {
                     roundedCorner.insert([.bottomLeft, .bottomRight])
                 }
-                
                 cell.roundedCorner = roundedCorner
+                
                 cell.titleLabel.text = model.label
                 cell.checkBox.isSelected = model.isSelected
             }
@@ -140,32 +117,25 @@ class PostsFilterVC: BaseViewController {
                     if indexPath.row == 0 {
                         self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: hotType, feedType: .time))
                     }
-                    
                     if indexPath.row == 1 {
                         self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: newType, feedType: .time))
                     }
-                    
                     if indexPath.row == 2 {
                         self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: popularType))
                         let vc = PostsFilterVC(filter: self.filter.value.newFilter(sortType: self.filter.value.sortType ?? .all), isTimeFrameMode: true)
                         vc.completion = self.completion
                         self.show(vc, sender: nil)
                     }
-                }
-                
-                else {
+                } else {
                     if indexPath.row == 0 {
                         self.filter.accept(self.filter.value.newFilter(sortType: .day))
                     }
-                    
                     if indexPath.row == 1 {
                         self.filter.accept(self.filter.value.newFilter(sortType: .week))
                     }
-                    
                     if indexPath.row == 2 {
                         self.filter.accept(self.filter.value.newFilter(sortType: .month))
                     }
-                    
                     if indexPath.row == 3 {
                         self.filter.accept(self.filter.value.newFilter(sortType: .all))
                     }
@@ -177,8 +147,6 @@ class PostsFilterVC: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    
-    // MARK: - Actions
     @objc func closeButtonDidTouch() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -197,13 +165,13 @@ class PostsFilterVC: BaseViewController {
 // MARK: - UIViewControllerTransitioningDelegate
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return CustomHeightPresentationController(height: CGFloat.adaptive(height: 418.0), presentedViewController: presented, presenting: presenting)
+        return CustomHeightPresentationController(height: 443, presentedViewController: presented, presenting: presenting)
     }
 }
 
 // MARK: - UITableViewDelegate
 extension PostsFilterVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat.adaptive(height: 58.0)
+        return 58
     }
 }
