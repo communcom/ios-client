@@ -43,8 +43,8 @@ class PostPageVC: CommentsViewController {
         super.init(viewModel: viewModel)
     }
     
-    init(userId: String? = nil, username: String? = nil, permlink: String, communityId: String? = nil, communityAlias: String? = nil) {
-        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias)
+    init(userId: String? = nil, username: String? = nil, permlink: String, communityId: String? = nil, communityAlias: String? = nil, selectedComment: ResponseAPIContentGetComment? = nil) {
+        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias, selectedComment: selectedComment)
         super.init(viewModel: viewModel)
     }
     
@@ -283,6 +283,23 @@ class PostPageVC: CommentsViewController {
         })
     }
     
+    
+    // MARK: - Custom Functions
+    func scrollTo(selectedComment: ResponseAPIContentGetComment) {
+        DispatchQueue.main.async {
+            // https://stackoverflow.com/a/16071589
+            var indexRow = 0
+            
+            if let viewModel = self.viewModel as? PostPageViewModel, let selectedComment = viewModel.selectedComment {
+                indexRow = viewModel.items.value.firstIndex(of: selectedComment) ?? 0
+            }
+            
+            self.tableView.safeScrollToRow(at: IndexPath(row: indexRow, section: 0), at: .top, animated: true)
+        }
+    }
+    
+    
+    // MARK: - Actions
     @objc func openMorePostActions() {
         postHeaderView.openMorePostActions()
     }

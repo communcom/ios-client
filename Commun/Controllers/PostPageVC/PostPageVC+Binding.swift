@@ -123,6 +123,7 @@ extension PostPageVC {
                 }
             })
             .disposed(by: disposeBag)
+
         // bind post
         let post = viewModel.post
         post
@@ -131,6 +132,10 @@ extension PostPageVC {
                 self.navigationBar.setUp(with: post)
                 self.commentForm.post = post
                 self.postHeaderView.setUp(with: post)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.scrollToTopAfterLoadingComment = true
+                }
             })
             .disposed(by: disposeBag)
         
