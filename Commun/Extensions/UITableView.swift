@@ -123,8 +123,6 @@ extension UITableView {
             .bold("?", font: .systemFont(ofSize: .adaptive(width: 14.0), weight: .bold), color: .appMainColor)
 
         label.textAlignment = .center
-//        label.font = .systemFont(ofSize: .adaptive(width: 14.0))
-//        label.textColor = .gray
         label.backgroundColor = .clear
         label.lineBreakMode = .byWordWrapping
 
