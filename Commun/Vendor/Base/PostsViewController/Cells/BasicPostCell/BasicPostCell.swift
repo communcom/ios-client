@@ -66,11 +66,11 @@ final class BasicPostCell: PostCell {
         for (index, content) in (post.content ?? []).enumerated() where content.type == "paragraph" {
             let attributedText = content.toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self, shouldAddParagraphSeparator: false)
             // remove empty text
-            let text = attributedText.string.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: "\r", with: "").replacingOccurrences(of: "  ", with: "")
+            let text = attributedText.string
            
             if text != "", text != " " {
                 if index != 0 {
-                    texts.append(NSAttributedString(string: "\n"))
+                    texts.append(NSAttributedString(string: "\n", attributes: defaultAttributes))
                 }
                 
                 texts.append(attributedText)
@@ -91,14 +91,9 @@ final class BasicPostCell: PostCell {
             texts = NSMutableAttributedString()
             for (index, paragraph) in paragraphsTexts.enumerated() where index < 6 {
                 texts.append(paragraph)
+                texts.append(NSAttributedString(string: "\n", attributes: defaultAttributes))
             }
-            texts = NSMutableAttributedString(string: texts.string.replacingOccurrences(of: "\r", with: ""), attributes: defaultAttributes)
             texts.append(moreText)
-        }
-
-        // remove paragraph separator
-        if texts.string.starts(with: "\n") {
-            texts.deleteCharacters(in: NSRange(location: 0, length: 1))
         }
 
         if texts.length > 0 {
