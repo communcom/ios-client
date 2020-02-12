@@ -117,6 +117,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
             .disposed(by: bag)
         
+        // show hud when reconnecting
+        SocketManager.shared.state
+            .subscribe(onNext: { (state) in
+                switch state {
+                case .disconnected:
+                    self.window?.rootViewController?.showIndetermineHudWithMessage(nil)
+                default:
+                    return
+                }
+                
+            })
+            .disposed(by: bag)
+        
+        // hide hud after reconnecting
+        AuthorizationManager.shared.status
+            .filter {$0 != .authorizing}
+            .subscribe(onNext: { (_) in
+                self.window?.rootViewController?.hideHud()
+            })
+            .disposed(by: disposeBag)
+        
         return true
     }
     

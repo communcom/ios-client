@@ -100,7 +100,7 @@ extension UIViewController {
         MBProgressHUD.hide(for: vc.view, animated: false)
     }
     
-    func showIndetermineHudWithMessage(_ message: String) {
+    func showIndetermineHudWithMessage(_ message: String?) {
         let vc = tabBarController ?? navigationController ?? parent ?? self
         
         // Hide all previous hud
