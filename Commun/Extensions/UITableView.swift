@@ -111,21 +111,24 @@ extension UITableView {
         if tableFooterView?.tag == listErrorFooterViewTag {
             return
         }
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: self.width, height: 44))
+
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: self.width, height: .adaptive(height: 44.0)))
         containerView.tag = listErrorFooterViewTag
+
         let label = UILabel()
         label.numberOfLines = 0
-        label.attributedText = NSMutableAttributedString().normal("can not fetch next items".localized().uppercaseFirst)
-            .normal(". ")
-            .bold("try again".localized().uppercaseFirst)
-            .bold("?")
+        label.attributedText = NSMutableAttributedString().normal("can not fetch next items".localized().uppercaseFirst, color: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1))
+            .normal(". ", color: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1))
+            .bold("try again".localized().uppercaseFirst, color: .appMainColor)
+            .bold("?", color: .appMainColor)
+
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .gray
+        label.font = .systemFont(ofSize: .adaptive(width: 14.0))
+//        label.textColor = .gray
         label.backgroundColor = .clear
         label.lineBreakMode = .byWordWrapping
+
         containerView.addSubview(label)
-        
         label.translatesAutoresizingMaskIntoConstraints = false
         label.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0).isActive = true
         label.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 0).isActive = true
