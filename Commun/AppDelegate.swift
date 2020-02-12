@@ -126,7 +126,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Closing animation
             let vc = controllerContainer.resolve(SplashViewController.self)!
             self.window?.rootViewController = vc
-        
         case .boarding:
             let vc: UIViewController
             
@@ -139,7 +138,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let nc = UINavigationController(rootViewController: vc)
             
             self.changeRootVC(nc)
-       
         case .authorized:
             // Retrieve favourites
             FavouritesList.shared.retrieve()
@@ -150,10 +148,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return
             }
             self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
-        
         case .registering:
-            guard window?.rootViewController?.isKind(of: SplashViewController.self) ?? false else { return }
-           
             let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
             let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
             self.changeRootVC(welcomeNav)
@@ -170,7 +165,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 try! RestAPIManager.instance.logout()
                 AuthorizationManager.shared.forceReAuthorize()
                 return
-            
             default:
                 break
             }
