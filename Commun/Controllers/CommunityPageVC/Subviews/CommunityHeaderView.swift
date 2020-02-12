@@ -30,15 +30,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
 
     lazy var friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: .adaptive(width: 12.0), weight: .bold, textColor: .a5a7bd)
 
-    lazy var membersCountLabel: UILabel = {
-        let label = UILabel.with(text: 10000000.kmFormatted, textSize: .adaptive(width: 15.0), weight: .bold)
-        return label
-    }()
+    lazy var membersCountLabel = UILabel.with(text: 10000000.kmFormatted, textSize: .adaptive(width: 15.0), weight: .bold)
     
-    lazy var leadersCountLabel: UILabel = {
-        let label = UILabel.with(text: "7", textSize: .adaptive(width: 15.0), weight: .bold)
-        return label
-    }()
+    lazy var leadersCountLabel = UILabel.with(text: "7", textSize: .adaptive(width: 15.0), weight: .bold)
     
     lazy var pointsContainerView: UIView = {
         let view = UIView(height: .adaptive(height: 70.0), backgroundColor: .appMainColor)
