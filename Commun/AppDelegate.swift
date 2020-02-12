@@ -126,6 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Closing animation
             let vc = controllerContainer.resolve(SplashViewController.self)!
             self.window?.rootViewController = vc
+        
         case .boarding:
             let vc: UIViewController
             
@@ -138,6 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let nc = UINavigationController(rootViewController: vc)
             
             self.changeRootVC(nc)
+       
         case .authorized:
             // Retrieve favourites
             FavouritesList.shared.retrieve()
@@ -148,18 +150,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return
             }
             self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+        
         case .registering:
+            guard window?.rootViewController?.isKind(of: SplashViewController.self) ?? false else { return }
+           
             let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
             let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
             self.changeRootVC(welcomeNav)
             
             let navigationBarAppearace = UINavigationBar.appearance()
             navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-            navigationBarAppearace.largeTitleTextAttributes =   [
-                                                                    NSAttributedString.Key.foregroundColor: UIColor.black,
-                                                                    NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold",
-                                                                                                                       size: 30.0 * Config.widthRatio)!
-            ]
+            navigationBarAppearace.largeTitleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
+                                                                NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold", size: .adaptive(width: 30.0))! ]
+            
         case .authorizingError(let error):
             switch error.caseInfo.message {
             case "Cannot get such account from BC",
@@ -167,6 +170,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 try! RestAPIManager.instance.logout()
                 AuthorizationManager.shared.forceReAuthorize()
                 return
+            
             default:
                 break
             }

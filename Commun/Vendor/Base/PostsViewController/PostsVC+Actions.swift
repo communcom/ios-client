@@ -30,10 +30,10 @@ extension PostsViewController {
         let nc = BaseNavigationController(rootViewController: vc)
         nc.transitioningDelegate = vc
         nc.modalPresentationStyle = .custom
-        nc.makeTransparent()
+//        nc.makeTransparent()
         
         present(nc, animated: true, completion: {
-            nc.isNavigationBarHidden = true
+//            nc.isNavigationBarHidden = true
         })
     }
 }
