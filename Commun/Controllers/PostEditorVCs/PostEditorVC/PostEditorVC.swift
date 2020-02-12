@@ -16,6 +16,7 @@ class PostEditorVC: EditorVC {
     let communityDraftKey = "PostEditorVC.communityDraftKey"
     
     // MARK: - Properties
+    var chooseCommunityAfterLoading: Bool
     
     // MARK: - Computed properties
     var contentLettersLimit: UInt {30000}
@@ -38,8 +39,6 @@ class PostEditorVC: EditorVC {
         fatalError("Must override")
     }
     
-    var chooseCommunityAfterLoading = true
-    
     // MARK: - Subviews
     // community
     lazy var communityView = UIView(forAutoLayout: ())
@@ -49,6 +48,19 @@ class PostEditorVC: EditorVC {
     
     var contentTextView: ContentTextView {
         fatalError("Must override")
+    }
+    
+    // MARK: - Initializers
+    init(post: ResponseAPIContentGetPost? = nil, community: ResponseAPIContentGetCommunity? = nil, chooseCommunityAfterLoading: Bool = true) {
+        self.chooseCommunityAfterLoading = chooseCommunityAfterLoading
+        super.init(nibName: nil, bundle: nil)
+        viewModel.postForEdit = post
+        viewModel.community.accept(community)
+        modalPresentationStyle = .fullScreen
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Methods
@@ -75,7 +87,7 @@ class PostEditorVC: EditorVC {
                     self.retrieveDraft()
                 }
             } else {
-                if chooseCommunityAfterLoading {
+                if viewModel.community.value == nil && chooseCommunityAfterLoading {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.chooseCommunityDidTouch()
                     }

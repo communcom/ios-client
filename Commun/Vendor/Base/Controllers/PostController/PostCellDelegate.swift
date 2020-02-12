@@ -118,17 +118,13 @@ extension PostCellDelegate where Self: BaseViewController {
             .subscribe(onSuccess: {post in
                 topController.hideHud()
                 if post.document?.attributes?.type == "basic" {
-                    let vc = BasicEditorVC()
-                    vc.viewModel.postForEdit = post
-                    vc.modalPresentationStyle = .fullScreen
+                    let vc = BasicEditorVC(post: post)
                     topController.present(vc, animated: true, completion: nil)
                     return
                 }
                 
                 if post.document?.attributes?.type == "article" {
-                    let vc = ArticleEditorVC()
-                    vc.viewModel.postForEdit = post
-                    vc.modalPresentationStyle = .fullScreen
+                    let vc = ArticleEditorVC(post: post)
                     topController.present(vc, animated: true, completion: nil)
                     return
                 }

@@ -67,12 +67,7 @@ class FeedPageHeaderView: MyTableHeaderView {
     }
     
     func openEditor(completion: ((BasicEditorVC) -> Void)? = nil) {
-        let editorVC = BasicEditorVC()
-        editorVC.modalPresentationStyle = .fullScreen
-        
-        if completion != nil {
-            editorVC.chooseCommunityAfterLoading = false
-        }
+        let editorVC = BasicEditorVC(chooseCommunityAfterLoading: completion == nil)
         
         parentViewController?.present(editorVC, animated: true, completion: {
             completion?(editorVC)
