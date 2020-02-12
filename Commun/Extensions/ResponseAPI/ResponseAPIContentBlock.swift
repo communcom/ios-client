@@ -166,10 +166,6 @@ extension ResponseAPIContentBlock {
             if shouldAddParagraphSeparator {
                 child.append(NSAttributedString(string: "\r", attributes: currentAttributes))
             }
-        case "post", "comment", "document":
-            if child.string.ends(with: "\r") {
-                child.deleteCharacters(in: NSRange(location: child.length - 1, length: 1))
-            }
         case "attachments":
             //TODO: attachments
             break
