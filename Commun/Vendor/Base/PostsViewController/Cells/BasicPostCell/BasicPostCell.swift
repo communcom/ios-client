@@ -64,7 +64,7 @@ final class BasicPostCell: PostCell {
         var paragraphsTexts: [NSAttributedString] = []
         
         for (index, content) in (post.content ?? []).enumerated() where content.type == "paragraph" {
-            let attributedText = content.toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self, viewMode: true)
+            let attributedText = content.toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self, shouldAddParagraphSeparator: false)
             // remove empty text
             let text = attributedText.string.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: "\r", with: "").replacingOccurrences(of: "  ", with: "")
            

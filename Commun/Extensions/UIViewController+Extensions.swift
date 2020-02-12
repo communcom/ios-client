@@ -207,9 +207,16 @@ extension UIViewController {
                 if let id = item.community?.communityId {
                     showCommunityWithCommunityId(id)
                 }
-            } else if let id = item.from?.userId {
-                showProfileWithUserId(id)
+            } else if item.from?.username?.lowercased() != "bounty" {
+                if let id = item.from?.userId {
+                    showProfileWithUserId(id)
+                }
+            } else {
+                if let id = item.community?.communityId {
+                    showOtherBalanceWalletVC(symbol: id)
+                }
             }
+            
         case "reward":
             if let id = item.community?.communityId {
                 showCommunityWithCommunityId(id)
@@ -237,6 +244,19 @@ extension UIViewController {
         show(communityVC, sender: nil)
     }
     
+    func showOtherBalanceWalletVC(symbol: String, shouldResetNavigationBarOnPush: Bool = false) {
+        let vc = OtherBalancesWalletVC(symbol: symbol)
+                
+        if  shouldResetNavigationBarOnPush {
+            show(vc, sender: nil)
+        } else {
+            let nc = navigationController as? BaseNavigationController
+            nc?.shouldResetNavigationBarOnPush = false
+            show(vc, sender: nil)
+            nc?.shouldResetNavigationBarOnPush = true
+        }
+    }
+    
     // MARK: - ChildVC
     func add(_ child: UIViewController, to view: UIView? = nil) {
         addChild(child)
@@ -254,11 +274,19 @@ extension UIViewController {
         view.removeFromSuperview()
         removeFromParent()
     }
-    
+   
     @objc func back() {
         popOrDismissVC()
     }
-    
+
+    @objc func leftButtonTapped() {
+        popOrDismissVC()
+    }
+
+    @objc func rightButtonTapped() {
+        popOrDismissVC()
+    }
+
     func backCompletion(_ completion: @escaping (() -> Void)) {
         popOrDismissVC(completion)
     }

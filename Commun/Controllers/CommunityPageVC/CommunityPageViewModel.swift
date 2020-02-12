@@ -76,6 +76,10 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
         Observable.merge(postsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .posts}, leadsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .leads})
     }
     
+    var walletGetBuyPriceRequest: Single<ResponseAPIWalletGetPrice> {
+        return RestAPIManager.instance.getBuyPrice(symbol: communityId ?? "CMN", quantity: "10 CMN")
+    }
+
     override func bind() {
         super.bind()
         

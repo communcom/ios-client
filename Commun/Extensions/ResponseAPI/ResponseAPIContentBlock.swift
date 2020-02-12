@@ -77,7 +77,7 @@ extension ResponseAPIContentBlock {
         }
     }
     
-    func toAttributedString<Attachment: SubviewTextAttachment & TextAttachmentType>(currentAttributes: [NSAttributedString.Key: Any], attachmentSize: CGSize = .zero, attachmentType: Attachment.Type, viewMode: Bool = false) -> NSAttributedString {
+    func toAttributedString<Attachment: SubviewTextAttachment & TextAttachmentType>(currentAttributes: [NSAttributedString.Key: Any], attachmentSize: CGSize = .zero, attachmentType: Attachment.Type, shouldAddParagraphSeparator: Bool = true) -> NSAttributedString {
         let child = NSMutableAttributedString()
         switch content {
         case .array(let array):
@@ -95,8 +95,8 @@ extension ResponseAPIContentBlock {
         
         switch type {
         case "paragraph":
-            if !viewMode {
-                child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
+            if shouldAddParagraphSeparator {
+                child.append(NSAttributedString(string: "\r", attributes: currentAttributes))
             }
         case "text":
             var attr = currentAttributes
@@ -162,16 +162,18 @@ extension ResponseAPIContentBlock {
             let attachment = Attachment(block: self, size: attachmentSize)
             let attachmentAS = NSAttributedString(attachment: attachment)
             child.append(attachmentAS)
-            child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
+            
+            if shouldAddParagraphSeparator {
+                child.append(NSAttributedString(string: "\r", attributes: currentAttributes))
+            }
         case "post", "comment", "document":
-            if child.string.starts(with: "\n\r") {
-                child.deleteCharacters(in: NSRange(location: 0, length: 2))
+            if child.string.ends(with: "\r") {
+                child.deleteCharacters(in: NSRange(location: child.length - 1, length: 1))
             }
         case "attachments":
             //TODO: attachments
             break
         default:
-            child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
             child.addAttributes(currentAttributes, range: NSRange(location: 0, length: child.length))
         }
         

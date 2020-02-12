@@ -239,7 +239,6 @@ class TabBarVC: UITabBarController {
     
     @objc func buttonAddTapped() {
         let basicEditorScene = BasicEditorVC()
-        basicEditorScene.modalPresentationStyle = .fullScreen
         self.present(basicEditorScene, animated: true, completion: nil)
     }
     

@@ -34,6 +34,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     override func viewDidLayoutSubviews() {
