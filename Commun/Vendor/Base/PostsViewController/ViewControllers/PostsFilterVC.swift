@@ -18,8 +18,8 @@ class PostsFilterVC: BaseViewController {
     var completion: ((PostsListFetcher.Filter) -> Void)?
     
     // MARK: - Subview
-    lazy var closeButton = UIButton.close()
-    lazy var backButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
+    lazy var closeButton = UIButton.close(size: .adaptive(width: 30.0))
+    lazy var backButton = UIButton.circle(size: .adaptive(width: 30.0), backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
     
     lazy var tableView = UITableView(forAutoLayout: ())
     lazy var saveButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save".localized().uppercaseFirst)
@@ -39,6 +39,7 @@ class PostsFilterVC: BaseViewController {
     // MARK: - Method
     override func setUp() {
         super.setUp()
+        
         view.backgroundColor = .f7f7f9
         title = "sort by".localized().uppercaseFirst
 
@@ -49,6 +50,8 @@ class PostsFilterVC: BaseViewController {
             setLeftNavBarButton(with: backButton)
             backButton.addTarget(self, action: #selector(backButtonDidTouch), for: .touchUpInside)
         }
+        
+        setupNavigationBar()
         
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
@@ -61,17 +64,18 @@ class PostsFilterVC: BaseViewController {
         saveButton.autoPinEdge(.top, to: .bottom, of: tableView, withOffset: 20)
         saveButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16), excludingEdge: .top)
         saveButton.addTarget(self, action: #selector(saveButtonDidTouch), for: .touchUpInside)
-        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        navigationController?.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-        navigationController?.navigationBar.frame.size.height = 58
+        
+        navigationController?.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: .adaptive(width: 20.0))
+        navigationController?.navigationBar.frame.size.height = .adaptive(height: 58.0)
     }
     
     override func bind() {
         super.bind()
+        
         tableView.register(FilterCell.self, forCellReuseIdentifier: "FilterCell")
         
         filter
@@ -147,6 +151,18 @@ class PostsFilterVC: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    
+    // MARK: - Custom Functions
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) // items color
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // bar color
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.shadowImage?.clear()
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
+    }
+    
+    
+    // MARK: - Actions
     @objc func closeButtonDidTouch() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -162,16 +178,18 @@ class PostsFilterVC: BaseViewController {
     }
 }
 
+
 // MARK: - UIViewControllerTransitioningDelegate
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return CustomHeightPresentationController(height: 443, presentedViewController: presented, presenting: presenting)
+        return CustomHeightPresentationController(height: .adaptive(height: 443.0), presentedViewController: presented, presenting: presenting)
     }
 }
+
 
 // MARK: - UITableViewDelegate
 extension PostsFilterVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 58
+        return .adaptive(height: 58.0)
     }
 }
