@@ -142,11 +142,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Retrieve favourites
             FavouritesList.shared.retrieve()
             
-            if let vc = window?.rootViewController,
-                vc is TabBarVC
-            {
-                return
-            }
             self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
         case .registering:
             let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
@@ -175,7 +170,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func changeRootVC(_ rootVC: UIViewController) {
+    func changeRootVC<VC: UIViewController>(_ rootVC: VC) {
+        if let vc = window?.rootViewController,
+            vc is VC
+        {
+            return
+        }
+        
         if let currentVC = window?.rootViewController as? SplashViewController {
             currentVC.animateSplash {
                 self.window?.rootViewController = rootVC

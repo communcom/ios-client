@@ -156,7 +156,6 @@ class PostHeaderView: MyTableHeaderView, PostController {
             contentTextView.attributedText = nil
         }
         
-        
         layoutSubviews()
     }
     
