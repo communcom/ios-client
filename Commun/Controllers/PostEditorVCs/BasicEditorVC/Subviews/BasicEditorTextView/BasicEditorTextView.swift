@@ -49,8 +49,11 @@ class BasicEditorTextView: ContentTextView {
         // child blocks of post block
         var contentBlocks = [Single<ResponseAPIContentBlock>]()
         
-        // separate blocks by \n
-        let components = attributedString.components(separatedBy: "\n")
+        // change all \n to \r
+        let aStr = attributedString.replaceOccurents(of: "\n", with: "\r")
+        
+        // separate blocks by \r
+        let components = aStr.components(separatedBy: "\r")
         
         for component in components {
             if let block = component.toParagraphContentBlock(id: &id) {
