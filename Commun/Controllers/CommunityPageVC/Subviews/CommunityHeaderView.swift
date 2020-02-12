@@ -120,6 +120,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         return button
     }()
     
+    // MARK: - Methods
     override func commonInit() {
         super.commonInit()
         
