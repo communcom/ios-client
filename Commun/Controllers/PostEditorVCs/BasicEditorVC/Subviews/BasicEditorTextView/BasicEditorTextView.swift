@@ -50,10 +50,10 @@ class BasicEditorTextView: ContentTextView {
         var contentBlocks = [Single<ResponseAPIContentBlock>]()
         
         // change all \n to \r
-        let aStr = attributedString.replaceOccurents(of: "\n", with: "\r")
+        let aStr = attributedString.replaceOccurents(of: "\r", with: "\n")
         
         // separate blocks by \r
-        let components = aStr.components(separatedBy: "\r")
+        let components = aStr.components(separatedBy: "\n")
         
         for component in components {
             if let block = component.toParagraphContentBlock(id: &id) {

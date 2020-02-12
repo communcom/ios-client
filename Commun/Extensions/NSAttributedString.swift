@@ -46,7 +46,7 @@ extension NSAttributedString {
         var blocks = [ResponseAPIContentBlock]()
         enumerateAttributes(in: NSRange(location: 0, length: length), options: []) { (attrs, range, _) in
             // get text
-            var content = attributedSubstring(from: range).string.replacingOccurrences(of: "\r", with: "")
+            var content = attributedSubstring(from: range).string
             if content.isEmpty { return }
             
             var blockType = "text"
