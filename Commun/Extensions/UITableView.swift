@@ -117,13 +117,13 @@ extension UITableView {
 
         let label = UILabel()
         label.numberOfLines = 0
-        label.attributedText = NSMutableAttributedString().normal("can not fetch next items".localized().uppercaseFirst, color: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1))
-            .normal(". ", color: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1))
-            .bold("try again".localized().uppercaseFirst, color: .appMainColor)
-            .bold("?", color: .appMainColor)
+        label.attributedText = NSMutableAttributedString().normal("can not fetch next items".localized().uppercaseFirst, font: .systemFont(ofSize: .adaptive(width: 14.0), weight: .regular), color: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1))
+            .normal(". ", font: .systemFont(ofSize: .adaptive(width: 14.0), weight: .regular), color: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1))
+            .bold("try again".localized().uppercaseFirst, font: .systemFont(ofSize: .adaptive(width: 14.0), weight: .bold), color: .appMainColor)
+            .bold("?", font: .systemFont(ofSize: .adaptive(width: 14.0), weight: .bold), color: .appMainColor)
 
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: .adaptive(width: 14.0))
+//        label.font = .systemFont(ofSize: .adaptive(width: 14.0))
 //        label.textColor = .gray
         label.backgroundColor = .clear
         label.lineBreakMode = .byWordWrapping
