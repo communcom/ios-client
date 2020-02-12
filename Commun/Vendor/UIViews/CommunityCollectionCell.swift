@@ -24,6 +24,7 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
     }()
     lazy var avatarImageView: MyAvatarImageView = {
         let avatar = MyAvatarImageView(size: 50)
+        avatar.backgroundColor = .white
         avatar.borderWidth = 2
         avatar.borderColor = .white
         return avatar
@@ -75,7 +76,7 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
         
         nameLabel.text = community.name
         
-        descriptionLabel.text = "\(Double(community.subscribersCount ?? 0).kmFormatted) " + "members".localized().uppercaseFirst
+        descriptionLabel.text = "\((community.subscribersCount ?? 0).kmFormatted) " + "members".localized().uppercaseFirst
         
         // joinButton
         let joined = community.isSubscribed ?? false

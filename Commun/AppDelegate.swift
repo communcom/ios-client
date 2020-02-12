@@ -33,9 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Properties
     var window: UIWindow?
     
-    static var reloadSubject = PublishSubject<Bool>()
     let notificationCenter = UNUserNotificationCenter.current()
-    let notificationRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
+    let notificationTappedRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
     
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
     
@@ -55,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
             // Analytics
@@ -69,7 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let id = UUID().uuidString + "." + "\(Date().timeIntervalSince1970)"
             do {
                 try KeychainManager.save([Config.currentDeviceIdKey: id])
-                SocketManager.shared.deviceIdDidSet()
             } catch {
                 Logger.log(message: error.localizedDescription, event: .debug)
             }
@@ -100,28 +98,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
         // handle connected
-        SocketManager.shared.connected
-            .filter {$0}
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .take(1)
-            .asSingle()
-            .timeout(5, scheduler: MainScheduler.instance)
-            .subscribe(onSuccess: { (_) in
-                AppDelegate.reloadSubject.onNext(false)
-                self.window?.makeKeyAndVisible()
-            }, onError: {_ in
-                if let vc = self.window?.rootViewController as? SplashViewController {
-                    vc.showErrorScreen()
-                }
+        AuthorizationManager.shared.status
+            .distinctUntilChanged()
+            .subscribe(onNext: { (status) in
+                self.navigateWithAuthorizationStatus(status)
             })
-            .disposed(by: bag)
-        
-        // Reload app
-        AppDelegate.reloadSubject
-            .subscribe(onNext: {force in
-                self.navigateWithRegistrationStep(force: force)
-            })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         // cache
         if let urlCache = SDURLCache(memoryCapacity: 0, diskCapacity: 2*1024*1024*1024, diskPath: SDURLCache.defaultCachePath(), enableForIOS5AndUp: true) {
@@ -138,99 +120,60 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func navigateWithRegistrationStep(force: Bool = false) {
-        let completion = {
-            let step = KeychainManager.currentUser()?.registrationStep ?? .firstStep
-            // Registered user
-            if step == .registered || step == .relogined {
-                // If first setting is uncompleted
-                let settingStep = KeychainManager.currentUser()?.settingStep ?? .backUpICloud
-                if settingStep != .completed {
-                    if !force,
-                        let nc = self.window?.rootViewController as? UINavigationController,
-                        (nc.viewControllers.first is BackUpKeysVC || nc.viewControllers.first is BoardingSetPasscodeVC)
-                    {
-                        return
-                    }
-                    
-                    let vc: UIViewController
-                    
-                    if KeychainManager.currentUser()?.registrationStep == .relogined {
-                        vc = BoardingSetPasscodeVC()
-                    } else {
-                        vc = BackUpKeysVC()
-                    }
-                    
-                    let nc = UINavigationController(rootViewController: vc)
-                    
-                    self.changeRootVC(nc)
-                    return
-                }
-                
-                // if all set
-                RestAPIManager.instance.authorize()
-                    .subscribe(onSuccess: { (_) in
-                        // Retrieve favourites
-                        FavouritesList.shared.retrieve()
-                        
-                        // show feed
-                        if !force && (self.window?.rootViewController is TabBarVC) {return}
-                        self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
-                        
-                        // set info
-                        self.deviceSetInfo()
-                    }, onError: { (error) in
-                        if let error = error as? ErrorAPI {
-                            switch error.caseInfo.message {
-                            case "Cannot get such account from BC",
-                                 _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
-                                do {
-                                    try KeychainManager.deleteUser()
-                                    AppDelegate.reloadSubject.onNext(true)
-                                } catch {
-                                    print("Could not delete user from key chain")
-                                }
-                                return
-                            default:
-                                break
-                            }
-                        }
-                        if let splashVC = self.window?.rootViewController as? SplashViewController {
-                            splashVC.showErrorScreen()
-                        }
-                        
-                    })
-                    .disposed(by: self.bag)
-                
-                // New user
-            } else {
-                if !force,
-                    let nc = self.window?.rootViewController as? UINavigationController,
-                    nc.viewControllers.first is WelcomeVC {
-                    return
-                }
-                
-                let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
-                let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
-                self.changeRootVC(welcomeNav)
-                
-                let navigationBarAppearace = UINavigationBar.appearance()
-                navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-                navigationBarAppearace.largeTitleTextAttributes =   [
-                                                                        NSAttributedString.Key.foregroundColor: UIColor.black,
-                                                                        NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold",
-                                                                                                                           size: 30.0 * Config.widthRatio)!
-                ]
-            }
-        }
-        
-        if force, let vc = window?.rootViewController, !(vc is SplashViewController) {
+    func navigateWithAuthorizationStatus(_ status: AuthorizationManager.Status) {
+        switch status {
+        case .authorizing:
             // Closing animation
             let vc = controllerContainer.resolve(SplashViewController.self)!
             self.window?.rootViewController = vc
-            completion()
-        } else {
-            completion()
+        case .boarding:
+            let vc: UIViewController
+            
+            if KeychainManager.currentUser()?.registrationStep == .relogined {
+                vc = BoardingSetPasscodeVC()
+            } else {
+                vc = BackUpKeysVC()
+            }
+            
+            let nc = UINavigationController(rootViewController: vc)
+            
+            self.changeRootVC(nc)
+        case .authorized:
+            // Retrieve favourites
+            FavouritesList.shared.retrieve()
+            
+            if let vc = window?.rootViewController,
+                vc is TabBarVC
+            {
+                return
+            }
+            self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+        case .registering:
+            let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
+            let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+            self.changeRootVC(welcomeNav)
+            
+            let navigationBarAppearace = UINavigationBar.appearance()
+            navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+            navigationBarAppearace.largeTitleTextAttributes =   [
+                                                                    NSAttributedString.Key.foregroundColor: UIColor.black,
+                                                                    NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold",
+                                                                                                                       size: 30.0 * Config.widthRatio)!
+            ]
+        case .authorizingError(let error):
+            switch error.caseInfo.message {
+            case "Cannot get such account from BC",
+                 _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
+                try! RestAPIManager.instance.logout()
+                AuthorizationManager.shared.forceReAuthorize()
+                return
+            default:
+                break
+            }
+            
+            if let splashVC = self.window?.rootViewController as? SplashViewController {
+                splashVC.showErrorScreen()
+            }
         }
     }
     
@@ -242,22 +185,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             self.window?.rootViewController = rootVC
         }
-        
+
         getConfig { (error) in
-            // Animation
-            rootVC.view.alpha = 0
-            UIView.animate(withDuration: 0.5, animations: {
-                rootVC.view.alpha = 1
-                if error != nil {
-                    if error?.toErrorAPI().caseInfo.message == "Need update application version" {
-                        rootVC.view.showForceUpdate()
-                        return
-                    }
-                    rootVC.view.showErrorView {
-                        AppDelegate.reloadSubject.onNext(true)
-                    }
+            if let error = error {
+                if error.toErrorAPI().caseInfo.message == "Need update application version" {
+                    rootVC.view.showForceUpdate()
+                    return
                 }
-            })
+                print("getConfig = \(error)")
+            }
         }
     }
     
@@ -271,7 +207,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .disposed(by: bag)
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         AnalyticsManger.shared.backgroundApp()
         SocketManager.shared.disconnect()
     }
@@ -282,10 +218,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+        UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
         SocketManager.shared.disconnect()
         self.saveContext()
     }
-
+    
     // MARK: - Custom Functions
     private func configureNotifications() {
         // Set delegate for Messaging
@@ -309,34 +246,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.notificationCenter.getNotificationSettings(completionHandler: { (settings) in
             Logger.log(message: "Notification settings: \(settings)", event: .debug)
         })
-    }
-    
-    private func deviceSetInfo() {
-        // set info
-        let key = "AppDelegate.setInfo"
-        if !UserDefaults.standard.bool(forKey: key) {
-            let offset = -TimeZone.current.secondsFromGMT() / 60
-            RestAPIManager.instance.deviceSetInfo(timeZoneOffset: offset)
-                .subscribe(onSuccess: { (_) in
-                    UserDefaults.standard.set(true, forKey: key)
-                })
-                .disposed(by: bag)
-        }
-        
-        // fcm token
-        if !UserDefaults.standard.bool(forKey: Config.currentDeviceDidSendFCMToken)
-        {
-            UserDefaults.standard.rx.observe(String.self, Config.currentDeviceFcmTokenKey)
-                .filter {$0 != nil}
-                .map {$0!}
-                .take(1)
-                .asSingle()
-                .flatMap {RestAPIManager.instance.deviceSetFcmToken($0)}
-                .subscribe(onSuccess: { (_) in
-                    UserDefaults.standard.set(true, forKey: Config.currentDeviceDidSendFCMToken)
-                })
-                .disposed(by: bag)
-        }
     }
 
     private func scheduleLocalNotification(userInfo: [AnyHashable: Any]) {
@@ -457,19 +366,6 @@ extension AppDelegate {
 // MARK: - UNUserNotificationCenterDelegate
 @available(iOS 10, *)
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    // Receive push-message when App is active/in background
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler:    @escaping (UNNotificationPresentationOptions) -> Void) {
-        // Display Local Notification
-        let notificationContent = notification.request.content
-        
-        // Print full message.
-        Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
-
-        completionHandler([.alert, .sound])
-    }
-    
     // Tap on push message
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
@@ -489,7 +385,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         {
             do {
                 let notification = try JSONDecoder().decode(ResponseAPIGetNotificationItem.self, from: data)
-                notificationRelay.accept(notification)
+                notificationTappedRelay.accept(notification)
             } catch {
                 Logger.log(message: "Receiving notification error: \(error)", event: .error)
             }
@@ -509,8 +405,7 @@ extension AppDelegate: MessagingDelegate {
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
 
         UserDefaults.standard.set(fcmToken, forKey: Config.currentDeviceFcmTokenKey)
-
-        // TODO: If necessary send token to application server.
+        
         // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
 
@@ -529,6 +424,28 @@ extension AppDelegate {
                 return true
             }
         }
+
         return false
+    }
+}
+
+// MARK: - Share Extension pass data
+extension AppDelegate {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        switch url.description {
+        case "commun://createPost":
+            if let tabBar = self.window?.rootViewController as? TabBarVC {
+                if let presentedVC = tabBar.presentedViewController as? BasicEditorVC {
+                    presentedVC.loadShareExtensionData()
+                } else {
+                    tabBar.buttonAddTapped()
+                }
+            }
+       
+        default:
+            return false
+        }
+        
+        return true
     }
 }

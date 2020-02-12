@@ -10,8 +10,9 @@ import UIKit
 import RxSwift
 import SwifterSwift
 import CyberSwift
+import NotificationView
 
-public let tabBarHeight: CGFloat = CGFloat.adaptive(height: 60.0) + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
+public let tabBarHeight: CGFloat = .adaptive(height: 60.0) + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
 
 class TabBarVC: UITabBarController {
     // MARK: - Constants
@@ -163,8 +164,8 @@ class TabBarVC: UITabBarController {
     var tabBarItemAdd: UIButton {
         let button = UIButton(type: .system)
         
-        let itemSize = CGFloat.adaptive(height: 45)
-        let itemPadding = CGFloat.adaptive(height: 14)
+        let itemSize: CGFloat = .adaptive(height: 45)
+        let itemPadding: CGFloat = .adaptive(height: 14)
         
         let view = UIView(width: itemSize, height: itemSize, backgroundColor: .appMainColor)
         view.cornerRadius = itemSize / 2
@@ -237,29 +238,14 @@ class TabBarVC: UITabBarController {
     }
     
     @objc func buttonAddTapped() {
-        // open basic editor
-        let vc = BasicEditorVC()
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
-        
-        // or select editor ???
-//        showActionSheet(title: "choose an editor".localized().uppercaseFirst, actions: [
-//            UIAlertAction(title: "basic editor".localized().uppercaseFirst, style: .default, handler: { (_) in
-//                let vc = BasicEditorVC()
-//                vc.modalPresentationStyle = .fullScreen
-//                self.present(vc, animated: true, completion: nil)
-//            }),
-//            UIAlertAction(title: "article editor".localized().uppercaseFirst, style: .default, handler: { (_) in
-//                let vc = ArticleEditorVC()
-//                vc.modalPresentationStyle = .fullScreen
-//                self.present(vc, animated: true, completion: nil)
-//            }),
-//        ])
+        let basicEditorScene = BasicEditorVC()
+        basicEditorScene.modalPresentationStyle = .fullScreen
+        self.present(basicEditorScene, animated: true, completion: nil)
     }
-
+    
     func bind() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.notificationRelay
+        appDelegate.notificationTappedRelay
             .skipWhile {$0 == .empty}
             .subscribe(onNext: { (item) in
                 self.selectedViewController?.navigateWithNotificationItem(item)
@@ -282,10 +268,19 @@ class TabBarVC: UITabBarController {
                     let vc = nc.topViewController as? NotificationsPageVC
                 {
                     let vm = vc.viewModel as? NotificationsPageViewModel
-                    vm?.markAllAsViewed(timestamp: Date().string())
+                    vm?.markAllAsViewed(timestamp: Date().iso8601String)
                 }
             })
             .disposed(by: bag)
+        
+        // in-app notifications
+        SocketManager.shared.newNotificationsRelay
+            .filter {$0.count > 0}
+            .subscribe(onNext: { (items) in
+                guard let notif = items.first else {return}
+                self.showNotificationViewWithNotification(notif)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func navigateWithDeeplinkPath(_ path: [String]) {
@@ -308,5 +303,20 @@ class TabBarVC: UITabBarController {
             let postVC = PostPageVC(username: username, permlink: permlink, communityAlias: communityAlias)
             self.selectedViewController?.show(postVC, sender: nil)
         }
+    }
+    
+    private func showNotificationViewWithNotification(_ notification: ResponseAPIGetNotificationItem) {
+        let notificationView = NotificationView.default
+        notificationView.body = notification.content
+        notificationView.identifier = notification.identity
+        notificationView.delegate = self
+        notificationView.show()
+    }
+}
+
+extension TabBarVC: NotificationViewDelegate {
+    func notificationViewDidTap(_ notificationView: NotificationView) {
+        guard let notif = SocketManager.shared.newNotificationsRelay.value.first(where: {$0.identity == notificationView.identifier}) else {return}
+        (UIApplication.shared.delegate as! AppDelegate).notificationTappedRelay.accept(notif)
     }
 }

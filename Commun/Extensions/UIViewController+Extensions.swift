@@ -146,20 +146,24 @@ extension UIViewController {
     
     func showProfileWithUserId(_ userId: String) {
         // if profile was opened, shake it off!!
-        if let profileVC = self as? UserProfilePageVC, profileVC.userId == userId {
-            profileVC.view.shake()
-            return
-        }
+//        if let profileVC = self as? UserProfilePageVC, profileVC.userId == userId {
+//            profileVC.view.shake()
+//            return
+//        }
         
         // Open other user's profile
         if userId != Config.currentUser?.id {
             let profileVC = UserProfilePageVC(userId: userId)
             show(profileVC, sender: nil)
             return
+        } else {
+            let profileVC = MyProfilePageVC()
+            profileVC.shouldHideBackButton = false 
+            show(profileVC, sender: nil)
         }
         
         // my profile
-        view.shake()
+//        view.shake()
 //        if let profileNC = tabBarController?.viewControllers?.first(where: {($0 as? UINavigationController)?.viewControllers.first is MyProfilePageVC}),
 //            profileNC != tabBarController?.selectedViewController,
 //            let tabBarVC = tabBarController as? TabBarVC
@@ -199,7 +203,11 @@ extension UIViewController {
                 break
             }
         case "transfer":
-            if let id = item.from?.userId {
+            if item.from?.username == nil {
+                if let id = item.community?.communityId {
+                    showCommunityWithCommunityId(id)
+                }
+            } else if let id = item.from?.userId {
                 showProfileWithUserId(id)
             }
         case "reward":
@@ -246,11 +254,19 @@ extension UIViewController {
         view.removeFromSuperview()
         removeFromParent()
     }
-    
+   
     @objc func back() {
         popOrDismissVC()
     }
-    
+
+    @objc func leftButtonTapped() {
+        popOrDismissVC()
+    }
+
+    @objc func rightButtonTapped() {
+        popOrDismissVC()
+    }
+
     func backCompletion(_ completion: @escaping (() -> Void)) {
         popOrDismissVC(completion)
     }
@@ -268,7 +284,13 @@ extension UIViewController {
         backButton.tintColor = tintColor
         navigationItem.leftBarButtonItem = backButton
     }
-    
+
+    func setRightBarButtonForGoingBack(tintColor: UIColor = .black) {
+        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(back))
+        backButton.tintColor = tintColor
+        navigationItem.rightBarButtonItem = backButton
+    }
+
     func setLeftNavBarButton(with button: UIButton) {
         // backButton
         let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))

@@ -15,7 +15,7 @@ extension ResponseAPIContentGetCommunity {
         guard value != isSubscribed
         else {return}
         isSubscribed = value
-        var subscribersCount: UInt64 = (self.subscribersCount ?? 0)
+        var subscribersCount: Int64 = (self.subscribersCount ?? 0)
         if value == false && subscribersCount == 0 {subscribersCount = 0} else {
             if value == true {
                 subscribersCount += 1
@@ -40,7 +40,8 @@ extension CommunityController {
         ResponseAPIContentGetCommunity.observeItemChanged()
             .filter {$0.identity == self.community?.identity}
             .subscribe(onNext: {newCommunity in
-                self.setUp(with: newCommunity)
+                guard let community = self.community?.newUpdatedItem(from: newCommunity) else {return}
+                self.setUp(with: community)
             })
             .disposed(by: disposeBag)
     }
@@ -119,7 +120,7 @@ extension CommunityController {
             value != community?.isSubscribed
         else {return}
         community!.isSubscribed = value
-        var subscribersCount: UInt64 = (community!.subscribersCount ?? 0)
+        var subscribersCount: Int64 = (community!.subscribersCount ?? 0)
         if value == false && subscribersCount == 0 {subscribersCount = 0} else {
             if value == true {
                 subscribersCount += 1

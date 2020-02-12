@@ -130,17 +130,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     
     override func bindItems() {
         viewModel.items
-            .map {items in
-                // TODO: - Restrict notification types, remove later
-                items.filter {
-                    $0.eventType == "subscribe" ||
-                    $0.eventType == "reply" ||
-                    $0.eventType == "mention" ||
-                    $0.eventType == "upvote" ||
-                    $0.eventType == "reward" ||
-                    $0.eventType == "transfer"
-                }
-            }
+            .map {$0.filter {ResponseAPIGetNotificationItem.supportedTypes.contains($0.eventType)}}
             .map { (items) -> [ListSection] in
                 let calendar = Calendar.current
                 let today = calendar.startOfDay(for: Date())

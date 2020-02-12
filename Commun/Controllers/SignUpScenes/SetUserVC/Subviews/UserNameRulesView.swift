@@ -9,20 +9,20 @@
 import Foundation
 
 class UserNameRulesView: MyCardView {
-    // MARK: - Subviews
-    lazy var understoodButton = CommunButton.default(height: 50 * Config.heightRatio, label: "understood".localized().uppercaseFirst, isHuggingContent: false)
-    lazy var closeButton = UIButton.close(size: 24)
+    // MARK: - Properties
+    lazy var actionButton = CommunButton.default(height: .adaptive(height: 50.0), label: "".localized().uppercaseFirst, isHuggingContent: false)
+    lazy var closeButton = UIButton.close(size: .adaptive(width: 24.0))
     
-    // MARK: - Methods
+    // MARK: - Custom Functions
     override func commonInit() {
         super.commonInit()
         
         addSubview(closeButton)
         closeButton.autoPinTopAndTrailingToSuperView()
         
-        let titleLabel = UILabel.with(text: "username must be".localized().uppercaseFirst, textSize: 17, weight: .semibold)
+        let titleLabel = UILabel.with(text: viewParameters.title, textSize: .adaptive(width: 17.0), weight: .semibold)
         addSubview(titleLabel)
-        titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+        titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 20.0))
         titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: closeButton)
         
         let rulesText = """
@@ -34,24 +34,25 @@ class UserNameRulesView: MyCardView {
         •  The presence of two "dot" characters in a row is not valid
         """
         
-        let attributedString = NSMutableAttributedString(string: rulesText)
+        let attributedString = NSMutableAttributedString(string: viewParameters == .user ? rulesText : viewParameters.note)
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 8 * Config.heightRatio
+        paragraphStyle.lineSpacing = .adaptive(height: .adaptive(height: 8.0))
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         
-        let rulesLabel = UILabel.with(textSize: 15, textColor: .a5a7bd, numberOfLines: 0)
+        let rulesLabel = UILabel.with(textSize: .adaptive(width: 15.0), textColor: .a5a7bd, numberOfLines: 0)
         rulesLabel.attributedText = attributedString
         
         addSubview(rulesLabel)
-        rulesLabel.autoPinEdge(.top, to: .bottom, of: closeButton, withOffset: 13)
-        rulesLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
-        rulesLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        rulesLabel.autoPinEdge(.top, to: .bottom, of: closeButton, withOffset: .adaptive(height: 13.0))
+        rulesLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 20.0))
+        rulesLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 20.0))
         
-        addSubview(understoodButton)
-        understoodButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 20), excludingEdge: .top)
-        understoodButton.autoPinEdge(.top, to: .bottom, of: rulesLabel, withOffset: 20)
+        addSubview(actionButton)
+        actionButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 20), excludingEdge: .top)
+        actionButton.autoPinEdge(.top, to: .bottom, of: rulesLabel, withOffset: .adaptive(height: 20.0))
+        actionButton.setTitle(viewParameters.buttonTitle, for: .normal)
         
+        actionButton.addTarget(self, action: #selector(openLink(_:)), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-        understoodButton.addTarget(self, action: #selector(close), for: .touchUpInside)
     }
 }

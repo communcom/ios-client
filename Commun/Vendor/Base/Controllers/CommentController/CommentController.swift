@@ -22,6 +22,7 @@ extension CommentController {
         ResponseAPIContentGetComment.observeItemChanged()
             .filter {$0.identity == self.comment?.identity}
             .subscribe(onNext: {newComment in
+                guard let newComment = self.comment?.newUpdatedItem(from: newComment) else {return}
                 self.setUp(with: newComment)
             })
             .disposed(by: disposeBag)

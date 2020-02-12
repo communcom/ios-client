@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-class SubscribersVC: SubsViewController<ResponseAPIContentResolveProfile, SubscribersCell>, ProfileCellDelegate {
+class SubscribersVC: SubsViewController<ResponseAPIContentGetProfile, SubscribersCell>, ProfileCellDelegate {
     init(title: String? = nil, userId: String? = nil, communityId: String? = nil) {
         let viewModel = SubscribersViewModel(userId: userId, communityId: communityId)
         super.init(viewModel: viewModel)

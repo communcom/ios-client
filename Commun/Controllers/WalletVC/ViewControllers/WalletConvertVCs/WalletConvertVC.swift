@@ -231,7 +231,7 @@ class WalletConvertVC: BaseViewController {
                     self?.leftTextField.hideLoader()
                     
                     self?.convertButton.isEnabled = self?.shouldEnableConvertButton() ?? false
-                case .error(_):
+                case .error:
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
                     
@@ -277,8 +277,8 @@ class WalletConvertVC: BaseViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.isTranslucent = true
         showNavigationBar(false, animated: true, completion: nil)
@@ -288,6 +288,7 @@ class WalletConvertVC: BaseViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         setTabBarHidden(false)
     }
     
@@ -379,14 +380,6 @@ class WalletConvertVC: BaseViewController {
     }
     
     func layoutBottom() {
-        let warningLabel = UILabel.with(textSize: 12, weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
-        warningLabel.attributedText = NSMutableAttributedString()
-            .text("transfer time takes up to".localized().uppercaseFirst, size: 12, weight: .medium, color: .a5a7bd)
-            .text(" 5-30 " + "minutes".localized().uppercaseFirst, size: 12, weight: .medium, color: .appMainColor)
-
-        view.addSubview(warningLabel)
-        warningLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
-        warningLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
         
         // convertButton
         convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
@@ -394,13 +387,12 @@ class WalletConvertVC: BaseViewController {
         view.addSubview(convertButton)
         convertButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         convertButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        convertButton.autoPinEdge(.top, to: .bottom, of: warningLabel, withOffset: 20)
         
         let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: convertButton, attribute: .bottom, multiplier: 1.0, constant: 16)
         keyboardViewV.observeKeyboardHeight()
         self.view.addConstraint(keyboardViewV)
         
-        scrollView.autoPinEdge(.bottom, to: .top, of: warningLabel)
+        scrollView.autoPinEdge(.bottom, to: .top, of: convertButton)
     }
         
     // MARK: - Updating
@@ -492,11 +484,27 @@ class WalletConvertVC: BaseViewController {
 
 extension WalletConvertVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField.text != "" || string != "" {
-            let res = (textField.text ?? "") + string
-            let formatter = NumberFormatter()
-            return formatter.number(from: res) != nil
+        // if deleting
+        if string.isEmpty {return true}
+        
+        // get the current text, or use an empty string if that failed
+        let currentText = textField.text ?? ""
+
+        // attempt to read the range they are trying to change, or exit if we can't
+        guard let stringRange = Range(range, in: currentText) else { return false }
+
+        // add their new text to the existing text
+        var updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        
+        // check if newText is a Number
+        let formatter = NumberFormatter()
+        let isANumber = formatter.number(from: updatedText) != nil
+        
+        if updatedText.starts(with: "0") && !updatedText.starts(with: "0.") {
+            updatedText = currentText.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
+            textField.text = updatedText
         }
-        return true
+        
+        return isANumber
     }
 }

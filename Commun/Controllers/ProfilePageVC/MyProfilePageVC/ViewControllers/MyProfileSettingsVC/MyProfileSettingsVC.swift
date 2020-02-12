@@ -36,12 +36,12 @@ class MyProfileSettingsVC: BaseViewController {
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImage, withOffset: 10)
         
-        let button = UIButton.circleGray(imageName: "next-arrow")
-        button.isUserInteractionEnabled = false
-        view.addSubview(button)
-        button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        button.autoAlignAxis(toSuperviewAxis: .horizontal)
-        button.autoPinEdge(.leading, to: .trailing, of: userLabel, withOffset: 10)
+//        let button = UIButton.circleGray(imageName: "next-arrow")
+//        button.isUserInteractionEnabled = false
+//        view.addSubview(button)
+//        button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+//        button.autoAlignAxis(toSuperviewAxis: .horizontal)
+//        button.autoPinEdge(.leading, to: .trailing, of: userLabel, withOffset: 10)
         
         view.isUserInteractionEnabled = true
         let tap = CommunActionSheet.Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
@@ -61,7 +61,7 @@ class MyProfileSettingsVC: BaseViewController {
         
         // backButton
         setLeftNavBarButton(with: backButton)
-        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
         
         // scrollView
         view.addSubview(scrollView)
@@ -74,7 +74,7 @@ class MyProfileSettingsVC: BaseViewController {
         stackView = stackViewWithActions(actions: [
             CommunActionSheet.Action(title: "notifications".localized().uppercaseFirst, icon: UIImage(named: "profile_options_notifications"), handle: {
                 self.showNotificationSettings()
-            }),
+            })
 //            CommunActionSheet.Action(title: "interface language".localized().uppercaseFirst, icon: UIImage(named: "profile_options_interface_language"), handle: {
 //                self.selectLanguage()
 //            }),
@@ -87,7 +87,8 @@ class MyProfileSettingsVC: BaseViewController {
         stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         stackView.autoPinEdge(.top, to: .bottom, of: userView, withOffset: 20)
         
-        let logoutButton = UIButton(height: 65, label: "logout".localized().uppercaseFirst, backgroundColor: .white, textColor: UIColor(hexString: "#ED2C5B")!, cornerRadius: 10)
+        let logoutButton = UIButton(height: 50, label: "logout".localized().uppercaseFirst, backgroundColor: .white, textColor: UIColor(hexString: "#ED2C5B")!, cornerRadius: 10)
+        logoutButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
         
         scrollView.contentView.addSubview(logoutButton)
@@ -95,7 +96,12 @@ class MyProfileSettingsVC: BaseViewController {
         
         logoutButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        baseNavigationController?.changeStatusBarStyle(.default)
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if stackView.arrangedSubviews.count == 1 {

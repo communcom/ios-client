@@ -32,12 +32,12 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     lazy var firstSeparator: UIView = UIView(height: 2, backgroundColor: .appLightGrayColor)
 
     lazy var followersCountLabel: UILabel = {
-        let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
+        let label = UILabel.with(text: 10000000.kmFormatted, textSize: 15, weight: .bold)
         return label
     }()
     
     lazy var followingsCountLabel: UILabel = {
-        let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
+        let label = UILabel.with(text: 10000000.kmFormatted, textSize: 15, weight: .bold)
         return label
     }()
     
@@ -165,7 +165,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             CMSegmentedControl.Item(name: "comments".localized().uppercaseFirst)
         ]
         
-        observeProfileChange()
     }
 
     private func showCommunities() {
@@ -189,7 +188,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         nameLabel.text = userProfile.username
         
         // join date
-        joinedDateLabel.text = Formatter.joinedText(with: userProfile.registration.time)
+        joinedDateLabel.text = Formatter.joinedText(with: userProfile.registration?.time)
         
         // followButton
         let isFollowing = userProfile.isSubscribed ?? false

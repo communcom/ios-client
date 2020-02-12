@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import SwiftTheme
+import SafariServices
 
 class BaseViewController: UIViewController {
     // MARK: - Properties
@@ -40,6 +41,18 @@ class BaseViewController: UIViewController {
         }
     }
     
+    func load(url: String) {
+        if let url = URL(string: url) {
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = true
+
+            let safariVC = SFSafariViewController(url: url, configuration: config)
+            safariVC.delegate = self
+
+            present(safariVC, animated: true)
+        }
+    }
+    
 //    func avoidTabBar() {
 //        // avoid tabBar
 //        guard let scrollView = contentScrollView,
@@ -51,4 +64,11 @@ class BaseViewController: UIViewController {
 //        scrollView.scrollIndicatorInsets.bottom = insetsBottom + view.safeAreaInsets.bottom
 //        scrollView.contentInset = contentInsets
 //    }
+}
+
+// MARK: - SFSafariViewControllerDelegate
+extension BaseViewController: SFSafariViewControllerDelegate {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        dismiss(animated: true)
+    }
 }

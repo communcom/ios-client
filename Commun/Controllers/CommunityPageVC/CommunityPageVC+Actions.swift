@@ -20,13 +20,51 @@ extension CommunityPageVC {
                 self.showAlert(
                     title: "community hidden".localized().uppercaseFirst,
                     message: "You've hidden" + " \(self.viewModel.profile.value?.communityId ?? "this community")" + ".\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
-                        self.viewModel.profile.value?.notifyDeleted()
-                        self.viewModel.profile.value?.notifyEvent(eventName: ResponseAPIContentGetCommunity.blockedEventName)
+                        var profile = self.viewModel.profile.value
+                        profile?.isInBlacklist = true
+                        profile?.notifyChanged()
+                        
+                        profile?.notifyDeleted()
+                        profile?.notifyEvent(eventName: ResponseAPIContentGetCommunity.blockedEventName)
                     }
             }) { (error) in
                 self.hideHud()
                 self.showError(error)
             }
+            .disposed(by: disposeBag)
+    }
+    
+    func unhideCommunity() {
+        guard let id = viewModel.profile.value?.communityId else {return}
+        showIndetermineHudWithMessage("unhiding".localized().uppercaseFirst + "...")
+        
+        BlockchainManager.instance.unhideCommunity(id)
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+            .subscribe(onCompleted: {
+                self.hideHud()
+                self.showAlert(
+                    title: "community unhidden".localized().uppercaseFirst,
+                    message: "You've un hidden" + " \(self.viewModel.profile.value?.communityId ?? "this community")" + ".") { _ in
+                        var profile = self.viewModel.profile.value
+                        profile?.isInBlacklist = false
+                        profile?.notifyChanged()
+                    }
+            }) { (error) in
+                self.hideHud()
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    @objc func getPointsButtonTapped(_ sender: UIButton) {
+        guard let userID = Config.currentUser?.id, let viewModel = viewModel as? CommunityPageViewModel, let communityID = viewModel.communityId else { return }
+
+        viewModel.loadBalances(byUserID: userID)
+            .subscribe(onSuccess: { balances in
+                self.openOther(balances: balances, withSymbol: communityID)
+            }, onError: { error in
+                self.showError(error)
+            })
             .disposed(by: disposeBag)
     }
 }

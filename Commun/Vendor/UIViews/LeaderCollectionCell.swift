@@ -54,7 +54,7 @@ class LeaderCollectionCell: MyCollectionViewCell, ListItemCellType {
         nameLabel.text = leader.username
         
         let pointsText = NSMutableAttributedString(
-            string: "\(leader.rating.kmFormatted) " + "points".localized().uppercaseFirst + " • ",
+            string: "\(leader.rating.kmFormatted()) " + "points".localized().uppercaseFirst + " • ",
             attributes: [
                 .foregroundColor: UIColor.a5a7bd,
                 .font: UIFont.boldSystemFont(ofSize: 12)

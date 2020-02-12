@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import ESPullToRefresh
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
     // MARK: - Constants
@@ -16,6 +15,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     let coverVisibleHeight: CGFloat = 150
     var coverImageHeightConstraint: NSLayoutConstraint!
     var coverImageWidthConstraint: NSLayoutConstraint!
+    let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // MARK: - Properties
     lazy var viewModel: ProfileViewModel<ProfileType> = self.createViewModel()
@@ -96,11 +96,11 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         tableView.setContentOffset(CGPoint(x: 0, y: -coverHeight), animated: true)
         
         // pull to refresh
-        tableView.es.addPullToRefresh { [unowned self] in
-            self.tableView.es.stopPullToRefresh()
-            self.reload()
-        }
-        tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = 0
+
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+        refreshControl.tintColor = .white
+        refreshControl.subviews.first?.bounds.origin.y = 112
         
         tableView.rx.endUpdatesEvent
             .subscribe(onNext: { _ in
@@ -113,7 +113,12 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         
         _headerView.segmentedControl.delegate = self
     }
-    
+
+    @objc func refresh() {
+        self.reload()
+        refreshControl.endRefreshing()
+    }
+
     override func bind() {
         super.bind()
         bindControls()
@@ -121,6 +126,19 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         bindProfile()
         
         bindList()
+    }
+    
+    func bindProfile() {
+        viewModel.profile
+            .filter {$0 != nil}
+            .map {$0!}
+            .do(onNext: { (_) in
+                self._headerView.selectedIndex.accept(0)
+            })
+            .subscribe(onNext: { [weak self] (item) in
+                self?.setUp(profile: item)
+            })
+            .disposed(by: disposeBag)
     }
     
     func setUp(profile: ProfileType) {
@@ -168,20 +186,14 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
 
         showTitle(tableView.contentOffset.y >= -43)
     }
-    
-    // TODO: - Temporary solution to fix rightBarButton padding, remove later
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        if let view = self.navigationController?.navigationBar.subviews[safe: 1]
-        {
-            view.constraints.first(where: {$0.constant == -16 && $0.firstAttribute == .trailing})?.constant = 0
-        }
-    }
 
     func showTitle(_ show: Bool, animated: Bool = false) {
+        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: CGFloat.adaptive(width: 16.0), offset: CGSize(width: 0.0, height: CGFloat.adaptive(height: 6.0)), opacity: 0.05)
+        baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
         coverImageView.isHidden = show
         showNavigationBar(show, animated: animated) {
             self.optionsButton.tintColor = show ? .black: .white
+            self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
             if !show {
                 self.optionsButton.layer.shadowRadius = 2
                 self.optionsButton.layer.shadowColor = UIColor.black.cgColor

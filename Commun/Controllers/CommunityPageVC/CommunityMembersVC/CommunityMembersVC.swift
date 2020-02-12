@@ -13,7 +13,7 @@ import RxDataSources
 class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDelegate {
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
-        case subscriber(ResponseAPIContentResolveProfile)
+        case subscriber(ResponseAPIContentGetProfile)
         case leader(ResponseAPIContentGetLeader)
         
         var identity: String {
@@ -29,6 +29,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     // MARK: - Properties
     var selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem
     var viewModel: CommunityMembersViewModel
+    let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // MARK: - Subviews
     lazy var topTabBar = CMTopTabBar(
@@ -41,7 +42,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         tableView.backgroundColor = .clear
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
-        tableView.contentInset = UIEdgeInsets(top: 10, left: -10, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
@@ -85,7 +86,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         
         // tableView
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0), excludingEdge: .top)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
         tableView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
         
         tableView.backgroundColor = .f3f5fa
@@ -95,10 +96,14 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         tableView.separatorStyle = .none
         
         // pull to refresh
-        tableView.es.addPullToRefresh { [unowned self] in
-            self.tableView.es.stopPullToRefresh()
-            self.reload()
-        }
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+        refreshControl.tintColor = .appGrayColor
+    }
+
+    @objc func refresh() {
+        reload()
+        refreshControl.endRefreshing()
     }
     
     override func bind() {

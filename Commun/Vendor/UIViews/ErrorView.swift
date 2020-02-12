@@ -13,11 +13,11 @@ class ErrorView: MyView {
     
     lazy var imageView = UIImageView(forAutoLayout: ())
     
-    lazy var title = UILabel.with(textSize: CGFloat.adaptive(height: 30), weight: .semibold, textColor: .black, numberOfLines: 0, textAlignment: .center)
+    lazy var title = UILabel.with(textSize: .adaptive(height: 30), weight: .semibold, textColor: .black, numberOfLines: 0, textAlignment: .center)
 
-    lazy var subtitle = UILabel.with(textSize: CGFloat.adaptive(height: 17), weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+    lazy var subtitle = UILabel.with(textSize: .adaptive(height: 17), weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
     
-    lazy var retryButton = UIButton(height: CGFloat.adaptive(height: 50), labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: .appMainColor, textColor: .white, cornerRadius: CGFloat.adaptive(height: 25))
+    lazy var retryButton = UIButton(height: .adaptive(height: 50), labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: .appMainColor, textColor: .white, cornerRadius: .adaptive(height: 25))
 
     var retryAction: (() -> Void)?
     
@@ -61,7 +61,7 @@ class ErrorView: MyView {
     }
     
     func layoutImageView() {
-        imageView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 10 * Config.heightRatio)
+        imageView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 50 * Config.heightRatio)
         imageView.autoAlignAxis(toSuperviewAxis: .vertical)
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: imageRatio)
             .isActive = true
@@ -84,7 +84,7 @@ class ErrorView: MyView {
         retryButton.autoPinEdge(.top, to: .bottom, of: subtitle, withOffset: 40 * Config.heightRatio)
         retryButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 30 * Config.heightRatio)
         retryButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 30 * Config.heightRatio)
-        retryButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16 * Config.heightRatio + 45)
+        retryButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 50 * Config.heightRatio + 45)
     }
     
     override func layoutSubviews() {

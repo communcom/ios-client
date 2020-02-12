@@ -37,12 +37,12 @@ extension UIImageView {
             sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "ProfilePageUserAvatar")) { [weak self] (_, error, _, _) in
                 if error != nil {
                     // Placeholder image
-                    self?.setNonAvatarImageWithId(namePlaceHolder)
+                    self?.image = UIImage(named: "empty-avatar")
                 }
             }
         } else {
             // Placeholder image
-            setNonAvatarImageWithId(namePlaceHolder)
+            image = UIImage(named: "empty-avatar")
         }
     }
     
@@ -61,22 +61,26 @@ extension UIImageView {
          }
      }
 
-    func setImageDetectGif(with urlString: String?, completed: SDExternalCompletionBlock? = nil) {
+    func setImageDetectGif(with urlString: String?, completed: SDExternalCompletionBlock? = nil, customWidth: CGFloat? = nil) {
         guard let urlString = urlString,
             let url = URL(string: urlString)
         else {return}
         if urlString.lowercased().ends(with: ".gif") {
             setGifFromURL(url)
         } else {
-            downloadImageFromUrl(url, placeholderImage: image)
+            downloadImageFromUrl(url, placeholderImage: image, customWidth: customWidth)
         }
     }
 
-    private func downloadImageFromUrl(_ url: URL, placeholderImage: UIImage?) {
+    private func downloadImageFromUrl(_ url: URL, placeholderImage: UIImage?, customWidth: CGFloat? = nil) {
         var newUrl = url
         var placeholderUrl: URL?
-
+        var width = bounds.width
         showBlur(false)
+
+        if let customWidth = customWidth {
+            width = customWidth
+        }
 
         // resize image
         if url.host == "img.commun.com" {
@@ -85,7 +89,7 @@ extension UIImageView {
                 newUrl = url.deletingLastPathComponent()
                 placeholderUrl = newUrl.appendingPathComponent("20x0")
                 placeholderUrl = placeholderUrl?.appendingPathComponent((components.last)!)
-                newUrl = newUrl.appendingPathComponent("\(UInt(bounds.width * 1.5))x0")
+                newUrl = newUrl.appendingPathComponent("\(UInt(width * 1.5))x0")
                 newUrl = newUrl.appendingPathComponent((components.last)!)
             }
         }

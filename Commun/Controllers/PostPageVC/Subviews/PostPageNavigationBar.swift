@@ -18,10 +18,7 @@ class PostPageNavigationBar: MyView, CommunityController {
     // MARK: - Subviews
     lazy var backButton: UIButton = .back(tintColor: .a5a7bd)
     
-    lazy var postMetaView: PostMetaView = {
-        let view = PostMetaView(height: 40)
-        return view
-    }()
+    lazy var postMetaView = PostMetaView(height: 40)
     
     lazy var moreButton: UIButton = {
         let button = UIButton(width: 36, height: 40, contentInsets: UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6))

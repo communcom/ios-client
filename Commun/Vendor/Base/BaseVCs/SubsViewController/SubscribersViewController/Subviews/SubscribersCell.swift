@@ -17,10 +17,10 @@ class SubscribersCell: SubsItemCell, ListItemCellType {
             actionButton = newValue
         }
     }
-    var profile: ResponseAPIContentResolveProfile?
+    var profile: ResponseAPIContentGetProfile?
     weak var delegate: ProfileCellDelegate?
     
-    func setUp(with profile: ResponseAPIContentResolveProfile) {
+    func setUp(with profile: ResponseAPIContentGetProfile) {
         self.profile = profile
         avatarImageView.setAvatar(urlString: profile.avatarUrl, namePlaceHolder: profile.username)
         nameLabel.text = profile.username

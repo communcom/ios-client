@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import PureLayout
 
 class PostEditorVC: EditorVC {
     // MARK: - Constants
@@ -53,6 +54,7 @@ class PostEditorVC: EditorVC {
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // if editing post
         if let post = viewModel.postForEdit {
             communityView.removeGestureRecognizers()

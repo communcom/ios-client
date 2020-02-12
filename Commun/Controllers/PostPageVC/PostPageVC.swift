@@ -19,9 +19,17 @@ class PostPageVC: CommentsViewController {
         var limit: UInt = 10
     }
     
+    // MARK: - Constants
+    let navigationBarHeight: CGFloat = 56
+    var commentFormMinPaddingTop: CGFloat {
+        view.safeAreaInsets.top + navigationBarHeight + 10
+    }
+    
     // MARK: - Subviews
-    lazy var navigationBar = PostPageNavigationBar(height: 56)
-    lazy var postView = PostHeaderView(tableView: tableView)
+    lazy var navigationBar = PostPageNavigationBar(height: navigationBarHeight)
+    lazy var postHeaderView = PostHeaderView(tableView: tableView)
+
+    lazy var shadowView = UIView(forAutoLayout: ())
     lazy var commentForm = CommentForm(backgroundColor: .white)
     
     // MARK: - Properties
@@ -35,8 +43,8 @@ class PostPageVC: CommentsViewController {
         super.init(viewModel: viewModel)
     }
     
-    init(userId: String? = nil, username: String? = nil, permlink: String, communityId: String? = nil, communityAlias: String? = nil) {
-        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias)
+    init(userId: String? = nil, username: String? = nil, permlink: String, communityId: String? = nil, communityAlias: String? = nil, selectedComment: ResponseAPIContentGetComment? = nil) {
+        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias, selectedComment: selectedComment)
         super.init(viewModel: viewModel)
     }
     
@@ -59,6 +67,15 @@ class PostPageVC: CommentsViewController {
         setTabBarHidden(false)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        commentForm.superview?.layoutIfNeeded()
+        commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
+        view.bringSubviewToFront(commentForm)
+        startContentOffsetY = tableView.contentOffset.y
+    }
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
@@ -67,7 +84,7 @@ class PostPageVC: CommentsViewController {
         view.addSubview(navigationBar)
         navigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
-
+        
         // top white view
         let topView = UIView(backgroundColor: .white)
         view.addSubview(topView)
@@ -75,19 +92,20 @@ class PostPageVC: CommentsViewController {
         topView.autoPinEdge(.bottom, to: .top, of: navigationBar)
 
         // tableView
-        tableView.contentInset = UIEdgeInsets(top: 56, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: navigationBarHeight, left: 0, bottom: 0, right: 0)
         tableView.keyboardDismissMode = .onDrag
         
         // postView
-        postView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
+        postHeaderView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
-        let shadowView = UIView(forAutoLayout: ())
-        shadowView.addShadow(ofColor: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), radius: CGFloat.adaptive(width: 4.0), offset: CGSize(width: 0, height: CGFloat.adaptive(height: -3.0)), opacity: 1.0)
+        shadowView.addShadow(ofColor: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), radius: .adaptive(width: 4.0), offset: CGSize(width: 0, height: .adaptive(height: -3.0)), opacity: 1.0)
 //        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
 
         view.addSubview(shadowView)
+        shadowView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: commentFormMinPaddingTop).isActive = true
+        
         shadowView.autoPinEdge(toSuperviewSafeArea: .leading)
         shadowView.autoPinEdge(toSuperviewSafeArea: .trailing)
         let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: shadowView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
@@ -96,17 +114,7 @@ class PostPageVC: CommentsViewController {
         
         shadowView.addSubview(commentForm)
         commentForm.autoPinEdgesToSuperviewEdges()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        commentForm.superview?.layoutIfNeeded()
-        commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
-        view.bringSubviewToFront(commentForm)
-        startContentOffsetY = tableView.contentOffset.y
-        navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
-    }
+ }
     
     override func bind() {
         super.bind()
@@ -128,17 +136,10 @@ class PostPageVC: CommentsViewController {
                 })
                 .disposed(by: disposeBag)
         }
+        
 //        else if let comment = commentThatNeedsScrollTo {
 //            //TODO: scroll to comment
 //        }
-
-        tableView.rx.contentOffset
-        .map { $0.y <= self.startContentOffsetY }
-        .distinctUntilChanged()
-        .subscribe(onNext: { (showShadow) in
-            self.navigationBar.addShadow(ofColor: showShadow ? .clear : .shadow, radius: 20, offset: CGSize(width: 0, height: 3), opacity: 0.07)
-        })
-        .disposed(by: disposeBag)
         
         // observer
         observePostDeleted()
@@ -273,8 +274,23 @@ class PostPageVC: CommentsViewController {
         })
     }
     
+    // MARK: - Custom Functions
+    func scrollTo(selectedComment: ResponseAPIContentGetComment) {
+        DispatchQueue.main.async {
+            // https://stackoverflow.com/a/16071589
+            var indexRow = 0
+            
+            if let viewModel = self.viewModel as? PostPageViewModel, let selectedComment = viewModel.selectedComment {
+                indexRow = viewModel.items.value.firstIndex(of: selectedComment) ?? 0
+            }
+            
+            self.tableView.safeScrollToRow(at: IndexPath(row: indexRow, section: 0), at: .top, animated: true)
+        }
+    }
+    
+    // MARK: - Actions
     @objc func openMorePostActions() {
-        postView.openMorePostActions()
+        postHeaderView.openMorePostActions()
     }
     
     @objc func sortButtonDidTouch() {

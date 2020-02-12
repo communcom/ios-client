@@ -28,10 +28,10 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
         super.init(actions: [
             Action(title: "upvote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_upvote")),
 //            Action(title: "downvote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_downvote")),
-//            Action(title: "points transfer".localized().uppercaseFirst, icon: UIImage(named: "profile_options_points_transfer")),
+            Action(title: "transfer".localized().uppercaseFirst, icon: UIImage(named: "profile_options_points_transfer")),
             Action(title: "reply".localized().uppercaseFirst, icon: UIImage(named: "profile_options_comment_and_reply")),
             Action(title: "mention".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention")),
-//            Action(title: "rewards for post".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_post")),
+            Action(title: "reward".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_post")),
 //            Action(title: "rewards for vote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_vote")),
             Action(title: "subscribe".localized().uppercaseFirst, icon: UIImage(named: "profile_options_following"))
         ])
@@ -47,7 +47,7 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
         
         title = "notifications".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
-        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
     }
     
     override func bind() {
@@ -97,6 +97,10 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
             notificationType = "mention"
         case "subscribe".localized().uppercaseFirst:
             notificationType = "subscribe"
+        case "transfer".localized().uppercaseFirst:
+            notificationType = "transfer"
+        case "reward".localized().uppercaseFirst:
+            notificationType = "reward"
         default:
             break
         }

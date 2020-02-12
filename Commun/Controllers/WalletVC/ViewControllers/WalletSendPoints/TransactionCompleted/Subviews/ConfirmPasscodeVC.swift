@@ -18,14 +18,14 @@ import RxSwift
 class ConfirmPasscodeVC: THPinViewController {
     // MARK: - Properties
     let currentPin: String = Config.currentUser?.passcode ?? "XXXX"
-    let closeButton = UIButton.circle(size: CGFloat.adaptive(width: 24.0), backgroundColor: #colorLiteral(red: 0.953, green: 0.961, blue: 0.98, alpha: 1), imageName: "icon-round-close-grey-default")
-    let touchFaceIdButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 50.0), height: CGFloat.adaptive(width: 50.0))))
+    let closeButton = UIButton.circle(size: .adaptive(width: 24.0), backgroundColor: #colorLiteral(red: 0.953, green: 0.961, blue: 0.98, alpha: 1), imageName: "icon-round-close-grey-default")
+    let touchFaceIdButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 50.0), height: .adaptive(width: 50.0))))
 
     var error: NSError?
     var completion: (() -> Void)?
     let disposeBag = DisposeBag()
     lazy var context = LAContext()
-
+    let biometricsEnabled = UserDefaults.standard.bool(forKey: Config.currentUserBiometryAuthEnabled)
     
     // MARK: - Class Initialization
     init() {
@@ -60,8 +60,11 @@ class ConfirmPasscodeVC: THPinViewController {
         modifyPromtTitle(asError: false)
         
         if !context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            showAlert(title: "info".localized().uppercaseFirst, message: "no biometry on your device".localized())
+            touchFaceIdButton.isHidden = true
+        } else {
+            touchFaceIdButtonTapped()
         }
+        
     }
     
     // MARK: - Custom Functions
@@ -69,7 +72,7 @@ class ConfirmPasscodeVC: THPinViewController {
         // Add close button
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         view.addSubview(closeButton)
-        closeButton.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 45.0), xInset: CGFloat.adaptive(width: 15.0))
+        closeButton.autoPinTopAndTrailingToSuperView(inset: .adaptive(height: 45.0), xInset: .adaptive(width: 15.0))
         
         // Add Touch/Face ID button
         let buttonImage = UIImage(named: context.biometryType == .faceID ? "icon-face-id-grey-default" : "icon-touch-id-grey-default" )
@@ -81,7 +84,7 @@ class ConfirmPasscodeVC: THPinViewController {
         if let pinView = view.subviews.first as? THPinView, let pinNumPadView = pinView.subviews.first(where: { $0.isKind(of: THPinNumPadView.self )}),
             let deleteButton = pinView.subviews.first(where: { $0.isKind(of: UIButton.self )}) as? UIButton {
             pinNumPadView.addSubview(touchFaceIdButton)
-            touchFaceIdButton.autoPinBottomAndTrailingToSuperView(inset: CGFloat.adaptive(height: 25.0 / 2), xInset: CGFloat.adaptive(width: 25.0 / 2))
+            touchFaceIdButton.autoPinBottomAndTrailingToSuperView(inset: .adaptive(height: 25.0 / 2), xInset: .adaptive(width: 25.0 / 2))
                         
             deleteButton.rx.tap
                 .bind {
@@ -104,7 +107,11 @@ class ConfirmPasscodeVC: THPinViewController {
     }
     
     private func didShowVerifyButton(_ value: Bool) {
-        touchFaceIdButton.isHidden = !value
+        if biometricsEnabled {
+            touchFaceIdButton.isHidden = !value
+        } else {
+            touchFaceIdButton.isHidden = true
+        }
     }
     
     private func verificationSuccessful() {
@@ -112,31 +119,26 @@ class ConfirmPasscodeVC: THPinViewController {
         closeButtonTapped(closeButton)
     }
 
-    
     // MARK: - Actions
     @objc func closeButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
     
-     @objc func touchFaceIdButtonTapped(_ sender: UIButton) {
-        guard error == nil else { return }
-        
+     @objc func touchFaceIdButtonTapped() {
+        guard error == nil, biometricsEnabled == true else { return }
+
         let reason = "Identify yourself!"
-        
-        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
+
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, _ in
             guard let strongSelf = self else { return }
-            
-            if success {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if success {
                     strongSelf.verificationSuccessful()
                 }
-            } else {
-                strongSelf.showError(authenticationError!)
             }
         }
     }
 }
-
 
 // NARK: - THPinViewDelegate
 extension ConfirmPasscodeVC: THPinViewDelegate {

@@ -57,22 +57,17 @@ extension BasicEditorVC {
     func bindAttachments() {
         _viewModel.attachment
             .subscribe(onNext: { [weak self] (attachment) in
+                self?.attachmentView.removeSubviews()
+                
                 guard let attachment = attachment,
                     let attributes = attachment.attributes,
                     let type = attributes.type
                 else {
-                    self?.attachmentView.removeSubviews()
-                    self?.attachmentView.autoSetDimension(.height, toSize: 300)
-                    self?.attachmentView.isHidden = true
                     return
                 }
-                self?.attachmentView.removeSubviews()
-                self?.attachmentView.heightConstraint?.isActive = false
-                self?.attachmentView.isHidden = false
                 
                 let attachmentView = AttachmentView(forAutoLayout: ())
                 attachmentView.attachment = attachment
-                attachmentView.isUserInteractionEnabled = true
                 attachmentView.tag = 0
                 attachmentView.delegate = self
                 self?.attachmentView.addSubview(attachmentView)

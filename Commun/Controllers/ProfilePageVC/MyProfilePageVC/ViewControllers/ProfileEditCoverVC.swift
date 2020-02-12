@@ -59,7 +59,7 @@ class ProfileEditCoverVC: UIViewController {
                 // user name
                 self.userNameLabel.text = profile.username
                 // join date
-                self.joinedDateLabel.text = Formatter.joinedText(with: profile.registration.time)
+                self.joinedDateLabel.text = Formatter.joinedText(with: profile.registration?.time)
             })
             .disposed(by: bag)
     }

@@ -53,6 +53,8 @@ class ListFetcher<T: ListItemType> {
     var offset: UInt = 0
     var search: String?
     
+    private var reloadClearedResult = true
+    
     // MARK: - Properties
     let disposeBag = DisposeBag()
     let state = BehaviorRelay<ListFetcherState>(value: .loading(false))
@@ -66,7 +68,10 @@ class ListFetcher<T: ListItemType> {
         state.accept(.loading(false))
         if clearResult {
             items.accept([])
+        } else {
+            items.accept(Array(items.value.prefix(Int(limit))))
         }
+        reloadClearedResult = clearResult
         offset = 0
     }
     
@@ -122,10 +127,31 @@ class ListFetcher<T: ListItemType> {
     }
     
     func join(newItems items: [T]) -> [T] {
-        var newList = items.filter { (item) -> Bool in
-            !self.items.value.contains {$0.identity == item.identity}
+        var updatedItems = [T]()
+        
+        // add new items
+        if !reloadClearedResult {
+            reloadClearedResult = true
+            updatedItems = items
+            updatedItems.joinUnique(self.items.value)
+        } else {
+            updatedItems = self.items.value
+            updatedItems.joinUnique(items)
         }
-        newList = self.items.value + newList
-        return newList
+        
+        // update current items
+        updatedItems = updatedItems.map {
+            var mutableItem = $0
+            
+            // if item exists in list, update it
+            if let newItem = items.first(where: {$0.identity == mutableItem.identity}),
+                let updatedItem = mutableItem.newUpdatedItem(from: newItem)
+            {
+                mutableItem = updatedItem
+            }
+            return mutableItem
+        }
+        
+        return updatedItems
     }
 }

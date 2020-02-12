@@ -79,14 +79,33 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
 //        return ResponseAPIContentGetPosts.singleWithMockData()
 //            .delay(0.8, scheduler: MainScheduler.instance)
         return RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, sortType: filter.sortType, limit: limit, offset: offset)
-        .map {$0.items ?? []}
+            .map { $0.items ?? [] }
+            .do(onSuccess: { (posts) in
+                self.loadRewards(fromPosts: posts)
+            })
     }
     
     override func join(newItems items: [ResponseAPIContentGetPost]) -> [ResponseAPIContentGetPost] {
-        var newList = items.filter { (item) -> Bool in
-            !self.items.value.contains {$0.identity == item.identity} && item.document != nil
-        }
-        newList = self.items.value + newList
+        let newList = super.join(newItems: items)
+            .filter { $0.document != nil}
         return newList
+    }
+
+    func loadRewards(fromPosts posts: [ResponseAPIContentGetPost]) {
+        let contentIds = posts.map { RequestAPIContentId(responseAPI: $0.contentId) }
+        
+        DispatchQueue.main.async {
+            RestAPIManager.instance.rewardsGetStateBulk(posts: contentIds)
+                .map({ $0.mosaics })
+                .subscribe(onSuccess: { (mosaics) in
+                    mosaics.forEach({ (mosaic) in
+                        if var post = posts.first(where: { $0.contentId.userId == mosaic.contentId.userId && $0.contentId.permlink == mosaic.contentId.permlink }) {
+                            post.mosaic = mosaic
+                            post.notifyChanged()
+                        }
+                    })
+                })
+                .disposed(by: self.disposeBag)
+        }
     }
 }

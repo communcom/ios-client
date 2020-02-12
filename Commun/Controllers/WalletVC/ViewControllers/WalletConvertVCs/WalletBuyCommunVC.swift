@@ -84,6 +84,8 @@ class WalletBuyCommunVC: WalletConvertVC {
             .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
             .subscribe(onNext: { (value) in
                 if value == 0 {
+                    self.viewModel.currentBuyPriceSymbol = nil
+                    self.viewModel.currentBuyPriceQuantity = nil
                     self.viewModel.priceLoadingState.accept(.finished)
                     self.viewModel.buyPrice.accept(0)
                     return
@@ -107,6 +109,7 @@ class WalletBuyCommunVC: WalletConvertVC {
             .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
             .subscribe(onNext: { (value) in
                 if value == 0 {
+                    self.viewModel.currentSellPriceQuantity = nil
                     self.viewModel.priceLoadingState.accept(.finished)
                     self.viewModel.sellPrice.accept(0)
                     return
@@ -188,12 +191,12 @@ class WalletBuyCommunVC: WalletConvertVC {
                     communBalance.notifyChanged()
                 }
 
-                let symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
+                let symbol: Symbol = Symbol(sell: balance.symbol, buy: Config.defaultSymbol)
                 
                 let transaction = Transaction(buyBalance: nil,
                                               sellBalance: nil,
                                               friend: nil,
-                                              amount: CGFloat(value),
+                                              amount: CGFloat(expectedValue ?? 0),
                                               history: nil,
                                               actionType: .buy,
                                               symbol: symbol,

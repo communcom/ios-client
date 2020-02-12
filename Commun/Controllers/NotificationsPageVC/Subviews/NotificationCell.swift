@@ -24,7 +24,12 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
     lazy var contentContainerView = UIView(forAutoLayout: ())
     lazy var contentLabel = UILabel.with(text: "Notification", textSize: 15, numberOfLines: 4)
     lazy var timestampLabel = UILabel.with(text: "ago", textSize: 13, textColor: .a5a7bd)
-    lazy var descriptionImageView = UIImageView(width: 44, height: 44, cornerRadius: 10)
+    lazy var descriptionImageView: UIImageView = {
+        let imageView = UIImageView(width: 44, height: 44, cornerRadius: 10)
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .appGrayColor
+        return imageView
+    }()
     lazy var actionButton = CommunButton.default(label: "follow")
     
     override func setUpViews() {
@@ -85,27 +90,19 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         timestampLabel.text = dateString
         
         var avatarUrl = (item.author ?? item.voter ?? item.user)?.avatarUrl
+        var userId = (item.author ?? item.voter ?? item.user)?.userId
         var avatarPlaceholder = (item.author ?? item.voter ?? item.user)?.username ?? "User"
+        
+        // content
+        contentLabel.attributedText = item.attributedContent
+        
         switch item.eventType {
         case "mention":
             iconImageView.image = UIImage(named: "notifications-page-mention")
-            let aStr = NSMutableAttributedString()
-                .semibold(item.author?.username ?? "a user".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("mentioned you in a \(item.entityType ?? "comment")".localized())
-                .normal(": \"")
-                .normal(item.comment?.shortText ?? "")
-                .normal("\"")
-            contentLabel.attributedText = aStr
+            
         case "subscribe":
             iconImageView.isHidden = true
-            let aStr = NSMutableAttributedString()
-                .semibold(item.user?.username ?? "a user".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("is following you")
-            contentLabel.attributedText = aStr
-            
-            // TODO: follow ?? unfollow
+            // TODO: - follow ?? unfollow
 //            contentView.addSubview(actionButton)
 //            actionButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
 //            actionButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
@@ -113,65 +110,49 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
 //            
 //            contentTrailingConstraint?.isActive = false
 //            contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: actionButton, withOffset: -4)
+
         case "upvote":
             iconImageView.image = UIImage(named: "notifications-page-upvote")
-            let aStr = NSMutableAttributedString()
-                .semibold(item.voter?.username ?? "a user".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("liked".localized() + " " + "your \(item.entityType ?? "post")".localized())
-                .normal(": \"")
-            
-            aStr.normal((item.comment?.shortText ?? item.post?.shortText ?? "") + "...\"")
-            contentLabel.attributedText = aStr
             
             if let imageUrl = item.comment?.imageUrl ?? item.post?.imageUrl {
                 contentView.addSubview(descriptionImageView)
                 descriptionImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
                 descriptionImageView.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
                 
-                descriptionImageView.setImageDetectGif(with: imageUrl)
+                descriptionImageView.setImageDetectGif(with: imageUrl, customWidth: UIScreen.main.bounds.width)
                 
                 contentTrailingConstraint?.isActive = false
                 contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: descriptionImageView, withOffset: -4)
             }
+            
         case "reply":
             iconImageView.image = UIImage(named: "notifications-page-reply")
-            let aStr = NSMutableAttributedString()
-                .semibold(item.author?.username ?? "a user".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("left a comment".localized())
-                .normal(": \"")
-            aStr.normal((item.comment?.shortText ?? "") + "...\"")
-            contentLabel.attributedText = aStr
         case "reward":
             avatarUrl = item.community?.avatarUrl
             avatarPlaceholder = item.community?.name ?? "Community"
-            iconImageView.image = UIImage(named: "notifications-page-reward")
-            let aStr = NSMutableAttributedString()
-                .normal("you got".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("\(item.amount ?? "0") \(item.community?.communityId ?? "POINTS")")
-                .normal(" ")
-                .normal("as a reward".localized())
-            contentLabel.attributedText = aStr
         case "transfer":
             avatarUrl = item.from?.avatarUrl
             avatarPlaceholder = item.from?.username ?? "User"
-            iconImageView.isHidden = true
-            let aStr = NSMutableAttributedString()
-                .semibold(item.from?.username ?? "a user".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("sent you".localized())
-                .normal(" ")
-                .normal("\(item.amount ?? "0") \(item.pointType ?? "points")")
-            contentLabel.attributedText = aStr
+            if item.from?.username == nil {
+                iconImageView.isHidden = true
+                avatarUrl = "https://commun.com/apple-touch-icon.png"
+                userId = nil
+            } else if item.from?.username?.lowercased() != "bounty" {
+                iconImageView.isHidden = true
+            } else {
+                iconImageView.setAvatar(urlString: item.community?.avatarUrl, namePlaceHolder: item.community?.name ?? "C")
+                iconImageView.borderWidth = 2
+                iconImageView.borderColor = .white
+            }
+            
         default:
             iconImageView.isHidden = true
-            contentLabel.text = "notification"
         }
-        
-        avatarImageView.setAvatar(
-            urlString: avatarUrl,
-            namePlaceHolder: avatarPlaceholder)
+
+        if let userId = userId {
+            avatarImageView.addTapToOpenUserProfile(profileId: userId)
+        }
+
+        avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: avatarPlaceholder)
     }
 }

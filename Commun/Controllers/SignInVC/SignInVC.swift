@@ -22,6 +22,7 @@ class SignInVC: BaseViewController {
     
     lazy var loginTextField: UITextField = {
         let textField = createTextField()
+        textField.textContentType = .username
         textField.attributedPlaceholder = NSAttributedString(string: "login".localized().uppercaseFirst, attributes: [
             NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.3)
         ])
@@ -35,6 +36,7 @@ class SignInVC: BaseViewController {
     
     lazy var passwordTextField: UITextField = {
         let textField = createTextField()
+        textField.textContentType = .password
         textField.attributedPlaceholder = NSAttributedString(string: "key".localized().uppercaseFirst, attributes: [
             NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.3)
         ])
@@ -48,7 +50,7 @@ class SignInVC: BaseViewController {
     lazy var signInButton = CommunButton.default(height: 56 * Config.heightRatio, label: "sign in".localized().uppercaseFirst, cornerRadius: 8, isDisableGrayColor: true)
     lazy var signUpButton = UIButton(label: "don't have an account?".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15 * Config.heightRatio), textColor: .appMainColor)
     
-    lazy var scanQrCodeButton = UIButton.roundedCorner(8, size: 56, backgroundColor: .appMainColor, tintColor: .white, imageName: "scan-qr-code")
+    lazy var scanQrCodeButton = UIButton.roundedCorner(8, size: 56 * Config.heightRatio, backgroundColor: .appMainColor, tintColor: .white, imageName: "scan-qr-code")
     
     // MARK: - Methods
     private func createTextField() -> UITextField {
@@ -179,7 +181,7 @@ class SignInVC: BaseViewController {
             )
             .subscribe(onCompleted: {
                 AnalyticsManger.shared.signInStatus(success: true)
-                AppDelegate.reloadSubject.onNext(true)
+                AuthorizationManager.shared.forceReAuthorize()
             }, onError: { [weak self] (error) in
                 AnalyticsManger.shared.signInStatus(success: false)
                 self?.configure(signingIn: false)

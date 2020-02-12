@@ -70,24 +70,19 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setNavBarBackButton(tintColor: .white)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.barTintColor = .appMainColor
         self.navigationController?.navigationBar.tintColor = .white
         self.setTabBarHidden(false)
-        super.viewWillAppear(animated)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-
-        super.viewWillDisappear(animated)
     }
 
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
+        
         headerView.sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
         headerView.convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
 
@@ -155,8 +150,7 @@ class CommunWalletVC: TransferHistoryVC {
             .subscribe { (event) in
                 var y = event.element ?? 0
                 y = y >= -self.headerView.height ? y : -self.headerView.height
-                let constant = -y - self.headerView.height
-                self.headerTopConstraint.constant = constant < -(self.headerView.height - 50) ? -(self.headerView.height - 50) : constant
+                self.headerTopConstraint.constant = -y - self.headerView.height
                 let diff = self.headerView.height + y
                 self.headerView.updateYPosition(y: diff)
 
@@ -205,7 +199,7 @@ class CommunWalletVC: TransferHistoryVC {
             .disposed(by: disposeBag)
         
         (viewModel as! WalletViewModel).subscriptionsVM.items
-            .map({ (items) -> [ResponseAPIContentGetSubscriptionsUser?] in
+            .map({ (items) -> [ResponseAPIContentGetProfile?] in
                 let items = items.compactMap {$0.userValue}
                 return items//[nil] + items // Temp hide Add friends
             })
@@ -296,10 +290,6 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     func routeToConvertScene(walletConvertVC: WalletConvertVC) {
-//        walletConvertVC.completion = {
-//            self.viewModel.reload()
-//        }
-
         let nc = navigationController as? BaseNavigationController
         nc?.shouldResetNavigationBarOnPush = false
         show(walletConvertVC, sender: nil)
@@ -316,11 +306,11 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     // Select recipient from friends
-    func sendPoint(to user: ResponseAPIContentGetSubscriptionsUser) {
+    func sendPoint(to user: ResponseAPIContentGetProfile) {
         routeToSendPointsScene(withUser: user)
     }
 
-    private func routeToSendPointsScene(withUser user: ResponseAPIContentGetSubscriptionsUser? = nil) {
+    private func routeToSendPointsScene(withUser user: ResponseAPIContentGetProfile? = nil) {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
 
         if let baseNC = navigationController as? BaseNavigationController {

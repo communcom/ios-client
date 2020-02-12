@@ -32,7 +32,7 @@ class WalletHeaderView: CommunWalletHeaderView {
     override func commonInit() {
         // balance
 
-        carousel = WalletCarousel(width: 300, height: 40)
+        carousel = WalletCarousel(width: 200, height: 40)
         carousel!.delegate = self
         carousel!.dataSource = self
 
@@ -41,14 +41,16 @@ class WalletHeaderView: CommunWalletHeaderView {
     }
 
     override func updateYPosition(y: CGFloat) {
-        var alpha: CGFloat = 1
-        if y > 30 {
-            alpha = 1 - ((100 / 50) / 100 * (y - 30))
+        var alpha1: CGFloat = 1
+        if y > 50 {
+            alpha1 = 1 - ((100 / 50) / 100 * (y - 50))
         }
 
-        communValueLabel.alpha = alpha
-        availableHoldValueLabel.alpha = alpha
-        balanceContainerView.alpha = alpha
+        let alpha2 = 1 - ((100 / 50) / 100 * y)
+
+        communValueLabel.alpha = alpha2
+        availableHoldValueLabel.alpha = alpha1
+        balanceContainerView.alpha = alpha1
 
         super.updateYPosition(y: y)
     }

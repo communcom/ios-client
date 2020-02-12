@@ -12,7 +12,7 @@ extension PostsViewController {
     @objc func toggleFeedType() {
         guard let viewModel = viewModel as? PostsViewModel else {return}
         if viewModel.filter.value.feedTypeMode == .subscriptions {
-            viewModel.changeFilter(feedTypeMode: .new)
+            viewModel.changeFilter(feedTypeMode: .hot)
         } else {
             viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .time)
         }
@@ -30,7 +30,10 @@ extension PostsViewController {
         let nc = BaseNavigationController(rootViewController: vc)
         nc.transitioningDelegate = vc
         nc.modalPresentationStyle = .custom
+        nc.makeTransparent()
         
-        present(nc, animated: true, completion: nil)
+        present(nc, animated: true, completion: {
+            nc.isNavigationBarHidden = true
+        })
     }
 }

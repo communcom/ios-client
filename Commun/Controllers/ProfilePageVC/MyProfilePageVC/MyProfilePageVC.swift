@@ -9,6 +9,9 @@
 import Foundation
 
 class MyProfilePageVC: UserProfilePageVC {
+    // MARK: - Properties
+    var shouldHideBackButton = true
+    
     // MARK: - Subviews
     lazy var changeCoverButton: UIButton = {
         let button = UIButton(width: 24, height: 24, backgroundColor: UIColor.black.withAlphaComponent(0.3), cornerRadius: 12, contentInsets: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6))
@@ -31,12 +34,21 @@ class MyProfilePageVC: UserProfilePageVC {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Class Functions
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.isTranslucent = tableView.contentOffset.y < -43.0
+    }
+    
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
         
         // hide back button
-        navigationItem.leftBarButtonItem = nil
+        if shouldHideBackButton {
+            navigationItem.leftBarButtonItem = nil
+        }
         
         // layout subview
         view.addSubview(changeCoverButton)
@@ -71,6 +83,7 @@ class MyProfilePageVC: UserProfilePageVC {
             .subscribe(onNext: { showNavBar in
                 self.optionsButton.tintColor = !showNavBar ? .black : .white
                 self.title = !showNavBar ? self.userName : nil
+                self.navigationController?.navigationBar.isTranslucent = showNavBar
             })
             .disposed(by: disposeBag)
     }

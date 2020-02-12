@@ -135,7 +135,7 @@ extension MyProfilePageVC {
         
         // On deleting
         if delete {
-            headerView.avatarImageView.setNonAvatarImageWithId(self.viewModel.profile.value!.username)
+            headerView.avatarImageView.image = UIImage(named: "empty-avatar")
             NetworkService.shared.updateMeta(params: ["avatar_url": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {

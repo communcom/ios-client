@@ -10,13 +10,18 @@ import Foundation
 import RxSwift
 
 extension UIScrollView {
+    var isUserScrolling: Bool {
+        isTracking || isDragging || isDecelerating
+    }
+    
     func scrollsToBottom() {
         let bottomOffset = CGPoint(x: 0, y: contentSize.height - bounds.size.height)
         setContentOffset(bottomOffset, animated: true)
     }
     
-    var isUserScrolling: Bool {
-        isTracking || isDragging || isDecelerating
+    func scrollTo(_ frame: CGRect) {
+        scrollRectToVisible(frame, animated: true)
+//        setContentOffset(.zero, animated: true)
     }
 }
 

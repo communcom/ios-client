@@ -17,7 +17,6 @@ PODS:
     - BigInt (~> 3.1.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-  - ESPullToRefresh (2.9)
   - Fabric (1.10.2)
   - Firebase/Analytics (6.13.0):
     - Firebase/Core
@@ -114,6 +113,7 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - NotificationView (0.2.4)
   - PhoneNumberKit (2.6.0):
     - PhoneNumberKit/PhoneNumberKitCore (= 2.6.0)
     - PhoneNumberKit/UIKit (= 2.6.0)
@@ -169,7 +169,6 @@ DEPENDENCIES:
   - Crashlytics
   - CryptoSwift
   - "eosswift (from `git@github.com:communcom/eos-swift.git`)"
-  - ESPullToRefresh
   - Fabric
   - Firebase/Analytics
   - Firebase/Core
@@ -181,6 +180,7 @@ DEPENDENCIES:
   - Localize-Swift (~> 2.0)
   - Locksmith
   - MBProgressHUD (~> 1.1.0)
+  - NotificationView
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
   - PureLayout
@@ -221,7 +221,6 @@ SPEC REPOS:
     - Crashlytics
     - CryptoSwift
     - Differentiator
-    - ESPullToRefresh
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -243,6 +242,7 @@ SPEC REPOS:
     - Locksmith
     - MBProgressHUD
     - nanopb
+    - NotificationView
     - PhoneNumberKit
     - PinCodeInputView
     - Protobuf
@@ -306,7 +306,6 @@ SPEC CHECKSUMS:
   CryptoSwift: 1283821600233bdbeb96d7b389c3288c3bf77211
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   eosswift: 3e1af4e3f7d5d5f255647e68eb869b08061777f5
-  ESPullToRefresh: ce058a36454a5032519cc9d8b45da217728cf104
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 458d109512200d1aca2e1b9b6cf7d68a869a4a46
   FirebaseAnalytics: 45f36d9c429fc91d206283900ab75390cd05ee8a
@@ -329,6 +328,7 @@ SPEC CHECKSUMS:
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  NotificationView: 1fe16a62d2b1866dc9b0e83782b4b97b385021b2
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
   PinCodeInputView: 0a7361aaec76b639ff6521f1b6c38ed27b8144e3
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
@@ -357,6 +357,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: b502861030e0b8b3f4cead801beaacd6e11dbaae
+PODFILE CHECKSUM: 0a0a84a8cf4ddabe52eb87ac29231b500806ebf0
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.0.beta.2

@@ -29,6 +29,7 @@ extension LeaderController {
         ResponseAPIContentGetLeader.observeItemChanged()
             .filter {$0.identity == self.leader?.identity}
             .subscribe(onNext: {newLeader in
+                guard let newLeader = self.leader?.newUpdatedItem(from: newLeader) else {return}
                 self.setUp(with: newLeader)
             })
             .disposed(by: disposeBag)

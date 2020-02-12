@@ -16,7 +16,6 @@ class TransactionCompletedVC: BaseViewController {
     var completionRepeat: (() -> Void)?
     var completionDismiss: (() -> Void)?
 
-    
     // MARK: - Class Initialization
     init(transaction: Transaction) {
         self.dataModel.transaction = transaction
@@ -28,7 +27,6 @@ class TransactionCompletedVC: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -67,8 +65,7 @@ class TransactionCompletedVC: BaseViewController {
         
         view.backgroundColor = dataModel.transaction.history == nil ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
     }
-        
-    
+
     // MARK: - Custom Functions
     private func setupNavBar() {
         title = "send points".localized()
@@ -78,7 +75,6 @@ class TransactionCompletedVC: BaseViewController {
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.shadowImage?.clear()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionBarButtonTapped))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(stopBarButtonTapped))
 
@@ -94,7 +90,7 @@ class TransactionCompletedVC: BaseViewController {
         transactionCompletedView.updateBuyerInfo(fromTransaction: dataModel.transaction)
         
         view.addSubview(transactionCompletedView)
-        transactionCompletedView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 40.0), vertical: CGFloat.adaptive(height: 20.0)), excludingEdge: .top)
+        transactionCompletedView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 40.0), vertical: .adaptive(height: 20.0)), excludingEdge: .top)
         transactionCompletedView.heightAnchor.constraint(equalToConstant: transactionCompletedView.bounds.height).isActive = true
         
         // Actions
@@ -136,8 +132,7 @@ class TransactionCompletedVC: BaseViewController {
         completionDismiss!()
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
+
     // MARK: - Actions
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {
         dismiss()

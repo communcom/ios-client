@@ -39,10 +39,9 @@ struct Transaction {
             history = nil
         }
     }
-
         
     // MARK: - Custom Functions
-    mutating func createFriend(from user: ResponseAPIContentGetSubscriptionsUser) {
+    mutating func createFriend(from user: ResponseAPIContentGetProfile) {
         self.friend = (id: user.userId, name: user.username, avatarURL: user.avatarUrl)
     }
 }

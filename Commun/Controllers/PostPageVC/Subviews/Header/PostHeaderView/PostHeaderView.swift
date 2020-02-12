@@ -51,13 +51,14 @@ class PostHeaderView: MyTableHeaderView, PostController {
     
 //    lazy var sortButton = RightAlignedIconButton(imageName: "small-down-arrow", label: "interesting first".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor, contentInsets: UIEdgeInsets(horizontal: 8, vertical: 0))
     
+    // MARK: - Constraints
+    var contentTextViewTopConstraint: NSLayoutConstraint?
+    
     override func commonInit() {
         super.commonInit()
-        addSubview(titleLabel)
-        titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .bottom)
         
         addSubview(contentTextView)
-        contentTextView.autoPinEdge(.top, to: .bottom, of: titleLabel)
+        contentTextViewTopConstraint = contentTextView.autoPinEdge(toSuperviewEdge: .top)
         contentTextView.autoPinEdge(toSuperviewEdge: .leading)
         contentTextView.autoPinEdge(toSuperviewEdge: .trailing)
         contentTextView.delegate = self
@@ -110,11 +111,24 @@ class PostHeaderView: MyTableHeaderView, PostController {
     func setUp(with post: ResponseAPIContentGetPost) {
         self.post = post
         
+        titleLabel.removeFromSuperview()
+        contentTextViewTopConstraint?.isActive = false
+        
         if post.document?.attributes?.type == "article" {
             // Show title
             titleLabel.text = post.document?.attributes?.title
+            
+            addSubview(titleLabel)
+            titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .bottom)
+            
+            contentTextViewTopConstraint = contentTextView.autoPinEdge(.top, to: .bottom, of: titleLabel)
+            contentTextViewTopConstraint?.isActive = true
+
         } else {
             titleLabel.text = nil
+            
+            contentTextViewTopConstraint = contentTextView.autoPinEdge(toSuperviewEdge: .top)
+            contentTextViewTopConstraint?.isActive = true
         }
         
         // Comments count

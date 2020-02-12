@@ -9,10 +9,7 @@
 import Foundation
 
 final class FeedPageFloatView: MyView {
-    // MARK: - Constants
-    
-    // MARK: - Properties
-    
+
     // MARK: - Subviews
     lazy var headerLabel = UILabel.with(textSize: 30 * Config.heightRatio, weight: .bold, textColor: .white)
     lazy var changeFeedTypeButton: UIButton = {
@@ -53,9 +50,8 @@ final class FeedPageFloatView: MyView {
         case .subscriptions:
             headerLabel.text = "my Feed".localized().uppercaseFirst
             changeFeedTypeButton.setTitle("trending".localized().uppercaseFirst, for: .normal)
-        case .new:
+        case .hot, .new:
             headerLabel.text = "trending".localized().uppercaseFirst
-            
             changeFeedTypeButton.setTitle("my Feed".localized().uppercaseFirst, for: .normal)
         default:
             break

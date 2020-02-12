@@ -54,7 +54,7 @@ class BuyCommunViewModel {
         
         // bind currentCurrency
         currentCurrency
-            .subscribe(onNext: {[weak self] (currency) in
+            .subscribe(onNext: {[weak self] (_) in
                 self?.getMinMaxAmount()
                 self?.getPrice()
             })

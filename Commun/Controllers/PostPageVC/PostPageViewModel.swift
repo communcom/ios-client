@@ -16,6 +16,7 @@ class PostPageViewModel: CommentsViewModel {
     var postForRequest: ResponseAPIContentGetPost?
     var username: String?
     var communityAlias: String?
+    var selectedComment: ResponseAPIContentGetComment?
     
     // MARK: - Objects
     let loadingState = BehaviorRelay<LoadingState>(value: .loading)
@@ -28,9 +29,11 @@ class PostPageViewModel: CommentsViewModel {
         defer { setUp() }
     }
     
-    init(userId: String?, username: String?, permlink: String, communityId: String?, communityAlias: String?) {
+    init(userId: String?, username: String?, permlink: String, communityId: String?, communityAlias: String?, selectedComment: ResponseAPIContentGetComment?) {
         self.username = username
         self.communityAlias = communityAlias
+        self.selectedComment = selectedComment
+        
         super.init(filter: CommentsListFetcher.Filter(type: .post, userId: userId, permlink: permlink, communityId: communityId))
         defer { setUp() }
     }
@@ -67,7 +70,10 @@ class PostPageViewModel: CommentsViewModel {
                 throw error
             })
             .subscribe(onSuccess: { (post) in
-                self.post.accept(post)
+                let originalPost = self.post.value ?? self.postForRequest
+                let postTemp = originalPost?.newUpdatedItem(from: post)
+                
+                postTemp == nil ? self.post.accept(post) : self.post.accept(postTemp)
             })
             .disposed(by: disposeBag)
     }
