@@ -18,7 +18,11 @@ class DiscoveryVC: BaseViewController {
     
     // MARK: - ChildVCs
     lazy var searchController = UISearchController.default()
-    lazy var discoveryAllVC = DiscoveryAllVC()
+    lazy var discoveryAllVC: DiscoveryAllVC = {
+        let vc = DiscoveryAllVC()
+        vc.showShadowWhenScrollUp = false
+        return vc
+    }()
     lazy var communitiesVC: CommunitiesVC = {
         let vc = CommunitiesVC(type: .all)
         vc.showShadowWhenScrollUp = false
@@ -181,8 +185,7 @@ class DiscoveryVC: BaseViewController {
     private func search(_ keyword: String?) {
         switch topTabBar.selectedIndex.value {
         case 0:
-            // TODO: - Search all
-            return
+            discoveryAllVC.search(keyword)
         case 1:
             communitiesVC.search(keyword)
         case 2:
