@@ -179,11 +179,18 @@ class DiscoveryVC: BaseViewController {
     
     // MARK: - Actions
     private func search(_ keyword: String?) {
-        if let keyword = keyword, !keyword.isEmpty {
-            // TODO: - search by keyword
-            
-        } else {
-            // TODO: - back to discovery
+        switch topTabBar.selectedIndex.value {
+        case 0:
+            // TODO: - Search all
+            return
+        case 1:
+            communitiesVC.search(keyword)
+        case 2:
+            usersVC.search(keyword)
+        case 3:
+            postsVC.search(keyword)
+        default:
+            return
         }
     }
 }
