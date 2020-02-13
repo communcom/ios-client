@@ -33,7 +33,7 @@ class DiscoveryVC: BaseViewController {
         vc.showShadowWhenScrollUp = false
         return vc
     }()
-    lazy var postsVC = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptionsPopular, feedType: .time, sortType: .day, userId: Config.currentUser?.id))
+    lazy var postsVC = SearchablePostsVC(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptionsPopular, feedType: .time, sortType: .day, userId: Config.currentUser?.id))
     
     // MARK: - Subviews
     lazy var topTabBar = CMTopTabBar(
