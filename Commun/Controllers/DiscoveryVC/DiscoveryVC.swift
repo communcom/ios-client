@@ -59,6 +59,9 @@ class DiscoveryVC: BaseViewController {
         super.viewDidLayoutSubviews()
         searchController.roundCorner()
         navigationController?.navigationBar.shadowOpacity = 0
+        
+        // avoid tabbar
+        tableView?.contentInset.bottom = 10 + tabBarHeight
     }
     
     // MARK: - Setup

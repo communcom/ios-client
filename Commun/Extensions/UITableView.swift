@@ -70,7 +70,7 @@ extension UITableView {
             rowType: PlaceholderNotificationCell.self,
             tag: notificationsLoadingFooterViewTag,
             rowHeight: 88,
-            numberOfRows: 5
+            numberOfRows: 2
         )
     }
     
