@@ -106,7 +106,7 @@ class DiscoveryVC: BaseViewController {
         searchController.searchBar.rx.text
             .distinctUntilChanged()
             .skip(1)
-            .debounce(0.3, scheduler: MainScheduler.instance)
+            .debounce(0.2, scheduler: MainScheduler.instance)
             .subscribe(onNext: { (query) in
                 self.search(query)
             })
@@ -171,8 +171,8 @@ class DiscoveryVC: BaseViewController {
                 // assign current childVC
                 self.currentChildVC = childVC
                 
-                // scroll to top
-                self.tableView?.scrollToTop()
+                // search
+                self.search(self.searchController.searchBar.text)
             })
     }
     
@@ -183,17 +183,20 @@ class DiscoveryVC: BaseViewController {
     
     // MARK: - Actions
     private func search(_ keyword: String?) {
-        switch topTabBar.selectedIndex.value {
-        case 0:
-            discoveryAllVC.search(keyword)
-        case 1:
-            communitiesVC.search(keyword)
-        case 2:
-            usersVC.search(keyword)
-        case 3:
-            postsVC.search(keyword)
-        default:
-            return
+        tableView?.scrollToTop()
+        DispatchQueue.main.async {
+            switch self.topTabBar.selectedIndex.value {
+            case 0:
+                self.discoveryAllVC.search(keyword)
+            case 1:
+                self.communitiesVC.search(keyword)
+            case 2:
+                self.usersVC.search(keyword)
+            case 3:
+                self.postsVC.search(keyword)
+            default:
+                return
+            }
         }
     }
 }

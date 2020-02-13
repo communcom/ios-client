@@ -10,7 +10,6 @@ import Foundation
 
 class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, SubscribersCell>, CommunityCellDelegate, ProfileCellDelegate {
     // MARK: - Properties
-    var viewsForHeaderInSection = [Int: UIView]()
     
     // MARK: - Initializers
     init() {
@@ -25,12 +24,6 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     }
     
     // MARK: - Methods
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        for key in viewsForHeaderInSection.keys {
-            viewsForHeaderInSection[key]?.roundCorners([.topLeft, .topRight], radius: 10)
-        }
-    }
     
     override func setUpTableView() {
         tableView = UITableView(frame: .zero, style: .grouped)
@@ -148,7 +141,9 @@ extension DiscoveryAllVC: UITableViewDelegate {
         label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         label.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        viewsForHeaderInSection[section] = view
+        DispatchQueue.main.async {
+            headerView.roundCorners([.topLeft, .topRight], radius: 10)
+        }
         return view
     }
 }
