@@ -28,8 +28,8 @@ class DiscoveryVC: BaseViewController {
         vc.showShadowWhenScrollUp = false
         return vc
     }()
-    lazy var usersVC: SubscribersVC = {
-        let vc = SubscribersVC(userId: Config.currentUser?.id)
+    lazy var usersVC: SearchableSubscribersVC = {
+        let vc = SearchableSubscribersVC(userId: Config.currentUser?.id)
         vc.showShadowWhenScrollUp = false
         return vc
     }()
@@ -44,7 +44,7 @@ class DiscoveryVC: BaseViewController {
             "users".localized().uppercaseFirst,
             "posts".localized().uppercaseFirst
         ],
-        selectedIndex: 0,
+        selectedIndex: 1,
         contentInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     )
     
