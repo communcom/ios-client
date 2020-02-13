@@ -1456,7 +1456,6 @@
 			isa = PBXGroup;
 			children = (
 				3BB48AD122D641C800F11B6A /* BoardingScenes */,
-				BC619B0F237268240005BB94 /* CommunitiesVC */,
 				BCA971192360339B00AE37E1 /* CommunityPageVC */,
 				576DC917223E41CA00EDED41 /* FeedPageVC */,
 				BCDEE79D23F4E97300DD3EB3 /* DiscoveryVC */,
@@ -1949,6 +1948,7 @@
 				BC4AD64F23B09BF7008546A4 /* BalancesVC */,
 				BC9066FD23AB2279000F9A3B /* TransferHistoryVC */,
 				BC18FA1C23D54DB1005DC7E3 /* CurrenciesVC */,
+				BC619B0F237268240005BB94 /* CommunitiesVC */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2314,7 +2314,8 @@
 				BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */,
 				BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */,
 			);
-			path = CommunitiesVC;
+			name = CommunitiesVC;
+			path = ../../Controllers/CommunitiesVC;
 			sourceTree = "<group>";
 		};
 		BC619B1623726C040005BB94 /* Subviews */ = {

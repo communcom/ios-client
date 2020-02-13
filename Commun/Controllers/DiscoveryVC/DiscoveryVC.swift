@@ -10,6 +10,15 @@ import Foundation
 import RxSwift
 
 class DiscoveryVC: BaseViewController {
+    // MARK: - Nested types
+    class DiscoveryCommunitiesVC: CommunitiesVC {
+        override var showShadowWhenScrollUp: Bool {false}
+    }
+
+    class DiscoverySubscribersVC: SubscribersVC {
+        override var showShadowWhenScrollUp: Bool {false}
+    }
+    
     // MARK: - Properties
     weak var currentChildVC: UIViewController?
     var tableView: UITableView? {
@@ -19,8 +28,8 @@ class DiscoveryVC: BaseViewController {
     // MARK: - ChildVCs
     lazy var searchController = UISearchController.default()
     lazy var discoveryAllVC = DiscoveryAllVC()
-    lazy var communitiesVC = CommunitiesVC(type: .all)
-    lazy var usersVC = SubscribersVC(userId: Config.currentUser?.id)
+    lazy var communitiesVC = DiscoveryCommunitiesVC(type: .all)
+    lazy var usersVC = DiscoverySubscribersVC(userId: Config.currentUser?.id)
     lazy var postsVC = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptionsPopular, feedType: .time, sortType: .day, userId: Config.currentUser?.id))
     
     // MARK: - Subviews
@@ -37,6 +46,20 @@ class DiscoveryVC: BaseViewController {
     )
     
     lazy var contentView = UIView(forAutoLayout: ())
+    
+    // MARK: - Methods
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        baseNavigationController?.resetNavigationBar()
+        baseNavigationController?.changeStatusBarStyle(.default)
+        extendedLayoutIncludesOpaqueBars = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        searchController.roundCorner()
+    }
     
     // MARK: - Setup
     override func setUp() {
