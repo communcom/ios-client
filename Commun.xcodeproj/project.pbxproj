@@ -444,7 +444,6 @@
 		BCCE0AAF2368217000A183AA /* MyProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AAE2368217000A183AA /* MyProfilePageVC.swift */; };
 		BCCE0AB22368225600A183AA /* MyProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AB12368225600A183AA /* MyProfileHeaderView.swift */; };
 		BCCE0AB723682D1B00A183AA /* MyProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AB623682D1B00A183AA /* MyProfilePageVC+Actions.swift */; };
-		BCCF8ACC23E517D9004892FF /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCF8ACB23E517D9004892FF /* SearchViewController.swift */; };
 		BCD00FB42373C8BD004A3952 /* LeaderCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB32373C8BD004A3952 /* LeaderCollectionCell.swift */; };
 		BCD00FB62373D280004A3952 /* CommunityMembersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */; };
 		BCD00FB82373D78D004A3952 /* CommunityMembersVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB72373D78D004A3952 /* CommunityMembersVC+Binding.swift */; };
@@ -979,7 +978,6 @@
 		BCCE0AAE2368217000A183AA /* MyProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePageVC.swift; sourceTree = "<group>"; };
 		BCCE0AB12368225600A183AA /* MyProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileHeaderView.swift; sourceTree = "<group>"; };
 		BCCE0AB623682D1B00A183AA /* MyProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
-		BCCF8ACB23E517D9004892FF /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		BCD00FB32373C8BD004A3952 /* LeaderCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderCollectionCell.swift; sourceTree = "<group>"; };
 		BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMembersHeaderView.swift; sourceTree = "<group>"; };
 		BCD00FB72373D78D004A3952 /* CommunityMembersVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityMembersVC+Binding.swift"; sourceTree = "<group>"; };
@@ -1473,7 +1471,6 @@
 				571B1509223A94CD00630C8F /* TabBarController */,
 				BC8F811723E27ECE0024C04A /* WalletVC */,
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
-				BCCF8AC823E516A3004892FF /* SearchViewController */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1945,6 +1942,7 @@
 				BCA97111236004F500AE37E1 /* CommentsViewController */,
 				BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */,
 				BC7D608F237BF764007D8C1A /* BlacklistViewModel.swift */,
+				BC06A9A223E7FC03000B690E /* SearchViewModel.swift */,
 				BC4AD64F23B09BF7008546A4 /* BalancesVC */,
 				BC9066FD23AB2279000F9A3B /* TransferHistoryVC */,
 				BC18FA1C23D54DB1005DC7E3 /* CurrenciesVC */,
@@ -2704,15 +2702,6 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
-		BCCF8AC823E516A3004892FF /* SearchViewController */ = {
-			isa = PBXGroup;
-			children = (
-				BCCF8ACB23E517D9004892FF /* SearchViewController.swift */,
-				BC06A9A223E7FC03000B690E /* SearchViewModel.swift */,
-			);
-			path = SearchViewController;
-			sourceTree = "<group>";
-		};
 		BCD00FB22373C8A4004A3952 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
@@ -3260,7 +3249,6 @@
 				BC7D608E237BF4E7007D8C1A /* BlacklistFetcher.swift in Sources */,
 				BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */,
 				BCD00FBF2375087C004A3952 /* PostPageVC.swift in Sources */,
-				BCCF8ACC23E517D9004892FF /* SearchViewController.swift in Sources */,
 				BC597A89238CF20500103F4F /* FTUECommunityCell.swift in Sources */,
 				57E515B12270F4EA00A6F6DB /* SettingsKeyCell.swift in Sources */,
 				BC4AD65423B09CB4008546A4 /* BalanceCell.swift in Sources */,
