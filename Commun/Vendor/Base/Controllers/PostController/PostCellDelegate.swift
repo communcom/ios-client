@@ -38,6 +38,12 @@ extension PostCellDelegate where Self: BaseViewController {
         
         if post.author?.userId != Config.currentUser?.id {
             actions.append(
+                CommunActionSheet.Action(title: (post.author?.isSubscribed ?? false ? "following" : "follow").localized().uppercaseFirst, icon: UIImage(named: "icon-select-black-cyrcle-default"), handle: {
+                    ShareHelper.share(post: post)
+                })
+            )
+
+            actions.append(
                 CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
                     self.reportPost(post)
                 }, tintColor: UIColor(hexString: "#ED2C5B")!)
