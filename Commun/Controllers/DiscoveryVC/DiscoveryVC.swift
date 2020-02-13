@@ -11,9 +11,17 @@ import RxSwift
 
 class DiscoveryVC: BaseViewController {
     // MARK: - Properties
+    weak var currentChildVC: UIViewController?
+    var tableView: UITableView? {
+        currentChildVC?.view.subviews.first(where: {$0 is UITableView}) as? UITableView
+    }
     
     // MARK: - ChildVCs
     lazy var searchController = UISearchController.default()
+    lazy var discoveryAllVC = DiscoveryAllVC()
+    lazy var communitiesVC = CommunitiesVC(type: .all)
+    lazy var usersVC = SubscribersVC(userId: Config.currentUser?.id)
+    lazy var postsVC = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptionsPopular, feedType: .time, sortType: .day, userId: Config.currentUser?.id))
     
     // MARK: - Subviews
     lazy var topTabBar = CMTopTabBar(
@@ -27,6 +35,8 @@ class DiscoveryVC: BaseViewController {
         selectedIndex: 0,
         contentInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     )
+    
+    lazy var contentView = UIView(forAutoLayout: ())
     
     // MARK: - Setup
     override func setUp() {
@@ -47,6 +57,11 @@ class DiscoveryVC: BaseViewController {
         view.addSubview(topBarContainerView)
         topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         topTabBar.scrollView.contentOffset.x = -16
+        
+        // contentView
+        view.addSubview(contentView)
+        contentView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        contentView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
     }
     
     private func setUpSearchController() {
@@ -57,6 +72,7 @@ class DiscoveryVC: BaseViewController {
     // MARK: - Binding
     override func bind() {
         super.bind()
+        // search controller
         searchController.searchBar.rx.text
             .distinctUntilChanged()
             .skip(1)
@@ -65,15 +81,82 @@ class DiscoveryVC: BaseViewController {
                 self.search(query)
             })
             .disposed(by: disposeBag)
+        
+        // topTabBar
+        topTabBar.selectedIndex
+            .distinctUntilChanged()
+            .subscribe(onNext: { (index) in
+                self.showChildVCWithIndex(index)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - ChildVC manager
+    private func showChildVCWithIndex(_ index: Int) {
+        let vc: UIViewController
+        
+        // select vc
+        switch index {
+        case 0:
+            // All
+            vc = discoveryAllVC
+        case 1:
+            // Community
+            vc = communitiesVC
+        case 2:
+            // Users
+            vc = usersVC
+        case 3:
+            // Posts
+            vc = postsVC
+        default:
+            return
+        }
+        
+        // show as child
+        showChildVC(vc)
+    }
+    
+    private func showChildVC(_ childVC: UIViewController) {
+        // get oldVC
+        let oldVC = currentChildVC
+        
+        // move oldVC out
+        oldVC?.willMove(toParent: nil)
+        addChild(childVC)
+        self.addSubview(childVC.view, toView: contentView)
+        childVC.view.alpha = 0
+        childVC.view.layoutIfNeeded()
+        UIView.animate(
+            withDuration: 0.5,
+            animations: {
+                childVC.view.alpha = 1
+                oldVC?.view.alpha = 0
+            },
+            completion: { _ in
+                oldVC?.view.removeFromSuperview()
+                oldVC?.removeFromParent()
+                childVC.didMove(toParent: self)
+            })
+        // assign current childVC
+        currentChildVC = childVC
+        
+        // scroll to top
+        tableView?.scrollToTop()
+    }
+    
+    private func addSubview(_ subView: UIView, toView parentView: UIView) {
+        parentView.addSubview(subView)
+        subView.autoPinEdgesToSuperviewEdges()
     }
     
     // MARK: - Actions
     private func search(_ keyword: String?) {
         if let keyword = keyword, !keyword.isEmpty {
-            // search by keyword
+            // TODO: - search by keyword
             
         } else {
-            // back to discovery
+            // TODO: - back to discovery
         }
     }
 }

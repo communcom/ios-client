@@ -23,6 +23,11 @@ extension UIScrollView {
         scrollRectToVisible(frame, animated: true)
 //        setContentOffset(.zero, animated: true)
     }
+    
+    func scrollToTop() {
+         let desiredOffset = CGPoint(x: 0, y: -contentInset.top)
+         setContentOffset(desiredOffset, animated: true)
+    }
 }
 
 extension Reactive where Base: UIScrollView {

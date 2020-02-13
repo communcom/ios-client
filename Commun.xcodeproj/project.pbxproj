@@ -459,6 +459,7 @@
 		BCDEE77723ED642600DD3EB3 /* ReportOtherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE77623ED642600DD3EB3 /* ReportOtherVC.swift */; };
 		BCDEE78C23F28D4400DD3EB3 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE78B23F28D4400DD3EB3 /* Int.swift */; };
 		BCDEE7A123F4E99300DD3EB3 /* DiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE7A023F4E99300DD3EB3 /* DiscoveryVC.swift */; };
+		BCDEE7A423F4EDF500DD3EB3 /* DiscoveryAllVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE7A323F4EDF500DD3EB3 /* DiscoveryAllVC.swift */; };
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
 		BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */; };
 		BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */; };
@@ -993,6 +994,7 @@
 		BCDEE77623ED642600DD3EB3 /* ReportOtherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOtherVC.swift; sourceTree = "<group>"; };
 		BCDEE78B23F28D4400DD3EB3 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		BCDEE7A023F4E99300DD3EB3 /* DiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryVC.swift; sourceTree = "<group>"; };
+		BCDEE7A323F4EDF500DD3EB3 /* DiscoveryAllVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryAllVC.swift; sourceTree = "<group>"; };
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentBlock.swift; sourceTree = "<group>"; };
 		BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+Actions.swift"; sourceTree = "<group>"; };
@@ -2734,9 +2736,18 @@
 		BCDEE79D23F4E97300DD3EB3 /* DiscoveryVC */ = {
 			isa = PBXGroup;
 			children = (
+				BCDEE7A223F4EDE200DD3EB3 /* ViewControllers */,
 				BCDEE7A023F4E99300DD3EB3 /* DiscoveryVC.swift */,
 			);
 			path = DiscoveryVC;
+			sourceTree = "<group>";
+		};
+		BCDEE7A223F4EDE200DD3EB3 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BCDEE7A323F4EDF500DD3EB3 /* DiscoveryAllVC.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		BCF3914A235FEAA500A9D1ED /* Fetchers */ = {
@@ -3194,6 +3205,7 @@
 				576DC921223E42C800EDED41 /* UIViewController+Extensions.swift in Sources */,
 				BCA971242360400200AE37E1 /* MyTableHeaderView.swift in Sources */,
 				BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */,
+				BCDEE7A423F4EDF500DD3EB3 /* DiscoveryAllVC.swift in Sources */,
 				BCABF1332366D4E2006B05F5 /* ProfileVC+Binding.swift in Sources */,
 				BC4692C82390E7120064A38B /* ListItemCellType.swift in Sources */,
 				BC4071A823CF09A0000027A3 /* NotificationsPageVC.swift in Sources */,
