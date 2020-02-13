@@ -154,7 +154,7 @@ class DiscoveryVC: BaseViewController {
         childVC.view.alpha = 0
         childVC.view.layoutIfNeeded()
         UIView.animate(
-            withDuration: 0.5,
+            withDuration: 0.2,
             animations: {
                 childVC.view.alpha = 1
                 oldVC?.view.alpha = 0
@@ -163,12 +163,13 @@ class DiscoveryVC: BaseViewController {
                 oldVC?.view.removeFromSuperview()
                 oldVC?.removeFromParent()
                 childVC.didMove(toParent: self)
+                
+                // assign current childVC
+                self.currentChildVC = childVC
+                
+                // scroll to top
+                self.tableView?.scrollToTop()
             })
-        // assign current childVC
-        currentChildVC = childVC
-        
-        // scroll to top
-        tableView?.scrollToTop()
     }
     
     private func addSubview(_ subView: UIView, toView parentView: UIView) {
