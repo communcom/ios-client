@@ -142,12 +142,20 @@ class PostHeaderView: MyTableHeaderView, PostController {
         
         // Show content
         // Parse data
-        let attributedString = post.document?.toAttributedString(
+        if let attributedString = post.document?.toAttributedString(
             currentAttributes: contentTextView.defaultAttributes,
             attachmentSize: contentTextView.attachmentSize,
             attachmentType: PostPageTextAttachment.self)
+        {
+            let aStr = NSMutableAttributedString(attributedString: attributedString)
+            if aStr.string.ends(with: "\r") {
+                aStr.deleteCharacters(in: NSRange(location: aStr.length - 1, length: 1))
+            }
+            contentTextView.attributedText = aStr
+        } else {
+            contentTextView.attributedText = nil
+        }
         
-        contentTextView.attributedText = attributedString
         layoutSubviews()
     }
     

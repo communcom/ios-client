@@ -155,8 +155,4 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
             return
         }
     }
-    
-    func loadBalances(byUserID userID: String) -> Single<[ResponseAPIWalletGetBalance]> {
-        return RestAPIManager.instance.getBalance(userId: userID).map{ $0.balances }
-    }
 }

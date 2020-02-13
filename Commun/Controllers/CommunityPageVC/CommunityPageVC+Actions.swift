@@ -57,14 +57,9 @@ extension CommunityPageVC {
     }
     
     @objc func getPointsButtonTapped(_ sender: UIButton) {
-        guard let userID = Config.currentUser?.id, let viewModel = viewModel as? CommunityPageViewModel, let communityID = viewModel.communityId else { return }
-
-        viewModel.loadBalances(byUserID: userID)
-            .subscribe(onSuccess: { balances in
-                self.openOther(balances: balances, withSymbol: communityID)
-            }, onError: { error in
-                self.showError(error)
-            })
-            .disposed(by: disposeBag)
+        guard let viewModel = viewModel as? CommunityPageViewModel,
+            let communityID = viewModel.communityId else { return }
+        
+        showOtherBalanceWalletVC(symbol: communityID)
     }
 }

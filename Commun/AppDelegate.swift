@@ -117,6 +117,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
             .disposed(by: bag)
         
+        // show hud when reconnecting
+        SocketManager.shared.state
+            .subscribe(onNext: { (state) in
+                switch state {
+                case .disconnected:
+                    self.window?.rootViewController?.showIndetermineHudWithMessage(nil)
+                default:
+                    return
+                }
+                
+            })
+            .disposed(by: bag)
+        
+        // hide hud after reconnecting
+        AuthorizationManager.shared.status
+            .filter {$0 != .authorizing}
+            .subscribe(onNext: { (_) in
+                self.window?.rootViewController?.hideHud()
+            })
+            .disposed(by: disposeBag)
+        
         return true
     }
     
@@ -142,11 +163,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Retrieve favourites
             FavouritesList.shared.retrieve()
             
-            if let vc = window?.rootViewController,
-                vc is TabBarVC
-            {
-                return
-            }
             self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
         case .registering:
             let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
@@ -155,11 +171,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let navigationBarAppearace = UINavigationBar.appearance()
             navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-            navigationBarAppearace.largeTitleTextAttributes =   [
-                                                                    NSAttributedString.Key.foregroundColor: UIColor.black,
-                                                                    NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold",
-                                                                                                                       size: 30.0 * Config.widthRatio)!
-            ]
+            navigationBarAppearace.largeTitleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
+                                                                NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold", size: .adaptive(width: 30.0))! ]
+            
         case .authorizingError(let error):
             switch error.caseInfo.message {
             case "Cannot get such account from BC",
@@ -177,7 +191,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func changeRootVC(_ rootVC: UIViewController) {
+    func changeRootVC<VC: UIViewController>(_ rootVC: VC) {
+        if let vc = window?.rootViewController,
+            vc is VC
+        {
+            return
+        }
+        
         if let currentVC = window?.rootViewController as? SplashViewController {
             currentVC.animateSplash {
                 self.window?.rootViewController = rootVC

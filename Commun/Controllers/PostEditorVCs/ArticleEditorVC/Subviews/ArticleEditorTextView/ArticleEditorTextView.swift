@@ -139,7 +139,13 @@ class ArticleEditorTextView: ContentTextView {
                 let end = range.location - 1
                 let rangeForText = NSRange(location: start, length: end - start + 1)
                 let subAS = textStorage.attributedSubstring(from: rangeForText)
-                let components = subAS.components(separatedBy: "\n")
+                
+                // change all \r to \n
+                let aStr = subAS.replaceOccurents(of: "\r", with: "\n")
+                
+                // separate blocks by \n
+                let components = aStr.components(separatedBy: "\n")
+                
                 for component in components {
                     if let block = component.toParagraphContentBlock(id: &id) {
                         contentBlocks.append(.just(block))
@@ -164,7 +170,12 @@ class ArticleEditorTextView: ContentTextView {
         if start < textStorage.length {
             let lastRange = NSRange(location: start, length: textStorage.length - start)
             let subAS = textStorage.attributedSubstring(from: lastRange)
-            let components = subAS.components(separatedBy: "\n")
+            // change all \r to \n
+            let aStr = subAS.replaceOccurents(of: "\r", with: "\n")
+            
+            // separate blocks by \n
+            let components = aStr.components(separatedBy: "\n")
+            
             for component in components {
                 if let block = component.toParagraphContentBlock(id: &id) {
                     contentBlocks.append(.just(block))
