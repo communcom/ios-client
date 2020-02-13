@@ -59,6 +59,7 @@ class DiscoveryVC: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         searchController.roundCorner()
+        navigationController?.navigationBar.shadowOpacity = 0
     }
     
     // MARK: - Setup
