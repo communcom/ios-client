@@ -2646,6 +2646,7 @@
 				BCB4A4C8237018B4005EDAAD /* Subviews */,
 				BCF74A61236180B900B91089 /* SubscribersViewModel.swift */,
 				BCB4A4C423701441005EDAAD /* SubscribersVC.swift */,
+				BCF4339923F5460D00EB07CE /* SearchableSubscribersVC.swift */,
 			);
 			path = SubscribersViewController;
 			sourceTree = "<group>";
@@ -2743,7 +2744,6 @@
 			isa = PBXGroup;
 			children = (
 				BCDEE7A323F4EDF500DD3EB3 /* DiscoveryAllVC.swift */,
-				BCF4339B23F5461700EB07CE /* SearchableSubscribersVC */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2775,14 +2775,6 @@
 				BC06A9A223E7FC03000B690E /* SearchViewModel.swift */,
 			);
 			path = SearchViewControllers;
-			sourceTree = "<group>";
-		};
-		BCF4339B23F5461700EB07CE /* SearchableSubscribersVC */ = {
-			isa = PBXGroup;
-			children = (
-				BCF4339923F5460D00EB07CE /* SearchableSubscribersVC.swift */,
-			);
-			path = SearchableSubscribersVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -14,4 +14,32 @@ class SearchViewModel: ListViewModel<ResponseAPIContentSearchItem> {
         fetcher.limit = 5
         super.init(fetcher: fetcher)
     }
+    
+    override func observeItemChange() {
+        ResponseAPIContentGetProfile.observeItemChanged()
+            .subscribe(onNext: {newUser in
+                self.updateItem(.profile(newUser))
+            })
+            .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetCommunity.observeItemChanged()
+            .subscribe(onNext: {newCommunity in
+                self.updateItem(.community(newCommunity))
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    override func observeItemDeleted() {
+        ResponseAPIContentGetProfile.observeItemDeleted()
+            .subscribe(onNext: { (deletedItem) in
+                self.deleteItem(.profile(deletedItem))
+            })
+            .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetCommunity.observeItemDeleted()
+            .subscribe(onNext: { (updatedCommunity) in
+                self.deleteItem(.community(updatedCommunity))
+            })
+            .disposed(by: disposeBag)
+    }
 }
