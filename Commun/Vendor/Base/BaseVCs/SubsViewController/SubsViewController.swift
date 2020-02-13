@@ -10,7 +10,7 @@ import Foundation
 
 /// Reusable viewcontroller for subscriptions/subscribers vc
 class SubsViewController<T: ListItemType, CellType: ListItemCellType>: ListViewController<T, CellType> {
-    var showShadowWhenScrollUp: Bool {true}
+    var showShadowWhenScrollUp = true
     lazy var closeButton = UIButton.close()
     
     override var tableViewMargin: UIEdgeInsets {

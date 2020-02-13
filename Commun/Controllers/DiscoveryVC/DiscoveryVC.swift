@@ -10,15 +10,6 @@ import Foundation
 import RxSwift
 
 class DiscoveryVC: BaseViewController {
-    // MARK: - Nested types
-    class DiscoveryCommunitiesVC: CommunitiesVC {
-        override var showShadowWhenScrollUp: Bool {false}
-    }
-
-    class DiscoverySubscribersVC: SubscribersVC {
-        override var showShadowWhenScrollUp: Bool {false}
-    }
-    
     // MARK: - Properties
     weak var currentChildVC: UIViewController?
     var tableView: UITableView? {
@@ -28,8 +19,16 @@ class DiscoveryVC: BaseViewController {
     // MARK: - ChildVCs
     lazy var searchController = UISearchController.default()
     lazy var discoveryAllVC = DiscoveryAllVC()
-    lazy var communitiesVC = DiscoveryCommunitiesVC(type: .all)
-    lazy var usersVC = DiscoverySubscribersVC(userId: Config.currentUser?.id)
+    lazy var communitiesVC: CommunitiesVC = {
+        let vc = CommunitiesVC(type: .all)
+        vc.showShadowWhenScrollUp = false
+        return vc
+    }()
+    lazy var usersVC: SubscribersVC = {
+        let vc = SubscribersVC(userId: Config.currentUser?.id)
+        vc.showShadowWhenScrollUp = false
+        return vc
+    }()
     lazy var postsVC = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptionsPopular, feedType: .time, sortType: .day, userId: Config.currentUser?.id))
     
     // MARK: - Subviews
