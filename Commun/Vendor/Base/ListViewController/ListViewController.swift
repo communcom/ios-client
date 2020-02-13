@@ -218,6 +218,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         
         if let profile = item as? ResponseAPIContentGetProfile {
             showProfileWithUserId(profile.userId)
+            return
         }
         
     }

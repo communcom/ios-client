@@ -103,6 +103,18 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         return UITableViewCell()
     }
     
+    override func modelSelected(_ item: ResponseAPIContentSearchItem) {
+        if let community = item.communityValue {
+            showCommunityWithCommunityId(community.communityId)
+            return
+        }
+        
+        if let user = item.profileValue {
+            showProfileWithUserId(user.userId)
+            return
+        }
+    }
+    
     override func handleListEmpty() {
         let title = "no result".localized().uppercaseFirst
         let description = "try to look for something else".localized().uppercaseFirst
