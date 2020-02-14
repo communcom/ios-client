@@ -238,14 +238,7 @@ class TabBarVC: UITabBarController {
     }
     
     @objc func buttonAddTapped() {
-        var community: ResponseAPIContentGetCommunity?
-        if let vc = UIApplication.topViewController() as? CommunityPageVCType,
-            let comm = vc.community,
-            comm.isSubscribed == true
-        {
-            community = comm
-        }
-        let basicEditorScene = BasicEditorVC(community: community)
+        let basicEditorScene = BasicEditorVC()
         self.present(basicEditorScene, animated: true, completion: nil)
     }
     
