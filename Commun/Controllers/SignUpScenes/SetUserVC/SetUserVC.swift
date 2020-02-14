@@ -146,17 +146,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 AuthorizationManager.shared.forceReAuthorize()
             }, onError: {error in
                 self.hideHud()
-                self.showError(error, showPleaseTryAgain: true) {
-                    if let error = error as? ErrorAPI
-                    {
-                        if error.caseInfo.message == ErrorAPI.Message.invalidStepTaken.rawValue ||
-                            error.caseInfo.message == ErrorAPI.Message.couldNotCreateUserId.rawValue
-                        {
-                            self.resetSignUpProcess()
-                        }
-                    }
-                }
-                
+                self.handleSignUpError(error: error)
             })
             .disposed(by: disposeBag)
     }

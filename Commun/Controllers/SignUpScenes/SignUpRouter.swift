@@ -53,22 +53,35 @@ extension SignUpRouter where Self: UIViewController {
 
 extension SignUpRouter where Self: UIViewController {
     // MARK: - Handler
-    func handleSignUpError(error: Error, with phone: String) {
+    func handleSignUpError(error: Error, with phone: String? = nil) {
+        // get phone
+        guard let phone = phone ?? Config.currentUser?.phoneNumber else {
+            // reset if phone not found
+            self.showError(error, showPleaseTryAgain: true) {
+                self.resetSignUpProcess()
+            }
+            return
+        }
+        
+        // catch error
         if let error = error as? ErrorAPI {
             switch error {
             case .registrationRequestFailed(let message, let currentStep):
                 if message == ErrorAPI.Message.invalidStepTaken.rawValue {
-                    // save state
-                    var dataToSave = [String: Any]()
-                    dataToSave[Config.registrationUserPhoneKey] = phone
-                    dataToSave[Config.registrationStepKey] = currentStep
-                    do {
-                        try KeychainManager.save(dataToSave)
-                        hideHud()
-                        signUpNextStep()
-                    } catch {
-                        hideHud()
-                        showError(error)
+                    showError(error) {
+                        // save state
+                        var dataToSave = [String: Any]()
+                        dataToSave[Config.registrationUserPhoneKey] = phone
+                        dataToSave[Config.registrationStepKey] = currentStep
+                        try! KeychainManager.save(dataToSave)
+                        self.signUpNextStep()
+                        return
+                    }
+                }
+                
+                if message == ErrorAPI.Message.couldNotCreateUserId.rawValue {
+                    self.showError(error, showPleaseTryAgain: true) {
+                        self.resetSignUpProcess()
                     }
                     return
                 }
@@ -76,7 +89,8 @@ extension SignUpRouter where Self: UIViewController {
                 break
             }
         }
-        hideHud()
-        showError(error)
+        
+        // unknown error, get state
+        self.showError(error)
     }
 }
