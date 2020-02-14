@@ -127,12 +127,13 @@ class SetUserVC: BaseViewController, SignUpRouter {
         
         showIndetermineHudWithMessage("setting username".localized().uppercaseFirst + "...")
         
-        viewModel.set(userName: userName)
-            .catchError({ (error) -> Single<String> in
+        RestAPIManager.instance.setUserName(userName).map {_ in ()}
+            .catchError({ error in
                 if let error = error as? ErrorAPI {
                     if error.caseInfo.message == "Invalid step taken",
-                        Config.currentUser?.registrationStep == .toBlockChain {
-                        return .just(Config.currentUser?.id ?? "")
+                        Config.currentUser?.registrationStep == .toBlockChain
+                    {
+                        return .just(())
                     }
                 }
                 throw error
@@ -145,7 +146,17 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 AuthorizationManager.shared.forceReAuthorize()
             }, onError: {error in
                 self.hideHud()
-                self.showError(error)
+                self.showError(error, showPleaseTryAgain: true) {
+                    if let error = error as? ErrorAPI
+                    {
+                        if error.caseInfo.message == ErrorAPI.Message.invalidStepTaken.rawValue ||
+                            error.caseInfo.message == ErrorAPI.Message.couldNotCreateUserId.rawValue
+                        {
+                            self.resetSignUpProcess()
+                        }
+                    }
+                }
+                
             })
             .disposed(by: disposeBag)
     }

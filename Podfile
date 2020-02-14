@@ -10,6 +10,7 @@ project 'cyberSwift/CyberSwift.xcodeproj'
 
 def common_pods
   pod 'RxDataSources', '~> 3.0'
+  pod 'Crashlytics'
 end
 
 def extensions_pods
@@ -22,7 +23,6 @@ def common_pods_commun
   extensions_pods
   
   pod 'Fabric'
-  pod 'Crashlytics'
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'

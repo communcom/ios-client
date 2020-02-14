@@ -25,11 +25,6 @@ extension UIViewController {
     }
     
     // MARK: - Custom Functions
-    @objc func popToSignUpVC() {
-        if let vc = navigationController?.viewControllers.filter({ $0 is WelcomeVC }).first {
-            navigationController?.popToViewController(vc, animated: true)
-        }
-    }
     
     class func instanceController(fromStoryboard storyboard: String, withIdentifier identifier: String) -> UIViewController {
         let st = UIStoryboard(name: storyboard, bundle: nil)
@@ -74,24 +69,24 @@ extension UIViewController {
         showErrorWithLocalizedMessage("Something went wrong.\nPlease try again later")
     }
     
-    func showErrorWithMessage(_ message: String) {
-        if let nc = navigationController {
-            nc.showAlert(title: "error".localized().uppercaseFirst, message: message)
-        } else {
-            showAlert(title: "error".localized().uppercaseFirst, message: message)
+    func showErrorWithMessage(_ message: String, completion: (() -> Void)? = nil) {
+        let vc = tabBarController ?? navigationController ?? parent ?? self
+        
+        vc.showAlert(title: "error".localized().uppercaseFirst, message: message, buttonTitles: ["OK".localized().uppercaseFirst]) { (_) in
+            completion?()
         }
     }
     
-    func showErrorWithLocalizedMessage(_ message: String) {
-        showErrorWithMessage(message.localized())
+    func showErrorWithLocalizedMessage(_ message: String, completion: (() -> Void)? = nil) {
+        showErrorWithMessage(message.localized(), completion: completion)
     }
     
-    func showError(_ error: Error) {
+    func showError(_ error: Error, showPleaseTryAgain: Bool = false, completion: (() -> Void)? = nil) {
         var message = error.localizedDescription
         if let error = error as? ErrorAPI {
             message = error.caseInfo.message
         }
-        showErrorWithLocalizedMessage(message)
+        showErrorWithLocalizedMessage(message + (showPleaseTryAgain ? (".\n" + "please try again later".localized().uppercaseFirst + "!"): ""), completion: completion)
     }
     
     func hideHud() {
