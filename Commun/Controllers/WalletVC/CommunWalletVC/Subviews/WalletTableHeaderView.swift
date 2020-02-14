@@ -12,7 +12,10 @@ import CircularCarousel
 
 class WalletTableHeaderView: MyTableHeaderView {
     // MARK: - Properties
-    var sendPointsTopConstraint: NSLayoutConstraint?
+    private var isSendPointsHidden = false
+    private var isMyPointsHidden = false
+    private var flexibleConstraint: NSLayoutConstraint?
+    private var filterTopConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
     lazy var myPointsContainerView = UIView(forAutoLayout: ())
@@ -60,33 +63,29 @@ class WalletTableHeaderView: MyTableHeaderView {
         myPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
         myPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
         
+        // set up my points
         let myPointsLabel = UILabel.with(text: "my points".localized().uppercaseFirst, textSize: 17, weight: .bold)
         myPointsContainerView.addSubview(myPointsLabel)
         myPointsLabel.autoPinEdge(toSuperviewEdge: .top)
         myPointsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-        
+
         myPointsContainerView.addSubview(myPointsSeeAllButton)
         myPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .top)
         myPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        
+
         myPointsContainerView.addSubview(myPointsCollectionView)
         myPointsCollectionView.autoPinEdge(.top, to: .bottom, of: myPointsLabel, withOffset: 20)
         myPointsCollectionView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
-        // send points
-        addSubview(sendPointsContainerView)
-        sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(.top, to: .bottom, of: myPointsContainerView, withOffset: 30 * Config.heightRatio)
-        sendPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
-        sendPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        sendPointsContainerView.addSubview(sendPointsSeeAllButton)
-        sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .top)
-        sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        
+        // set up send points
         let sendPointsLabel = UILabel.with(text: "send points".localized().uppercaseFirst, textSize: 17, weight: .bold)
         sendPointsContainerView.addSubview(sendPointsLabel)
         sendPointsLabel.autoPinEdge(toSuperviewEdge: .top)
         sendPointsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
+        
+        sendPointsContainerView.addSubview(sendPointsSeeAllButton)
+        sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .top)
+        sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         
         sendPointsContainerView.addSubview(sendPointsCollectionView)
         sendPointsCollectionView.autoPinEdge(.top, to: .bottom, of: sendPointsLabel, withOffset: 20)
@@ -94,7 +93,6 @@ class WalletTableHeaderView: MyTableHeaderView {
         
         // filter
         addSubview(filterContainerView)
-        filterContainerView.autoPinEdge(.top, to: .bottom, of: sendPointsContainerView, withOffset: 32)
         filterContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         filterContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         
@@ -113,9 +111,14 @@ class WalletTableHeaderView: MyTableHeaderView {
         
         // initial setup
         setMyPointHidden(false)
+        setSendPointsHidden(false)
     }
     
     func setMyPointHidden(_ hidden: Bool) {
+        // assign value
+        isMyPointsHidden = hidden
+        
+        // check
         if !hidden {
             // add my point
             if !myPointsContainerView.isDescendant(of: self) {
@@ -124,19 +127,78 @@ class WalletTableHeaderView: MyTableHeaderView {
                 myPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
                 myPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
                 
-                sendPointsTopConstraint?.isActive = false
-                sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(.top, to: .bottom, of: myPointsContainerView, withOffset: 30 * Config.heightRatio)
+                flexibleConstraint?.isActive = false
+                filterTopConstraint?.isActive = false
+                if sendPointsContainerView.isDescendant(of: self) && !isSendPointsHidden {
+                    flexibleConstraint = myPointsContainerView.autoPinEdge(
+                        .bottom,
+                        to: .top,
+                        of: sendPointsContainerView,
+                        withOffset: -30 * Config.heightRatio)
+                    filterTopConstraint = filterContainerView.autoPinEdge(.top, to: .bottom, of: sendPointsContainerView, withOffset: 32)
+                } else {
+                    flexibleConstraint = myPointsContainerView.autoPinEdge(
+                        .bottom,
+                        to: .top,
+                        of: filterContainerView,
+                        withOffset: -32 * Config.heightRatio)
+                }
             }
         } else {
             // remove my point
             if myPointsContainerView.isDescendant(of: self) {
                 myPointsContainerView.removeFromSuperview()
                 
-                sendPointsTopConstraint?.isActive = false
-                sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(toSuperviewEdge: .top)
+                flexibleConstraint?.isActive = false
+                filterTopConstraint?.isActive = false
+                if sendPointsContainerView.isDescendant(of: self) && !isSendPointsHidden {
+                    flexibleConstraint = sendPointsContainerView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+                    filterTopConstraint = filterContainerView.autoPinEdge(.top, to: .bottom, of: sendPointsContainerView, withOffset: 32)
+                } else {
+                    filterTopConstraint = filterContainerView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+                }
+                
             }
         }
         
+    }
+    
+    func setSendPointsHidden(_ hidden: Bool) {
+        // assign value
+        isSendPointsHidden = hidden
+        
+        // check
+        if !hidden {
+            // add send point
+            if !sendPointsContainerView.isDescendant(of: self) {
+                addSubview(sendPointsContainerView)
+                sendPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
+                sendPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
+                
+                flexibleConstraint?.isActive = false
+                filterTopConstraint?.isActive = false
+                if myPointsContainerView.isDescendant(of: self) && !isMyPointsHidden {
+                    flexibleConstraint = sendPointsContainerView.autoPinEdge(.top, to: .bottom, of: myPointsContainerView, withOffset: 30 * Config.heightRatio)
+                    filterTopConstraint = filterContainerView.autoPinEdge(.top, to: .bottom, of: sendPointsContainerView, withOffset: 32)
+                } else {
+                    flexibleConstraint = sendPointsContainerView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+                }
+            }
+        } else {
+            // remove send point
+            if sendPointsContainerView.isDescendant(of: self) {
+                sendPointsContainerView.removeFromSuperview()
+                
+                flexibleConstraint?.isActive = false
+                filterTopConstraint?.isActive = false
+                if myPointsContainerView.isDescendant(of: self) && !isMyPointsHidden {
+                    flexibleConstraint = myPointsContainerView.autoPinEdge(.bottom, to: .top, of: filterContainerView, withOffset: -32)
+                    filterTopConstraint = filterContainerView.autoPinEdge(.top, to: .bottom, of: myPointsContainerView, withOffset: 32)
+                } else {
+                    filterTopConstraint = filterContainerView.autoPinEdge(toSuperviewEdge: .top, withInset: 32)
+                }
+            }
+        }
     }
     
     override func layoutSubviews() {
