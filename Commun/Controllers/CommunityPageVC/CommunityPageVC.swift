@@ -11,7 +11,8 @@ import RxSwift
 import RxDataSources
 import CyberSwift
 
-class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate {
+class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate, CommunityPageVCType {
+    
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
         case post(ResponseAPIContentGetPost)
@@ -37,6 +38,10 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     var communityId: String?
     var communityAlias: String?
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>!
+    
+    var community: ResponseAPIContentGetCommunity? {
+        return viewModel.profile.value
+    }
     
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetCommunity> {
         if let alias = communityAlias {
