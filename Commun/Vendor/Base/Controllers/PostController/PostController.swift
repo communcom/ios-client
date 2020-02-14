@@ -79,6 +79,7 @@ extension PostController {
                 }, tintColor: UIColor(hexString: "#ED2C5B")!)
             )
         }
+        
 
         // headerView for actionSheet
         let headerView = PostMetaView(frame: .zero)

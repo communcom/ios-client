@@ -25,10 +25,16 @@ extension NSMutableAttributedString {
         return self
     }
     
-    @discardableResult func normal(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15)) -> NSMutableAttributedString {
+    @discardableResult func normal(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15), color: UIColor? = nil) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: font]
-        let normal = NSAttributedString(string: text, attributes: attrs)
+        var normal = NSAttributedString(string: text, attributes: attrs)
+        
+        if let colorValue = color {
+            normal = normal.colored(with: colorValue)
+        }
+        
         append(normal)
+        
         return self
     }
     

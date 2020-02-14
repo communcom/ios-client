@@ -36,6 +36,17 @@ extension PostCellDelegate where Self: BaseViewController {
         
         var actions = [CommunActionSheet.Action]()
         
+        if let community = post.community, let isSubscribed = community.isSubscribed {
+            let title = (isSubscribed ? "following" : "follow").localized().uppercaseFirst
+            let icon = UIImage(named: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")
+            
+            let action = CommunActionSheet.Action(title: title, icon: icon, handle: {
+                self.followButtonDidTouch(community: community)
+            })
+            
+            actions.append(action)
+        }
+        
         if post.author?.userId != Config.currentUser?.id {
             actions.append(
                 CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
@@ -99,7 +110,6 @@ extension PostCellDelegate where Self: BaseViewController {
     }
     
     func reportPost(_ post: ResponseAPIContentGetPost) {
-        
         let vc = ContentReportVC(content: post)
         let nc = BaseNavigationController(rootViewController: vc)
         
@@ -113,6 +123,7 @@ extension PostCellDelegate where Self: BaseViewController {
         guard let topController = UIApplication.topViewController() else {return}
         
         topController.showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
+        
         // Get full post
         RestAPIManager.instance.loadPost(userId: post.contentId.userId, permlink: post.contentId.permlink, communityId: post.contentId.communityId ?? "")
             .subscribe(onSuccess: {post in
@@ -135,5 +146,13 @@ extension PostCellDelegate where Self: BaseViewController {
                 topController.showError(error)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func followButtonDidTouch(community: ResponseAPIContentGetCommunity) {
+        NetworkService.shared.triggerFollow(community: community)
+            .subscribe { [weak self] (error) in
+                self?.showError(error)
+        }
+        .disposed(by: disposeBag)
     }
 }

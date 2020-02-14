@@ -40,7 +40,21 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         let label = UILabel.with(text: 10000000.kmFormatted, textSize: 15, weight: .bold)
         return label
     }()
-    
+
+    lazy var followsYouLabel: UILabel = {
+        let label = UILabel.with(text: "follows you".localized().uppercaseFirst, textSize: .adaptive(width: 12.0), weight: .bold, textColor: .appGrayColor)
+        label.isHidden = true
+        
+        return label
+    }()
+
+    lazy var dotLabel2: UILabel = {
+        let label = UILabel.with(text: "•", textSize: .adaptive(width: 15.0), weight: .regular, textColor: .appGrayColor)
+        label.isHidden = true
+        
+        return label
+    }()
+
     lazy var seeAllButton: UIButton = UIButton(label: "see all".localized(), labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
     
     lazy var communitiesLabel = UILabel.with(text: "communities".localized().uppercaseFirst, textSize: 20, weight: .bold)
@@ -85,32 +99,43 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             self.parentViewController?.present(navigation, animated: true, completion: nil)
         }.disposed(by: disposeBag)
         
-        let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .regular, textColor: .appGrayColor)
-        addSubview(dotLabel)
-        dotLabel.autoPinEdge(.leading, to: .trailing, of: followersLabel, withOffset: 2)
-        dotLabel.autoPinEdge(.bottom, to: .bottom, of: followersLabel)
+        let dotLabel1 = UILabel.with(text: "•", textSize: 15, weight: .regular, textColor: .appGrayColor)
+        addSubview(dotLabel1)
+        dotLabel1.autoPinEdge(.leading, to: .trailing, of: followersLabel, withOffset: 2)
+        dotLabel1.autoPinEdge(.bottom, to: .bottom, of: followersLabel)
         
         addSubview(followingsCountLabel)
-        followingsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
+        followingsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel1, withOffset: 2)
         followingsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
         
-        let followingsLabel = UILabel.with(text: "followings".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .appGrayColor)
+        let followingsLabel = UILabel.with(text: "followings".localized().uppercaseFirst, textSize: .adaptive(width: 12.0), weight: .bold, textColor: .appGrayColor)
         addSubview(followingsLabel)
-        followingsLabel.autoPinEdge(.leading, to: .trailing, of: followingsCountLabel, withOffset: 4)
+        followingsLabel.autoPinEdge(.leading, to: .trailing, of: followingsCountLabel, withOffset: .adaptive(width: 4.0))
         followingsLabel.autoPinEdge(.bottom, to: .bottom, of: followingsCountLabel)
 
-        let followingsButton = UIButton(height: 44, backgroundColor: .clear)
+        let followingsButton = UIButton(height: .adaptive(height: 44.0), backgroundColor: .clear)
         addSubview(followingsButton)
         followingsButton.autoAlignAxis(.horizontal, toSameAxisOf: followingsLabel)
         followingsButton.autoPinEdge(.left, to: .left, of: followingsCountLabel)
         followingsButton.autoPinEdge(.right, to: .right, of: followingsLabel)
-        followingsButton.rx.tap.subscribe { _ in
-            let vc = SubscriptionsVC(title: self.profile?.username, userId: self.profile?.userId, type: .user)
-            let navigation = BaseNavigationController(rootViewController: vc)
-            navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-            self.parentViewController?.present(navigation, animated: true, completion: nil)
-        }.disposed(by: disposeBag)
         
+        followingsButton.rx.tap
+            .subscribe { _ in
+                let vc = SubscriptionsVC(title: self.profile?.username, userId: self.profile?.userId, type: .user)
+                let navigation = BaseNavigationController(rootViewController: vc)
+                navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+                self.parentViewController?.present(navigation, animated: true, completion: nil)
+            }
+            .disposed(by: disposeBag)
+        
+        addSubview(dotLabel2)
+        dotLabel2.autoPinEdge(.leading, to: .trailing, of: followingsButton, withOffset: .adaptive(width: 2.0))
+        dotLabel2.autoPinEdge(.bottom, to: .bottom, of: followingsLabel)
+        
+        addSubview(followsYouLabel)
+        followsYouLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel2, withOffset: .adaptive(width: 2.0))
+        followsYouLabel.autoPinEdge(.bottom, to: .bottom, of: followingsLabel)
+
         firstSeparator = UIView(height: 2, backgroundColor: .appLightGrayColor)
         addSubview(firstSeparator)
         firstSeparator.autoPinEdge(toSuperviewEdge: .leading)
@@ -211,6 +236,11 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
 
         if userProfile.userId != Config.currentUser?.id {
             isCommunitiesHidden = !(userProfile.highlightCommunitiesCount ?? 0 > 0)
+        }
+        
+        if let boolValue = userProfile.isSubscribed {
+            dotLabel2.isHidden = !boolValue
+            followsYouLabel.isHidden = !boolValue
         }
     }
     
