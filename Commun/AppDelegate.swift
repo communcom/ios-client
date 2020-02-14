@@ -85,8 +85,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // global tintColor
         window?.tintColor = .appMainColor
+        
         // Logger
 //        Logger.showEvents = [.debug]
+//        Logger.shownApiMethods = ["registration.getState"]
 
         // support webp image
         SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
