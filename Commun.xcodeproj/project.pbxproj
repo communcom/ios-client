@@ -308,7 +308,6 @@
 		BC4AD66123B1BB9D008546A4 /* TransferHistoryFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */; };
 		BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */; };
 		BC4AD66623B1EBF1008546A4 /* TransferHistoryTopTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */; };
-		BC4CD23B23F54AA4008B412C /* SearchablePostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4CD23A23F54AA4008B412C /* SearchablePostsVC.swift */; };
 		BC4CD23F23F55127008B412C /* CommunityPageVCType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4CD23E23F55127008B412C /* CommunityPageVCType.swift */; };
 		BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */; };
 		BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */; };
@@ -450,6 +449,7 @@
 		BCD00FBD23750859004A3952 /* PostPageNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FBC23750859004A3952 /* PostPageNavigationBar.swift */; };
 		BCD00FBF2375087C004A3952 /* PostPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FBE2375087C004A3952 /* PostPageVC.swift */; };
 		BCD00FC123750B15004A3952 /* PostPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FC023750B15004A3952 /* PostPageViewModel.swift */; };
+		BCD01A0423F65231003B0E1E /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD01A0323F65231003B0E1E /* UINavigationController.swift */; };
 		BCD3BC8B23AB313E0036C947 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8A23AB313E0036C947 /* UIStackView.swift */; };
 		BCD3BC8D23AC66740036C947 /* UICollectionView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */; };
 		BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */; };
@@ -841,7 +841,6 @@
 		BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryFilterVC.swift; sourceTree = "<group>"; };
 		BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistorySegmentedControl.swift; sourceTree = "<group>"; };
 		BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryTopTabBar.swift; sourceTree = "<group>"; };
-		BC4CD23A23F54AA4008B412C /* SearchablePostsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePostsVC.swift; sourceTree = "<group>"; };
 		BC4CD23E23F55127008B412C /* CommunityPageVCType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageVCType.swift; sourceTree = "<group>"; };
 		BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubviewAttachingTextView.swift; sourceTree = "<group>"; };
 		BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageTextAttachment.swift; sourceTree = "<group>"; };
@@ -982,6 +981,7 @@
 		BCD00FBC23750859004A3952 /* PostPageNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostPageNavigationBar.swift; sourceTree = "<group>"; };
 		BCD00FBE2375087C004A3952 /* PostPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageVC.swift; sourceTree = "<group>"; };
 		BCD00FC023750B15004A3952 /* PostPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostPageViewModel.swift; sourceTree = "<group>"; };
+		BCD01A0323F65231003B0E1E /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		BCD3BC8A23AB313E0036C947 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+PureLayout.swift"; sourceTree = "<group>"; };
 		BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
@@ -1622,6 +1622,7 @@
 				BC18FA2623D56325005DC7E3 /* UITextField.swift */,
 				BC99B65923E17848004AA74E /* UISearchController.swift */,
 				B1A6344D23E83BDA00996375 /* UIApplication+Extensions.swift */,
+				BCD01A0323F65231003B0E1E /* UINavigationController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1941,7 +1942,6 @@
 				BC4AD64F23B09BF7008546A4 /* BalancesVC */,
 				BC9066FD23AB2279000F9A3B /* TransferHistoryVC */,
 				BC18FA1C23D54DB1005DC7E3 /* CurrenciesVC */,
-				BC619B0F237268240005BB94 /* CommunitiesVC */,
 				BC4CD23E23F55127008B412C /* CommunityPageVCType.swift */,
 			);
 			path = Base;
@@ -3435,6 +3435,7 @@
 				3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */,
 				3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */,
 				BC22BBD2236C213D00F40658 /* SelectLanguageVC.swift in Sources */,
+				BCD01A0423F65231003B0E1E /* UINavigationController.swift in Sources */,
 				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				BC472D9623A3755C00822371 /* CardPresentationController.swift in Sources */,
 				BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */,

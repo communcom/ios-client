@@ -45,18 +45,9 @@ extension SignUpRouter where Self: UIViewController {
     func resetSignUpProcess() {
         try? KeychainManager.deleteUser()
         // Dismiss all screen
-        popToPreviousVC()
-    }
-}
-
-extension SignUpRouter where Self: UIViewController {
-    // MARK: - Back button
-    func setBackButtonToSignUpVC() {
-        let newBackButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(popToPreviousVC))
-        newBackButton.tintColor = .black
-        
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.leftBarButtonItem = newBackButton
+        navigationController?.popToVC(type: SignUpVC.self) { signUpVC in
+            signUpVC.phoneNumberTextField.text = nil
+        }
     }
 }
 
@@ -66,7 +57,7 @@ extension SignUpRouter where Self: UIViewController {
         if let error = error as? ErrorAPI {
             switch error {
             case .registrationRequestFailed(let message, let currentStep):
-                if message == "Invalid step taken" {
+                if message == ErrorAPI.Message.invalidStepTaken.rawValue {
                     // save state
                     var dataToSave = [String: Any]()
                     dataToSave[Config.registrationUserPhoneKey] = phone

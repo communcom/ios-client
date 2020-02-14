@@ -193,8 +193,10 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
 
     @IBAction func resendButtonTapped(_ sender: UIButton) {
         guard KeychainManager.currentUser()?.phoneNumber != nil else {
-                resetSignUpProcess()
-                return
+            try? KeychainManager.deleteUser()
+            // Go back
+            popToPreviousVC()
+            return
         }
         AnalyticsManger.shared.smsCodeResend()
         
