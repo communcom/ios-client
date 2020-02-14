@@ -52,12 +52,12 @@ lane :beta do |options|
 	build_path = ENV['BUILD_PATH']
 	build_number = ENV['BUILD_NUMBER']
 
-	crashlytics(
-		api_token: FABRIC_TOKEN,
-		build_secret: FABRIC_SECRET,
-		groups: FABRIC_TESTERS_GROUP,
-		notifications: "false"
-	)
+    firebase_app_distribution(
+        app: "1:512725341165:ios:5b0e9bc757e72efc7a4de4",
+        apk_path: build_path,
+        firebase_cli_token: "1//0cXk-dcR_3jrUCgYIARAAGAwSNwF-L9IrhXqwxufqsZXEHSU2NVA-hQJYM_qAmltWyGKWdeQzf7wvyUZTHI2KiFivklmhk78BuYI",
+        groups: "commun-ios"
+    )
 
 	appcenter_upload(
 	  api_token: "5544f8df69750ae5a545f4b1bb8f9c5a4040c8f5",
