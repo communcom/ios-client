@@ -54,23 +54,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
             // Analytics
             AnalyticsManger.shared.launchFirstTime()
             
             UserDefaults.standard.set(true, forKey: firstInstallAppKey)
-        }
-        
-        // create deviceId
-        if KeychainManager.currentDeviceId == nil {
-            let id = UUID().uuidString + "." + "\(Date().timeIntervalSince1970)"
-            do {
-                try KeychainManager.save([Config.currentDeviceIdKey: id])
-            } catch {
-                Logger.log(message: error.localizedDescription, event: .debug)
-            }
         }
 
         AnalyticsManger.shared.sessionStart()
@@ -85,8 +74,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // global tintColor
         window?.tintColor = .appMainColor
+        
         // Logger
 //        Logger.showEvents = [.debug]
+//        Logger.shownApiMethods = ["registration.getState"]
 
         // support webp image
         SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
@@ -178,8 +169,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch error.caseInfo.message {
             case "Cannot get such account from BC",
                  _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
+                AuthorizationManager.shared.status.accept(.authorizing)
                 try! RestAPIManager.instance.logout()
-                AuthorizationManager.shared.forceReAuthorize()
                 return
             default:
                 break

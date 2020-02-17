@@ -12,14 +12,18 @@ import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
     // MARK: - Properties
-    var balancesSubject: BehaviorRelay<[ResponseAPIWalletGetBalance]> {
-        (viewModel as! WalletViewModel).balancesVM.items
+    var balancesVM: BalancesViewModel {
+        (viewModel as! WalletViewModel).balancesVM
+    }
+    
+    var subscriptionsVM: SubscriptionsViewModel {
+        (viewModel as! WalletViewModel).subscriptionsVM
     }
 
     var isCommunBalance = true
 
     var balances: [ResponseAPIWalletGetBalance] {
-        balancesSubject.value
+        balancesVM.items.value
     }
     
     var isUserScrolling: Bool {
@@ -179,14 +183,15 @@ class CommunWalletVC: TransferHistoryVC {
 
     override func bindItems() {
         super.bindItems()
-        balancesSubject
+        balancesVM.items
             .distinctUntilChanged()
             .subscribe(onNext: { (_) in
                 self.reloadData()
             })
             .disposed(by: disposeBag)
         
-        balancesSubject
+        balancesVM.items
+            .do(onNext: {self.tableHeaderView.setMyPointHidden($0.count == 0)})
             .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
             }
@@ -198,11 +203,12 @@ class CommunWalletVC: TransferHistoryVC {
             })
             .disposed(by: disposeBag)
         
-        (viewModel as! WalletViewModel).subscriptionsVM.items
+        subscriptionsVM.items
             .map({ (items) -> [ResponseAPIContentGetProfile?] in
                 let items = items.compactMap {$0.userValue}
                 return items//[nil] + items // Temp hide Add friends
             })
+            .do(onNext: {self.tableHeaderView.setSendPointsHidden($0.count == 0)})
             .bind(to: sendPointsCollectionView.rx.items(cellIdentifier: "\(SendPointCollectionCell.self)", cellType: SendPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
             }
@@ -263,6 +269,12 @@ class CommunWalletVC: TransferHistoryVC {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    override func refresh() {
+        super.refresh()
+        balancesVM.reload()
+        subscriptionsVM.reload()
     }
 
     // MARK: - Actions

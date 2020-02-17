@@ -22,19 +22,19 @@ class ErrorView: MyView {
     var retryAction: (() -> Void)?
     
     init(
-        imageRatio: CGFloat = 285/350,
-        imageNamed: String = "no-connection-image",
-        title: String = "no connection".localized().uppercaseFirst,
-        subtitle: String = "check your Internet connection\n and try again".localized().uppercaseFirst,
-        retryButtonTitle: String = "try again".localized().uppercaseFirst,
-        retryAction: (() -> Void)?
+        imageRatio: CGFloat? = nil,
+        imageNamed: String? = nil,
+        title: String? = nil,
+        subtitle: String? = nil,
+        retryButtonTitle: String? = nil,
+        retryAction: (() -> Void)? = nil
     ) {
-        self.imageRatio = imageRatio
+        self.imageRatio = imageRatio ?? 285/350
         super.init(frame: .zero)
-        self.imageView.image = UIImage(named: imageNamed)
-        self.title.text = title
-        self.subtitle.text = subtitle
-        self.retryButton.setTitle(retryButtonTitle, for: .normal)
+        self.imageView.image = UIImage(named: imageNamed ?? "no-connection-image")
+        self.title.text = title ?? "no connection".localized().uppercaseFirst
+        self.subtitle.text = subtitle ?? "check your Internet connection\n and try again".localized().uppercaseFirst
+        self.retryButton.setTitle(retryButtonTitle ?? "try again".localized().uppercaseFirst, for: .normal)
         self.retryAction = retryAction
     }
     

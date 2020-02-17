@@ -81,12 +81,12 @@ extension UIViewController {
         showErrorWithMessage(message.localized(), completion: completion)
     }
     
-    func showError(_ error: Error, showPleaseTryAgain: Bool = false, completion: (() -> Void)? = nil) {
+    func showError(_ error: Error, showPleaseTryAgain: Bool = false, additionalMessage: String? = nil, completion: (() -> Void)? = nil) {
         var message = error.localizedDescription
         if let error = error as? ErrorAPI {
             message = error.caseInfo.message
         }
-        showErrorWithLocalizedMessage(message + (showPleaseTryAgain ? (".\n" + "please try again later".localized().uppercaseFirst + "!"): ""), completion: completion)
+        showErrorWithLocalizedMessage(message + (showPleaseTryAgain ? (".\n" + "please try again later".localized().uppercaseFirst + "!"): "") + (additionalMessage ?? ""), completion: completion)
     }
     
     func hideHud() {

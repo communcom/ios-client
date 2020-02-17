@@ -109,6 +109,9 @@ extension PostPageVC {
                  }
             })
             .disposed(by: disposeBag)
+        
+        // forward delegate
+        commentForm.textView.rx.setDelegate(self).disposed(by: disposeBag)
     }
     
     func bindPost() {

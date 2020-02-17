@@ -142,6 +142,9 @@ class WalletSendPointsVC: BaseViewController {
             guard let strongSelf = self else { return }
             
             let enteredAmount = value + strongSelf.dataModel.transaction.amount
+            
+            guard enteredAmount <= strongSelf.dataModel.getBalance(bySymbol: strongSelf.dataModel.transaction.symbol.sell).amount else { return }
+
             strongSelf.dataModel.transaction.amount = enteredAmount
             strongSelf.pointsTextField.text = String(Double(enteredAmount).currencyValueFormatted)
             strongSelf.clearPointsButton.isHidden = false
@@ -369,6 +372,7 @@ class WalletSendPointsVC: BaseViewController {
         sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
     }
 
+    
     // MARK: - Actions
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
         let friendsListVC = SendPointListVC { [weak self] user in
@@ -435,6 +439,7 @@ class WalletSendPointsVC: BaseViewController {
     }
 }
 
+
 // MARK: - UITextFieldDelegate
 extension WalletSendPointsVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -446,30 +451,33 @@ extension WalletSendPointsVC: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // TODO: - Add action
         textField.resignFirstResponder()
         return true
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let text = textField.text {
-            guard CharacterSet(charactersIn: "0123456789.,").isSuperset(of: CharacterSet(charactersIn: string)) || string.isEmpty else { return false }
-
-            let countDots = (text + string).filter({$0 == "."}).count
-            let countCommas = (text + string).filter({$0 == ","}).count
-
-            guard countDots + countCommas <= 1 else { return false }
-
-            if (text.hasSuffix(".") || text.hasSuffix(",")) && (string == "." || string == ",") {
-                return false
-            }
-
-            clearPointsButton.isHidden = text.count == 1 && string.isEmpty
+        guard !string.isEmpty else { return true }
+        guard let text = textField.text, !(text.starts(with: "0") && string == "0") else { return false }
+        guard CharacterSet(charactersIn: "0123456789.,").isSuperset(of: CharacterSet(charactersIn: string)) else { return false }
+        
+        let updatedText = text + string
+        let countDots = (text + string).filter({$0 == "."}).count
+        let countCommas = (text + string).filter({$0 == ","}).count
+        
+        guard countDots + countCommas <= 1 else { return false }
+        guard !updatedText.hasSuffix(".") || !updatedText.hasSuffix(",") else { return false }
+        guard CGFloat(updatedText.float() ?? 0.0) <= dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount else { return false }
+        
+        if updatedText.count > 1 && updatedText.starts(with: "0") && !(updatedText.contains(",") || updatedText.contains(".")) {
+            textField.text = nil
         }
-
+        
+        clearPointsButton.isHidden = text.count == 1
+        
         return true
     }
 }
+
 
 // MARK: - CircularCarouselDataSource
 extension WalletSendPointsVC: CircularCarouselDataSource {
@@ -509,6 +517,7 @@ extension WalletSendPointsVC: CircularCarouselDataSource {
         return dataModel.balances.firstIndex(where: { $0.symbol == dataModel.transaction.symbol.sell }) ?? 0
     }
 }
+
 
 // MARK: - CircularCarouselDelegate
 extension WalletSendPointsVC: CircularCarouselDelegate {
