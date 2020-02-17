@@ -73,17 +73,8 @@ extension BasicEditorVC {
                 self?.attachmentView.addSubview(attachmentView)
                 attachmentView.autoPinEdgesToSuperviewEdges()
                 
-                // modify close button
-                if type == "rich" || type == "embed" {
-                    attachmentView.closeButtonRightConstraint?.constant = -26
-                }
-                
                 if let url = attributes.url {
-                    let embedView = EmbedView(content: ResponseAPIContentBlock(id: 0, type: type, attributes: attributes, content: ResponseAPIContentBlockContent.string(url)))
-                    attachmentView.addSubview(embedView)
-                    embedView.autoPinEdgesToSuperviewEdges()
-                    attachmentView.bringSubviewToFront(attachmentView.closeButton)
-                    attachmentView.expandButton.isHidden = true
+                    attachmentView.setUp(block: ResponseAPIContentBlock(id: 0, type: type, attributes: attributes, content: ResponseAPIContentBlockContent.string(url)))
                 } else {
                     attachmentView.setUp(image: attachment.localImage, url: attachment.attributes?.url, description: attachment.attributes?.title ?? attachment.attributes?.description)
                     attachmentView.autoSetDimension(.height, toSize: attachment.size?.height ?? 300)

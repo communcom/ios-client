@@ -24,7 +24,6 @@
 		3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B0231E318400D0B1DA /* StateButton.swift */; };
 		3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */; };
 		3B25E5C0234C2F66005BD1B8 /* BasicEditorVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */; };
-		3B25E5C2234C4205005BD1B8 /* AttachmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5C1234C4205005BD1B8 /* AttachmentsView.swift */; };
 		3B25E5C4234C6E4E005BD1B8 /* BasicEditorVC+Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5C3234C6E4E005BD1B8 /* BasicEditorVC+Link.swift */; };
 		3B25E5C6234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift */; };
 		3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B289B962346E51600598407 /* UIButton+PureLayout.swift */; };
@@ -426,7 +425,6 @@
 		BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C423701441005EDAAD /* SubscribersVC.swift */; };
 		BCB4A4C72370188B005EDAAD /* SubscribersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */; };
 		BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */; };
-		BCC545E32386710D004DFF2A /* EditorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC545E22386710D004DFF2A /* EditorGridView.swift */; };
 		BCC60E1623A0D02C00D40013 /* FeedPageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */; };
 		BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB99302375503A005252CF /* PostPageVC+Binding.swift */; };
 		BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB993323756318005252CF /* PostHeaderTextView.swift */; };
@@ -547,7 +545,6 @@
 		3B2538B0231E318400D0B1DA /* StateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateButton.swift; sourceTree = "<group>"; };
 		3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorViewModel.swift; sourceTree = "<group>"; };
 		3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Binding.swift"; sourceTree = "<group>"; };
-		3B25E5C1234C4205005BD1B8 /* AttachmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsView.swift; sourceTree = "<group>"; };
 		3B25E5C3234C6E4E005BD1B8 /* BasicEditorVC+Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Link.swift"; sourceTree = "<group>"; };
 		3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIFrameGetEmbed.swift; sourceTree = "<group>"; };
 		3B289B962346E51600598407 /* UIButton+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+PureLayout.swift"; sourceTree = "<group>"; };
@@ -960,7 +957,6 @@
 		BCB4A4C423701441005EDAAD /* SubscribersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersVC.swift; sourceTree = "<group>"; };
 		BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersCell.swift; sourceTree = "<group>"; };
 		BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsViewController.swift; sourceTree = "<group>"; };
-		BCC545E22386710D004DFF2A /* EditorGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorGridView.swift; sourceTree = "<group>"; };
 		BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageHeaderView.swift; sourceTree = "<group>"; };
 		BCCB99302375503A005252CF /* PostPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Binding.swift"; sourceTree = "<group>"; };
 		BCCB993323756318005252CF /* PostHeaderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
@@ -1075,8 +1071,6 @@
 			isa = PBXGroup;
 			children = (
 				3B3C8B9623478DFA00D8BADB /* BasicEditorTextView */,
-				3B25E5C1234C4205005BD1B8 /* AttachmentsView.swift */,
-				BCC545E22386710D004DFF2A /* EditorGridView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -3353,7 +3347,6 @@
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
 				BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */,
 				BC3694F923699B8600B2E078 /* ArticleEditorVC+Actions.swift in Sources */,
-				BCC545E32386710D004DFF2A /* EditorGridView.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */,
 				BC4692DF2394B4130064A38B /* CommentCellDelegate.swift in Sources */,
@@ -3407,7 +3400,6 @@
 				BC286C3523A2187100801A26 /* MyImageView.swift in Sources */,
 				BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
-				3B25E5C2234C4205005BD1B8 /* AttachmentsView.swift in Sources */,
 				BCCE0AB22368225600A183AA /* MyProfileHeaderView.swift in Sources */,
 				BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */,
 				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,

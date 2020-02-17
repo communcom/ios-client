@@ -24,7 +24,7 @@ class AttachmentView: UIView {
         }
     }
     weak var attachment: TextAttachment?
-    var closeButtonRightConstraint: NSLayoutConstraint?
+    private var closeButtonRightConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
@@ -119,38 +119,20 @@ class AttachmentView: UIView {
     }
     
     /// videoAttachment
-    func setUp(block: ResponseAPIContentBlock, absoluteHeight: CGFloat? = nil) {
-        if block.type == "image" {
-            setUp(image: nil, url: block.content.stringValue ?? block.attributes?.url, description: block.attributes?.title ?? block.attributes?.description, absoluteHeight: absoluteHeight)
-            return
+    func setUp(block: ResponseAPIContentBlock) {
+        // modify close button
+        if block.type == "rich" || block.type == "embed" {
+            closeButtonRightConstraint?.constant = -26
         }
         
-        if block.type == "website" {
-            setUp(image: nil, url: block.attributes?.thumbnailUrl ?? block.attributes?.url, urlDescription: block.content.stringValue, description: block.attributes?.title ?? block.attributes?.description, absoluteHeight: absoluteHeight)
-            return
-        }
-        
-        if block.type == "video" {
-            let webConfiguration = WKWebViewConfiguration()
-            let webView = WKWebView(frame: .zero, configuration: webConfiguration)
-            webView.configureForAutoLayout()
-            webView.scrollView.isScrollEnabled = false
-            
-            contentView.addSubview(webView)
-            webView.autoPinEdgesToSuperviewEdges()
-            
-            if let string = block.attributes?.html {
-                let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"><link rel=\"stylesheet\" type=\"text/css\" href=\"HTMLStringWebView.css\"></HEAD><BODY><section style=\"word-break: hyphenate; -webkit-hyphens: auto; font-family: -apple-system; text-align: justify; font-size: 17\">"
-                let htmlEnd = " </section></BODY></HTML>"
-                let html = htmlStart + string + htmlEnd
-                webView.loadHTMLString(html, baseURL: nil)
-            }
-            
-            setDescription(url: block.content.stringValue ?? block.attributes?.url, description: block.attributes?.title ?? block.attributes?.description, absoluteHeight: absoluteHeight)
-        }
+        let embedView = EmbedView(content: block)
+        addSubview(embedView)
+        embedView.autoPinEdgesToSuperviewEdges()
+        bringSubviewToFront(closeButton)
+        expandButton.isHidden = true
     }
     
-    func setDescription(url: String? = nil, description: String? = nil, absoluteHeight: CGFloat? = nil) {
+    private func setDescription(url: String? = nil, description: String? = nil, absoluteHeight: CGFloat? = nil) {
         // description
         var url = url
         var description = description
