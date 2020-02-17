@@ -82,8 +82,8 @@ class CommunActionSheet: SwipeDownDismissViewController {
     
     // MARK: - Subviews
     var headerView: UIView?
+    
     lazy var closeButton: UIButton = {
-        
         var button = UIButton(frame: .zero)
         button.setImage(UIImage(named: "close-x"), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(inset: 3)
@@ -164,6 +164,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
     
     func addActions() {
         guard let actions = actions else {return}
+        
         for (index, action) in actions.enumerated() {
             // action views
             let actionView = UIView(backgroundColor: .white, cornerRadius: 10)
@@ -209,6 +210,11 @@ class CommunActionSheet: SwipeDownDismissViewController {
                 titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultMargin)
                 titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
                 titleLabel.autoPinEdge(.trailing, to: .leading, of: iconImageView, withOffset: -defaultMargin)
+                
+                if action.style == .follow {
+                    titleLabel.tag = 777
+                    iconImageView.tag = 778
+                }
             
             case .profile:
                 titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
@@ -233,6 +239,16 @@ class CommunActionSheet: SwipeDownDismissViewController {
             actionView.addGestureRecognizer(tap)
         }
     }
+    
+    func updateAction(byIndex index: Int, withProperties properties: (title: String, icon: UIImage)) {
+        guard var actions = self.actions, let label = view.viewWithTag(777) as? UILabel, let iconImageView = view.viewWithTag(778) as? UIImageView else { return }
+        
+        actions[index].title = properties.title
+        actions[index].icon = properties.icon
+        label.text = properties.title
+        iconImageView.setImage(properties.icon)
+    }
+    
     
     // MARK: - Actions
     @objc func closeButtonDidTouch(_ sender: Any) {

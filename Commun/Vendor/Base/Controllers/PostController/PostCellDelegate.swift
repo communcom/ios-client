@@ -32,16 +32,17 @@ extension PostCellDelegate where Self: BaseViewController {
     }
     
     func menuButtonDidTouch(post: ResponseAPIContentGetPost) {
-        guard let topController = UIApplication.topViewController() else {return}
+        guard let topController = UIApplication.topViewController() else { return }
         
         var actions = [CommunActionSheet.Action]()
         
-        if let community = post.community, let isSubscribed = community.isSubscribed {
-            let title = (isSubscribed ? "following" : "follow").localized().uppercaseFirst
-            let icon = UIImage(named: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")
+        if var community = post.community, let isSubscribed = community.isSubscribed {
+            let actionProperties = self.setupAction(isSubscribed: isSubscribed)
             
-            let action = CommunActionSheet.Action(title: title, icon: icon, style: .follow, handle: {
+            let action = CommunActionSheet.Action(title: actionProperties.title, icon: actionProperties.icon, style: .follow, handle: {
+                community.isBeingJoined = true
                 self.followButtonDidTouch(community: community)
+                self.observe(community: community)
             })
             
             actions.append(action)
@@ -80,6 +81,27 @@ extension PostCellDelegate where Self: BaseViewController {
         topController.showCommunActionSheet(headerView: headerView, actions: actions) {
             headerView.setUp(post: post)
         }
+    }
+    
+    func observe(community: ResponseAPIContentGetCommunity) {
+        ResponseAPIContentGetCommunity.observeItemChanged()
+            .filter { $0.identity == community.identity }
+            .subscribe(onNext: { newCommunity in
+                guard let isSubscribed = newCommunity.isSubscribed else { return }
+                self.updateAction(isSubscribed: isSubscribed)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func setupAction(isSubscribed: Bool) -> (title: String, icon: UIImage) {
+        return (title: (isSubscribed ? "following" : "follow").localized().uppercaseFirst, icon: UIImage(named: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")!)
+    }
+    
+    func updateAction(isSubscribed: Bool) {
+        guard let communActionSheet = UIApplication.topViewController() as? CommunActionSheet, var actions = communActionSheet.actions, let actionIndex = communActionSheet.actions?.firstIndex(where: { $0.style == .follow })  else { return }
+        
+        let actionProperties = setupAction(isSubscribed: isSubscribed)
+        communActionSheet.updateAction(byIndex: actionIndex, withProperties: actionProperties)
     }
     
     func deletePost(_ post: ResponseAPIContentGetPost) {
