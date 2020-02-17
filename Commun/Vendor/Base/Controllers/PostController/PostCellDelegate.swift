@@ -40,7 +40,7 @@ extension PostCellDelegate where Self: BaseViewController {
             let title = (isSubscribed ? "following" : "follow").localized().uppercaseFirst
             let icon = UIImage(named: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")
             
-            let action = CommunActionSheet.Action(title: title, icon: icon, handle: {
+            let action = CommunActionSheet.Action(title: title, icon: icon, style: .follow, handle: {
                 self.followButtonDidTouch(community: community)
             })
             
@@ -48,30 +48,28 @@ extension PostCellDelegate where Self: BaseViewController {
         }
         
         if post.author?.userId != Config.currentUser?.id {
-            actions.append(
-                CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
-                    self.reportPost(post)
-                }, tintColor: UIColor(hexString: "#ED2C5B")!)
-            )
+            actions.append(CommunActionSheet.Action(title: "send report".localized().uppercaseFirst,
+                                                    icon: UIImage(named: "report"),
+                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    handle: { self.reportPost(post) }))
         } else {
-            actions.append(
-                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst, icon: UIImage(named: "edit"), handle: {
-                    self.editPost(post)
-                })
-            )
+            actions.append(CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
+                                                    icon: UIImage(named: "edit"),
+                                                    handle: { self.editPost(post) }))
         }
         
-        actions.append(
-            CommunActionSheet.Action(title: "share".localized().uppercaseFirst, icon: UIImage(named: "share"), handle: {
-                ShareHelper.share(post: post)
-            })
-        )
+        actions.append(CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
+                                                icon: UIImage(named: "share"),
+                                                handle: { ShareHelper.share(post: post) }))
 
         if post.author?.userId == Config.currentUser?.id {
             actions.append(
-                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst, icon: UIImage(named: "delete"), handle: {
-                    self.deletePost(post)
-                }, tintColor: UIColor(hexString: "#ED2C5B")!)
+                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
+                                         icon: UIImage(named: "delete"),
+                                         tintColor: UIColor(hexString: "#ED2C5B")!,
+                                         handle: {
+                                            self.deletePost(post)
+                })
             )
         }
 

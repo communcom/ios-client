@@ -30,13 +30,12 @@ extension ProfileEditViewController {
                     handle: {[unowned self] in
                         cover ? self.onUpdateCover() : self.onUpdateAvatar()
                 }),
-                CommunActionSheet.Action(
-                    title: String(format: "%@ %@", "delete current".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
-                    icon: UIImage(named: "delete"),
-                    handle: {[unowned self] in
-                        cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
-                    },
-                    tintColor: .red
+                CommunActionSheet.Action(title: String(format: "%@ %@", "delete current".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
+                                         icon: UIImage(named: "delete"),
+                                         tintColor: .red,
+                                         handle: {[unowned self] in
+                                            cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
+                    }
                 )
         ])
     }

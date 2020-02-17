@@ -326,21 +326,23 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
         showCommunActionSheet(headerView: headerView, actions: [
-            CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
-                
-                self.showAlert(
-                    title: (profile.isInBlacklist == true ? "unhide community": "hide community").localized().uppercaseFirst,
-                    message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of": "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
-                    buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
-                    highlightedButtonIndex: 1) { (index) in
-                        if index != 0 {return}
-                        if profile.isInBlacklist == true {
-                            self.unhideCommunity()
-                        } else {
-                            self.hideCommunity()
-                        }
-                    }
-            }, tintColor: profile.isInBlacklist == true ? .black: .ed2c5b)
+            CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
+                                     icon: UIImage(named: "profile_options_blacklist"),
+                                     tintColor: profile.isInBlacklist == true ? .black: .ed2c5b,
+                                     handle: {
+                                        self.showAlert(
+                                            title: (profile.isInBlacklist == true ? "unhide community": "hide community").localized().uppercaseFirst,
+                                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of": "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
+                                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
+                                            highlightedButtonIndex: 1) { (index) in
+                                                if index != 0 {return}
+                                                if profile.isInBlacklist == true {
+                                                    self.unhideCommunity()
+                                                } else {
+                                                    self.hideCommunity()
+                                                }
+                                        }
+            })
         ]) {
             
         }

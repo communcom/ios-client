@@ -128,20 +128,29 @@ class MyProfilePageVC: UserProfilePageVC {
 //                vc.title = "saved posts".localized().uppercaseFirst
 //                self.show(vc, sender: self)
 //            }),
-            CommunActionSheet.Action(title: "liked".localized().uppercaseFirst, icon: UIImage(named: "profile_options_liked"), handle: {
-                let vc = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .voted, feedType: .time, userId: Config.currentUser?.id))
-                vc.title = "liked".localized().uppercaseFirst
-                self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                self.baseNavigationController?.changeStatusBarStyle(.default)
-                self.show(vc, sender: self)
-            }, style: .profile),
-            CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
-                self.show(MyProfileBlacklistVC(), sender: self)
-            }, style: .profile),
-            CommunActionSheet.Action(title: "settings".localized().uppercaseFirst, icon: UIImage(named: "profile_options_settings"), handle: {
-                let vc = MyProfileSettingsVC()
-                self.show(vc, sender: self)
-            }, marginTop: 14)
+            CommunActionSheet.Action(title: "liked".localized().uppercaseFirst,
+                                     icon: UIImage(named: "profile_options_liked"),
+                                     style: .profile,
+                                     handle: {
+                                        let vc = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .voted, feedType: .time, userId: Config.currentUser?.id))
+                                        vc.title = "liked".localized().uppercaseFirst
+                                        self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
+                                        self.baseNavigationController?.changeStatusBarStyle(.default)
+                                        self.show(vc, sender: self)
+            }),
+            CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst,
+                                     icon: UIImage(named: "profile_options_blacklist"),
+                                     style: .profile,
+                                     handle: {
+                                        self.show(MyProfileBlacklistVC(), sender: self)
+            }),
+            CommunActionSheet.Action(title: "settings".localized().uppercaseFirst,
+                                     icon: UIImage(named: "profile_options_settings"),
+                                     marginTop: 14,
+                                     handle: {
+                                        let vc = MyProfileSettingsVC()
+                                        self.show(vc, sender: self)
+            })
 //            CommunActionSheet.Action(title: "logout".localized().uppercaseFirst, icon: nil, handle: {
 //                self.showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
 //

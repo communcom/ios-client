@@ -13,15 +13,17 @@ class CommunActionSheet: SwipeDownDismissViewController {
     enum Style {
         case `default`
         case profile
+        case follow
     }
     
     struct Action {
         var title: String
         var icon: UIImage?
-        var handle: (() -> Void)?
+        var style: Style = .default
         var tintColor: UIColor = .black
         var marginTop: CGFloat = 0
-        var style: Style = .default
+        var handle: (() -> Void)?
+
         class TapGesture: UITapGestureRecognizer {
             var action: Action?
         }
@@ -30,26 +32,28 @@ class CommunActionSheet: SwipeDownDismissViewController {
     // MARK: - Constants
     var defaultMargin: CGFloat {
         switch style {
-        case .default:
+        case .default, .follow:
             return 16
         case .profile:
             return 10
         }
     }
+    
     let buttonSize: CGFloat = 30
     var headerHeight: CGFloat = 40
     let headerToButtonsSpace: CGFloat = 23
     var actionViewHeight: CGFloat {
         switch style {
-        case .default:
+        case .default, .follow:
             return 50
         case .profile:
             return 65
         }
     }
+    
     var actionViewSeparatorSpace: CGFloat {
         switch style {
-        case .default:
+        case .default, .follow:
             return 8
         case .profile:
             return 2
@@ -175,17 +179,20 @@ class CommunActionSheet: SwipeDownDismissViewController {
             
             // icon
             let iconImageView = UIImageView(forAutoLayout: ())
-            if style == .default {
+           
+            if style == .default || style == .follow {
                 iconImageView.tintColor = action.tintColor
             }
+            
             iconImageView.image = action.icon
             actionView.addSubview(iconImageView)
             
             switch style {
-            case .default:
+            case .default, .follow:
                 iconImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: defaultMargin)
                 iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
                 iconImageView.autoSetDimensions(to: CGSize(width: 24, height: 24))
+            
             case .profile:
                 iconImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
                 iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -198,10 +205,11 @@ class CommunActionSheet: SwipeDownDismissViewController {
             actionView.addSubview(titleLabel)
             
             switch style {
-            case .default:
+            case .default, .follow:
                 titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultMargin)
                 titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
                 titleLabel.autoPinEdge(.trailing, to: .leading, of: iconImageView, withOffset: -defaultMargin)
+            
             case .profile:
                 titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
                 titleLabel.autoPinEdge(.leading, to: .trailing, of: iconImageView, withOffset: 10)
@@ -232,7 +240,9 @@ class CommunActionSheet: SwipeDownDismissViewController {
     }
     
     @objc func actionViewDidTouch(_ tap: Action.TapGesture) {
-        guard let action = tap.action else {return}
+        guard let action = tap.action else { return }
+        guard action.style != .follow else { action.handle?(); return }
+        
         dismiss(animated: true) {
             action.handle?()
         }
