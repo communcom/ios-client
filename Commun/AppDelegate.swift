@@ -61,16 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             UserDefaults.standard.set(true, forKey: firstInstallAppKey)
         }
-        
-        // create deviceId
-        if KeychainManager.currentDeviceId == nil {
-            let id = UUID().uuidString + "." + "\(Date().timeIntervalSince1970)"
-            do {
-                try KeychainManager.save([Config.currentDeviceIdKey: id])
-            } catch {
-                Logger.log(message: error.localizedDescription, event: .debug)
-            }
-        }
 
         AnalyticsManger.shared.sessionStart()
         // Use Firebase library to configure APIs
@@ -179,8 +169,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch error.caseInfo.message {
             case "Cannot get such account from BC",
                  _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
+                AuthorizationManager.shared.status.accept(.authorizing)
                 try! RestAPIManager.instance.logout()
-                AuthorizationManager.shared.forceReAuthorize()
                 return
             default:
                 break
