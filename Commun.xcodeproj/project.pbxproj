@@ -24,7 +24,6 @@
 		3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B0231E318400D0B1DA /* StateButton.swift */; };
 		3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */; };
 		3B25E5C0234C2F66005BD1B8 /* BasicEditorVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */; };
-		3B25E5C2234C4205005BD1B8 /* AttachmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5C1234C4205005BD1B8 /* AttachmentsView.swift */; };
 		3B25E5C4234C6E4E005BD1B8 /* BasicEditorVC+Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5C3234C6E4E005BD1B8 /* BasicEditorVC+Link.swift */; };
 		3B25E5C6234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift */; };
 		3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B289B962346E51600598407 /* UIButton+PureLayout.swift */; };
@@ -309,8 +308,6 @@
 		BC4AD66123B1BB9D008546A4 /* TransferHistoryFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */; };
 		BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */; };
 		BC4AD66623B1EBF1008546A4 /* TransferHistoryTopTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */; };
-		BC4CD23B23F54AA4008B412C /* SearchablePostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4CD23A23F54AA4008B412C /* SearchablePostsVC.swift */; };
-		BC4CD23F23F55127008B412C /* CommunityPageVCType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4CD23E23F55127008B412C /* CommunityPageVCType.swift */; };
 		BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */; };
 		BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */; };
 		BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */; };
@@ -428,7 +425,6 @@
 		BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C423701441005EDAAD /* SubscribersVC.swift */; };
 		BCB4A4C72370188B005EDAAD /* SubscribersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */; };
 		BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */; };
-		BCC545E32386710D004DFF2A /* EditorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC545E22386710D004DFF2A /* EditorGridView.swift */; };
 		BCC60E1623A0D02C00D40013 /* FeedPageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */; };
 		BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB99302375503A005252CF /* PostPageVC+Binding.swift */; };
 		BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB993323756318005252CF /* PostHeaderTextView.swift */; };
@@ -451,6 +447,9 @@
 		BCD00FBD23750859004A3952 /* PostPageNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FBC23750859004A3952 /* PostPageNavigationBar.swift */; };
 		BCD00FBF2375087C004A3952 /* PostPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FBE2375087C004A3952 /* PostPageVC.swift */; };
 		BCD00FC123750B15004A3952 /* PostPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FC023750B15004A3952 /* PostPageViewModel.swift */; };
+		BCD01A0423F65231003B0E1E /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD01A0323F65231003B0E1E /* UINavigationController.swift */; };
+		BCD01A4523F66311003B0E1E /* CommunityPageVCType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD01A4423F66311003B0E1E /* CommunityPageVCType.swift */; };
+		BCD01A9723FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD01A9623FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift */; };
 		BCD3BC8B23AB313E0036C947 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8A23AB313E0036C947 /* UIStackView.swift */; };
 		BCD3BC8D23AC66740036C947 /* UICollectionView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */; };
 		BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */; };
@@ -546,7 +545,6 @@
 		3B2538B0231E318400D0B1DA /* StateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateButton.swift; sourceTree = "<group>"; };
 		3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorViewModel.swift; sourceTree = "<group>"; };
 		3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Binding.swift"; sourceTree = "<group>"; };
-		3B25E5C1234C4205005BD1B8 /* AttachmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsView.swift; sourceTree = "<group>"; };
 		3B25E5C3234C6E4E005BD1B8 /* BasicEditorVC+Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Link.swift"; sourceTree = "<group>"; };
 		3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIFrameGetEmbed.swift; sourceTree = "<group>"; };
 		3B289B962346E51600598407 /* UIButton+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+PureLayout.swift"; sourceTree = "<group>"; };
@@ -843,8 +841,6 @@
 		BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryFilterVC.swift; sourceTree = "<group>"; };
 		BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistorySegmentedControl.swift; sourceTree = "<group>"; };
 		BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryTopTabBar.swift; sourceTree = "<group>"; };
-		BC4CD23A23F54AA4008B412C /* SearchablePostsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePostsVC.swift; sourceTree = "<group>"; };
-		BC4CD23E23F55127008B412C /* CommunityPageVCType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageVCType.swift; sourceTree = "<group>"; };
 		BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubviewAttachingTextView.swift; sourceTree = "<group>"; };
 		BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageTextAttachment.swift; sourceTree = "<group>"; };
 		BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
@@ -961,7 +957,6 @@
 		BCB4A4C423701441005EDAAD /* SubscribersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersVC.swift; sourceTree = "<group>"; };
 		BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersCell.swift; sourceTree = "<group>"; };
 		BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsViewController.swift; sourceTree = "<group>"; };
-		BCC545E22386710D004DFF2A /* EditorGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorGridView.swift; sourceTree = "<group>"; };
 		BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageHeaderView.swift; sourceTree = "<group>"; };
 		BCCB99302375503A005252CF /* PostPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Binding.swift"; sourceTree = "<group>"; };
 		BCCB993323756318005252CF /* PostHeaderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
@@ -984,6 +979,9 @@
 		BCD00FBC23750859004A3952 /* PostPageNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostPageNavigationBar.swift; sourceTree = "<group>"; };
 		BCD00FBE2375087C004A3952 /* PostPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageVC.swift; sourceTree = "<group>"; };
 		BCD00FC023750B15004A3952 /* PostPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostPageViewModel.swift; sourceTree = "<group>"; };
+		BCD01A0323F65231003B0E1E /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
+		BCD01A4423F66311003B0E1E /* CommunityPageVCType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageVCType.swift; sourceTree = "<group>"; };
+		BCD01A9623FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		BCD3BC8A23AB313E0036C947 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+PureLayout.swift"; sourceTree = "<group>"; };
 		BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
@@ -1073,8 +1071,6 @@
 			isa = PBXGroup;
 			children = (
 				3B3C8B9623478DFA00D8BADB /* BasicEditorTextView */,
-				3B25E5C1234C4205005BD1B8 /* AttachmentsView.swift */,
-				BCC545E22386710D004DFF2A /* EditorGridView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -1490,6 +1486,7 @@
 				BCD00FBE2375087C004A3952 /* PostPageVC.swift */,
 				BCCB99302375503A005252CF /* PostPageVC+Binding.swift */,
 				BC52913B2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift */,
+				BCD01A9623FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift */,
 			);
 			path = PostPageVC;
 			sourceTree = "<group>";
@@ -1625,6 +1622,7 @@
 				BC18FA2623D56325005DC7E3 /* UITextField.swift */,
 				BC99B65923E17848004AA74E /* UISearchController.swift */,
 				B1A6344D23E83BDA00996375 /* UIApplication+Extensions.swift */,
+				BCD01A0323F65231003B0E1E /* UINavigationController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1944,8 +1942,7 @@
 				BC4AD64F23B09BF7008546A4 /* BalancesVC */,
 				BC9066FD23AB2279000F9A3B /* TransferHistoryVC */,
 				BC18FA1C23D54DB1005DC7E3 /* CurrenciesVC */,
-				BC619B0F237268240005BB94 /* CommunitiesVC */,
-				BC4CD23E23F55127008B412C /* CommunityPageVCType.swift */,
+				BCD01A4423F66311003B0E1E /* CommunityPageVCType.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -3259,6 +3256,7 @@
 				AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */,
 				BC8F815323E27ECE0024C04A /* BuyCommunVC.swift in Sources */,
 				BC384F1E23862FBC0021A2A9 /* CommunityPageVC+Binding.swift in Sources */,
+				BCD01A4523F66311003B0E1E /* CommunityPageVCType.swift in Sources */,
 				3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */,
 				BC9066F723A9E1AC000F9A3B /* TransferHistoryViewModel.swift in Sources */,
 				B1FA77D9238BF7E0006E57D1 /* WelcomeVC.swift in Sources */,
@@ -3349,7 +3347,6 @@
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
 				BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */,
 				BC3694F923699B8600B2E078 /* ArticleEditorVC+Actions.swift in Sources */,
-				BCC545E32386710D004DFF2A /* EditorGridView.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */,
 				BC4692DF2394B4130064A38B /* CommentCellDelegate.swift in Sources */,
@@ -3403,7 +3400,6 @@
 				BC286C3523A2187100801A26 /* MyImageView.swift in Sources */,
 				BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
-				3B25E5C2234C4205005BD1B8 /* AttachmentsView.swift in Sources */,
 				BCCE0AB22368225600A183AA /* MyProfileHeaderView.swift in Sources */,
 				BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */,
 				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,
@@ -3438,6 +3434,7 @@
 				3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */,
 				3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */,
 				BC22BBD2236C213D00F40658 /* SelectLanguageVC.swift in Sources */,
+				BCD01A0423F65231003B0E1E /* UINavigationController.swift in Sources */,
 				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				BC472D9623A3755C00822371 /* CardPresentationController.swift in Sources */,
 				BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */,
@@ -3456,7 +3453,6 @@
 				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,
 				BC52913C2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,
-				BC4CD23F23F55127008B412C /* CommunityPageVCType.swift in Sources */,
 				BCCE0AA82367EB5900A183AA /* MyCollectionViewCell.swift in Sources */,
 				BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */,
 				BCA9712823608ABD00AE37E1 /* UsersStackView.swift in Sources */,
@@ -3486,6 +3482,7 @@
 				BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */,
 				3BF381812331D9CD00C02123 /* URL.swift in Sources */,
 				BC3694EF2369850100B2E078 /* EditorVC.swift in Sources */,
+				BCD01A9723FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift in Sources */,
 				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				BC8F814523E27ECE0024C04A /* WalletTableHeaderView.swift in Sources */,
 				BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */,

@@ -95,8 +95,4 @@ class SetUserViewModel {
     func isUserNameValid(_ userName: String) -> Bool {
         checkUserName(userName).allSatisfy {$0}
     }
-    
-    func set(userName: String) -> Single<String> {
-        return RestAPIManager.instance.setUserName(userName).map {_ in userName}
-    }
 }

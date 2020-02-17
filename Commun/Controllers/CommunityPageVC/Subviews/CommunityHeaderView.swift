@@ -136,9 +136,15 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16.0))
         membersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: .adaptive(height: 24.0))
         membersCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
-        membersCountLabel.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(membersLabelDidTouch))
-        membersCountLabel.addGestureRecognizer(tap)
+
+        let membersButton = UIButton()
+        addSubview(membersButton)
+        membersButton.autoPinEdge(.left, to: .left, of: membersCountLabel)
+        membersButton.autoPinEdge(.top, to: .top, of: membersCountLabel, withOffset: -10)
+        membersButton.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel, withOffset: 10)
+        membersButton.autoPinEdge(.right, to: .right, of: membersCountLabel)
+        membersButton.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+        membersButton.addTarget(self, action: #selector(membersLabelDidTouch), for: .touchUpInside)
 
         let dotLabel = UILabel.with(text: "•", textSize: .adaptive(width: 15.0), weight: .semibold, textColor: .a5a7bd)
         addSubview(dotLabel)
@@ -148,9 +154,15 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         addSubview(leadersCountLabel)
         leadersCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
         leadersCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
-        leadersCountLabel.isUserInteractionEnabled = true
-        let tap2 = UITapGestureRecognizer(target: self, action: #selector(leadsLabelDidTouch))
-        leadersCountLabel.addGestureRecognizer(tap2)
+
+        let leadersButton = UIButton()
+        addSubview(leadersButton)
+        leadersButton.autoPinEdge(.left, to: .left, of: leadersCountLabel)
+        leadersButton.autoPinEdge(.top, to: .top, of: leadersCountLabel, withOffset: -10)
+        leadersButton.autoPinEdge(.bottom, to: .bottom, of: leadersCountLabel, withOffset: 10)
+        leadersButton.autoPinEdge(.right, to: .right, of: leadersCountLabel)
+        leadersButton.autoAlignAxis(.horizontal, toSameAxisOf: leadersCountLabel)
+        leadersButton.addTarget(self, action: #selector(leadsLabelDidTouch), for: .touchUpInside)
 
         addSubview(friendLabel)
         friendLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
