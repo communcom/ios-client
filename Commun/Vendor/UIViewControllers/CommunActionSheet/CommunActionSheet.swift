@@ -60,6 +60,17 @@ class CommunActionSheet: SwipeDownDismissViewController {
         }
     }
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 24.0), height: .adaptive(height: 24.0))))
+        activity.hidesWhenStopped = true
+        activity.style = .white
+        activity.color = .black
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        
+        return activity
+    }()
+
+    
     // MARK: - Properties
     var style: Style
     var backgroundColor = UIColor(hexString: "#F7F7F9")
@@ -240,13 +251,28 @@ class CommunActionSheet: SwipeDownDismissViewController {
         }
     }
     
-    func updateAction(byIndex index: Int, withProperties properties: (title: String, icon: UIImage)) {
+    func updateAction(byIndex index: Int, withProperties properties: (title: String, icon: UIImage), handle: @escaping (() -> Void)) {
         guard var actions = self.actions, let label = view.viewWithTag(777) as? UILabel, let iconImageView = view.viewWithTag(778) as? UIImageView else { return }
         
         actions[index].title = properties.title
         actions[index].icon = properties.icon
         label.text = properties.title
         iconImageView.setImage(properties.icon)
+        
+        handle()
+    }
+    
+    func loaderDidStart(byIndex index: Int) {
+        guard let actions = self.actions, let iconImageView = view.viewWithTag(778) as? UIImageView else { return }
+        
+        iconImageView.image = nil
+        iconImageView.addSubview(activityIndicator)
+        activityIndicator.autoPinEdgesToSuperviewEdges()
+        activityIndicator.startAnimating()
+    }
+    
+    func loaderDidFinish() {
+        activityIndicator.stopAnimating()
     }
     
     
