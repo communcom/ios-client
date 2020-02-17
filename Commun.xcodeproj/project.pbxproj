@@ -451,6 +451,7 @@
 		BCD00FC123750B15004A3952 /* PostPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FC023750B15004A3952 /* PostPageViewModel.swift */; };
 		BCD01A0423F65231003B0E1E /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD01A0323F65231003B0E1E /* UINavigationController.swift */; };
 		BCD01A4523F66311003B0E1E /* CommunityPageVCType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD01A4423F66311003B0E1E /* CommunityPageVCType.swift */; };
+		BCD01A9723FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD01A9623FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift */; };
 		BCD3BC8B23AB313E0036C947 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8A23AB313E0036C947 /* UIStackView.swift */; };
 		BCD3BC8D23AC66740036C947 /* UICollectionView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */; };
 		BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */; };
@@ -984,6 +985,7 @@
 		BCD00FC023750B15004A3952 /* PostPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostPageViewModel.swift; sourceTree = "<group>"; };
 		BCD01A0323F65231003B0E1E /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		BCD01A4423F66311003B0E1E /* CommunityPageVCType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageVCType.swift; sourceTree = "<group>"; };
+		BCD01A9623FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		BCD3BC8A23AB313E0036C947 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+PureLayout.swift"; sourceTree = "<group>"; };
 		BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
@@ -1490,6 +1492,7 @@
 				BCD00FBE2375087C004A3952 /* PostPageVC.swift */,
 				BCCB99302375503A005252CF /* PostPageVC+Binding.swift */,
 				BC52913B2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift */,
+				BCD01A9623FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift */,
 			);
 			path = PostPageVC;
 			sourceTree = "<group>";
@@ -3487,6 +3490,7 @@
 				BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */,
 				3BF381812331D9CD00C02123 /* URL.swift in Sources */,
 				BC3694EF2369850100B2E078 /* EditorVC.swift in Sources */,
+				BCD01A9723FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift in Sources */,
 				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				BC8F814523E27ECE0024C04A /* WalletTableHeaderView.swift in Sources */,
 				BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */,
