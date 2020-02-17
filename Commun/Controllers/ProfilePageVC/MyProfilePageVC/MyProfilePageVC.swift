@@ -72,18 +72,18 @@ class MyProfilePageVC: UserProfilePageVC {
             .map {$0.y}.share()
             
         offSetY
-            .map {$0 < -140}
+            .map { $0 < -140 }
             .subscribe(onNext: { show in
                 self.changeCoverButton.isHidden = !show
             })
             .disposed(by: disposeBag)
         
         offSetY
-            .map {$0 < -43}
+            .map { $0 < -43 }
             .subscribe(onNext: { showNavBar in
                 self.optionsButton.tintColor = !showNavBar ? .black : .white
                 self.title = !showNavBar ? self.userName : nil
-                self.navigationController?.navigationBar.isTranslucent = showNavBar
+//                self.navigationController?.navigationBar.isTranslucent = showNavBar
             })
             .disposed(by: disposeBag)
     }
