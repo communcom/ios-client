@@ -11,9 +11,9 @@ import CyberSwift
 import ASSpinnerView
 
 extension UIView {
-    func showErrorView(retryAction: (() -> Void)?) {
+    func showErrorView(title: String? = nil, subtitle: String? = nil, retryButtonTitle: String? = nil, retryAction: (() -> Void)?) {
         // setup new errorView
-        let errorView = ErrorView(retryAction: retryAction)
+        let errorView = ErrorView(title: title, subtitle: subtitle, retryButtonTitle: retryButtonTitle, retryAction: retryAction)
         
         // add subview
         addSubview(errorView)

@@ -36,12 +36,12 @@ extension ProfileVC {
                     self?._headerView.showLoader()
                 case .finished:
                     self?._headerView.hideLoader()
-                case .error:
+                case .error(let error):
                     guard let strongSelf = self else {return}
                     strongSelf._headerView.hideLoader()
                     let backButtonOriginTintColor = strongSelf.navigationItem.leftBarButtonItem?.tintColor
                     strongSelf.navigationItem.leftBarButtonItem?.tintColor = .black
-                    strongSelf.view.showErrorView {
+                    strongSelf.view.showErrorView(title: "Error", subtitle: error.toErrorAPI().caseInfo.message) {
                         strongSelf.view.hideErrorView()
                         strongSelf.navigationItem.leftBarButtonItem?.tintColor = backButtonOriginTintColor
                         strongSelf.reload()
