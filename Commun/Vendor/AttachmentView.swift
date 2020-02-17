@@ -24,6 +24,7 @@ class AttachmentView: UIView {
         }
     }
     weak var attachment: TextAttachment?
+    var closeButtonRightConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
@@ -59,7 +60,7 @@ class AttachmentView: UIView {
         // pin closeButton
         addSubview(closeButton)
         closeButton.autoPinEdge(.top, to: .top, of: contentView, withOffset: 10)
-        closeButton.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -10)
+        closeButtonRightConstraint = closeButton.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -10)
         closeButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
         
         // pin expandButton
