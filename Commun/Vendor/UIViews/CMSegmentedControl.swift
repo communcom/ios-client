@@ -112,8 +112,10 @@ class CMSegmentedControl: MyView {
     }
     
     @objc private func changeSelection(_ sender: TapGesture) {
-        delegate?.segmentedControl(self, didTapOptionAtIndex: sender.index)
-        changeSelectedIndex(sender.index)
+        DispatchQueue.main.async {
+            self.delegate?.segmentedControl(self, didTapOptionAtIndex: sender.index)
+            self.changeSelectedIndex(sender.index)
+        }
     }
     
     func changeSelectedIndex(_ index: Int) {

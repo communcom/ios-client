@@ -33,14 +33,7 @@ class MyProfilePageVC: UserProfilePageVC {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Class Functions
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.navigationBar.isTranslucent = tableView.contentOffset.y < -43.0
-    }
-    
+
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
