@@ -255,11 +255,13 @@ class CommunActionSheet: SwipeDownDismissViewController {
     func loaderDidStart(withTitle title: String) {
         guard let label = view.viewWithTag(777) as? UILabel, let iconImageView = view.viewWithTag(778) as? UIImageView else { return }
 
-        label.text = title
-        iconImageView.image = nil
-        iconImageView.addSubview(activityIndicator)
-        activityIndicator.autoPinEdgesToSuperviewEdges()
-        activityIndicator.startAnimating()
+        DispatchQueue.main.async {
+                    label.text = title
+            iconImageView.image = nil
+            iconImageView.addSubview(self.activityIndicator)
+            self.activityIndicator.autoPinEdgesToSuperviewEdges()
+            self.activityIndicator.startAnimating()
+        }
     }
     
     private func loaderDidFinish() {
