@@ -17,6 +17,7 @@ class DiscoveryVC: BaseViewController {
     }
     private var currentKeyword = ""
     private var searchWasCancelled = false
+    private var contentViewTopConstraint: NSLayoutConstraint?
     
     // MARK: - ChildVCs
     lazy var searchController = UISearchController.default()
@@ -38,6 +39,13 @@ class DiscoveryVC: BaseViewController {
     lazy var postsVC = SearchablePostsVC(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptionsPopular, feedType: .time, sortType: .day, userId: Config.currentUser?.id))
     
     // MARK: - Subviews
+    lazy var topBarContainerView: UIView = {
+        let view = UIView(backgroundColor: .white)
+        view.addSubview(topTabBar)
+        topTabBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
+        return view
+    }()
+    
     lazy var topTabBar = CMTopTabBar(
         height: 35,
         labels: [
@@ -79,26 +87,41 @@ class DiscoveryVC: BaseViewController {
         // search controller
         setUpSearchController()
         
-        // top tabBar
-        let topBarContainerView: UIView = {
-            let view = UIView(backgroundColor: .white)
-            view.addSubview(topTabBar)
-            topTabBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
-            return view
-        }()
-        view.addSubview(topBarContainerView)
-        topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
-        topTabBar.scrollView.contentOffset.x = -16
-        
         // contentView
         view.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        contentView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
+        
+        setTopBarHidden(false)
     }
     
     private func setUpSearchController() {
         self.definesPresentationContext = true
         self.navigationItem.titleView = searchController.searchBar
+    }
+    
+    private func setTopBarHidden(_ hidden: Bool, animated: Bool = false) {
+        if hidden {
+            if topBarContainerView.isDescendant(of: view) {
+                topBarContainerView.removeFromSuperview()
+                
+                contentViewTopConstraint?.isActive = false
+                contentViewTopConstraint = contentView.autoPinEdge(toSuperviewSafeArea: .top)
+            }
+        } else {
+            if !topBarContainerView.isDescendant(of: view) {
+                // top tabBar
+                view.addSubview(topBarContainerView)
+                topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+                topTabBar.scrollView.contentOffset.x = -16
+                
+                contentViewTopConstraint?.isActive = false
+                contentViewTopConstraint = contentView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
+            }
+        }
+        
+        UIView.animate(withDuration: animated ? 0.3: 0) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     // MARK: - Binding
@@ -118,6 +141,7 @@ class DiscoveryVC: BaseViewController {
         searchController.searchBar.rx.textDidBeginEditing
             .subscribe(onNext: { (_) in
                 self.searchWasCancelled = false
+                self.setTopBarHidden(true, animated: true)
             })
             .disposed(by: disposeBag)
             
@@ -129,6 +153,7 @@ class DiscoveryVC: BaseViewController {
                 } else {
                     self.currentKeyword = self.searchController.searchBar.text ?? ""
                 }
+                self.setTopBarHidden(false, animated: true)
             })
             .disposed(by: disposeBag)
         
