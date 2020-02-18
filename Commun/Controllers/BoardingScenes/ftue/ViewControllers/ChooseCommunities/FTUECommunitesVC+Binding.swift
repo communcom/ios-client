@@ -104,7 +104,7 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .disposed(by: disposeBag)
         
         viewModel.chosenCommunities
-            .map {$0.count >= 3}
+            .map {$0.count(where: {$0.isBeingJoined == false}) >= 3}
             .distinctUntilChanged()
             .bind(to: nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
