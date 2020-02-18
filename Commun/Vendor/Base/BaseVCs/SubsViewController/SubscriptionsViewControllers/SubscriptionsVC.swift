@@ -16,8 +16,8 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     private var isNeedHideCloseButton = false
     
     // MARK: - Class Initialization
-    init(title: String? = nil, userId: String? = nil, type: GetSubscriptionsType) {
-        let viewModel = SubscriptionsViewModel(userId: userId, type: type)
+    init(title: String? = nil, userId: String? = nil, type: GetSubscriptionsType, prefetch: Bool = true) {
+        let viewModel = SubscriptionsViewModel(userId: userId, type: type, prefetch: prefetch)
         super.init(viewModel: viewModel)
         defer {self.title = title}
     }
@@ -100,8 +100,8 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
             buttonTitleValue    =   "empty subscriptions button title".localized().uppercaseFirst
             
         case .user:
-            titleValue          =   "no subscribers".localized().uppercaseFirst
-            descriptionValue    =   "no subscribers found".localized().uppercaseFirst
+            titleValue          =   "empty subscriptions title".localized().uppercaseFirst
+            descriptionValue    =   "empty subscriptions user description".localized().uppercaseFirst
         }
         
         tableView.addEmptyPlaceholderFooterView(title: titleValue,

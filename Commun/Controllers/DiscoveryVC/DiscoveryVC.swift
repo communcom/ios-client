@@ -36,7 +36,7 @@ class DiscoveryVC: BaseViewController {
     }
     lazy var communitiesVC = DiscoveryCommunitiesVC(prefetch: self.searchController.searchBar.text?.isEmpty == true)
     lazy var usersVC = DiscoveryUsersVC(prefetch: self.searchController.searchBar.text?.isEmpty == true)
-    lazy var postsVC = SearchablePostsVC(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptionsPopular, feedType: .time, sortType: .day, userId: Config.currentUser?.id))
+    lazy var postsVC = DiscoveryPostsVC(prefetch: self.searchController.searchBar.text?.isEmpty == true)
     
     // MARK: - Subviews
     lazy var topBarContainerView: UIView = {

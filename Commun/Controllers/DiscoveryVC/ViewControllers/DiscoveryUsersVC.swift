@@ -8,9 +8,9 @@
 
 import Foundation
 
-class DiscoveryUsersVC: SubscribersVC {
+class DiscoveryUsersVC: SubscriptionsVC {
     init(prefetch: Bool = true) {
-        super.init(userId: Config.currentUser?.id, prefetch: prefetch)
+        super.init(type: .user, prefetch: prefetch)
         
         defer {
             showShadowWhenScrollUp = false

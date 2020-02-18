@@ -51,7 +51,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         
-        tableView.contentInset.top -= 24
+        tableView.contentInset.top -= 14
     }
     
     override func bind() {
