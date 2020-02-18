@@ -17,9 +17,9 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         let vm = SearchViewModel()
         (vm.fetcher as! SearchListFetcher).searchType = .extendedSearch
         (vm.fetcher as! SearchListFetcher).extendedSearchEntity = [
-            .profiles: ["limit": 4, "offset": 0],
-            .communities: ["limit": 4, "offset": 0],
-            .posts: ["limit": 4, "offset": 0]
+            .profiles: ["limit": 5, "offset": 0],
+            .communities: ["limit": 5, "offset": 0],
+            .posts: ["limit": 5, "offset": 0]
         ]
         self.seeAllHandler = seeAllHandler
         super.init(viewModel: vm)
@@ -149,18 +149,9 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         tableView.addEmptyPlaceholderFooterView(emoji: "😿", title: title, description: description)
     }
     
-    override func search(_ keyword: String?) {
-        guard let keyword = keyword, !keyword.isEmpty else {
-            viewModel.fetcher.search = nil
-            viewModel.state.accept(.loading(false))
-            viewModel.items.accept([])
-            return
-        }
-        
-        if viewModel.fetcher.search != keyword {
-            viewModel.fetcher.search = keyword
-            viewModel.reload(clearResult: false)
-        }
+    override func handleEmptyKeyword() {
+        viewModel.state.accept(.loading(false))
+        viewModel.items.accept([])
     }
     
     // MARK: - Actions
@@ -188,24 +179,26 @@ extension DiscoveryAllVC: UITableViewDelegate {
         label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         label.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        let seeAllLabel = UILabel.with(text: "see all".localized(), textSize: 15, weight: .semibold, textColor: .appMainColor)
-        headerView.addSubview(seeAllLabel)
-        seeAllLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        seeAllLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        switch dataSource.sectionModels[section].model {
-        case "communities":
-            seeAllLabel.tag = 1
-        case "users":
-            seeAllLabel.tag = 2
-        case "posts":
-            seeAllLabel.tag = 3
-        default:
-            break
+        if dataSource.sectionModels[section].items.count == 5 {
+            let seeAllLabel = UILabel.with(text: "see all".localized(), textSize: 15, weight: .semibold, textColor: .appMainColor)
+            headerView.addSubview(seeAllLabel)
+            seeAllLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+            seeAllLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+            
+            switch dataSource.sectionModels[section].model {
+            case "communities":
+                seeAllLabel.tag = 1
+            case "users":
+                seeAllLabel.tag = 2
+            case "posts":
+                seeAllLabel.tag = 3
+            default:
+                break
+            }
+            
+            seeAllLabel.isUserInteractionEnabled = true
+            seeAllLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(seeAllButtonDidTouch(gesture:))))
         }
-        
-        seeAllLabel.isUserInteractionEnabled = true
-        seeAllLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(seeAllButtonDidTouch(gesture:))))
         
         DispatchQueue.main.async {
             headerView.roundCorners([.topLeft, .topRight], radius: 10)

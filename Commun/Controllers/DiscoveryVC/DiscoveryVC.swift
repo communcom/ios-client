@@ -38,8 +38,8 @@ class DiscoveryVC: BaseViewController {
         vc.showShadowWhenScrollUp = false
         return vc
     }()
-    lazy var communitiesVC: CommunitiesVC = {
-        let vc = CommunitiesVC(type: .all)
+    lazy var communitiesVC: SearchableCommunitiesVC = {
+        let vc = SearchableCommunitiesVC(type: .all)
         vc.showShadowWhenScrollUp = false
         return vc
     }()

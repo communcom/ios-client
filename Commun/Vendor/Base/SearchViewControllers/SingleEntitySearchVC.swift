@@ -89,17 +89,8 @@ class SingleEntitySearchVC: SubsViewController<ResponseAPIContentSearchItem, Sub
         tableView.addEmptyPlaceholderFooterView(emoji: "😿", title: title, description: description)
     }
     
-    override func search(_ keyword: String?) {
-        guard let keyword = keyword, !keyword.isEmpty else {
-            viewModel.fetcher.search = nil
-            viewModel.state.accept(.loading(false))
-            viewModel.items.accept([])
-            return
-        }
-        
-        if viewModel.fetcher.search != keyword {
-            viewModel.fetcher.search = keyword
-            viewModel.reload(clearResult: false)
-        }
+    override func handleEmptyKeyword() {
+        viewModel.state.accept(.loading(false))
+        viewModel.items.accept([])
     }
 }

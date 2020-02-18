@@ -287,6 +287,19 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     func search(_ keyword: String?) {
-        fatalError("Must override")
+        guard let keyword = keyword, !keyword.isEmpty else {
+            viewModel.fetcher.search = nil
+            handleEmptyKeyword()
+            return
+        }
+        
+        if viewModel.fetcher.search != keyword {
+            viewModel.fetcher.search = keyword
+            viewModel.reload(clearResult: false)
+        }
+    }
+    
+    func handleEmptyKeyword() {
+        viewModel.reload()
     }
 }

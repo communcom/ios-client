@@ -1,14 +1,14 @@
 //
-//  SearchablePostsVC.swift
+//  SearchableCommunitiesVC.swift
 //  Commun
 //
-//  Created by Chung Tran on 2/13/20.
+//  Created by Chung Tran on 2/18/20.
 //  Copyright © 2020 Commun Limited. All rights reserved.
 //
 
 import Foundation
 
-class SearchablePostsVC: PostsViewController {
+class SearchableCommunitiesVC: CommunitiesVC {
     // MARK: - Properties
     override var isSearchEnabled: Bool {true}
 }

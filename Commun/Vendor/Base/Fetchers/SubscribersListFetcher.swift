@@ -17,8 +17,8 @@ class SubscribersListFetcher: ListFetcher<ResponseAPIContentGetProfile> {
     lazy var searchFetcher: SearchListFetcher = {
         let fetcher = SearchListFetcher()
         fetcher.limit = 5
-        fetcher.searchType = .quickSearch
-        fetcher.entities = [.profiles]
+        fetcher.searchType = .entitySearch
+        fetcher.entitySearchEntity = .profiles
         return fetcher
     }()
     
