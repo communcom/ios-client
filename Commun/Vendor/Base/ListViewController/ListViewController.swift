@@ -288,8 +288,10 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     func search(_ keyword: String?) {
         guard let keyword = keyword, !keyword.isEmpty else {
-            viewModel.fetcher.search = nil
-            handleEmptyKeyword()
+            if viewModel.fetcher.search != nil {
+                viewModel.fetcher.search = nil
+                handleEmptyKeyword()
+            }
             return
         }
         
