@@ -32,7 +32,9 @@ class DiscoveryVC: BaseViewController {
         }
     }
     lazy var discoveryAllVC: DiscoveryAllVC = {
-        let vc = DiscoveryAllVC()
+        let vc = DiscoveryAllVC { index in
+            self.topTabBar.selectedIndex.accept(index)
+        }
         vc.showShadowWhenScrollUp = false
         return vc
     }()
