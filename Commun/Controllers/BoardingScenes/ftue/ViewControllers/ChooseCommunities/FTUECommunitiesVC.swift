@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class FTUECommunitiesVC: BaseViewController, BoardingRouter {
+class FTUECommunitiesVC: BaseViewController {
     // MARK: - Constants
     let bottomBarHeight: CGFloat = 114
     
