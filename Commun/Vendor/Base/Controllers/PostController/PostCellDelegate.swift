@@ -32,47 +32,41 @@ extension PostCellDelegate where Self: BaseViewController {
     }
     
     func menuButtonDidTouch(post: ResponseAPIContentGetPost) {
-        guard let topController = UIApplication.topViewController() else {return}
+        guard let topController = UIApplication.topViewController() else { return }
         
         var actions = [CommunActionSheet.Action]()
         
         if let community = post.community, let isSubscribed = community.isSubscribed {
-            let title = (isSubscribed ? "following" : "follow").localized().uppercaseFirst
-            let icon = UIImage(named: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")
+            let actionProperties = self.setupAction(isSubscribed: isSubscribed)
             
-            let action = CommunActionSheet.Action(title: title, icon: icon, handle: {
-                self.followButtonDidTouch(community: community)
+            let action = CommunActionSheet.Action(title: actionProperties.title, icon: actionProperties.icon, style: .follow, post: post, handle: {
+                self.followButtonDidTouch()
+                self.observeCommunity()
             })
             
             actions.append(action)
         }
         
         if post.author?.userId != Config.currentUser?.id {
-            actions.append(
-                CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
-                    self.reportPost(post)
-                }, tintColor: UIColor(hexString: "#ED2C5B")!)
-            )
+            actions.append(CommunActionSheet.Action(title: "send report".localized().uppercaseFirst,
+                                                    icon: UIImage(named: "report"),
+                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    handle: { self.reportPost(post) }))
         } else {
-            actions.append(
-                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst, icon: UIImage(named: "edit"), handle: {
-                    self.editPost(post)
-                })
-            )
+            actions.append(CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
+                                                    icon: UIImage(named: "edit"),
+                                                    handle: { self.editPost(post) }))
         }
         
-        actions.append(
-            CommunActionSheet.Action(title: "share".localized().uppercaseFirst, icon: UIImage(named: "share"), handle: {
-                ShareHelper.share(post: post)
-            })
-        )
+        actions.append(CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
+                                                icon: UIImage(named: "share"),
+                                                handle: { ShareHelper.share(post: post) }))
 
         if post.author?.userId == Config.currentUser?.id {
-            actions.append(
-                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst, icon: UIImage(named: "delete"), handle: {
-                    self.deletePost(post)
-                }, tintColor: UIColor(hexString: "#ED2C5B")!)
-            )
+            actions.append(CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
+                                                    icon: UIImage(named: "delete"),
+                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    handle: { self.deletePost(post) }))
         }
 
         // headerView for actionSheet
@@ -84,9 +78,36 @@ extension PostCellDelegate where Self: BaseViewController {
         }
     }
     
+    func observeCommunity() {
+        guard let communActionSheet = UIApplication.topViewController() as? CommunActionSheet, let post = communActionSheet.actions?[0].post else { return }
+
+        ResponseAPIContentGetCommunity.observeItemChanged()
+            .filter { $0.identity == post.community?.identity }
+            .subscribe(onNext: { newCommunity in
+                guard let isSubscribed = newCommunity.isSubscribed, let community = post.community, isSubscribed != community.isSubscribed else { return }
+                communActionSheet.updateFollowAction(withCommunity: newCommunity)
+                
+                var postTemp = post
+                postTemp.community = newCommunity
+                
+                self.update(post: postTemp)
+                NotificationCenter.default.removeObserver(self)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func setupAction(isSubscribed: Bool) -> (title: String, icon: UIImage) {
+        return (title: (isSubscribed ? "following" : "follow").localized().uppercaseFirst, icon: UIImage(named: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")!)
+    }
+        
+    func update(post: ResponseAPIContentGetPost) {
+        guard let postsVC = self as? PostsViewController else { return }
+        postsVC.viewModel.updateItem(post)
+    }
+    
     func deletePost(_ post: ResponseAPIContentGetPost) {
         guard let topController = UIApplication.topViewController()
-        else {return}
+        else { return }
         
         topController.showAlert(
             title: "delete".localized().uppercaseFirst,
@@ -148,7 +169,11 @@ extension PostCellDelegate where Self: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func followButtonDidTouch(community: ResponseAPIContentGetCommunity) {
+    func followButtonDidTouch() {
+        guard let communActionSheet = UIApplication.topViewController() as? CommunActionSheet, let community = communActionSheet.actions?[0].post?.community else { return }
+       
+        communActionSheet.loaderDidStart(withTitle: (community.isSubscribed ?? false ? "follow" : "following").localized().uppercaseFirst)
+        
         NetworkService.shared.triggerFollow(community: community)
             .subscribe { [weak self] (error) in
                 self?.showError(error)

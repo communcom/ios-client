@@ -53,13 +53,12 @@ extension MyProfilePageVC {
                     handle: {[unowned self] in
                         cover ? self.onUpdateCover() : self.onUpdateAvatar()
                 }),
-                CommunActionSheet.Action(
-                    title: String(format: "%@ %@", "delete current".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
-                    icon: UIImage(named: "delete"),
-                    handle: {[unowned self] in
-                        cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
-                    },
-                    tintColor: .red
+                CommunActionSheet.Action(title: String(format: "%@ %@", "delete current".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
+                                         icon: UIImage(named: "delete"),
+                                         tintColor: .red,
+                                         handle: {[unowned self] in
+                                            cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
+                    }
                 )
         ])
     }
@@ -185,19 +184,17 @@ extension MyProfilePageVC {
         showCommunActionSheet(
             title: String(format: "%@ %@", "change".localized().uppercaseFirst, "profile description".localized()),
             actions: [
-                CommunActionSheet.Action(
-                    title: "edit".localized().uppercaseFirst,
-                    icon: UIImage(named: "edit"),
-                    handle: {[unowned self] in
-                        self.onUpdateBio()
+                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
+                                         icon: UIImage(named: "edit"),
+                                         handle: {[unowned self] in
+                                            self.onUpdateBio()
                 }),
-                CommunActionSheet.Action(
-                    title: "delete".localized().uppercaseFirst,
-                    icon: UIImage(named: "delete"),
-                    handle: {[unowned self] in
-                        self.onUpdateBio(delete: true)
-                    },
-                    tintColor: .red
+                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
+                                         icon: UIImage(named: "delete"),
+                                         tintColor: .red,
+                                         handle: {[unowned self] in
+                                            self.onUpdateBio(delete: true)
+                    }
                 )
         ])
     }

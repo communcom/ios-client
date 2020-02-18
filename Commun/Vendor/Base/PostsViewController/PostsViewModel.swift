@@ -19,6 +19,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
         defer {
             bindFilter()
+            observeItemChange()
             observeUserBlocked()
             observeCommunityBlocked()
         }
@@ -61,6 +62,17 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
             .disposed(by: disposeBag)
     }
     
+    override func observeItemChange() {
+        super.observeItemChange()
+        
+        ResponseAPIContentGetPost.observeItemChanged()
+//            .map {ResponseAPIContentGetProfile(leader: $0)}
+            .subscribe(onNext: { post in
+                self.updateItem(post)
+            })
+            .disposed(by: disposeBag)
+    }
+
     func changeFilter(
         feedTypeMode: FeedTypeMode? = nil,
         feedType: FeedSortMode? = nil,
