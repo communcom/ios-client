@@ -21,6 +21,16 @@ class DiscoveryVC: BaseViewController {
     
     // MARK: - ChildVCs
     lazy var searchController = UISearchController.default()
+    lazy var suggestionsVC = DiscoverySuggestionsVC {
+        self.searchController.searchBar.resignFirstResponder()
+        DispatchQueue.main.async {
+            if self.topTabBar.selectedIndex.value != 0 {
+                self.topTabBar.selectedIndex.accept(0)
+            } else {
+                self.showChildVCWithIndex(0)
+            }
+        }
+    }
     lazy var discoveryAllVC: DiscoveryAllVC = {
         let vc = DiscoveryAllVC()
         vc.showShadowWhenScrollUp = false
@@ -142,6 +152,7 @@ class DiscoveryVC: BaseViewController {
             .subscribe(onNext: { (_) in
                 self.searchWasCancelled = false
                 self.setTopBarHidden(true, animated: true)
+                self.showChildVC(self.suggestionsVC)
             })
             .disposed(by: disposeBag)
             
@@ -154,6 +165,7 @@ class DiscoveryVC: BaseViewController {
                     self.currentKeyword = self.searchController.searchBar.text ?? ""
                 }
                 self.setTopBarHidden(false, animated: true)
+                self.showChildVCWithIndex(self.topTabBar.selectedIndex.value)
             })
             .disposed(by: disposeBag)
         
@@ -236,17 +248,21 @@ class DiscoveryVC: BaseViewController {
     private func search(_ keyword: String?) {
         tableView?.scrollToTop()
         DispatchQueue.main.async {
-            switch self.topTabBar.selectedIndex.value {
-            case 0:
-                self.discoveryAllVC.search(keyword)
-            case 1:
-                self.communitiesVC.search(keyword)
-            case 2:
-                self.usersVC.search(keyword)
-            case 3:
-                self.postsVC.search(keyword)
-            default:
-                return
+            if self.searchController.searchBar.isFirstResponder {
+                self.suggestionsVC.search(keyword)
+            } else {
+                switch self.topTabBar.selectedIndex.value {
+                case 0:
+                    self.discoveryAllVC.search(keyword)
+                case 1:
+                    self.communitiesVC.search(keyword)
+                case 2:
+                    self.usersVC.search(keyword)
+                case 3:
+                    self.postsVC.search(keyword)
+                default:
+                    return
+                }
             }
         }
     }

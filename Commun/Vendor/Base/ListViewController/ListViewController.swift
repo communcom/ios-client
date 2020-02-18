@@ -126,7 +126,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     func bindItems() {
         if !isSearchEnabled {
             viewModel.items
-                .map {[ListSection(model: "", items: $0)]}
+                .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
                 .bind(to: tableView.rx.items(dataSource: dataSource))
                 .disposed(by: disposeBag)
         } else {

@@ -123,6 +123,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     
     override func search(_ keyword: String?) {
         guard let keyword = keyword, !keyword.isEmpty else {
+            viewModel.fetcher.search = nil
             viewModel.state.accept(.loading(false))
             viewModel.items.accept([])
             return
