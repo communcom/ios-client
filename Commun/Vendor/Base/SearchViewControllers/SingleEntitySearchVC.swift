@@ -91,14 +91,15 @@ class SingleEntitySearchVC: SubsViewController<ResponseAPIContentSearchItem, Sub
     
     override func search(_ keyword: String?) {
         guard let keyword = keyword, !keyword.isEmpty else {
+            viewModel.fetcher.search = nil
             viewModel.state.accept(.loading(false))
             viewModel.items.accept([])
             return
         }
         
-        if self.viewModel.fetcher.search != keyword {
-            self.viewModel.fetcher.search = keyword
-            self.viewModel.reload(clearResult: false)
+        if viewModel.fetcher.search != keyword {
+            viewModel.fetcher.search = keyword
+            viewModel.reload(clearResult: false)
         }
     }
 }

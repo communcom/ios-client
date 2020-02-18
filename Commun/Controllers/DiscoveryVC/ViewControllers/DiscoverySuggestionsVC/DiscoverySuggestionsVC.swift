@@ -69,9 +69,9 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
             return
         }
         
-        if self.viewModel.fetcher.search != keyword {
-            self.viewModel.fetcher.search = keyword
-            self.viewModel.reload(clearResult: false)
+        if viewModel.fetcher.search != keyword {
+            viewModel.fetcher.search = keyword
+            viewModel.reload(clearResult: false)
         }
     }
     
