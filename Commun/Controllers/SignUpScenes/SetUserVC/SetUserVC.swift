@@ -27,7 +27,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
     
     lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#F53D5B")!, numberOfLines: 0, textAlignment: .center)
     
-    lazy var nextButton = StepButton(height: 56 * Config.heightRatio, label: "next".localized().uppercaseFirst, labelFont: UIFont.boldSystemFont(ofSize: 17 * Config.heightRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 8)
+    lazy var nextButton = StepButton(height: 56, label: "next".localized().uppercaseFirst, labelFont: UIFont.boldSystemFont(ofSize: 17 * Config.heightRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 8)
     
     // MARK: - Methods
     override func setUp() {

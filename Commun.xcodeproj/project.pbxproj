@@ -161,6 +161,7 @@
 		AC3386A12371D1B6009DB3BB /* EmbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3386A02371D1B6009DB3BB /* EmbedView.swift */; };
 		AC3386A62371DDEA009DB3BB /* EmbedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC3386A52371DDEA009DB3BB /* EmbedView.xib */; };
 		AC5D7D8B2385A1C400EEC5ED /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */; };
+		AC6A7CBA23FC4C9A004CA486 /* DeviceScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A7CB923FC4C99004CA486 /* DeviceScreen.swift */; };
 		AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC88ADCF2386B12A00D72374 /* ShareHelper.swift */; };
 		AC8C57BD238C408A00B0D260 /* InstagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C57BC238C408A00B0D260 /* InstagramView.swift */; };
 		AC8C57C1238D494D00B0D260 /* InstagramView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8C57C0238D494D00B0D260 /* InstagramView.xib */; };
@@ -719,6 +720,7 @@
 		AC3386A02371D1B6009DB3BB /* EmbedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedView.swift; sourceTree = "<group>"; };
 		AC3386A52371DDEA009DB3BB /* EmbedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbedView.xib; sourceTree = "<group>"; };
 		AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		AC6A7CB923FC4C99004CA486 /* DeviceScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceScreen.swift; sourceTree = "<group>"; };
 		AC759B91237C15C20069D169 /* CyberSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CyberSwift.xcodeproj; path = cyberSwift/CyberSwift.xcodeproj; sourceTree = "<group>"; };
 		AC88ADCF2386B12A00D72374 /* ShareHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareHelper.swift; sourceTree = "<group>"; };
 		AC8C57BC238C408A00B0D260 /* InstagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramView.swift; sourceTree = "<group>"; };
@@ -1819,6 +1821,7 @@
 			children = (
 				AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */,
 				AC88ADCF2386B12A00D72374 /* ShareHelper.swift */,
+				AC6A7CB923FC4C99004CA486 /* DeviceScreen.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -3482,6 +3485,7 @@
 				BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */,
 				3BF381812331D9CD00C02123 /* URL.swift in Sources */,
 				BC3694EF2369850100B2E078 /* EditorVC.swift in Sources */,
+				AC6A7CBA23FC4C9A004CA486 /* DeviceScreen.swift in Sources */,
 				BCD01A9723FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift in Sources */,
 				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				BC8F814523E27ECE0024C04A /* WalletTableHeaderView.swift in Sources */,

@@ -131,8 +131,6 @@ class SignUpVC: UIViewController, SignUpRouter {
         self.setNavBarBackButton()
         self.setupBindings()
         self.setupActions()
-
-        updateLocation()
     }
     
     private var checkedStep = false

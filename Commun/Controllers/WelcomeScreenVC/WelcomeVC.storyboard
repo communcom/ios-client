@@ -62,7 +62,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="QNK-sy-znB" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                         </constraints>
-                                        <state key="normal" title="sign up"/>
+                                        <state key="normal" title="Start and get 30 Points"/>
                                         <connections>
                                             <action selector="signUpButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="fBz-Vm-2c5"/>
                                         </connections>
@@ -80,6 +80,13 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coin-reward" translatesAutoresizingMaskIntoConstraints="NO" id="JZ3-e2-Mok">
+                                <rect key="frame" x="248.5" y="441.5" width="35" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="4Od-Qz-SXg"/>
+                                    <constraint firstAttribute="width" constant="35" id="aJj-KX-Fpr"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -89,6 +96,8 @@
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="9u7-LT-02r" secondAttribute="trailing" constant="15" id="Vz7-oj-mvg" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="IfS-V6-9za" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="20" id="aJ5-L4-K3B" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="9u7-LT-02r" firstAttribute="top" secondItem="bF6-IB-5mY" secondAttribute="top" constant="6" id="ciL-uL-cY7" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="zIG-dP-Ewi" firstAttribute="centerY" secondItem="JZ3-e2-Mok" secondAttribute="centerY" id="g8S-fO-23r"/>
+                            <constraint firstItem="zIG-dP-Ewi" firstAttribute="centerX" secondItem="JZ3-e2-Mok" secondAttribute="centerX" constant="-106" id="jvu-nh-f2P"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="bottom" secondItem="IfS-V6-9za" secondAttribute="bottom" constant="20" id="kDl-Ko-m8v" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="trailing" secondItem="bF6-IB-5mY" secondAttribute="trailing" id="mLH-q0-tby"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="IfS-V6-9za" secondAttribute="trailing" constant="20" id="sit-PB-k0c" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -98,6 +107,7 @@
                     <connections>
                         <outlet property="bottomSignInButton" destination="zCr-Mk-Clg" id="9cr-Wq-QUx"/>
                         <outlet property="buttonsStackView" destination="IfS-V6-9za" id="Dfn-sQ-4Dd"/>
+                        <outlet property="coinImageView" destination="JZ3-e2-Mok" id="h1C-1O-Eu8"/>
                         <outlet property="nextButton" destination="8t8-vm-TGP" id="s0d-7q-sgW"/>
                         <outlet property="signUpButton" destination="zIG-dP-Ewi" id="HE5-NS-Pah"/>
                         <outlet property="topSignInButton" destination="9u7-LT-02r" id="1ZJ-TG-iTS"/>
@@ -107,7 +117,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zhj-Zk-YL3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-415.19999999999999" y="229.80295566502463"/>
+            <point key="canvasLocation" x="-416.25" y="229.22535211267606"/>
         </scene>
         <!--Welcome PageVC-->
         <scene sceneID="Czc-JF-Ucl">
@@ -199,4 +209,7 @@
             <point key="canvasLocation" x="1128.8" y="192.95352323838082"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="coin-reward" width="35" height="33"/>
+    </resources>
 </document>
