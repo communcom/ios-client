@@ -11,10 +11,12 @@ import RxSwift
 
 class DiscoveryVC: BaseViewController {
     // MARK: - Properties
-    weak var currentChildVC: UIViewController?
+    private weak var currentChildVC: UIViewController?
     var tableView: UITableView? {
         currentChildVC?.view.subviews.first(where: {$0 is UITableView}) as? UITableView
     }
+    private var currentKeyword = ""
+    private var searchWasCancelled = false
     
     // MARK: - ChildVCs
     lazy var searchController = UISearchController.default()
@@ -44,7 +46,7 @@ class DiscoveryVC: BaseViewController {
             "users".localized().uppercaseFirst,
             "posts".localized().uppercaseFirst
         ],
-        selectedIndex: 1,
+        selectedIndex: 0,
         contentInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     )
     
@@ -104,11 +106,35 @@ class DiscoveryVC: BaseViewController {
         super.bind()
         // search controller
         searchController.searchBar.rx.text
+            .debounce(0.2, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .skip(1)
-            .debounce(0.2, scheduler: MainScheduler.instance)
             .subscribe(onNext: { (query) in
+                self.currentKeyword = query ?? ""
                 self.search(query)
+            })
+            .disposed(by: disposeBag)
+        
+        searchController.searchBar.rx.textDidBeginEditing
+            .subscribe(onNext: { (_) in
+                self.searchWasCancelled = false
+            })
+            .disposed(by: disposeBag)
+            
+        searchController.searchBar.rx.textDidEndEditing
+            .subscribe(onNext: { (_) in
+                if self.searchWasCancelled {
+                    self.searchController.searchBar.text = self.currentKeyword
+                    self.searchController.searchBar.delegate?.searchBar?(self.searchController.searchBar, textDidChange: self.currentKeyword)
+                } else {
+                    self.currentKeyword = self.searchController.searchBar.text ?? ""
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        searchController.searchBar.rx.cancelButtonClicked
+            .subscribe(onNext: { (_) in
+                self.searchWasCancelled = true
             })
             .disposed(by: disposeBag)
         
