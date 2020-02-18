@@ -22,6 +22,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
         var style: Style = .default
         var tintColor: UIColor = .black
         var marginTop: CGFloat = 0
+        var post: ResponseAPIContentGetPost?
         var handle: (() -> Void)?
 
         class TapGesture: UITapGestureRecognizer {
@@ -62,7 +63,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 24.0), height: .adaptive(height: 24.0))))
-        activity.hidesWhenStopped = true
+        activity.hidesWhenStopped = false
         activity.style = .white
         activity.color = .black
         activity.translatesAutoresizingMaskIntoConstraints = false
@@ -251,28 +252,41 @@ class CommunActionSheet: SwipeDownDismissViewController {
         }
     }
     
-    func updateAction(byIndex index: Int, withProperties properties: (title: String, icon: UIImage), handle: @escaping (() -> Void)) {
-        guard var actions = self.actions, let label = view.viewWithTag(777) as? UILabel, let iconImageView = view.viewWithTag(778) as? UIImageView else { return }
-        
-        actions[index].title = properties.title
-        actions[index].icon = properties.icon
-        label.text = properties.title
-        iconImageView.setImage(properties.icon)
-        
-        handle()
-    }
-    
-    func loaderDidStart(byIndex index: Int) {
-        guard let actions = self.actions, let iconImageView = view.viewWithTag(778) as? UIImageView else { return }
-        
+    func loaderDidStart(withTitle title: String) {
+        guard let label = view.viewWithTag(777) as? UILabel, let iconImageView = view.viewWithTag(778) as? UIImageView else { return }
+
+        label.text = title
         iconImageView.image = nil
         iconImageView.addSubview(activityIndicator)
         activityIndicator.autoPinEdgesToSuperviewEdges()
         activityIndicator.startAnimating()
     }
     
-    func loaderDidFinish() {
+    private func loaderDidFinish() {
         activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
+    }
+    
+    func setupAction(isSubscribed: Bool) -> (title: String, icon: UIImage) {
+        return (title: (isSubscribed ? "following" : "follow").localized().uppercaseFirst, icon: UIImage(named: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")!)
+    }
+    
+    func updateFollowAction(withCommunity community: ResponseAPIContentGetCommunity) {
+        let actionProperties = setupAction(isSubscribed: community.isSubscribed ?? false)
+
+        var communityTemp = community
+        communityTemp.isBeingJoined = true
+        actions?[0].post?.community = community
+                
+        updateFollowAction(image: actionProperties.icon)
+        communityTemp.isBeingJoined = false
+        loaderDidFinish()
+    }
+
+    private func updateFollowAction(image: UIImage) {
+        guard let iconImageView = view.viewWithTag(778) as? UIImageView else { return }
+
+        iconImageView.setImage(image)
     }
     
     
@@ -283,7 +297,14 @@ class CommunActionSheet: SwipeDownDismissViewController {
     
     @objc func actionViewDidTouch(_ tap: Action.TapGesture) {
         guard let action = tap.action else { return }
-        guard action.style != .follow else { action.handle?(); return }
+        
+        guard action.style != .follow else {
+            if !activityIndicator.isAnimating {
+                action.handle?()
+            }
+            
+            return
+        }
         
         dismiss(animated: true) {
             action.handle?()

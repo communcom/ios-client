@@ -39,9 +39,9 @@ extension PostCellDelegate where Self: BaseViewController {
         if let community = post.community, let isSubscribed = community.isSubscribed {
             let actionProperties = self.setupAction(isSubscribed: isSubscribed)
             
-            let action = CommunActionSheet.Action(title: actionProperties.title, icon: actionProperties.icon, style: .follow, handle: {
-                self.followButtonDidTouch(community: community)
-                self.observe(community: community)
+            let action = CommunActionSheet.Action(title: actionProperties.title, icon: actionProperties.icon, style: .follow, post: post, handle: {
+                self.followButtonDidTouch()
+                self.observeCommunity()
             })
             
             actions.append(action)
@@ -63,14 +63,10 @@ extension PostCellDelegate where Self: BaseViewController {
                                                 handle: { ShareHelper.share(post: post) }))
 
         if post.author?.userId == Config.currentUser?.id {
-            actions.append(
-                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
-                                         icon: UIImage(named: "delete"),
-                                         tintColor: UIColor(hexString: "#ED2C5B")!,
-                                         handle: {
-                                            self.deletePost(post)
-                })
-            )
+            actions.append(CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
+                                                    icon: UIImage(named: "delete"),
+                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    handle: { self.deletePost(post) }))
         }
 
         // headerView for actionSheet
@@ -82,12 +78,20 @@ extension PostCellDelegate where Self: BaseViewController {
         }
     }
     
-    func observe(community: ResponseAPIContentGetCommunity) {
+    func observeCommunity() {
+        guard let communActionSheet = UIApplication.topViewController() as? CommunActionSheet, let post = communActionSheet.actions?[0].post else { return }
+
         ResponseAPIContentGetCommunity.observeItemChanged()
-            .filter { $0.identity == community.identity }
+            .filter { $0.identity == post.community?.identity }
             .subscribe(onNext: { newCommunity in
-                guard let isSubscribed = newCommunity.isSubscribed, isSubscribed != community.isSubscribed else { return }
-                self.updateAction(withCommunity: newCommunity)
+                guard let isSubscribed = newCommunity.isSubscribed, let community = post.community, isSubscribed != community.isSubscribed else { return }
+                communActionSheet.updateFollowAction(withCommunity: newCommunity)
+                
+                var postTemp = post
+                postTemp.community = newCommunity
+                
+                self.update(post: postTemp)
+                NotificationCenter.default.removeObserver(self)
             })
             .disposed(by: disposeBag)
     }
@@ -95,24 +99,15 @@ extension PostCellDelegate where Self: BaseViewController {
     func setupAction(isSubscribed: Bool) -> (title: String, icon: UIImage) {
         return (title: (isSubscribed ? "following" : "follow").localized().uppercaseFirst, icon: UIImage(named: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")!)
     }
-    
-    func updateAction(withCommunity community: ResponseAPIContentGetCommunity) {
-        guard let communActionSheet = UIApplication.topViewController() as? CommunActionSheet, let actions = communActionSheet.actions, let actionIndex = actions.firstIndex(where: { $0.style == .follow })  else { return }
-                
-        var communityTemp = community
-        communityTemp.isBeingJoined = true
         
-        let actionProperties = setupAction(isSubscribed: community.isSubscribed ?? false)
-        communActionSheet.updateAction(byIndex: actionIndex, withProperties: actionProperties, handle: {
-            communityTemp.isBeingJoined = false
-            communActionSheet.loaderDidFinish()
-            // TODO: - UPDATE POST
-        })
+    func update(post: ResponseAPIContentGetPost) {
+        guard let postsVC = self as? PostsViewController else { return }
+        postsVC.viewModel.updateItem(post)
     }
     
     func deletePost(_ post: ResponseAPIContentGetPost) {
         guard let topController = UIApplication.topViewController()
-        else {return}
+        else { return }
         
         topController.showAlert(
             title: "delete".localized().uppercaseFirst,
@@ -174,10 +169,10 @@ extension PostCellDelegate where Self: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func followButtonDidTouch(community: ResponseAPIContentGetCommunity) {
-        guard let communActionSheet = UIApplication.topViewController() as? CommunActionSheet, let actions = communActionSheet.actions, let actionIndex = actions.firstIndex(where: { $0.style == .follow })  else { return }
+    func followButtonDidTouch() {
+        guard let communActionSheet = UIApplication.topViewController() as? CommunActionSheet, let community = communActionSheet.actions?[0].post?.community else { return }
        
-        communActionSheet.loaderDidStart(byIndex: actionIndex)
+        communActionSheet.loaderDidStart(withTitle: (community.isSubscribed ?? false ? "follow" : "following").localized().uppercaseFirst)
         
         NetworkService.shared.triggerFollow(community: community)
             .subscribe { [weak self] (error) in
