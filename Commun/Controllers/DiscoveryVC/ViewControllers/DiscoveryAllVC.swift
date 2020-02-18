@@ -14,8 +14,12 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     // MARK: - Initializers
     init() {
         let vm = SearchViewModel()
-        (vm.fetcher as! SearchListFetcher).searchType = .quickSearch
-        (vm.fetcher as! SearchListFetcher).entities = [.profiles, .communities]
+        (vm.fetcher as! SearchListFetcher).searchType = .extendedSearch
+        (vm.fetcher as! SearchListFetcher).extendedSearchEntity = [
+            .profiles: ["limit": 4, "offset": 0],
+            .communities: ["limit": 4, "offset": 0],
+            .posts: ["limit": 4, "offset": 0]
+        ]
         super.init(viewModel: vm)
     }
     
@@ -55,12 +59,16 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
             .map {items -> [ListSection] in
                 let communities = items.filter {$0.communityValue != nil}
                 let followers = items.filter {$0.profileValue != nil}
+                let posts = items.filter {$0.postValue != nil}
                 var sections = [ListSection]()
                 if !communities.isEmpty {
                     sections.append(ListSection(model: "communities".localized().uppercaseFirst, items: communities))
                 }
                 if !followers.isEmpty {
                     sections.append(ListSection(model: "followers".localized().uppercaseFirst, items: followers))
+                }
+                if !posts.isEmpty {
+                    sections.append(ListSection(model: "posts".localized().uppercaseFirst, items: posts))
                 }
                 return sections
             }
@@ -71,6 +79,8 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     override func registerCell() {
         super.registerCell()
         tableView.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
+        tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
+        tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
     }
     
     override func configureCell(with item: ResponseAPIContentSearchItem, indexPath: IndexPath) -> UITableViewCell {
@@ -97,6 +107,22 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
             if indexPath.row == self.viewModel.items.value.count - 1 {
                 cell.roundedCorner.insert([.bottomLeft, .bottomRight])
             }
+            return cell
+        }
+        
+        if let post = item.postValue {
+            let cell: PostCell
+            switch post.document?.attributes?.type {
+            case "article":
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
+                cell.setUp(with: post)
+            case "basic":
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
+                cell.setUp(with: post)
+            default:
+                return UITableViewCell()
+            }
+            
             return cell
         }
 
