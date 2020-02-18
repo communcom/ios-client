@@ -29,10 +29,13 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
     public var fetcher: ListFetcher<T>
     
     // MARK: - Methods
-    init(fetcher: ListFetcher<T>) {
+    init(fetcher: ListFetcher<T>, prefetch: Bool = false) {
         self.fetcher = fetcher
         super.init()
         defer {
+            if prefetch {
+                fetchNext()
+            }
             observeItemDeleted()
             observeItemChange()
         }
