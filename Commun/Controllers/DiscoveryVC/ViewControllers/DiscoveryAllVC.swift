@@ -23,6 +23,10 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         ]
         self.seeAllHandler = seeAllHandler
         super.init(viewModel: vm)
+        
+        defer {
+            showShadowWhenScrollUp = false
+        }
     }
     
     required init?(coder: NSCoder) {

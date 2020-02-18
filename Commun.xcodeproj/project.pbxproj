@@ -271,7 +271,8 @@
 		BC3AD9DC23838E920026EAB4 /* CommentFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AD9DB23838E920026EAB4 /* CommentFormViewModel.swift */; };
 		BC3AF37923FBC01D00528EEB /* DiscoverySuggestionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AF37823FBC01D00528EEB /* DiscoverySuggestionsVC.swift */; };
 		BC3AF37F23FBC24400528EEB /* DiscoverySuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AF37E23FBC24400528EEB /* DiscoverySuggestionCell.swift */; };
-		BC3AF38123FBDCC300528EEB /* SearchableCommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AF38023FBDCC300528EEB /* SearchableCommunitiesVC.swift */; };
+		BC3AF38323FBE58D00528EEB /* DiscoveryCommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AF38223FBE58D00528EEB /* DiscoveryCommunitiesVC.swift */; };
+		BC3AF38523FBEB4200528EEB /* DiscoveryUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AF38423FBEB4200528EEB /* DiscoveryUsersVC.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */; };
 		BC40719923CEF801000027A3 /* PlaceholderNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */; };
@@ -811,7 +812,8 @@
 		BC3AD9DB23838E920026EAB4 /* CommentFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentFormViewModel.swift; sourceTree = "<group>"; };
 		BC3AF37823FBC01D00528EEB /* DiscoverySuggestionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverySuggestionsVC.swift; sourceTree = "<group>"; };
 		BC3AF37E23FBC24400528EEB /* DiscoverySuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverySuggestionCell.swift; sourceTree = "<group>"; };
-		BC3AF38023FBDCC300528EEB /* SearchableCommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableCommunitiesVC.swift; sourceTree = "<group>"; };
+		BC3AF38223FBE58D00528EEB /* DiscoveryCommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryCommunitiesVC.swift; sourceTree = "<group>"; };
+		BC3AF38423FBEB4200528EEB /* DiscoveryUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryUsersVC.swift; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderAvatarImageView.swift; sourceTree = "<group>"; };
 		BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderNotificationCell.swift; sourceTree = "<group>"; };
@@ -2347,7 +2349,6 @@
 				BC619B1623726C040005BB94 /* Subviews */,
 				BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */,
 				BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */,
-				BC3AF38023FBDCC300528EEB /* SearchableCommunitiesVC.swift */,
 			);
 			name = CommunitiesVC;
 			path = ../../Controllers/CommunitiesVC;
@@ -2775,6 +2776,8 @@
 			children = (
 				BCDEE7A323F4EDF500DD3EB3 /* DiscoveryAllVC.swift */,
 				BC3AF37C23FBC22800528EEB /* DiscoverySuggestionsVC */,
+				BC3AF38223FBE58D00528EEB /* DiscoveryCommunitiesVC.swift */,
+				BC3AF38423FBEB4200528EEB /* DiscoveryUsersVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3285,6 +3288,7 @@
 				BC016D5A235EB88400F1319F /* PostsVC+Actions.swift in Sources */,
 				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
 				BC619B1823726C180005BB94 /* CommunityCell.swift in Sources */,
+				BC3AF38323FBE58D00528EEB /* DiscoveryCommunitiesVC.swift in Sources */,
 				3B8DDF58234AEA9600B213F0 /* ContentTextView+Draft.swift in Sources */,
 				BC4AD65C23B1BA01008546A4 /* BottomMenuPresentationController.swift in Sources */,
 				3B3C8B7C23472BF000D8BADB /* EditorToolbarItem.swift in Sources */,
@@ -3521,6 +3525,7 @@
 				BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */,
 				BC8F814B23E27ECE0024C04A /* Transaction.swift in Sources */,
 				BCF3914C235FEAB300A9D1ED /* ListFetcher.swift in Sources */,
+				BC3AF38523FBEB4200528EEB /* DiscoveryUsersVC.swift in Sources */,
 				BCCE0AAF2368217000A183AA /* MyProfilePageVC.swift in Sources */,
 				BCCE0AB723682D1B00A183AA /* MyProfilePageVC+Actions.swift in Sources */,
 				3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */,
@@ -3543,7 +3548,6 @@
 				3B5EDE3B22E0DD5100897BF3 /* NotificationSettingType.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
-				BC3AF38123FBDCC300528EEB /* SearchableCommunitiesVC.swift in Sources */,
 				BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */,
 				3B3C8B982347911D00D8BADB /* PostEditorViewModel.swift in Sources */,
 				BC4692FB239645C70064A38B /* CommunityLeaderFollowCell.swift in Sources */,

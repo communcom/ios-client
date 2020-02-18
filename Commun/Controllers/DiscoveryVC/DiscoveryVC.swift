@@ -31,23 +31,11 @@ class DiscoveryVC: BaseViewController {
             }
         }
     }
-    lazy var discoveryAllVC: DiscoveryAllVC = {
-        let vc = DiscoveryAllVC { index in
-            self.topTabBar.selectedIndex.accept(index)
-        }
-        vc.showShadowWhenScrollUp = false
-        return vc
-    }()
-    lazy var communitiesVC: SearchableCommunitiesVC = {
-        let vc = SearchableCommunitiesVC(type: .all)
-        vc.showShadowWhenScrollUp = false
-        return vc
-    }()
-    lazy var usersVC: SearchableSubscribersVC = {
-        let vc = SearchableSubscribersVC(userId: Config.currentUser?.id)
-        vc.showShadowWhenScrollUp = false
-        return vc
-    }()
+    lazy var discoveryAllVC = DiscoveryAllVC { index in
+        self.topTabBar.selectedIndex.accept(index)
+    }
+    lazy var communitiesVC = DiscoveryCommunitiesVC(prefetch: self.searchController.searchBar.text?.isEmpty == true)
+    lazy var usersVC = DiscoveryUsersVC(prefetch: self.searchController.searchBar.text?.isEmpty == true)
     lazy var postsVC = SearchablePostsVC(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptionsPopular, feedType: .time, sortType: .day, userId: Config.currentUser?.id))
     
     // MARK: - Subviews

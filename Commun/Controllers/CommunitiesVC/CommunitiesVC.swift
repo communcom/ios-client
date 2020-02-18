@@ -10,8 +10,8 @@ import Foundation
 
 class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, CommunityCell>, CommunityCellDelegate {
     // MARK: - Initializers
-    init(type: GetCommunitiesType, userId: String? = nil) {
-        let viewModel = CommunitiesViewModel(type: type, userId: userId)
+    init(type: GetCommunitiesType, userId: String? = nil, prefetch: Bool = true) {
+        let viewModel = CommunitiesViewModel(type: type, userId: userId, prefetch: prefetch)
         super.init(viewModel: viewModel)
         defer {self.title = "communities".localized().uppercaseFirst}
     }
