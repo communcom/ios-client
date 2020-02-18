@@ -135,6 +135,20 @@ class SignUpVC: UIViewController, SignUpRouter {
         updateLocation()
     }
     
+    private var checkedStep = false
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !checkedStep {
+            // if signUp is processing
+            if let step = KeychainManager.currentUser()?.registrationStep,
+                step != .firstStep
+            {
+                self.signUpNextStep()
+            }
+            checkedStep = true
+        }
+    }
+    
     // MARK: - Custom Functions
     func setupBindings() {
         let country = viewModel.selectedCountry

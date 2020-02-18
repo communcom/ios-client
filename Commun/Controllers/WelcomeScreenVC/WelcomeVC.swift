@@ -64,6 +64,12 @@ class WelcomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // if signUp is processing
+        if KeychainManager.currentUser()?.registrationStep != nil
+        {
+            navigateToSignUp()
+        }
+        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
