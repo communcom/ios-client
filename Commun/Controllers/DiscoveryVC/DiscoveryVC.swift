@@ -22,8 +22,11 @@ class DiscoveryVC: BaseViewController {
     // MARK: - ChildVCs
     lazy var searchController = UISearchController.default()
     lazy var suggestionsVC = DiscoverySuggestionsVC {
-        self.searchController.searchBar.resignFirstResponder()
+        let originalText = self.searchController.searchBar.text ?? ""
+        self.searchController.isActive = false
+        self.searchBarChangeTextNotified(text: originalText)
         DispatchQueue.main.async {
+            self.setTopBarHidden(false, animated: true)
             if self.topTabBar.selectedIndex.value != 0 {
                 self.topTabBar.selectedIndex.accept(0)
             } else {
@@ -129,7 +132,7 @@ class DiscoveryVC: BaseViewController {
         super.bind()
         // search controller
         searchController.searchBar.rx.text
-            .debounce(0.2, scheduler: MainScheduler.instance)
+            .debounce(0.5, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .skip(1)
             .subscribe(onNext: { (query) in
@@ -141,27 +144,28 @@ class DiscoveryVC: BaseViewController {
         searchController.searchBar.rx.textDidBeginEditing
             .subscribe(onNext: { (_) in
                 self.searchWasCancelled = false
-                self.setTopBarHidden(true, animated: true)
-                self.showChildVC(self.suggestionsVC)
-            })
-            .disposed(by: disposeBag)
-            
-        searchController.searchBar.rx.textDidEndEditing
-            .subscribe(onNext: { (_) in
-                if self.searchWasCancelled {
-                    self.searchController.searchBar.text = self.currentKeyword
-                    self.searchController.searchBar.delegate?.searchBar?(self.searchController.searchBar, textDidChange: self.currentKeyword)
-                } else {
-                    self.currentKeyword = self.searchController.searchBar.text ?? ""
+                if self.currentChildVC != self.suggestionsVC {
+                    self.setTopBarHidden(true, animated: true)
+                    self.showChildVC(self.suggestionsVC)
                 }
-                self.setTopBarHidden(false, animated: true)
-                self.showChildVCWithIndex(self.topTabBar.selectedIndex.value)
             })
             .disposed(by: disposeBag)
         
         searchController.searchBar.rx.cancelButtonClicked
             .subscribe(onNext: { (_) in
                 self.searchWasCancelled = true
+            })
+            .disposed(by: disposeBag)
+        
+        searchController.searchBar.rx.textDidEndEditing
+            .subscribe(onNext: { (_) in
+                if self.searchWasCancelled {
+                    self.searchBarChangeTextNotified(text: self.currentKeyword)
+                    self.setTopBarHidden(false, animated: true)
+                    self.showChildVCWithIndex(self.topTabBar.selectedIndex.value)
+                } else {
+                    self.currentKeyword = self.searchController.searchBar.text ?? ""
+                }
             })
             .disposed(by: disposeBag)
         
@@ -241,19 +245,30 @@ class DiscoveryVC: BaseViewController {
             if self.searchController.searchBar.isFirstResponder {
                 self.suggestionsVC.search(keyword)
             } else {
-                switch self.topTabBar.selectedIndex.value {
-                case 0:
-                    self.discoveryAllVC.search(keyword)
-                case 1:
-                    self.communitiesVC.search(keyword)
-                case 2:
-                    self.usersVC.search(keyword)
-                case 3:
-                    self.postsVC.search(keyword)
-                default:
-                    return
-                }
+                self.discoveryAllVC.search(keyword)
+                self.communitiesVC.search(keyword)
+                self.usersVC.search(keyword)
+                self.postsVC.search(keyword)
+                
+//                switch self.topTabBar.selectedIndex.value {
+//                case 0:
+//                    self.discoveryAllVC.search(keyword)
+//                case 1:
+//                    self.communitiesVC.search(keyword)
+//                case 2:
+//                    self.usersVC.search(keyword)
+//                case 3:
+//                    self.postsVC.search(keyword)
+//                default:
+//                    return
+//                }
             }
         }
+    }
+    
+    // MARK: - Helpers
+    private func searchBarChangeTextNotified(text: String) {
+        searchController.searchBar.text = text
+        searchController.searchBar.delegate?.searchBar?(searchController.searchBar, textDidChange: text)
     }
 }
