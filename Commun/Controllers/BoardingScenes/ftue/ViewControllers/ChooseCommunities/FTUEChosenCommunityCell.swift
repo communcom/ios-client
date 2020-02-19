@@ -35,6 +35,14 @@ class FTUEChosenCommunityCell: MyCollectionViewCell {
         self.community = community
         avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
         avatarImageView.percent = 1
+        
+        if community.isBeingJoined == true {
+            avatarImageView.alpha = 0.6
+            deleteButton.isEnabled = false
+        } else {
+            avatarImageView.alpha = 1
+            deleteButton.isEnabled = true
+        }
     }
     
     @objc func buttonDeleteDidTouch() {

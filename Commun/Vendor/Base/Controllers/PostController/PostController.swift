@@ -63,22 +63,32 @@ extension PostController {
 
         if post.author?.userId != Config.currentUser?.id {
             actions.append(
-                CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
-                    self.reportPost()
-                }, tintColor: UIColor(hexString: "#ED2C5B")!)
+                CommunActionSheet.Action(title: "send report".localized().uppercaseFirst,
+                                         icon: UIImage(named: "report"),
+                                         tintColor: UIColor(hexString: "#ED2C5B")!,
+                                         handle: {
+                                            self.reportPost()
+                })
             )
         } else {
             actions.append(
-                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst, icon: UIImage(named: "edit"), handle: {
-                    self.editPost()
+                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
+                                         icon: UIImage(named: "edit"),
+                                         handle: {
+                                            self.editPost()
                 })
             )
+            
             actions.append(
-                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst, icon: UIImage(named: "delete"), handle: {
-                    self.deletePost()
-                }, tintColor: UIColor(hexString: "#ED2C5B")!)
+                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
+                                         icon: UIImage(named: "delete"),
+                                         tintColor: UIColor(hexString: "#ED2C5B")!,
+                                         handle: {
+                                            self.deletePost()
+                })
             )
         }
+        
 
         // headerView for actionSheet
         let headerView = PostMetaView(frame: .zero)
@@ -175,17 +185,13 @@ extension PostController {
             .subscribe(onSuccess: {post in
                 topController.hideHud()
                 if post.document?.attributes?.type == "basic" {
-                    let vc = BasicEditorVC()
-                    vc.viewModel.postForEdit = post
-                    vc.modalPresentationStyle = .fullScreen
+                    let vc = BasicEditorVC(post: post)
                     topController.present(vc, animated: true, completion: nil)
                     return
                 }
                 
                 if post.document?.attributes?.type == "article" {
-                    let vc = ArticleEditorVC()
-                    vc.viewModel.postForEdit = post
-                    vc.modalPresentationStyle = .fullScreen
+                    let vc = ArticleEditorVC(post: post)
                     topController.present(vc, animated: true, completion: nil)
                     return
                 }

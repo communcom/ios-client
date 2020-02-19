@@ -14,8 +14,7 @@ extension BasicEditorVC {
             weak var presentingViewController = self?.presentingViewController
             let attrStr = self?.contentTextView.attributedText
             self?.dismiss(animated: true, completion: {
-                let vc = ArticleEditorVC()
-                vc.modalPresentationStyle = .fullScreen
+                let vc = ArticleEditorVC(community: self?.viewModel.community.value)
                 presentingViewController?.present(vc, animated: true, completion: {
                     vc.contentTextView.attributedText = attrStr
                 })

@@ -109,6 +109,9 @@ extension PostPageVC {
                  }
             })
             .disposed(by: disposeBag)
+        
+        // forward delegate
+        commentForm.textView.rx.setDelegate(self).disposed(by: disposeBag)
     }
     
     func bindPost() {
@@ -119,11 +122,11 @@ extension PostPageVC {
             .subscribe(onNext: { [weak self] loadingState in
                 switch loadingState {
                 case .loading:
-                    self?.postView.showLoader()
+                    self?.postHeaderView.showLoader()
                 case .finished:
-                    self?.postView.hideLoader()
+                    self?.postHeaderView.hideLoader()
                 case .error:
-                    self?.postView.hideLoader()
+                    self?.postHeaderView.hideLoader()
                     guard let strongSelf = self else {return}
                     strongSelf.view.showErrorView {
                         strongSelf.view.hideErrorView()
@@ -133,6 +136,7 @@ extension PostPageVC {
                 }
             })
             .disposed(by: disposeBag)
+
         // bind post
         let post = viewModel.post
         post
@@ -140,7 +144,11 @@ extension PostPageVC {
                 guard let post = post else {return}
                 self.navigationBar.setUp(with: post)
                 self.commentForm.post = post
-                self.postView.setUp(with: post)
+                self.postHeaderView.setUp(with: post)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.scrollToTopAfterLoadingComment = true
+                }
             })
             .disposed(by: disposeBag)
         

@@ -76,7 +76,7 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
         
         nameLabel.text = community.name
         
-        descriptionLabel.text = "\(Double(community.subscribersCount ?? 0).kmFormatted) " + "members".localized().uppercaseFirst
+        descriptionLabel.text = "\((community.subscribersCount ?? 0).kmFormatted) " + "members".localized().uppercaseFirst
         
         // joinButton
         let joined = community.isSubscribed ?? false

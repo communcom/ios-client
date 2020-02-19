@@ -21,7 +21,11 @@ class SendPointsModel {
     }
        
     func getBalance(bySymbol symbol: String = Config.defaultSymbol) -> Balance {
-        return convert(balance: balances.first(where: { $0.symbol == symbol })!)
+        guard balances.count > 0, let balance = balances.first(where: { $0.symbol == symbol }) else {
+            return convert(balance: balances[0])
+        }
+        
+        return convert(balance: balance)
     }
     
     func checkEnteredAmounts() -> Bool {

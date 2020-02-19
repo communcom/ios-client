@@ -52,18 +52,6 @@ class BaseViewController: UIViewController {
             present(safariVC, animated: true)
         }
     }
-    
-//    func avoidTabBar() {
-//        // avoid tabBar
-//        guard let scrollView = contentScrollView,
-//            let tabBarController = tabBarController as? TabBarVC else {return}
-//        var contentInsets = scrollView.contentInset
-//        let insetsBottom = contentInsets.bottom + tabBarController.tabBarHeight
-//        let defaultBottomOffset: CGFloat = 10
-//        contentInsets.bottom = insetsBottom + defaultBottomOffset + view.safeAreaInsets.bottom
-//        scrollView.scrollIndicatorInsets.bottom = insetsBottom + view.safeAreaInsets.bottom
-//        scrollView.contentInset = contentInsets
-//    }
 }
 
 // MARK: - SFSafariViewControllerDelegate

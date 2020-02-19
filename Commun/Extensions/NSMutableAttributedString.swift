@@ -12,23 +12,29 @@ import CyberSwift
 
 extension NSMutableAttributedString {
     @discardableResult func bold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .bold), color: UIColor = .black) -> NSMutableAttributedString {
-        let attrs: [NSAttributedString.Key: Any] = [.font: font]
-        let boldString = NSAttributedString(string: text, attributes: attrs).colored(with: color)
+        let attrs: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: color]
+        let boldString = NSAttributedString(string: text, attributes: attrs)
         append(boldString)
         return self
     }
     
     @discardableResult func semibold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .semibold), color: UIColor = .black) -> NSMutableAttributedString {
-        let attrs: [NSAttributedString.Key: Any] = [.font: font]
-        let boldString = NSAttributedString(string: text, attributes: attrs).colored(with: color)
+        let attrs: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: color]
+        let boldString = NSAttributedString(string: text, attributes: attrs)
         append(boldString)
         return self
     }
     
-    @discardableResult func normal(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15)) -> NSMutableAttributedString {
-        let attrs: [NSAttributedString.Key: Any] = [.font: font]
+    @discardableResult func normal(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15), color: UIColor? = nil) -> NSMutableAttributedString {
+        var attrs: [NSAttributedString.Key: Any] = [.font: font]
         let normal = NSAttributedString(string: text, attributes: attrs)
+
+        if let colorValue = color {
+            attrs[.foregroundColor] = colorValue
+        }
+        
         append(normal)
+        
         return self
     }
     
@@ -42,17 +48,20 @@ extension NSMutableAttributedString {
         return self
     }
     
-    @discardableResult func withParagraphSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
+    @discardableResult func withParagraphSpacing(_ spacing: CGFloat, alignment: NSTextAlignment = .left) -> NSMutableAttributedString {
+
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacing = 4
+        paragraphStyle.minimumLineHeight = spacing
+        paragraphStyle.maximumLineHeight = spacing
+        paragraphStyle.alignment = alignment
         let attrs: [NSAttributedString.Key: Any] = [.paragraphStyle: paragraphStyle]
         addAttributes(attrs, range: NSRange(location: 0, length: self.length))
         return self
     }
     
     @discardableResult func gray(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15)) -> NSMutableAttributedString {
-        let attrs: [NSAttributedString.Key: Any] = [.font: font]
-        let normal = NSAttributedString(string: text, attributes: attrs).colored(with: UIColor.gray)
+        let attrs: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: UIColor.appGrayColor]
+        let normal = NSAttributedString(string: text, attributes: attrs)
         append(normal)
         return self
     }

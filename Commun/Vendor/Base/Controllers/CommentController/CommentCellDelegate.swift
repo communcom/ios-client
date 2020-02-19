@@ -70,46 +70,39 @@ extension CommentCellDelegate where Self: BaseViewController {
         }
 
         if texts.count > 0 {
-            actions.append(
-                CommunActionSheet.Action(
-                title: "copy".localized().uppercaseFirst,
-                    icon: UIImage(named: "copy"),
-                    handle: {
-                        UIPasteboard.general.string = texts.joined(separator: "\n")
-                        self.showDone("copied to clipboard".localized().uppercaseFirst)
-                    },
-                    tintColor: .black)
+            actions.append(CommunActionSheet.Action(title: "copy".localized().uppercaseFirst,
+                                                    icon: UIImage(named: "copy"),
+                                                    tintColor: .black,
+                                                    handle: {
+                                                        UIPasteboard.general.string = texts.joined(separator: "\n")
+                                                        self.showDone("copied to clipboard".localized().uppercaseFirst)
+                                                    })
             )
-
         }
+        
         if comment.author?.userId == Config.currentUser?.id {
-            actions.append(
-                CommunActionSheet.Action(
-                    title: "edit".localized().uppercaseFirst,
-                    icon: UIImage(named: "edit"),
-                    handle: {
-                        self.cell(cell, didTapEditForComment: comment)
-                    },
-                    tintColor: .black)
+            actions.append(CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
+                                                    icon: UIImage(named: "edit"),
+                                                    tintColor: .black,
+                                                    handle: {
+                                                        self.cell(cell, didTapEditForComment: comment)
+                                                    })
             )
-            actions.append(
-                CommunActionSheet.Action(
-                    title: "delete".localized().uppercaseFirst,
-                    icon: UIImage(named: "delete"),
-                    handle: {
-                        self.deleteComment(comment)
-                    },
-                    tintColor: UIColor(hexString: "#ED2C5B")!)
+            
+            actions.append(CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
+                                                    icon: UIImage(named: "delete"),
+                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    handle: {
+                                                        self.deleteComment(comment)
+                                                    })
             )
         } else {
-            actions.append(
-                CommunActionSheet.Action(
-                    title: "report".localized().uppercaseFirst,
-                    icon: UIImage(named: "report"),
-                    handle: {
-                        self.reportComment(comment)
-                    },
-                    tintColor: UIColor(hexString: "#ED2C5B")!)
+            actions.append(CommunActionSheet.Action(title: "report".localized().uppercaseFirst,
+                                                    icon: UIImage(named: "report"),
+                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    handle: {
+                                                        self.reportComment(comment)
+                                                    })
             )
         }
         
@@ -129,6 +122,7 @@ extension CommentCellDelegate where Self: BaseViewController {
             }
             .disposed(by: self.disposeBag)
     }
+    
     func cell(_ cell: CommentCell, didTapDownVoteForComment comment: ResponseAPIContentGetComment) {
         NetworkService.shared.downvoteMessage(message: comment)
             .subscribe { (error) in

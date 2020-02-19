@@ -52,6 +52,16 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
         
         // items
         viewModel.items
+            .map { items -> [ResponseAPIContentGetCommunity] in
+                var items = items
+                for i in 0..<items.count {
+                    if self.viewModel.chosenCommunities.value.contains(where: {$0.identity == items[i].identity})
+                    {
+                        items[i].isSubscribed = true
+                    }
+                }
+                return items
+            }
             .skip(1)
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: FTUECommunityCell.self)) { index, model, cell in
                 cell.setUp(with: model)
@@ -94,7 +104,7 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .disposed(by: disposeBag)
         
         viewModel.chosenCommunities
-            .map {$0.count >= 3}
+            .map {$0.count(where: {$0.isBeingJoined == false}) >= 3}
             .distinctUntilChanged()
             .bind(to: nextButton.rx.isEnabled)
             .disposed(by: disposeBag)

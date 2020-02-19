@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, NotificationCell> {
     // MARK: - Constants
@@ -34,6 +35,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     override func viewDidLayoutSubviews() {
@@ -157,7 +159,8 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        (viewModel as! NotificationsPageViewModel).unseenCount
+        Observable.combineLatest((viewModel as! NotificationsPageViewModel).unseenCount, viewModel.items.map {UInt64($0.count(where: {$0.isNew}))})
+            .map {max($0, $1)}
             .subscribe(onNext: { (newCount) in
                 let text = NSMutableAttributedString()
                 if newCount > 0 {

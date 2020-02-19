@@ -193,8 +193,10 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
 
     @IBAction func resendButtonTapped(_ sender: UIButton) {
         guard KeychainManager.currentUser()?.phoneNumber != nil else {
-                resetSignUpProcess()
-                return
+            try? KeychainManager.deleteUser()
+            // Go back
+            popToPreviousVC()
+            return
         }
         AnalyticsManger.shared.smsCodeResend()
         
@@ -235,12 +237,8 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
             }) { (error) in
                 self.deleteCode()
                 AnalyticsManger.shared.smsCodeError()
-                guard let phone = Config.currentUser?.phoneNumber else {
-                    self.hideHud()
-                    self.showError(error)
-                    return
-                }
-                self.handleSignUpError(error: error, with: phone)
+                self.hideHud()
+                self.handleSignUpError(error: error)
             }
             .disposed(by: disposeBag)
     }

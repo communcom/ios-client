@@ -33,8 +33,8 @@ import UIKit
     
     // MARK: - Custom Functions
     func commonInit(backgroundColor: UIColor? = .appMainColor,
-                    font: UIFont? = .boldSystemFont(ofSize: .adaptive(width: 17.0)),
-                    cornerRadius: CGFloat? = .adaptive(width: 8.0)) {
+                    font: UIFont? = .boldSystemFont(ofSize: 17.0),
+                    cornerRadius: CGFloat? = 8.0) {
         self.backgroundColor        =   backgroundColor!
         self.titleLabel?.font       =   font
         self.layer.cornerRadius     =   cornerRadius!

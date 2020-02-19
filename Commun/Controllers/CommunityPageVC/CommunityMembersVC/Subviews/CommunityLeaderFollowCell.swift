@@ -9,69 +9,39 @@
 import Foundation
 
 class CommunityLeaderFollowCell: MyTableViewCell {
+    // MARK: - Properties
     var leader: ResponseAPIContentGetLeader?
     weak var delegate: LeaderCellDelegate?
     
-    lazy var avatarImageView: LeaderAvatarImageView = {
-        let imageView = LeaderAvatarImageView(size: 50)
-        return imageView
-    }()
-    
-    lazy var userNameLabel: UILabel = {
-        let label = UILabel.with(text: "Sergey Marchenko", textSize: 15, weight: .semibold)
-        return label
-    }()
-    
-    lazy var pointsCountLabel: UILabel = {
-        let label = UILabel.with(text: "12,2k", textSize: 12, weight: .semibold, textColor: .a5a7bd)
-        return label
-    }()
-    
-    lazy var percentsCountLabel: UILabel = {
-        let label = UILabel.with(text: "50", textSize: 12, weight: .semibold, textColor: .appMainColor)
-        return label
-    }()
-    
+    // MARK: - Subviews
+    lazy var avatarImageView = LeaderAvatarImageView(size: 50)
+    lazy var userNameLabel = UILabel.with(text: "Sergey Marchenko", textSize: 15, weight: .semibold, numberOfLines: 0)
+    lazy var statsLabel = UILabel.with(text: "601k Points • 42.0%", textSize: 12, weight: .medium, numberOfLines: 0)
     lazy var followButton: CommunButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
     
+    // MARK: - Methods
     override func setUpViews() {
         super.setUpViews()
         contentView.backgroundColor = .white
         
-        contentView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)
+        let stackView: UIStackView = {
+            let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+            
+            // name, statsLabel
+            let vStack = UIStackView(axis: .vertical, alignment: .leading, distribution: .fill)
+            vStack.addArrangedSubview(self.userNameLabel)
+            vStack.addArrangedSubview(self.statsLabel)
+            
+            hStack.addArrangedSubview(self.avatarImageView)
+            hStack.addArrangedSubview(vStack)
+            hStack.addArrangedSubview(followButton)
+            
+            return hStack
+        }()
         
-        // name and points
-        let namePointsContainerView = UIView(forAutoLayout: ())
-        contentView.addSubview(namePointsContainerView)
-        namePointsContainerView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        namePointsContainerView.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+        contentView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
         
-        namePointsContainerView.addSubview(userNameLabel)
-        userNameLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        
-        namePointsContainerView.addSubview(pointsCountLabel)
-        pointsCountLabel.autoPinBottomAndLeadingToSuperView(inset: 0)
-        pointsCountLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel)
-        
-        let pointsLabel = UILabel.with(text: "points".localized().uppercaseFirst + " • ", textSize: 12, weight: .semibold, textColor: .a5a7bd)
-        namePointsContainerView.addSubview(pointsLabel)
-        pointsLabel.autoPinEdge(.leading, to: .trailing, of: pointsCountLabel, withOffset: 5)
-        pointsLabel.autoPinEdge(.bottom, to: .bottom, of: pointsCountLabel)
-        
-        namePointsContainerView.addSubview(percentsCountLabel)
-        percentsCountLabel.autoPinEdge(.leading, to: .trailing, of: pointsLabel)
-        percentsCountLabel.autoPinEdge(.bottom, to: .bottom, of: pointsCountLabel)
-        
-        let percentLabel = UILabel.with(text: "%", textSize: 12, weight: .semibold, textColor: .appMainColor)
-        namePointsContainerView.addSubview(percentLabel)
-        percentLabel.autoPinEdge(.leading, to: .trailing, of: percentsCountLabel)
-        percentLabel.autoPinEdge(.bottom, to: .bottom, of: pointsCountLabel)
-        
-        // followButton
-        contentView.addSubview(followButton)
-        followButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        followButton.autoAlignAxis(.horizontal, toSameAxisOf: namePointsContainerView)
         followButton.addTarget(self, action: #selector(followButtonDidTouch), for: .touchUpInside)
     }
     
@@ -85,8 +55,9 @@ class CommunityLeaderFollowCell: MyTableViewCell {
         userNameLabel.text = leader.username
         
         // point
-        pointsCountLabel.text = "\(leader.rating)"
-        percentsCountLabel.text = "\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)"
+        statsLabel.attributedText = NSMutableAttributedString()
+            .text(leader.rating.kmFormatted() + " " + "points".localized().uppercaseFirst + " • ", size: 12, weight: .medium, color: .a5a7bd)
+            .text("\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)%", size: 12, weight: .medium, color: .appMainColor)
         
         // voteButton
         let followed = leader.isSubscribed ?? false

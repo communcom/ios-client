@@ -27,7 +27,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
     
     lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#F53D5B")!, numberOfLines: 0, textAlignment: .center)
     
-    lazy var nextButton = StepButton(height: 56 * Config.heightRatio, label: "next".localized().uppercaseFirst, labelFont: UIFont.boldSystemFont(ofSize: 17 * Config.heightRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 8)
+    lazy var nextButton = StepButton(height: 56, label: "next".localized().uppercaseFirst, labelFont: UIFont.boldSystemFont(ofSize: 17 * Config.heightRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 8)
     
     // MARK: - Methods
     override func setUp() {
@@ -127,12 +127,13 @@ class SetUserVC: BaseViewController, SignUpRouter {
         
         showIndetermineHudWithMessage("setting username".localized().uppercaseFirst + "...")
         
-        viewModel.set(userName: userName)
-            .catchError({ (error) -> Single<String> in
+        RestAPIManager.instance.setUserName(userName).map {_ in ()}
+            .catchError({ error in
                 if let error = error as? ErrorAPI {
                     if error.caseInfo.message == "Invalid step taken",
-                        Config.currentUser?.registrationStep == .toBlockChain {
-                        return .just(Config.currentUser?.id ?? "")
+                        Config.currentUser?.registrationStep == .toBlockChain
+                    {
+                        return .just(())
                     }
                 }
                 throw error
@@ -145,7 +146,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 AuthorizationManager.shared.forceReAuthorize()
             }, onError: {error in
                 self.hideHud()
-                self.showError(error)
+                self.handleSignUpError(error: error)
             })
             .disposed(by: disposeBag)
     }

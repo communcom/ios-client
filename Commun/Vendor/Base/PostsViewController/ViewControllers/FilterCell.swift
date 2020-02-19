@@ -9,29 +9,27 @@
 import Foundation
 
 class FilterCell: MyTableViewCell {
-    lazy var titleLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var checkBox = CommunCheckbox(width: 24, height: 24, cornerRadius: 6)
-    lazy var separator = UIView(height: 2, backgroundColor: .f7f7f9)
+    // MARK: - Properties
+    lazy var titleLabel = UILabel.with(textSize: CGFloat.adaptive(width: 15.0), weight: .semibold)
+    lazy var checkBox = CommunCheckbox(width: CGFloat.adaptive(width: 24.0), height: CGFloat.adaptive(width: 24.0), cornerRadius: CGFloat.adaptive(width: 6.0))
+    lazy var separator = UIView(height: CGFloat.adaptive(height: 2.0), backgroundColor: .f7f7f9)
     
+    // MARK: - Custom Functions
     override var roundedCorner: UIRectCorner {
         didSet {
-            if roundedCorner.contains(.bottomLeft) {
-                separator.isHidden = true
-            } else {
-                separator.isHidden = false
-            }
+            separator.isHidden = roundedCorner.contains(.bottomLeft)
             layoutSubviews()
         }
     }
-    
+        
     override func setUpViews() {
         super.setUpViews()
         contentView.addSubview(titleLabel)
-        titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(width: 15.0))
         titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         contentView.addSubview(checkBox)
-        checkBox.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        checkBox.autoPinEdge(toSuperviewEdge: .trailing, withInset: CGFloat.adaptive(width: 15.0))
         checkBox.autoAlignAxis(toSuperviewAxis: .horizontal)
         checkBox.isUserInteractionEnabled = false
         checkBox.notShowOffCheckbox = true

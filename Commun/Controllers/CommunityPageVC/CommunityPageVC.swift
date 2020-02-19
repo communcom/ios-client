@@ -11,7 +11,8 @@ import RxSwift
 import RxDataSources
 import CyberSwift
 
-class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate {
+class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate, CommunityPageVCType {
+    
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
         case post(ResponseAPIContentGetPost)
@@ -38,6 +39,10 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     var communityAlias: String?
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>!
     
+    var community: ResponseAPIContentGetCommunity? {
+        return viewModel.profile.value
+    }
+    
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetCommunity> {
         if let alias = communityAlias {
             return CommunityPageViewModel(communityAlias: alias)
@@ -47,6 +52,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     
     // MARK: - Subviews
     lazy var headerView = CommunityHeaderView(tableView: tableView)
+    
     override var _headerView: ProfileHeaderView! {
         return headerView
     }
@@ -135,6 +141,15 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         
         // header
         headerView.setUp(with: profile)
+        headerView.walletButton.addTarget(self, action: #selector(getPointsButtonTapped), for: .touchUpInside)
+        
+        (viewModel as! CommunityPageViewModel).walletGetBuyPriceRequest
+            .subscribe(onSuccess: { (buyPrice) in
+                self.headerView.setUp(walletPrice: buyPrice)
+            }, onError: { (error) in
+                self.showError(error)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func handleListLoading() {
@@ -310,21 +325,23 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
-        showCommunActionSheet(style: .profile, headerView: headerView, actions: [
-            CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
-                
-                self.showAlert(
-                    title: (profile.isInBlacklist == true ? "unhide community": "hide community").localized().uppercaseFirst,
-                    message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of": "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
-                    buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
-                    highlightedButtonIndex: 1) { (index) in
-                        if index != 0 {return}
-                        if profile.isInBlacklist == true {
-                            self.unhideCommunity()
-                        } else {
-                            self.hideCommunity()
-                        }
-                    }
+        showCommunActionSheet(headerView: headerView, actions: [
+            CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
+                                     icon: UIImage(named: "profile_options_blacklist"),
+                                     tintColor: profile.isInBlacklist == true ? .black: .ed2c5b,
+                                     handle: {
+                                        self.showAlert(
+                                            title: (profile.isInBlacklist == true ? "unhide community": "hide community").localized().uppercaseFirst,
+                                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of": "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
+                                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
+                                            highlightedButtonIndex: 1) { (index) in
+                                                if index != 0 {return}
+                                                if profile.isInBlacklist == true {
+                                                    self.unhideCommunity()
+                                                } else {
+                                                    self.hideCommunity()
+                                                }
+                                        }
             })
         ]) {
             
@@ -332,16 +349,20 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     }
 }
 
+// MARK: - UITableViewDelegate
 extension CommunityPageVC: UITableViewDelegate {
     // MARK: - Sorting
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let viewModel = self.viewModel as! CommunityPageViewModel
+        
         if viewModel.segmentedItem.value == .posts {
             return 48
         }
+        
         if viewModel.segmentedItem.value == .leads {
             return 42
         }
+        
         return 0
     }
     
@@ -359,13 +380,16 @@ extension CommunityPageVC: UITableViewDelegate {
             headerView.addSubview(label)
             label.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
             label.autoAlignAxis(toSuperviewAxis: .horizontal)
+            
             return headerView
         }
+        
         return nil
     }
     
     func updatePostSortingView() {
         let viewModel = self.viewModel as! CommunityPageViewModel
+       
         if viewModel.segmentedItem.value != .posts {
             return
         }

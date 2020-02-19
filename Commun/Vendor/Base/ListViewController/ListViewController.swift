@@ -86,7 +86,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         }
     }
     
-    
     func viewWillSetUpTableView() {
         
     }
@@ -198,6 +197,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         if let post = item as? ResponseAPIContentGetPost {
             let postPageVC = PostPageVC(post: post)
             show(postPageVC, sender: nil)
+            
             return
         }
         

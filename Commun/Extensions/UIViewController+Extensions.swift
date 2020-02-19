@@ -25,11 +25,6 @@ extension UIViewController {
     }
     
     // MARK: - Custom Functions
-    @objc func popToSignUpVC() {
-        if let vc = navigationController?.viewControllers.filter({ $0 is WelcomeVC }).first {
-            navigationController?.popToViewController(vc, animated: true)
-        }
-    }
     
     class func instanceController(fromStoryboard storyboard: String, withIdentifier identifier: String) -> UIViewController {
         let st = UIStoryboard(name: storyboard, bundle: nil)
@@ -74,24 +69,24 @@ extension UIViewController {
         showErrorWithLocalizedMessage("Something went wrong.\nPlease try again later")
     }
     
-    func showErrorWithMessage(_ message: String) {
-        if let nc = navigationController {
-            nc.showAlert(title: "error".localized().uppercaseFirst, message: message)
-        } else {
-            showAlert(title: "error".localized().uppercaseFirst, message: message)
+    func showErrorWithMessage(_ message: String, completion: (() -> Void)? = nil) {
+        let vc = tabBarController ?? navigationController ?? parent ?? self
+        
+        vc.showAlert(title: "error".localized().uppercaseFirst, message: message, buttonTitles: ["OK".localized().uppercaseFirst]) { (_) in
+            completion?()
         }
     }
     
-    func showErrorWithLocalizedMessage(_ message: String) {
-        showErrorWithMessage(message.localized())
+    func showErrorWithLocalizedMessage(_ message: String, completion: (() -> Void)? = nil) {
+        showErrorWithMessage(message.localized(), completion: completion)
     }
     
-    func showError(_ error: Error) {
+    func showError(_ error: Error, showPleaseTryAgain: Bool = false, additionalMessage: String? = nil, completion: (() -> Void)? = nil) {
         var message = error.localizedDescription
         if let error = error as? ErrorAPI {
             message = error.caseInfo.message
         }
-        showErrorWithLocalizedMessage(message)
+        showErrorWithLocalizedMessage(message + (showPleaseTryAgain ? (".\n" + "please try again later".localized().uppercaseFirst + "!"): "") + (additionalMessage ?? ""), completion: completion)
     }
     
     func hideHud() {
@@ -100,7 +95,7 @@ extension UIViewController {
         MBProgressHUD.hide(for: vc.view, animated: false)
     }
     
-    func showIndetermineHudWithMessage(_ message: String) {
+    func showIndetermineHudWithMessage(_ message: String?) {
         let vc = tabBarController ?? navigationController ?? parent ?? self
         
         // Hide all previous hud
@@ -207,9 +202,16 @@ extension UIViewController {
                 if let id = item.community?.communityId {
                     showCommunityWithCommunityId(id)
                 }
-            } else if let id = item.from?.userId {
-                showProfileWithUserId(id)
+            } else if item.from?.username?.lowercased() != "bounty" {
+                if let id = item.from?.userId {
+                    showProfileWithUserId(id)
+                }
+            } else {
+                if let id = item.community?.communityId {
+                    showOtherBalanceWalletVC(symbol: id)
+                }
             }
+            
         case "reward":
             if let id = item.community?.communityId {
                 showCommunityWithCommunityId(id)
@@ -237,6 +239,19 @@ extension UIViewController {
         show(communityVC, sender: nil)
     }
     
+    func showOtherBalanceWalletVC(symbol: String, shouldResetNavigationBarOnPush: Bool = false) {
+        let vc = OtherBalancesWalletVC(symbol: symbol)
+                
+        if  shouldResetNavigationBarOnPush {
+            show(vc, sender: nil)
+        } else {
+            let nc = navigationController as? BaseNavigationController
+            nc?.shouldResetNavigationBarOnPush = false
+            show(vc, sender: nil)
+            nc?.shouldResetNavigationBarOnPush = true
+        }
+    }
+    
     // MARK: - ChildVC
     func add(_ child: UIViewController, to view: UIView? = nil) {
         addChild(child)
@@ -254,11 +269,19 @@ extension UIViewController {
         view.removeFromSuperview()
         removeFromParent()
     }
-    
+   
     @objc func back() {
         popOrDismissVC()
     }
-    
+
+    @objc func leftButtonTapped() {
+        popOrDismissVC()
+    }
+
+    @objc func rightButtonTapped() {
+        popOrDismissVC()
+    }
+
     func backCompletion(_ completion: @escaping (() -> Void)) {
         popOrDismissVC(completion)
     }

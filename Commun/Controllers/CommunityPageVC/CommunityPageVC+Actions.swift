@@ -55,4 +55,11 @@ extension CommunityPageVC {
             }
             .disposed(by: disposeBag)
     }
+    
+    @objc func getPointsButtonTapped(_ sender: UIButton) {
+        guard let viewModel = viewModel as? CommunityPageViewModel,
+            let communityID = viewModel.communityId else { return }
+        
+        showOtherBalanceWalletVC(symbol: communityID)
+    }
 }

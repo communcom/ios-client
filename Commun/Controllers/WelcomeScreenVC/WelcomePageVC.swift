@@ -9,8 +9,8 @@
 import UIKit
 
 class WelcomePageVC: UIPageViewController {
-    // MARK: - Properties
-    var totalPages = 4
+    // MARK: - Properties   
+    var totalPages = 3
         
     var currentPage = 0 {
         didSet {
@@ -52,11 +52,13 @@ class WelcomePageVC: UIPageViewController {
     
     func showActionButtons(_ index: Int) {
         if let welcomeVC = self.parent as? WelcomeVC {
-            welcomeVC.nextButton.isHidden           =   index == 3   // true
-            welcomeVC.signUpButton.isHidden         =   index != 3   // false
-            welcomeVC.topSignInButton.isHidden      =   index == 3   // true
-            welcomeVC.bottomSignInButton.isHidden   =   index != 3   // false
-            welcomeVC.pageControl.selectedIndex     =   index
+            let lastScreenIndex = totalPages - 1
+            welcomeVC.nextButton.isHidden = index == lastScreenIndex
+            welcomeVC.signUpButton.isHidden = index != lastScreenIndex
+            welcomeVC.topSignInButton.isHidden = index == lastScreenIndex
+            welcomeVC.bottomSignInButton.isHidden = index != lastScreenIndex
+            welcomeVC.pageControl.selectedIndex = index
+            welcomeVC.coinImageView.isHidden = index != lastScreenIndex
         }
     }
 }

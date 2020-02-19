@@ -54,23 +54,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
             // Analytics
             AnalyticsManger.shared.launchFirstTime()
             
             UserDefaults.standard.set(true, forKey: firstInstallAppKey)
-        }
-        
-        // create deviceId
-        if KeychainManager.currentDeviceId == nil {
-            let id = UUID().uuidString + "." + "\(Date().timeIntervalSince1970)"
-            do {
-                try KeychainManager.save([Config.currentDeviceIdKey: id])
-            } catch {
-                Logger.log(message: error.localizedDescription, event: .debug)
-            }
         }
 
         AnalyticsManger.shared.sessionStart()
@@ -85,8 +74,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // global tintColor
         window?.tintColor = .appMainColor
+        
         // Logger
 //        Logger.showEvents = [.debug]
+//        Logger.shownApiMethods = ["registration.getState"]
 
         // support webp image
         SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
@@ -116,6 +107,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UIApplication.shared.applicationIconBadgeNumber = Int(count)
             })
             .disposed(by: bag)
+        
+        // show hud when reconnecting
+        SocketManager.shared.state
+            .subscribe(onNext: { (state) in
+                switch state {
+                case .disconnected:
+                    self.window?.rootViewController?.showIndetermineHudWithMessage(nil)
+                default:
+                    return
+                }
+                
+            })
+            .disposed(by: bag)
+        
+        // hide hud after reconnecting
+        AuthorizationManager.shared.status
+            .filter {$0 != .authorizing}
+            .subscribe(onNext: { (_) in
+                self.window?.rootViewController?.hideHud()
+            })
+            .disposed(by: disposeBag)
         
         return true
     }
@@ -150,17 +162,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let navigationBarAppearace = UINavigationBar.appearance()
             navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-            navigationBarAppearace.largeTitleTextAttributes =   [
-                                                                    NSAttributedString.Key.foregroundColor: UIColor.black,
-                                                                    NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold",
-                                                                                                                       size: 30.0 * Config.widthRatio)!
-            ]
+            navigationBarAppearace.largeTitleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
+                                                                NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold", size: .adaptive(width: 30.0))! ]
+            
         case .authorizingError(let error):
             switch error.caseInfo.message {
             case "Cannot get such account from BC",
                  _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
+                AuthorizationManager.shared.status.accept(.authorizing)
                 try! RestAPIManager.instance.logout()
-                AuthorizationManager.shared.forceReAuthorize()
                 return
             default:
                 break
@@ -172,7 +182,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func changeRootVC(_ rootVC: UIViewController) {
+    func changeRootVC<VC: UIViewController>(_ rootVC: VC) {
+        if let vc = window?.rootViewController,
+            vc is VC
+        {
+            return
+        }
+        
         if let currentVC = window?.rootViewController as? SplashViewController {
             currentVC.animateSplash {
                 self.window?.rootViewController = rootVC

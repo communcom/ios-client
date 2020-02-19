@@ -45,39 +45,43 @@ extension SignUpRouter where Self: UIViewController {
     func resetSignUpProcess() {
         try? KeychainManager.deleteUser()
         // Dismiss all screen
-        popToPreviousVC()
-    }
-}
-
-extension SignUpRouter where Self: UIViewController {
-    // MARK: - Back button
-    func setBackButtonToSignUpVC() {
-        let newBackButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(popToPreviousVC))
-        newBackButton.tintColor = .black
-        
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.leftBarButtonItem = newBackButton
+        navigationController?.popToVC(type: SignUpVC.self) { signUpVC in
+            signUpVC.phoneNumberTextField.text = nil
+        }
     }
 }
 
 extension SignUpRouter where Self: UIViewController {
     // MARK: - Handler
-    func handleSignUpError(error: Error, with phone: String) {
+    func handleSignUpError(error: Error, with phone: String? = nil) {
+        // get phone
+        guard let phone = phone ?? Config.currentUser?.phoneNumber else {
+            // reset if phone not found
+            self.showError(error, showPleaseTryAgain: true) {
+                self.resetSignUpProcess()
+            }
+            return
+        }
+        
+        // catch error
         if let error = error as? ErrorAPI {
             switch error {
             case .registrationRequestFailed(let message, let currentStep):
-                if message == "Invalid step taken" {
-                    // save state
-                    var dataToSave = [String: Any]()
-                    dataToSave[Config.registrationUserPhoneKey] = phone
-                    dataToSave[Config.registrationStepKey] = currentStep
-                    do {
-                        try KeychainManager.save(dataToSave)
-                        hideHud()
-                        signUpNextStep()
-                    } catch {
-                        hideHud()
-                        showError(error)
+                if message == ErrorAPI.Message.invalidStepTaken.rawValue {
+                    showError(error) {
+                        // save state
+                        var dataToSave = [String: Any]()
+                        dataToSave[Config.registrationUserPhoneKey] = phone
+                        dataToSave[Config.registrationStepKey] = currentStep
+                        try! KeychainManager.save(dataToSave)
+                        self.signUpNextStep()
+                        return
+                    }
+                }
+                
+                if message == ErrorAPI.Message.couldNotCreateUserId.rawValue {
+                    self.showError(error, showPleaseTryAgain: true) {
+                        self.resetSignUpProcess()
                     }
                     return
                 }
@@ -85,7 +89,8 @@ extension SignUpRouter where Self: UIViewController {
                 break
             }
         }
-        hideHud()
-        showError(error)
+        
+        // unknown error, get state
+        self.showError(error)
     }
 }

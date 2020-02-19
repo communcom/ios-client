@@ -35,8 +35,8 @@ extension MyProfileSettingsVC {
         showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
             
             if index == 0 {
+                AuthorizationManager.shared.status.accept(.authorizing)
                 try! RestAPIManager.instance.logout()
-                AuthorizationManager.shared.forceReAuthorize()
             }
         }
     }

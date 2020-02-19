@@ -33,6 +33,7 @@ class BasicEditorVC: PostEditorVC {
     }
     
     var ignoredLinks = [String]()
+    var forcedDeleteEmbed = false
     
     // MARK: - Subviews
     var _contentTextView = BasicEditorTextView(forExpandable: ())

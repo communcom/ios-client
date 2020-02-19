@@ -14,21 +14,22 @@ import SwiftTheme
 class WelcomeVC: UIViewController {
     // MARK: - Properties
     var welcomePageVC: WelcomePageVC!
-    lazy var pageControl = CMPageControll(numberOfPages: 4)
+    lazy var pageControl = CMPageControll(numberOfPages: 3)
     
     // MARK: - IBOutlets
     @IBOutlet weak var nextButton: StepButton!
-    
-    @IBOutlet weak var buttonsStackView: UIStackView! {
+    @IBOutlet weak var coinImageView: UIImageView! {
         didSet {
-            self.buttonsStackView.spacing = .adaptive(height: 15.0)
+            self.coinImageView.isHidden = true
         }
     }
+
+    @IBOutlet weak var buttonsStackView: UIStackView!
     
     @IBOutlet weak var bottomSignInButton: StepButton! {
         didSet {
             self.bottomSignInButton.commonInit(backgroundColor: UIColor(hexString: "#F3F5FA"),
-                                               font: .boldSystemFont(ofSize: .adaptive(width: 15.0)),
+                                               font: .boldSystemFont(ofSize: 15.0),
                                                cornerRadius: self.bottomSignInButton.height / 2)
             
             self.bottomSignInButton.setTitleColor(UIColor(hexString: "#6A80F5"), for: .normal)
@@ -39,7 +40,7 @@ class WelcomeVC: UIViewController {
     @IBOutlet weak var topSignInButton: BlankButton! {
         didSet {
             self.topSignInButton.commonInit(hexColors: [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
-                                            font: UIFont.systemFont(ofSize: .adaptive(width: 15.0), weight: .medium),
+                                            font: UIFont.systemFont(ofSize: 15.0, weight: .medium),
                                             alignment: .right)
         }
     }
@@ -48,8 +49,9 @@ class WelcomeVC: UIViewController {
         didSet {
             self.actionButtonsCollection.forEach {
                 $0.commonInit(backgroundColor: .appMainColor,
-                              font: .boldSystemFont(ofSize: .adaptive(width: 15.0)),
+                              font: .boldSystemFont(ofSize: 15.0),
                               cornerRadius: $0.height / 2)
+                $0.heightConstraint?.constant = 50
             }
         }
     }
@@ -64,6 +66,12 @@ class WelcomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // if signUp is processing
+        if KeychainManager.currentUser()?.registrationStep != nil
+        {
+            navigateToSignUp()
+        }
+        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -72,6 +80,10 @@ class WelcomeVC: UIViewController {
         pageControl.autoAlignAxis(.horizontal, toSameAxisOf: topSignInButton)
         pageControl.autoAlignAxis(toSuperviewAxis: .vertical)
         pageControl.selectedIndex = 0
+
+        bottomSignInButton.heightConstraint?.constant = 50
+        signUpButton.heightConstraint?.constant = 50
+        nextButton.heightConstraint?.constant = 50
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,31 +134,3 @@ class WelcomeVC: UIViewController {
         self.pageControl.selectedIndex = indexNext
     }
 }
-
-///*
-// MARK: - FOR TEST!!!
- extension WelcomeVC {
-     @IBAction func testButtonTapped(_ sender: UIButton) {
-//         testSendVCShow()
-        
-        sender.tag = 1
-        testCommunBuyVCShow(sender)
-     }
-
-    private func testSendVCShow() {
-//        let modalViewController = WalletSendPointsVC(withSelectedBalance: 0, andRecipient: nil)
-//        show(modalViewController, sender: nil)
-    }
-    
-    private func testCommunBuyVCShow(_ sender: UIButton) {
-//        let modalViewController = TransactionCompletedVC(transaction: Transaction(recipient: Recipient(id: "2", name: "XXX", avatarURL: nil),
-//                                                                                  accuracy: 4,
-//                                                                                  symbol: "CMN",
-//                                                                                  amount: 30,
-//                                                                                  operationDate: Date()))
-//        modalViewController.modalPresentationStyle = .overCurrentContext
-//
-//        present(modalViewController, animated: true, completion: nil)
-    }
-}
-//*/

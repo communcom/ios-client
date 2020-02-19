@@ -13,15 +13,18 @@ class CommunActionSheet: SwipeDownDismissViewController {
     enum Style {
         case `default`
         case profile
+        case follow
     }
     
     struct Action {
         var title: String
         var icon: UIImage?
-        var handle: (() -> Void)?
+        var style: Style = .default
         var tintColor: UIColor = .black
         var marginTop: CGFloat = 0
-        var style: Style = .default
+        var post: ResponseAPIContentGetPost?
+        var handle: (() -> Void)?
+
         class TapGesture: UITapGestureRecognizer {
             var action: Action?
         }
@@ -30,31 +33,44 @@ class CommunActionSheet: SwipeDownDismissViewController {
     // MARK: - Constants
     var defaultMargin: CGFloat {
         switch style {
-        case .default:
+        case .default, .follow:
             return 16
         case .profile:
             return 10
         }
     }
+    
     let buttonSize: CGFloat = 30
     var headerHeight: CGFloat = 40
     let headerToButtonsSpace: CGFloat = 23
     var actionViewHeight: CGFloat {
         switch style {
-        case .default:
+        case .default, .follow:
             return 50
         case .profile:
             return 65
         }
     }
+    
     var actionViewSeparatorSpace: CGFloat {
         switch style {
-        case .default:
+        case .default, .follow:
             return 8
         case .profile:
             return 2
         }
     }
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 24.0), height: .adaptive(height: 24.0))))
+        activity.hidesWhenStopped = false
+        activity.style = .white
+        activity.color = .black
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        
+        return activity
+    }()
+
     
     // MARK: - Properties
     var style: Style
@@ -78,8 +94,8 @@ class CommunActionSheet: SwipeDownDismissViewController {
     
     // MARK: - Subviews
     var headerView: UIView?
+    
     lazy var closeButton: UIButton = {
-        
         var button = UIButton(frame: .zero)
         button.setImage(UIImage(named: "close-x"), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(inset: 3)
@@ -160,6 +176,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
     
     func addActions() {
         guard let actions = actions else {return}
+        
         for (index, action) in actions.enumerated() {
             // action views
             let actionView = UIView(backgroundColor: .white, cornerRadius: 10)
@@ -175,17 +192,20 @@ class CommunActionSheet: SwipeDownDismissViewController {
             
             // icon
             let iconImageView = UIImageView(forAutoLayout: ())
-            if style == .default {
+           
+            if style == .default || style == .follow {
                 iconImageView.tintColor = action.tintColor
             }
+            
             iconImageView.image = action.icon
             actionView.addSubview(iconImageView)
             
             switch style {
-            case .default:
+            case .default, .follow:
                 iconImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: defaultMargin)
                 iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
                 iconImageView.autoSetDimensions(to: CGSize(width: 24, height: 24))
+            
             case .profile:
                 iconImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
                 iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -198,10 +218,16 @@ class CommunActionSheet: SwipeDownDismissViewController {
             actionView.addSubview(titleLabel)
             
             switch style {
-            case .default:
+            case .default, .follow:
                 titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultMargin)
                 titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
                 titleLabel.autoPinEdge(.trailing, to: .leading, of: iconImageView, withOffset: -defaultMargin)
+                
+                if action.style == .follow {
+                    titleLabel.tag = 777
+                    iconImageView.tag = 778
+                }
+            
             case .profile:
                 titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
                 titleLabel.autoPinEdge(.leading, to: .trailing, of: iconImageView, withOffset: 10)
@@ -226,13 +252,62 @@ class CommunActionSheet: SwipeDownDismissViewController {
         }
     }
     
+    func loaderDidStart(withTitle title: String) {
+        guard let label = view.viewWithTag(777) as? UILabel, let iconImageView = view.viewWithTag(778) as? UIImageView else { return }
+
+        DispatchQueue.main.async {
+                    label.text = title
+            iconImageView.image = nil
+            iconImageView.addSubview(self.activityIndicator)
+            self.activityIndicator.autoPinEdgesToSuperviewEdges()
+            self.activityIndicator.startAnimating()
+        }
+    }
+    
+    private func loaderDidFinish() {
+        activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
+    }
+    
+    func setupAction(isSubscribed: Bool) -> (title: String, icon: UIImage) {
+        return (title: (isSubscribed ? "following" : "follow").localized().uppercaseFirst, icon: UIImage(named: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")!)
+    }
+    
+    func updateFollowAction(withCommunity community: ResponseAPIContentGetCommunity) {
+        let actionProperties = setupAction(isSubscribed: community.isSubscribed ?? false)
+
+        var communityTemp = community
+        communityTemp.isBeingJoined = true
+        actions?[0].post?.community = community
+                
+        updateFollowAction(image: actionProperties.icon)
+        communityTemp.isBeingJoined = false
+        loaderDidFinish()
+    }
+
+    private func updateFollowAction(image: UIImage) {
+        guard let iconImageView = view.viewWithTag(778) as? UIImageView else { return }
+
+        iconImageView.setImage(image)
+    }
+    
+    
     // MARK: - Actions
     @objc func closeButtonDidTouch(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     @objc func actionViewDidTouch(_ tap: Action.TapGesture) {
-        guard let action = tap.action else {return}
+        guard let action = tap.action else { return }
+        
+        guard action.style != .follow else {
+            if !activityIndicator.isAnimating {
+                action.handle?()
+            }
+            
+            return
+        }
+        
         dismiss(animated: true) {
             action.handle?()
         }

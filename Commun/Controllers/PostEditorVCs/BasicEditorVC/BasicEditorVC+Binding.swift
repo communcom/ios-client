@@ -57,33 +57,24 @@ extension BasicEditorVC {
     func bindAttachments() {
         _viewModel.attachment
             .subscribe(onNext: { [weak self] (attachment) in
+                self?.attachmentView.removeSubviews()
+                
                 guard let attachment = attachment,
                     let attributes = attachment.attributes,
                     let type = attributes.type
                 else {
-                    self?.attachmentView.removeSubviews()
-                    self?.attachmentView.autoSetDimension(.height, toSize: 300)
-                    self?.attachmentView.isHidden = true
                     return
                 }
-                self?.attachmentView.removeSubviews()
-                self?.attachmentView.heightConstraint?.isActive = false
-                self?.attachmentView.isHidden = false
                 
                 let attachmentView = AttachmentView(forAutoLayout: ())
                 attachmentView.attachment = attachment
-                attachmentView.isUserInteractionEnabled = true
                 attachmentView.tag = 0
                 attachmentView.delegate = self
                 self?.attachmentView.addSubview(attachmentView)
                 attachmentView.autoPinEdgesToSuperviewEdges()
                 
                 if let url = attributes.url {
-                    let embedView = EmbedView(content: ResponseAPIContentBlock(id: 0, type: type, attributes: attributes, content: ResponseAPIContentBlockContent.string(url)))
-                    attachmentView.addSubview(embedView)
-                    embedView.autoPinEdgesToSuperviewEdges()
-                    attachmentView.bringSubviewToFront(attachmentView.closeButton)
-                    attachmentView.expandButton.isHidden = true
+                    attachmentView.setUp(block: ResponseAPIContentBlock(id: 0, type: type, attributes: attributes, content: ResponseAPIContentBlockContent.string(url)))
                 } else {
                     attachmentView.setUp(image: attachment.localImage, url: attachment.attributes?.url, description: attachment.attributes?.title ?? attachment.attributes?.description)
                     attachmentView.autoSetDimension(.height, toSize: attachment.size?.height ?? 300)

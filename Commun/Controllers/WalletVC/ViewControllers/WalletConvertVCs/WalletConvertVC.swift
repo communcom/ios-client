@@ -484,11 +484,27 @@ class WalletConvertVC: BaseViewController {
 
 extension WalletConvertVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField.text != "" || string != "" {
-            let res = (textField.text ?? "") + string
-            let formatter = NumberFormatter()
-            return formatter.number(from: res) != nil
+        // if deleting
+        if string.isEmpty {return true}
+        
+        // get the current text, or use an empty string if that failed
+        let currentText = textField.text ?? ""
+
+        // attempt to read the range they are trying to change, or exit if we can't
+        guard let stringRange = Range(range, in: currentText) else { return false }
+
+        // add their new text to the existing text
+        var updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        
+        // check if newText is a Number
+        let formatter = NumberFormatter()
+        let isANumber = formatter.number(from: updatedText) != nil
+        
+        if updatedText.starts(with: "0") && !updatedText.starts(with: "0.") {
+            updatedText = currentText.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
+            textField.text = updatedText
         }
-        return true
+        
+        return isANumber
     }
 }

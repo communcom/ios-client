@@ -61,7 +61,7 @@ class MyProfileSettingsVC: BaseViewController {
         
         // backButton
         setLeftNavBarButton(with: backButton)
-        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
         
         // scrollView
         view.addSubview(scrollView)
@@ -82,6 +82,7 @@ class MyProfileSettingsVC: BaseViewController {
 //
 //            })
         ])
+        
         scrollView.contentView.addSubview(stackView)
         stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
@@ -93,8 +94,14 @@ class MyProfileSettingsVC: BaseViewController {
         
         scrollView.contentView.addSubview(logoutButton)
         logoutButton.autoPinEdge(.top, to: .bottom, of: stackView, withOffset: 20)
-        
         logoutButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
+        
+        let versionBuildLabel = UILabel()
+        versionBuildLabel.tune(withText: Bundle.main.fullVersion, hexColors: grayishBluePickers, font: .systemFont(ofSize: .adaptive(width: 13.0) , weight: .regular), alignment: .center, isMultiLines: false)
+        
+        scrollView.contentView.addSubview(versionBuildLabel)
+        versionBuildLabel.autoAlignAxis(.vertical, toSameAxisOf: scrollView.contentView)
+        versionBuildLabel.autoPinEdge(.bottom, to: .bottom, of: view, withOffset: .adaptive(height: -15.0 - tabBarHeight))
     }
 
     override func viewWillAppear(_ animated: Bool) {

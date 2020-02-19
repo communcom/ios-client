@@ -15,6 +15,17 @@ extension NSAttributedString {
         return str1.range(of: text)
     }
     
+    func replaceOccurents(of stringToReplace: String, with newStringPart: String) -> NSMutableAttributedString
+    {
+        let mutableAttributedString = mutableCopy() as! NSMutableAttributedString
+        let mutableString = mutableAttributedString.mutableString
+        while mutableString.contains(stringToReplace) {
+            let rangeOfStringToBeReplaced = mutableString.range(of: stringToReplace)
+            mutableAttributedString.replaceCharacters(in: rangeOfStringToBeReplaced, with: newStringPart)
+        }
+        return mutableAttributedString
+    }
+    
     func components(separatedBy separator: String) -> [NSAttributedString] {
         var result = [NSAttributedString]()
         let separatedStrings = string.components(separatedBy: separator)
@@ -34,7 +45,10 @@ extension NSAttributedString {
         
         var blocks = [ResponseAPIContentBlock]()
         enumerateAttributes(in: NSRange(location: 0, length: length), options: []) { (attrs, range, _) in
+            // get text
             var content = attributedSubstring(from: range).string
+            if content.isEmpty { return }
+            
             var blockType = "text"
             
             // Parse links and tags
@@ -130,9 +144,5 @@ extension NSAttributedString {
         // \u2063 means Invisible Separator
         let separator = NSMutableAttributedString(string: "\n")
         return separator
-    }
-    
-    static func paragraphSeparator(attributes: [NSAttributedString.Key: Any] = [:]) -> NSAttributedString {
-        NSAttributedString(string: "\n\r", attributes: attributes)
     }
 }

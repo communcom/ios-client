@@ -10,6 +10,9 @@ import Foundation
 
 class OtherBalancesWalletVC: CommunWalletVC {
     // MARK: - Properties
+    var initialSymbol: String
+    var initialSymbolDidSelect = false
+    
     override var balances: [ResponseAPIWalletGetBalance] {
         super.balances.filter {$0.symbol != Config.defaultSymbol}
     }
@@ -32,14 +35,9 @@ class OtherBalancesWalletVC: CommunWalletVC {
         subscriptions: [ResponseAPIContentGetSubscriptionsItem]? = nil,
         history: [ResponseAPIWalletGetTransferHistoryItem]? = nil
     ) {
+        initialSymbol = symbol
         let vm = WalletViewModel(balances: balances, subscriptions: subscriptions, symbol: symbol)
         super.init(viewModel: vm)
-        
-        defer {
-            if let index = self.balances.firstIndex(where: {$0.symbol == symbol}) {
-                (headerView as! WalletHeaderView).selectedIndex = index
-            }
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -47,6 +45,12 @@ class OtherBalancesWalletVC: CommunWalletVC {
     }
     
     override func reloadData() {
+        if !initialSymbolDidSelect && !balances.isEmpty {
+            if let index = self.balances.firstIndex(where: {$0.symbol == initialSymbol}) {
+                (headerView as! WalletHeaderView).selectedIndex = index
+            }
+            initialSymbolDidSelect = true
+        }
         (headerView as! WalletHeaderView).carousel?.reloadData()
         super.reloadData()
     }
