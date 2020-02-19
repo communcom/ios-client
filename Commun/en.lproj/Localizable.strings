@@ -95,6 +95,13 @@
 "has removed your voice from your..."           =   "has removed your voice from your delegate node";
 "hundreds"                                      =   "hundreds";
 "has been generated"                            =   "has been generated";
+"hint type enter text"                          =   "enter the text";
+"hint type enter text or photo"                 =   "enter the text or add a photo";
+"hint type enter amount"                        =   "enter the amount";
+"hint type enter different text"                =   "same text";
+"hint type choose friend"                       =   "select the user";
+"hint type choose problem"                      =   "select a problem";
+"hint type choose community"                    =   "choose a community";
 
 
 // I
