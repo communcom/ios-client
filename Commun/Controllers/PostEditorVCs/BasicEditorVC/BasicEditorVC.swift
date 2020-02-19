@@ -85,7 +85,7 @@ class BasicEditorVC: PostEditorVC {
     
     // MARK: - Intializers
     convenience init(shareExtensionData: ShareExtensionData) {
-        self.init(post:  nil, community: nil, chooseCommunityAfterLoading: false, parseDraftAfterLoading: false)
+        self.init(post: nil, community: nil, chooseCommunityAfterLoading: false, parseDraftAfterLoading: false)
         self.shareExtensionData = shareExtensionData
     }
     
@@ -96,6 +96,10 @@ class BasicEditorVC: PostEditorVC {
         self.navigationItem.title = "Share this"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(cancelButtonTapped))
         
+        loadShareExtensionData()
+    }
+    
+    func loadShareExtensionData() {
         if let shareExtensionData = shareExtensionData {
             
             if let text = shareExtensionData.text {
@@ -103,7 +107,7 @@ class BasicEditorVC: PostEditorVC {
             }
             
             if let urlString = shareExtensionData.link {
-                didAddLink(urlString, placeholder: urlString)
+                parseLink(urlString)
             }
             
             if let imageData = shareExtensionData.imageData, let image = UIImage(data: imageData) {
