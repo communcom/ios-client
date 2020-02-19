@@ -32,4 +32,10 @@ class DiscoveryPostsVC: PostsViewController {
         viewModel.rowHeights = [:]
         super.search(keyword)
     }
+    
+    override func handleListEmpty() {
+        let title = "no result".localized().uppercaseFirst
+        let description = "try to look for something else".localized().uppercaseFirst
+        tableView.addEmptyPlaceholderFooterView(emoji: "😿", title: title, description: description)
+    }
 }

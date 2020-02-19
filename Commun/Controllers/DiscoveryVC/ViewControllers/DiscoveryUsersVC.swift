@@ -20,4 +20,10 @@ class DiscoveryUsersVC: SubscriptionsVC {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func handleListEmpty() {
+        let title = "no result".localized().uppercaseFirst
+        let description = "try to look for something else".localized().uppercaseFirst
+        tableView.addEmptyPlaceholderFooterView(emoji: "😿", title: title, description: description)
+    }
 }
