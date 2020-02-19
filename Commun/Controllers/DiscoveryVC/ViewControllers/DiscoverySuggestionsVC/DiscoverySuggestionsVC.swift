@@ -26,10 +26,12 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
     }
     
     // MARK: - Methods
-    override func setUp() {
-        super.setUp()
+    override func setUpTableView() {
+        super.setUpTableView()
         tableView.backgroundColor = .f3f5fa
         tableView.separatorStyle = .none
+        
+        tableView.keyboardDismissMode = .onDrag
     }
     
     override func bind() {
