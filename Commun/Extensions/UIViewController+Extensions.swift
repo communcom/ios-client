@@ -214,7 +214,7 @@ extension UIViewController {
             
         case "reward":
             if let id = item.community?.communityId {
-                showCommunityWithCommunityId(id)
+                showOtherBalanceWalletVC(symbol: id)
             }
         default:
             break
