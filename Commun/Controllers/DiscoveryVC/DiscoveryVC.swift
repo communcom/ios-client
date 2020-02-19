@@ -17,6 +17,7 @@ class DiscoveryVC: BaseViewController {
     }
     private var currentKeyword = ""
     private var searchWasCancelled = false
+    private var searchBarShouldBeginEditting = true
     private var contentViewTopConstraint: NSLayoutConstraint?
     
     // MARK: - ChildVCs
@@ -176,6 +177,10 @@ class DiscoveryVC: BaseViewController {
                 self.showChildVCWithIndex(index)
             })
             .disposed(by: disposeBag)
+        
+        // forward searchBar Delegate
+        searchController.searchBar.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - ChildVC manager
@@ -270,5 +275,22 @@ class DiscoveryVC: BaseViewController {
     private func searchBarChangeTextNotified(text: String) {
         searchController.searchBar.text = text
         searchController.searchBar.delegate?.searchBar?(searchController.searchBar, textDidChange: text)
+    }
+}
+
+extension DiscoveryVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if !searchBar.isFirstResponder {
+            searchBarShouldBeginEditting = false
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        let boolToReturn = searchBarShouldBeginEditting
+        searchBarShouldBeginEditting = true
+        return boolToReturn
     }
 }
