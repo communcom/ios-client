@@ -133,4 +133,10 @@ class WelcomeVC: UIViewController {
         self.welcomePageVC.showActionButtons(indexNext)
         self.pageControl.selectedIndex = indexNext
     }
+    
+    @IBAction func test(_ sender: Any) {
+        let hintView = CMHint(type: .chooseCommunity)
+        view.addSubview(hintView)
+        hintView.display()
+    }
 }
