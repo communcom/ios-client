@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let notificationCenter = UNUserNotificationCenter.current()
     let notificationTappedRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
+    let shareExtensionDataRelay = BehaviorRelay<ShareExtensionData?>(value: nil)
     
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
     
@@ -445,14 +446,7 @@ extension AppDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         switch url.description {
         case "commun://createPost":
-            if let tabBar = self.window?.rootViewController as? TabBarVC {
-                if let presentedVC = tabBar.presentedViewController as? BasicEditorVC {
-                    presentedVC.loadShareExtensionData()
-                } else {
-                    tabBar.buttonAddTapped()
-                }
-            }
-       
+            self.shareExtensionDataRelay.accept(UserDefaults.appGroups.loadShareExtensionData())
         default:
             return false
         }

@@ -17,6 +17,7 @@ class PostEditorVC: EditorVC {
     
     // MARK: - Properties
     var chooseCommunityAfterLoading: Bool
+    var parseDraftAfterLoading: Bool
     
     // MARK: - Computed properties
     var contentLettersLimit: UInt {30000}
@@ -51,8 +52,9 @@ class PostEditorVC: EditorVC {
     }
     
     // MARK: - Initializers
-    init(post: ResponseAPIContentGetPost? = nil, community: ResponseAPIContentGetCommunity? = nil, chooseCommunityAfterLoading: Bool = true) {
+    init(post: ResponseAPIContentGetPost? = nil, community: ResponseAPIContentGetCommunity? = nil, chooseCommunityAfterLoading: Bool = true, parseDraftAfterLoading: Bool = true) {
         self.chooseCommunityAfterLoading = chooseCommunityAfterLoading
+        self.parseDraftAfterLoading = parseDraftAfterLoading
         super.init(nibName: nil, bundle: nil)
         viewModel.postForEdit = post
         viewModel.community.accept(community)
@@ -81,7 +83,7 @@ class PostEditorVC: EditorVC {
                 .disposed(by: disposeBag)
         } else {
             // parse draft
-            if hasDraft {
+            if hasDraft && parseDraftAfterLoading {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     // your code here
                     self.retrieveDraft()

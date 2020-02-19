@@ -265,6 +265,18 @@ class TabBarVC: UITabBarController {
             })
             .disposed(by: bag)
         
+        appDelegate.shareExtensionDataRelay
+            .filter {$0 != nil}
+            .map {$0!}
+            .subscribe(onNext: { (data) in
+                let basicEditorScene = BasicEditorVC(shareExtensionData: data)
+                self.present(basicEditorScene, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    appDelegate.shareExtensionDataRelay.accept(nil)
+                }
+            })
+            .disposed(by: disposeBag)
+            
         SocketManager.shared
             .unseenNotificationsRelay
             .subscribe(onNext: { (unseen) in
