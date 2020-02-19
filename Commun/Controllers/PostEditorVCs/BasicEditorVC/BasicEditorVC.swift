@@ -34,6 +34,7 @@ class BasicEditorVC: PostEditorVC {
     
     var ignoredLinks = [String]()
     var forcedDeleteEmbed = false
+    var shareExtensionData: ShareExtensionData?
     
     // MARK: - Subviews
     var _contentTextView = BasicEditorTextView(forExpandable: ())
@@ -81,14 +82,38 @@ class BasicEditorVC: PostEditorVC {
     override var viewModel: PostEditorViewModel {
         return _viewModel
     }
-
+    
+    // MARK: - Intializers
+    convenience init(shareExtensionData: ShareExtensionData) {
+        self.init(post: nil, community: nil, chooseCommunityAfterLoading: false, parseDraftAfterLoading: false)
+        self.shareExtensionData = shareExtensionData
+    }
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.loadShareExtensionData()
         self.navigationItem.title = "Share this"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(cancelButtonTapped))
+        
+        loadShareExtensionData()
+    }
+    
+    func loadShareExtensionData() {
+        if let shareExtensionData = shareExtensionData {
+            
+            if let text = shareExtensionData.text {
+                contentTextView.attributedText = NSAttributedString(string: text, attributes: contentTextView.defaultTypingAttributes)
+            }
+            
+            if let urlString = shareExtensionData.link {
+                parseLink(urlString)
+            }
+            
+            if let imageData = shareExtensionData.imageData, let image = UIImage(data: imageData) {
+                didChooseImageFromGallery(image)
+            }
+        }
     }
         
     func hideExtensionWithCompletionHandler(completion:@escaping (Bool) -> Void) {
@@ -154,26 +179,6 @@ class BasicEditorVC: PostEditorVC {
         super.bind()
         
         bindAttachments()
-    }
-    
-    func loadShareExtensionData() {
-        if let shareExtensionData = UserDefaults.appGroups.loadShareExtensionData() {
-            contentTextView.clear()
-            _viewModel.attachment.accept(nil)
-            link = nil
-
-            if let text = shareExtensionData.text {
-                contentTextView.text = text + "\n"
-            }
-            
-            if let urlString = shareExtensionData.link {
-                didAddLink(urlString, placeholder: urlString)
-            }
-            
-            if let imageData = shareExtensionData.imageData, let image = UIImage(data: imageData) {
-                didChooseImageFromGallery(image)
-            }
-        }
     }
 
     // MARK: - GetContentBlock
