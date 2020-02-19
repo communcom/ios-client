@@ -33,9 +33,10 @@ class PostPageVC: CommentsViewController {
     lazy var commentForm = CommentForm(backgroundColor: .white)
     
     // MARK: - Properties
-    var scrollToTopAfterLoadingComment = false
-    var commentThatNeedsScrollTo: ResponseAPIContentGetComment?
     var startContentOffsetY: CGFloat = 0.0
+    var scrollToTopAfterLoadingComment = false
+    var selectedComment: ResponseAPIContentGetComment?
+    
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
@@ -43,8 +44,8 @@ class PostPageVC: CommentsViewController {
         super.init(viewModel: viewModel)
     }
     
-    init(userId: String? = nil, username: String? = nil, permlink: String, communityId: String? = nil, communityAlias: String? = nil, selectedComment: ResponseAPIContentGetComment? = nil) {
-        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias, selectedComment: selectedComment)
+    init(userId: String? = nil, username: String? = nil, permlink: String, communityId: String? = nil, communityAlias: String? = nil) {
+        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias)
         super.init(viewModel: viewModel)
     }
     
@@ -97,12 +98,9 @@ class PostPageVC: CommentsViewController {
         
         // postView
         postHeaderView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
-//        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
         shadowView.addShadow(ofColor: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), radius: .adaptive(width: 4.0), offset: CGSize(width: 0, height: .adaptive(height: -3.0)), opacity: 1.0)
-//        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
-
         view.addSubview(shadowView)
         shadowView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: commentFormMinPaddingTop).isActive = true
         
@@ -137,9 +135,9 @@ class PostPageVC: CommentsViewController {
                 .disposed(by: disposeBag)
         }
         
-//        else if let comment = commentThatNeedsScrollTo {
-//            //TODO: scroll to comment
-//        }
+        else if let comment = selectedComment {
+            self.scrollTo(selectedComment: comment)
+        }
         
         // observer
         observePostDeleted()
@@ -274,19 +272,16 @@ class PostPageVC: CommentsViewController {
         })
     }
     
+    
     // MARK: - Custom Functions
     func scrollTo(selectedComment: ResponseAPIContentGetComment) {
-        DispatchQueue.main.async {
-            // https://stackoverflow.com/a/16071589
-            var indexRow = 0
-            
-            if let viewModel = self.viewModel as? PostPageViewModel, let selectedComment = viewModel.selectedComment {
-                indexRow = viewModel.items.value.firstIndex(of: selectedComment) ?? 0
-            }
-            
-            self.tableView.safeScrollToRow(at: IndexPath(row: indexRow, section: 0), at: .top, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            let commentIndex = self.viewModel.items.value.firstIndex(of: selectedComment) ?? 0
+            self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: commentIndex), at: .top, animated: true)
         }
     }
+    
     
     // MARK: - Actions
     @objc func openMorePostActions() {

@@ -204,9 +204,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                 return
             }
             
-            let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId, selectedComment: comment)
-            postPageVC.scrollToTopAfterLoadingComment = true
-            
+            let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+            postPageVC.selectedComment = comment
+    
             self.show(postPageVC, sender: nil)
         default:
             break
