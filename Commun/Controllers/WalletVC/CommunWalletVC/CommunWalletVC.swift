@@ -75,16 +75,21 @@ class CommunWalletVC: TransferHistoryVC {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         setNavBarBackButton(tintColor: .white)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.barTintColor = .appMainColor
         self.navigationController?.navigationBar.tintColor = .white
+        
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.shadowImage?.clear()
+
         self.setTabBarHidden(false)
         
         baseNavigationController?.changeStatusBarStyle(barStyle)
     }
 
+    
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
