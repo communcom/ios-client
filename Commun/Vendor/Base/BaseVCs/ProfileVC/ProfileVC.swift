@@ -223,9 +223,12 @@ extension ProfileVC: CMSegmentedControlDelegate {
             .debounce(1, scheduler: MainScheduler.instance)
             .take(1)
             .asSingle()
-            .subscribe(onSuccess: { (_) in
-                if let inset = self.originInsetBottom {
-                    self.tableView.contentInset.bottom = inset
+            .subscribe(onSuccess: {[weak self] (_) in
+                guard let strongSelf = self else {return}
+                if let inset = strongSelf.originInsetBottom,
+                    (UIScreen.main.bounds.height - strongSelf.tableView.contentSize.height + strongSelf.tableView.contentOffset.y < inset)
+                {
+                    strongSelf.tableView.contentInset.bottom = inset
                 }
             })
             .disposed(by: disposeBag)
