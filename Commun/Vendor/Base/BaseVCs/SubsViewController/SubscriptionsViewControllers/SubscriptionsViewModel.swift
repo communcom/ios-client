@@ -32,7 +32,6 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
             observeProfileBlocked()
             if userId == Config.currentUser?.id {
                 observeUserFollowed()
-                observeUserUnfollowed()
             }
         }
     }

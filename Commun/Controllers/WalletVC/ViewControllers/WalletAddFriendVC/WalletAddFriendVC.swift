@@ -23,6 +23,14 @@ class WalletAddFriendVC: SubscriptionsVC {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func bindItems() {
+        viewModel.items
+            .map {$0.filter {$0.userValue?.isSubscribed != true}}
+            .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+    }
+    
     override func modelSelected(_ item: ResponseAPIContentGetSubscriptionsItem) {
         guard let user = item.userValue else {return}
         if user.isSubscribed == true {

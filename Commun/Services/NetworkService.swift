@@ -311,16 +311,16 @@ class NetworkService: NSObject {
                 user.isBeingToggledFollow = false
                 user.isInBlacklist = originIsInBlacklist
                 user.notifyChanged()
+            }, onCompleted: {
+                // re-enable state
+                user.isBeingToggledFollow = false
+                user.notifyChanged()
+                
                 if user.isSubscribed == false {
                     user.notifyEvent(eventName: ResponseAPIContentGetProfile.unfollowedEventName)
                 } else {
                     user.notifyEvent(eventName: ResponseAPIContentGetProfile.followedEventName)
                 }
-                
-            }, onCompleted: {
-                // re-enable state
-                user.isBeingToggledFollow = false
-                user.notifyChanged()
             })
     }
     
