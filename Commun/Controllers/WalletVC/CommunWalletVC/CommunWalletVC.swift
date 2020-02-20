@@ -342,8 +342,20 @@ class CommunWalletVC: TransferHistoryVC {
     }
     
     @objc func sendPointsSeeAllDidTouch() {
-        let vc = SendPointListVC { (user) in
-            self.sendPoint(to: user)
+        guard !subscriptionsVM.items.value.isEmpty else {
+            showAlert(title: "no friend found".localized().uppercaseFirst, message: "you don't have any friend. Do you want to add some?".localized().uppercaseFirst, buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 0) { (index) in
+                if index == 0 {
+                    self.addFriend()
+                }
+            }
+            return
+        }
+        
+        let vc = SendPointListVC()
+        vc.completion = { (user) in
+            vc.dismiss(animated: true) {
+                self.sendPoint(to: user)
+            }
         }
         
         let nc = BaseNavigationController(rootViewController: vc)
@@ -360,7 +372,14 @@ class CommunWalletVC: TransferHistoryVC {
     }
         
     func addFriend() {
-        showAlert(title: "TODO: Add friend", message: "add friend")
+        let vc = WalletAddFriendVC()
+        vc.completion = { (user) in
+            vc.dismiss(animated: true) {
+                self.sendPoint(to: user)
+            }
+        }
+        let nc = BaseNavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
     }
     
     private func openOtherBalancesWalletVC(withSelectedBalance balance: ResponseAPIWalletGetBalance?) {

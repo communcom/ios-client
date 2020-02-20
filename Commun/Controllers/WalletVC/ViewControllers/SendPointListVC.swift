@@ -13,8 +13,7 @@ class SendPointListVC: SubscriptionsVC {
     var completion: ((ResponseAPIContentGetProfile) -> Void)?
     
     // MARK: - Initializers
-    init(completion: ((ResponseAPIContentGetProfile) -> Void)?) {
-        self.completion = completion
+    init() {
         super.init(title: "send points".localized().uppercaseFirst, type: .user)
     }
     
@@ -31,8 +30,6 @@ class SendPointListVC: SubscriptionsVC {
     
     override func modelSelected(_ item: ResponseAPIContentGetSubscriptionsItem) {
         guard let user = item.userValue else {return}
-        dismiss(animated: true) {
-            self.completion?(user)
-        }
+        self.completion?(user)
     }
 }

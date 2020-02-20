@@ -372,16 +372,16 @@ class WalletSendPointsVC: BaseViewController {
         sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
     }
 
-    
     // MARK: - Actions
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
-        let friendsListVC = SendPointListVC { [weak self] user in
-            guard let strongSelf = self else { return }
-            
-            strongSelf.dataModel.transaction.createFriend(from: user)
-            strongSelf.chooseFriendButton.isSelected = true
-            strongSelf.updateBuyerInfo()
-            strongSelf.updateSendInfoByEnteredPoints()
+        let friendsListVC = SendPointListVC()
+        friendsListVC.completion = { [weak self] user in
+           guard let strongSelf = self else { return }
+           
+           strongSelf.dataModel.transaction.createFriend(from: user)
+           strongSelf.chooseFriendButton.isSelected = true
+           strongSelf.updateBuyerInfo()
+           strongSelf.updateSendInfoByEnteredPoints()
         }
         
         let nc = BaseNavigationController(rootViewController: friendsListVC)
