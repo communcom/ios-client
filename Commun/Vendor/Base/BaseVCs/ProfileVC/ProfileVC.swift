@@ -19,7 +19,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     // MARK: - Properties
     lazy var viewModel: ProfileViewModel<ProfileType> = self.createViewModel()
-    var tableViewLastOffset: CGPoint?
+    var originInsetBottom: CGFloat?
     
     func createViewModel() -> ProfileViewModel<ProfileType> {
         fatalError("must override")
@@ -101,15 +101,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         tableView.addSubview(refreshControl)
         refreshControl.tintColor = .white
         refreshControl.subviews.first?.bounds.origin.y = 112
-        
-        tableView.rx.endUpdatesEvent
-            .subscribe(onNext: { _ in
-                if let offset = self.tableViewLastOffset {
-                    self.tableView.layoutIfNeeded()
-                    self.tableView.contentOffset = offset
-                }
-            })
-            .disposed(by: disposeBag)
         
         _headerView.segmentedControl.delegate = self
     }
@@ -210,16 +201,34 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     @objc func reload() {
         viewModel.reload()
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if originInsetBottom == nil && tableView.contentInset.bottom > 0 {
+            originInsetBottom = tableView.contentInset.bottom
+        }
+    }
 }
 
 extension ProfileVC: CMSegmentedControlDelegate {
     func segmentedControl(_ segmentedControl: CMSegmentedControl, didTapOptionAtIndex: Int) {
-        tableViewLastOffset = tableView.contentOffset
+        // Add additional space to bottom of tableView to prevent jumping lag when swich tab
+        let headerMaxY = _headerView.convert(_headerView.bounds, to: view).maxY
         
+        let newInsetBottom: CGFloat = UIScreen.main.bounds.height - headerMaxY
+        tableView.contentInset.bottom = newInsetBottom
+        
+        // Return contentInset to original value after updating
         tableView.rx.endUpdatesEvent
-            .subscribe(onNext: { (_) in
-                DispatchQueue.main.async {
-                    self.tableViewLastOffset = nil
+            .debounce(1, scheduler: MainScheduler.instance)
+            .take(1)
+            .asSingle()
+            .subscribe(onSuccess: {[weak self] (_) in
+                guard let strongSelf = self else {return}
+                if let inset = strongSelf.originInsetBottom,
+                    (UIScreen.main.bounds.height - strongSelf.tableView.contentSize.height + strongSelf.tableView.contentOffset.y < inset)
+                {
+                    strongSelf.tableView.contentInset.bottom = inset
                 }
             })
             .disposed(by: disposeBag)

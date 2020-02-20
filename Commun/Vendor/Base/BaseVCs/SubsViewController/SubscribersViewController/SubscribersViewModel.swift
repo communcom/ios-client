@@ -10,11 +10,11 @@ import Foundation
 import CyberSwift
 
 class SubscribersViewModel: ListViewModel<ResponseAPIContentGetProfile> {
-    convenience init(userId: String? = nil, communityId: String? = nil) {
+    convenience init(userId: String? = nil, communityId: String? = nil, prefetch: Bool = true) {
         let fetcher = SubscribersListFetcher()
         fetcher.userId = userId
         fetcher.communityId = communityId
-        self.init(fetcher: fetcher)
+        self.init(fetcher: fetcher, prefetch: prefetch)
         
         defer {
             observeProfileBlocked()

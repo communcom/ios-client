@@ -77,6 +77,7 @@
 "error"                                         =   "error";
 "empty subscriptions title"                     =   "no Subscriptions";
 "empty subscriptions description"               =   "you haven’t subscribed to any community yet";
+"empty subscriptions user description"          =   "you haven’t subscribed to anyone yet";
 "empty subscriptions button title"              =   "find Communities";
 
 

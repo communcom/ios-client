@@ -211,9 +211,8 @@ class CommunWalletVC: TransferHistoryVC {
         subscriptionsVM.items
             .map({ (items) -> [ResponseAPIContentGetProfile?] in
                 let items = items.compactMap {$0.userValue}
-                return items//[nil] + items // Temp hide Add friends
+                return [nil] + items
             })
-            .do(onNext: {self.tableHeaderView.setSendPointsHidden($0.count == 0)})
             .bind(to: sendPointsCollectionView.rx.items(cellIdentifier: "\(SendPointCollectionCell.self)", cellType: SendPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
             }
@@ -229,7 +228,11 @@ class CommunWalletVC: TransferHistoryVC {
         
         sendPointsCollectionView.rx.itemSelected
             .subscribe(onNext: { (indexPath) in
-                guard let user = (self.viewModel as! WalletViewModel).subscriptionsVM.items.value[safe: indexPath.row]?.userValue else {return}
+                guard let user = (self.viewModel as! WalletViewModel).subscriptionsVM.items.value[safe: indexPath.row - 1]?.userValue else {
+                    // add friend
+                    self.addFriend()
+                    return
+                }
                 self.sendPoint(to: user)
             })
             .disposed(by: disposeBag)

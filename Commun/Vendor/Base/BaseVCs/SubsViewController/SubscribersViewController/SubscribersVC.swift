@@ -10,8 +10,8 @@ import Foundation
 import CyberSwift
 
 class SubscribersVC: SubsViewController<ResponseAPIContentGetProfile, SubscribersCell>, ProfileCellDelegate {
-    init(title: String? = nil, userId: String? = nil, communityId: String? = nil) {
-        let viewModel = SubscribersViewModel(userId: userId, communityId: communityId)
+    init(title: String? = nil, userId: String? = nil, communityId: String? = nil, prefetch: Bool = true) {
+        let viewModel = SubscribersViewModel(userId: userId, communityId: communityId, prefetch: prefetch)
         super.init(viewModel: viewModel)
         defer {
             self.title = title

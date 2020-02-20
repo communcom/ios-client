@@ -16,7 +16,15 @@ extension ProfileVC {
             .share()
             
         offSetY
-            .subscribe(onNext: {_ in
+            .subscribe(onNext: {offSetY in
+                // return contentInset after updating tableView
+                if let inset = self.originInsetBottom,
+                    (UIScreen.main.bounds.height - self.tableView.contentSize.height + offSetY < inset)
+                {
+                    self.tableView.contentInset.bottom = inset
+                }
+                
+                // headerView paralax effect
                 self.updateHeaderView()
             })
             .disposed(by: disposeBag)
