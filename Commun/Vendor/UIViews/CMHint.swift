@@ -55,14 +55,16 @@ class CMHint: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("XXX")
+    }
+    
     
     // MARK: - Custom Functions
     func commonInit() {
         alpha = 0.0
         backgroundColor = #colorLiteral(red: 0.141, green: 0.141, blue: 0.173, alpha: 1)
         layer.cornerRadius = .adaptive(width: 10.0)
-
-        contentLabel.text = type.rawValue.localized().uppercaseFirst
         
         let labelsStackView = UIStackView(arrangedSubviews: [topicLabel, contentLabel],
                                           axis: .vertical,
@@ -85,7 +87,9 @@ class CMHint: UIView {
         mainStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 34.0)))
     }
     
-    func display() {
+    func display(withType type: HintType = .enterText, completion: (() -> Void)?) {
+        contentLabel.text = type.rawValue.localized().uppercaseFirst
+
         // Show
         UIView.animate(withDuration: 0.9) {
             self.alpha = 1.0
@@ -93,10 +97,15 @@ class CMHint: UIView {
         }
 
         // Hide
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
             UIView.animate(withDuration: 0.9) {
                 self.alpha = 0.0
                 self.transform = .identity
+                completion?()
+                
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+                    self.removeFromSuperview()
+                }
             }
         }
     }

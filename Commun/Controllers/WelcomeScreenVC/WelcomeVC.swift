@@ -135,8 +135,8 @@ class WelcomeVC: UIViewController {
     }
     
     @IBAction func test(_ sender: Any) {
-        let hintView = CMHint(type: .chooseCommunity)
-        view.addSubview(hintView)
-        hintView.display()
+        hintView?.display(withType: .chooseProblem) {
+            print("CCC")
+        }
     }
 }
