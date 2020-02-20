@@ -25,7 +25,7 @@ class SendPointListVC: SubscriptionsVC {
     // MARK: - Methods
     override func configureCell(with subscription: ResponseAPIContentGetSubscriptionsItem, indexPath: IndexPath) -> UITableViewCell {
         let cell = super.configureCell(with: subscription, indexPath: indexPath) as! SubscriptionsUserCell
-        cell.followButton.heightConstraint?.constant = 0
+        cell.hideActionButton()
         return cell
     }
     
