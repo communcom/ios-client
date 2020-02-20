@@ -13,8 +13,6 @@ protocol LeaderCellDelegate: class {
     func buttonFollowDidTouch(leader: ResponseAPIContentGetLeader)
 }
 
-extension ResponseAPIContentGetLeader: ProfileType {}
-
 extension LeaderCellDelegate where Self: BaseViewController {
     func buttonVoteDidTouch(leader: ResponseAPIContentGetLeader) {
         NetworkService.shared.toggleVoteLeader(leader: leader)
