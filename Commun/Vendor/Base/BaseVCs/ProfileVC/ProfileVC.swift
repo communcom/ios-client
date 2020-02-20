@@ -212,10 +212,13 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
 
 extension ProfileVC: CMSegmentedControlDelegate {
     func segmentedControl(_ segmentedControl: CMSegmentedControl, didTapOptionAtIndex: Int) {
+        // Add additional space to bottom of tableView to prevent jumping lag when swich tab
+        let headerMaxY = _headerView.convert(_headerView.bounds, to: view).maxY
         
-        let newInsetBottom: CGFloat = 2000
+        let newInsetBottom: CGFloat = UIScreen.main.bounds.height - headerMaxY
         tableView.contentInset.bottom = newInsetBottom
         
+        // Return contentInset to original value after updating
         tableView.rx.endUpdatesEvent
             .debounce(1, scheduler: MainScheduler.instance)
             .take(1)
