@@ -23,9 +23,17 @@ extension UIViewController {
     var baseNavigationController: BaseNavigationController? {
         navigationController as? BaseNavigationController
     }
+        
+    var hintView: CMHint? {
+        get {
+            let hintViewInstance = CMHint(type: .enterText)
+            view.addSubview(hintViewInstance)
+            return hintViewInstance
+        }
+    }
     
+
     // MARK: - Custom Functions
-    
     class func instanceController(fromStoryboard storyboard: String, withIdentifier identifier: String) -> UIViewController {
         let st = UIStoryboard(name: storyboard, bundle: nil)
         return st.instantiateViewController(withIdentifier: identifier)
