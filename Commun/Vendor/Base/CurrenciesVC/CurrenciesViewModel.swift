@@ -13,10 +13,6 @@ class CurrenciesViewModel: ListViewModel<ResponseAPIGetCurrency> {
     // MARK: - Initializers
     init() {
         let fetcher = CurrenciesListFetcher()
-        super.init(fetcher: fetcher)
-        
-        defer {
-            fetchNext()
-        }
+        super.init(fetcher: fetcher, prefetch: true)
     }
 }

@@ -13,9 +13,9 @@ import RxCocoa
 class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     var filter: BehaviorRelay<PostsListFetcher.Filter>!
     
-    convenience init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time)) {
+    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time), prefetch: Bool = true) {
         let fetcher = PostsListFetcher(filter: filter)
-        self.init(fetcher: fetcher)
+        super.init(fetcher: fetcher, prefetch: prefetch)
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
         defer {
             bindFilter()
