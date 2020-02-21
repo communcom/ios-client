@@ -120,8 +120,16 @@ class CMHint: UIView {
         
         addSubview(mainStackView)
         mainStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 34.0)))
+        addTapGesture()
     }
     
+    private func addTapGesture() {
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(didSwiped))
+        swipeDown.direction = .down
+        addGestureRecognizer(swipeDown)
+        isUserInteractionEnabled = true
+    }
+
     func display(inPosition position: CGPoint, withType type: HintType = .enterText, completion: (() -> Void)?) {
         contentLabel.text = type.introduced()
         
@@ -137,6 +145,21 @@ class CMHint: UIView {
                 self.alpha = 0.0
                 self.transform = .identity
                 completion?()
+                
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+                    self.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
+    
+    // MARK: - Actions
+    @objc func didSwiped(_ sender: UISwipeGestureRecognizer) {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.2) {
+                self.alpha = 0.0
+                self.transform = .identity
                 
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
                     self.removeFromSuperview()

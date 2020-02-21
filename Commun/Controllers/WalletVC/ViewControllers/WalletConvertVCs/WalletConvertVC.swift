@@ -435,7 +435,7 @@ class WalletConvertVC: BaseViewController {
     }
     
     func checkValues() -> Bool {
-        guard let errorText = errorLabel.text, errorText.isEmpty else {
+        guard errorLabel.text == nil else {
             self.hintView?.display(inPosition: convertButton.frame.origin, withType: .error(errorLabel.text!), completion: {})
             return false
         }
