@@ -437,7 +437,7 @@ class WalletConvertVC: BaseViewController {
     func checkValues() -> Bool {
         guard convertButton.isDisabled, let amount = leftTextField.text, amount.isEmpty else { return true }
         
-        self.hintView?.display(withType: .enterAmount, completion: {})
+        self.hintView?.display(inPosition: convertButton.frame.origin, withType: .enterAmount, completion: {})
         
         return false
     }

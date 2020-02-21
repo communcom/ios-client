@@ -26,6 +26,7 @@ class WalletSendPointsVC: BaseViewController {
 
     let carouselHeight: CGFloat = .adaptive(height: 50.0)
 
+    let whiteView = UIView(width: .adaptive(width: 375.0), height: .adaptive(height: 543.0), backgroundColor: .white, cornerRadius: .adaptive(width: 25.0))
     let pointsToolbar: CMToolbarView = CMToolbarView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 375.0), height: .adaptive(height: 50.0))))
 
     lazy var communLogoImageView = UIView.transparentCommunLogo(size: .adaptive(width: 50.0))
@@ -224,7 +225,6 @@ class WalletSendPointsVC: BaseViewController {
         dataModel.transaction.history == nil ? updateSendInfoByEnteredPoints() : updateSendInfoByHistory()
 
         // Action view
-        let whiteView = UIView(width: .adaptive(width: 375.0), height: .adaptive(height: 543.0), backgroundColor: .white, cornerRadius: .adaptive(width: 25.0))
         whiteView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.addSubview(whiteView)
         whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
@@ -374,12 +374,14 @@ class WalletSendPointsVC: BaseViewController {
     private func checkValues() -> Bool {
         guard sendPointsButton.isDisabled else { return true }
 
+        let sendPointsButtonFrame = view.convert(sendPointsButton.frame, from: whiteView)
+
         if !chooseFriendButton.isSelected {
-            self.hintView?.display(withType: .chooseFriend, completion: {})
+            self.hintView?.display(inPosition: sendPointsButtonFrame.origin, withType: .chooseFriend, completion: {})
         }
         
         else {
-            self.hintView?.display(withType: .enterAmount, completion: {})
+            self.hintView?.display(inPosition: sendPointsButtonFrame.origin, withType: .enterAmount, completion: {})
         }
         
         return false
