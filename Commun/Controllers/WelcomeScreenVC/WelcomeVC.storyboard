@@ -87,18 +87,9 @@
                                     <constraint firstAttribute="width" constant="35" id="aJj-KX-Fpr"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLP-IA-Cxd">
-                                <rect key="frame" x="16" y="13" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="test:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="efL-Nd-PKy"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="bLP-IA-Cxd" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="16" id="9Yl-sK-kG8"/>
-                            <constraint firstItem="bLP-IA-Cxd" firstAttribute="top" secondItem="bF6-IB-5mY" secondAttribute="top" constant="13" id="REt-cS-7FJ"/>
                             <constraint firstItem="IfS-V6-9za" firstAttribute="top" secondItem="qQo-fb-NcH" secondAttribute="bottom" constant="14" id="S5D-R6-UkA" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" id="Tjd-Cq-itW"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="top" secondItem="oXF-w0-ktq" secondAttribute="top" id="UWO-ih-eU6" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>

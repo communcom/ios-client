@@ -19,19 +19,25 @@ extension UIButton {
         backgroundColor: UIColor? = nil,
         textColor: UIColor? = nil,
         cornerRadius: CGFloat? = nil,
-        contentInsets: UIEdgeInsets? = nil
+        contentInsets: UIEdgeInsets? = nil,
+        completionDisable: (() -> Void)? = nil
     ) {
         self.init(width: width, height: height, backgroundColor: backgroundColor)
+        
         setTitle(label, for: .normal)
+        
         if let font = labelFont {
             titleLabel?.font = font
         }
+        
         if let textColor = textColor {
             setTitleColor(textColor, for: .normal)
         }
+        
         if let cornerRadius = cornerRadius {
             self.cornerRadius = cornerRadius
         }
+        
         if let contentInsets = contentInsets {
             if contentInsets == .zero {
                 // After some experimentation, it appears that if you try and set contentEdgeInsets to all zeros, the default insets are used. However, if you set them to nearly zero, it works:
