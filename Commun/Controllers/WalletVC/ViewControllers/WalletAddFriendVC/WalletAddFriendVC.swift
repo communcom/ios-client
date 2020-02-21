@@ -13,10 +13,15 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate {
     
     // MARK: - Properties
     var completion: ((ResponseAPIContentGetProfile) -> Void)?
+    var tableViewTopConstraint: NSLayoutConstraint?
+    
+    // MARK: - Subviews
+    let searchContainerView = UIView(backgroundColor: .white)
     
     // MARK: - Initializers
     init() {
         super.init(title: "add friends".localized().uppercaseFirst, type: .user, prefetch: false)
+        showShadowWhenScrollUp = false
     }
     
     required init?(coder: NSCoder) {
@@ -27,6 +32,32 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate {
         super.viewWillAppear(animated)
         baseNavigationController?.changeStatusBarStyle(.default)
         extendedLayoutIncludesOpaqueBars = true
+        
+        navigationController?.navigationBar.shadowOpacity = 0
+    }
+    
+    override func layoutSearchBar() {
+        view.addSubview(searchContainerView)
+        searchContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        searchContainerView.addSubview(searchController.searchBar)
+        
+        searchController.searchBar.autoPinEdgesToSuperviewEdges()
+        DispatchQueue.main.async {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    override func setUpTableView() {
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin, excludingEdge: .top)
+        tableViewTopConstraint = tableView.autoPinEdge(.top, to: .bottom, of: searchContainerView)
+        tableView.rowHeight = UITableView.automaticDimension
+        
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
+        
+        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     }
     
     override func registerCell() {
@@ -53,6 +84,45 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate {
         }
         
         return UITableViewCell()
+    }
+    
+    override func bindSearchBar() {
+        super.bindSearchBar()
+        
+        searchController.searchBar.rx.textDidBeginEditing
+            .subscribe(onNext: { (_) in
+                self.showSearchBar(onNavigationBar: true)
+            })
+            .disposed(by: disposeBag)
+        
+        searchController.searchBar.rx.textDidEndEditing
+            .subscribe(onNext: { (_) in
+                self.showSearchBar(onNavigationBar: false)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func showSearchBar(onNavigationBar: Bool) {
+        if onNavigationBar {
+            navigationItem.titleView = searchController.searchBar
+            navigationItem.rightBarButtonItem = nil
+            
+            tableViewTopConstraint?.isActive = false
+            
+            searchContainerView.removeFromSuperview()
+            tableViewTopConstraint = tableView.autoPinEdge(toSuperviewSafeArea: .top)
+            
+            baseNavigationController?.setNavigationBarBackground()
+        } else {
+            navigationItem.titleView = nil
+            setRightNavBarButton(with: self.closeButton)
+            
+            tableViewTopConstraint?.isActive = false
+            layoutSearchBar()
+            tableViewTopConstraint = tableView.autoPinEdge(.top, to: .bottom, of: searchContainerView)
+            
+            baseNavigationController?.setNavigationBarBackground()
+        }
     }
     
     func sendPointButtonDidTouch(friend: ResponseAPIContentGetProfile) {
