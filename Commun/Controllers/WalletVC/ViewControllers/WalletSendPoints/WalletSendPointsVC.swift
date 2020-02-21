@@ -74,9 +74,8 @@ class WalletSendPointsVC: BaseViewController {
     }()
     
     let sendPointsButton: CommunButton = {
-        let sendPointsButtonInstance = CommunButton.default(height: 50.0)
+        let sendPointsButtonInstance = CommunButton.default(height: 50.0, isDisabled: true)
         sendPointsButtonInstance.addTarget(self, action: #selector(sendPointsButtonTapped), for: .touchUpInside)
-        sendPointsButtonInstance.isEnabled = false
         
         return sendPointsButtonInstance
     }()
@@ -357,7 +356,8 @@ class WalletSendPointsVC: BaseViewController {
         setSendButton(amount: amount, percent: 0.1)
         pointsTextField.text = String(format: "%.*f", accuracy, amount)
 
-        sendPointsButton.isEnabled = dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected
+        sendPointsButton.isDisabled = !(dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected)
+//        sendPointsButton.isEnabled = dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected
     }
     
     private func updateSendInfoByEnteredPoints() {
@@ -369,9 +369,21 @@ class WalletSendPointsVC: BaseViewController {
         setSendButton(amount: dataModel.transaction.amount, percent: isCMN ? 0.0 : 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.sell.fullName)
 
-        sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
+        sendPointsButton.isDisabled = !(dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected)
+//        sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
     }
 
+    private func checkValues() {
+        if !chooseFriendButton.isSelected {
+            self.hintView?.display(withType: .chooseFriend, completion: {})
+        }
+
+        else if pointsTextField.text == "" {
+            self.hintView?.display(withType: .enterAmount, completion: {})
+        }
+    }
+    
+    
     // MARK: - Actions
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
         let friendsListVC = SendPointListVC()
@@ -397,6 +409,11 @@ class WalletSendPointsVC: BaseViewController {
     }
 
     @objc func sendPointsButtonTapped(_ sender: UITapGestureRecognizer) {
+        guard !sendPointsButton.isDisabled else {
+            checkValues()
+            return
+        }
+        
         let confirmPasscodeVC = ConfirmPasscodeVC()
         present(confirmPasscodeVC, animated: true, completion: nil)
         

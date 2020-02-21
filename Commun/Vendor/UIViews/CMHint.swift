@@ -22,6 +22,7 @@ class CMHint: UIView {
     }
     
     var type: HintType
+    private var tabbarHeight: CGFloat = 0.0
     
     var topicLabel = UILabel(text: "warning".localized().uppercaseFirst,
                              font: .systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
@@ -42,9 +43,10 @@ class CMHint: UIView {
     
     
     // MARK: - Class Initialization
-    init(type: HintType) {
+    init(type: HintType, isTabbarHidden: Bool) {
         self.type = type
-
+        self.tabbarHeight = CGFloat((!isTabbarHidden).int) * tabBarHeight
+        
         super.init(frame: CGRect(origin: CGPoint(x: .adaptive(width: 15.0), y: DeviceScreen.ScreenSize.height + 100.0),
                                  size: CGSize(width: .adaptive(width: 345.0), height: .adaptive(height: 64.0))))
 
@@ -91,14 +93,14 @@ class CMHint: UIView {
         contentLabel.text = type.rawValue.localized().uppercaseFirst
 
         // Show
-        UIView.animate(withDuration: 0.9) {
+        UIView.animate(withDuration: 0.2) {
             self.alpha = 1.0
-            self.transform = CGAffineTransform(translationX: 0, y: -(100.0 + self.bounds.height + .adaptive(height: 88.0 + 15.0)))
+            self.transform = CGAffineTransform(translationX: 0, y: -(100.0 + self.safeAreaInsets.bottom + self.bounds.height + .adaptive(height: self.tabbarHeight + (self.tabbarHeight == 0.0 ? 10.0 : 15.0))))
         }
 
         // Hide
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-            UIView.animate(withDuration: 0.9) {
+            UIView.animate(withDuration: 0.2) {
                 self.alpha = 0.0
                 self.transform = .identity
                 completion?()

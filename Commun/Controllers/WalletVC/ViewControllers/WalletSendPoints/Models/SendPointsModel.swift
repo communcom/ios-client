@@ -34,7 +34,7 @@ class SendPointsModel {
     }
 
     func checkHistoryAmounts() -> Bool {
-        guard abs(transaction.history!.quantityValue) > 0 else { return false }
+        guard abs(transaction.history?.quantityValue ?? 0) > 0 else { return false }
         return abs(CGFloat(transaction.history!.quantityValue)) <= getBalance().amount
     }
 

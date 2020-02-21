@@ -132,11 +132,5 @@ class WelcomeVC: UIViewController {
         self.welcomePageVC.currentPage = indexNext
         self.welcomePageVC.showActionButtons(indexNext)
         self.pageControl.selectedIndex = indexNext
-    }
-    
-    @IBAction func test(_ sender: Any) {
-        hintView?.display(withType: .chooseProblem) {
-            print("CCC")
-        }
-    }
+    }    
 }
