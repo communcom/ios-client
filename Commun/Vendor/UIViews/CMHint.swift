@@ -92,6 +92,10 @@ class CMHint: UIView {
     func display(withType type: HintType = .enterText, completion: (() -> Void)?) {
         contentLabel.text = type.rawValue.localized().uppercaseFirst
 
+        layer.zPosition = CGFloat(MAXFLOAT)
+        let windowCount = UIApplication.shared.windows.count
+        UIApplication.shared.windows[windowCount - 1].addSubview(self)
+        
         // Show
         UIView.animate(withDuration: 0.2) {
             self.alpha = 1.0

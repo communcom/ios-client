@@ -27,7 +27,7 @@ extension UIViewController {
     var hintView: CMHint? {
         get {
             let hintViewInstance = CMHint(type: .enterText, isTabbarHidden: tabBarController?.tabBar.isHidden ?? true)
-            view.addSubview(hintViewInstance)
+//            view.addSubview(hintViewInstance)
             return hintViewInstance
         }
     }

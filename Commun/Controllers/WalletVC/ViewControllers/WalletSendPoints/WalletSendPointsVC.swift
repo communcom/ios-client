@@ -356,8 +356,7 @@ class WalletSendPointsVC: BaseViewController {
         setSendButton(amount: amount, percent: 0.1)
         pointsTextField.text = String(format: "%.*f", accuracy, amount)
 
-        sendPointsButton.isDisabled = !(dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected)
-//        sendPointsButton.isEnabled = dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected
+        sendPointsButton.isDisabled = dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected
     }
     
     private func updateSendInfoByEnteredPoints() {
@@ -369,20 +368,23 @@ class WalletSendPointsVC: BaseViewController {
         setSendButton(amount: dataModel.transaction.amount, percent: isCMN ? 0.0 : 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.sell.fullName)
 
-        sendPointsButton.isDisabled = !(dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected)
-//        sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
+        sendPointsButton.isDisabled = !(dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected)
     }
 
-    private func checkValues() {
+    private func checkValues() -> Bool {
+        guard sendPointsButton.isDisabled else { return true }
+
         if !chooseFriendButton.isSelected {
             self.hintView?.display(withType: .chooseFriend, completion: {})
         }
-
-        else if pointsTextField.text == "" {
+        
+        else {
             self.hintView?.display(withType: .enterAmount, completion: {})
         }
+        
+        return false
     }
-    
+
     
     // MARK: - Actions
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
@@ -409,10 +411,7 @@ class WalletSendPointsVC: BaseViewController {
     }
 
     @objc func sendPointsButtonTapped(_ sender: UITapGestureRecognizer) {
-        guard !sendPointsButton.isDisabled else {
-            checkValues()
-            return
-        }
+        guard checkValues() else { return }
         
         let confirmPasscodeVC = ConfirmPasscodeVC()
         present(confirmPasscodeVC, animated: true, completion: nil)
