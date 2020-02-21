@@ -24,6 +24,10 @@ class WalletViewModel: TransferHistoryViewModel {
         self.initialBalances = balances
         self.initialSubscriptionItems = subscriptions
         super.init(symbol: symbol)
+        
+        defer {
+            subscriptionsVM.observeUserUnfollowed()
+        }
     }
     
     override func reload(clearResult: Bool = true) {

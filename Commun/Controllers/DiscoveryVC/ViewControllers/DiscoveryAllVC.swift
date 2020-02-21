@@ -22,6 +22,10 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
 //            .posts: ["limit": 5, "offset": 0]
         ]
         self.seeAllHandler = seeAllHandler
+        
+        // prefetch
+        vm.fetchNext()
+        
         super.init(viewModel: vm)
         
         defer {
@@ -154,8 +158,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     }
     
     override func handleEmptyKeyword() {
-        viewModel.state.accept(.loading(false))
-        viewModel.items.accept([])
+        viewModel.reload()
     }
     
     // MARK: - Actions

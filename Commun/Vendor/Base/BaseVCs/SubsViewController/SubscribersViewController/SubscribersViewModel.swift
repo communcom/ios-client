@@ -18,6 +18,9 @@ class SubscribersViewModel: ListViewModel<ResponseAPIContentGetProfile> {
         
         defer {
             observeProfileBlocked()
+            if userId == Config.currentUser?.id {
+                observeUserFollowed()
+            }
         }
     }
     
@@ -36,6 +39,32 @@ class SubscribersViewModel: ListViewModel<ResponseAPIContentGetProfile> {
         ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
             .subscribe(onNext: { (blockedProfile) in
                 self.deleteItemWithIdentity(blockedProfile.identity)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeUserFollowed() {
+        // if current user follow someone
+        ResponseAPIContentGetProfile.observeProfileFollowed()
+            .filter {profile in
+                !self.items.value.contains(where: {$0.identity == profile.identity})
+            }
+            .subscribe(onNext: { (followedProfile) in
+                var newItems = [followedProfile]
+                newItems.joinUnique(self.items.value)
+                self.items.accept(newItems)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeUserUnfollowed() {
+        // if current user unfollow someone
+        ResponseAPIContentGetProfile.observeProfileUnfollowed()
+            .filter {profile in
+                self.items.value.contains(where: {$0.identity == profile.identity})
+            }
+            .subscribe(onNext: { (unfollowedProfile) in
+                self.deleteItemWithIdentity(unfollowedProfile.identity)
             })
             .disposed(by: disposeBag)
     }

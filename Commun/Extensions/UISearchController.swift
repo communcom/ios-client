@@ -13,7 +13,13 @@ extension UISearchController {
         placeholder: String = "search".localized().uppercaseFirst
     ) -> UISearchController {
         let sc = UISearchController(searchResultsController: nil)
-        if let textfield = sc.searchBar.textField {
+        sc.searchBar.searchBarStyle = .minimal
+        sc.setStyle(placeholder: placeholder)
+        return sc
+    }
+    
+    func setStyle(placeholder: String = "search".localized().uppercaseFirst) {
+        if let textfield = searchBar.textField {
             textfield.backgroundColor = .f3f5fa
             textfield.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: UIColor.a5a7bd])
             if let iconView = textfield.leftView as? UIImageView {
@@ -22,10 +28,8 @@ extension UISearchController {
             }
         }
         // Don't hide the navigation bar because the search bar is in it.
-        sc.hidesNavigationBarDuringPresentation = false
-        sc.obscuresBackgroundDuringPresentation = false
-        
-        return sc
+        hidesNavigationBarDuringPresentation = false
+        obscuresBackgroundDuringPresentation = false
     }
     
     func roundCorner(cornerRadius: CGFloat? = nil) {

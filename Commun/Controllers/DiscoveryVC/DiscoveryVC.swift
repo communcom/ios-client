@@ -15,7 +15,6 @@ class DiscoveryVC: BaseViewController {
     var tableView: UITableView? {
         currentChildVC?.view.subviews.first(where: {$0 is UITableView}) as? UITableView
     }
-    private var currentKeyword = ""
     private var searchWasCancelled = false
     private var searchBarShouldBeginEditting = true
     private var contentViewTopConstraint: NSLayoutConstraint?
@@ -137,7 +136,6 @@ class DiscoveryVC: BaseViewController {
             .distinctUntilChanged()
             .skip(1)
             .subscribe(onNext: { (query) in
-                self.currentKeyword = query ?? ""
                 self.search(query)
             })
             .disposed(by: disposeBag)
@@ -161,11 +159,8 @@ class DiscoveryVC: BaseViewController {
         searchController.searchBar.rx.textDidEndEditing
             .subscribe(onNext: { (_) in
                 if self.searchWasCancelled {
-                    self.searchBarChangeTextNotified(text: self.currentKeyword)
                     self.setTopBarHidden(false, animated: true)
                     self.showChildVCWithIndex(self.topTabBar.selectedIndex.value)
-                } else {
-                    self.currentKeyword = self.searchController.searchBar.text ?? ""
                 }
             })
             .disposed(by: disposeBag)

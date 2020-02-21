@@ -315,6 +315,12 @@ class NetworkService: NSObject {
                 // re-enable state
                 user.isBeingToggledFollow = false
                 user.notifyChanged()
+                
+                if user.isSubscribed == false {
+                    user.notifyEvent(eventName: ResponseAPIContentGetProfile.unfollowedEventName)
+                } else {
+                    user.notifyEvent(eventName: ResponseAPIContentGetProfile.followedEventName)
+                }
             })
     }
     
