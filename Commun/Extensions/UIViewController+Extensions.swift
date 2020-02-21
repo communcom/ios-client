@@ -295,13 +295,17 @@ extension UIViewController {
     }
     
     func setLeftNavBarButtonForGoingBack(tintColor: UIColor = .black) {
-        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(back))
+        setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: tintColor, action: #selector(back))
+    }
+    
+    func setLeftBarButton(imageName: String, tintColor: UIColor = .black, action: Selector?) {
+        let backButton = UIBarButtonItem(image: UIImage(named: imageName), style: .plain, target: self, action: action)
         backButton.tintColor = tintColor
         navigationItem.leftBarButtonItem = backButton
     }
 
-    func setRightBarButtonForGoingBack(tintColor: UIColor = .black) {
-        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(back))
+    func setRightBarButton(imageName: String, tintColor: UIColor = .black, action: Selector?) {
+        let backButton = UIBarButtonItem(image: UIImage(named: imageName), style: .plain, target: self, action: action)
         backButton.tintColor = tintColor
         navigationItem.rightBarButtonItem = backButton
     }

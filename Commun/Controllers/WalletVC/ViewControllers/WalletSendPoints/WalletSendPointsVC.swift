@@ -288,6 +288,10 @@ class WalletSendPointsVC: BaseViewController {
         navigationController?.navigationBar.shadowImage?.clear()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
+        if self.dataModel.transaction.symbol != Symbol(sell: "CMN", buy: "CMN") {
+            setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(pointsListButtonDidTouch))
+        }
+        
         setTabBarHidden(true)
     }
     
@@ -373,6 +377,16 @@ class WalletSendPointsVC: BaseViewController {
     }
 
     // MARK: - Actions
+    @objc func pointsListButtonDidTouch() {
+        let vc = BalancesVC { balance in
+            // TODO: - Handle balance change
+//            carouselView.scroll(toItemAtIndex: <#T##Int#>, animated: <#T##Bool#>)
+        }
+        
+        let nc = BaseNavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
+    }
+    
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
         let friendsListVC = SendPointListVC()
         friendsListVC.completion = { [weak self] user in
@@ -477,7 +491,6 @@ extension WalletSendPointsVC: UITextFieldDelegate {
         return true
     }
 }
-
 
 // MARK: - CircularCarouselDataSource
 extension WalletSendPointsVC: CircularCarouselDataSource {
