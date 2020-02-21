@@ -89,17 +89,13 @@ class CMHint: UIView {
         mainStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 34.0)))
     }
     
-    func display(withType type: HintType = .enterText, completion: (() -> Void)?) {
+    func display(inPosition position: CGPoint, withType type: HintType = .enterText, completion: (() -> Void)?) {
         contentLabel.text = type.rawValue.localized().uppercaseFirst
-
-        layer.zPosition = CGFloat(MAXFLOAT)
-        let windowCount = UIApplication.shared.windows.count
-        UIApplication.shared.windows[windowCount - 1].addSubview(self)
         
         // Show
         UIView.animate(withDuration: 0.2) {
             self.alpha = 1.0
-            self.transform = CGAffineTransform(translationX: 0, y: -(100.0 + self.safeAreaInsets.bottom + self.bounds.height + .adaptive(height: self.tabbarHeight + (self.tabbarHeight == 0.0 ? 10.0 : 15.0))))
+            self.transform = CGAffineTransform(translationX: 0, y: -(100.0 + DeviceScreen.ScreenSize.height - position.y + .adaptive(height: 7.0)))
         }
 
         // Hide
