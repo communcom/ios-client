@@ -10,15 +10,48 @@ import UIKit
 
 class CMHint: UIView {
     // MARK: - Properties
-    enum HintType: String {
-        case enterText = "hint type enter text"
-        case enterAmount = "hint type enter amount"
-        case enterTextPhoto = "hint type enter text or photo"
-        case enterDifferentText = "hint type enter different text"
+    enum HintType {
+        case enterText
+        case enterAmount
+        case enterTextPhoto
+        case enterDifferentText
         
-        case chooseFriend = "hint type choose friend"
-        case chooseProblem = "hint type choose problem"
-        case chooseCommunity = "hint type choose community"
+        case chooseFriend
+        case chooseProblem
+        case chooseCommunity
+        
+        case error(String)
+        
+        func introduced() -> String {
+            switch self {
+            case .enterText:
+                return "hint type enter text".localized().uppercaseFirst
+
+            case .enterAmount:
+                return "hint type enter amount".localized().uppercaseFirst
+
+            case .enterTextPhoto:
+                return "hint type enter text or photo".localized().uppercaseFirst
+                
+            case .enterDifferentText:
+                return "hint type enter different text".localized().uppercaseFirst
+            
+            case .chooseFriend:
+                return "hint type choose friend".localized().uppercaseFirst
+           
+            case .chooseProblem:
+                return "hint type choose problem".localized().uppercaseFirst
+            
+            case .chooseCommunity:
+                return "hint type choose community".localized().uppercaseFirst
+            
+            case .error(let text):
+                return text.replacingOccurrences(of: "Error: ", with: "").localized().uppercaseFirst
+                
+            default:
+                break
+            }
+        }
     }
     
     var type: HintType
@@ -90,7 +123,7 @@ class CMHint: UIView {
     }
     
     func display(inPosition position: CGPoint, withType type: HintType = .enterText, completion: (() -> Void)?) {
-        contentLabel.text = type.rawValue.localized().uppercaseFirst
+        contentLabel.text = type.introduced()
         
         // Show
         UIView.animate(withDuration: 0.2) {
