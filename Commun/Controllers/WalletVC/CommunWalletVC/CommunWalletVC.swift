@@ -81,6 +81,8 @@ class CommunWalletVC: TransferHistoryVC {
         self.navigationController?.navigationBar.barTintColor = .appMainColor
         self.navigationController?.navigationBar.tintColor = .white
         self.setTabBarHidden(false)
+        
+        baseNavigationController?.changeStatusBarStyle(barStyle)
     }
 
     // MARK: - Custom Functions

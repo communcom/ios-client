@@ -34,7 +34,7 @@ def common_pods_commun
   pod 'SDWebImage'
   pod 'SDWebImageWebPCoder'
   pod 'Action'
-  pod 'SwiftyGif'
+  pod 'SwiftyGif', :git => "https://github.com/communcom/SwiftyGif.git"
   
   pod "InitialsImageView"
   
