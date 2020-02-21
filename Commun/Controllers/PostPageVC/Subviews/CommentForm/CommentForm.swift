@@ -240,7 +240,7 @@ class CommentForm: MyView {
             .map {_ -> Bool in
                 if self.localImage.value != nil {return true}
                 
-                let isTextViewEmpty = self.textView.text.isEmpty
+                let isTextViewEmpty = self.textView.text.trimmed.isEmpty
                 let isTextChanged = (self.textView.attributedText != self.textView.originalAttributedString)
                 
                 if self.mode == .edit && !isTextViewEmpty && self.url != self.parentComment?.attachments.first?.thumbnailUrl {

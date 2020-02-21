@@ -85,6 +85,8 @@ class CommunWalletVC: TransferHistoryVC {
         navigationController?.navigationBar.shadowImage?.clear()
 
         self.setTabBarHidden(false)
+        
+        baseNavigationController?.changeStatusBarStyle(barStyle)
     }
 
     

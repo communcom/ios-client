@@ -202,7 +202,7 @@ DEPENDENCIES:
   - SwifterSwift/UIKit
   - SwiftLint
   - SwiftTheme
-  - SwiftyGif
+  - SwiftyGif (from `https://github.com/communcom/SwiftyGif.git`)
   - SwiftyJSON (~> 4.0)
   - Swinject
   - THPinViewController (from `https://github.com/communcom/THPinViewController.git`, branch `commun`)
@@ -263,7 +263,6 @@ SPEC REPOS:
     - SwifterSwift
     - SwiftLint
     - SwiftTheme
-    - SwiftyGif
     - SwiftyJSON
     - Swinject
     - TLPhotoPicker
@@ -276,6 +275,8 @@ EXTERNAL SOURCES:
     :git: "git@github.com:communcom/GoloGrypto.git"
   SubviewAttachingTextView:
     :git: https://github.com/communcom/SubviewAttachingTextView.git
+  SwiftyGif:
+    :git: https://github.com/communcom/SwiftyGif.git
   THPinViewController:
     :branch: commun
     :git: https://github.com/communcom/THPinViewController.git
@@ -290,6 +291,9 @@ CHECKOUT OPTIONS:
   SubviewAttachingTextView:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
     :git: https://github.com/communcom/SubviewAttachingTextView.git
+  SwiftyGif:
+    :commit: dad6a37be372a3f61068d516348157794d58d857
+    :git: https://github.com/communcom/SwiftyGif.git
   THPinViewController:
     :commit: 70354d5f437b5fa385c2753fb420d3f42e06c680
     :git: https://github.com/communcom/THPinViewController.git
@@ -357,6 +361,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: b11c7cdd95080817eccaeb6a4cb5f8dbf832fa78
+PODFILE CHECKSUM: 098c70fcac4cffa981193678486d8858fa908508
 
 COCOAPODS: 1.9.0.beta.3

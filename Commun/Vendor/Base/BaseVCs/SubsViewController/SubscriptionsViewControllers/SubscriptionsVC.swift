@@ -14,6 +14,7 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     // MARK: - Properties
     var hideFollowButton = false
     private var isNeedHideCloseButton = false
+    var dismissModalWhenPushing = false
     
     // MARK: - Class Initialization
     init(title: String? = nil, userId: String? = nil, type: GetSubscriptionsType, prefetch: Bool = true) {
@@ -110,5 +111,28 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
                                                 buttonAction: {
                                                     Logger.log(message: "Action button tapped...", event: .debug)
         })
+    }
+    
+    override func modelSelected(_ item: ResponseAPIContentGetSubscriptionsItem) {
+        let completion: (UIViewController) -> Void = {vc in
+            if let community = item.communityValue {
+                vc.showCommunityWithCommunityId(community.communityId)
+            }
+            if let user = item.userValue {
+                vc.showProfileWithUserId(user.userId)
+            }
+        }
+        
+        if dismissModalWhenPushing,
+            self.isModal,
+            let tabBar = presentingViewController as? TabBarVC,
+            let vc = tabBar.selectedViewController as? BaseNavigationController
+        {
+            dismiss(animated: true) {
+                completion(vc)
+            }
+        } else {
+            completion(self)
+        }
     }
 }

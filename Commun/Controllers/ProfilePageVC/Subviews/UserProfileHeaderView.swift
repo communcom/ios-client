@@ -94,6 +94,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followersButton.autoPinEdge(.right, to: .right, of: followersLabel)
         followersButton.rx.tap.subscribe { _ in
             let vc = SubscribersVC(title: self.profile?.username, userId: self.profile?.userId)
+            vc.dismissModalWhenPushing = true
             let navigation = BaseNavigationController(rootViewController: vc)
             navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
             self.parentViewController?.present(navigation, animated: true, completion: nil)
@@ -122,6 +123,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followingsButton.rx.tap
             .subscribe { _ in
                 let vc = SubscriptionsVC(title: self.profile?.username, userId: self.profile?.userId, type: .user)
+                vc.dismissModalWhenPushing = true
                 let navigation = BaseNavigationController(rootViewController: vc)
                 navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
                 self.parentViewController?.present(navigation, animated: true, completion: nil)

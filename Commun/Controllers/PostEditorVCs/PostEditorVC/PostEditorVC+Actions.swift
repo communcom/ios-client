@@ -40,6 +40,10 @@ extension PostEditorVC {
         viewModel.postForEdit == nil && !contentTextView.text.isEmpty
     }
     @objc override func close() {
+        UIView.performWithoutAnimation {
+            view.endEditing(true)
+        }
+        
         guard shouldSaveDraft() else {
             back()
             return
