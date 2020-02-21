@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WalletAddFriendVC: SubscriptionsVC {
+class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate {
     override var isSearchEnabled: Bool {true}
     
     // MARK: - Properties
@@ -23,21 +23,46 @@ class WalletAddFriendVC: SubscriptionsVC {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func bindItems() {
-        viewModel.items
-            .map {$0.filter {$0.userValue?.isSubscribed != true}}
-            .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        baseNavigationController?.changeStatusBarStyle(.default)
+        extendedLayoutIncludesOpaqueBars = true
     }
     
-    override func modelSelected(_ item: ResponseAPIContentGetSubscriptionsItem) {
-        guard let user = item.userValue else {return}
-        if user.isSubscribed == true {
+    override func registerCell() {
+        tableView.register(WalletAddFriendCell.self, forCellReuseIdentifier: "WalletAddFriendCell")
+    }
+    
+    override func configureCell(with subscription: ResponseAPIContentGetSubscriptionsItem, indexPath: IndexPath) -> UITableViewCell {
+        if let profile = subscription.userValue {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "WalletAddFriendCell") as! WalletAddFriendCell
+            cell.setUp(with: profile)
+            cell.delegate = self as WalletAddFriendCellDelegate
+            
+            cell.roundedCorner = []
+            
+            if indexPath.row == 0 {
+                cell.roundedCorner.insert([.topLeft, .topRight])
+            }
+            
+            if indexPath.row == self.viewModel.items.value.count - 1 {
+                cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+            }
+            
+            return cell
+        }
+        
+        return UITableViewCell()
+    }
+    
+    func sendPointButtonDidTouch(friend: ResponseAPIContentGetProfile) {
+        if searchController.searchBar.isFirstResponder {
             searchController.searchBar.resignFirstResponder()
             searchController.dismiss(animated: true) {
-                self.completion?(user)
+                self.completion?(friend)
             }
+        } else {
+            self.completion?(friend)
         }
     }
 }

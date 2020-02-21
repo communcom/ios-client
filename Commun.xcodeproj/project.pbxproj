@@ -365,6 +365,7 @@
 		BC74F503237957790018DB8E /* CommentsVC+CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74F502237957790018DB8E /* CommentsVC+CommentCellDelegate.swift */; };
 		BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */; };
 		BC7A88FB23FE73C300B8CF6E /* WalletAddFriendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7A88FA23FE73C300B8CF6E /* WalletAddFriendVC.swift */; };
+		BC7C8CBD23FF7AC70038DF5E /* WalletAddFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7C8CBC23FF7AC70038DF5E /* WalletAddFriendCell.swift */; };
 		BC7D608A237BF3F1007D8C1A /* MyProfileBlacklistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D6089237BF3F1007D8C1A /* MyProfileBlacklistVC.swift */; };
 		BC7D608C237BF419007D8C1A /* MyProfileBlacklistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D608B237BF419007D8C1A /* MyProfileBlacklistViewModel.swift */; };
 		BC7D608E237BF4E7007D8C1A /* BlacklistFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D608D237BF4E7007D8C1A /* BlacklistFetcher.swift */; };
@@ -910,6 +911,7 @@
 		BC74F502237957790018DB8E /* CommentsVC+CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsVC+CommentCellDelegate.swift"; sourceTree = "<group>"; };
 		BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+CommentCellDelegate.swift"; sourceTree = "<group>"; };
 		BC7A88FA23FE73C300B8CF6E /* WalletAddFriendVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAddFriendVC.swift; sourceTree = "<group>"; };
+		BC7C8CBC23FF7AC70038DF5E /* WalletAddFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAddFriendCell.swift; sourceTree = "<group>"; };
 		BC7D6089237BF3F1007D8C1A /* MyProfileBlacklistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileBlacklistVC.swift; sourceTree = "<group>"; };
 		BC7D608B237BF419007D8C1A /* MyProfileBlacklistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileBlacklistViewModel.swift; sourceTree = "<group>"; };
 		BC7D608D237BF4E7007D8C1A /* BlacklistFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlacklistFetcher.swift; sourceTree = "<group>"; };
@@ -2399,6 +2401,7 @@
 			isa = PBXGroup;
 			children = (
 				BC7A88FA23FE73C300B8CF6E /* WalletAddFriendVC.swift */,
+				BC7C8CBC23FF7AC70038DF5E /* WalletAddFriendCell.swift */,
 			);
 			path = WalletAddFriendVC;
 			sourceTree = "<group>";
@@ -3428,6 +3431,7 @@
 				BCCC33EE23752C22004E46EF /* CommentsViewController.swift in Sources */,
 				BCCE0AA22367E60A00A183AA /* SubscriptionsViewModel.swift in Sources */,
 				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
+				BC7C8CBD23FF7AC70038DF5E /* WalletAddFriendCell.swift in Sources */,
 				B1FA77EC238C205F006E57D1 /* MasterPasswordAttention.swift in Sources */,
 				BC016D4E235EA1DE00F1319F /* BaseViewController.swift in Sources */,
 				3BE85D262327A50200C7E7F6 /* GridView.swift in Sources */,
