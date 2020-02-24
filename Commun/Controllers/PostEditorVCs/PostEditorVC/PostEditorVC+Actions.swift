@@ -202,6 +202,8 @@ extension PostEditorVC {
     
     // MARK: - Send post
     @objc override func send() {
+        guard checkValues() else { return }
+        
         self.view.endEditing(true)
         
         // remove draft

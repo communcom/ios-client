@@ -47,9 +47,6 @@ class CMHint: UIView {
             
             case .error(let text):
                 return text.replacingOccurrences(of: "Error: ", with: "").localized().uppercaseFirst
-                
-            default:
-                break
             }
         }
     }
