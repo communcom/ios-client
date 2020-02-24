@@ -19,8 +19,8 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
         defer {
             bindFilter()
-            observeUserBlocked()
-            observeCommunityBlocked()
+            observeUserEvents()
+            observeCommunityEvents()
         }
     }
     
@@ -53,22 +53,103 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
             .disposed(by: disposeBag)
     }
     
-    func observeUserBlocked() {
+    func observeUserEvents() {
+        let removePostByUser: (ResponseAPIContentGetProfile) -> Void = {[weak self] user in
+            guard let strongSelf = self else {return}
+            
+            // if user is on UserProfilePage, do nothing
+            if let fetcher = strongSelf.fetcher as? PostsListFetcher,
+                fetcher.filter.feedTypeMode == .byUser,
+                fetcher.filter.userId == user.userId
+            {
+                return
+            }
+            
+            let posts = strongSelf.items.value.filter {$0.author?.userId != user.userId}
+            strongSelf.items.accept(posts)
+        }
+        
+        let followUserHandler: (ResponseAPIContentGetProfile) -> Void = {[weak self] user in
+            guard let strongSelf = self else {return}
+            
+            // if user is on UserProfilePage, do nothing
+            if let fetcher = strongSelf.fetcher as? PostsListFetcher,
+                fetcher.filter.feedTypeMode == .byUser,
+                fetcher.filter.userId == user.userId
+            {
+                return
+            }
+            
+            strongSelf.reload(clearResult: false)
+        }
+        
         ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
             .subscribe(onNext: {blockedUser in
-                let posts = self.items.value.filter {$0.author?.userId != blockedUser.userId}
-                self.items.accept(posts)
+                removePostByUser(blockedUser)
+            })
+            .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetProfile.observeProfileUnfollowed()
+            .subscribe(onNext: { (unfollowedUser) in
+                removePostByUser(unfollowedUser)
+            })
+            .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetProfile.observeProfileFollowed()
+            .subscribe(onNext: { (followedUser) in
+                followUserHandler(followedUser)
             })
             .disposed(by: disposeBag)
     }
     
-    func observeCommunityBlocked() {
+    func observeCommunityEvents() {
+        let removeAnyPostsByCommunity: (ResponseAPIContentGetCommunity) -> Void = { [weak self] community in
+            guard let strongSelf = self else {return}
+            
+            // if user is on CommunityPage, do nothing
+            if let fetcher = strongSelf.fetcher as? PostsListFetcher,
+                fetcher.filter.feedTypeMode == .community,
+                (fetcher.filter.communityId == community.communityId || fetcher.filter.communityAlias == fetcher.filter.communityAlias)
+            {
+                return
+            }
+            
+            let posts = strongSelf.items.value.filter {$0.community?.communityId != community.communityId}
+            strongSelf.items.accept(posts)
+        }
+        
+        let followCommunityHandler: (ResponseAPIContentGetCommunity) -> Void = { [weak self] community in
+            guard let strongSelf = self else {return}
+            
+            // if user is on CommunityPage, do nothing
+            if let fetcher = strongSelf.fetcher as? PostsListFetcher,
+                fetcher.filter.feedTypeMode == .community,
+                (fetcher.filter.communityId == community.communityId || fetcher.filter.communityAlias == fetcher.filter.communityAlias)
+            {
+                return
+            }
+            
+            strongSelf.reload(clearResult: false)
+        }
+        
         ResponseAPIContentGetCommunity.observeEvent(eventName: ResponseAPIContentGetCommunity.blockedEventName)
             .subscribe(onNext: { (blockedCommunity) in
-                let posts = self.items.value.filter {$0.community?.communityId != blockedCommunity.communityId}
-                self.items.accept(posts)
+                removeAnyPostsByCommunity(blockedCommunity)
             })
             .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetCommunity.observeCommunityUnfollowed()
+            .subscribe(onNext: { (unfollowedCommunity) in
+                removeAnyPostsByCommunity(unfollowedCommunity)
+            })
+            .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetCommunity.observeCommunityFollowed()
+            .subscribe(onNext: { (followedCommunity) in
+                followCommunityHandler(followedCommunity)
+            })
+            .disposed(by: disposeBag)
+            
     }
 
     func changeFilter(
