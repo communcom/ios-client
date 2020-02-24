@@ -15,12 +15,15 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     private let headerViewMinHeight: CGFloat = 44
     
     // MARK: - Properties
+    private var headerViewHeightConstraint: NSLayoutConstraint?
+    private var headerViewHeight: CGFloat = 0
+    
+    // MARK: - Subviews
     private lazy var headerView = UIView(backgroundColor: .white)
     private lazy var smallTitleLabel = UILabel.with(text: title, textSize: 15, weight: .semibold)
     private lazy var largeTitleLabel = UILabel.with(text: title, textSize: 30, weight: .bold)
     private lazy var newNotificationsCountLabel = UILabel.with(text: "", textSize: 12, weight: .regular, textColor: .a5a7bd)
-    private var headerViewHeightConstraint: NSLayoutConstraint?
-    private var headerViewHeight: CGFloat = 0
+    private var enablePNView: EnablePNView?
     
     // MARK: - Initializers
     init() {
@@ -94,6 +97,8 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     override func viewDidSetUpTableView() {
         super.viewDidSetUpTableView()
         view.bringSubviewToFront(headerView)
+        
+        enablePNView = EnablePNView(tableView: tableView)
     }
     
     override func bind() {
