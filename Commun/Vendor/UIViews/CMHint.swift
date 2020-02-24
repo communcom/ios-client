@@ -130,13 +130,13 @@ class CMHint: UIView {
         isUserInteractionEnabled = true
     }
 
-    func display(inPosition position: CGPoint, withType type: HintType = .enterText, completion: (() -> Void)?) {
+    func display(inPosition position: CGPoint, withType type: HintType = .enterText, andButtonHeight buttonHeight: CGFloat = .adaptive(height: 50.0), completion: (() -> Void)?) {
         contentLabel.text = type.introduced()
         
         // Show
         UIView.animate(withDuration: 0.2) {
             self.alpha = 1.0
-            self.transform = CGAffineTransform(translationX: 0, y: -(100.0 + DeviceScreen.ScreenSize.height - position.y + .adaptive(height: 7.0)))
+            self.transform = CGAffineTransform(translationX: 0, y: -(100.0 + DeviceScreen.ScreenSize.height - position.y + (self.height - buttonHeight) / 2))
         }
 
         // Hide
