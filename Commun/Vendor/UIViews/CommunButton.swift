@@ -6,7 +6,9 @@
 //  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import RxSwift
+import RxCocoa
 
 class CommunButton: UIButton {
     var isDisableGrayColor = false
@@ -103,6 +105,16 @@ class CommunButton: UIButton {
             layer.add(fadeAnim, forKey: "Fade")
             
             CATransaction.commit()
+        }
+    }
+}
+
+
+extension Reactive where Base: CommunButton {
+    /// Bindable sink for `disabled` property.
+    var isDisabled: Binder<Bool> {
+        return Binder(self.base) { control, value in
+            control.isDisabled = !value
         }
     }
 }

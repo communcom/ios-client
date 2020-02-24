@@ -31,6 +31,7 @@ class MyProfileEditBioVC: EditorVC {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
         // header
         headerLabel.text = (bio == nil ? "add bio" : "edit bio").localized().uppercaseFirst
         textView.rx.text.onNext(bio)
@@ -62,10 +63,10 @@ class MyProfileEditBioVC: EditorVC {
     override func bind() {
         // Bind textView
         let bioChanged = textView.rx.text.orEmpty
-            .map {$0.count != 0 && $0 != self.bio && $0.count <= self.bioLimit}
+            .map { $0.count != 0 && $0 != self.bio && $0.count <= self.bioLimit }
         
-        bioChanged.bind(to: actionButton.rx.isEnabled)
-            .disposed(by: disposeBag)
+//        bioChanged.bind(to: actionButton.rx.isEnabled)
+//            .disposed(by: disposeBag)
         
         textView.rx.text.orEmpty
             .map {"\($0.count)"}
@@ -82,6 +83,7 @@ class MyProfileEditBioVC: EditorVC {
         if textView.text != bio {
             didConfirm.onNext(textView.text)
         }
+        
         didConfirm.onCompleted()
         back()
     }
