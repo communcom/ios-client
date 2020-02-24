@@ -24,7 +24,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     private lazy var smallTitleLabel = UILabel.with(text: title, textSize: 15, weight: .semibold)
     private lazy var largeTitleLabel = UILabel.with(text: title, textSize: 30, weight: .bold)
     private lazy var newNotificationsCountLabel = UILabel.with(text: "", textSize: 12, weight: .regular, textColor: .a5a7bd)
-    private var pnAlertView: PNAlertView?
+    private var pnAlertView: PNAlertTableHeaderView?
     
     // MARK: - Initializers
     init() {
@@ -210,7 +210,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     
     func showPNAlertView() {
         UIView.animate(withDuration: 0.3) {
-            self.pnAlertView = PNAlertView(tableView: self.tableView)
+            self.pnAlertView = PNAlertTableHeaderView(tableView: self.tableView)
             self.pnAlertView?.delegate = self
         }
     }
