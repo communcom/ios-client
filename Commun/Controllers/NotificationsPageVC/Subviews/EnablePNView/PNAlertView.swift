@@ -8,27 +8,9 @@
 
 import Foundation
 
-protocol EnablePNViewDelegate: class {
-    func closeButtonDidTouch(enablePNView: EnablePNView)
-}
-
-extension EnablePNViewDelegate {
-    func openIOSSettingsButtonDidTouch(enablePNView: EnablePNView) {
-        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-            return
-        }
-
-        if UIApplication.shared.canOpenURL(settingsUrl) {
-            UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                print("Settings opened: \(success)") // Prints true
-            })
-        }
-    }
-}
-
-class EnablePNView: MyTableHeaderView {
+class PNAlertView: MyTableHeaderView {
     // MARK: - Properties
-    weak var delegate: EnablePNViewDelegate?
+    weak var delegate: PNAlertViewDelegate?
     
     override func commonInit() {
         super.commonInit()

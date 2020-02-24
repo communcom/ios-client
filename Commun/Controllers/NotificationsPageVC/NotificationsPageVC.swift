@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, NotificationCell> {
+class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, NotificationCell>, PNAlertViewDelegate {
     // MARK: - Constants
     private let headerViewMaxHeight: CGFloat = 82
     private let headerViewMinHeight: CGFloat = 44
@@ -19,11 +19,12 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     private var headerViewHeight: CGFloat = 0
     
     // MARK: - Subviews
+    private lazy var emptyTableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
     private lazy var headerView = UIView(backgroundColor: .white)
     private lazy var smallTitleLabel = UILabel.with(text: title, textSize: 15, weight: .semibold)
     private lazy var largeTitleLabel = UILabel.with(text: title, textSize: 30, weight: .bold)
     private lazy var newNotificationsCountLabel = UILabel.with(text: "", textSize: 12, weight: .regular, textColor: .a5a7bd)
-    private var enablePNView: EnablePNView?
+    private var enablePNView: PNAlertView?
     
     // MARK: - Initializers
     init() {
@@ -89,16 +90,16 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
         tableView.autoPinEdgesToSuperviewSafeArea()
         tableView.backgroundColor = .f3f5fa
         tableView.separatorStyle = .none
-        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
         
         tableView.rowHeight = UITableView.automaticDimension
+        clearPNAlertView()
     }
     
     override func viewDidSetUpTableView() {
         super.viewDidSetUpTableView()
         view.bringSubviewToFront(headerView)
         
-        enablePNView = EnablePNView(tableView: tableView)
+        checkPNAuthorizationStatus()
     }
     
     override func bind() {
@@ -133,6 +134,8 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
         
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func bindItems() {
@@ -191,6 +194,26 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     
     override func handleLoading() {
         tableView.addNotificationsLoadingFooterView()
+    }
+    
+    // MARK: - PNAlertViewDelegate
+    var pnAlertViewShowed: Bool {
+        self.tableView.tableHeaderView != emptyTableHeaderView
+    }
+    
+    func clearPNAlertView() {
+        tableView.tableHeaderView = emptyTableHeaderView
+        enablePNView = nil
+    }
+    
+    func showPNAlertView() {
+        self.enablePNView = PNAlertView(tableView: self.tableView)
+        self.enablePNView?.delegate = self
+    }
+    
+    // MARK: - AppState observer
+    @objc func applicationDidBecomeActive(notification: NSNotification) {
+        checkPNAuthorizationStatus()
     }
 }
 

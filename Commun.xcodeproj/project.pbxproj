@@ -241,7 +241,8 @@
 		BC06A99F23E7CAEE000B690E /* SearchListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A99E23E7CAEE000B690E /* SearchListFetcher.swift */; };
 		BC06A9A323E7FC03000B690E /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A9A223E7FC03000B690E /* SearchViewModel.swift */; };
 		BC06A9C123EBFBDB000B690E /* ResponseAPIGetNotificationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A9C023EBFBDB000B690E /* ResponseAPIGetNotificationItem.swift */; };
-		BC08E8C0240388EF00436A5C /* EnablePNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC08E8BF240388EF00436A5C /* EnablePNView.swift */; };
+		BC08E8C0240388EF00436A5C /* PNAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC08E8BF240388EF00436A5C /* PNAlertView.swift */; };
+		BC08E8C52403C72E00436A5C /* PNAlertViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC08E8C42403C72E00436A5C /* PNAlertViewDelegate.swift */; };
 		BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */; };
 		BC18FA2123D54E26005DC7E3 /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */; };
 		BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */; };
@@ -785,7 +786,8 @@
 		BC06A99E23E7CAEE000B690E /* SearchListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListFetcher.swift; sourceTree = "<group>"; };
 		BC06A9A223E7FC03000B690E /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		BC06A9C023EBFBDB000B690E /* ResponseAPIGetNotificationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIGetNotificationItem.swift; sourceTree = "<group>"; };
-		BC08E8BF240388EF00436A5C /* EnablePNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnablePNView.swift; sourceTree = "<group>"; };
+		BC08E8BF240388EF00436A5C /* PNAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNAlertView.swift; sourceTree = "<group>"; };
+		BC08E8C42403C72E00436A5C /* PNAlertViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNAlertViewDelegate.swift; sourceTree = "<group>"; };
 		BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesListFetcher.swift; sourceTree = "<group>"; };
 		BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
 		BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesVC.swift; sourceTree = "<group>"; };
@@ -1978,6 +1980,15 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		BC08E8C32403C71C00436A5C /* EnablePNView */ = {
+			isa = PBXGroup;
+			children = (
+				BC08E8BF240388EF00436A5C /* PNAlertView.swift */,
+				BC08E8C42403C72E00436A5C /* PNAlertViewDelegate.swift */,
+			);
+			path = EnablePNView;
+			sourceTree = "<group>";
+		};
 		BC18FA1C23D54DB1005DC7E3 /* CurrenciesVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -2139,7 +2150,7 @@
 			isa = PBXGroup;
 			children = (
 				BC4071AC23CF0AFA000027A3 /* NotificationCell.swift */,
-				BC08E8BF240388EF00436A5C /* EnablePNView.swift */,
+				BC08E8C32403C71C00436A5C /* EnablePNView */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -3305,7 +3316,7 @@
 				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
 				BC619B1823726C180005BB94 /* CommunityCell.swift in Sources */,
 				BC3AF38323FBE58D00528EEB /* DiscoveryCommunitiesVC.swift in Sources */,
-				BC08E8C0240388EF00436A5C /* EnablePNView.swift in Sources */,
+				BC08E8C0240388EF00436A5C /* PNAlertView.swift in Sources */,
 				3B8DDF58234AEA9600B213F0 /* ContentTextView+Draft.swift in Sources */,
 				BC4AD65C23B1BA01008546A4 /* BottomMenuPresentationController.swift in Sources */,
 				3B3C8B7C23472BF000D8BADB /* EditorToolbarItem.swift in Sources */,
@@ -3382,6 +3393,7 @@
 				BC016D52235EA25B00F1319F /* ListViewController.swift in Sources */,
 				BC7D608C237BF419007D8C1A /* MyProfileBlacklistViewModel.swift in Sources */,
 				BC7D6094237C004F007D8C1A /* MyProfileBlacklistVC+Binding.swift in Sources */,
+				BC08E8C52403C72E00436A5C /* PNAlertViewDelegate.swift in Sources */,
 				BC46592D238E681500AF9C29 /* BoardingSetPasscodeVC.swift in Sources */,
 				BC8F815523E27ECE0024C04A /* WalletBuyCommunVC.swift in Sources */,
 				B1C3712D2383D0F3000BAE2F /* ProfileEditViewController.swift in Sources */,
