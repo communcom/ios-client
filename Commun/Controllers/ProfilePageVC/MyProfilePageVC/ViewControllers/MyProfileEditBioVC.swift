@@ -23,6 +23,7 @@ class MyProfileEditBioVC: EditorVC {
         textView.textContainer.lineFragmentPadding = 0
         textView.placeholder = "enter text".localized().uppercaseFirst + "..."
         textView.keyboardDismissMode = .onDrag
+        
         return textView
     }()
     
@@ -38,7 +39,7 @@ class MyProfileEditBioVC: EditorVC {
         
         // actionButton
         actionButton.setTitle("save".localized().uppercaseFirst, for: .normal)
-        actionButton.backgroundColor = .black
+        actionButton.isDisabled = true
         
         // charactersCountLabel
         let charactersCountContainerView = UIView(height: 35, backgroundColor: .black, cornerRadius: 35/2)
@@ -64,9 +65,9 @@ class MyProfileEditBioVC: EditorVC {
         // Bind textView
         let bioChanged = textView.rx.text.orEmpty
             .map { $0.count != 0 && $0 != self.bio && $0.count <= self.bioLimit }
-        
-//        bioChanged.bind(to: actionButton.rx.isEnabled)
-//            .disposed(by: disposeBag)
+       
+        bioChanged.bind(to: actionButton.rx.isDisabled)
+            .disposed(by: disposeBag)
         
         textView.rx.text.orEmpty
             .map {"\($0.count)"}
@@ -80,6 +81,8 @@ class MyProfileEditBioVC: EditorVC {
     }
     
     override func send() {
+        guard checkValues() else { return }
+        
         if textView.text != bio {
             didConfirm.onNext(textView.text)
         }
@@ -99,5 +102,17 @@ class MyProfileEditBioVC: EditorVC {
                 super.close()
             }
         }
+    }
+    
+    private func checkValues() -> Bool {
+        guard !actionButton.isDisabled else {
+            let hintType: CMHint.HintType = textView.text.isEmpty ? .enterText : .enterDifferentText
+            let actionButtonFrame = view.convert(actionButton.frame, from: toolbar)
+            
+            self.hintView?.display(inPosition: actionButtonFrame.origin, withType: hintType, andButtonHeight: actionButton.height, completion: {})
+            return false
+        }
+                        
+        return true
     }
 }
