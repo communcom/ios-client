@@ -28,6 +28,8 @@ class BaseVerticalStackViewController: BaseViewController {
     
     // MARK: - Properties
     var actions: [Action]
+    var scrollViewTopConstraint: NSLayoutConstraint?
+    var stackViewTopConstraint: NSLayoutConstraint?
     
     // MARK: - Initializers
     init(actions: [Action]) {
@@ -45,7 +47,8 @@ class BaseVerticalStackViewController: BaseViewController {
         
         // scrollView
         view.addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewEdges()
+        scrollViewTopConstraint = scrollView.autoPinEdge(toSuperviewEdge: .top)
+        scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
         // stackView
         setUpStackView()
@@ -54,7 +57,8 @@ class BaseVerticalStackViewController: BaseViewController {
     }
 
     func layout() {
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10))
+        stackViewTopConstraint = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10), excludingEdge: .top)
     }
     
     override func viewDidLayoutSubviews() {
