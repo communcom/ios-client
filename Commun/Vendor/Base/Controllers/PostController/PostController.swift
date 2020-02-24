@@ -89,7 +89,6 @@ extension PostController {
             )
         }
         
-
         // headerView for actionSheet
         let headerView = PostMetaView(frame: .zero)
         headerView.isUserNameTappable = false
