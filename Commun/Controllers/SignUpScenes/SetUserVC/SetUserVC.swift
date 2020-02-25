@@ -77,6 +77,26 @@ class SetUserVC: BaseViewController, SignUpRouter {
         view.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
+        
+        // if username has already been set
+        if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
+            showErrorWithMessage("username has already been set".localized().uppercaseFirst) {
+                self.textField.text = KeychainManager.currentUser()?.name
+                self.handleToBlockchainStep()
+            }
+        }
+    }
+    
+    func handleToBlockchainStep() {
+        showIndetermineHudWithMessage("saving to blockchain")
+        RestAPIManager.instance.toBlockChain()
+            .subscribe(onCompleted: {
+                AuthorizationManager.shared.forceReAuthorize()
+            }) { (error) in
+                self.hideHud()
+                self.handleSignUpError(error: error)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func bind() {
@@ -124,6 +144,13 @@ class SetUserVC: BaseViewController, SignUpRouter {
         AnalyticsManger.shared.userNameEntered()
         
         self.view.endEditing(true)
+        
+        if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
+            showErrorWithMessage("username has already been set".localized().uppercaseFirst) {
+                self.handleToBlockchainStep()
+            }
+            return
+        }
         
         showIndetermineHudWithMessage("setting username".localized().uppercaseFirst + "...")
         

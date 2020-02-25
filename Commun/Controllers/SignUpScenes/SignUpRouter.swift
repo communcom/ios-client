@@ -68,21 +68,36 @@ extension SignUpRouter where Self: UIViewController {
             switch error {
             case .registrationRequestFailed(let message, let currentStep):
                 if message == ErrorAPI.Message.invalidStepTaken.rawValue {
-                    showError(error) {
-                        // save state
-                        var dataToSave = [String: Any]()
-                        dataToSave[Config.registrationUserPhoneKey] = phone
-                        dataToSave[Config.registrationStepKey] = currentStep
-                        try! KeychainManager.save(dataToSave)
-                        self.signUpNextStep()
-                        return
-                    }
+                    // save state
+                    var dataToSave = [String: Any]()
+                    dataToSave[Config.registrationUserPhoneKey] = phone
+                    dataToSave[Config.registrationStepKey] = currentStep
+                    try! KeychainManager.save(dataToSave)
+                    
+                    RestAPIManager.instance.getState()
+                        .subscribe(onSuccess: { (_) in
+                            self.hideHud()
+                            self.signUpNextStep()
+                        }) { (error) in
+                            self.hideHud()
+                            self.showError(error)
+                        }
+                        .disposed(by: disposeBag)
+                    
+                    return
                 }
                 
                 if message == ErrorAPI.Message.couldNotCreateUserId.rawValue {
-                    self.showError(error, showPleaseTryAgain: true) {
-                        self.resetSignUpProcess()
-                    }
+                    showIndetermineHudWithMessage("resolving problem".localized().uppercaseFirst + "...")
+                    RestAPIManager.instance.getState()
+                        .subscribe(onSuccess: { (_) in
+                            self.hideHud()
+                            self.signUpNextStep()
+                        }) { (error) in
+                            self.hideHud()
+                            self.showError(error)
+                        }
+                        .disposed(by: disposeBag)
                     return
                 }
             default:
