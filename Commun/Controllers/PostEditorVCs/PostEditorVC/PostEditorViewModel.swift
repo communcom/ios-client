@@ -54,7 +54,7 @@ class PostEditorViewModel {
         guard let id = sendPostCompletion.transactionId,
             let userId = sendPostCompletion.userId,
             let permlink = sendPostCompletion.permlink else {
-                return .error(ErrorAPI.responseUnsuccessful(message: "post not found".localized().uppercaseFirst))
+                return .error(CMError.invalidResponse(message: ErrorMessage.postNotFound.rawValue))
         }
         
         return NetworkService.shared.waitForTransactionWith(id: id)

@@ -251,11 +251,11 @@ extension PostEditorVC {
             }) { (error) in
                 self.hideHud()
                 let message = "post not found".localized().uppercaseFirst
-                if let error = error as? ErrorAPI {
+                if let error = error as? CMError {
                     switch error {
-                    case .responseUnsuccessful(message: message):
+                    case .invalidResponse(message: message, _):
                         self.dismiss(animated: true, completion: nil)
-                    case .blockchain(message: let message):
+                    case .blockchainError(message: let message, _):
                         self.showAlert(title: "error".localized().uppercaseFirst, message: message)
                     default:
                         break

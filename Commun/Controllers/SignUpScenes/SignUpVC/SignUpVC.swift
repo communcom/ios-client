@@ -141,7 +141,7 @@ class SignUpVC: UIViewController, SignUpRouter {
             if let step = KeychainManager.currentUser()?.registrationStep,
                 step != .firstStep
             {
-                self.signUpNextStep()
+                getState(showError: false)
             }
             checkedStep = true
         }

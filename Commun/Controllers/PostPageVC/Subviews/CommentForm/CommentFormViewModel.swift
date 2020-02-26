@@ -20,7 +20,7 @@ class CommentFormViewModel {
         guard let communCode = post?.community?.communityId,
             let authorId = post?.author?.userId,
             let postPermlink = post?.contentId.permlink
-            else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
+            else {return .error(CMError.invalidRequest(message: ErrorMessage.postInfoIsMissing.rawValue))}
         // Send request
         return BlockchainManager.instance.createMessage(
             isComment: true,
@@ -39,7 +39,7 @@ class CommentFormViewModel {
         uploadingImage: UIImage? = nil
     ) -> Single<SendPostCompletion> {
         guard let communCode = post?.community?.communityId
-        else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
+        else {return .error(CMError.invalidRequest(message: ErrorMessage.postInfoIsMissing.rawValue))}
         
         // Send request
         return BlockchainManager.instance.updateMessage(
@@ -57,7 +57,7 @@ class CommentFormViewModel {
         uploadingImage: UIImage? = nil
     ) -> Single<SendPostCompletion> {
         guard let communCode = post?.community?.communityId
-            else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
+            else {return .error(CMError.invalidRequest(message: ErrorMessage.postInfoIsMissing.rawValue))}
         
         let authorId = comment.contentId.userId
         let parentCommentPermlink = comment.contentId.permlink
