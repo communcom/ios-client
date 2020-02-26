@@ -142,15 +142,7 @@ class SignUpVC: UIViewController, SignUpRouter {
                 step != .firstStep
             {
                 showIndetermineHudWithMessage("retrieving registration state".localized().uppercaseFirst + "...")
-                RestAPIManager.instance.getState()
-                    .subscribe(onSuccess: { (_) in
-                        self.hideHud()
-                        self.signUpNextStep()
-                    }) { (error) in
-                        self.hideHud()
-                        self.showError(error)
-                    }
-                    .disposed(by: disposeBag)
+                getState()
             }
             checkedStep = true
         }
@@ -293,7 +285,7 @@ class SignUpVC: UIViewController, SignUpRouter {
                                     print(captchaCode)                                    
                                 strongSelf.view.viewWithTag(reCaptchaTag)?.removeFromSuperview()
 
-                                    let phone = "+" + strongSelf.viewModel.phone.value
+                                    let phone = strongSelf.viewModel.phone.value
                                     RestAPIManager.instance.firstStep(phone: phone, captchaCode: captchaCode)
                                         .subscribe(onSuccess: { _ in
                                             strongSelf.hideHud()

@@ -82,10 +82,7 @@ extension UIViewController {
     }
     
     func showError(_ error: Error, showPleaseTryAgain: Bool = false, additionalMessage: String? = nil, completion: (() -> Void)? = nil) {
-        var message = error.localizedDescription
-        if let error = error as? ErrorAPI {
-            message = error.caseInfo.message
-        }
+        let message = error.localizedDescription
         showErrorWithLocalizedMessage(message + (showPleaseTryAgain ? (".\n" + "please try again later".localized().uppercaseFirst + "!"): "") + (additionalMessage ?? ""), completion: completion)
     }
     
