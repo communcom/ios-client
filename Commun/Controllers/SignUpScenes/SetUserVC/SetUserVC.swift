@@ -171,13 +171,12 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 }
                 throw error
             })
-            .flatMapToCompletable()
-//            .flatMapCompletable({ (_) -> Completable in
-//                self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
-//                return RestAPIManager.instance.toBlockChain()
-//            })
+            .flatMapCompletable({ (_) -> Completable in
+                self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
+                return RestAPIManager.instance.toBlockChain()
+            })
             .subscribe(onCompleted: {
-//                AuthorizationManager.shared.forceReAuthorize()
+                AuthorizationManager.shared.forceReAuthorize()
             }, onError: {error in
                 self.hideHud()
                 self.handleSignUpError(error: error)
