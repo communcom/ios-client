@@ -79,24 +79,24 @@ class SetUserVC: BaseViewController, SignUpRouter {
         view.addGestureRecognizer(tap)
         
         // if username has already been set
-        if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
-            showErrorWithMessage("username has already been set".localized().uppercaseFirst) {
-                self.textField.text = KeychainManager.currentUser()?.name
-                self.handleToBlockchainStep()
-            }
-        }
+        handleToBlockchainStep()
     }
     
     func handleToBlockchainStep() {
-        showIndetermineHudWithMessage("saving to blockchain")
-        RestAPIManager.instance.toBlockChain()
-            .subscribe(onCompleted: {
-                AuthorizationManager.shared.forceReAuthorize()
-            }) { (error) in
-                self.hideHud()
-                self.handleSignUpError(error: error)
+        if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
+            showErrorWithMessage("username has already been set".localized().uppercaseFirst) {
+                self.textField.text = KeychainManager.currentUser()?.name
+                self.showIndetermineHudWithMessage("saving to blockchain")
+                RestAPIManager.instance.toBlockChain()
+                    .subscribe(onCompleted: {
+                        AuthorizationManager.shared.forceReAuthorize()
+                    }) { (error) in
+                        self.hideHud()
+                        self.handleSignUpError(error: error)
+                    }
+                    .disposed(by: self.disposeBag)
             }
-            .disposed(by: disposeBag)
+        }
     }
     
     override func bind() {
@@ -146,9 +146,15 @@ class SetUserVC: BaseViewController, SignUpRouter {
         self.view.endEditing(true)
         
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
-            showErrorWithMessage("username has already been set".localized().uppercaseFirst) {
-                self.handleToBlockchainStep()
-            }
+            self.showIndetermineHudWithMessage("saving to blockchain")
+            RestAPIManager.instance.toBlockChain()
+                .subscribe(onCompleted: {
+                    AuthorizationManager.shared.forceReAuthorize()
+                }) { (error) in
+                    self.hideHud()
+                    self.handleSignUpError(error: error)
+                }
+                .disposed(by: self.disposeBag)
             return
         }
         
@@ -165,12 +171,13 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 }
                 throw error
             })
-            .flatMapCompletable({ (_) -> Completable in
-                self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
-                return RestAPIManager.instance.toBlockChain()
-            })
+            .flatMapToCompletable()
+//            .flatMapCompletable({ (_) -> Completable in
+//                self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
+//                return RestAPIManager.instance.toBlockChain()
+//            })
             .subscribe(onCompleted: {
-                AuthorizationManager.shared.forceReAuthorize()
+//                AuthorizationManager.shared.forceReAuthorize()
             }, onError: {error in
                 self.hideHud()
                 self.handleSignUpError(error: error)
