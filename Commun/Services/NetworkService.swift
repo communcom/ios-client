@@ -413,11 +413,6 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.recordPostView(permlink: permlink)
     }
     
-    // MARK: - Notifications
-    func getFreshNotifications() -> Single<ResponseAPIOnlineNotifyHistoryFresh> {
-        return RestAPIManager.instance.getOnlineNotifyHistoryFresh()
-    }
-    
     // MARK: - Other
     func getEmbed(url: String) -> Single<ResponseAPIFrameGetEmbed> {
         return RestAPIManager.instance.getEmbed(url: url)
