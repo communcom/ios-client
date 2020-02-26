@@ -73,23 +73,19 @@ extension SignUpRouter where Self: UIViewController {
                     dataToSave[Config.registrationUserPhoneKey] = phone
                     dataToSave[Config.registrationStepKey] = currentStep
                     try! KeychainManager.save(dataToSave)
-                    
                     getState()
                     return
                 }
                 
                 if message == ErrorMessage.couldNotCreateUserId.rawValue {
-                    showIndetermineHudWithMessage("resolving problem".localized().uppercaseFirst + "...")
-                    RestAPIManager.instance.getState()
-                        .subscribe(onSuccess: { (_) in
-                            self.hideHud()
-                            self.signUpNextStep()
-                        }) { (error) in
-                            self.hideHud()
-                            self.showError(error)
-                        }
-                        .disposed(by: disposeBag)
+                    getState()
                     return
+                }
+                
+                if message == ErrorMessage.accountHasBeenRegistered.rawValue {
+                    self.showError(error) {
+                        self.resetSignUpProcess()
+                    }
                 }
             default:
                 break
@@ -100,7 +96,7 @@ extension SignUpRouter where Self: UIViewController {
         self.showError(error)
     }
     
-    func getState() {
+    func getState(showError: Bool = true) {
         showIndetermineHudWithMessage("retrieving registration state".localized().uppercaseFirst + "...")
         RestAPIManager.instance.getState()
             .subscribe(onSuccess: { (_) in
@@ -108,13 +104,18 @@ extension SignUpRouter where Self: UIViewController {
                 self.signUpNextStep()
             }) { (error) in
                 self.hideHud()
-                self.showError(error) {
-                    if let error = error as? CMError,
-                        error.message == ErrorMessage.userHasBeenRegistered.rawValue
-                    {
-                        self.resetSignUpProcess()
+                if showError {
+                    self.showError(error) {
+                        if let error = error as? CMError,
+                            error.message == ErrorMessage.accountHasBeenRegistered.rawValue
+                        {
+                            self.resetSignUpProcess()
+                        }
                     }
+                } else {
+                    self.resetSignUpProcess()
                 }
+                
             }
             .disposed(by: disposeBag)
     }
