@@ -76,10 +76,12 @@ class CommunWalletVC: TransferHistoryVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setNavBarBackButton(tintColor: .white)
+        self.showNavigationBar(false, animated: true, completion: nil)
+        self.setNavBarBackButton(tintColor: .white)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
+        self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
 
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.shadowImage?.clear()
@@ -87,6 +89,7 @@ class CommunWalletVC: TransferHistoryVC {
         self.setTabBarHidden(false)
         
         baseNavigationController?.changeStatusBarStyle(barStyle)
+        UIApplication.shared.statusBarView?.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -180,7 +183,6 @@ class CommunWalletVC: TransferHistoryVC {
                                         
                     let alpha = ((100 / 50) / 100 * diff) - 1
                     self.barBalanceView.alpha = alpha
-                    print("alpha = \(alpha)")
                     self.changeNavbar(y: alpha)
                 } else {
                     let alpha = 1 - ((100 / 50) / 100 * diff)
