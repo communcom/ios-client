@@ -141,7 +141,6 @@ class SignUpVC: UIViewController, SignUpRouter {
             if let step = KeychainManager.currentUser()?.registrationStep,
                 step != .firstStep
             {
-                showIndetermineHudWithMessage("retrieving registration state".localized().uppercaseFirst + "...")
                 getState()
             }
             checkedStep = true

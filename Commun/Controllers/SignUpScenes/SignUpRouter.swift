@@ -101,8 +101,9 @@ extension SignUpRouter where Self: UIViewController {
     }
     
     func getState() {
+        showIndetermineHudWithMessage("retrieving registration state".localized().uppercaseFirst + "...")
         RestAPIManager.instance.getState()
-            .subscribe(onSuccess: { (state) in
+            .subscribe(onSuccess: { (_) in
                 self.hideHud()
                 self.signUpNextStep()
             }) { (error) in
