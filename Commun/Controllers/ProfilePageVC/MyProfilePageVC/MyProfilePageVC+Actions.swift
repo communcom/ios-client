@@ -19,11 +19,6 @@ extension MyProfilePageVC {
         openActionSheet(cover: false)
     }
     
-    @objc func settingsButtonDidTouch(_ sender: Any) {
-        let settingsVC = controllerContainer.resolve(SettingsVC.self)!
-        show(settingsVC, sender: nil)
-    }
-    
     @objc func walletDidTouch() {
         let state = (viewModel as! MyProfilePageViewModel).balancesVM.state.value
         switch state {
