@@ -245,11 +245,7 @@ class WalletConvertVC: BaseViewController {
             .subscribe(onNext: {[weak self] (error) in
                 switch error {
                 case .other(let error):
-                    if let error = error as? ErrorAPI {
-                        self?.errorLabel.text = "Error: " + error.caseInfo.message
-                    } else {
-                        self?.errorLabel.text = "Error: " + error.localizedDescription
-                    }
+                    self?.errorLabel.text = "Error: " + error.localizedDescription
                 case .insufficientFunds:
                     self?.errorLabel.text = "Error: Insufficient funds"
                 default:

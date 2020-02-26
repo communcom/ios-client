@@ -129,8 +129,8 @@ class SetUserVC: BaseViewController, SignUpRouter {
         
         RestAPIManager.instance.setUserName(userName).map {_ in ()}
             .catchError({ error in
-                if let error = error as? ErrorAPI {
-                    if error.caseInfo.message == "Invalid step taken",
+                if let error = error as? CMError {
+                    if error.message == ErrorMessage.invalidStepTaken.rawValue,
                         Config.currentUser?.registrationStep == .toBlockChain
                     {
                         return .just(())

@@ -180,37 +180,6 @@ class NetworkService: NSObject {
 //            return code.md5() ?? ""
 //        })
 //    }
-    
-    func getUserProfile(userId: String? = nil) -> Single<ResponseAPIContentGetProfile> {
-        // if userId = nil => retrieving current user
-        guard let userNickName = userId ?? Config.currentUser?.id else { return .error(ErrorAPI.requestFailed(message: "userId missing")) }
-        
-        return RestAPIManager.instance.getProfile(user: userNickName)
-            .do(onSuccess: { (profile) in
-                if userId == Config.currentUser?.id {
-                    // `personal.avatarUrl`
-                    if let avatarUrlValue = profile.avatarUrl {
-                        self.saveUser(avatarUrl: avatarUrlValue)
-                    } else {
-                        self.removeUserAvatar()
-                    }
-
-                    // `personal.coverUrl`
-                    if let coverUrlValue = profile.coverUrl {
-                        self.saveUser(coverUrl: coverUrlValue)
-                    } else {
-                        self.removeUserCover()
-                    }
-
-                    // `personal.biography`
-                    if let biographyValue = profile.personal?.biography {
-                        self.saveUser(biography: biographyValue)
-                    } else {
-                        self.removeUserBiography()
-                    }
-                }
-            })
-    }
 
     func userVerify(phone: String, code: String) -> Observable<Bool> {
         
@@ -259,7 +228,7 @@ class NetworkService: NSObject {
                    single(.error(error))
                    return
                }
-               single(.error(ErrorAPI.unknown))
+               single(.error(CMError.unknown))
             }
             return Disposables.create()
         }

@@ -64,10 +64,10 @@ extension SignUpRouter where Self: UIViewController {
         }
         
         // catch error
-        if let error = error as? ErrorAPI {
+        if let error = error as? CMError {
             switch error {
-            case .registrationRequestFailed(let message, let currentStep):
-                if message == ErrorAPI.Message.invalidStepTaken.rawValue {
+            case .registration(let message, let currentStep):
+                if message == ErrorMessage.invalidStepTaken.rawValue {
                     showError(error) {
                         // save state
                         var dataToSave = [String: Any]()
@@ -79,7 +79,7 @@ extension SignUpRouter where Self: UIViewController {
                     }
                 }
                 
-                if message == ErrorAPI.Message.couldNotCreateUserId.rawValue {
+                if message == ErrorMessage.couldNotCreateUserId.rawValue {
                     self.showError(error, showPleaseTryAgain: true) {
                         self.resetSignUpProcess()
                     }

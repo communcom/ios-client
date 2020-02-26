@@ -167,9 +167,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                 NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold", size: .adaptive(width: 30.0))! ]
             
         case .authorizingError(let error):
-            switch error.caseInfo.message {
+            switch error.message {
             case "Cannot get such account from BC",
-                 _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
+                 _ where error.message.hasPrefix("Can't resolve name"):
                 AuthorizationManager.shared.status.accept(.authorizing)
                 try! RestAPIManager.instance.logout()
                 return
@@ -200,7 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         getConfig { (error) in
             if let error = error {
-                if error.toErrorAPI().caseInfo.message == "Need update application version" {
+                if error.cmError.message == ErrorMessage.needUpdateApplicationVersion.rawValue {
                     rootVC.view.showForceUpdate()
                     return
                 }
