@@ -167,9 +167,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                 NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold", size: .adaptive(width: 30.0))! ]
             
         case .authorizingError(let error):
-            switch error.message {
-            case "Cannot get such account from BC",
-                 _ where error.message.hasPrefix("Can't resolve name"):
+            switch error {
+            case .userNotFound:
                 AuthorizationManager.shared.status.accept(.authorizing)
                 try! RestAPIManager.instance.logout()
                 return
