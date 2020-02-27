@@ -10,6 +10,15 @@ import Foundation
 import RxSwift
 
 class PostHeaderView: MyTableHeaderView, PostController {
+    var voteContainerView: VoteContainerView {
+        get {
+            postStatsView.voteContainerView
+        }
+        set {
+            postStatsView.voteContainerView = newValue
+        }
+    }
+    
     // MARK: - Constants
     let voteActionsContainerViewHeight: CGFloat = 35
     
@@ -22,32 +31,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
     
     lazy var contentTextView = PostHeaderTextView(forExpandable: ())
     
-    lazy var voteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
-    
-    lazy var viewsCountButton: UIButton = {
-        let button = UIButton(width: 20, height: 18)
-        button.setImage(UIImage(named: "icon-views-count-gray-default"), for: .normal)
-        button.touchAreaEdgeInsets = UIEdgeInsets(top: -13, left: -12, bottom: -13, right: -12)
-        return button
-    }()
-    
-    lazy var viewsCountLabel = UILabel.with(text: "1.2k", textSize: 12, weight: .medium, textColor: UIColor(hexString: "#A5A7BD")!, numberOfLines: 1)
-    
-    lazy var commentsCountButton: UIButton = {
-        let button = UIButton(width: 20, height: 18)
-        button.setImage(UIImage(named: "comment-count"), for: .normal)
-        button.touchAreaEdgeInsets = UIEdgeInsets(top: -13, left: -12, bottom: -13, right: -12)
-        return button
-    }()
-    
-    lazy var commentsCountLabel = UILabel.with(text: "12k", textSize: 12, weight: .medium, textColor: UIColor(hexString: "#A5A7BD")!, numberOfLines: 1)
-    
-    lazy var sharesCountButton: UIButton = {
-        let button = UIButton(width: 20, height: 18)
-        button.setImage(UIImage(named: "share-count"), for: .normal)
-        button.touchAreaEdgeInsets = UIEdgeInsets(top: -13, left: -12, bottom: -13, right: -12)
-        return button
-    }()
+    lazy var postStatsView = PostStatsView(forAutoLayout: ())
     
 //    lazy var sortButton = RightAlignedIconButton(imageName: "small-down-arrow", label: "interesting first".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor, contentInsets: UIEdgeInsets(horizontal: 8, vertical: 0))
     
@@ -63,38 +47,18 @@ class PostHeaderView: MyTableHeaderView, PostController {
         contentTextView.autoPinEdge(toSuperviewEdge: .trailing)
         contentTextView.delegate = self
         
-        addSubview(voteContainerView)
-        voteContainerView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
-        voteContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonDidTouch(_:)), for: .touchUpInside)
-        voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch(_:)), for: .touchUpInside)
-
-        addSubview(sharesCountButton)
-        sharesCountButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        sharesCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        sharesCountButton.addTarget(self, action: #selector(shareButtonDidTouch(_:)), for: .touchUpInside)
+        addSubview(postStatsView)
+        postStatsView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
+        postStatsView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16))
+        postStatsView.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 16))
         
-        addSubview(commentsCountLabel)
-        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: sharesCountButton, withOffset: -23)
-        commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        
-        addSubview(commentsCountButton)
-        commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: -8)
-        commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        
-        // Views count
-        // temp hide
-//        addSubview(viewsCountLabel)
-//        viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: -23)
-//        viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-//
-//        addSubview(viewsCountButton)
-//        viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: -8)
-//        viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        postStatsView.voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonDidTouch(_:)), for: .touchUpInside)
+        postStatsView.voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch(_:)), for: .touchUpInside)
+        postStatsView.shareButton.addTarget(self, action: #selector(shareButtonDidTouch(_:)), for: .touchUpInside)
         
         let commentsLabel = UILabel.with(text: "comments".localized().uppercaseFirst, textSize: 21, weight: .bold)
         addSubview(commentsLabel)
-        commentsLabel.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 20)
+        commentsLabel.autoPinEdge(.top, to: .bottom, of: postStatsView, withOffset: 20)
         commentsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         
 //        addSubview(sortButton)
@@ -131,14 +95,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
             contentTextViewTopConstraint?.isActive = true
         }
         
-        // Comments count
-        commentsCountLabel.text = "\(post.stats?.commentsCount ?? 0)"
-        
-        // Views count
-        viewsCountLabel.text = "\(post.stats?.viewCount ?? 0)"
-        
-        // Votes
-        voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
+        postStatsView.setUp(with: post)
         
         // Show content
         // Parse data

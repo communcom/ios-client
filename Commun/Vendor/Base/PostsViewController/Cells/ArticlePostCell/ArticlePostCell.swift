@@ -96,7 +96,7 @@ final class ArticlePostCell: PostCell {
         readButton.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 16)
         
         // pin content bottom
-        cardImageView.autoPinEdge(.bottom, to: .top, of: voteContainerView, withOffset: -10)
+        cardImageView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -10)
     }
     
     override func setUp(with post: ResponseAPIContentGetPost) {
