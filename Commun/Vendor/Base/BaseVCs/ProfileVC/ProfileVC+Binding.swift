@@ -37,6 +37,21 @@ extension ProfileVC {
             })
             .disposed(by: disposeBag)
         
+        tableView.rx.willBeginDragging
+            .subscribe(onNext: { (_) in
+                self.frozenContentOffsetForRowAnimation = nil
+            })
+            .disposed(by: disposeBag)
+        
+        tableView.rx.didScroll
+            .subscribe(onNext: { (_) in
+                if let overrideOffset = self.frozenContentOffsetForRowAnimation, self.tableView.contentOffset != overrideOffset
+                {
+                    self.tableView.setContentOffset(overrideOffset, animated: false)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.loadingState
             .subscribe(onNext: { [weak self] loadingState in
                 switch loadingState {
