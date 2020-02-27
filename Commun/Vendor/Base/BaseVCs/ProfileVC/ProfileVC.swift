@@ -20,6 +20,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     // MARK: - Properties
     lazy var viewModel: ProfileViewModel<ProfileType> = self.createViewModel()
     var originInsetBottom: CGFloat?
+    var frozenContentOffsetForRowAnimation: CGPoint?
     
     func createViewModel() -> ProfileViewModel<ProfileType> {
         fatalError("must override")
@@ -218,6 +219,7 @@ extension ProfileVC: CMSegmentedControlDelegate {
         let newInsetBottom: CGFloat = UIScreen.main.bounds.height - headerMaxY
         tableView.contentInset.bottom = newInsetBottom
         
+        frozenContentOffsetForRowAnimation = tableView.contentOffset
         // Return contentInset to original value after updating
         tableView.rx.endUpdatesEvent
             .debounce(1, scheduler: MainScheduler.instance)

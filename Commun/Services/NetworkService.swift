@@ -180,37 +180,6 @@ class NetworkService: NSObject {
 //            return code.md5() ?? ""
 //        })
 //    }
-    
-    func getUserProfile(userId: String? = nil) -> Single<ResponseAPIContentGetProfile> {
-        // if userId = nil => retrieving current user
-        guard let userNickName = userId ?? Config.currentUser?.id else { return .error(ErrorAPI.requestFailed(message: "userId missing")) }
-        
-        return RestAPIManager.instance.getProfile(user: userNickName)
-            .do(onSuccess: { (profile) in
-                if userId == Config.currentUser?.id {
-                    // `personal.avatarUrl`
-                    if let avatarUrlValue = profile.avatarUrl {
-                        self.saveUser(avatarUrl: avatarUrlValue)
-                    } else {
-                        self.removeUserAvatar()
-                    }
-
-                    // `personal.coverUrl`
-                    if let coverUrlValue = profile.coverUrl {
-                        self.saveUser(coverUrl: coverUrlValue)
-                    } else {
-                        self.removeUserCover()
-                    }
-
-                    // `personal.biography`
-                    if let biographyValue = profile.personal?.biography {
-                        self.saveUser(biography: biographyValue)
-                    } else {
-                        self.removeUserBiography()
-                    }
-                }
-            })
-    }
 
     func userVerify(phone: String, code: String) -> Observable<Bool> {
         
@@ -259,7 +228,7 @@ class NetworkService: NSObject {
                    single(.error(error))
                    return
                }
-               single(.error(ErrorAPI.unknown))
+               single(.error(CMError.unknown))
             }
             return Disposables.create()
         }
@@ -326,11 +295,13 @@ class NetworkService: NSObject {
     
     func triggerFollow(community: ResponseAPIContentGetCommunity) -> Completable {
         // for reverse
-        let originIsSubscribed = community.isSubscribed ?? false
+        let originIsFollowing = community.isSubscribed ?? false
+        let originIsInBlacklist = community.isInBlacklist ?? false
         
         // set value
         var community = community
-        community.setIsSubscribed(!originIsSubscribed)
+        community.setIsSubscribed(!originIsFollowing)
+        community.isInBlacklist = false
         community.isBeingJoined = true
         
         // notify changes
@@ -338,7 +309,10 @@ class NetworkService: NSObject {
         
         let request: Single<String>
         
-        if originIsSubscribed {
+        if originIsInBlacklist {
+            request = BlockchainManager.instance.unhideCommunity(community.communityId)
+                .flatMap {_ in BlockchainManager.instance.follow(community.communityId)}
+        } else if originIsFollowing {
             request = BlockchainManager.instance.unfollowCommunity(community.communityId)
         } else {
             request = BlockchainManager.instance.followCommunity(community.communityId)
@@ -348,13 +322,20 @@ class NetworkService: NSObject {
             .flatMapCompletable {self.waitForTransactionWith(id: $0)}
             .do(onError: { (_) in
                 // reverse change
-                community.setIsSubscribed(originIsSubscribed)
+                community.setIsSubscribed(originIsFollowing)
                 community.isBeingJoined = false
+                community.isInBlacklist = originIsInBlacklist
                 community.notifyChanged()
             }, onCompleted: {
                 // re-enable state
                 community.isBeingJoined = false
                 community.notifyChanged()
+                
+                if community.isSubscribed == false {
+                    community.notifyEvent(eventName: ResponseAPIContentGetCommunity.unfollowedEventName)
+                } else {
+                    community.notifyEvent(eventName: ResponseAPIContentGetCommunity.followedEventName)
+                }
             })
     }
     
@@ -399,11 +380,6 @@ class NetworkService: NSObject {
     // meta.recordPostView
     func markPostAsRead(permlink: String) -> Single<ResponseAPIStatus> {
         return RestAPIManager.instance.recordPostView(permlink: permlink)
-    }
-    
-    // MARK: - Notifications
-    func getFreshNotifications() -> Single<ResponseAPIOnlineNotifyHistoryFresh> {
-        return RestAPIManager.instance.getOnlineNotifyHistoryFresh()
     }
     
     // MARK: - Other

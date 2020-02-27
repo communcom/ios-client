@@ -51,7 +51,7 @@ extension BasicEditorVC {
         // detect link type
         NetworkService.shared.getEmbed(url: link)
             .flatMap {
-                $0.toTextAttachmentSingle(withSize: CGSize(width: self.contentTextView.size.width, height: self.attachmentHeight), forTextView: self._contentTextView) ?? .error(ErrorAPI.unknown)
+                $0.toTextAttachmentSingle(withSize: CGSize(width: self.contentTextView.size.width, height: self.attachmentHeight), forTextView: self._contentTextView) ?? .error(CMError.unknown)
             }
             .subscribe(onSuccess: {[weak self] attachment in
                 if self?.forcedDeleteEmbed == true {return}

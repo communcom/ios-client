@@ -72,9 +72,9 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     
     lazy var searchFetcher: SearchListFetcher = {
         let fetcher = SearchListFetcher()
-        fetcher.limit = 5
-        fetcher.searchType = .quickSearch
-        fetcher.entities = [.posts]
+        fetcher.limit = 20
+        fetcher.searchType = .entitySearch
+        fetcher.entitySearchEntity = .posts
         return fetcher
 
     }()

@@ -37,6 +37,21 @@ extension ProfileVC {
             })
             .disposed(by: disposeBag)
         
+        tableView.rx.willBeginDragging
+            .subscribe(onNext: { (_) in
+                self.frozenContentOffsetForRowAnimation = nil
+            })
+            .disposed(by: disposeBag)
+        
+        tableView.rx.didScroll
+            .subscribe(onNext: { (_) in
+                if let overrideOffset = self.frozenContentOffsetForRowAnimation, self.tableView.contentOffset != overrideOffset
+                {
+                    self.tableView.setContentOffset(overrideOffset, animated: false)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.loadingState
             .subscribe(onNext: { [weak self] loadingState in
                 switch loadingState {
@@ -49,7 +64,7 @@ extension ProfileVC {
                     strongSelf._headerView.hideLoader()
                     let backButtonOriginTintColor = strongSelf.navigationItem.leftBarButtonItem?.tintColor
                     strongSelf.navigationItem.leftBarButtonItem?.tintColor = .black
-                    strongSelf.view.showErrorView(title: "Error", subtitle: error.toErrorAPI().caseInfo.message) {
+                    strongSelf.view.showErrorView(title: "Error", subtitle: error.localizedDescription) {
                         strongSelf.view.hideErrorView()
                         strongSelf.navigationItem.leftBarButtonItem?.tintColor = backButtonOriginTintColor
                         strongSelf.reload()

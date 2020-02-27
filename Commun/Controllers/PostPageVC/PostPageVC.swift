@@ -96,7 +96,7 @@ class PostPageVC: CommentsViewController {
         tableView.keyboardDismissMode = .onDrag
         
         // postView
-        postHeaderView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
+        postHeaderView.postStatsView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form

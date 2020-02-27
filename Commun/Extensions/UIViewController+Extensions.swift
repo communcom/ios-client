@@ -23,9 +23,17 @@ extension UIViewController {
     var baseNavigationController: BaseNavigationController? {
         navigationController as? BaseNavigationController
     }
+        
+    var hintView: CMHint? {
+        get {
+            let hintViewInstance = CMHint(type: .enterText, isTabbarHidden: tabBarController?.tabBar.isHidden ?? true)
+            view.addSubview(hintViewInstance)
+            return hintViewInstance
+        }
+    }
     
+
     // MARK: - Custom Functions
-    
     class func instanceController(fromStoryboard storyboard: String, withIdentifier identifier: String) -> UIViewController {
         let st = UIStoryboard(name: storyboard, bundle: nil)
         return st.instantiateViewController(withIdentifier: identifier)
@@ -82,10 +90,7 @@ extension UIViewController {
     }
     
     func showError(_ error: Error, showPleaseTryAgain: Bool = false, additionalMessage: String? = nil, completion: (() -> Void)? = nil) {
-        var message = error.localizedDescription
-        if let error = error as? ErrorAPI {
-            message = error.caseInfo.message
-        }
+        let message = error.localizedDescription
         showErrorWithLocalizedMessage(message + (showPleaseTryAgain ? (".\n" + "please try again later".localized().uppercaseFirst + "!"): "") + (additionalMessage ?? ""), completion: completion)
     }
     

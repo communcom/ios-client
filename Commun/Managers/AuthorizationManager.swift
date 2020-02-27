@@ -17,7 +17,7 @@ class AuthorizationManager {
         case boarding(step: CurrentUserSettingStep)
         case authorized
         case registering(step: CurrentUserRegistrationStep)
-        case authorizingError(error: ErrorAPI)
+        case authorizingError(error: CMError)
     }
     
     // MARK: - Properties
@@ -38,7 +38,6 @@ class AuthorizationManager {
                 case .signed:
                     self.authorize()
                 case .disconnected(let error):
-                    let error = error ?? ErrorAPI.socketDisconnected
                     self.status.accept(.authorizingError(error: error))
                 default:
                     return
@@ -66,7 +65,7 @@ class AuthorizationManager {
                         self.deviceSetInfo()
                         self.status.accept(.authorized)
                     }) { (error) in
-                        self.status.accept(.authorizingError(error: error.toErrorAPI()))
+                        self.status.accept(.authorizingError(error: error.cmError))
                     }
                     .disposed(by: disposeBag)
             }

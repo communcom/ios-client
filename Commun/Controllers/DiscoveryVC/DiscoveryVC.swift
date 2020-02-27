@@ -21,7 +21,7 @@ class DiscoveryVC: BaseViewController {
     
     // MARK: - ChildVCs
     lazy var searchController = UISearchController.default()
-    lazy var suggestionsVC = DiscoverySuggestionsVC {
+    lazy var suggestionsVC = DiscoverySuggestionsVC(showAllHandler: {
         let originalText = self.searchController.searchBar.text ?? ""
         self.searchController.isActive = false
         self.searchBarChangeTextNotified(text: originalText)
@@ -33,7 +33,11 @@ class DiscoveryVC: BaseViewController {
                 self.showChildVCWithIndex(0)
             }
         }
+    }) {
+        self.searchController.isActive = false
+        self.cancelSearch()
     }
+    
     lazy var discoveryAllVC = DiscoveryAllVC { index in
         self.topTabBar.selectedIndex.accept(index)
     }
@@ -144,8 +148,7 @@ class DiscoveryVC: BaseViewController {
             .subscribe(onNext: { (_) in
                 self.searchWasCancelled = false
                 if self.currentChildVC != self.suggestionsVC {
-                    self.setTopBarHidden(true, animated: true)
-                    self.showChildVC(self.suggestionsVC)
+                    self.activeSearch()
                 }
             })
             .disposed(by: disposeBag)
@@ -159,8 +162,7 @@ class DiscoveryVC: BaseViewController {
         searchController.searchBar.rx.textDidEndEditing
             .subscribe(onNext: { (_) in
                 if self.searchWasCancelled {
-                    self.setTopBarHidden(false, animated: true)
-                    self.showChildVCWithIndex(self.topTabBar.selectedIndex.value)
+                    self.cancelSearch()
                 }
             })
             .disposed(by: disposeBag)
@@ -176,6 +178,16 @@ class DiscoveryVC: BaseViewController {
         // forward searchBar Delegate
         searchController.searchBar.rx.setDelegate(self)
             .disposed(by: disposeBag)
+    }
+    
+    private func cancelSearch() {
+        self.setTopBarHidden(false, animated: true)
+        self.showChildVCWithIndex(self.topTabBar.selectedIndex.value)
+    }
+    
+    private func activeSearch() {
+        self.setTopBarHidden(true, animated: true)
+        self.showChildVC(self.suggestionsVC)
     }
     
     // MARK: - ChildVC manager
