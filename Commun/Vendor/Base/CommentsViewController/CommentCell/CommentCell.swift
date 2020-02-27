@@ -47,7 +47,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         selectionStyle = .none
         
         contentView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
+        avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 0)
         avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         
         contentView.addSubview(contentTextView)

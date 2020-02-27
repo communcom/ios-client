@@ -17,27 +17,6 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
         return viewModel
     }
     
-    // MARK: - Subviews
-    override var tableView: UITableView {
-        get {
-            _tableView
-        }
-        set {
-            _tableView = newValue
-        }
-    }
-    
-    lazy var _tableView: UITableView = {
-        // Override tableView to fix problem with floating footer in section
-        // https://stackoverflow.com/a/32517926
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.configureForAutoLayout()
-        view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
-        tableView.backgroundColor = .white
-        return tableView
-    }()
-    
     // MARK: Initializers
     init(filter: CommentsListFetcher.Filter) {
         let viewModel = CommentsViewModel(filter: filter)
@@ -52,9 +31,8 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setUp() {
-        super.setUp()
-        // setup datasource
+    override func setUpTableView() {
+        super.setUpTableView()
         tableView.separatorStyle = .none
         
         // setup long press
