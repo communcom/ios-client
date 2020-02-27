@@ -17,7 +17,7 @@ class SubscriptionsListFetcher: ListFetcher<ResponseAPIContentGetSubscriptionsIt
     
     lazy var searchFetcher: SearchListFetcher = {
         let fetcher = SearchListFetcher()
-        fetcher.limit = 5
+        fetcher.limit = 20
         fetcher.searchType = .entitySearch
         fetcher.entitySearchEntity = .profiles
         return fetcher
