@@ -99,8 +99,7 @@ class CommunWalletVC: TransferHistoryVC {
         navigationController?.navigationBar.backgroundColor = .clear
         UIApplication.shared.statusBarView?.backgroundColor = .clear
     }
-    
-    
+
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
@@ -129,6 +128,7 @@ class CommunWalletVC: TransferHistoryVC {
         tableView.configureForAutoLayout()
         tableView.insetsContentViewsToSafeArea = false
         tableView.showsVerticalScrollIndicator = false
+        tableView.contentInsetAdjustmentBehavior = .never
 
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges(with: .zero)
@@ -139,7 +139,7 @@ class CommunWalletVC: TransferHistoryVC {
 
     override func bind() {
         super.bind()
-        
+
         // forward delegate
         myPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
