@@ -83,7 +83,7 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
 
 extension DiscoverySuggestionsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 51
+        viewModel.fetcher.search == nil ? 0 : 51
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
