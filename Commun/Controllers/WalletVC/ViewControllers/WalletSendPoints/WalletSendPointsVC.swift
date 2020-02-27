@@ -26,6 +26,7 @@ class WalletSendPointsVC: BaseViewController {
 
     let carouselHeight: CGFloat = .adaptive(height: 50.0)
 
+    let whiteView = UIView(width: .adaptive(width: 375.0), height: .adaptive(height: 543.0), backgroundColor: .white, cornerRadius: .adaptive(width: 25.0))
     let pointsToolbar: CMToolbarView = CMToolbarView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 375.0), height: .adaptive(height: 50.0))))
 
     lazy var communLogoImageView = UIView.transparentCommunLogo(size: .adaptive(width: 50.0))
@@ -74,9 +75,8 @@ class WalletSendPointsVC: BaseViewController {
     }()
     
     let sendPointsButton: CommunButton = {
-        let sendPointsButtonInstance = CommunButton.default(height: 50.0)
+        let sendPointsButtonInstance = CommunButton.default(height: 50.0, isDisabled: true)
         sendPointsButtonInstance.addTarget(self, action: #selector(sendPointsButtonTapped), for: .touchUpInside)
-        sendPointsButtonInstance.isEnabled = false
         
         return sendPointsButtonInstance
     }()
@@ -225,7 +225,6 @@ class WalletSendPointsVC: BaseViewController {
         dataModel.transaction.history == nil ? updateSendInfoByEnteredPoints() : updateSendInfoByHistory()
 
         // Action view
-        let whiteView = UIView(width: .adaptive(width: 375.0), height: .adaptive(height: 543.0), backgroundColor: .white, cornerRadius: .adaptive(width: 25.0))
         whiteView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.addSubview(whiteView)
         whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
@@ -357,7 +356,7 @@ class WalletSendPointsVC: BaseViewController {
         setSendButton(amount: amount, percent: 0.1)
         pointsTextField.text = String(format: "%.*f", accuracy, amount)
 
-        sendPointsButton.isEnabled = dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected
+        sendPointsButton.isDisabled = dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected
     }
     
     private func updateSendInfoByEnteredPoints() {
@@ -369,19 +368,36 @@ class WalletSendPointsVC: BaseViewController {
         setSendButton(amount: dataModel.transaction.amount, percent: isCMN ? 0.0 : 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.sell.fullName)
 
-        sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
+        sendPointsButton.isDisabled = !(dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected)
+    }
+
+    private func checkValues() -> Bool {
+        guard sendPointsButton.isDisabled else { return true }
+
+        let sendPointsButtonFrame = view.convert(sendPointsButton.frame, from: whiteView)
+
+        if !chooseFriendButton.isSelected {
+            self.hintView?.display(inPosition: sendPointsButtonFrame.origin, withType: .chooseFriend, completion: {})
+        }
+        
+        else {
+            self.hintView?.display(inPosition: sendPointsButtonFrame.origin, withType: .enterAmount, completion: {})
+        }
+        
+        return false
     }
 
     
     // MARK: - Actions
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
-        let friendsListVC = SendPointListVC { [weak self] user in
-            guard let strongSelf = self else { return }
-            
-            strongSelf.dataModel.transaction.createFriend(from: user)
-            strongSelf.chooseFriendButton.isSelected = true
-            strongSelf.updateBuyerInfo()
-            strongSelf.updateSendInfoByEnteredPoints()
+        let friendsListVC = SendPointListVC()
+        friendsListVC.completion = { [weak self] user in
+           guard let strongSelf = self else { return }
+           
+           strongSelf.dataModel.transaction.createFriend(from: user)
+           strongSelf.chooseFriendButton.isSelected = true
+           strongSelf.updateBuyerInfo()
+           strongSelf.updateSendInfoByEnteredPoints()
         }
         
         let nc = BaseNavigationController(rootViewController: friendsListVC)
@@ -397,6 +413,8 @@ class WalletSendPointsVC: BaseViewController {
     }
 
     @objc func sendPointsButtonTapped(_ sender: UITapGestureRecognizer) {
+        guard checkValues() else { return }
+        
         let confirmPasscodeVC = ConfirmPasscodeVC()
         present(confirmPasscodeVC, animated: true, completion: nil)
         

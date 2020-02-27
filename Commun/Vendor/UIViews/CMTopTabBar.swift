@@ -12,6 +12,7 @@ import RxSwift
 
 class CMTopTabBar: MyView {
     // MARK: - Properties
+    let contentInset: UIEdgeInsets
     var tabBarHeight: CGFloat
     var spacing: CGFloat
     let bag = DisposeBag()
@@ -24,14 +25,15 @@ class CMTopTabBar: MyView {
     var selectedIndex: BehaviorRelay<Int>
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(axis: .vertical, contentInset: .zero)
+    lazy var scrollView = ContentHuggingScrollView(axis: .vertical, contentInset: contentInset)
     
     // MARK: - Init
-    init(height: CGFloat, labels: [String], selectedIndex: Int = 0, spacing: CGFloat = 5) {
+    init(height: CGFloat, labels: [String], selectedIndex: Int = 0, spacing: CGFloat = 5, contentInset: UIEdgeInsets = .zero) {
         self.labels = labels
         self.selectedIndex = BehaviorRelay<Int>(value: selectedIndex)
         self.tabBarHeight = height
         self.spacing = spacing
+        self.contentInset = contentInset
         super.init(frame: .zero)
     }
     

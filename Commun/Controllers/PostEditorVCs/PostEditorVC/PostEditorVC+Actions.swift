@@ -40,27 +40,33 @@ extension PostEditorVC {
         viewModel.postForEdit == nil && !contentTextView.text.isEmpty
     }
     @objc override func close() {
+        UIView.performWithoutAnimation {
+            view.endEditing(true)
+        }
+        
         guard shouldSaveDraft() else {
             back()
             return
         }
         
-        showAlert(
-            title: "save post as draft".localized().uppercaseFirst + "?",
-            message: "draft let you save your edits, so you can come back later".localized().uppercaseFirst,
-            buttonTitles: ["save".localized().uppercaseFirst, "delete".localized().uppercaseFirst],
-            highlightedButtonIndex: 0) { (index) in
-                if index == 0 {
-                    self.saveDraft {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.showAlert(
+                title: "save post as draft".localized().uppercaseFirst + "?",
+                message: "draft let you save your edits, so you can come back later".localized().uppercaseFirst,
+                buttonTitles: ["save".localized().uppercaseFirst, "delete".localized().uppercaseFirst],
+                highlightedButtonIndex: 0) { (index) in
+                    if index == 0 {
+                        self.saveDraft {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    } else if index == 1 {
+                        // remove draft if exists
+                        self.removeDraft()
+                        
+                        // close
                         self.dismiss(animated: true, completion: nil)
                     }
-                } else if index == 1 {
-                    // remove draft if exists
-                    self.removeDraft()
-                    
-                    // close
-                    self.dismiss(animated: true, completion: nil)
-                }
+            }
         }
     }
     
@@ -198,6 +204,8 @@ extension PostEditorVC {
     
     // MARK: - Send post
     @objc override func send() {
+        guard checkValues() else { return }
+        
         self.view.endEditing(true)
         
         // remove draft
@@ -245,11 +253,11 @@ extension PostEditorVC {
             }) { (error) in
                 self.hideHud()
                 let message = "post not found".localized().uppercaseFirst
-                if let error = error as? ErrorAPI {
+                if let error = error as? CMError {
                     switch error {
-                    case .responseUnsuccessful(message: message):
+                    case .invalidResponse(message: message, _):
                         self.dismiss(animated: true, completion: nil)
-                    case .blockchain(message: let message):
+                    case .blockchainError(message: let message, _):
                         self.showAlert(title: "error".localized().uppercaseFirst, message: message)
                     default:
                         break

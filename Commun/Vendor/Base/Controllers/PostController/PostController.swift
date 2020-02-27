@@ -89,7 +89,6 @@ extension PostController {
             )
         }
         
-
         // headerView for actionSheet
         let headerView = PostMetaView(frame: .zero)
         headerView.isUserNameTappable = false
@@ -196,7 +195,7 @@ extension PostController {
                     return
                 }
                 topController.hideHud()
-                topController.showError(ErrorAPI.invalidData(message: "Unsupported type of post"))
+                topController.showError(CMError.invalidRequest(message: ErrorMessage.unsupportedTypeOfPost.rawValue))
             }, onError: {error in
                 topController.hideHud()
                 topController.showError(error)

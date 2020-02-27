@@ -23,6 +23,7 @@ class MyProfileEditBioVC: EditorVC {
         textView.textContainer.lineFragmentPadding = 0
         textView.placeholder = "enter text".localized().uppercaseFirst + "..."
         textView.keyboardDismissMode = .onDrag
+        
         return textView
     }()
     
@@ -31,13 +32,14 @@ class MyProfileEditBioVC: EditorVC {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
         // header
         headerLabel.text = (bio == nil ? "add bio" : "edit bio").localized().uppercaseFirst
         textView.rx.text.onNext(bio)
         
         // actionButton
         actionButton.setTitle("save".localized().uppercaseFirst, for: .normal)
-        actionButton.backgroundColor = .black
+        actionButton.isDisabled = true
         
         // charactersCountLabel
         let charactersCountContainerView = UIView(height: 35, backgroundColor: .black, cornerRadius: 35/2)
@@ -62,9 +64,9 @@ class MyProfileEditBioVC: EditorVC {
     override func bind() {
         // Bind textView
         let bioChanged = textView.rx.text.orEmpty
-            .map {$0.count != 0 && $0 != self.bio && $0.count <= self.bioLimit}
-        
-        bioChanged.bind(to: actionButton.rx.isEnabled)
+            .map { $0.count != 0 && $0 != self.bio && $0.count <= self.bioLimit }
+       
+        bioChanged.bind(to: actionButton.rx.isDisabled)
             .disposed(by: disposeBag)
         
         textView.rx.text.orEmpty
@@ -79,9 +81,12 @@ class MyProfileEditBioVC: EditorVC {
     }
     
     override func send() {
+        guard checkValues() else { return }
+        
         if textView.text != bio {
             didConfirm.onNext(textView.text)
         }
+        
         didConfirm.onCompleted()
         back()
     }
@@ -97,5 +102,17 @@ class MyProfileEditBioVC: EditorVC {
                 super.close()
             }
         }
+    }
+    
+    private func checkValues() -> Bool {
+        guard !actionButton.isDisabled else {
+            let hintType: CMHint.HintType = textView.text.isEmpty ? .enterText : .enterDifferentText
+            let actionButtonFrame = view.convert(actionButton.frame, from: toolbar)
+            
+            self.hintView?.display(inPosition: actionButtonFrame.origin, withType: hintType, andButtonHeight: actionButton.height, completion: {})
+            return false
+        }
+                        
+        return true
     }
 }

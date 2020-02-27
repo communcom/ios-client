@@ -10,10 +10,9 @@ import Foundation
 import CyberSwift
 
 class CommunitiesViewModel: ListViewModel<ResponseAPIContentGetCommunity> {
-    init(type: GetCommunitiesType, userId: String? = nil) {
+    init(type: GetCommunitiesType, userId: String? = nil, prefetch: Bool = true) {
         let fetcher = CommunitiesListFetcher(type: type, userId: userId)
-        super.init(fetcher: fetcher)
+        super.init(fetcher: fetcher, prefetch: prefetch)
         self.fetcher = fetcher
-        defer {fetchNext()}
     }
 }

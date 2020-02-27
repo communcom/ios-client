@@ -10,6 +10,7 @@ import Foundation
 
 /// Reusable itemcell for subscribers/subscriptions
 class SubsItemCell: MyTableViewCell {
+    lazy var stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     lazy var nameLabel = UILabel.with(textSize: 15, weight: .semibold, numberOfLines: 0)
     lazy var statsLabel = UILabel.descriptionLabel(numberOfLines: 0)
@@ -32,7 +33,6 @@ class SubsItemCell: MyTableViewCell {
         backgroundColor = .white
         selectionStyle = .none
         
-        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         contentView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
         
@@ -51,6 +51,11 @@ class SubsItemCell: MyTableViewCell {
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
         actionButton.addTarget(self, action: #selector(actionButtonDidTouch), for: .touchUpInside)
+    }
+    
+    func hideActionButton() {
+        stackView.removeArrangedSubview(actionButton)
+        actionButton.removeFromSuperview()
     }
     
     @objc func actionButtonDidTouch() {

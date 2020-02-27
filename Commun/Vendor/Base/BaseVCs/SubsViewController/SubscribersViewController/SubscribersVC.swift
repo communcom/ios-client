@@ -10,8 +10,10 @@ import Foundation
 import CyberSwift
 
 class SubscribersVC: SubsViewController<ResponseAPIContentGetProfile, SubscribersCell>, ProfileCellDelegate {
-    init(title: String? = nil, userId: String? = nil, communityId: String? = nil) {
-        let viewModel = SubscribersViewModel(userId: userId, communityId: communityId)
+    var dismissModalWhenPushing = false
+    
+    init(title: String? = nil, userId: String? = nil, communityId: String? = nil, prefetch: Bool = true) {
+        let viewModel = SubscribersViewModel(userId: userId, communityId: communityId, prefetch: prefetch)
         super.init(viewModel: viewModel)
         defer {
             self.title = title
@@ -27,5 +29,23 @@ class SubscribersVC: SubsViewController<ResponseAPIContentGetProfile, Subscriber
         let title = "no subscribers"
         let description = "no subscribers found"
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
+    }
+    
+    override func modelSelected(_ user: ResponseAPIContentGetProfile) {
+        let completion: (UIViewController) -> Void = {vc in
+            vc.showProfileWithUserId(user.userId)
+        }
+        
+        if dismissModalWhenPushing,
+            self.isModal,
+            let tabBar = presentingViewController as? TabBarVC,
+            let vc = tabBar.selectedViewController as? BaseNavigationController
+        {
+            dismiss(animated: true) {
+                completion(vc)
+            }
+        } else {
+            completion(self)
+        }
     }
 }

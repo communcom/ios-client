@@ -43,7 +43,7 @@ extension ResponseAPIGetNotificationItem {
                 .normal((comment?.shortText ?? "") + "...\"")
             
         case "reward":
-            aStr.normal("you got".localized().uppercaseFirst)
+            aStr.normal("you've got".localized().uppercaseFirst)
                 .normal(" ")
                 .normal("\(amount ?? "0") \(community?.communityId ?? "POINTS")")
                 .normal(" ")
@@ -55,6 +55,8 @@ extension ResponseAPIGetNotificationItem {
                     .normal(" ")
                     .normal("\(amount ?? "0") \(community?.communityId ?? "points")")
             } else if from?.username?.lowercased() != "bounty" {
+                var pointType = self.pointType
+                if pointType == "token" {pointType = "Commun"}
                 aStr.semibold(from?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
                     .normal("sent you".localized())

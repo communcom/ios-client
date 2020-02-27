@@ -17,7 +17,7 @@ public let tabBarHeight: CGFloat = .adaptive(height: 60.0) + (UIDevice.hasNotch 
 class TabBarVC: UITabBarController {
     // MARK: - Constants
     let feedTabIndex = 0
-    let searchTabIndex = 1
+    let discoveryTabIndex = 1
     let notificationTabIndex = 2
     let profileTabIndex = 3
     let selectedColor = UIColor.black
@@ -118,10 +118,10 @@ class TabBarVC: UITabBarController {
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
-        let comunities = CommunitiesVC(type: .all)
-        let communitiesNC = BaseNavigationController(rootViewController: comunities, tabBarVC: self)
-        let communitiesItem = buttonTabBarItem(image: UIImage(named: "tabbar-discovery-icon")!, tag: searchTabIndex)
-        comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
+        let discoveryVC = DiscoveryVC()
+        let discoveryNC = BaseNavigationController(rootViewController: discoveryVC, tabBarVC: self)
+        let discoveryItem = buttonTabBarItem(image: UIImage(named: "tabbar-discovery-icon")!, tag: discoveryTabIndex)
+        discoveryVC.accessibilityLabel = "TabBarDiscoveryTabBarItem"
         
         // Notifications Tab
         let notifications = NotificationsPageVC()
@@ -137,11 +137,11 @@ class TabBarVC: UITabBarController {
         profileNC.navigationBar.tintColor = UIColor.appMainColor
 
         // Set up controllers
-        viewControllers = [feedNC, communitiesNC, /* wallet,*/ notificationsNC, profileNC]
+        viewControllers = [feedNC, discoveryNC, /* wallet,*/ notificationsNC, profileNC]
         
         tabBarStackView.addArrangedSubviews([
             feedItem,
-            communitiesItem,
+            discoveryItem,
             tabBarItemAdd,
             notificationsItem,
             profileItem
@@ -194,6 +194,11 @@ class TabBarVC: UITabBarController {
     }
 
     func switchTab(index: Int) {
+        // Remove notifications red marker
+        if index == notificationTabIndex {
+            self.setNotificationRedMarkHidden(true)
+        }
+        
         // pop to first if index is selected
         if selectedIndex == index {
             if let navController = viewControllers?[index] as? UINavigationController {
@@ -203,6 +208,7 @@ class TabBarVC: UITabBarController {
                     navController.topViewController?.scrollToTop()
                 }
             }
+            
             return
         }
         
@@ -214,6 +220,7 @@ class TabBarVC: UITabBarController {
         let selectedItem = items.first {$0.tag == selectedIndex}
         let unselectedItems = items.filter {$0.tag != selectedIndex}
         selectedItem?.tintColor = selectedColor
+        
         for item in unselectedItems {
             item.tintColor = unselectedColor
         }

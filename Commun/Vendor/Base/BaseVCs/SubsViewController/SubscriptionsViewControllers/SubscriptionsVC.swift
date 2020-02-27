@@ -14,10 +14,11 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     // MARK: - Properties
     var hideFollowButton = false
     private var isNeedHideCloseButton = false
+    var dismissModalWhenPushing = false
     
     // MARK: - Class Initialization
-    init(title: String? = nil, userId: String? = nil, type: GetSubscriptionsType) {
-        let viewModel = SubscriptionsViewModel(userId: userId, type: type)
+    init(title: String? = nil, userId: String? = nil, type: GetSubscriptionsType, prefetch: Bool = true) {
+        let viewModel = SubscriptionsViewModel(userId: userId, type: type, prefetch: prefetch)
         super.init(viewModel: viewModel)
         defer {self.title = title}
     }
@@ -100,8 +101,8 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
             buttonTitleValue    =   "empty subscriptions button title".localized().uppercaseFirst
             
         case .user:
-            titleValue          =   "no subscribers".localized().uppercaseFirst
-            descriptionValue    =   "no subscribers found".localized().uppercaseFirst
+            titleValue          =   "empty subscriptions title".localized().uppercaseFirst
+            descriptionValue    =   "empty subscriptions user description".localized().uppercaseFirst
         }
         
         tableView.addEmptyPlaceholderFooterView(title: titleValue,
@@ -110,5 +111,28 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
                                                 buttonAction: {
                                                     Logger.log(message: "Action button tapped...", event: .debug)
         })
+    }
+    
+    override func modelSelected(_ item: ResponseAPIContentGetSubscriptionsItem) {
+        let completion: (UIViewController) -> Void = {vc in
+            if let community = item.communityValue {
+                vc.showCommunityWithCommunityId(community.communityId)
+            }
+            if let user = item.userValue {
+                vc.showProfileWithUserId(user.userId)
+            }
+        }
+        
+        if dismissModalWhenPushing,
+            self.isModal,
+            let tabBar = presentingViewController as? TabBarVC,
+            let vc = tabBar.selectedViewController as? BaseNavigationController
+        {
+            dismiss(animated: true) {
+                completion(vc)
+            }
+        } else {
+            completion(self)
+        }
     }
 }

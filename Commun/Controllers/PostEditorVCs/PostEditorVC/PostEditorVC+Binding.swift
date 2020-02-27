@@ -25,10 +25,10 @@ extension PostEditorVC {
     
     func bindSendPostButton() {
         // Verification
-        //TODO: Verify community
+        // TODO: Verify community
         contentCombined
             .map {_ in self.isContentValid}
-            .bind(to: actionButton.rx.isEnabled)
+            .bind(to: actionButton.rx.isDisabled)
             .disposed(by: disposeBag)
     }
     

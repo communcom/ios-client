@@ -128,7 +128,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     func bindItems() {
         if !isSearchEnabled {
             viewModel.items
-                .map {[ListSection(model: "", items: $0)]}
+                .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
                 .bind(to: tableView.rx.items(dataSource: dataSource))
                 .disposed(by: disposeBag)
         } else {
@@ -223,6 +223,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         
         if let profile = item as? ResponseAPIContentGetProfile {
             showProfileWithUserId(profile.userId)
+            return
         }
         
     }
@@ -291,6 +292,21 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     func search(_ keyword: String?) {
-        fatalError("Must override")
+        guard let keyword = keyword, !keyword.isEmpty else {
+            if viewModel.fetcher.search != nil {
+                viewModel.fetcher.search = nil
+                handleEmptyKeyword()
+            }
+            return
+        }
+        
+        if viewModel.fetcher.search != keyword {
+            viewModel.fetcher.search = keyword
+            viewModel.reload(clearResult: false)
+        }
+    }
+    
+    func handleEmptyKeyword() {
+        viewModel.reload()
     }
 }

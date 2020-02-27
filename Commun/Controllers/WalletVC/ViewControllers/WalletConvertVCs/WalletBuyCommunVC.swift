@@ -64,7 +64,8 @@ class WalletBuyCommunVC: WalletConvertVC {
             leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
         }
         
-        convertButton.isEnabled = shouldEnableConvertButton()
+        convertButton.isDisabled = !shouldEnableConvertButton()
+//        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
@@ -74,7 +75,8 @@ class WalletBuyCommunVC: WalletConvertVC {
             rightTextField.text = stringFromNumber(viewModel.sellPrice.value)
         }
         
-        convertButton.isEnabled = shouldEnableConvertButton()
+        convertButton.isDisabled = !shouldEnableConvertButton()
+//        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func bindBuyPrice() {
@@ -154,23 +156,28 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
      override func shouldEnableConvertButton() -> Bool {
-        guard let sellAmount = NumberFormatter().number(from: self.leftTextField.text ?? "0")?.doubleValue
-            else {return false}
-        guard let currentBalance = self.currentBalance else {return false}
-        guard sellAmount > 0 else {return false}
+        guard let sellAmount = NumberFormatter().number(from: self.leftTextField.text ?? "0")?.doubleValue else { return false }
+        guard let currentBalance = self.currentBalance else { return false }
+        guard sellAmount > 0 else { return false }
+        
         if sellAmount > currentBalance.balanceValue {
             viewModel.errorSubject.accept(.insufficientFunds)
+            
             return false
         }
+        
         return true
     }
     
     override func convertButtonDidTouch() {
+        guard checkValues() else { return }
+
         super.convertButtonDidTouch()
+        
         guard var balance = currentBalance,
             var communBalance = communBalance,
             let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
-        else {return}
+        else { return }
         
         let expectedValue = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue
         

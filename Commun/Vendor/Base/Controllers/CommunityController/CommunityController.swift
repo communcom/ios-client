@@ -63,71 +63,11 @@ extension CommunityController {
     }
     
     private func sendJoinRequest() {
-        guard community != nil else {return}
-        let id = community!.communityId
-        
-        // for reverse
-        let originIsSubscribed = community!.isSubscribed ?? false
-        let originIsInBlacklist = community!.isInBlacklist ?? false
-        
-        // set value
-        setIsSubscribed(!originIsSubscribed)
-        community?.isBeingJoined = true
-        community?.isInBlacklist = false
-        
-        // notify changes
-        community!.notifyChanged()
-        
-        // send request
-//        Completable.empty()
-//            .delay(0.8, scheduler: MainScheduler.instance)
-        let request: Single<String>
-        
-        if originIsSubscribed {
-            request = BlockchainManager.instance.unfollowCommunity(id)
-        } else {
-            if originIsInBlacklist {
-                request = BlockchainManager.instance.unhideCommunity(id)
-                    .flatMap {_ in BlockchainManager.instance.followCommunity(id)}
-            } else {
-                request = BlockchainManager.instance.followCommunity(id)
-            }
-        }
-        
-        request
-            .flatMapToCompletable()
-            .subscribe(onCompleted: { [weak self] in
-                // re-enable state
-                self?.community?.isBeingJoined = false
-                self?.community?.notifyChanged()
-                
-            }) { [weak self] (error) in
-                guard let strongSelf = self else {return}
-                // reverse change
-                strongSelf.setIsSubscribed(originIsSubscribed)
-                strongSelf.community?.isBeingJoined = false
-                strongSelf.community?.isInBlacklist = originIsInBlacklist
-                strongSelf.community?.notifyChanged()
-                
-                // show error
+        guard let community = community else {return}
+        NetworkService.shared.triggerFollow(community: community)
+            .subscribe(onError: { (error) in
                 UIApplication.topViewController()?.showError(error)
-            }
-            .disposed(by: disposeBag)
-    }
-    
-    func setIsSubscribed(_ value: Bool) {
-        guard community != nil,
-            value != community?.isSubscribed
-        else {return}
-        community!.isSubscribed = value
-        var subscribersCount: Int64 = (community!.subscribersCount ?? 0)
-        if value == false && subscribersCount == 0 {subscribersCount = 0} else {
-            if value == true {
-                subscribersCount += 1
-            } else {
-                subscribersCount -= 1
-            }
-        }
-        community!.subscribersCount = subscribersCount
+            })
+            .disposed(by: self.disposeBag)
     }
 }

@@ -23,7 +23,7 @@ extension PostCell {
             return
         }
         
-        voteContainerView.animateUpVote {
+        postStatsView.voteContainerView.animateUpVote {
             self.delegate?.upvoteButtonDidTouch(post: post)
         }
     }
@@ -36,7 +36,7 @@ extension PostCell {
             return
         }
         
-        voteContainerView.animateDownVote {
+        postStatsView.voteContainerView.animateDownVote {
             self.delegate?.downvoteButtonDidTouch(post: post)
         }
     }

@@ -6,17 +6,36 @@
 //  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import RxSwift
+import RxCocoa
 
 class CommunButton: UIButton {
     var isDisableGrayColor = false
+    
+    var isDisabled: Bool = false {
+        didSet {
+            alpha = isDisabled ? 0.5 : 1.0
+        }
+    }
+
+    override var isEnabled: Bool {
+        didSet {
+            if isDisableGrayColor {
+                backgroundColor = isEnabled ? UIColor.appMainColor : .appGrayColor
+            } else {
+                alpha = isEnabled ? 1.0 : 0.5
+            }
+        }
+    }
+    
     enum AnimationType {
         case `default`
         case upVote
         case downVote
     }
     
-    static func `default`(height: CGFloat = 35.0, label: String? = nil, cornerRadius: CGFloat? = nil, isHuggingContent: Bool = true, isDisableGrayColor: Bool = false) -> CommunButton {
+    static func `default`(height: CGFloat = 35.0, label: String? = nil, cornerRadius: CGFloat? = nil, isHuggingContent: Bool = true, isDisableGrayColor: Bool = false, isDisabled: Bool = false) -> CommunButton {
         let button = CommunButton(height: height,
                                   label: label,
                                   labelFont: .boldSystemFont(ofSize: 15.0),
@@ -28,7 +47,9 @@ class CommunButton: UIButton {
                                                                  bottom: 10.0,
                                                                  right: 15.0))
 
+        button.isDisabled = isDisabled
         button.isDisableGrayColor = isDisableGrayColor
+
         if isHuggingContent {
             button.setContentHuggingPriority(.required, for: .horizontal)
         }
@@ -40,16 +61,6 @@ class CommunButton: UIButton {
         backgroundColor = isHighlighted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
         setTitleColor(isHighlighted ? .appMainColor: .white, for: .normal)
         setTitle((isHighlighted ? highlightedLabel : unHighlightedLabel).localized().uppercaseFirst, for: .normal)
-    }
-    
-    override var isEnabled: Bool {
-        didSet {
-            if isDisableGrayColor {
-                backgroundColor = isEnabled ? UIColor.appMainColor : .appGrayColor
-            } else {
-                alpha = isEnabled ? 1: 0.5
-            }
-        }
     }
     
     func animate(type: AnimationType = .default, completion: (() -> Void)? = nil) {
@@ -94,6 +105,16 @@ class CommunButton: UIButton {
             layer.add(fadeAnim, forKey: "Fade")
             
             CATransaction.commit()
+        }
+    }
+}
+
+
+extension Reactive where Base: CommunButton {
+    /// Bindable sink for `disabled` property.
+    var isDisabled: Binder<Bool> {
+        return Binder(self.base) { control, value in
+            control.isDisabled = !value
         }
     }
 }

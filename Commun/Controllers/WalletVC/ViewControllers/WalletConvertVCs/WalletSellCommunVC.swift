@@ -44,7 +44,8 @@ class WalletSellCommunVC: WalletConvertVC {
             rightTextField.text = stringFromNumber(viewModel.buyPrice.value)
         }
         
-        convertButton.isEnabled = shouldEnableConvertButton()
+        convertButton.isDisabled = !shouldEnableConvertButton()
+//        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
@@ -54,7 +55,8 @@ class WalletSellCommunVC: WalletConvertVC {
             leftTextField.text = stringFromNumber(viewModel.sellPrice.value)
         }
         
-        convertButton.isEnabled = shouldEnableConvertButton()
+        convertButton.isDisabled = !shouldEnableConvertButton()
+//        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func layoutCarousel() {
@@ -66,9 +68,15 @@ class WalletSellCommunVC: WalletConvertVC {
         balanceNameLabel.autoPinEdge(.top, to: .bottom, of: communLogo, withOffset: 20)
     }
     
+    override func layoutBuyContainer() {
+        super.layoutBuyContainer()
+        buyContainer.isUserInteractionEnabled = true
+        buyContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dropdownButtonDidTouch)))
+    }
+    
     override func layoutTrailingOfBuyContainer() {
         let dropdownButton = UIButton.circleGray(imageName: "drop-down")
-        dropdownButton.addTarget(self, action: #selector(dropdownButtonDidTouch), for: .touchUpInside)
+        dropdownButton.isUserInteractionEnabled = false
         buyContainer.addSubview(dropdownButton)
         dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         dropdownButton.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -76,14 +84,15 @@ class WalletSellCommunVC: WalletConvertVC {
     }
     
     override func shouldEnableConvertButton() -> Bool {
-        guard let sellAmount = NumberFormatter().number(from: self.leftTextField.text ?? "0")?.doubleValue
-            else {return false}
-        guard let communBalance = self.communBalance else {return false}
-        guard sellAmount > 0 else {return false}
+        guard let sellAmount = NumberFormatter().number(from: self.leftTextField.text ?? "0")?.doubleValue else { return false }
+        guard let communBalance = self.communBalance else { return false }
+        guard sellAmount > 0 else { return false }
+        
         if sellAmount > communBalance.balanceValue {
             viewModel.errorSubject.accept(.insufficientFunds)
             return false
         }
+        
         return true
     }
     
@@ -167,16 +176,19 @@ class WalletSellCommunVC: WalletConvertVC {
         guard let balance = currentBalance,
             let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue,
             value > 0
-        else {return}
+        else { return }
         viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
     
     override func convertButtonDidTouch() {
+        guard checkValues() else { return }
+        
         super.convertButtonDidTouch()
+        
         guard var balance = currentBalance,
             var communBalance = communBalance,
             let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
-        else {return}
+        else { return }
         
         let expectedValue = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue
         

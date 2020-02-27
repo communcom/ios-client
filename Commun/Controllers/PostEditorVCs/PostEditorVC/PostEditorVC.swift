@@ -101,8 +101,9 @@ class PostEditorVC: EditorVC {
     override func setUp() {
         super.setUp()
         
-        actionButton.setTitle("send post".localized().uppercaseFirst, for: .normal)
+        actionButton.isDisabled = true
         actionButton.backgroundColor = .appMainColor
+        actionButton.setTitle("send post".localized().uppercaseFirst, for: .normal)
         
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
@@ -175,5 +176,21 @@ class PostEditorVC: EditorVC {
     
     func getContentBlock() -> Single<ResponseAPIContentBlock> {
         contentTextView.getContentBlock()
+    }
+    
+    func checkValues() -> Bool {
+        let actionButtonFrame = view.convert(actionButton.frame, from: toolbar)
+
+        if viewModel.community.value == nil {
+            self.hintView?.display(inPosition: actionButtonFrame.origin, withType: .chooseCommunity, andButtonHeight: actionButton.height, completion: {})
+            return false
+        }
+        
+        else if contentTextView.text.isEmpty {
+            self.hintView?.display(inPosition: actionButtonFrame.origin, withType: .enterTextPhoto, andButtonHeight: actionButton.height, completion: {})
+            return false
+        }
+        
+        return true
     }
 }

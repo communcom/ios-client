@@ -21,6 +21,19 @@ class AnalyticsManger {
         #endif
     }
 
+    // MARK: - Rate
+    func sendFeedback(message: String) {
+        sendEvent(name: "Feedback", props: ["message": message])
+    }
+
+    func showRate() {
+        sendEvent(name: "Show Rate App")
+    }
+
+    func rate(isLike: String) {
+        sendEvent(name: "Rate App", props: ["Is Like": isLike])
+    }
+
     // MARK: - Launch
     func launchFirstTime() {
         sendEvent(name: "Launch first time")

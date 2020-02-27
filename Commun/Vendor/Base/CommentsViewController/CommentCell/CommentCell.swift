@@ -85,7 +85,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         constraint.priority = .defaultLow
         constraint.isActive = true
         
-        voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
         
         // handle tap on see more
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapTextView(sender:)))
@@ -194,13 +194,20 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             .foregroundColor: UIColor.black
         ])
         
-        guard let content = comment?.document?.toAttributedString(
+        guard var content = comment?.document?.toAttributedString(
             currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)],
             attachmentType: TextAttachment.self)
         else {
             mutableAS.append(NSAttributedString(string: " " + "this comment was deleted".localized().uppercaseFirst, attributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize), .foregroundColor: UIColor.lightGray]))
             contentTextView.attributedText = mutableAS
             return
+        }
+        
+        // truncate last character
+        if content.string.ends(with: "\r") {
+            let newContent = NSMutableAttributedString(attributedString: content)
+            newContent.deleteCharacters(in: NSRange(location: content.length - 1, length: 1))
+            content = newContent
         }
         
         if content.string.trimmed == "" {

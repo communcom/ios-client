@@ -12,13 +12,16 @@ import CyberSwift
 class ReportVC: BaseVerticalStackViewController {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
-    
+    let sendButton = CommunButton.default(height: .adaptive(height: 50.0), label: "send".localized().uppercaseFirst, isDisabled: true)
+
     // MARK: - Properties
     var choosedReasons: [BlockchainManager.ReportReason] {
         actions.filter {$0.isSelected == true}
             .compactMap {BlockchainManager.ReportReason(rawValue: $0.title)}
     }
+    
     var otherReason: String?
+    
     
     // MARK: - Initializers
     init() {
@@ -30,6 +33,7 @@ class ReportVC: BaseVerticalStackViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     // MARK: - Methods
     override func viewDidLayoutSubviews() {
@@ -66,7 +70,6 @@ class ReportVC: BaseVerticalStackViewController {
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
-        let sendButton = CommunButton.default(height: 50 * Config.heightRatio, label: "send".localized().uppercaseFirst)
         scrollView.contentView.addSubview(sendButton)
         sendButton.autoPinEdge(.top, to: .bottom, of: alertView, withOffset: 30)
         sendButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -81,30 +84,46 @@ class ReportVC: BaseVerticalStackViewController {
         actionView.checkBox.isUserInteractionEnabled = false
         actionView.titleLabel.text = action.title
         actionView.checkBox.isSelected = action.isSelected
+        
         return actionView
     }
     
     override func didSelectAction(_ action: Action) {
-        guard let index = actions.firstIndex(where: {$0.title == action.title})
-            else {return}
+        guard let index = actions.firstIndex(where: { $0.title == action.title }) else { return }
         
         actions[index].isSelected = !actions[index].isSelected
         (viewForActionAtIndex(index) as! ReportOptionView).checkBox.isSelected = actions[index].isSelected
         
+        sendButton.isDisabled = !actions.any(matching: { $0.isSelected == true })
+        
         // other reason
-        if index == actions.count - 1, actions[index].isSelected
-        {
+        if index == actions.count - 1, actions[index].isSelected {
             // open vc for entering text
             let vc = ReportOtherVC()
+            
             vc.completion = { otherReason in
                 vc.back()
                 self.otherReason = otherReason
                 self.sendButtonDidTouch()
+                self.sendButton.isDisabled = true
             }
+            
             show(vc, sender: nil)
         }
     }
     
+    func checkValues() -> Bool {
+        guard !sendButton.isDisabled else {
+            let sendButtonFrame = view.convert(sendButton.frame, from: scrollView.contentView)
+            self.hintView?.display(inPosition: sendButtonFrame.origin, withType: .chooseProblem, completion: {})
+            return false
+        }
+                        
+        return true
+    }
+
+    
+    // MARK: - Actions
     @objc func sendButtonDidTouch() {
     }
 }

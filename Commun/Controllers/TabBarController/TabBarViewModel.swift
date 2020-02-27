@@ -10,8 +10,5 @@ import Foundation
 import RxSwift
 
 struct TabBarViewModel {
-    func getFreshCount() -> Single<UInt16> {
-        return NetworkService.shared.getFreshNotifications()
-            .map {$0.fresh}
-    }
+    
 }

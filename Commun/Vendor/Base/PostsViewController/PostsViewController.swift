@@ -10,12 +10,9 @@ import UIKit
 import CyberSwift
 
 class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCell>, PostCellDelegate {
-    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time, userId: Config.currentUser?.id)) {
-        let viewModel = PostsViewModel(filter: filter)
+    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time, userId: Config.currentUser?.id), prefetch: Bool = true) {
+        let viewModel = PostsViewModel(filter: filter, prefetch: prefetch)
         super.init(viewModel: viewModel)
-        defer {
-            viewModel.fetchNext()
-        }
     }
     
     required init?(coder: NSCoder) {
