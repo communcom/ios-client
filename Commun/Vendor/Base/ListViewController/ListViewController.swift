@@ -170,12 +170,15 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                     } else {
                         self?.refreshControl.endRefreshing()
                     }
+                
                 case .listEnded:
                     self?.handleListEnded()
                     self?.refreshControl.endRefreshing()
+                
                 case .listEmpty:
                     self?.handleListEmpty()
                     self?.refreshControl.endRefreshing()
+                
                 case .error(let error):
                     self?.refreshControl.endRefreshing()
                     self?.handleListError()
