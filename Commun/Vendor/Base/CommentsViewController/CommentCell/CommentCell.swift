@@ -85,7 +85,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         constraint.priority = .defaultLow
         constraint.isActive = true
         
-        voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
         
         // handle tap on see more
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapTextView(sender:)))

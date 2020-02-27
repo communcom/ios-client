@@ -49,22 +49,24 @@ extension PostEditorVC {
             return
         }
         
-        showAlert(
-            title: "save post as draft".localized().uppercaseFirst + "?",
-            message: "draft let you save your edits, so you can come back later".localized().uppercaseFirst,
-            buttonTitles: ["save".localized().uppercaseFirst, "delete".localized().uppercaseFirst],
-            highlightedButtonIndex: 0) { (index) in
-                if index == 0 {
-                    self.saveDraft {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.showAlert(
+                title: "save post as draft".localized().uppercaseFirst + "?",
+                message: "draft let you save your edits, so you can come back later".localized().uppercaseFirst,
+                buttonTitles: ["save".localized().uppercaseFirst, "delete".localized().uppercaseFirst],
+                highlightedButtonIndex: 0) { (index) in
+                    if index == 0 {
+                        self.saveDraft {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    } else if index == 1 {
+                        // remove draft if exists
+                        self.removeDraft()
+                        
+                        // close
                         self.dismiss(animated: true, completion: nil)
                     }
-                } else if index == 1 {
-                    // remove draft if exists
-                    self.removeDraft()
-                    
-                    // close
-                    self.dismiss(animated: true, completion: nil)
-                }
+            }
         }
     }
     

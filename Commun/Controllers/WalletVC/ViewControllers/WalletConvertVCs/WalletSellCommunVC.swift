@@ -68,9 +68,15 @@ class WalletSellCommunVC: WalletConvertVC {
         balanceNameLabel.autoPinEdge(.top, to: .bottom, of: communLogo, withOffset: 20)
     }
     
+    override func layoutBuyContainer() {
+        super.layoutBuyContainer()
+        buyContainer.isUserInteractionEnabled = true
+        buyContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dropdownButtonDidTouch)))
+    }
+    
     override func layoutTrailingOfBuyContainer() {
         let dropdownButton = UIButton.circleGray(imageName: "drop-down")
-        dropdownButton.addTarget(self, action: #selector(dropdownButtonDidTouch), for: .touchUpInside)
+        dropdownButton.isUserInteractionEnabled = false
         buyContainer.addSubview(dropdownButton)
         dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         dropdownButton.autoAlignAxis(toSuperviewAxis: .horizontal)

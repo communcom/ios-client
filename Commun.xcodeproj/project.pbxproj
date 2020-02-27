@@ -307,6 +307,7 @@
 		BC4AD66123B1BB9D008546A4 /* TransferHistoryFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */; };
 		BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */; };
 		BC4AD66623B1EBF1008546A4 /* TransferHistoryTopTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */; };
+		BC51B48D2407BA8B009DFB48 /* PostStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC51B48C2407BA8B009DFB48 /* PostStatsView.swift */; };
 		BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */; };
 		BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */; };
 		BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */; };
@@ -844,6 +845,7 @@
 		BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryFilterVC.swift; sourceTree = "<group>"; };
 		BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistorySegmentedControl.swift; sourceTree = "<group>"; };
 		BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryTopTabBar.swift; sourceTree = "<group>"; };
+		BC51B48C2407BA8B009DFB48 /* PostStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatsView.swift; sourceTree = "<group>"; };
 		BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubviewAttachingTextView.swift; sourceTree = "<group>"; };
 		BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageTextAttachment.swift; sourceTree = "<group>"; };
 		BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
@@ -2616,6 +2618,7 @@
 				BC619B1C2372C1480005BB94 /* CMTopTabBar.swift */,
 				BC597A7B238CBFE700103F4F /* CMPageControll.swift */,
 				BCCC33E923751A10004E46EF /* VoteContainerView.swift */,
+				BC51B48C2407BA8B009DFB48 /* PostStatsView.swift */,
 				BC52913423765EAB0022EC7F /* RightAlignedIconButton.swift */,
 				BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */,
 				BC597A86238CE8FD00103F4F /* CommunityCollectionCell.swift */,
@@ -3364,6 +3367,7 @@
 				BC561E85238B9989004C53EB /* ReportVC+Presentation.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */,
+				BC51B48D2407BA8B009DFB48 /* PostStatsView.swift in Sources */,
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
 				BCA0039D23716AA1002A68BA /* LeaderController.swift in Sources */,
 				BCF74A62236180B900B91089 /* SubscribersViewModel.swift in Sources */,

@@ -11,13 +11,15 @@ import Foundation
 class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, DiscoverySuggestionCell> {
     // MARK: - Properties
     var showAllHandler: (() -> Void)?
+    var cancelSearchHandler: (() -> Void)?
     
     // MARK: - Initializers
-    init(showAllHandler: (() -> Void)? = nil) {
+    init(showAllHandler: (() -> Void)? = nil, cancelSearchHandler: (() -> Void)? = nil) {
         let vm = SearchViewModel()
         (vm.fetcher as! SearchListFetcher).searchType = .quickSearch
         (vm.fetcher as! SearchListFetcher).entities = [.profiles, .communities]
         self.showAllHandler = showAllHandler
+        self.cancelSearchHandler = cancelSearchHandler
         super.init(viewModel: vm)
     }
     
@@ -32,6 +34,20 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
         tableView.separatorStyle = .none
         
         tableView.keyboardDismissMode = .onDrag
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(gesture:)))
+        tapGesture.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissKeyboard(gesture: UITapGestureRecognizer) {
+        let point = gesture.location(in: tableView)
+        
+        // cancel search if tap outside cell
+        if tableView.indexPathForRow(at: point) == nil {
+            cancelSearchHandler?()
+        }
+        
     }
     
     override func bind() {
@@ -83,7 +99,7 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
 
 extension DiscoverySuggestionsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 51
+        viewModel.fetcher.search == nil ? 0 : 51
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
