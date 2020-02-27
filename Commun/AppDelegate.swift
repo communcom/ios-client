@@ -114,11 +114,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .subscribe(onNext: { (state) in
                 switch state {
                 case .disconnected:
-                    self.window?.rootViewController?.showIndetermineHudWithMessage(nil)
+                    self.showConnectingHud()
                 default:
                     return
                 }
-                
             })
             .disposed(by: bag)
         
@@ -224,6 +223,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        showConnectingHud()
         AnalyticsManger.shared.foregroundApp()
         SocketManager.shared.connect()
     }
@@ -371,6 +371,11 @@ extension AppDelegate {
         
         // With swizzling disabled you must set the APNs token here.
         // Messaging.messaging().apnsToken = deviceToken
+    }
+
+    private func showConnectingHud() {
+        let message = "connecting".uppercaseFirst.localized() + "..."
+        self.window?.rootViewController?.showIndetermineHudWithMessage(message)
     }
 }
 
