@@ -14,18 +14,8 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     
     // MARK: - Initializers
     init(seeAllHandler: ((Int) -> Void)? = nil) {
-        let vm = SearchViewModel()
-        (vm.fetcher as! SearchListFetcher).searchType = .extendedSearch
-        (vm.fetcher as! SearchListFetcher).extendedSearchEntity = [
-            .profiles: ["limit": 5, "offset": 0],
-            .communities: ["limit": 5, "offset": 0],
-            .posts: ["limit": 5, "offset": 0]
-        ]
         self.seeAllHandler = seeAllHandler
-        
-        // prefetch
-        vm.fetchNext()
-        
+        let vm = DiscoveryAllViewModel()
         super.init(viewModel: vm)
         
         defer {
@@ -38,7 +28,6 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     }
     
     // MARK: - Methods
-    
     override func setUpTableView() {
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.configureForAutoLayout()
@@ -61,28 +50,6 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     override func bind() {
         super.bind()
         tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-    }
-    
-    override func bindItems() {
-        viewModel.items
-            .map {items -> [ListSection] in
-                let communities = items.filter {$0.communityValue != nil}
-                let followers = items.filter {$0.profileValue != nil}
-                let posts = items.filter {$0.postValue != nil}
-                var sections = [ListSection]()
-                if !communities.isEmpty {
-                    sections.append(ListSection(model: "communities", items: communities))
-                }
-                if !followers.isEmpty {
-                    sections.append(ListSection(model: "users", items: followers))
-                }
-                if !posts.isEmpty {
-                    sections.append(ListSection(model: "posts", items: posts))
-                }
-                return sections
-            }
-            .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
     
@@ -137,6 +104,28 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         }
 
         return UITableViewCell()
+    }
+    
+    override func bindItems() {
+        viewModel.items
+            .map {items -> [ListSection] in
+                let communities = items.filter {$0.communityValue != nil}
+                let followers = items.filter {$0.profileValue != nil}
+                let posts = items.filter {$0.postValue != nil}
+                var sections = [ListSection]()
+                if !communities.isEmpty {
+                    sections.append(ListSection(model: "communities", items: communities))
+                }
+                if !followers.isEmpty {
+                    sections.append(ListSection(model: "users", items: followers))
+                }
+                if !posts.isEmpty {
+                    sections.append(ListSection(model: "posts", items: posts))
+                }
+                return sections
+            }
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     override func modelSelected(_ item: ResponseAPIContentSearchItem) {
