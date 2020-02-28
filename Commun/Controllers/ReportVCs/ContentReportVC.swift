@@ -26,14 +26,18 @@ class ContentReportVC<T: ListItemType>: ReportVC {
     
     // MARK: - Methods
     override func sendButtonDidTouch() {
-        guard choosedReasons.count > 0 else {
-            showAlert(title: "reason needed".localized().uppercaseFirst, message: "you must choose at least one reason".localized().uppercaseFirst)
-            return
-        }
+        guard checkValues() else { return }
+
+//        guard choosedReasons.count > 0 else {
+//            showAlert(title: "reason needed".localized().uppercaseFirst, message: "you must choose at least one reason".localized().uppercaseFirst)
+//
+//            return
+//        }
         
         var communityId: String?
         var authorId: String?
         var permlink: String?
+        
         if let post = content as? ResponseAPIContentGetPost {
             communityId = post.community?.communityId
             authorId = post.author?.userId
@@ -47,6 +51,7 @@ class ContentReportVC<T: ListItemType>: ReportVC {
         }
         
         showIndetermineHudWithMessage("reporting".localized().uppercaseFirst + "...")
+        
         BlockchainManager.instance.report(communityID: communityId ?? "", autorID: authorId ?? "", permlink: permlink ?? "", reasons: choosedReasons, message: otherReason)
 //            .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { (_) in

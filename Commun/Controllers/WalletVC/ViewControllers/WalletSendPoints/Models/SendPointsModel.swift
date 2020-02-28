@@ -28,14 +28,16 @@ class SendPointsModel {
         return convert(balance: balance)
     }
     
+    // For `isDisabled`
     func checkEnteredAmounts() -> Bool {
         guard abs(transaction.amount) > 0 else { return false }
         return abs(transaction.amount) <= getBalance(bySymbol: transaction.symbol.sell).amount
     }
 
+    // For `isDisabled`
     func checkHistoryAmounts() -> Bool {
-        guard abs(transaction.history!.quantityValue) > 0 else { return false }
-        return abs(CGFloat(transaction.history!.quantityValue)) <= getBalance().amount
+        guard abs(transaction.history?.quantityValue ?? 0) > 0 else { return true }
+        return !(abs(CGFloat(transaction.history!.quantityValue)) <= getBalance().amount)
     }
 
     private func loadBalances(byUserID userID: String) -> Single<[ResponseAPIWalletGetBalance]> {

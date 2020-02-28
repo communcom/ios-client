@@ -75,14 +75,29 @@ class CommunWalletVC: TransferHistoryVC {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setNavBarBackButton(tintColor: .white)
+        
+        self.showNavigationBar(false, animated: true, completion: nil)
+        self.setNavBarBackButton(tintColor: .white)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.barTintColor = .appMainColor
-        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
+        self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.shadowImage?.clear()
+
         self.setTabBarHidden(false)
         
         baseNavigationController?.changeStatusBarStyle(barStyle)
+        UIApplication.shared.statusBarView?.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = .clear
+        UIApplication.shared.statusBarView?.backgroundColor = .clear
     }
 
     // MARK: - Custom Functions
@@ -113,6 +128,7 @@ class CommunWalletVC: TransferHistoryVC {
         tableView.configureForAutoLayout()
         tableView.insetsContentViewsToSafeArea = false
         tableView.showsVerticalScrollIndicator = false
+        tableView.contentInsetAdjustmentBehavior = .never
 
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges(with: .zero)
@@ -123,7 +139,7 @@ class CommunWalletVC: TransferHistoryVC {
 
     override func bind() {
         super.bind()
-        
+
         // forward delegate
         myPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
@@ -152,24 +168,28 @@ class CommunWalletVC: TransferHistoryVC {
         .disposed(by: disposeBag)
 
         tableView.rx.contentOffset
-            .map {$0.y}
+            .map { $0.y }
             .subscribe { (event) in
                 var y = event.element ?? 0
                 y = y >= -self.headerView.height ? y : -self.headerView.height
                 self.headerTopConstraint.constant = -y - self.headerView.height
                 let diff = self.headerView.height + y
                 self.headerView.updateYPosition(y: diff)
-
+                
                 if diff >= 50 {
                     if self.navigationItem.titleView != self.barBalanceView {
                         self.navigationItem.titleView = self.barBalanceView
                     }
+                                        
                     let alpha = ((100 / 50) / 100 * diff) - 1
                     self.barBalanceView.alpha = alpha
+                    self.changeNavbar(y: alpha)
                 } else {
                     let alpha = 1 - ((100 / 50) / 100 * diff)
+                    
                     if self.isCommunBalance {
                         self.logoView.alpha = alpha
+                        
                         if self.navigationItem.titleView != self.logoView {
                             self.navigationItem.titleView = self.logoView
                         }
@@ -183,6 +203,25 @@ class CommunWalletVC: TransferHistoryVC {
         }.disposed(by: disposeBag)
     }
 
+    private func changeNavbar(y: CGFloat) {
+        if 2...3 ~= y {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
+                self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
+                self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+                self.navigationController?.navigationBar.barStyle = .default
+                UIApplication.shared.statusBarView?.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+            })
+        }
+
+        if 0..<2 ~= y {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.navigationController?.navigationBar.backgroundColor = .clear
+                UIApplication.shared.statusBarView?.backgroundColor = .clear
+            })
+        }
+    }
+    
     override func bindItems() {
         super.bindItems()
         balancesVM.items

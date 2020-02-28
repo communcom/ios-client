@@ -114,10 +114,12 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     // MARK: - Binding
     override func bind() {
         super.bind()
+        
         bindState()
         bindItems()
         bindItemSelected()
         bindScrollView()
+        
         if isSearchEnabled {
             bindSearchBar()
         }

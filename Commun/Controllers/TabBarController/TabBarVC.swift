@@ -194,6 +194,11 @@ class TabBarVC: UITabBarController {
     }
 
     func switchTab(index: Int) {
+        // Remove notifications red marker
+        if index == notificationTabIndex {
+            self.setNotificationRedMarkHidden(true)
+        }
+        
         // pop to first if index is selected
         if selectedIndex == index {
             if let navController = viewControllers?[index] as? UINavigationController {
@@ -203,6 +208,7 @@ class TabBarVC: UITabBarController {
                     navController.topViewController?.scrollToTop()
                 }
             }
+            
             return
         }
         
@@ -214,6 +220,7 @@ class TabBarVC: UITabBarController {
         let selectedItem = items.first {$0.tag == selectedIndex}
         let unselectedItems = items.filter {$0.tag != selectedIndex}
         selectedItem?.tintColor = selectedColor
+        
         for item in unselectedItems {
             item.tintColor = unselectedColor
         }
