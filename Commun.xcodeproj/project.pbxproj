@@ -340,6 +340,7 @@
 		BC619B1B2372B5760005BB94 /* CommunityMembersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1A2372B5760005BB94 /* CommunityMembersViewModel.swift */; };
 		BC619B1D2372C1480005BB94 /* CMTopTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1C2372C1480005BB94 /* CMTopTabBar.swift */; };
 		BC619B1F2373B5550005BB94 /* CommunityMembersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1E2373B5550005BB94 /* CommunityMembersVC.swift */; };
+		BC62BAAD2408C62A007783A6 /* DiscoveryAllViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62BAAC2408C62A007783A6 /* DiscoveryAllViewModel.swift */; };
 		BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7CC236FC5D00097F870 /* LoadingState.swift */; };
 		BC69F7CF236FC63F0097F870 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7CE236FC63F0097F870 /* BaseViewModel.swift */; };
 		BC69F7D1236FD1690097F870 /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7D0236FD1680097F870 /* NotificationSettingsView.swift */; };
@@ -878,6 +879,7 @@
 		BC619B1A2372B5760005BB94 /* CommunityMembersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMembersViewModel.swift; sourceTree = "<group>"; };
 		BC619B1C2372C1480005BB94 /* CMTopTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTopTabBar.swift; sourceTree = "<group>"; };
 		BC619B1E2373B5550005BB94 /* CommunityMembersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMembersVC.swift; sourceTree = "<group>"; };
+		BC62BAAC2408C62A007783A6 /* DiscoveryAllViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryAllViewModel.swift; sourceTree = "<group>"; };
 		BC69F7CC236FC5D00097F870 /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		BC69F7CE236FC63F0097F870 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		BC69F7D0236FD1680097F870 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
@@ -2336,6 +2338,15 @@
 			path = CommunityMembersVC;
 			sourceTree = "<group>";
 		};
+		BC62BAA92408C5FD007783A6 /* DiscoveryAllVC */ = {
+			isa = PBXGroup;
+			children = (
+				BCDEE7A323F4EDF500DD3EB3 /* DiscoveryAllVC.swift */,
+				BC62BAAC2408C62A007783A6 /* DiscoveryAllViewModel.swift */,
+			);
+			path = DiscoveryAllVC;
+			sourceTree = "<group>";
+		};
 		BC69F7D2236FDB390097F870 /* SubscriptionsViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2747,7 +2758,7 @@
 		BCDEE7A223F4EDE200DD3EB3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				BCDEE7A323F4EDF500DD3EB3 /* DiscoveryAllVC.swift */,
+				BC62BAA92408C5FD007783A6 /* DiscoveryAllVC */,
 				BC3AF37C23FBC22800528EEB /* DiscoverySuggestionsVC */,
 				BC3AF38223FBE58D00528EEB /* DiscoveryCommunitiesVC.swift */,
 				BC3AF38423FBEB4200528EEB /* DiscoveryUsersVC.swift */,
@@ -3459,6 +3470,7 @@
 				BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */,
 				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,
 				3B62055A2346E4220017FEB7 /* PostEditorVC.swift in Sources */,
+				BC62BAAD2408C62A007783A6 /* DiscoveryAllViewModel.swift in Sources */,
 				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,
 				BC472D9D23A37AAB00822371 /* UserNameRulesView.swift in Sources */,
 				BCA971262360883D00AE37E1 /* Double.swift in Sources */,

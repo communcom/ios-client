@@ -217,6 +217,9 @@ class DiscoveryVC: BaseViewController {
     }
     
     private func showChildVC(_ childVC: UIViewController) {
+        // search
+        self.search(self.searchController.searchBar.text)
+        
         // get oldVC
         let oldVC = currentChildVC
         
@@ -239,9 +242,6 @@ class DiscoveryVC: BaseViewController {
                 
                 // assign current childVC
                 self.currentChildVC = childVC
-                
-                // search
-                self.search(self.searchController.searchBar.text)
             })
     }
     
