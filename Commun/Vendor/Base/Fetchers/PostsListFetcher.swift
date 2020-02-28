@@ -70,34 +70,15 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     
     var filter: Filter
     
-    lazy var searchFetcher: SearchListFetcher = {
-        let fetcher = SearchListFetcher()
-        fetcher.limit = 20
-        fetcher.searchType = .entitySearch
-        fetcher.entitySearchEntity = .posts
-        return fetcher
-
-    }()
-    
     required init(filter: Filter) {
         self.filter = filter
         super.init()
     }
         
     override var request: Single<[ResponseAPIContentGetPost]> {
-//        return ResponseAPIContentGetPosts.singleWithMockData()
-//            .delay(0.8, scheduler: MainScheduler.instance)
-        let single: Single<[ResponseAPIContentGetPost]>
-        
-        if let search = search {
-            searchFetcher.search = search
-            single = searchFetcher.request.map {$0.compactMap {$0.postValue}}
-        } else {
-            single = RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, sortType: filter.sortType, limit: limit, offset: offset)
-                .map { $0.items ?? [] }
-        }
-        
-        return single
+        RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, sortType: filter.sortType, limit: limit, offset: offset
+        )
+            .map { $0.items ?? [] }
             .do(onSuccess: { (posts) in
                 self.loadRewards(fromPosts: posts)
             })

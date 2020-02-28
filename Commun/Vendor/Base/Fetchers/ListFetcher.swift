@@ -51,7 +51,6 @@ class ListFetcher<T: ListItemType> {
     // MARK: - Parammeters
     var limit = UInt(Config.paginationLimit)
     var offset: UInt = 0
-    var search: String?
     
     private var reloadClearedResult = true
     

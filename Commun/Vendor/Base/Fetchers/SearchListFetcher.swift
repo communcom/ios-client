@@ -26,17 +26,18 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
     lazy var entities = [SearchEntityType]()
     lazy var extendedSearchEntity = [SearchEntityType: [String: UInt]]()
     lazy var entitySearchEntity = SearchEntityType.communities
+    var queryString: String?
     
     override var request: Single<[ResponseAPIContentSearchItem]> {
         switch searchType {
         case .quickSearch:
-            return RestAPIManager.instance.quickSearch(queryString: search ?? "", entities: entities, limit: limit)
+            return RestAPIManager.instance.quickSearch(queryString: queryString ?? "", entities: entities, limit: limit)
                 .do(onSuccess: { (result) in
                     self.total = result.total
                 })
                 .map {$0.items}
         case .extendedSearch:
-            return RestAPIManager.instance.extendedSearch(queryString: search ?? "", entities: extendedSearchEntity)
+            return RestAPIManager.instance.extendedSearch(queryString: queryString ?? "", entities: extendedSearchEntity)
                 .do(onSuccess: {result in
                     self.total = (result.communities?.total ?? 0) + (result.profiles?.total ?? 0) + (result.posts?.total ?? 0)
                 })
@@ -44,15 +45,11 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
                     (result.communities?.items ?? []) + (result.profiles?.items ?? []) + (result.posts?.items ?? [])
                 }
         case .entitySearch:
-            return  RestAPIManager.instance.entitySearch(queryString: search ?? "", entity: entitySearchEntity, limit: limit, offset: offset)
+            return  RestAPIManager.instance.entitySearch(queryString: queryString ?? "", entity: entitySearchEntity, limit: limit, offset: offset)
                 .do(onSuccess: { (result) in
                     self.total = result.total
                 })
                 .map {$0.items}
         }
-    }
-    
-    override func join(newItems items: [ResponseAPIContentSearchItem]) -> [ResponseAPIContentSearchItem] {
-        items
     }
 }
