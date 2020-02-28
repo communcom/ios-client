@@ -115,8 +115,8 @@ extension DiscoverySuggestionsVC: UITableViewDelegate {
         label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         label.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        label.isUserInteractionEnabled = true
-        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showAllResultDidTouch)))
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showAllResultDidTouch)))
         return view
     }
 }
