@@ -8,12 +8,11 @@
 
 import Foundation
 
-class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate {
-    override var isSearchEnabled: Bool {true}
-    
+class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, SearchableViewControllerType {
     // MARK: - Properties
     var completion: ((ResponseAPIContentGetProfile) -> Void)?
     var tableViewTopConstraint: NSLayoutConstraint?
+    lazy var searchController = UISearchController.default()
     
     // MARK: - Subviews
     let searchContainerView = UIView(backgroundColor: .white)
@@ -36,7 +35,12 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate {
         navigationController?.navigationBar.shadowOpacity = 0
     }
     
-    override func layoutSearchBar() {
+    override func viewWillSetUpTableView() {
+        setUpSearchController()
+        super.viewWillSetUpTableView()
+    }
+    
+    func layoutSearchBar() {
         view.addSubview(searchContainerView)
         searchContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         searchContainerView.addSubview(searchController.searchBar)
@@ -58,6 +62,30 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate {
         tableView.showsVerticalScrollIndicator = false
         
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+    }
+    
+    override func bind() {
+        super.bind()
+        bindSearchBar()
+    }
+    
+    override func bindItems() {
+        super.bindItems()
+        
+    }
+    
+    func bindSearchBar() {
+        searchController.searchBar.rx.textDidBeginEditing
+            .subscribe(onNext: { (_) in
+                self.showSearchBar(onNavigationBar: true)
+            })
+            .disposed(by: disposeBag)
+        
+        searchController.searchBar.rx.textDidEndEditing
+            .subscribe(onNext: { (_) in
+                self.showSearchBar(onNavigationBar: false)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func registerCell() {
@@ -84,22 +112,6 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate {
         }
         
         return UITableViewCell()
-    }
-    
-    override func bindSearchBar() {
-        super.bindSearchBar()
-        
-        searchController.searchBar.rx.textDidBeginEditing
-            .subscribe(onNext: { (_) in
-                self.showSearchBar(onNavigationBar: true)
-            })
-            .disposed(by: disposeBag)
-        
-        searchController.searchBar.rx.textDidEndEditing
-            .subscribe(onNext: { (_) in
-                self.showSearchBar(onNavigationBar: false)
-            })
-            .disposed(by: disposeBag)
     }
     
     private func showSearchBar(onNavigationBar: Bool) {
@@ -134,5 +146,9 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate {
         } else {
             self.completion?(friend)
         }
+    }
+    
+    func search(_ keyword: String?) {
+        // TODO: - Search
     }
 }
