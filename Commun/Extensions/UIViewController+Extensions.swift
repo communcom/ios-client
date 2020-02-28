@@ -11,6 +11,7 @@ import RxSwift
 import CyberSwift
 import MBProgressHUD
 import ReCaptcha
+import SafariServices
 
 public let reCaptchaTag: Int = 777
 
@@ -254,6 +255,43 @@ extension UIViewController {
             nc?.shouldResetNavigationBarOnPush = false
             show(vc, sender: nil)
             nc?.shouldResetNavigationBarOnPush = true
+        }
+    }
+    
+    @discardableResult
+    func handleUrl(url: URL) -> Bool {
+        let path = Array(url.path.components(separatedBy: "/").dropFirst())
+        
+        // Check if link is a commun.com link
+        if url.absoluteString.starts(with: URL.appURL),
+            path.count == 1 || path.count == 3
+        {
+            if path.count == 1 {
+                if path[0].starts(with: "@") {
+                    // user's profile
+                    let userId = String(path[0].dropFirst())
+                    showProfileWithUserId(userId)
+                } else if path[0].starts(with: "#") {
+                    // TODO: - Tag
+                } else {
+                    // community
+                    let alias = path[0]
+                    showCommunityWithCommunityAlias(alias)
+                }
+                return true
+            } else {
+                let communityAlias = path[0]
+                let username = String(path[1].dropFirst())
+                let permlink = path[2]
+                
+                let postVC = PostPageVC(username: username, permlink: permlink, communityAlias: communityAlias)
+                show(postVC, sender: nil)
+                return true
+            }
+        } else {
+            let safariVC = SFSafariViewController(url: url)
+            present(safariVC, animated: true, completion: nil)
+            return true
         }
     }
     
