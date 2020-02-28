@@ -91,18 +91,18 @@ extension SignUpRouter where Self: UIViewController {
                     return
                 }
                 
-                if message == ErrorMessage.accountHasBeenRegistered.rawValue {
-                    self.showError(error) {
-                        self.resetSignUpProcess()
-                    }
-                }
+            case .noConnection:
+                self.showError(error)
+                return
             default:
                 break
             }
         }
         
-        // unknown error, get state
-        self.showError(error)
+        // unknown error
+        self.showError(error) {
+            self.resetSignUpProcess()
+        }
     }
     
     func getState(showError: Bool = true) {
@@ -113,18 +113,7 @@ extension SignUpRouter where Self: UIViewController {
                 self.signUpNextStep()
             }) { (error) in
                 self.hideHud()
-                if showError {
-                    self.showError(error) {
-                        if let error = error as? CMError,
-                            error.message == ErrorMessage.accountHasBeenRegistered.rawValue
-                        {
-                            self.resetSignUpProcess()
-                        }
-                    }
-                } else {
-                    self.resetSignUpProcess()
-                }
-                
+                self.handleSignUpError(error: error)
             }
             .disposed(by: disposeBag)
     }
