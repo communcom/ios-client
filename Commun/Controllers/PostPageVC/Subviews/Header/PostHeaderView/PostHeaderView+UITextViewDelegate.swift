@@ -10,6 +10,7 @@ import Foundation
 
 extension PostHeaderView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        parentViewController?.handleUrl(url: URL) ?? false
+        parentViewController?.handleUrl(url: URL)
+        return false
     }
 }

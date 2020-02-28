@@ -12,8 +12,9 @@ class SingleEntitySearchVC: SubsViewController<ResponseAPIContentSearchItem, Sub
     // MARK: - Initializers
     init(entityType: SearchEntityType) {
         let vm = SearchViewModel()
-        (vm.fetcher as! SearchListFetcher).searchType = .quickSearch
-        (vm.fetcher as! SearchListFetcher).entities = [entityType]
+        (vm.fetcher as! SearchListFetcher).limit = 20
+        (vm.fetcher as! SearchListFetcher).searchType = .entitySearch
+        (vm.fetcher as! SearchListFetcher).entitySearchEntity = entityType
         super.init(viewModel: vm)
     }
     

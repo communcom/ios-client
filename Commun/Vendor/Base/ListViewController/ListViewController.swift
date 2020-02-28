@@ -270,7 +270,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     func bindSearchBar() {
         searchController.searchBar.rx.text
             .distinctUntilChanged()
-            .skip(1)
+            .skip(searchController.searchBar.text?.isEmpty == false ? 0 : 1)
             .debounce(0.3, scheduler: MainScheduler.instance)
             .subscribe(onNext: { (query) in
                 self.search(query)
