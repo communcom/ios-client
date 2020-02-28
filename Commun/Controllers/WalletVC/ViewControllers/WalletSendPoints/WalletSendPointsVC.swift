@@ -182,6 +182,7 @@ class WalletSendPointsVC: BaseViewController {
         pointsToolbar.frame.size = CGSize(width: .adaptive(width: 375.0), height: .adaptive(height: 50.0))
     }
     
+    
     // MARK: - Custom Functions
     override func bind() {
         pointsTextField.delegate = self
@@ -305,6 +306,7 @@ class WalletSendPointsVC: BaseViewController {
         let subtitle1 = String(format: "%@: %@ %@", "send".localized().uppercaseFirst, Double(amount).currencyValueFormatted, dataModel.transaction.symbol.sell.fullName)
         var title: NSMutableAttributedString!
         var subtitle2 = ""
+        
         if percent > 0 {
             subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
             title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
@@ -395,8 +397,11 @@ class WalletSendPointsVC: BaseViewController {
     // MARK: - Actions
     @objc func pointsListButtonDidTouch() {
         let vc = BalancesVC { balance in
-            // TODO: - Handle balance change
-//            carouselView.scroll(toItemAtIndex: <#T##Int#>, animated: <#T##Bool#>)
+            guard let selectedBalanceIndex = self.dataModel.balances.firstIndex(where: { $0.symbol == balance.symbol }) else { return }
+
+            self.carouselView.scroll(toItemAtIndex: selectedBalanceIndex, animated: true)
+            self.updateSellerInfo()
+            self.updateSendInfoByEnteredPoints()
         }
         
         let nc = BaseNavigationController(rootViewController: vc)
@@ -509,6 +514,7 @@ extension WalletSendPointsVC: UITextFieldDelegate {
         return true
     }
 }
+
 
 // MARK: - CircularCarouselDataSource
 extension WalletSendPointsVC: CircularCarouselDataSource {
