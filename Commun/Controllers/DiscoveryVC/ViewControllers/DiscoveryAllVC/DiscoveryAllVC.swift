@@ -7,10 +7,14 @@
 //
 
 import Foundation
+import RxSwift
 
 class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, SubscribersCell>, CommunityCellDelegate, ProfileCellDelegate {
     // MARK: - Properties
     var seeAllHandler: ((Int) -> Void)?
+    var isSearchBarEmpty: Bool {
+        viewModel.fetcher.search == nil
+    }
     
     // MARK: - Initializers
     init(seeAllHandler: ((Int) -> Void)? = nil) {
@@ -107,7 +111,9 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     }
     
     override func bindItems() {
-        viewModel.items
+        let viewModel = self.viewModel as! DiscoveryAllViewModel
+        
+        Observable.merge(viewModel.subscriptions, viewModel.items.asObservable())
             .map {items -> [ListSection] in
                 let communities = items.filter {$0.communityValue != nil}
                 let followers = items.filter {$0.profileValue != nil}
@@ -117,7 +123,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
                     sections.append(ListSection(model: "communities", items: communities))
                 }
                 if !followers.isEmpty {
-                    sections.append(ListSection(model: "users", items: followers))
+                    sections.append(ListSection(model: self.isSearchBarEmpty ? "following" : "users", items: followers))
                 }
                 if !posts.isEmpty {
                     sections.append(ListSection(model: "posts", items: posts))
@@ -184,7 +190,7 @@ extension DiscoveryAllVC: UITableViewDelegate {
             switch dataSource.sectionModels[section].model {
             case "communities":
                 seeAllLabel.tag = 1
-            case "users":
+            case "users", "following":
                 seeAllLabel.tag = 2
             case "posts":
                 seeAllLabel.tag = 3

@@ -19,7 +19,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var viewModel: ListViewModel<T>
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     var tableViewMargin: UIEdgeInsets {.zero}
-    var pullToRefreshAdded = false
     let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // search
@@ -78,12 +77,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
 
         // pull to refresh
-        if !pullToRefreshAdded {
-            refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
-            tableView.addSubview(refreshControl)
-            refreshControl.tintColor = .appGrayColor
-            pullToRefreshAdded = true
-        }
+        setUpPullToRefresh()
     }
     
     func viewWillSetUpTableView() {
@@ -92,6 +86,12 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     func viewDidSetUpTableView() {
         
+    }
+    
+    func setUpPullToRefresh() {
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+        refreshControl.tintColor = .appGrayColor
     }
     
     func setUpTableView() {
