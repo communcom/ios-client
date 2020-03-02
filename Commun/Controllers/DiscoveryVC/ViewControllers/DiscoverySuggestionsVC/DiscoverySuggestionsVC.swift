@@ -59,7 +59,7 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
     
     override func bindItems() {
         viewModel.items
-            .map {[ListSection(model: "", items: $0)]}
+            .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

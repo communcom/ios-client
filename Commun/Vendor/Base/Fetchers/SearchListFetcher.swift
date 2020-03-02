@@ -52,4 +52,28 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
                 .map {$0.items}
         }
     }
+    
+    override func modifyStateAfterRequest(itemsCount: Int) {
+        switch searchType {
+        case .quickSearch, .extendedSearch:
+            if itemsCount == 0 {
+                state.accept(.listEmpty)
+            } else {
+                state.accept(.listEnded)
+            }
+        case .entitySearch:
+            return super.modifyStateAfterRequest(itemsCount: itemsCount)
+        }
+    }
+    
+    override func join(newItems items: [ResponseAPIContentSearchItem]) -> [ResponseAPIContentSearchItem] {
+        switch searchType {
+        case .quickSearch:
+            return items
+        case .extendedSearch:
+            return items
+        case .entitySearch:
+            return super.join(newItems: items)
+        }
+    }
 }
