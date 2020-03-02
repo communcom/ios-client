@@ -11,6 +11,7 @@ import RxSwift
 import CyberSwift
 import MBProgressHUD
 import ReCaptcha
+import SafariServices
 
 public let reCaptchaTag: Int = 777
 
@@ -255,6 +256,49 @@ extension UIViewController {
             show(vc, sender: nil)
             nc?.shouldResetNavigationBarOnPush = true
         }
+    }
+    
+    func handleUrl(url: URL) {
+        let path = Array(url.path.components(separatedBy: "/").dropFirst())
+        
+        // Check if link is a commun.com link
+        if url.absoluteString.starts(with: URL.appURL) &&
+            (path.count == 1 || path.count == 3)
+        {
+            if path.count == 1 {
+                if path[0].starts(with: "@") {
+                    // user's profile
+                    let userId = String(path[0].dropFirst())
+                    showProfileWithUserId(userId)
+                    return
+                } else if !path[0].isEmpty {
+                    // community
+                    let alias = path[0]
+                    showCommunityWithCommunityAlias(alias)
+                    return
+                } else if url.absoluteString.starts(with: URL.appURL + "/#"),
+                    let hashtag = url.absoluteString.components(separatedBy: "#").last
+                {
+                    // hashtag
+                    let vc = SearchablePostsVC(keyword: "#" + hashtag)
+                    self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
+                    self.baseNavigationController?.changeStatusBarStyle(.default)
+                    self.show(vc, sender: self)
+                    return
+                }
+            } else if path.count == 3 {
+                let communityAlias = path[0]
+                let username = String(path[1].dropFirst())
+                let permlink = path[2]
+                
+                let postVC = PostPageVC(username: username, permlink: permlink, communityAlias: communityAlias)
+                show(postVC, sender: nil)
+                return
+            }
+        }
+        
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true, completion: nil)
     }
     
     // MARK: - ChildVC

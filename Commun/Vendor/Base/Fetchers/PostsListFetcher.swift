@@ -104,13 +104,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     }
     
     override func join(newItems items: [ResponseAPIContentGetPost]) -> [ResponseAPIContentGetPost] {
-        let newList: [ResponseAPIContentGetPost]
-        if search != nil {
-            newList = items
-        } else {
-            newList = super.join(newItems: items)
-        }
-        return newList.filter { $0.document != nil}
+        return super.join(newItems: items).filter { $0.document != nil}
     }
 
     func loadRewards(fromPosts posts: [ResponseAPIContentGetPost]) {
