@@ -25,7 +25,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     var post: ResponseAPIContentGetPost?
-    
+
     // MARK: - Subviews
     lazy var titleLabel = UILabel.with(text: "", textSize: 21, weight: .bold, numberOfLines: 0)
     
@@ -97,8 +97,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
         
         postStatsView.setUp(with: post)
         
-        // Show content
-        // Parse data
+        // Show content & Parse data
         if let attributedString = post.document?.toAttributedString(
             currentAttributes: contentTextView.defaultAttributes,
             attachmentSize: contentTextView.attachmentSize,
@@ -115,6 +114,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
         
         layoutSubviews()
     }
+    
     
     // MARK: - Actions
     @objc func upVoteButtonDidTouch(_ sender: Any) {

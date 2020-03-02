@@ -15,6 +15,7 @@ class PostHeaderTextView: MySubviewAttachingTextView {
         let width = size.width
         return CGSize(width: width, height: 270)
     }()
+   
     let defaultFont = UIFont.systemFont(ofSize: 17)
     
     var defaultAttributes: [NSAttributedString.Key: Any] {
@@ -28,11 +29,13 @@ class PostHeaderTextView: MySubviewAttachingTextView {
     
     override func commonInit() {
         super.commonInit()
+        
         textContainerInset = UIEdgeInsets(
             top: 10,
             left: PostHeaderTextView.attachmentInset.left,
             bottom: 10,
             right: PostHeaderTextView.attachmentInset.right)
+        
         textContainer.lineFragmentPadding = 0
         isEditable = false
     }
