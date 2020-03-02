@@ -226,22 +226,30 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         oldVC?.willMove(toParent: nil)
         addChild(childVC)
         self.addSubview(childVC.view, toView: contentView)
-        childVC.view.alpha = 0
-        childVC.view.layoutIfNeeded()
-        UIView.animate(
-            withDuration: 0.2,
-            animations: {
-                childVC.view.alpha = 1
-                oldVC?.view.alpha = 0
-            },
-            completion: { _ in
-                oldVC?.view.removeFromSuperview()
-                oldVC?.removeFromParent()
-                childVC.didMove(toParent: self)
-                
-                // assign current childVC
-                self.currentChildVC = childVC
-            })
+        
+        oldVC?.view.removeFromSuperview()
+        oldVC?.removeFromParent()
+        childVC.didMove(toParent: self)
+        
+        // assign current childVC
+        self.currentChildVC = childVC
+        
+//        childVC.view.alpha = 0
+//        childVC.view.layoutIfNeeded()
+//        UIView.animate(
+//            withDuration: 0.2,
+//            animations: {
+//                childVC.view.alpha = 1
+//                oldVC?.view.alpha = 0
+//            },
+//            completion: { _ in
+//                oldVC?.view.removeFromSuperview()
+//                oldVC?.removeFromParent()
+//                childVC.didMove(toParent: self)
+//
+//                // assign current childVC
+//                self.currentChildVC = childVC
+//            })
     }
     
     private func addSubview(_ subView: UIView, toView parentView: UIView) {
