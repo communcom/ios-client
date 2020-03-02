@@ -45,18 +45,30 @@ class SearchViewModel: ListViewModel<ResponseAPIContentSearchItem> {
                 self.updateItem(.community(newCommunity))
             })
             .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetPost.observeItemChanged()
+            .subscribe(onNext: {newPost in
+                self.updateItem(.post(newPost))
+            })
+            .disposed(by: disposeBag)
     }
     
     override func observeItemDeleted() {
         ResponseAPIContentGetProfile.observeItemDeleted()
-            .subscribe(onNext: { (deletedItem) in
-                self.deleteItem(.profile(deletedItem))
+            .subscribe(onNext: { (deletedProfile) in
+                self.deleteItem(.profile(deletedProfile))
             })
             .disposed(by: disposeBag)
         
         ResponseAPIContentGetCommunity.observeItemDeleted()
-            .subscribe(onNext: { (updatedCommunity) in
-                self.deleteItem(.community(updatedCommunity))
+            .subscribe(onNext: { (deletedCommunity) in
+                self.deleteItem(.community(deletedCommunity))
+            })
+            .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetPost.observeItemDeleted()
+            .subscribe(onNext: { (deletedPost) in
+                self.deleteItem(.post(deletedPost))
             })
             .disposed(by: disposeBag)
     }

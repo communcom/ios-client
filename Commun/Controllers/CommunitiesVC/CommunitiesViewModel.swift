@@ -23,4 +23,20 @@ class CommunitiesViewModel: ListViewModel<ResponseAPIContentGetCommunity> {
         super.init(fetcher: fetcher, prefetch: prefetch)
         self.fetcher = fetcher
     }
+    
+    override func fetchNext(forceRetry: Bool = false) {
+        if searchVM.isQueryEmpty {
+            super.fetchNext(forceRetry: forceRetry)
+        } else {
+            searchVM.reload(clearResult: forceRetry)
+        }
+    }
+    
+    override func reload(clearResult: Bool = true) {
+        if searchVM.isQueryEmpty {
+            super.reload(clearResult: clearResult)
+        } else {
+            searchVM.reload(clearResult: clearResult)
+        }
+    }
 }

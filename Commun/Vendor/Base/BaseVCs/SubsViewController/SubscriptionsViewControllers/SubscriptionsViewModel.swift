@@ -51,6 +51,22 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
         }
     }
     
+    override func fetchNext(forceRetry: Bool = false) {
+        if searchVM.isQueryEmpty {
+            super.fetchNext(forceRetry: forceRetry)
+        } else {
+            searchVM.reload(clearResult: forceRetry)
+        }
+    }
+    
+    override func reload(clearResult: Bool = true) {
+        if searchVM.isQueryEmpty {
+            super.reload(clearResult: clearResult)
+        } else {
+            searchVM.reload(clearResult: clearResult)
+        }
+    }
+    
     override func observeItemDeleted() {
         ResponseAPIContentGetProfile.observeItemDeleted()
             .subscribe(onNext: { (deletedUser) in

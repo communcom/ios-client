@@ -46,6 +46,15 @@ class DiscoveryAllViewModel: SearchViewModel {
         return Observable.zip(users, communities).map {Array($0) + Array($1)}
     }
     
+    override func fetchNext(forceRetry: Bool = false) {
+        if isQueryEmpty {
+            followingVM.fetchNext(forceRetry: forceRetry)
+            communitiesVM.fetchNext(forceRetry: forceRetry)
+        } else {
+            super.fetchNext(forceRetry: forceRetry)
+        }
+    }
+    
     override func reload(clearResult: Bool = true) {
         if isQueryEmpty {
             // clear subscriptions
