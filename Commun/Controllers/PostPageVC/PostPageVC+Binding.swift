@@ -146,9 +146,9 @@ extension PostPageVC {
                 self.commentForm.post = post
                 self.postHeaderView.setUp(with: post)
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.scrollToTopAfterLoadingComment = true
-                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+//                    self.scrollToTopAfterLoadingComment = true
+//                }
             })
             .disposed(by: disposeBag)
         
