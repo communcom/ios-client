@@ -71,6 +71,9 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
         case .extendedSearch:
             return items
         case .entitySearch:
+            if offset == 0 {
+                return items
+            }
             return super.join(newItems: items)
         }
     }

@@ -28,7 +28,7 @@ class CommunitiesViewModel: ListViewModel<ResponseAPIContentGetCommunity> {
         if searchVM.isQueryEmpty {
             super.fetchNext(forceRetry: forceRetry)
         } else {
-            searchVM.reload(clearResult: forceRetry)
+            searchVM.fetchNext(forceRetry: forceRetry)
         }
     }
     
