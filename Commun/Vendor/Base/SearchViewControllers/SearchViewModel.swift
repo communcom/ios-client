@@ -29,6 +29,10 @@ class SearchViewModel: ListViewModel<ResponseAPIContentSearchItem> {
         
     }
     
+    var isQueryEmpty: Bool {
+        (query == nil) || (query!.isEmpty)
+    }
+    
     override func observeItemChange() {
         ResponseAPIContentGetProfile.observeItemChanged()
             .subscribe(onNext: {newUser in

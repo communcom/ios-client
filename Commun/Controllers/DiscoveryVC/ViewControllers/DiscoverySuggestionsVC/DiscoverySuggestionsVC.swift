@@ -86,7 +86,12 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
         tableView.tableFooterView = spinner
     }
     
-    override func handleEmptyKeyword() {
+    func searchBarIsSearchingWithQuery(_ query: String) {
+        (viewModel as! SearchViewModel).query = query
+        viewModel.reload(clearResult: false)
+    }
+    
+    func searchBarDidCancelSearching() {
         viewModel.state.accept(.loading(false))
         viewModel.items.accept([])
     }
@@ -99,7 +104,7 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
 
 extension DiscoverySuggestionsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        viewModel.fetcher.search == nil ? 0 : 51
+        (viewModel as! SearchViewModel).isQueryEmpty ? 0 : 51
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

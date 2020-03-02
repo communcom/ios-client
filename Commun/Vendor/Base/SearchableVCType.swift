@@ -28,7 +28,7 @@ extension SearchableViewControllerType {
             .disposed(by: disposeBag)
     }
     
-    private func search(_ keyword: String?) {
+    func search(_ keyword: String?) {
         if let keyword = keyword, !keyword.isEmpty {
             searchBarIsSearchingWithQuery(keyword)
         } else {

@@ -11,6 +11,15 @@ import CyberSwift
 
 class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsItem> {
     let type: GetSubscriptionsType
+    
+    lazy var searchVM: SearchViewModel = {
+        let fetcher = SearchListFetcher()
+        fetcher.limit = 20
+        fetcher.searchType = .entitySearch
+        fetcher.entitySearchEntity = .profiles
+        return SearchViewModel(fetcher: fetcher)
+    }()
+    
     init(userId: String? = nil, type: GetSubscriptionsType, initialItems: [ResponseAPIContentGetSubscriptionsItem]? = nil, prefetch: Bool = true) {
         var userId = userId
         if userId == nil {

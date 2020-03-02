@@ -12,9 +12,6 @@ import RxSwift
 class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, SubscribersCell>, CommunityCellDelegate, ProfileCellDelegate {
     // MARK: - Properties
     var seeAllHandler: ((Int) -> Void)?
-    var isSearchBarEmpty: Bool {
-        viewModel.fetcher.search == nil
-    }
     
     // MARK: - Initializers
     init(seeAllHandler: ((Int) -> Void)? = nil) {
@@ -123,7 +120,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
                     sections.append(ListSection(model: "communities", items: communities))
                 }
                 if !followers.isEmpty {
-                    sections.append(ListSection(model: self.isSearchBarEmpty ? "following" : "users", items: followers))
+                    sections.append(ListSection(model: (self.viewModel as! SearchViewModel).isQueryEmpty ? "following" : "users", items: followers))
                 }
                 if !posts.isEmpty {
                     sections.append(ListSection(model: "posts", items: posts))
@@ -152,8 +149,13 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         tableView.addEmptyPlaceholderFooterView(emoji: "😿", title: title, description: description)
     }
     
-    override func handleEmptyKeyword() {
-        viewModel.reload()
+    // MARK: - Search
+    func searchBarIsSearchingWithQuery(_ query: String) {
+        (viewModel as! SearchViewModel).query = query
+        viewModel.reload(clearResult: false)
+    }
+    func searchBarDidCancelSearching() {
+        viewModel.reload(clearResult: false)
     }
     
     // MARK: - Actions

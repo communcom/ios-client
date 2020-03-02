@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class DiscoveryPostsVC: PostsViewController {
     init(prefetch: Bool = true) {
@@ -28,14 +29,30 @@ class DiscoveryPostsVC: PostsViewController {
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     }
     
-    override func search(_ keyword: String?) {
-        viewModel.rowHeights = [:]
-        super.search(keyword)
+    override func bindItems() {
+        Observable.merge(
+            viewModel.items.asObservable(),
+            (viewModel as! PostsViewModel).searchVM.items.map{$0.compactMap{$0.postValue}}
+        )
+            .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     override func handleListEmpty() {
         let title = "no result".localized().uppercaseFirst
         let description = "try to look for something else".localized().uppercaseFirst
         tableView.addEmptyPlaceholderFooterView(emoji: "😿", title: title, description: description)
+    }
+    
+    // MARK: - Search manager
+    func searchBarIsSearchingWithQuery(_ query: String) {
+        (viewModel as! PostsViewModel).searchVM.query = query
+        (viewModel as! PostsViewModel).searchVM.reload(clearResult: false)
+    }
+    
+    func searchBarDidCancelSearching() {
+        viewModel.items.accept(viewModel.items.value)
+        viewModel.state.accept(.loading(false))
     }
 }
