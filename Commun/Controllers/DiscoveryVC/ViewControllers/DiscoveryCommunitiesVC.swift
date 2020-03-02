@@ -44,6 +44,7 @@ class DiscoveryCommunitiesVC: CommunitiesVC {
     }
     
     func searchBarDidCancelSearching() {
+        (viewModel as! CommunitiesViewModel).searchVM.query = nil
         viewModel.items.accept(viewModel.items.value)
         viewModel.state.accept(.loading(false))
     }

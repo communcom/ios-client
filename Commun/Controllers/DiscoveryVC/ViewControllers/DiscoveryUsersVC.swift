@@ -49,6 +49,7 @@ class DiscoveryUsersVC: SubscriptionsVC {
     }
     
     func searchBarDidCancelSearching() {
+        (viewModel as! SubscriptionsViewModel).searchVM.query = nil
         viewModel.items.accept(viewModel.items.value)
         viewModel.state.accept(.loading(false))
     }
