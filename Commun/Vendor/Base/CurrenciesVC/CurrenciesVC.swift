@@ -11,6 +11,13 @@ import CyberSwift
 import RxSwift
 
 class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell>, SearchableViewControllerType {
+    var searchBar: UISearchBar {
+        get {
+            searchController.searchBar
+        }
+        set {}
+    }
+    
     // MARK: - Properties
     lazy var searchController = UISearchController.default()
     
@@ -31,7 +38,8 @@ class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell>, Se
     }
     
     override func viewWillSetUpTableView() {
-        setUpSearchController()
+        self.definesPresentationContext = true
+        layoutSearchBar()
         super.viewWillSetUpTableView()
     }
     
@@ -66,16 +74,14 @@ class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell>, Se
     }
     
     // MARK: - Search manager
-    func search(_ keyword: String?) {
+    func searchBarIsSearchingWithQuery(_ query: String) {
         let viewModel = self.viewModel as! CurrenciesViewModel
-        
-        guard let keyword = keyword, !keyword.isEmpty else {
-            viewModel.items.accept(viewModel.items.value)
-            return
-        }
-        
         viewModel.searchResult.accept(
-            viewModel.items.value.filter {$0.name.lowercased().contains(keyword.lowercased()) || ($0.fullName?.lowercased().contains(keyword.lowercased()) ?? false)}
+            viewModel.items.value.filter {$0.name.lowercased().contains(query.lowercased()) || ($0.fullName?.lowercased().contains(query.lowercased()) ?? false)}
         )
+    }
+    
+    func searchBarDidCancelSearching() {
+        viewModel.items.accept(viewModel.items.value)
     }
 }

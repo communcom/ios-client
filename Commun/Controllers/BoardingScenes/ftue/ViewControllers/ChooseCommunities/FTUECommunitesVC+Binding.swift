@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDelegate {
     func bindControl() {
@@ -51,7 +52,10 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .disposed(by: disposeBag)
         
         // items
-        viewModel.items
+        Observable.merge(
+            viewModel.items.asObservable(),
+            viewModel.searchVM.items.map{$0.compactMap{$0.communityValue}}.asObservable()
+        )
             .map { items -> [ResponseAPIContentGetCommunity] in
                 var items = items
                 for i in 0..<items.count {

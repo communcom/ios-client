@@ -9,12 +9,15 @@
 import Foundation
 import RxSwift
 
-class FTUECommunitiesVC: BaseViewController {
+class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     // MARK: - Constants
     let bottomBarHeight: CGFloat = 114
     
     // MARK: - Properties
     lazy var headerView = UIView(forAutoLayout: ())
+    
+    lazy var descriptionLabel = UILabel.with(textSize: 17 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0)
+    
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar(forAutoLayout: ())
         searchBar.searchBarStyle = .minimal
@@ -68,7 +71,6 @@ class FTUECommunitiesVC: BaseViewController {
         titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
         
         // descriptionLabel
-        let descriptionLabel = UILabel.with(textSize: 17 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10 * Config.heightRatio
         let attrString = NSAttributedString(string: "subscribe to at least 3 communities and get your first Community Points".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle])
@@ -79,9 +81,7 @@ class FTUECommunitiesVC: BaseViewController {
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         // searchBar
-        headerView.addSubview(searchBar)
-        searchBar.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 25 * Config.heightRatio)
-        searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
+        layoutSearchBar()
         
         // collection view
         communitiesCollectionView.keyboardDismissMode = .onDrag
@@ -129,21 +129,9 @@ class FTUECommunitiesVC: BaseViewController {
         super.bind()
         bindControl()
         bindCommunities()
-        observeCommunityFollowed()
+        bindSearchBar()
         
-        searchBar.rx.text.orEmpty
-            .distinctUntilChanged()
-            .skip(1)
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .subscribe(onNext: { (string) in
-                if string.isEmpty {
-                    self.viewModel.fetcher.search = nil
-                } else {
-                    self.viewModel.fetcher.search = string.uppercaseFirst
-                }
-                self.viewModel.reload()
-            })
-            .disposed(by: disposeBag)
+        observeCommunityFollowed()
     }
     
     override func viewDidLayoutSubviews() {
@@ -171,5 +159,21 @@ class FTUECommunitiesVC: BaseViewController {
     
     @objc func dismissKeyboard() {
         self.view.endEditing(true)
+    }
+    
+    // MARK: - Search
+    func layoutSearchBar() {
+        headerView.addSubview(searchBar)
+        searchBar.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 25 * Config.heightRatio)
+        searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
+    }
+    
+    func searchBarIsSearchingWithQuery(_ query: String) {
+        viewModel.searchVM.query = query
+        viewModel.searchVM.reload()
+    }
+    
+    func searchBarDidCancelSearching() {
+        viewModel.items.accept(viewModel.items.value)
     }
 }

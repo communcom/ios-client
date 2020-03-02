@@ -15,6 +15,20 @@ class SearchViewModel: ListViewModel<ResponseAPIContentSearchItem> {
         super.init(fetcher: fetcher)
     }
     
+    init(fetcher: SearchListFetcher) {
+        super.init(fetcher: fetcher)
+    }
+    
+    var query: String? {
+        get {
+            (fetcher as! SearchListFetcher).queryString
+        }
+        set {
+            (fetcher as! SearchListFetcher).queryString = newValue
+        }
+        
+    }
+    
     override func observeItemChange() {
         ResponseAPIContentGetProfile.observeItemChanged()
             .subscribe(onNext: {newUser in

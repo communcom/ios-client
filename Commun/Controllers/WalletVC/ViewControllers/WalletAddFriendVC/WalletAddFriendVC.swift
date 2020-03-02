@@ -16,6 +16,10 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, Searchabl
     
     // MARK: - Subviews
     let searchContainerView = UIView(backgroundColor: .white)
+    var searchBar: UISearchBar {
+        get {searchController.searchBar}
+        set {}
+    }
     
     // MARK: - Initializers
     init() {
@@ -36,7 +40,10 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, Searchabl
     }
     
     override func viewWillSetUpTableView() {
-        setUpSearchController()
+        // Search controller
+        self.definesPresentationContext = true
+        bindSearchBar()
+        
         super.viewWillSetUpTableView()
     }
     
@@ -67,25 +74,23 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, Searchabl
     override func bind() {
         super.bind()
         bindSearchBar()
-    }
-    
-    override func bindItems() {
-        super.bindItems()
         
-    }
-    
-    func bindSearchBar() {
-        searchController.searchBar.rx.textDidBeginEditing
+        searchBar.rx.textDidBeginEditing
             .subscribe(onNext: { (_) in
                 self.showSearchBar(onNavigationBar: true)
             })
             .disposed(by: disposeBag)
         
-        searchController.searchBar.rx.textDidEndEditing
+        searchBar.rx.textDidEndEditing
             .subscribe(onNext: { (_) in
                 self.showSearchBar(onNavigationBar: false)
             })
             .disposed(by: disposeBag)
+    }
+    
+    override func bindItems() {
+        super.bindItems()
+        
     }
     
     override func registerCell() {
@@ -148,7 +153,12 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, Searchabl
         }
     }
     
-    func search(_ keyword: String?) {
+    // MARK: - Search manager
+    func searchBarIsSearchingWithQuery(_ query: String) {
         // TODO: - Search
+    }
+    
+    func searchBarDidCancelSearching() {
+        // TODO: - Cancel search
     }
 }
