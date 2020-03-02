@@ -12,6 +12,7 @@ import RxSwift
 class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, SubscribersCell>, CommunityCellDelegate, ProfileCellDelegate {
     // MARK: - Properties
     var seeAllHandler: ((Int) -> Void)?
+    override var isInfiniteScrollingEnabled: Bool {false}
     
     // MARK: - Initializers
     init(seeAllHandler: ((Int) -> Void)? = nil) {
@@ -110,7 +111,10 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     override func bindItems() {
         let viewModel = self.viewModel as! DiscoveryAllViewModel
         
-        Observable.merge(viewModel.subscriptions, viewModel.items.asObservable())
+        Observable.merge(
+            viewModel.subscriptions,
+            viewModel.items.asObservable()
+        )
             .map {items -> [ListSection] in
                 let communities = items.filter {$0.communityValue != nil}
                 let followers = items.filter {$0.profileValue != nil}
@@ -155,6 +159,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         viewModel.reload(clearResult: false)
     }
     func searchBarDidCancelSearching() {
+        (viewModel as! SearchViewModel).query = nil
         viewModel.reload(clearResult: false)
     }
     

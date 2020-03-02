@@ -21,6 +21,8 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var tableViewMargin: UIEdgeInsets {.zero}
     let refreshControl = UIRefreshControl(forAutoLayout: ())
     
+    var isInfiniteScrollingEnabled: Bool {true}
+    
     // MARK: - Subviews
     lazy var tableView = UITableView(forAutoLayout: ())
     
@@ -188,10 +190,12 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     func bindScrollView() {
-        tableView.addLoadMoreAction { [weak self] in
-            self?.viewModel.fetchNext()
+        if isInfiniteScrollingEnabled {
+            tableView.addLoadMoreAction { [weak self] in
+                self?.viewModel.fetchNext()
+            }
+                .disposed(by: disposeBag)
         }
-            .disposed(by: disposeBag)
     }
     
     // MARK: - State handling
