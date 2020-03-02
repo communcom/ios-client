@@ -14,10 +14,13 @@ class WalletBuyCommunVC: WalletConvertVC {
     
     override func setUp() {
         super.setUp()
+        
         buyNameLabel.text = "Commun"
         buyLogoImageView.image = UIImage(named: "tux")
         convertBuyLabel.text = "buy".localized().uppercaseFirst + " Commun"
         
+        setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(pointsListButtonDidTouch))
+
         carousel.scrollingHandler = { index in
             self.currentBalance = self.viewModel.items.value[safe: index + 1]
         }
@@ -25,6 +28,7 @@ class WalletBuyCommunVC: WalletConvertVC {
     
     override func bind() {
         super.bind()
+        
         viewModel.items
             .map {$0.filter {$0.symbol != Config.defaultSymbol}}
             .subscribe(onNext: { (items) in
@@ -45,12 +49,14 @@ class WalletBuyCommunVC: WalletConvertVC {
     
     override func setUpCommunBalance() {
         super.setUpCommunBalance()
+        
         guard let balance = communBalance else {return}
         buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
     }
     
     override func setUpCurrentBalance() {
         super.setUpCurrentBalance()
+        
         guard let balance = currentBalance else {return}
         balanceNameLabel.text = balance.name
         valueLabel.text = balance.balanceValue.currencyValueFormatted
@@ -65,7 +71,6 @@ class WalletBuyCommunVC: WalletConvertVC {
         }
         
         convertButton.isDisabled = !shouldEnableConvertButton()
-//        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
@@ -76,7 +81,6 @@ class WalletBuyCommunVC: WalletConvertVC {
         }
         
         convertButton.isDisabled = !shouldEnableConvertButton()
-//        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func bindBuyPrice() {
@@ -142,16 +146,15 @@ class WalletBuyCommunVC: WalletConvertVC {
         guard let balance = currentBalance,
             let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue,
             value > 0
-        else {return}
+        else { return }
         viewModel.getBuyPrice(symbol: balance.symbol, quantity: "\(value) CMN")
-        
     }
     
     override func getSellPrice() {
         guard let balance = currentBalance,
             let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue,
             value > 0
-        else {return}
+        else { return }
         viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
     

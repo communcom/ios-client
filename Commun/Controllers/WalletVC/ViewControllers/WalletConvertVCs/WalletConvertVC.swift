@@ -14,11 +14,13 @@ class WalletConvertVC: BaseViewController {
     // MARK: - Properties
     let viewModel = WalletConvertViewModel()
     var currentSymbol: String?
+   
     var currentBalance: ResponseAPIWalletGetBalance? {
         didSet {
             setUpCurrentBalance()
         }
     }
+    
     var communBalance: ResponseAPIWalletGetBalance? {
         didSet {
             setUpCommunBalance()
@@ -488,6 +490,16 @@ class WalletConvertVC: BaseViewController {
     @objc func convertButtonDidTouch() {
         view.endEditing(true)
     }
+    
+    @objc func pointsListButtonDidTouch() {
+        let vc = BalancesVC { balance in
+            self.currentBalance = balance
+        }
+        
+        let nc = BaseNavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
+    }
+
     
     // MARK: - Helpers
     func stringFromNumber(_ number: Double) -> String {
