@@ -7,9 +7,14 @@
 //
 
 import Foundation
+import RxSwift
 
-class SearchablePostsVC: PostsViewController {
-    override var isSearchEnabled: Bool {true}
+class SearchablePostsVC: PostsViewController, SearchableViewControllerType {
+    var searchVM: SearchViewModel {
+        (viewModel as! PostsViewModel).searchVM
+    }
+    lazy var searchBar = UISearchBar.default()
+    
     private var initialKeyword: String?
     
     init(keyword: String? = nil) {
@@ -23,26 +28,41 @@ class SearchablePostsVC: PostsViewController {
     
     override func setUp() {
         super.setUp()
+        layoutSearchBar()
+        
         if let keyword = initialKeyword {
-            searchBarChangeTextNotified(text: "")
-            searchBarChangeTextNotified(text: keyword)
+            searchBar.changeTextNotified(text: "")
+            searchBar.changeTextNotified(text: keyword)
         }
     }
     
-    private func searchBarChangeTextNotified(text: String) {
-        searchController.searchBar.text = text
-        searchController.searchBar.delegate?.searchBar?(searchController.searchBar, textDidChange: text)
+    func layoutSearchBar() {
+        // Place the search bar in the navigation item's title view.
+        self.navigationItem.titleView = searchBar
+    }
+    
+    override func bind() {
+        super.bind()
+        bindSearchBar()
     }
     
     override func bindItems() {
-        viewModel.items
+        Observable.merge(
+            viewModel.items.asObservable(),
+            searchVM.items.map{$0.compactMap{$0.postValue}}
+        )
             .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
     
-    override func search(_ keyword: String?) {
+    func searchBarIsSearchingWithQuery(_ query: String) {
         viewModel.rowHeights = [:]
-        super.search(keyword)
+        searchVM.query = query
+        searchVM.reload()
+    }
+    
+    func searchBarDidCancelSearching() {
+        viewModel.items.accept(viewModel.items.value)
     }
 }

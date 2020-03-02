@@ -12,6 +12,13 @@ import RxCocoa
 
 class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     var filter: BehaviorRelay<PostsListFetcher.Filter>!
+    lazy var searchVM: SearchViewModel = {
+        let fetcher = SearchListFetcher()
+        fetcher.limit = 10
+        fetcher.searchType = .entitySearch
+        fetcher.entitySearchEntity = .posts
+        return SearchViewModel(fetcher: fetcher)
+    }()
     
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time), prefetch: Bool = true) {
         let fetcher = PostsListFetcher(filter: filter)
