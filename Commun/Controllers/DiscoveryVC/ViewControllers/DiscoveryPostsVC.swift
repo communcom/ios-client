@@ -47,11 +47,13 @@ class DiscoveryPostsVC: PostsViewController {
     
     // MARK: - Search manager
     func searchBarIsSearchingWithQuery(_ query: String) {
+        viewModel.rowHeights = [:]
         (viewModel as! PostsViewModel).searchVM.query = query
         (viewModel as! PostsViewModel).searchVM.reload(clearResult: false)
     }
     
     func searchBarDidCancelSearching() {
+        viewModel.rowHeights = [:]
         viewModel.items.accept(viewModel.items.value)
         viewModel.state.accept(.loading(false))
     }
