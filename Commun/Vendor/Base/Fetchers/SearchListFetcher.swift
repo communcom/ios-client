@@ -19,8 +19,6 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
     }
     
     // MARK: - Properties
-    override var isPaginationEnabled: Bool {false}
-    
     var searchType = SearchType.quickSearch
     lazy var total: UInt = 0
     lazy var entities = [SearchEntityType]()
