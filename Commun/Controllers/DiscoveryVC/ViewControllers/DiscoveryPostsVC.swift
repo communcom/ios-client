@@ -54,6 +54,7 @@ class DiscoveryPostsVC: PostsViewController {
     
     func searchBarDidCancelSearching() {
         viewModel.rowHeights = [:]
+        (viewModel as! PostsViewModel).searchVM.query = nil
         viewModel.items.accept(viewModel.items.value)
         viewModel.state.accept(.loading(false))
     }

@@ -31,6 +31,22 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         }
     }
     
+    override func fetchNext(forceRetry: Bool = false) {
+        if searchVM.isQueryEmpty {
+            super.fetchNext(forceRetry: forceRetry)
+        } else {
+            searchVM.fetchNext(forceRetry: forceRetry)
+        }
+    }
+    
+    override func reload(clearResult: Bool = true) {
+        if searchVM.isQueryEmpty {
+            super.reload(clearResult: clearResult)
+        } else {
+            searchVM.reload(clearResult: clearResult)
+        }
+    }
+    
     override func observeItemChange() {
         super.observeItemChange()
         
