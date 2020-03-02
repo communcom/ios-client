@@ -30,7 +30,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     lazy var suggestionsVC = DiscoverySuggestionsVC(showAllHandler: {
         let originalText = self.searchController.searchBar.text ?? ""
         self.searchController.isActive = false
-        self.searchBarChangeTextNotified(text: originalText)
+        self.searchBar.changeTextNotified(text: originalText)
         DispatchQueue.main.async {
             self.setTopBarHidden(false, animated: true)
             if self.topTabBar.selectedIndex.value != 0 {
@@ -294,12 +294,6 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
             self.usersVC.searchBarDidCancelSearching()
             self.postsVC.searchBarDidCancelSearching()
 //        }
-    }
-    
-    // MARK: - Helpers
-    private func searchBarChangeTextNotified(text: String) {
-        searchController.searchBar.text = text
-        searchController.searchBar.delegate?.searchBar?(searchController.searchBar, textDidChange: text)
     }
 }
 

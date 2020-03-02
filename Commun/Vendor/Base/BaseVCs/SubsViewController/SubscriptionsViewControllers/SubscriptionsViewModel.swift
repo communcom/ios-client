@@ -16,7 +16,6 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
         let fetcher = SearchListFetcher()
         fetcher.limit = 20
         fetcher.searchType = .entitySearch
-        fetcher.entitySearchEntity = .profiles
         return SearchViewModel(fetcher: fetcher)
     }()
     
@@ -30,6 +29,13 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
         super.init(fetcher: fetcher)
         
         defer {
+            switch type {
+            case .user:
+                (searchVM.fetcher as! SearchListFetcher).entitySearchEntity = .profiles
+            case .community:
+                (searchVM.fetcher as! SearchListFetcher).entitySearchEntity = .communities
+            }
+            
             if let initItems = initialItems {
                 items.accept(initItems)
             } else {
