@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SingleEntitySearchVC: SubsViewController<ResponseAPIContentSearchItem, SubscribersCell>, SearchableViewControllerType, ProfileCellDelegate, CommunityCellDelegate, PostCellDelegate {
+class SingleEntitySearchVC: ListViewController<ResponseAPIContentSearchItem, SubscribersCell>, SearchableViewControllerType, ProfileCellDelegate, CommunityCellDelegate, PostCellDelegate {
     // MARK: - Properties
     lazy var searchController = UISearchController.default()
     var searchBar: UISearchBar {
