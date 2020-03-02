@@ -30,9 +30,12 @@ class DiscoveryPostsVC: PostsViewController {
     }
     
     override func bindItems() {
+        let viewModel = self.viewModel as! PostsViewModel
         Observable.merge(
-            viewModel.items.asObservable(),
-            (viewModel as! PostsViewModel).searchVM.items.map{$0.compactMap{$0.postValue}}
+            viewModel.items.filter {_ in viewModel.searchVM.isQueryEmpty}.asObservable(),
+            viewModel.searchVM.items
+                .filter {_ in !viewModel.searchVM.isQueryEmpty}
+                .map{$0.compactMap{$0.postValue}}
         )
             .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
             .bind(to: tableView.rx.items(dataSource: dataSource))

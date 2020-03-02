@@ -57,13 +57,6 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
             .disposed(by: disposeBag)
     }
     
-    override func bindItems() {
-        viewModel.items
-            .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-    }
-    
     override func modelSelected(_ item: ResponseAPIContentSearchItem) {
         if let community = item.communityValue {
             showCommunityWithCommunityId(community.communityId)

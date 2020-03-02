@@ -112,8 +112,8 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         let viewModel = self.viewModel as! DiscoveryAllViewModel
         
         Observable.merge(
-            viewModel.subscriptions,
-            viewModel.items.asObservable()
+            viewModel.subscriptions.filter {_ in viewModel.isQueryEmpty},
+            viewModel.items.filter {_ in !viewModel.isQueryEmpty}.asObservable()
         )
             .map {items -> [ListSection] in
                 let communities = items.filter {$0.communityValue != nil}

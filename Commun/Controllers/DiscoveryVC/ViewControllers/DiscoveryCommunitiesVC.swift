@@ -22,9 +22,12 @@ class DiscoveryCommunitiesVC: CommunitiesVC {
     }
     
     override func bindItems() {
+        let viewModel = self.viewModel as! CommunitiesViewModel
         Observable.merge(
-            viewModel.items.asObservable(),
-            (viewModel as! CommunitiesViewModel).searchVM.items.map{$0.compactMap{$0.communityValue}}
+            viewModel.items.filter {_ in viewModel.searchVM.isQueryEmpty}.asObservable(),
+            viewModel.searchVM.items
+                .filter {_ in !viewModel.searchVM.isQueryEmpty}
+                .map{$0.compactMap{$0.communityValue}}
         )
             .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
             .bind(to: tableView.rx.items(dataSource: dataSource))

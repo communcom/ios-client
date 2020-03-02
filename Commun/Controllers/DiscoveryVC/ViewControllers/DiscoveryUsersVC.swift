@@ -23,9 +23,10 @@ class DiscoveryUsersVC: SubscriptionsVC {
     }
     
     override func bindItems() {
+        let viewModel = self.viewModel as! SubscriptionsViewModel
         Observable.merge(
-            viewModel.items.asObservable(),
-            (viewModel as! SubscriptionsViewModel).searchVM.items
+            viewModel.items.filter {_ in viewModel.searchVM.isQueryEmpty}.asObservable(),
+            viewModel.searchVM.items.filter {_ in !viewModel.searchVM.isQueryEmpty}
                 .map {
                     $0.compactMap{$0.profileValue}
                         .map{ResponseAPIContentGetSubscriptionsItem.user($0)}
