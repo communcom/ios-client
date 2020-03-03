@@ -37,7 +37,6 @@ class PostPageVC: CommentsViewController {
     var scrollToTopAfterLoadingComment = false
     var selectedComment: ResponseAPIContentGetComment?
     
-    
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
         let viewModel = PostPageViewModel(post: post)
@@ -134,9 +133,7 @@ class PostPageVC: CommentsViewController {
                     }
                 })
                 .disposed(by: disposeBag)
-        }
-        
-        else if let comment = selectedComment {
+        } else if let comment = selectedComment {
             self.scrollTo(selectedComment: comment)
         }
         

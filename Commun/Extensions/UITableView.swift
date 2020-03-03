@@ -204,6 +204,18 @@ extension UITableView {
                 }
             })
     }
+    
+    /// Check if cell at the specific section and row is visible
+    /// - Parameters:
+    /// - section: an Int reprenseting a UITableView section
+    /// - row: and Int representing a UITableView row
+    /// - Returns: True if cell at section and row is visible, False otherwise
+    func isCellVisible(indexPath: IndexPath) -> Bool {
+        guard let indexes = self.indexPathsForVisibleRows else {
+            return false
+        }
+        return indexes.contains(indexPath)
+    }
 }
 
 extension Reactive where Base: UITableView {

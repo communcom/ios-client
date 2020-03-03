@@ -155,11 +155,10 @@ extension PostPageVC {
         // Mark post as read
         post.filter {$0 != nil}.map {$0!}
             .take(1).asSingle()
-            .flatMap {RestAPIManager.instance.recordPostView(permlink: $0.contentId.permlink)}
-            .subscribe(onSuccess: {_ in
-                var newPost = post.value!
-                newPost.viewsCount = (newPost.viewsCount ?? 0) + 1
-                newPost.notifyChanged()
+            .subscribe(onSuccess: { (post) in
+                if !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity) {
+                    post.markAsViewed().disposed(by: self.disposeBag)
+                }
             })
             .disposed(by: disposeBag)
     }

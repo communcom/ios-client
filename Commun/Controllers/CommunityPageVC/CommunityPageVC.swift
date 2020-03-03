@@ -477,6 +477,16 @@ extension CommunityPageVC: UITableViewDelegate {
         switch item {
         case let post as ResponseAPIContentGetPost:
             (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] = cell.bounds.height
+            
+            // record post view
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                if tableView.isCellVisible(indexPath: indexPath) &&
+                    (cell as! PostCell).post?.identity == post.identity &&
+                    !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity)
+                {
+                    post.markAsViewed().disposed(by: self.disposeBag)
+                }
+            }
         case let leader as ResponseAPIContentGetLeader:
             (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] = cell.bounds.height
         default:
