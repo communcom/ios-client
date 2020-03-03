@@ -12,6 +12,13 @@ import RxSwift
 import RxDataSources
 
 class CommentsViewController: ListViewController<ResponseAPIContentGetComment, CommentCell>, CommentCellDelegate {
+    // MARK: - Nested types
+    class ReplyButton: UIButton {
+        var parentComment: ResponseAPIContentGetComment?
+        var offset: UInt = 0
+        var limit: UInt = 10
+    }
+    
     // MARK: - Properties
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
@@ -33,7 +40,14 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     }
     
     override func setUpTableView() {
-        super.setUpTableView()
+        tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.configureForAutoLayout()
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
+        tableView.backgroundColor = .white
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        
         tableView.separatorStyle = .none
         
         // setup long press

@@ -12,13 +12,6 @@ import CyberSwift
 import RxDataSources
 
 class PostPageVC: CommentsViewController {
-    // MARK: - Nested types
-    class ReplyButton: UIButton {
-        var parentComment: ResponseAPIContentGetComment?
-        var offset: UInt = 0
-        var limit: UInt = 10
-    }
-    
     // MARK: - Constants
     let navigationBarHeight: CGFloat = 56
     var commentFormMinPaddingTop: CGFloat {
