@@ -74,7 +74,9 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
             if offset == 0 {
                 return items
             }
-            return super.join(newItems: items)
+            var newItems = self.items.value
+            newItems.joinUnique(items)
+            return newItems
         }
     }
 }

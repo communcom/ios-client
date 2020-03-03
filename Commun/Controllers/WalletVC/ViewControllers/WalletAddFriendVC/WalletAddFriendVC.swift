@@ -9,19 +9,11 @@
 import Foundation
 import RxSwift
 
-class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, SearchableViewControllerType {
+class WalletAddFriendVC: SubsViewController<ResponseAPIContentSearchItem, WalletAddFriendCell>, WalletAddFriendCellDelegate, SearchableViewControllerType {
     // MARK: - Properties
     var completion: ((ResponseAPIContentGetProfile) -> Void)?
     var tableViewTopConstraint: NSLayoutConstraint?
     lazy var searchController = UISearchController.default()
-    
-    override var listLoadingStateObservable: Observable<ListFetcherState> {
-        let viewModel = self.viewModel as! SubscriptionsViewModel
-        return Observable.merge(
-//            viewModel.state.filter {_ in viewModel.searchVM.isQueryEmpty},
-            viewModel.searchVM.state.filter {_ in !viewModel.searchVM.isQueryEmpty}
-        )
-    }
     
     // MARK: - Subviews
     let searchContainerView = UIView(backgroundColor: .white)
@@ -32,14 +24,20 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, Searchabl
     
     // MARK: - Initializers
     init() {
-        super.init(title: "add friends".localized().uppercaseFirst, type: .user, prefetch: false)
+        let vm = SearchViewModel()
+        (vm.fetcher as! SearchListFetcher).limit = 20
+        (vm.fetcher as! SearchListFetcher).searchType = .entitySearch
+        (vm.fetcher as! SearchListFetcher).entitySearchEntity = .profiles
+        super.init(viewModel: vm)
         showShadowWhenScrollUp = false
+        title = "add friends".localized().uppercaseFirst
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         baseNavigationController?.changeStatusBarStyle(.default)
@@ -102,27 +100,8 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, Searchabl
             .disposed(by: disposeBag)
     }
     
-    override func bindItems() {
-        let viewModel = self.viewModel as! SubscriptionsViewModel
-        Observable.merge(
-//            viewModel.items.filter {_ in viewModel.searchVM.isQueryEmpty}.asObservable(),
-            viewModel.searchVM.items.filter {_ in !viewModel.searchVM.isQueryEmpty}
-                .map {
-                    $0.compactMap{$0.profileValue}
-                        .map{ResponseAPIContentGetSubscriptionsItem.user($0)}
-                }
-        )
-            .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-    }
-    
-    override func registerCell() {
-        tableView.register(WalletAddFriendCell.self, forCellReuseIdentifier: "WalletAddFriendCell")
-    }
-    
-    override func configureCell(with subscription: ResponseAPIContentGetSubscriptionsItem, indexPath: IndexPath) -> UITableViewCell {
-        if let profile = subscription.userValue {
+    override func configureCell(with item: ResponseAPIContentSearchItem, indexPath: IndexPath) -> UITableViewCell {
+        if let profile = item.profileValue {
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "WalletAddFriendCell") as! WalletAddFriendCell
             cell.setUp(with: profile)
             cell.delegate = self as WalletAddFriendCellDelegate
@@ -179,13 +158,12 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, Searchabl
     
     // MARK: - Search manager
     func searchBarIsSearchingWithQuery(_ query: String) {
-        (viewModel as! SubscriptionsViewModel).searchVM.query = query
-        (viewModel as! SubscriptionsViewModel).searchVM.reload(clearResult: false)
+        (viewModel as! SearchViewModel).query = query
+        viewModel.reload(clearResult: false)
     }
     
     func searchBarDidCancelSearching() {
-        (viewModel as! SubscriptionsViewModel).searchVM.query = nil
-        (viewModel as! SubscriptionsViewModel).searchVM.items.accept([])
-        (viewModel as! SubscriptionsViewModel).searchVM.state.accept(.loading(false))
+        viewModel.state.accept(.listEnded)
+        viewModel.items.accept([])
     }
 }
