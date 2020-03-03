@@ -10,6 +10,14 @@ import Foundation
 import RxSwift
 
 class DiscoveryUsersVC: SubscriptionsVC {
+    override var listLoadingStateObservable: Observable<ListFetcherState> {
+        let viewModel = self.viewModel as! SubscriptionsViewModel
+        return Observable.merge(
+            viewModel.state.filter {_ in viewModel.searchVM.isQueryEmpty},
+            viewModel.searchVM.state.filter {_ in !viewModel.searchVM.isQueryEmpty}
+        )
+    }
+    
     init(prefetch: Bool = true) {
         super.init(type: .user, prefetch: prefetch)
         

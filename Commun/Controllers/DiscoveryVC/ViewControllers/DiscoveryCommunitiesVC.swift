@@ -10,6 +10,17 @@ import Foundation
 import RxSwift
 
 class DiscoveryCommunitiesVC: CommunitiesVC {
+    override var listLoadingStateObservable: Observable<ListFetcherState> {
+        let viewModel = self.viewModel as! CommunitiesViewModel
+        return Observable.merge(
+            viewModel.state.filter {_ in viewModel.searchVM.isQueryEmpty},
+            viewModel.searchVM.state.filter {_ in !viewModel.searchVM.isQueryEmpty}
+        )
+            .do(onNext: { (state) in
+                print(viewModel.searchVM.state.value, viewModel.state.value, state)
+            })
+    }
+    
     init(prefetch: Bool) {
         super.init(type: .all, prefetch: prefetch)
         defer {
@@ -24,7 +35,7 @@ class DiscoveryCommunitiesVC: CommunitiesVC {
     override func bindItems() {
         let viewModel = self.viewModel as! CommunitiesViewModel
         Observable.merge(
-            viewModel.items.filter {_ in viewModel.searchVM.isQueryEmpty}.asObservable(),
+            viewModel.items.filter {_ in viewModel.searchVM.isQueryEmpty},
             viewModel.searchVM.items
                 .filter {_ in !viewModel.searchVM.isQueryEmpty}
                 .map{$0.compactMap{$0.communityValue}}

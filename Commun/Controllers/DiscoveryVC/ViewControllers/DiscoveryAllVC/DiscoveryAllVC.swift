@@ -13,6 +13,14 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     // MARK: - Properties
     var seeAllHandler: ((Int) -> Void)?
     override var isInfiniteScrollingEnabled: Bool {false}
+    override var listLoadingStateObservable: Observable<ListFetcherState> {
+        let viewModel = self.viewModel as! DiscoveryAllViewModel
+        let subscriptionsFetchingState = Observable.merge(viewModel.communitiesVM.state.asObservable(), viewModel.followingVM.state.asObservable())
+        return Observable.merge(
+            viewModel.state.filter {_ in !viewModel.isQueryEmpty},
+            subscriptionsFetchingState.filter {_ in viewModel.isQueryEmpty}
+        )
+    }
     
     // MARK: - Initializers
     init(seeAllHandler: ((Int) -> Void)? = nil) {

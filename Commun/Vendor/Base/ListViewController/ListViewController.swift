@@ -22,6 +22,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     var isInfiniteScrollingEnabled: Bool {true}
+    var listLoadingStateObservable: Observable<ListFetcherState> {viewModel.state.asObservable()}
     
     // MARK: - Subviews
     lazy var tableView = UITableView(forAutoLayout: ())
@@ -116,9 +117,8 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     func bindState() {
-        viewModel.state
+        listLoadingStateObservable
             .distinctUntilChanged()
-            .debounce(0.3, scheduler: MainScheduler.instance)
             .do(onNext: { (state) in
                 Logger.log(message: "\(state)", event: .debug)
                 return
@@ -127,9 +127,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                 switch state {
                 case .loading(let isLoading):
                     if isLoading {
+                        self?.handleLoading()
                         if (self?.viewModel.items.value.count ?? 0) == 0 {
                             self?.refreshControl.endRefreshing()
-                            self?.handleLoading()
                         }
                     } else {
                         self?.refreshControl.endRefreshing()
@@ -228,7 +228,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     @objc func refresh() {
-        refreshControl.endRefreshing()
         viewModel.reload(clearResult: false)
     }
 }
