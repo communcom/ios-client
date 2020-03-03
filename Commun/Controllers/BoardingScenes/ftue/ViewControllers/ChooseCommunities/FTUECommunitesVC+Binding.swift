@@ -25,11 +25,11 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
     
     func bindCommunities() {
         // state
-        viewModel.state
+        viewModel.mergedState
             .subscribe(onNext: { [weak self] state in
                 switch state {
                 case .loading(let isLoading):
-                    if isLoading && self?.viewModel.items.value.count == 0 {
+                    if isLoading && self?.viewModel.itemsCount == 0 {
                         self?.communitiesCollectionView.showLoading(offsetTop: 20)
                     } else {
                         self?.communitiesCollectionView.hideLoading()
@@ -52,10 +52,7 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .disposed(by: disposeBag)
         
         // items
-        Observable.merge(
-            viewModel.items.asObservable(),
-            viewModel.searchVM.items.map{$0.compactMap{$0.communityValue}}.asObservable()
-        )
+        viewModel.mergedItems
             .map { items -> [ResponseAPIContentGetCommunity] in
                 var items = items
                 for i in 0..<items.count {

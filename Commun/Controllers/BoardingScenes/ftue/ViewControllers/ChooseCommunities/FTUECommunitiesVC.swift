@@ -170,10 +170,12 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     
     func searchBarIsSearchingWithQuery(_ query: String) {
         viewModel.searchVM.query = query
-        viewModel.searchVM.reload()
+        viewModel.searchVM.reload(clearResult: false)
     }
     
     func searchBarDidCancelSearching() {
+        viewModel.searchVM.query = nil
         viewModel.items.accept(viewModel.items.value)
+        viewModel.state.accept(.loading(false))
     }
 }

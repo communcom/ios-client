@@ -8,6 +8,7 @@
 
 import Foundation
 import CyberSwift
+import RxSwift
 
 class CommunitiesViewModel: ListViewModel<ResponseAPIContentGetCommunity> {
     lazy var searchVM: SearchViewModel = {
@@ -22,6 +23,29 @@ class CommunitiesViewModel: ListViewModel<ResponseAPIContentGetCommunity> {
         let fetcher = CommunitiesListFetcher(type: type, userId: userId)
         super.init(fetcher: fetcher, prefetch: prefetch)
         self.fetcher = fetcher
+    }
+    
+    var mergedState: Observable<ListFetcherState> {
+        Observable.merge(
+            state.filter {_ in self.searchVM.isQueryEmpty},
+            searchVM.state.filter {_ in !self.searchVM.isQueryEmpty}
+        )
+    }
+    
+    var mergedItems: Observable<[ResponseAPIContentGetCommunity]> {
+        Observable.merge(
+            items.filter {_ in self.searchVM.isQueryEmpty},
+            searchVM.items
+                .filter {_ in !self.searchVM.isQueryEmpty}
+                .map{$0.compactMap{$0.communityValue}}
+        )
+    }
+    
+    var itemsCount: Int {
+        if searchVM.isQueryEmpty {
+            return items.value.count
+        }
+        return searchVM.items.value.count
     }
     
     override func fetchNext(forceRetry: Bool = false) {
