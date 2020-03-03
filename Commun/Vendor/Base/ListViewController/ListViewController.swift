@@ -111,9 +111,13 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     func bindItems() {
         viewModel.items
-            .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
+            .map {self.mapItems(items: $0)}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+    }
+    
+    func mapItems(items: [T]) -> [AnimatableSectionModel<String, T>] {
+        items.count > 0 ? [ListSection(model: "", items: items)] : []
     }
     
     func bindState() {

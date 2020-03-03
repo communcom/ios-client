@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, DiscoverySuggestionCell> {
     // MARK: - Properties
@@ -57,6 +58,10 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
             .disposed(by: disposeBag)
     }
     
+    override func mapItems(items: [ResponseAPIContentSearchItem]) -> [AnimatableSectionModel<String, ResponseAPIContentSearchItem>] {
+        [ListSection(model: "", items: items)]
+    }
+    
     override func modelSelected(_ item: ResponseAPIContentSearchItem) {
         if let community = item.communityValue {
             showCommunityWithCommunityId(community.communityId)
@@ -69,7 +74,9 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
         }
     }
     
-    override func handleListEmpty() {}
+    override func handleListEmpty() {
+        self.tableView.tableFooterView = nil
+    }
     
     override func handleLoading() {
         let spinner = UIActivityIndicatorView(style: .gray)
