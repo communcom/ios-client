@@ -156,9 +156,9 @@ extension PostPageVC {
         post.filter {$0 != nil}.map {$0!}
             .take(1).asSingle()
             .subscribe(onSuccess: { (post) in
-                if !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity) {
+//                if !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity) {
                     post.markAsViewed().disposed(by: self.disposeBag)
-                }
+//                }
             })
             .disposed(by: disposeBag)
     }
