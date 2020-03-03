@@ -77,6 +77,7 @@
 "error"                                         =   "error";
 "empty subscriptions title"                     =   "no Subscriptions";
 "empty subscriptions description"               =   "you haven’t subscribed to any community yet";
+"empty subscriptions user description"          =   "you haven’t subscribed to anyone yet";
 "empty subscriptions button title"              =   "find Communities";
 
 
@@ -95,6 +96,13 @@
 "has removed your voice from your..."           =   "has removed your voice from your delegate node";
 "hundreds"                                      =   "hundreds";
 "has been generated"                            =   "has been generated";
+"hint type enter text"                          =   "enter the text";
+"hint type enter text or photo"                 =   "enter the text or add a photo";
+"hint type enter amount"                        =   "enter the amount";
+"hint type enter different text"                =   "same text";
+"hint type choose friend"                       =   "select the user";
+"hint type choose problem"                      =   "select a problem";
+"hint type choose community"                    =   "choose a community";
 
 
 // I
@@ -214,7 +222,7 @@
 "send post"                                     =   "post";
 "send report"                                   =   "report";
 "social network"                                =   "social network";
-"send points"                                   =   "Send Points";
+"send points"                                   =   "send points";
 
 
 // T

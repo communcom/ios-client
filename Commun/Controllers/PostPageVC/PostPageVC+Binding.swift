@@ -146,18 +146,19 @@ extension PostPageVC {
                 self.commentForm.post = post
                 self.postHeaderView.setUp(with: post)
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.scrollToTopAfterLoadingComment = true
-                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+//                    self.scrollToTopAfterLoadingComment = true
+//                }
             })
             .disposed(by: disposeBag)
         
         // Mark post as read
         post.filter {$0 != nil}.map {$0!}
             .take(1).asSingle()
-            .flatMap {NetworkService.shared.markPostAsRead(permlink: $0.contentId.permlink)}
-            .subscribe(onSuccess: {_ in
-                Logger.log(message: "Marked post as read", event: .severe)
+            .subscribe(onSuccess: { (post) in
+//                if !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity) {
+                    post.markAsViewed().disposed(by: self.disposeBag)
+//                }
             })
             .disposed(by: disposeBag)
     }

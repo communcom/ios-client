@@ -9,12 +9,9 @@
 import Foundation
 
 class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, CommunityCell>, CommunityCellDelegate {
-    // MARK: - Properties
-    override var isSearchEnabled: Bool {true}
-    
     // MARK: - Initializers
-    init(type: GetCommunitiesType, userId: String? = nil) {
-        let viewModel = CommunitiesViewModel(type: type, userId: userId)
+    init(type: GetCommunitiesType, userId: String? = nil, prefetch: Bool = true) {
+        let viewModel = CommunitiesViewModel(type: type, userId: userId, prefetch: prefetch)
         super.init(viewModel: viewModel)
         defer {self.title = "communities".localized().uppercaseFirst}
     }
@@ -33,14 +30,6 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
     override func setUp() {
         super.setUp()
         navigationItem.rightBarButtonItem = nil
-    }
-    
-    override func bindItemsWithSearchResult() {
-        // search result replace items itself
-        viewModel.items
-            .map {[ListSection(model: "", items: $0)]}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
     }
     
     override func configureCell(with community: ResponseAPIContentGetCommunity, indexPath: IndexPath) -> UITableViewCell {
@@ -65,21 +54,5 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
         let title = "no communities"
         let description = "no communities found"
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
-    }
-    
-    // MARK: - Search manager
-    override func search(_ keyword: String?) {
-        guard let keyword = keyword, !keyword.isEmpty else {
-            if self.viewModel.fetcher.search != nil {
-                self.viewModel.fetcher.search = nil
-                self.viewModel.reload()
-            }
-            return
-        }
-        
-        if self.viewModel.fetcher.search != keyword {
-            self.viewModel.fetcher.search = keyword.uppercaseFirst
-            self.viewModel.reload(clearResult: false)
-        }
     }
 }

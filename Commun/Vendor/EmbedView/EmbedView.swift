@@ -271,8 +271,7 @@ class EmbedView: UIView {
             }
         } else {
             if let url = URL(string: content.attributes?.url ?? "") {
-                let safariVC = SFSafariViewController(url: url)
-                parentViewController?.present(safariVC, animated: true, completion: nil)
+                parentViewController?.handleUrl(url: url)
             }
         }
     }

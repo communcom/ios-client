@@ -21,6 +21,9 @@ protocol ProfileType: ListItemType {
 }
 
 extension ProfileType {
+    static var followedEventName: String {"Followed"}
+    static var unfollowedEventName: String {"Unfollowed"}
+    
     mutating func setIsSubscribed(_ value: Bool) {
         guard value != isSubscribed
         else {return}
@@ -35,9 +38,18 @@ extension ProfileType {
         }
         self.subscribersCount = subscribersCount
     }
+    
+    static func observeProfileFollowed() -> Observable<Self> {
+        observeEvent(eventName: followedEventName)
+    }
+    
+    static func observeProfileUnfollowed() -> Observable<Self> {
+        observeEvent(eventName: unfollowedEventName)
+    }
 }
 
 extension ResponseAPIContentGetProfile: ProfileType {}
+extension ResponseAPIContentGetLeader: ProfileType {}
 
 protocol ProfileController: class {
     associatedtype Profile: ProfileType

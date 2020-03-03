@@ -14,6 +14,7 @@ import CyberSwift
 import SDWebImage
 import SwiftyGif
 import ImageViewer_swift
+import ASSpinnerView
 
 var nonAvatarColors = [String: UIColor]()
 
@@ -66,7 +67,14 @@ extension UIImageView {
             let url = URL(string: urlString)
         else {return}
         if urlString.lowercased().ends(with: ".gif") {
-            setGifFromURL(url)
+            // add spinnerView
+            let size = (height > 76 ? 60: height-16)
+            let spinnerView = ASSpinnerView(width: size, height: size)
+            spinnerView.spinnerLineWidth = size/10
+            spinnerView.spinnerDuration = 0.3
+            spinnerView.spinnerStrokeColor = UIColor.white.cgColor
+            
+            setGifFromURL(url, customLoader: spinnerView)
         } else {
             downloadImageFromUrl(url, placeholderImage: image, customWidth: customWidth)
         }
@@ -89,7 +97,7 @@ extension UIImageView {
                 newUrl = url.deletingLastPathComponent()
                 placeholderUrl = newUrl.appendingPathComponent("20x0")
                 placeholderUrl = placeholderUrl?.appendingPathComponent((components.last)!)
-                newUrl = newUrl.appendingPathComponent("\(UInt(width * 1.5))x0")
+                newUrl = newUrl.appendingPathComponent("\(UInt(width * 2))x0")
                 newUrl = newUrl.appendingPathComponent((components.last)!)
             }
         }

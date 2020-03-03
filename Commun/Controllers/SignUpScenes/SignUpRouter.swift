@@ -30,10 +30,19 @@ extension SignUpRouter where Self: UIViewController {
             let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self)!
             vc = confirmUserVC
             
-        case .setUserName, .toBlockChain:
+        case .setUserName:
+            
             let setUserVC = SetUserVC()
             vc = setUserVC
             
+        case .toBlockChain:
+            if let setUserVC = self as? SetUserVC {
+                setUserVC.handleToBlockchainStep()
+                return
+            }
+            
+            let setUserVC = SetUserVC()
+            vc = setUserVC
         default:
             return
         }
@@ -64,33 +73,46 @@ extension SignUpRouter where Self: UIViewController {
         }
         
         // catch error
-        if let error = error as? ErrorAPI {
+        if let error = error as? CMError {
             switch error {
-            case .registrationRequestFailed(let message, let currentStep):
-                if message == ErrorAPI.Message.invalidStepTaken.rawValue {
-                    showError(error) {
-                        // save state
-                        var dataToSave = [String: Any]()
-                        dataToSave[Config.registrationUserPhoneKey] = phone
-                        dataToSave[Config.registrationStepKey] = currentStep
-                        try! KeychainManager.save(dataToSave)
-                        self.signUpNextStep()
-                        return
-                    }
-                }
-                
-                if message == ErrorAPI.Message.couldNotCreateUserId.rawValue {
-                    self.showError(error, showPleaseTryAgain: true) {
-                        self.resetSignUpProcess()
-                    }
+            case .registration(let message, let currentStep):
+                if message == ErrorMessage.invalidStepTaken.rawValue {
+                    // save state
+                    var dataToSave = [String: Any]()
+                    dataToSave[Config.registrationUserPhoneKey] = phone
+                    dataToSave[Config.registrationStepKey] = currentStep
+                    try! KeychainManager.save(dataToSave)
+                    getState()
                     return
                 }
+                
+                if message == ErrorMessage.couldNotCreateUserId.rawValue {
+                    getState()
+                    return
+                }
+                
+            case .noConnection:
+                self.showError(error)
+                return
             default:
                 break
             }
         }
-        
-        // unknown error, get state
+
+        // unknown error
         self.showError(error)
+    }
+    
+    func getState(showError: Bool = true) {
+        showIndetermineHudWithMessage("retrieving registration state".localized().uppercaseFirst + "...")
+        RestAPIManager.instance.getState()
+            .subscribe(onSuccess: { (_) in
+                self.hideHud()
+                self.signUpNextStep()
+            }) { (error) in
+                self.hideHud()
+                self.handleSignUpError(error: error)
+            }
+            .disposed(by: disposeBag)
     }
 }

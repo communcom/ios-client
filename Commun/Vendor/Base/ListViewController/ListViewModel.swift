@@ -23,16 +23,18 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
     }
     
     public lazy var rowHeights = [ItemIdentifier: CGFloat]()
-    let searchResult = BehaviorRelay<[T]?>(value: nil)
     
     // MARK: - Filter & Fetcher
     public var fetcher: ListFetcher<T>
     
     // MARK: - Methods
-    init(fetcher: ListFetcher<T>) {
+    init(fetcher: ListFetcher<T>, prefetch: Bool = false) {
         self.fetcher = fetcher
         super.init()
         defer {
+            if prefetch {
+                fetchNext()
+            }
             observeItemDeleted()
             observeItemChange()
         }

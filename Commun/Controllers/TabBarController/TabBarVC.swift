@@ -17,7 +17,7 @@ public let tabBarHeight: CGFloat = .adaptive(height: 60.0) + (UIDevice.hasNotch 
 class TabBarVC: UITabBarController {
     // MARK: - Constants
     let feedTabIndex = 0
-    let searchTabIndex = 1
+    let discoveryTabIndex = 1
     let notificationTabIndex = 2
     let profileTabIndex = 3
     let selectedColor = UIColor.black
@@ -118,10 +118,10 @@ class TabBarVC: UITabBarController {
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
-        let comunities = CommunitiesVC(type: .all)
-        let communitiesNC = BaseNavigationController(rootViewController: comunities, tabBarVC: self)
-        let communitiesItem = buttonTabBarItem(image: UIImage(named: "tabbar-discovery-icon")!, tag: searchTabIndex)
-        comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
+        let discoveryVC = DiscoveryVC()
+        let discoveryNC = BaseNavigationController(rootViewController: discoveryVC, tabBarVC: self)
+        let discoveryItem = buttonTabBarItem(image: UIImage(named: "tabbar-discovery-icon")!, tag: discoveryTabIndex)
+        discoveryVC.accessibilityLabel = "TabBarDiscoveryTabBarItem"
         
         // Notifications Tab
         let notifications = NotificationsPageVC()
@@ -137,11 +137,11 @@ class TabBarVC: UITabBarController {
         profileNC.navigationBar.tintColor = UIColor.appMainColor
 
         // Set up controllers
-        viewControllers = [feedNC, communitiesNC, /* wallet,*/ notificationsNC, profileNC]
+        viewControllers = [feedNC, discoveryNC, /* wallet,*/ notificationsNC, profileNC]
         
         tabBarStackView.addArrangedSubviews([
             feedItem,
-            communitiesItem,
+            discoveryItem,
             tabBarItemAdd,
             notificationsItem,
             profileItem
@@ -194,6 +194,11 @@ class TabBarVC: UITabBarController {
     }
 
     func switchTab(index: Int) {
+        // Remove notifications red marker
+        if index == notificationTabIndex {
+            self.setNotificationRedMarkHidden(true)
+        }
+        
         // pop to first if index is selected
         if selectedIndex == index {
             if let navController = viewControllers?[index] as? UINavigationController {
@@ -203,6 +208,7 @@ class TabBarVC: UITabBarController {
                     navController.topViewController?.scrollToTop()
                 }
             }
+            
             return
         }
         
@@ -214,6 +220,7 @@ class TabBarVC: UITabBarController {
         let selectedItem = items.first {$0.tag == selectedIndex}
         let unselectedItems = items.filter {$0.tag != selectedIndex}
         selectedItem?.tintColor = selectedColor
+        
         for item in unselectedItems {
             item.tintColor = unselectedColor
         }
@@ -265,6 +272,42 @@ class TabBarVC: UITabBarController {
             })
             .disposed(by: bag)
         
+        appDelegate.shareExtensionDataRelay
+            .filter {$0 != nil}
+            .map {$0!}
+            .subscribe(onNext: { (data) in
+                if let presentedVC = self.presentedViewController as? BasicEditorVC {
+                    if !presentedVC.contentTextView.text.isEmpty || presentedVC._viewModel.attachment.value != nil
+                    {
+                        presentedVC.showAlert(title: "replace content".localized().uppercaseFirst, message: "you are currently editing a post".localized().uppercaseFirst + ".\n" + "would you like to replace this content".localized().uppercaseFirst, buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 1) { (index) in
+                            if index == 0 {
+                                presentedVC.shareExtensionData = data
+                                presentedVC.loadShareExtensionData()
+                            }
+                        }
+                    } else {
+                        presentedVC.shareExtensionData = data
+                        presentedVC.loadShareExtensionData()
+                    }
+                } else if let presentedVC = self.presentedViewController {
+                    presentedVC.showAlert(title: "open editor".localized().uppercaseFirst, message: "close this screen and open editor".localized().uppercaseFirst + "?", buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 0) { (index) in
+                        if index == 0 {
+                            presentedVC.dismiss(animated: true) {
+                                let basicEditorScene = BasicEditorVC(shareExtensionData: data)
+                                self.present(basicEditorScene, animated: true, completion: nil)
+                            }
+                        }
+                    }
+                } else {
+                    let basicEditorScene = BasicEditorVC(shareExtensionData: data)
+                    self.present(basicEditorScene, animated: true, completion: nil)
+                }
+                DispatchQueue.main.async {
+                    appDelegate.shareExtensionDataRelay.accept(nil)
+                }
+            })
+            .disposed(by: disposeBag)
+            
         SocketManager.shared
             .unseenNotificationsRelay
             .subscribe(onNext: { (unseen) in

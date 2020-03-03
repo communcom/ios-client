@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let notificationCenter = UNUserNotificationCenter.current()
     let notificationTappedRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
+    let shareExtensionDataRelay = BehaviorRelay<ShareExtensionData?>(value: nil)
     
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
     
@@ -113,11 +114,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .subscribe(onNext: { (state) in
                 switch state {
                 case .disconnected:
-                    self.window?.rootViewController?.showIndetermineHudWithMessage(nil)
+                    self.showConnectingHud()
                 default:
                     return
                 }
-                
             })
             .disposed(by: bag)
         
@@ -166,9 +166,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                 NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold", size: .adaptive(width: 30.0))! ]
             
         case .authorizingError(let error):
-            switch error.caseInfo.message {
-            case "Cannot get such account from BC",
-                 _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
+            switch error {
+            case .userNotFound:
                 AuthorizationManager.shared.status.accept(.authorizing)
                 try! RestAPIManager.instance.logout()
                 return
@@ -199,7 +198,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         getConfig { (error) in
             if let error = error {
-                if error.toErrorAPI().caseInfo.message == "Need update application version" {
+                if error.cmError.message == ErrorMessage.needUpdateApplicationVersion.rawValue {
                     rootVC.view.showForceUpdate()
                     return
                 }
@@ -224,6 +223,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        showConnectingHud()
         AnalyticsManger.shared.foregroundApp()
         SocketManager.shared.connect()
     }
@@ -372,6 +372,11 @@ extension AppDelegate {
         // With swizzling disabled you must set the APNs token here.
         // Messaging.messaging().apnsToken = deviceToken
     }
+
+    private func showConnectingHud() {
+        let message = "connecting".uppercaseFirst.localized() + "..."
+        self.window?.rootViewController?.showIndetermineHudWithMessage(message)
+    }
 }
 
 // MARK: - UNUserNotificationCenterDelegate
@@ -445,14 +450,7 @@ extension AppDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         switch url.description {
         case "commun://createPost":
-            if let tabBar = self.window?.rootViewController as? TabBarVC {
-                if let presentedVC = tabBar.presentedViewController as? BasicEditorVC {
-                    presentedVC.loadShareExtensionData()
-                } else {
-                    tabBar.buttonAddTapped()
-                }
-            }
-       
+            self.shareExtensionDataRelay.accept(UserDefaults.appGroups.loadShareExtensionData())
         default:
             return false
         }

@@ -9,34 +9,21 @@
 import Foundation
 import CyberSwift
 import RxSwift
+import RxDataSources
 
 class CommentsViewController: ListViewController<ResponseAPIContentGetComment, CommentCell>, CommentCellDelegate {
+    // MARK: - Nested types
+    class ReplyButton: UIButton {
+        var parentComment: ResponseAPIContentGetComment?
+        var offset: UInt = 0
+        var limit: UInt = 10
+    }
+    
     // MARK: - Properties
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
         return viewModel
     }
-    
-    // MARK: - Subviews
-    override var tableView: UITableView {
-        get {
-            _tableView
-        }
-        set {
-            _tableView = newValue
-        }
-    }
-    
-    lazy var _tableView: UITableView = {
-        // Override tableView to fix problem with floating footer in section
-        // https://stackoverflow.com/a/32517926
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.configureForAutoLayout()
-        view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
-        tableView.backgroundColor = .white
-        return tableView
-    }()
     
     // MARK: Initializers
     init(filter: CommentsListFetcher.Filter) {
@@ -52,9 +39,15 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setUp() {
-        super.setUp()
-        // setup datasource
+    override func setUpTableView() {
+        tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.configureForAutoLayout()
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
+        tableView.backgroundColor = .white
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        
         tableView.separatorStyle = .none
         
         // setup long press
@@ -85,11 +78,8 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
             .disposed(by: disposeBag)
     }
     
-    override func bindItems() {
-        viewModel.items
-            .map {$0.map {ListSection(model: $0.identity, items: [$0] + ($0.children ?? []))}}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+    override func mapItems(items: [ResponseAPIContentGetComment]) -> [AnimatableSectionModel<String, ResponseAPIContentGetComment>] {
+        items.map {ListSection(model: $0.identity, items: [$0] + ($0.children ?? []))}
     }
     
 //    override func bindItemSelected() {

@@ -14,11 +14,13 @@ class WalletConvertVC: BaseViewController {
     // MARK: - Properties
     let viewModel = WalletConvertViewModel()
     var currentSymbol: String?
+   
     var currentBalance: ResponseAPIWalletGetBalance? {
         didSet {
             setUpCurrentBalance()
         }
     }
+    
     var communBalance: ResponseAPIWalletGetBalance? {
         didSet {
             setUpCommunBalance()
@@ -70,7 +72,8 @@ class WalletConvertVC: BaseViewController {
     lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .red, textAlignment: .center)
     lazy var rateLabel = UILabel.with(text: "Rate: ", textSize: 12, weight: .medium, textAlignment: .center)
     
-    lazy var convertButton = CommunButton.default(height: 50 * Config.heightRatio, label: "convert".localized().uppercaseFirst, isHuggingContent: false)
+    lazy var convertButton = CommunButton.default(height: .adaptive(height: 50.0), label: "convert".localized().uppercaseFirst, isHuggingContent: false, isDisabled: true)
+    
     
     // MARK: - Initializers
     init(balances: [ResponseAPIWalletGetBalance], symbol: String? = nil, historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) {
@@ -88,9 +91,11 @@ class WalletConvertVC: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
         title = "convert".localized().uppercaseFirst
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         
@@ -130,6 +135,7 @@ class WalletConvertVC: BaseViewController {
             imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
             return view
         }()
+       
         convertLogoView.isUserInteractionEnabled = true
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(changeMode))
         convertLogoView.addGestureRecognizer(tap2)
@@ -225,17 +231,20 @@ class WalletConvertVC: BaseViewController {
                         self?.leftTextField.showLoader()
                     }
                     
-                    self?.convertButton.isEnabled = false
+                    self?.convertButton.isDisabled = true
+//                    self?.convertButton.isEnabled = false
                 case .finished:
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
                     
-                    self?.convertButton.isEnabled = self?.shouldEnableConvertButton() ?? false
+                    self?.convertButton.isDisabled = !(self?.shouldEnableConvertButton() ?? false)
+//                    self?.convertButton.isEnabled = self?.shouldEnableConvertButton() ?? false
                 case .error:
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
                     
-                    self?.convertButton.isEnabled = false
+                    self?.convertButton.isDisabled = true
+//                    self?.convertButton.isEnabled = false
                 }
             })
             .disposed(by: disposeBag)
@@ -245,11 +254,7 @@ class WalletConvertVC: BaseViewController {
             .subscribe(onNext: {[weak self] (error) in
                 switch error {
                 case .other(let error):
-                    if let error = error as? ErrorAPI {
-                        self?.errorLabel.text = "Error: " + error.caseInfo.message
-                    } else {
-                        self?.errorLabel.text = "Error: " + error.localizedDescription
-                    }
+                    self?.errorLabel.text = "Error: " + error.localizedDescription
                 case .insufficientFunds:
                     self?.errorLabel.text = "Error: Insufficient funds"
                 default:
@@ -431,6 +436,20 @@ class WalletConvertVC: BaseViewController {
         fatalError("Must override")
     }
     
+    func checkValues() -> Bool {
+        guard errorLabel.text == nil else {
+            self.hintView?.display(inPosition: convertButton.frame.origin, withType: .error(errorLabel.text!), completion: {})
+            return false
+        }
+        
+        guard convertButton.isDisabled, let amount = leftTextField.text, amount.isEmpty else { return true }
+        
+        self.hintView?.display(inPosition: convertButton.frame.origin, withType: .enterAmount, completion: {})
+        
+        return false
+    }
+
+    
     // MARK: - Actions
     @objc func dismissKeyboard() {
         view.endEditing(true)
@@ -471,6 +490,16 @@ class WalletConvertVC: BaseViewController {
     @objc func convertButtonDidTouch() {
         view.endEditing(true)
     }
+    
+    @objc func pointsListButtonDidTouch() {
+        let vc = BalancesVC { balance in
+            self.currentBalance = balance
+        }
+        
+        let nc = BaseNavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
+    }
+
     
     // MARK: - Helpers
     func stringFromNumber(_ number: Double) -> String {

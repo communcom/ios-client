@@ -75,12 +75,29 @@ class CommunWalletVC: TransferHistoryVC {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setNavBarBackButton(tintColor: .white)
+        
+        self.showNavigationBar(false, animated: true, completion: nil)
+        self.setNavBarBackButton(tintColor: .white)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.barTintColor = .appMainColor
-        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
+        self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.shadowImage?.clear()
+
         self.setTabBarHidden(false)
+        
+        baseNavigationController?.changeStatusBarStyle(barStyle)
+        UIApplication.shared.statusBarView?.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = .clear
+        UIApplication.shared.statusBarView?.backgroundColor = .clear
     }
 
     // MARK: - Custom Functions
@@ -111,6 +128,7 @@ class CommunWalletVC: TransferHistoryVC {
         tableView.configureForAutoLayout()
         tableView.insetsContentViewsToSafeArea = false
         tableView.showsVerticalScrollIndicator = false
+        tableView.contentInsetAdjustmentBehavior = .never
 
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges(with: .zero)
@@ -121,7 +139,7 @@ class CommunWalletVC: TransferHistoryVC {
 
     override func bind() {
         super.bind()
-        
+
         // forward delegate
         myPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
@@ -150,24 +168,28 @@ class CommunWalletVC: TransferHistoryVC {
         .disposed(by: disposeBag)
 
         tableView.rx.contentOffset
-            .map {$0.y}
+            .map { $0.y }
             .subscribe { (event) in
                 var y = event.element ?? 0
                 y = y >= -self.headerView.height ? y : -self.headerView.height
                 self.headerTopConstraint.constant = -y - self.headerView.height
                 let diff = self.headerView.height + y
                 self.headerView.updateYPosition(y: diff)
-
+                
                 if diff >= 50 {
                     if self.navigationItem.titleView != self.barBalanceView {
                         self.navigationItem.titleView = self.barBalanceView
                     }
+                                        
                     let alpha = ((100 / 50) / 100 * diff) - 1
                     self.barBalanceView.alpha = alpha
+                    self.changeNavbar(y: alpha)
                 } else {
                     let alpha = 1 - ((100 / 50) / 100 * diff)
+                    
                     if self.isCommunBalance {
                         self.logoView.alpha = alpha
+                        
                         if self.navigationItem.titleView != self.logoView {
                             self.navigationItem.titleView = self.logoView
                         }
@@ -181,6 +203,25 @@ class CommunWalletVC: TransferHistoryVC {
         }.disposed(by: disposeBag)
     }
 
+    private func changeNavbar(y: CGFloat) {
+        if 2...3 ~= y {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
+                self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
+                self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+                self.navigationController?.navigationBar.barStyle = .default
+                UIApplication.shared.statusBarView?.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+            })
+        }
+
+        if 0..<2 ~= y {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.navigationController?.navigationBar.backgroundColor = .clear
+                UIApplication.shared.statusBarView?.backgroundColor = .clear
+            })
+        }
+    }
+    
     override func bindItems() {
         super.bindItems()
         balancesVM.items
@@ -206,9 +247,8 @@ class CommunWalletVC: TransferHistoryVC {
         subscriptionsVM.items
             .map({ (items) -> [ResponseAPIContentGetProfile?] in
                 let items = items.compactMap {$0.userValue}
-                return items//[nil] + items // Temp hide Add friends
+                return [nil] + items
             })
-            .do(onNext: {self.tableHeaderView.setSendPointsHidden($0.count == 0)})
             .bind(to: sendPointsCollectionView.rx.items(cellIdentifier: "\(SendPointCollectionCell.self)", cellType: SendPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
             }
@@ -224,7 +264,11 @@ class CommunWalletVC: TransferHistoryVC {
         
         sendPointsCollectionView.rx.itemSelected
             .subscribe(onNext: { (indexPath) in
-                guard let user = (self.viewModel as! WalletViewModel).subscriptionsVM.items.value[safe: indexPath.row]?.userValue else {return}
+                guard let user = (self.viewModel as! WalletViewModel).subscriptionsVM.items.value[safe: indexPath.row - 1]?.userValue else {
+                    // add friend
+                    self.addFriend()
+                    return
+                }
                 self.sendPoint(to: user)
             })
             .disposed(by: disposeBag)
@@ -339,8 +383,20 @@ class CommunWalletVC: TransferHistoryVC {
     }
     
     @objc func sendPointsSeeAllDidTouch() {
-        let vc = SendPointListVC { (user) in
-            self.sendPoint(to: user)
+        guard !subscriptionsVM.items.value.isEmpty else {
+            showAlert(title: "no friend found".localized().uppercaseFirst, message: "you don't have any friend. Do you want to add some?".localized().uppercaseFirst, buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 0) { (index) in
+                if index == 0 {
+                    self.addFriend()
+                }
+            }
+            return
+        }
+        
+        let vc = SendPointListVC()
+        vc.completion = { (user) in
+            vc.dismiss(animated: true) {
+                self.sendPoint(to: user)
+            }
         }
         
         let nc = BaseNavigationController(rootViewController: vc)
@@ -357,7 +413,14 @@ class CommunWalletVC: TransferHistoryVC {
     }
         
     func addFriend() {
-        showAlert(title: "TODO: Add friend", message: "add friend")
+        let vc = WalletAddFriendVC()
+        vc.completion = { (user) in
+            vc.dismiss(animated: true) {
+                self.sendPoint(to: user)
+            }
+        }
+        let nc = BaseNavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
     }
     
     private func openOtherBalancesWalletVC(withSelectedBalance balance: ResponseAPIWalletGetBalance?) {

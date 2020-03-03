@@ -68,7 +68,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         }
     }
     
-    var filter: Filter 
+    var filter: Filter
     
     required init(filter: Filter) {
         self.filter = filter
@@ -76,9 +76,8 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     }
         
     override var request: Single<[ResponseAPIContentGetPost]> {
-//        return ResponseAPIContentGetPosts.singleWithMockData()
-//            .delay(0.8, scheduler: MainScheduler.instance)
-        return RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, sortType: filter.sortType, limit: limit, offset: offset)
+        RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, sortType: filter.sortType, limit: limit, offset: offset
+        )
             .map { $0.items ?? [] }
             .do(onSuccess: { (posts) in
                 self.loadRewards(fromPosts: posts)
@@ -86,9 +85,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     }
     
     override func join(newItems items: [ResponseAPIContentGetPost]) -> [ResponseAPIContentGetPost] {
-        let newList = super.join(newItems: items)
-            .filter { $0.document != nil}
-        return newList
+        return super.join(newItems: items).filter { $0.document != nil}
     }
 
     func loadRewards(fromPosts posts: [ResponseAPIContentGetPost]) {

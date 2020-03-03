@@ -70,7 +70,7 @@ extension UITableView {
             rowType: PlaceholderNotificationCell.self,
             tag: notificationsLoadingFooterViewTag,
             rowHeight: 88,
-            numberOfRows: 5
+            numberOfRows: 2
         )
     }
     
@@ -203,6 +203,18 @@ extension UITableView {
                     loadMoreAction()
                 }
             })
+    }
+    
+    /// Check if cell at the specific section and row is visible
+    /// - Parameters:
+    /// - section: an Int reprenseting a UITableView section
+    /// - row: and Int representing a UITableView row
+    /// - Returns: True if cell at section and row is visible, False otherwise
+    func isCellVisible(indexPath: IndexPath) -> Bool {
+        guard let indexes = self.indexPathsForVisibleRows else {
+            return false
+        }
+        return indexes.contains(indexPath)
     }
 }
 

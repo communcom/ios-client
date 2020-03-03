@@ -161,7 +161,7 @@ extension PostCellDelegate where Self: BaseViewController {
                     return
                 }
                 topController.hideHud()
-                topController.showError(ErrorAPI.invalidData(message: "Unsupported type of post"))
+                topController.showError(CMError.invalidRequest(message: ErrorMessage.unsupportedTypeOfPost.rawValue))
             }, onError: {error in
                 topController.hideHud()
                 topController.showError(error)

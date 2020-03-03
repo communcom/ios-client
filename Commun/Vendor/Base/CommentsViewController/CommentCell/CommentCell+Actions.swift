@@ -43,25 +43,8 @@ extension CommentCell {
                     return
                 }
                 
-                if urlString.isLinkToMention,
-                    let userName = urlString.components(separatedBy: "@").last {
-                    parentViewController?.showProfileWithUserId(userName)
-                    return
-                }
-                
-                if urlString.isLinkToTag,
-                    let tag = urlString.components(separatedBy: "#").last {
-                    delegate?.cell(self, didTapOnTag: tag)
-                    return
-                }
-                
-                if urlString.starts(with: "https://") ||
-                    urlString.starts(with: "http://"),
-                    let url = URL(string: urlString)
-                {
-                    let safariVC = SFSafariViewController(url: url)
-                    parentViewController?.present(safariVC, animated: true, completion: nil)
-                    return
+                if let url = URL(string: urlString) {
+                    parentViewController?.handleUrl(url: url)
                 }
             }
         }

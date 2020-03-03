@@ -16,7 +16,15 @@ extension ProfileVC {
             .share()
             
         offSetY
-            .subscribe(onNext: {_ in
+            .subscribe(onNext: {offSetY in
+                // return contentInset after updating tableView
+                if let inset = self.originInsetBottom,
+                    (UIScreen.main.bounds.height - self.tableView.contentSize.height + offSetY < inset)
+                {
+                    self.tableView.contentInset.bottom = inset
+                }
+                
+                // headerView paralax effect
                 self.updateHeaderView()
             })
             .disposed(by: disposeBag)
@@ -26,6 +34,21 @@ extension ProfileVC {
             .map {$0 < -43}
             .subscribe(onNext: { showNavBar in
                 self.showTitle(!showNavBar)
+            })
+            .disposed(by: disposeBag)
+        
+        tableView.rx.willBeginDragging
+            .subscribe(onNext: { (_) in
+                self.frozenContentOffsetForRowAnimation = nil
+            })
+            .disposed(by: disposeBag)
+        
+        tableView.rx.didScroll
+            .subscribe(onNext: { (_) in
+                if let overrideOffset = self.frozenContentOffsetForRowAnimation, self.tableView.contentOffset != overrideOffset
+                {
+                    self.tableView.setContentOffset(overrideOffset, animated: false)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -41,7 +64,7 @@ extension ProfileVC {
                     strongSelf._headerView.hideLoader()
                     let backButtonOriginTintColor = strongSelf.navigationItem.leftBarButtonItem?.tintColor
                     strongSelf.navigationItem.leftBarButtonItem?.tintColor = .black
-                    strongSelf.view.showErrorView(title: "Error", subtitle: error.toErrorAPI().caseInfo.message) {
+                    strongSelf.view.showErrorView(title: "Error", subtitle: error.localizedDescription) {
                         strongSelf.view.hideErrorView()
                         strongSelf.navigationItem.leftBarButtonItem?.tintColor = backButtonOriginTintColor
                         strongSelf.reload()

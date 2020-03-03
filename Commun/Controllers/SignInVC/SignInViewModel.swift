@@ -16,7 +16,7 @@ class SignInViewModel {
     func signIn(login: String, masterKey: String) -> Completable {
         return RestAPIManager.instance.login(login: login, masterKey: masterKey)
             .map {response -> String in
-                guard response.permission == "active" else {throw ErrorAPI.unknown}
+                guard response.permission == "active" else {throw CMError.unknown}
                 return response.permission
             }
             .flatMapToCompletable()

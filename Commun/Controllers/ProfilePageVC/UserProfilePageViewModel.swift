@@ -27,7 +27,7 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     
     // MARK: - Methods
     override var loadProfileRequest: Single<ResponseAPIContentGetProfile> {
-        NetworkService.shared.getUserProfile(userId: profileId)
+        RestAPIManager.instance.getProfile(user: profileId)
     }
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {

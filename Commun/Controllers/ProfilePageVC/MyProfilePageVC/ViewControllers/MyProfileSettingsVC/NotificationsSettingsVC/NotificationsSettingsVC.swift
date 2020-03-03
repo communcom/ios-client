@@ -9,9 +9,10 @@
 import Foundation
 import RxSwift
 
-class NotificationsSettingsVC: BaseVerticalStackViewController {
+class NotificationsSettingsVC: BaseVerticalStackViewController, PNAlertViewDelegate {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
+    var pnAlertView: PNAlertView?
     
     // MARK: - Properties
     var viewModel = NotificationSettingsViewModel()
@@ -48,6 +49,8 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
         title = "notifications".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
         closeButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        
+        checkPNAuthorizationStatus()
     }
     
     override func bind() {
@@ -83,6 +86,8 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewForAction(_ action: Action) -> UIView {
@@ -108,6 +113,42 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
         actionView.setUp(with: action)
         actionView.delegate = self
         return actionView
+    }
+    
+    // MARK: - PNAlertViewDelegate
+    var pnAlertViewShowed: Bool {
+        pnAlertView?.isDescendant(of: view) ?? false
+    }
+    
+    func clearPNAlertView() {
+        pnAlertView?.removeFromSuperview()
+        pnAlertView = nil
+        
+        stackViewTopConstraint?.isActive = false
+        stackViewTopConstraint = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+        UIView.animate(withDuration: 0.3) {
+            self.scrollView.layoutIfNeeded()
+        }
+    }
+    
+    func showPNAlertView() {
+        stackViewTopConstraint?.isActive = false
+        
+        pnAlertView = PNAlertView(forAutoLayout: ())
+        pnAlertView?.delegate = self
+        scrollView.contentView.addSubview(pnAlertView!)
+        
+        pnAlertView?.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .bottom)
+        stackViewTopConstraint = pnAlertView?.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: -16)
+        
+        UIView.animate(withDuration: 0.3) {
+            self.scrollView.layoutIfNeeded()
+        }
+    }
+    
+    // MARK: - AppState observer
+    @objc func applicationDidBecomeActive(notification: NSNotification) {
+        checkPNAuthorizationStatus()
     }
 }
 

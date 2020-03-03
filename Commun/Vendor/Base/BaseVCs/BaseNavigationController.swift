@@ -65,14 +65,29 @@ final class BaseNavigationController: UINavigationController {
     func resetNavigationBar() {
         navigationBar.isTranslucent = false
         
+        removeNavigationBarShadow()
+        
+        setNavigationBarBackground(color: .white)
+        
+        setTitleStyle()
+    }
+    
+    func removeNavigationBarShadow() {
         let img = UIImage()
         navigationBar.shadowImage = img
+    }
+    
+    func setNavigationBarBackground(color: UIColor = .white) {
+        let img = UIImage()
         navigationBar.setBackgroundImage(img, for: .default)
         navigationBar.barStyle = .default
-        navigationBar.barTintColor = .white
-        navigationBar.subviews.first?.backgroundColor = .white
-        navigationBar.tintColor = .black
-        navigationBar.setTitleFont(.boldSystemFont(ofSize: 15), color: .black)
+        navigationBar.barTintColor = color
+        navigationBar.subviews.first?.backgroundColor = color
+    }
+    
+    func setTitleStyle(font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .black) {
+        navigationBar.tintColor = textColor
+        navigationBar.setTitleFont(.boldSystemFont(ofSize: 15), color: textColor)
         setNavigationBarHidden(false, animated: false)
     }
     

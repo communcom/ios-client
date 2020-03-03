@@ -11,6 +11,7 @@ import RxSwift
 import CyberSwift
 import MBProgressHUD
 import ReCaptcha
+import SafariServices
 
 public let reCaptchaTag: Int = 777
 
@@ -23,9 +24,17 @@ extension UIViewController {
     var baseNavigationController: BaseNavigationController? {
         navigationController as? BaseNavigationController
     }
+        
+    var hintView: CMHint? {
+        get {
+            let hintViewInstance = CMHint(type: .enterText, isTabbarHidden: tabBarController?.tabBar.isHidden ?? true)
+            view.addSubview(hintViewInstance)
+            return hintViewInstance
+        }
+    }
     
+
     // MARK: - Custom Functions
-    
     class func instanceController(fromStoryboard storyboard: String, withIdentifier identifier: String) -> UIViewController {
         let st = UIStoryboard(name: storyboard, bundle: nil)
         return st.instantiateViewController(withIdentifier: identifier)
@@ -82,10 +91,7 @@ extension UIViewController {
     }
     
     func showError(_ error: Error, showPleaseTryAgain: Bool = false, additionalMessage: String? = nil, completion: (() -> Void)? = nil) {
-        var message = error.localizedDescription
-        if let error = error as? ErrorAPI {
-            message = error.caseInfo.message
-        }
+        let message = error.localizedDescription
         showErrorWithLocalizedMessage(message + (showPleaseTryAgain ? (".\n" + "please try again later".localized().uppercaseFirst + "!"): "") + (additionalMessage ?? ""), completion: completion)
     }
     
@@ -214,7 +220,7 @@ extension UIViewController {
             
         case "reward":
             if let id = item.community?.communityId {
-                showCommunityWithCommunityId(id)
+                showOtherBalanceWalletVC(symbol: id)
             }
         default:
             break
@@ -250,6 +256,49 @@ extension UIViewController {
             show(vc, sender: nil)
             nc?.shouldResetNavigationBarOnPush = true
         }
+    }
+    
+    func handleUrl(url: URL) {
+        let path = Array(url.path.components(separatedBy: "/").dropFirst())
+        
+        // Check if link is a commun.com link
+        if url.absoluteString.starts(with: URL.appURL) &&
+            (path.count == 1 || path.count == 3)
+        {
+            if path.count == 1 {
+                if path[0].starts(with: "@") {
+                    // user's profile
+                    let userId = String(path[0].dropFirst())
+                    showProfileWithUserId(userId)
+                    return
+                } else if !path[0].isEmpty {
+                    // community
+                    let alias = path[0]
+                    showCommunityWithCommunityAlias(alias)
+                    return
+                } else if url.absoluteString.starts(with: URL.appURL + "/#"),
+                    let hashtag = url.absoluteString.components(separatedBy: "#").last
+                {
+                    // hashtag
+                    let vc = SearchablePostsVC(keyword: "#" + hashtag)
+                    self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
+                    self.baseNavigationController?.changeStatusBarStyle(.default)
+                    self.show(vc, sender: self)
+                    return
+                }
+            } else if path.count == 3 {
+                let communityAlias = path[0]
+                let username = String(path[1].dropFirst())
+                let permlink = path[2]
+                
+                let postVC = PostPageVC(username: username, permlink: permlink, communityAlias: communityAlias)
+                show(postVC, sender: nil)
+                return
+            }
+        }
+        
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true, completion: nil)
     }
     
     // MARK: - ChildVC
@@ -295,13 +344,17 @@ extension UIViewController {
     }
     
     func setLeftNavBarButtonForGoingBack(tintColor: UIColor = .black) {
-        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(back))
+        setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: tintColor, action: #selector(back))
+    }
+    
+    func setLeftBarButton(imageName: String, tintColor: UIColor = .black, action: Selector?) {
+        let backButton = UIBarButtonItem(image: UIImage(named: imageName), style: .plain, target: self, action: action)
         backButton.tintColor = tintColor
         navigationItem.leftBarButtonItem = backButton
     }
 
-    func setRightBarButtonForGoingBack(tintColor: UIColor = .black) {
-        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(back))
+    func setRightBarButton(imageName: String, tintColor: UIColor = .black, action: Selector?) {
+        let backButton = UIBarButtonItem(image: UIImage(named: imageName), style: .plain, target: self, action: action)
         backButton.tintColor = tintColor
         navigationItem.rightBarButtonItem = backButton
     }

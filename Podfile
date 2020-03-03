@@ -11,6 +11,7 @@ project 'cyberSwift/CyberSwift.xcodeproj'
 def common_pods
   pod 'RxDataSources', '~> 3.0'
   pod 'Crashlytics'
+  pod 'Amplitude-iOS'
 end
 
 def extensions_pods
@@ -26,7 +27,6 @@ def common_pods_commun
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
-  pod 'Amplitude-iOS'
      
   pod 'PureLayout'
   pod 'Alamofire'
@@ -34,7 +34,7 @@ def common_pods_commun
   pod 'SDWebImage'
   pod 'SDWebImageWebPCoder'
   pod 'Action'
-  pod 'SwiftyGif'
+  pod 'SwiftyGif', :git => "https://github.com/communcom/SwiftyGif.git"
   
   pod "InitialsImageView"
   

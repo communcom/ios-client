@@ -12,12 +12,14 @@ class ReportOtherVC: BaseViewController {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
     lazy var textView = UITextView(forAutoLayout: ())
-    lazy var sendButton = CommunButton.default(height: .adaptive(height: 50), label: "send".localized().uppercaseFirst, cornerRadius: .adaptive(height: 25), isHuggingContent: false, isDisableGrayColor: true)
+    lazy var sendButton = CommunButton.default(height: .adaptive(height: 50), label: "send".localized().uppercaseFirst, cornerRadius: .adaptive(height: 25), isHuggingContent: false, isDisabled: true)
     var completion: ((String) -> Void)?
+    
     
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
         title = "please enter a reason".localized().uppercaseFirst
         navigationItem.setHidesBackButton(true, animated: false)
         setRightNavBarButton(with: closeButton)
@@ -39,13 +41,28 @@ class ReportOtherVC: BaseViewController {
     
     override func bind() {
         super.bind()
+       
         textView.rx.text.orEmpty
-            .map {!$0.isEmpty}
-            .bind(to: sendButton.rx.isEnabled)
+            .map { !$0.isEmpty }
+            .bind(to: sendButton.rx.isDisabled)
+//            .bind(to: sendButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
     
+    private func checkValues() -> Bool {
+        guard !sendButton.isDisabled else {
+            self.hintView?.display(inPosition: sendButton.frame.origin, withType: .enterText, completion: {})
+            return false
+        }
+                        
+        return true
+    }
+
+    
+    // MARK: - Actions
     @objc func sendButtonDidTouch() {
+        guard checkValues() else { return }
+
         completion?(textView.text)
     }
 }

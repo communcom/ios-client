@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryItem, TransferHistoryItemCell> {
     // MARK: - Properties
@@ -62,33 +63,28 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
         return cell
     }
     
-    override func bindItems() {
-        viewModel.items
-            .map { (items) -> [ListSection] in
-                let calendar = Calendar.current
-                let today = calendar.startOfDay(for: Date())
-                let dictionary = Dictionary(grouping: items) { item -> Int in
-                    let date = Date.from(string: item.timestamp)
-                    let createdDate = calendar.startOfDay(for: date)
-                    return calendar.dateComponents([.day], from: createdDate, to: today).day ?? 0
+    override func mapItems(items: [ResponseAPIWalletGetTransferHistoryItem]) -> [AnimatableSectionModel<String, ResponseAPIWalletGetTransferHistoryItem>] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let dictionary = Dictionary(grouping: items) { item -> Int in
+            let date = Date.from(string: item.timestamp)
+            let createdDate = calendar.startOfDay(for: date)
+            return calendar.dateComponents([.day], from: createdDate, to: today).day ?? 0
+        }
+        
+        return dictionary.keys.sorted()
+            .map { (key) -> ListSection in
+                var sectionLabel: String
+                switch key {
+                case 0:
+                    sectionLabel = "today".localized().uppercaseFirst
+                case 1:
+                    sectionLabel = "yesterday".localized().uppercaseFirst
+                default:
+                    sectionLabel = "\(key) " + "days ago".localized()
                 }
-                
-                return dictionary.keys.sorted()
-                    .map { (key) -> ListSection in
-                        var sectionLabel: String
-                        switch key {
-                        case 0:
-                            sectionLabel = "today".localized().uppercaseFirst
-                        case 1:
-                            sectionLabel = "yesterday".localized().uppercaseFirst
-                        default:
-                            sectionLabel = "\(key) " + "days ago".localized()
-                        }
-                        return ListSection(model: sectionLabel, items: dictionary[key] ?? [])
-                    }
+                return ListSection(model: sectionLabel, items: dictionary[key] ?? [])
             }
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
     }
     
     override func bindItemSelected() {

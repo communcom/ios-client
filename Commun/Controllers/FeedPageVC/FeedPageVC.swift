@@ -45,8 +45,10 @@ final class FeedPageVC: PostsViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let height = floatView.height
+        
         if floatViewHeight == 0 {
             tableView.contentInset.top = height
+            tableView.scrollIndicatorInsets = UIEdgeInsets(top: height, left: 0.0, bottom: 0.0, right: 0.0)
             floatViewHeight = height
             scrollToTop()
         }

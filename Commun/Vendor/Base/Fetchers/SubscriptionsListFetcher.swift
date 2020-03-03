@@ -22,7 +22,7 @@ class SubscriptionsListFetcher: ListFetcher<ResponseAPIContentGetSubscriptionsIt
     }
     
     override var request: Single<[ResponseAPIContentGetSubscriptionsItem]> {
-        return RestAPIManager.instance.getSubscriptions(userId: userId, type: type, offset: Int(offset), limit: Int(limit))
+        RestAPIManager.instance.getSubscriptions(userId: userId, type: type, offset: Int(offset), limit: Int(limit))
             .map {$0.items}
     }
 }
