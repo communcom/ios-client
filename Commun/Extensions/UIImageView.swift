@@ -97,7 +97,7 @@ extension UIImageView {
                 newUrl = url.deletingLastPathComponent()
                 placeholderUrl = newUrl.appendingPathComponent("20x0")
                 placeholderUrl = placeholderUrl?.appendingPathComponent((components.last)!)
-                newUrl = newUrl.appendingPathComponent("\(UInt(width * 1.5))x0")
+                newUrl = newUrl.appendingPathComponent("\(UInt(width * 2))x0")
                 newUrl = newUrl.appendingPathComponent((components.last)!)
             }
         }
