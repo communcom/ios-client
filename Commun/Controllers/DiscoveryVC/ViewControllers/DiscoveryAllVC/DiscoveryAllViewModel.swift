@@ -46,6 +46,59 @@ class DiscoveryAllViewModel: SearchViewModel {
         return Observable.zip(users, communities).map {Array($0) + Array($1)}
     }
     
+    var subscriptionsFetcherState: Observable<ListFetcherState> {
+        let usersFetcherState = followingVM.state.asObservable()
+        let communitiesFetcherState = communitiesVM.state.asObservable()
+        return Observable.combineLatest(usersFetcherState, communitiesFetcherState)
+            .map {(state1, state2) -> ListFetcherState in
+                switch state1 {
+                case .loading(let isLoading):
+                    if isLoading {return .loading(true)}
+                    switch state2 {
+                    case .loading(let isLoading2):
+                        if isLoading != isLoading2 {return .loading(true)}
+                        return .listEnded
+                    case .listEmpty, .listEnded:
+                        return .listEnded
+                    case .error(let error):
+                        return .error(error: error)
+                    }
+                case .listEmpty:
+                    switch state2 {
+                    case .loading(let isLoading):
+                        if isLoading {return .loading(true)}
+                        return .listEnded
+                    case .listEmpty, .listEnded:
+                        return .listEnded
+                    case .error(let error):
+                        return .error(error: error)
+                    }
+                case .listEnded:
+                    switch state2 {
+                    case .loading(let isLoading):
+                        if isLoading {return .loading(true)}
+                        return .listEnded
+                    case .listEmpty, .listEnded:
+                        return .listEnded
+                    case .error(let error):
+                        return .error(error: error)
+                    }
+                case .error(let error):
+                    switch state2 {
+                    case .loading(let isLoading):
+                        if isLoading {return .loading(true)}
+                        return .error(error: error)
+                    case .listEmpty:
+                        return .error(error: error)
+                    case .listEnded:
+                        return .error(error: error)
+                    case .error:
+                        return .error(error: error)
+                    }
+                }
+            }
+    }
+    
     override func fetchNext(forceRetry: Bool = false) {
         if isQueryEmpty {
             followingVM.fetchNext(forceRetry: forceRetry)

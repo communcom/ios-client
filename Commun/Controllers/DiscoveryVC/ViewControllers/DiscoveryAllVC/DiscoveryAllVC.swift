@@ -15,7 +15,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     override var isInfiniteScrollingEnabled: Bool {false}
     override var listLoadingStateObservable: Observable<ListFetcherState> {
         let viewModel = self.viewModel as! DiscoveryAllViewModel
-        let subscriptionsFetchingState = Observable.merge(viewModel.communitiesVM.state.asObservable(), viewModel.followingVM.state.asObservable())
+        let subscriptionsFetchingState = viewModel.subscriptionsFetcherState
         return Observable.merge(
             viewModel.state.filter {_ in !viewModel.isQueryEmpty},
             subscriptionsFetchingState.filter {_ in viewModel.isQueryEmpty}
