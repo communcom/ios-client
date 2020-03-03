@@ -31,5 +31,6 @@ class SendPointListVC: SubscriptionsVC {
     override func modelSelected(_ item: ResponseAPIContentGetSubscriptionsItem) {
         guard let user = item.userValue else {return}
         self.completion?(user)
+        self.dismiss(animated: true, completion: nil)
     }
 }
