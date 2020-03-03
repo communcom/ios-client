@@ -12,8 +12,14 @@ import RxSwift
 class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, SubscribersCell>, CommunityCellDelegate, ProfileCellDelegate {
     // MARK: - Properties
     var seeAllHandler: ((Int) -> Void)?
-    var isSearchBarEmpty: Bool {
-        viewModel.fetcher.search == nil
+    override var isInfiniteScrollingEnabled: Bool {false}
+    override var listLoadingStateObservable: Observable<ListFetcherState> {
+        let viewModel = self.viewModel as! DiscoveryAllViewModel
+        let subscriptionsFetchingState = viewModel.subscriptionsFetcherState
+        return Observable.merge(
+            viewModel.state.filter {_ in !viewModel.isQueryEmpty},
+            subscriptionsFetchingState.filter {_ in viewModel.isQueryEmpty}
+        )
     }
     
     // MARK: - Initializers
@@ -113,7 +119,10 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     override func bindItems() {
         let viewModel = self.viewModel as! DiscoveryAllViewModel
         
-        Observable.merge(viewModel.subscriptions, viewModel.items.asObservable())
+        Observable.merge(
+            viewModel.subscriptions.filter {_ in viewModel.isQueryEmpty},
+            viewModel.items.filter {_ in !viewModel.isQueryEmpty}.asObservable()
+        )
             .map {items -> [ListSection] in
                 let communities = items.filter {$0.communityValue != nil}
                 let followers = items.filter {$0.profileValue != nil}
@@ -123,7 +132,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
                     sections.append(ListSection(model: "communities", items: communities))
                 }
                 if !followers.isEmpty {
-                    sections.append(ListSection(model: self.isSearchBarEmpty ? "following" : "users", items: followers))
+                    sections.append(ListSection(model: (self.viewModel as! SearchViewModel).isQueryEmpty ? "following" : "users", items: followers))
                 }
                 if !posts.isEmpty {
                     sections.append(ListSection(model: "posts", items: posts))
@@ -152,8 +161,14 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         tableView.addEmptyPlaceholderFooterView(emoji: "😿", title: title, description: description)
     }
     
-    override func handleEmptyKeyword() {
-        viewModel.reload()
+    // MARK: - Search
+    func searchBarIsSearchingWithQuery(_ query: String) {
+        (viewModel as! SearchViewModel).query = query
+        viewModel.reload(clearResult: false)
+    }
+    func searchBarDidCancelSearching() {
+        (viewModel as! SearchViewModel).query = nil
+        viewModel.reload(clearResult: false)
     }
     
     // MARK: - Actions

@@ -51,7 +51,6 @@ class ListFetcher<T: ListItemType> {
     // MARK: - Parammeters
     var limit = UInt(Config.paginationLimit)
     var offset: UInt = 0
-    var search: String?
     
     private var reloadClearedResult = true
     
@@ -97,25 +96,7 @@ class ListFetcher<T: ListItemType> {
                 self.items.accept(self.join(newItems: items))
                 
                 // resign state
-                if self.isPaginationEnabled {
-                    if items.count == 0 {
-                        if self.offset == 0 {
-                            self.state.accept(.listEmpty)
-                        } else {
-                            if self.items.value.count > 0 {
-                                self.state.accept(.listEnded)
-                            }
-                        }
-                    } else if items.count < self.limit {
-                        self.state.accept(.listEnded)
-                    } else if items.count > self.limit {
-                        self.state.accept(.listEnded)
-                    } else {
-                        self.state.accept(.loading(false))
-                    }
-                } else {
-                    self.state.accept(items.count == 0 ? .listEmpty: .listEnded)
-                }
+                self.modifyStateAfterRequest(itemsCount: items.count)
                 
                 // get next offset
                 self.offset += self.limit
@@ -124,6 +105,28 @@ class ListFetcher<T: ListItemType> {
                 self.state.accept(.error(error: error))
             })
             .disposed(by: disposeBag)
+    }
+    
+    func modifyStateAfterRequest(itemsCount: Int) {
+        if self.isPaginationEnabled {
+            if itemsCount == 0 {
+                if self.offset == 0 {
+                    self.state.accept(.listEmpty)
+                } else {
+                    if self.items.value.count > 0 {
+                        self.state.accept(.listEnded)
+                    }
+                }
+            } else if itemsCount < self.limit {
+                self.state.accept(.listEnded)
+            } else if itemsCount > self.limit {
+                self.state.accept(.listEnded)
+            } else {
+                self.state.accept(.loading(false))
+            }
+        } else {
+            self.state.accept(itemsCount == 0 ? .listEmpty: .listEnded)
+        }
     }
     
     func join(newItems items: [T]) -> [T] {

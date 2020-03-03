@@ -19,24 +19,23 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
     }
     
     // MARK: - Properties
-    override var isPaginationEnabled: Bool {false}
-    
     var searchType = SearchType.quickSearch
     lazy var total: UInt = 0
     lazy var entities = [SearchEntityType]()
     lazy var extendedSearchEntity = [SearchEntityType: [String: UInt]]()
     lazy var entitySearchEntity = SearchEntityType.communities
+    var queryString: String?
     
     override var request: Single<[ResponseAPIContentSearchItem]> {
         switch searchType {
         case .quickSearch:
-            return RestAPIManager.instance.quickSearch(queryString: search ?? "", entities: entities, limit: limit)
+            return RestAPIManager.instance.quickSearch(queryString: queryString ?? "", entities: entities, limit: limit)
                 .do(onSuccess: { (result) in
                     self.total = result.total
                 })
                 .map {$0.items}
         case .extendedSearch:
-            return RestAPIManager.instance.extendedSearch(queryString: search ?? "", entities: extendedSearchEntity)
+            return RestAPIManager.instance.extendedSearch(queryString: queryString ?? "", entities: extendedSearchEntity)
                 .do(onSuccess: {result in
                     self.total = (result.communities?.total ?? 0) + (result.profiles?.total ?? 0) + (result.posts?.total ?? 0)
                 })
@@ -44,7 +43,7 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
                     (result.communities?.items ?? []) + (result.profiles?.items ?? []) + (result.posts?.items ?? [])
                 }
         case .entitySearch:
-            return  RestAPIManager.instance.entitySearch(queryString: search ?? "", entity: entitySearchEntity, limit: limit, offset: offset)
+            return  RestAPIManager.instance.entitySearch(queryString: queryString ?? "", entity: entitySearchEntity, limit: limit, offset: offset)
                 .do(onSuccess: { (result) in
                     self.total = result.total
                 })
@@ -52,7 +51,32 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
         }
     }
     
+    override func modifyStateAfterRequest(itemsCount: Int) {
+        switch searchType {
+        case .quickSearch, .extendedSearch:
+            if itemsCount == 0 {
+                state.accept(.listEmpty)
+            } else {
+                state.accept(.listEnded)
+            }
+        case .entitySearch:
+            return super.modifyStateAfterRequest(itemsCount: itemsCount)
+        }
+    }
+    
     override func join(newItems items: [ResponseAPIContentSearchItem]) -> [ResponseAPIContentSearchItem] {
-        items
+        switch searchType {
+        case .quickSearch:
+            return items
+        case .extendedSearch:
+            return items
+        case .entitySearch:
+            if offset == 0 {
+                return items
+            }
+            var newItems = self.items.value
+            newItems.joinUnique(items)
+            return newItems
+        }
     }
 }

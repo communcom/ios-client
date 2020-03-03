@@ -9,7 +9,13 @@
 import Foundation
 import RxSwift
 
-class DiscoveryVC: BaseViewController {
+class DiscoveryVC: BaseViewController, SearchableViewControllerType {
+    // MARK: - Subviews
+    var searchBar: UISearchBar {
+        get {searchController.searchBar}
+        set {}
+    }
+    
     // MARK: - Properties
     private weak var currentChildVC: UIViewController?
     var tableView: UITableView? {
@@ -24,7 +30,7 @@ class DiscoveryVC: BaseViewController {
     lazy var suggestionsVC = DiscoverySuggestionsVC(showAllHandler: {
         let originalText = self.searchController.searchBar.text ?? ""
         self.searchController.isActive = false
-        self.searchBarChangeTextNotified(text: originalText)
+        self.searchBar.changeTextNotified(text: originalText)
         DispatchQueue.main.async {
             self.setTopBarHidden(false, animated: true)
             if self.topTabBar.selectedIndex.value != 0 {
@@ -92,7 +98,7 @@ class DiscoveryVC: BaseViewController {
         view.backgroundColor = .f3f5fa
         
         // search controller
-        setUpSearchController()
+        layoutSearchBar()
         
         // contentView
         view.addSubview(contentView)
@@ -101,9 +107,9 @@ class DiscoveryVC: BaseViewController {
         setTopBarHidden(false)
     }
     
-    private func setUpSearchController() {
+    func layoutSearchBar() {
         self.definesPresentationContext = true
-        self.navigationItem.titleView = searchController.searchBar
+        self.navigationItem.titleView = searchBar
     }
     
     private func setTopBarHidden(_ hidden: Bool, animated: Bool = false) {
@@ -135,14 +141,7 @@ class DiscoveryVC: BaseViewController {
     override func bind() {
         super.bind()
         // search controller
-        searchController.searchBar.rx.text
-            .debounce(0.5, scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .skip(1)
-            .subscribe(onNext: { (query) in
-                self.search(query)
-            })
-            .disposed(by: disposeBag)
+        bindSearchBar()
         
         searchController.searchBar.rx.textDidBeginEditing
             .subscribe(onNext: { (_) in
@@ -216,33 +215,39 @@ class DiscoveryVC: BaseViewController {
         showChildVC(vc)
     }
     
-    private func showChildVC(_ childVC: UIViewController) {
+    private func showChildVC(_ newVC: UIViewController) {
         // search
         self.search(self.searchController.searchBar.text)
         
         // get oldVC
-        let oldVC = currentChildVC
+        guard let oldVC = currentChildVC else {
+            addChild(newVC)
+            contentView.addSubview(newVC.view)
+            newVC.view.autoPinEdgesToSuperviewEdges()
+            newVC.didMove(toParent: self)
+            
+            // assign current childVC
+            self.currentChildVC = newVC
+            return
+        }
         
         // move oldVC out
-        oldVC?.willMove(toParent: nil)
-        addChild(childVC)
-        self.addSubview(childVC.view, toView: contentView)
-        childVC.view.alpha = 0
-        childVC.view.layoutIfNeeded()
-        UIView.animate(
-            withDuration: 0.2,
-            animations: {
-                childVC.view.alpha = 1
-                oldVC?.view.alpha = 0
-            },
-            completion: { _ in
-                oldVC?.view.removeFromSuperview()
-                oldVC?.removeFromParent()
-                childVC.didMove(toParent: self)
-                
-                // assign current childVC
-                self.currentChildVC = childVC
-            })
+        oldVC.willMove(toParent: nil)
+        
+        // add newVC
+        addChild(newVC)
+        contentView.insertSubview(newVC.view, belowSubview: oldVC.view)
+        newVC.view.autoPinEdgesToSuperviewEdges()
+        
+        // Transtion
+        UIView.transition(from: oldVC.view, to: newVC.view, duration: 0.3, options: [.transitionCrossDissolve]) { (_) in
+            oldVC.view.removeFromSuperview()
+            oldVC.removeFromParent()
+            newVC.didMove(toParent: self)
+            
+            // assign current childVC
+            self.currentChildVC = newVC
+        }
     }
     
     private func addSubview(_ subView: UIView, toView parentView: UIView) {
@@ -250,18 +255,27 @@ class DiscoveryVC: BaseViewController {
         subView.autoPinEdgesToSuperviewEdges()
     }
     
-    // MARK: - Actions
+    // MARK: - Search manager
     private func search(_ keyword: String?) {
         tableView?.scrollToTop()
         DispatchQueue.main.async {
-            if self.searchController.searchBar.isFirstResponder {
-                self.suggestionsVC.search(keyword)
+            if let keyword = keyword, !keyword.isEmpty {
+                self.searchBarIsSearchingWithQuery(keyword)
             } else {
-                self.discoveryAllVC.search(keyword)
-                self.communitiesVC.search(keyword)
-                self.usersVC.search(keyword)
-                self.postsVC.search(keyword)
-                
+                self.searchBarDidCancelSearching()
+            }
+        }
+    }
+    
+    func searchBarIsSearchingWithQuery(_ query: String) {
+//        if self.searchController.searchBar.isFirstResponder {
+            self.suggestionsVC.searchBarIsSearchingWithQuery(query)
+//        } else {
+            self.discoveryAllVC.searchBarIsSearchingWithQuery(query)
+            self.communitiesVC.searchBarIsSearchingWithQuery(query)
+            self.usersVC.searchBarIsSearchingWithQuery(query)
+            self.postsVC.searchBarIsSearchingWithQuery(query)
+//        }
 //                switch self.topTabBar.selectedIndex.value {
 //                case 0:
 //                    self.discoveryAllVC.search(keyword)
@@ -274,14 +288,18 @@ class DiscoveryVC: BaseViewController {
 //                default:
 //                    return
 //                }
-            }
-        }
+
     }
     
-    // MARK: - Helpers
-    private func searchBarChangeTextNotified(text: String) {
-        searchController.searchBar.text = text
-        searchController.searchBar.delegate?.searchBar?(searchController.searchBar, textDidChange: text)
+    func searchBarDidCancelSearching() {
+//        if self.searchController.searchBar.isFirstResponder {
+            self.suggestionsVC.searchBarDidCancelSearching()
+//        } else {
+            self.discoveryAllVC.searchBarDidCancelSearching()
+            self.communitiesVC.searchBarDidCancelSearching()
+            self.usersVC.searchBarDidCancelSearching()
+            self.postsVC.searchBarDidCancelSearching()
+//        }
     }
 }
 
