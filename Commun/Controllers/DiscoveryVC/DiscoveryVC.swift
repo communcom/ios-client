@@ -215,41 +215,39 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         showChildVC(vc)
     }
     
-    private func showChildVC(_ childVC: UIViewController) {
+    private func showChildVC(_ newVC: UIViewController) {
         // search
         self.search(self.searchController.searchBar.text)
         
         // get oldVC
-        let oldVC = currentChildVC
+        guard let oldVC = currentChildVC else {
+            addChild(newVC)
+            contentView.addSubview(newVC.view)
+            newVC.view.autoPinEdgesToSuperviewEdges()
+            newVC.didMove(toParent: self)
+            
+            // assign current childVC
+            self.currentChildVC = newVC
+            return
+        }
         
         // move oldVC out
-        oldVC?.willMove(toParent: nil)
-        addChild(childVC)
-        self.addSubview(childVC.view, toView: contentView)
+        oldVC.willMove(toParent: nil)
         
-        oldVC?.view.removeFromSuperview()
-        oldVC?.removeFromParent()
-        childVC.didMove(toParent: self)
+        // add newVC
+        addChild(newVC)
+        contentView.insertSubview(newVC.view, belowSubview: oldVC.view)
+        newVC.view.autoPinEdgesToSuperviewEdges()
         
-        // assign current childVC
-        self.currentChildVC = childVC
-        
-//        childVC.view.alpha = 0
-//        childVC.view.layoutIfNeeded()
-//        UIView.animate(
-//            withDuration: 0.2,
-//            animations: {
-//                childVC.view.alpha = 1
-//                oldVC?.view.alpha = 0
-//            },
-//            completion: { _ in
-//                oldVC?.view.removeFromSuperview()
-//                oldVC?.removeFromParent()
-//                childVC.didMove(toParent: self)
-//
-//                // assign current childVC
-//                self.currentChildVC = childVC
-//            })
+        // Transtion
+        UIView.transition(from: oldVC.view, to: newVC.view, duration: 0.3, options: [.transitionCrossDissolve]) { (_) in
+            oldVC.view.removeFromSuperview()
+            oldVC.removeFromParent()
+            newVC.didMove(toParent: self)
+            
+            // assign current childVC
+            self.currentChildVC = newVC
+        }
     }
     
     private func addSubview(_ subView: UIView, toView parentView: UIView) {
