@@ -7,12 +7,21 @@
 //
 
 import Foundation
+import RxSwift
 
 class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, SearchableViewControllerType {
     // MARK: - Properties
     var completion: ((ResponseAPIContentGetProfile) -> Void)?
     var tableViewTopConstraint: NSLayoutConstraint?
     lazy var searchController = UISearchController.default()
+    
+    override var listLoadingStateObservable: Observable<ListFetcherState> {
+        let viewModel = self.viewModel as! SubscriptionsViewModel
+        return Observable.merge(
+//            viewModel.state.filter {_ in viewModel.searchVM.isQueryEmpty},
+            viewModel.searchVM.state.filter {_ in !viewModel.searchVM.isQueryEmpty}
+        )
+    }
     
     // MARK: - Subviews
     let searchContainerView = UIView(backgroundColor: .white)
@@ -39,10 +48,15 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, Searchabl
         navigationController?.navigationBar.shadowOpacity = 0
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        searchController.roundCorner()
+    }
+    
     override func viewWillSetUpTableView() {
         // Search controller
         self.definesPresentationContext = true
-        bindSearchBar()
+        layoutSearchBar()
         
         super.viewWillSetUpTableView()
     }
@@ -52,7 +66,7 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, Searchabl
         searchContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         searchContainerView.addSubview(searchController.searchBar)
         
-        searchController.searchBar.autoPinEdgesToSuperviewEdges()
+        searchController.searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0))
         DispatchQueue.main.async {
             self.view.layoutIfNeeded()
         }
@@ -89,8 +103,18 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, Searchabl
     }
     
     override func bindItems() {
-        super.bindItems()
-        
+        let viewModel = self.viewModel as! SubscriptionsViewModel
+        Observable.merge(
+//            viewModel.items.filter {_ in viewModel.searchVM.isQueryEmpty}.asObservable(),
+            viewModel.searchVM.items.filter {_ in !viewModel.searchVM.isQueryEmpty}
+                .map {
+                    $0.compactMap{$0.profileValue}
+                        .map{ResponseAPIContentGetSubscriptionsItem.user($0)}
+                }
+        )
+            .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     override func registerCell() {
@@ -155,10 +179,13 @@ class WalletAddFriendVC: SubscriptionsVC, WalletAddFriendCellDelegate, Searchabl
     
     // MARK: - Search manager
     func searchBarIsSearchingWithQuery(_ query: String) {
-        // TODO: - Search
+        (viewModel as! SubscriptionsViewModel).searchVM.query = query
+        (viewModel as! SubscriptionsViewModel).searchVM.reload(clearResult: false)
     }
     
     func searchBarDidCancelSearching() {
-        // TODO: - Cancel search
+        (viewModel as! SubscriptionsViewModel).searchVM.query = nil
+        (viewModel as! SubscriptionsViewModel).searchVM.items.accept([])
+        (viewModel as! SubscriptionsViewModel).searchVM.state.accept(.loading(false))
     }
 }
