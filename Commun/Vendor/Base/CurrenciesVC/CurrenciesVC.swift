@@ -32,6 +32,11 @@ class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell>, Se
     }
     
     // MARK: - Methods
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        searchController.roundCorner()
+    }
+    
     override func setUp() {
         super.setUp()
         setLeftNavBarButtonForGoingBack()
