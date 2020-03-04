@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, DiscoverySuggestionCell> {
     // MARK: - Properties
@@ -57,11 +58,8 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
             .disposed(by: disposeBag)
     }
     
-    override func bindItems() {
-        viewModel.items
-            .map {[ListSection(model: "", items: $0)]}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+    override func mapItems(items: [ResponseAPIContentSearchItem]) -> [AnimatableSectionModel<String, ResponseAPIContentSearchItem>] {
+        [ListSection(model: "", items: items)]
     }
     
     override func modelSelected(_ item: ResponseAPIContentSearchItem) {
@@ -76,7 +74,9 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
         }
     }
     
-    override func handleListEmpty() {}
+    override func handleListEmpty() {
+        self.tableView.tableFooterView = nil
+    }
     
     override func handleLoading() {
         let spinner = UIActivityIndicatorView(style: .gray)
@@ -86,7 +86,12 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
         tableView.tableFooterView = spinner
     }
     
-    override func handleEmptyKeyword() {
+    func searchBarIsSearchingWithQuery(_ query: String) {
+        (viewModel as! SearchViewModel).query = query
+        viewModel.reload(clearResult: false)
+    }
+    
+    func searchBarDidCancelSearching() {
         viewModel.state.accept(.loading(false))
         viewModel.items.accept([])
     }
@@ -99,7 +104,7 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
 
 extension DiscoverySuggestionsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        viewModel.fetcher.search == nil ? 0 : 51
+        (viewModel as! SearchViewModel).isQueryEmpty ? 0 : 51
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

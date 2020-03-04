@@ -376,12 +376,6 @@ class NetworkService: NSObject {
             })
     }
     
-    // MARK: - meta
-    // meta.recordPostView
-    func markPostAsRead(permlink: String) -> Single<ResponseAPIStatus> {
-        return RestAPIManager.instance.recordPostView(permlink: permlink)
-    }
-    
     // MARK: - Other
     func getEmbed(url: String) -> Single<ResponseAPIFrameGetEmbed> {
         return RestAPIManager.instance.getEmbed(url: url)

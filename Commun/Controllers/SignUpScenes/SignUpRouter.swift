@@ -98,11 +98,9 @@ extension SignUpRouter where Self: UIViewController {
                 break
             }
         }
-        
+
         // unknown error
-        self.showError(error) {
-            self.resetSignUpProcess()
-        }
+        self.showError(error)
     }
     
     func getState(showError: Bool = true) {

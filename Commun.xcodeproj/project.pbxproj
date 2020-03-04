@@ -310,13 +310,14 @@
 		BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */; };
 		BC4AD66623B1EBF1008546A4 /* TransferHistoryTopTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */; };
 		BC4F0A2C240900B9002C4F06 /* SearchablePostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F0A2B240900B9002C4F06 /* SearchablePostsVC.swift */; };
+		BC4F0A3224091460002C4F06 /* SearchableVCType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F0A3124091460002C4F06 /* SearchableVCType.swift */; };
+		BC4F9343240E60AD00BB935F /* UserProfilePageVC+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F9342240E60AD00BB935F /* UserProfilePageVC+UITableViewDelegate.swift */; };
 		BC51B48D2407BA8B009DFB48 /* PostStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC51B48C2407BA8B009DFB48 /* PostStatsView.swift */; };
 		BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */; };
 		BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */; };
 		BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */; };
 		BC52913523765EAB0022EC7F /* RightAlignedIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913423765EAB0022EC7F /* RightAlignedIconButton.swift */; };
 		BC52913823766F080022EC7F /* CommentCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913723766F080022EC7F /* CommentCell+Actions.swift */; };
-		BC52913C2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913B2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift */; };
 		BC52914023793D330022EC7F /* CommentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913F23793D330022EC7F /* CommentForm.swift */; };
 		BC529142237941920022EC7F /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC529141237941920022EC7F /* CommentTextView.swift */; };
 		BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E7A238B76A8004C53EB /* ReportVC.swift */; };
@@ -344,6 +345,7 @@
 		BC619B1D2372C1480005BB94 /* CMTopTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1C2372C1480005BB94 /* CMTopTabBar.swift */; };
 		BC619B1F2373B5550005BB94 /* CommunityMembersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1E2373B5550005BB94 /* CommunityMembersVC.swift */; };
 		BC62BAAD2408C62A007783A6 /* DiscoveryAllViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62BAAC2408C62A007783A6 /* DiscoveryAllViewModel.swift */; };
+		BC6908BA240CC0A100A1F7EC /* UISearchBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6908B9240CC0A100A1F7EC /* UISearchBar+Extensions.swift */; };
 		BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7CC236FC5D00097F870 /* LoadingState.swift */; };
 		BC69F7CF236FC63F0097F870 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7CE236FC63F0097F870 /* BaseViewModel.swift */; };
 		BC69F7D1236FD1690097F870 /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7D0236FD1680097F870 /* NotificationSettingsView.swift */; };
@@ -852,13 +854,14 @@
 		BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistorySegmentedControl.swift; sourceTree = "<group>"; };
 		BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryTopTabBar.swift; sourceTree = "<group>"; };
 		BC4F0A2B240900B9002C4F06 /* SearchablePostsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePostsVC.swift; sourceTree = "<group>"; };
+		BC4F0A3124091460002C4F06 /* SearchableVCType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableVCType.swift; sourceTree = "<group>"; };
+		BC4F9342240E60AD00BB935F /* UserProfilePageVC+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		BC51B48C2407BA8B009DFB48 /* PostStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatsView.swift; sourceTree = "<group>"; };
 		BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubviewAttachingTextView.swift; sourceTree = "<group>"; };
 		BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageTextAttachment.swift; sourceTree = "<group>"; };
 		BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
 		BC52913423765EAB0022EC7F /* RightAlignedIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightAlignedIconButton.swift; sourceTree = "<group>"; };
 		BC52913723766F080022EC7F /* CommentCell+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentCell+Actions.swift"; sourceTree = "<group>"; };
-		BC52913B2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		BC52913F23793D330022EC7F /* CommentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentForm.swift; sourceTree = "<group>"; };
 		BC529141237941920022EC7F /* CommentTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
 		BC561E7A238B76A8004C53EB /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
@@ -886,6 +889,7 @@
 		BC619B1C2372C1480005BB94 /* CMTopTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTopTabBar.swift; sourceTree = "<group>"; };
 		BC619B1E2373B5550005BB94 /* CommunityMembersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMembersVC.swift; sourceTree = "<group>"; };
 		BC62BAAC2408C62A007783A6 /* DiscoveryAllViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryAllViewModel.swift; sourceTree = "<group>"; };
+		BC6908B9240CC0A100A1F7EC /* UISearchBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extensions.swift"; sourceTree = "<group>"; };
 		BC69F7CC236FC5D00097F870 /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		BC69F7CE236FC63F0097F870 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		BC69F7D0236FD1680097F870 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
@@ -1302,6 +1306,7 @@
 				BCABF1382366DF2B006B05F5 /* UserProfilePageVC.swift */,
 				BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */,
 				BCCE0AA32367E83900A183AA /* UserProfilePageVC+Binding.swift */,
+				BC4F9342240E60AD00BB935F /* UserProfilePageVC+UITableViewDelegate.swift */,
 				BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */,
 				BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */,
 			);
@@ -1493,7 +1498,6 @@
 				BCD00FC023750B15004A3952 /* PostPageViewModel.swift */,
 				BCD00FBE2375087C004A3952 /* PostPageVC.swift */,
 				BCCB99302375503A005252CF /* PostPageVC+Binding.swift */,
-				BC52913B2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift */,
 				BCD01A9623FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift */,
 			);
 			path = PostPageVC;
@@ -1629,6 +1633,7 @@
 				BCD3BC8A23AB313E0036C947 /* UIStackView.swift */,
 				BC18FA2623D56325005DC7E3 /* UITextField.swift */,
 				BC99B65923E17848004AA74E /* UISearchController.swift */,
+				BC6908B9240CC0A100A1F7EC /* UISearchBar+Extensions.swift */,
 				B1A6344D23E83BDA00996375 /* UIApplication+Extensions.swift */,
 				BCD01A0323F65231003B0E1E /* UINavigationController.swift */,
 			);
@@ -1930,6 +1935,7 @@
 				BC619B0F237268240005BB94 /* CommunitiesVC */,
 				BCD01A4423F66311003B0E1E /* CommunityPageVCType.swift */,
 				B1B103F3240E65A200253DE8 /* CMAppLike.swift */,
+				BC4F0A3124091460002C4F06 /* SearchableVCType.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -3369,6 +3375,7 @@
 				BC8F815723E27ECE0024C04A /* WalletConvertViewModel.swift in Sources */,
 				BC40719E23CF0137000027A3 /* NotificationsListFetcher.swift in Sources */,
 				3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */,
+				BC4F0A3224091460002C4F06 /* SearchableVCType.swift in Sources */,
 				BCABF1392366DF2B006B05F5 /* UserProfilePageVC.swift in Sources */,
 				3B8DDF56234AD5D500B213F0 /* ContentTextView+Parsing.swift in Sources */,
 				57A95197224178010020F55D /* PostController.swift in Sources */,
@@ -3384,6 +3391,7 @@
 				BCDEE7A123F4E99300DD3EB3 /* DiscoveryVC.swift in Sources */,
 				BC69F7DA236FFA190097F870 /* SubsItemCell.swift in Sources */,
 				BC469306239677E00064A38B /* MyProfilePageVC+Binding.swift in Sources */,
+				BC6908BA240CC0A100A1F7EC /* UISearchBar+Extensions.swift in Sources */,
 				BC06A9A323E7FC03000B690E /* SearchViewModel.swift in Sources */,
 				BC561E85238B9989004C53EB /* ReportVC+Presentation.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
@@ -3513,6 +3521,7 @@
 				3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */,
 				3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */,
 				BC22BBD2236C213D00F40658 /* SelectLanguageVC.swift in Sources */,
+				BC4F9343240E60AD00BB935F /* UserProfilePageVC+UITableViewDelegate.swift in Sources */,
 				BCD01A0423F65231003B0E1E /* UINavigationController.swift in Sources */,
 				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				BC472D9623A3755C00822371 /* CardPresentationController.swift in Sources */,
@@ -3531,7 +3540,6 @@
 				BCCE0AAD23681B2400A183AA /* ProfileController.swift in Sources */,
 				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
 				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,
-				BC52913C2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,
 				BCCE0AA82367EB5900A183AA /* MyCollectionViewCell.swift in Sources */,
 				BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */,

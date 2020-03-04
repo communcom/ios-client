@@ -22,6 +22,7 @@ protocol CommentCellDelegate: class {
     func cell(_ cell: CommentCell, didTapDeleteForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapEditForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapRetryForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCell, didTapOnUserForComment comment: ResponseAPIContentGetComment)
 }
 
 extension CommentCellDelegate where Self: BaseViewController {
@@ -129,6 +130,11 @@ extension CommentCellDelegate where Self: BaseViewController {
                 UIApplication.topViewController()?.showError(error)
             }
             .disposed(by: self.disposeBag)
+    }
+    
+    func cell(_ cell: CommentCell, didTapOnUserForComment comment: ResponseAPIContentGetComment) {
+        guard let userId = comment.author?.userId else {return}
+        showProfileWithUserId(userId)
     }
     
     func reportComment(_ comment: ResponseAPIContentGetComment) {

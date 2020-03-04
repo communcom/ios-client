@@ -70,8 +70,9 @@ class PostPageViewModel: CommentsViewModel {
             .subscribe(onSuccess: { (post) in
                 let originalPost = self.post.value ?? self.postForRequest
                 let postTemp = originalPost?.newUpdatedItem(from: post)
-                
-                postTemp == nil ? self.post.accept(post) : self.post.accept(postTemp)
+                var newPost = postTemp ?? post
+                newPost.viewsCount = max((post.viewsCount ?? 0), (postTemp?.viewsCount ?? 0))
+                self.post.accept(newPost)
             })
             .disposed(by: disposeBag)
     }

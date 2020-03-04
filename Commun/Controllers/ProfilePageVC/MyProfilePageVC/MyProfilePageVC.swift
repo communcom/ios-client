@@ -23,7 +23,7 @@ class MyProfilePageVC: UserProfilePageVC {
     
     // MARK: - Initializers
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
-        MyProfilePageViewModel(profileId: userId)
+        MyProfilePageViewModel(userId: userId)
     }
     
     init() {
@@ -75,7 +75,7 @@ class MyProfilePageVC: UserProfilePageVC {
             .map { $0 < -43 }
             .subscribe(onNext: { showNavBar in
                 self.optionsButton.tintColor = !showNavBar ? .black : .white
-                self.title = !showNavBar ? self.userName : nil
+                self.title = !showNavBar ? self.username : nil
 //                self.navigationController?.navigationBar.isTranslucent = showNavBar
             })
             .disposed(by: disposeBag)
@@ -107,13 +107,13 @@ class MyProfilePageVC: UserProfilePageVC {
         userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
 
-        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.userId ?? "")", textSize: 12, textColor: .appMainColor)
+        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.userId ?? "")", textSize: 12, weight: .semibold, textColor: .appMainColor)
         headerView.addSubview(userIdLabel)
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
-        showCommunActionSheet(style: .profile, headerView: headerView, actions: [
+        showCommunActionSheet(headerView: headerView, actions: [
             // remove from MVP
 //            CommunActionSheet.Action(title: "saved".localized().uppercaseFirst, icon: UIImage(named: "profile_options_saved"), handle: {
 //                #warning("change filter")
@@ -139,6 +139,7 @@ class MyProfilePageVC: UserProfilePageVC {
             }),
             CommunActionSheet.Action(title: "settings".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_settings"),
+                                     style: .profile,
                                      marginTop: 14,
                                      handle: {
                                         let vc = MyProfileSettingsVC()

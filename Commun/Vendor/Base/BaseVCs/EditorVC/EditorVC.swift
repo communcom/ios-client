@@ -39,7 +39,7 @@ class EditorVC: BaseViewController {
                                          labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .semibold),
                                          backgroundColor: .appMainColor,
                                          textColor: .white,
-                                         cornerRadius: .adaptive(width: 18.0),
+                                         cornerRadius: .adaptive(height: 18.0),
                                          contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
     
     override func setUp() {

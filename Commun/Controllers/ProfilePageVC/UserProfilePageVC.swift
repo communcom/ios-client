@@ -31,12 +31,12 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     }
     
     // MARK: - Properties
-    let userId: String
-    var userName: String?
+    let userId: String?
+    var username: String?
 
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
-        UserProfilePageViewModel(profileId: userId)
+        UserProfilePageViewModel(userId: userId, username: username)
     }
     
     // MARK: - Subviews
@@ -50,8 +50,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     }
     
     // MARK: - Initializers
-    init(userId: String) {
+    init(userId: String?, username: String? = nil) {
         self.userId = userId
+        self.username = username
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -98,7 +99,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
         
         // title
-        userName = profile.username
+        username = profile.username
 
         // cover
         if let urlString = profile.coverUrl {
@@ -230,14 +231,14 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
 
-        let userIdLabel = UILabel.with(text: "@\(profile.userId)", textSize: 12, textColor: .appMainColor)
+        let userIdLabel = UILabel.with(text: "@\(profile.userId)", textSize: 12, weight: .semibold, textColor: .appMainColor)
         headerView.addSubview(userIdLabel)
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
-        showCommunActionSheet(style: .profile, headerView: headerView, actions: [
-            CommunActionSheet.Action(title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
+        showCommunActionSheet(headerView: headerView, actions: [
+            CommunActionSheet.Action(title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), style: .profile, handle: {
                 
                 self.showAlert(
                     title: profile.isInBlacklist == true ? "unblock user".localized().uppercaseFirst: "block user".localized().uppercaseFirst,

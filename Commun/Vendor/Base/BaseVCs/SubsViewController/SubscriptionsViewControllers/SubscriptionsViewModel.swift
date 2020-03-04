@@ -11,6 +11,14 @@ import CyberSwift
 
 class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsItem> {
     let type: GetSubscriptionsType
+    
+    lazy var searchVM: SearchViewModel = {
+        let fetcher = SearchListFetcher()
+        fetcher.limit = 20
+        fetcher.searchType = .entitySearch
+        return SearchViewModel(fetcher: fetcher)
+    }()
+    
     init(userId: String? = nil, type: GetSubscriptionsType, initialItems: [ResponseAPIContentGetSubscriptionsItem]? = nil, prefetch: Bool = true) {
         var userId = userId
         if userId == nil {
@@ -21,6 +29,13 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
         super.init(fetcher: fetcher)
         
         defer {
+            switch type {
+            case .user:
+                (searchVM.fetcher as! SearchListFetcher).entitySearchEntity = .profiles
+            case .community:
+                (searchVM.fetcher as! SearchListFetcher).entitySearchEntity = .communities
+            }
+            
             if let initItems = initialItems {
                 items.accept(initItems)
             } else {
@@ -33,6 +48,22 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
             if userId == Config.currentUser?.id {
                 observeUserFollowed()
             }
+        }
+    }
+    
+    override func fetchNext(forceRetry: Bool = false) {
+        if searchVM.isQueryEmpty {
+            super.fetchNext(forceRetry: forceRetry)
+        } else {
+            searchVM.fetchNext(forceRetry: forceRetry)
+        }
+    }
+    
+    override func reload(clearResult: Bool = true) {
+        if searchVM.isQueryEmpty {
+            super.reload(clearResult: clearResult)
+        } else {
+            searchVM.reload(clearResult: clearResult)
         }
     }
     

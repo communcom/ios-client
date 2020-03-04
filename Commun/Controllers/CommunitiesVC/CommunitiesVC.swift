@@ -32,14 +32,6 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
         navigationItem.rightBarButtonItem = nil
     }
     
-    override func bindItemsWithSearchResult() {
-        // search result replace items itself
-        viewModel.items
-            .map {[ListSection(model: "", items: $0)]}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-    }
-    
     override func configureCell(with community: ResponseAPIContentGetCommunity, indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityCell") as! CommunityCell
         cell.setUp(with: community)

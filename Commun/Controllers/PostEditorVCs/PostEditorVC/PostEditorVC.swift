@@ -179,14 +179,13 @@ class PostEditorVC: EditorVC {
     }
     
     func checkValues() -> Bool {
+        if isContentValid {return true}
         let actionButtonFrame = view.convert(actionButton.frame, from: toolbar)
 
         if viewModel.community.value == nil {
             self.hintView?.display(inPosition: actionButtonFrame.origin, withType: .chooseCommunity, andButtonHeight: actionButton.height, completion: {})
             return false
-        }
-        
-        else if contentTextView.text.isEmpty {
+        } else if contentTextView.text.isEmpty {
             self.hintView?.display(inPosition: actionButtonFrame.origin, withType: .enterTextPhoto, andButtonHeight: actionButton.height, completion: {})
             return false
         }

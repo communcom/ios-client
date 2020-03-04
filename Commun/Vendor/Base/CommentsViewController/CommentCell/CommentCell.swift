@@ -20,7 +20,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     // MARK: - Properties
     var comment: ResponseAPIContentGetComment?
     var expanded = false
-    var themeColor = UIColor(hexString: "#6A80F5")!
     weak var delegate: CommentCellDelegate?
     var textViewToEmbedConstraint: NSLayoutConstraint?
     
@@ -49,6 +48,9 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         contentView.addSubview(avatarImageView)
         avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
         avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        
+        avatarImageView.isUserInteractionEnabled = true
+        avatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openProfile)))
         
         contentView.addSubview(contentTextView)
         contentTextView.autoPinEdge(.top, to: .top, of: avatarImageView)
@@ -241,7 +243,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
                     string: "see more".localized().uppercaseFirst,
                     attributes: [
                         .link: "seemore://",
-                        .foregroundColor: themeColor
+                        .foregroundColor: UIColor.appMainColor
                 ])
             )
 

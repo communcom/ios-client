@@ -98,5 +98,15 @@ extension PostsViewController: UITableViewDelegate {
         guard let post = viewModel.items.value[safe: indexPath.row]
         else {return}
         viewModel.rowHeights[post.identity] = cell.bounds.height
+        
+        // record post view
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            if tableView.isCellVisible(indexPath: indexPath) &&
+                (cell as! PostCell).post?.identity == post.identity &&
+                !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity)
+            {
+                post.markAsViewed().disposed(by: self.disposeBag)
+            }
+        }
     }
 }

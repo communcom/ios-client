@@ -9,8 +9,16 @@
 import Foundation
 import CyberSwift
 import RxSwift
+import RxDataSources
 
 class CommentsViewController: ListViewController<ResponseAPIContentGetComment, CommentCell>, CommentCellDelegate {
+    // MARK: - Nested types
+    class ReplyButton: UIButton {
+        var parentComment: ResponseAPIContentGetComment?
+        var offset: UInt = 0
+        var limit: UInt = 10
+    }
+    
     // MARK: - Properties
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
@@ -32,7 +40,14 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     }
     
     override func setUpTableView() {
-        super.setUpTableView()
+        tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.configureForAutoLayout()
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
+        tableView.backgroundColor = .white
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        
         tableView.separatorStyle = .none
         
         // setup long press
@@ -63,11 +78,8 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
             .disposed(by: disposeBag)
     }
     
-    override func bindItems() {
-        viewModel.items
-            .map {$0.map {ListSection(model: $0.identity, items: [$0] + ($0.children ?? []))}}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+    override func mapItems(items: [ResponseAPIContentGetComment]) -> [AnimatableSectionModel<String, ResponseAPIContentGetComment>] {
+        items.map {ListSection(model: $0.identity, items: [$0] + ($0.children ?? []))}
     }
     
 //    override func bindItemSelected() {

@@ -8,7 +8,14 @@
 
 import Foundation
 
-class SingleEntitySearchVC: SubsViewController<ResponseAPIContentSearchItem, SubscribersCell>, ProfileCellDelegate, CommunityCellDelegate, PostCellDelegate {
+class SingleEntitySearchVC: ListViewController<ResponseAPIContentSearchItem, SubscribersCell>, SearchableViewControllerType, ProfileCellDelegate, CommunityCellDelegate, PostCellDelegate {
+    // MARK: - Properties
+    lazy var searchController = UISearchController.default()
+    var searchBar: UISearchBar {
+        get {searchController.searchBar}
+        set {}
+    }
+    
     // MARK: - Initializers
     init(entityType: SearchEntityType) {
         let vm = SearchViewModel()
@@ -23,6 +30,21 @@ class SingleEntitySearchVC: SubsViewController<ResponseAPIContentSearchItem, Sub
     }
     
     // MARK: - Methods
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        searchController.roundCorner()
+    }
+    
+    override func setUp() {
+        super.setUp()
+        layoutSearchBar()
+    }
+    
+    override func bind() {
+        super.bind()
+        bindSearchBar()
+    }
+    
     override func registerCell() {
         super.registerCell()
         tableView.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
@@ -90,7 +112,18 @@ class SingleEntitySearchVC: SubsViewController<ResponseAPIContentSearchItem, Sub
         tableView.addEmptyPlaceholderFooterView(emoji: "😿", title: title, description: description)
     }
     
-    override func handleEmptyKeyword() {
+    // MARK: - Search manager
+    func layoutSearchBar() {
+        // Place the search bar in the navigation item's title view.
+        self.navigationItem.titleView = searchController.searchBar
+    }
+    
+    func searchBarIsSearchingWithQuery(_ query: String) {
+        (viewModel as! SearchViewModel).query = query
+        viewModel.reload(clearResult: false)
+    }
+    
+    func searchBarDidCancelSearching() {
         viewModel.state.accept(.loading(false))
         viewModel.items.accept([])
     }

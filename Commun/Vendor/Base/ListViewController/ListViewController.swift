@@ -21,9 +21,8 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var tableViewMargin: UIEdgeInsets {.zero}
     let refreshControl = UIRefreshControl(forAutoLayout: ())
     
-    // search
-    var isSearchEnabled: Bool {false}
-    lazy var searchController = UISearchController.default()
+    var isInfiniteScrollingEnabled: Bool {true}
+    var listLoadingStateObservable: Observable<ListFetcherState> {viewModel.state.asObservable()}
     
     // MARK: - Subviews
     lazy var tableView = UITableView(forAutoLayout: ())
@@ -39,20 +38,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     // MARK: - Methods
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if isSearchEnabled {
-            searchController.roundCorner()
-        }
-    }
     
     override func setUp() {
         super.setUp()
-        
-        // search
-        if isSearchEnabled {
-            setUpSearchController()
-        }
         
         // before setting tableView
         viewWillSetUpTableView()
@@ -119,42 +107,22 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         bindItems()
         bindItemSelected()
         bindScrollView()
-        
-        if isSearchEnabled {
-            bindSearchBar()
-        }
     }
     
     func bindItems() {
-        if !isSearchEnabled {
-            viewModel.items
-                .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
-                .bind(to: tableView.rx.items(dataSource: dataSource))
-                .disposed(by: disposeBag)
-        } else {
-            bindItemsWithSearchResult()
-        }
-        
-    }
-    
-    func bindItemsWithSearchResult() {
-        Observable.merge(viewModel.items.asObservable(), viewModel.searchResult.filter {$0 != nil}.map {$0!}.asObservable())
-            .map {[ListSection(model: "", items: $0)]}
+        viewModel.items
+            .map {self.mapItems(items: $0)}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
-        viewModel.searchResult
-            .filter {$0 == nil}
-            .subscribe(onNext: { (_) in
-                self.viewModel.items.accept(self.viewModel.items.value)
-            })
-            .disposed(by: disposeBag)
+    }
+    
+    func mapItems(items: [T]) -> [AnimatableSectionModel<String, T>] {
+        items.count > 0 ? [ListSection(model: "", items: items)] : []
     }
     
     func bindState() {
-        viewModel.state
+        listLoadingStateObservable
             .distinctUntilChanged()
-            .debounce(0.3, scheduler: MainScheduler.instance)
             .do(onNext: { (state) in
                 Logger.log(message: "\(state)", event: .debug)
                 return
@@ -163,9 +131,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                 switch state {
                 case .loading(let isLoading):
                     if isLoading {
+                        self?.handleLoading()
                         if (self?.viewModel.items.value.count ?? 0) == 0 {
                             self?.refreshControl.endRefreshing()
-                            self?.handleLoading()
                         }
                     } else {
                         self?.refreshControl.endRefreshing()
@@ -229,10 +197,12 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     func bindScrollView() {
-        tableView.addLoadMoreAction { [weak self] in
-            self?.viewModel.fetchNext()
+        if isInfiniteScrollingEnabled {
+            tableView.addLoadMoreAction { [weak self] in
+                self?.viewModel.fetchNext()
+            }
+                .disposed(by: disposeBag)
         }
-            .disposed(by: disposeBag)
     }
     
     // MARK: - State handling
@@ -265,48 +235,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     @objc func refresh() {
-        refreshControl.endRefreshing()
         viewModel.reload(clearResult: false)
-    }
-    
-    // MARK: - Search manager
-    func bindSearchBar() {
-        searchController.searchBar.rx.text
-            .distinctUntilChanged()
-            .skip(searchController.searchBar.text?.isEmpty == false ? 0 : 1)
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .subscribe(onNext: { (query) in
-                self.search(query)
-            })
-            .disposed(by: disposeBag)
-
-    }
-    private func setUpSearchController() {
-        self.definesPresentationContext = true
-        layoutSearchBar()
-    }
-
-    func layoutSearchBar() {
-        // Place the search bar in the navigation item's title view.
-        self.navigationItem.titleView = searchController.searchBar
-    }
-    
-    func search(_ keyword: String?) {
-        guard let keyword = keyword, !keyword.isEmpty else {
-            if viewModel.fetcher.search != nil {
-                viewModel.fetcher.search = nil
-                handleEmptyKeyword()
-            }
-            return
-        }
-        
-        if viewModel.fetcher.search != keyword {
-            viewModel.fetcher.search = keyword
-            viewModel.reload(clearResult: false)
-        }
-    }
-    
-    func handleEmptyKeyword() {
-        viewModel.reload()
     }
 }
