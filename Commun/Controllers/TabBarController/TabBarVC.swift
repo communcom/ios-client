@@ -325,9 +325,10 @@ class TabBarVC: UITabBarController {
         // in-app notifications
         SocketManager.shared.newNotificationsRelay
             .filter {$0.count > 0}
-            .subscribe(onNext: { (items) in
-                guard let notif = items.first else {return}
-                self.showNotificationViewWithNotification(notif)
+            .map {$0.first!}
+            .distinctUntilChanged()
+            .subscribe(onNext: { (item) in
+                self.showNotificationViewWithNotification(item)
             })
             .disposed(by: disposeBag)
     }
