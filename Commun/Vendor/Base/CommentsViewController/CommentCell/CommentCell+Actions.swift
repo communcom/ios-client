@@ -46,6 +46,16 @@ extension CommentCell {
                 if let url = URL(string: urlString) {
                     parentViewController?.handleUrl(url: url)
                 }
+                
+                return
+            }
+            
+            // username handler
+            let detectedRange = NSRange(location: 0, length: characterIndex + 1)
+            let posibleUsername = (myTextView.attributedText.string as NSString).substring(with: detectedRange)
+            if !posibleUsername.contains(" ") {
+                openProfile()
+                return
             }
         }
     }
@@ -80,5 +90,10 @@ extension CommentCell {
     @objc func retrySendingCommentDidTouch(gestureRecognizer: UITapGestureRecognizer) {
         guard let comment = comment else {return}
         delegate?.cell(self, didTapRetryForComment: comment)
+    }
+    
+    @objc func openProfile() {
+        guard let comment = comment else {return}
+        delegate?.cell(self, didTapOnUserForComment: comment)
     }
 }
