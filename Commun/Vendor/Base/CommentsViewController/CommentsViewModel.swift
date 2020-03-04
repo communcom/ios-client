@@ -13,9 +13,11 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     var filter: BehaviorRelay<CommentsListFetcher.Filter>!
     
     init(
-        filter: CommentsListFetcher.Filter = CommentsListFetcher.Filter(type: .user)) {
+        filter: CommentsListFetcher.Filter = CommentsListFetcher.Filter(type: .user),
+        prefetch: Bool = false
+    ) {
         let fetcher = CommentsListFetcher(filter: filter)
-        super.init(fetcher: fetcher)
+        super.init(fetcher: fetcher, prefetch: prefetch)
         self.filter = BehaviorRelay<CommentsListFetcher.Filter>(value: filter)
         defer {
             bindFilter()

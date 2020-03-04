@@ -22,12 +22,14 @@ class ProfileViewModel<ProfileType: Decodable>: BaseViewModel {
     let items = BehaviorRelay<[Any]>(value: [])
     
     // MARK: - Initializers
-    convenience init(profileId: String?) {
-        self.init()
+    init(profileId: String?, prefetch: Bool = true) {
+        super.init()
         self.profileId = profileId
         
         defer {
-            loadProfile()
+            if prefetch {
+                loadProfile()
+            }
             bind()
         }
     }

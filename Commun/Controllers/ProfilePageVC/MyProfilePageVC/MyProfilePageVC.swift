@@ -23,7 +23,7 @@ class MyProfilePageVC: UserProfilePageVC {
     
     // MARK: - Initializers
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
-        MyProfilePageViewModel(profileId: userId)
+        MyProfilePageViewModel(userId: userId)
     }
     
     init() {
@@ -75,7 +75,7 @@ class MyProfilePageVC: UserProfilePageVC {
             .map { $0 < -43 }
             .subscribe(onNext: { showNavBar in
                 self.optionsButton.tintColor = !showNavBar ? .black : .white
-                self.title = !showNavBar ? self.userName : nil
+                self.title = !showNavBar ? self.username : nil
 //                self.navigationController?.navigationBar.isTranslucent = showNavBar
             })
             .disposed(by: disposeBag)

@@ -21,17 +21,46 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     // MARK: - Objects
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
-    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .byUser, feedType: .timeDesc, sortType: .all, userId: profileId))
-    lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(type: .user, userId: profileId))
+    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .byUser, feedType: .timeDesc, sortType: .all, userId: profileId), prefetch: profileId != nil)
+    lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(type: .user, userId: profileId), prefetch: profileId != nil)
     lazy var highlightCommunities = BehaviorRelay<[ResponseAPIContentGetCommunity]>(value: [])
+    
+    var username: String?
+    
+    // MARK: - Initializers
+    init(userId: String? = nil, username: String? = nil) {
+        self.username = username
+        super.init(profileId: userId)
+    }
     
     // MARK: - Methods
     override var loadProfileRequest: Single<ResponseAPIContentGetProfile> {
-        RestAPIManager.instance.getProfile(user: profileId)
+        RestAPIManager.instance.getProfile(user: profileId ?? username)
     }
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {
         Observable.merge(postsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .posts}, commentsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .comments})
+    }
+    
+    override func loadProfile() {
+        super.loadProfile()
+        
+        // if username was parsing, then wait for loading user, then fetch posts, comments
+        if profileId == nil {
+            profile
+                .filter {$0?.userId != nil}
+                .map {$0!.userId}
+                .take(1)
+                .asSingle()
+                .subscribe(onSuccess: { (userId) in
+                    self.profileId = userId
+                    (self.postsVM.fetcher as! PostsListFetcher).filter.userId = userId
+                    (self.commentsVM.fetcher as! CommentsListFetcher).filter.userId = userId
+                    self.postsVM.fetchNext()
+                    self.commentsVM.fetchNext()
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
     override func bind() {
