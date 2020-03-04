@@ -31,12 +31,12 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     }
     
     // MARK: - Properties
-    let userId: String
-    var userName: String?
+    let userId: String?
+    var username: String?
 
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
-        UserProfilePageViewModel(profileId: userId)
+        UserProfilePageViewModel(userId: userId, username: username)
     }
     
     // MARK: - Subviews
@@ -50,8 +50,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     }
     
     // MARK: - Initializers
-    init(userId: String) {
+    init(userId: String?, username: String? = nil) {
         self.userId = userId
+        self.username = username
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -98,7 +99,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
         
         // title
-        userName = profile.username
+        username = profile.username
 
         // cover
         if let urlString = profile.coverUrl {

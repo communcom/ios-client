@@ -145,7 +145,7 @@ extension UIViewController {
         return presentingIsModal || presentingIsNavigation || presentingIsTabBar
     }
     
-    func showProfileWithUserId(_ userId: String) {
+    func showProfileWithUserId(_ userId: String?, username: String? = nil) {
         // if profile was opened, shake it off!!
 //        if let profileVC = self as? UserProfilePageVC, profileVC.userId == userId {
 //            profileVC.view.shake()
@@ -154,7 +154,7 @@ extension UIViewController {
         
         // Open other user's profile
         if userId != Config.currentUser?.id {
-            let profileVC = UserProfilePageVC(userId: userId)
+            let profileVC = UserProfilePageVC(userId: userId, username: username)
             show(profileVC, sender: nil)
             return
         } else {
@@ -268,8 +268,8 @@ extension UIViewController {
             if path.count == 1 {
                 if path[0].starts(with: "@") {
                     // user's profile
-                    let userId = String(path[0].dropFirst())
-                    showProfileWithUserId(userId)
+                    let username = String(path[0].dropFirst())
+                    showProfileWithUserId(nil, username: username)
                     return
                 } else if !path[0].isEmpty {
                     // community
