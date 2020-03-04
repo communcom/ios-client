@@ -15,7 +15,8 @@ import CircularCarousel
 class WalletSendPointsVC: BaseViewController {
     // MARK: - Properties
     var dataModel: SendPointsModel
-        
+    var buttonBottomConstraint: NSLayoutConstraint?
+
     private let carouselHeight: CGFloat = 50
 
     lazy var scrollView: UIScrollView = {
@@ -180,12 +181,21 @@ class WalletSendPointsVC: BaseViewController {
         bind()
     }
 
-    @objc func keyboardWillShow() {
+    @objc func keyboardWillShow(notification: Notification) {
+        self.view.layoutIfNeeded()
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.buttonBottomConstraint?.constant = -keyboardSize.height - 10
+        }
         let y = (navigationController?.navigationBar.frame.size.height ?? 0) + (navigationController?.navigationBar.frame.origin.y ?? 0)
         scrollView.contentInset.top = y
         scrollView.contentOffset.y = -y
         navigationItem.titleView = navigationBarTitleView
         self.carouselView.alpha = 0
+
+        UIView.animate(withDuration: 0.1) {
+            self.carouselView.alpha = 1
+            self.view.layoutIfNeeded()
+        }
     }
 
     @objc func keyboardWillHide() {
@@ -193,8 +203,12 @@ class WalletSendPointsVC: BaseViewController {
         scrollView.contentInset.top = 270
         navigationItem.titleView = nil
         title = "send points".localized().uppercaseFirst
+
+        self.view.layoutIfNeeded()
+        self.buttonBottomConstraint?.constant = -30
         UIView.animate(withDuration: 0.1) {
             self.carouselView.alpha = 1
+            self.view.layoutIfNeeded()
         }
     }
 
@@ -294,7 +308,7 @@ class WalletSendPointsVC: BaseViewController {
         amountLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 11)
 
         amountView.addSubview(pointsTextField)
-        pointsTextField.inputAccessoryView = pointsToolbar
+
         pointsTextField.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 33, left: 15, bottom: 11, right: 30))
 
         amountView.addSubview(clearPointsButton)
@@ -305,8 +319,11 @@ class WalletSendPointsVC: BaseViewController {
         alertLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 15)
         alertLabel.autoPinEdge(.top, to: .bottom, of: amountView, withOffset: 10)
 
-        whiteView.addSubview(sendPointsButton)
-        sendPointsButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 15, bottom: 30, right: 15), excludingEdge: .top)
+        view.addSubview(sendPointsButton)
+
+        sendPointsButton.autoPinEdge(toSuperviewEdge: .left, withInset: 15)
+        sendPointsButton.autoPinEdge(toSuperviewEdge: .right, withInset: 15)
+        buttonBottomConstraint = sendPointsButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 10)
     }
     
     override func viewWillAppear(_ animated: Bool) {
