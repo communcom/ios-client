@@ -419,9 +419,22 @@ class CommunWalletVC: TransferHistoryVC {
     }
     
     private func openOtherBalancesWalletVC(withSelectedBalance balance: ResponseAPIWalletGetBalance?) {
-        let viewModel = (self.viewModel as! WalletViewModel)
-        guard let balance = balance else {return}
-        let vc = OtherBalancesWalletVC(balances: viewModel.balancesVM.items.value, symbol: balance.symbol, subscriptions: viewModel.subscriptionsVM.items.value, history: viewModel.items.value)
+        guard   let selectedBalance = balance,
+                let balances = (self.viewModel as? WalletViewModel)?.balancesVM.items.value,
+                let subscriptions = (self.viewModel as? WalletViewModel)?.subscriptionsVM.items.value,
+                var selectedBalanceIndex = balances.firstIndex(where: { $0.symbol == selectedBalance.symbol })
+        else { return }
+        
+        guard headerView.carousel == nil else {
+            if selectedBalanceIndex == 0 {
+                selectedBalanceIndex = 1
+            }
+            
+            headerView.carousel!.scroll(toItemAtIndex: selectedBalanceIndex - 1, animated: true)
+            return
+        }
+        
+        let vc = OtherBalancesWalletVC(balances: balances, symbol: selectedBalance.symbol, subscriptions: subscriptions, history: viewModel.items.value)
         let nc = navigationController as? BaseNavigationController
         nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
