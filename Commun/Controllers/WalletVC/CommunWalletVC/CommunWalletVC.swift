@@ -34,11 +34,13 @@ class CommunWalletVC: TransferHistoryVC {
     
     // MARK: - Subviews
     lazy var headerView: CommunWalletHeaderView = createHeaderView()
+    
     func createHeaderView() -> CommunWalletHeaderView {
         let headerView = CommunWalletHeaderView(forAutoLayout: ())
         headerView.dataSource = self
         return headerView
     }
+   
     lazy var tableHeaderView = WalletTableHeaderView(tableView: tableView)
     var myPointsCollectionView: UICollectionView {tableHeaderView.myPointsCollectionView}
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
@@ -65,6 +67,7 @@ class CommunWalletVC: TransferHistoryVC {
         view.addSubview(barPointLabel)
         barPointLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         barPointLabel.autoPinEdge(.top, to: .bottom, of: barTitleLabel, withOffset: 3)
+        
         return view
     }
 
@@ -78,25 +81,17 @@ class CommunWalletVC: TransferHistoryVC {
         
         self.showNavigationBar(false, animated: true, completion: nil)
         self.setNavBarBackButton(tintColor: .white)
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
-        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
-        self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
-
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.shadowImage?.clear()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.shadowImage?.clear()
 
         self.setTabBarHidden(false)
-        
-        baseNavigationController?.changeStatusBarStyle(barStyle)
-        UIApplication.shared.statusBarView?.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = .clear
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.backgroundColor = .clear
         UIApplication.shared.statusBarView?.backgroundColor = .clear
     }
 
@@ -116,11 +111,11 @@ class CommunWalletVC: TransferHistoryVC {
     
     override func viewWillSetUpTableView() {
         super.viewWillSetUpTableView()
+        
         view.addSubview(headerView)
         headerTopConstraint = headerView.autoPinEdge(toSuperviewEdge: .top)
         headerView.autoPinEdge(toSuperviewEdge: .left)
         headerView.autoPinEdge(toSuperviewEdge: .right)
-//        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
     }
     
     override func setUpTableView() {
@@ -208,7 +203,6 @@ class CommunWalletVC: TransferHistoryVC {
             UIView.animate(withDuration: 0.2, animations: {
                 self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
                 self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
-                self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
                 self.navigationController?.navigationBar.barStyle = .default
                 UIApplication.shared.statusBarView?.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
             })
@@ -224,6 +218,7 @@ class CommunWalletVC: TransferHistoryVC {
     
     override func bindItems() {
         super.bindItems()
+        
         balancesVM.items
             .distinctUntilChanged()
             .subscribe(onNext: { (_) in
