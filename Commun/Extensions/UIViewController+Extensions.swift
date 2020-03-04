@@ -54,15 +54,14 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showCommunActionSheet(style: CommunActionSheet.Style = .default,
-                               headerView: UIView? = nil,
+    func showCommunActionSheet(headerView: UIView? = nil,
                                title: String? = nil,
                                titleFont: UIFont = .systemFont(ofSize: 15, weight: .semibold),
                                titleAlignment: NSTextAlignment = .left,
                                actions: [CommunActionSheet.Action],
                                completion: (() -> Void)? = nil) {
 
-        let actionSheet = CommunActionSheet(style: style)
+        let actionSheet = CommunActionSheet()
         actionSheet.title = title
         actionSheet.headerView = headerView
         actionSheet.actions = actions
