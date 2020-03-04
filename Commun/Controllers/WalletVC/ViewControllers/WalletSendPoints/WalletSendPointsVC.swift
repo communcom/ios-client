@@ -308,7 +308,7 @@ class WalletSendPointsVC: BaseViewController {
         var subtitle2 = ""
         
         if percent > 0 {
-            subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
+            subtitle2 = String(format: "%.1f%% %@", percent, "will be burned 🔥".localized())
             title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
         } else {
             title = NSMutableAttributedString(string: subtitle1)
