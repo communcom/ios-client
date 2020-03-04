@@ -12,6 +12,7 @@ import CyberSwift
 import MBProgressHUD
 import ReCaptcha
 import SafariServices
+import StoreKit
 
 public let reCaptchaTag: Int = 777
 
@@ -454,14 +455,15 @@ extension UIViewController {
                 AnalyticsManger.shared.showRate()
             })
             
-            appLikeView.completionDismissWithAction = { isLiked in
-                // value = true <-> `Yes`
+            appLikeView.completionDismissWithAppLiked = { isLiked in
                 self.dismiss(animated: true, completion: {
                     AnalyticsManger.shared.rate(isLike: isLiked)
 
-//                    if value, let baseVC = self.parentViewController as? BaseViewController {
-//                        baseVC.load(url: postLink)
-//                    }
+                    if isLiked {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+                            SKStoreReviewController.requestReview()
+                        }
+                    }
                 })
             }
         }
