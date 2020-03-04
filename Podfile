@@ -38,9 +38,9 @@ def common_pods_commun
   
   pod "InitialsImageView"
   
-  pod 'SwifterSwift/SwiftStdlib'   # Standard Library Extensions
-  pod 'SwifterSwift/Foundation'    # Foundation Extensions
-  pod 'SwifterSwift/UIKit'         # UIKit Extensions
+  pod 'SwifterSwift/SwiftStdlib', :git => "https://github.com/communcom/SwifterSwift.git"   # Standard Library Extensions
+  pod 'SwifterSwift/Foundation', :git => "https://github.com/communcom/SwifterSwift.git"    # Foundation Extensions
+  pod 'SwifterSwift/UIKit', :git => "https://github.com/communcom/SwifterSwift.git"         # UIKit Extensions
   
   pod 'Segmentio'
   
