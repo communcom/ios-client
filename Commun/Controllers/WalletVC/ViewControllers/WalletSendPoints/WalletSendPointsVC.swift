@@ -201,6 +201,7 @@ class WalletSendPointsVC: BaseViewController {
         scrollView.alwaysBounceVertical = true
 
         scrollView.isScrollEnabled = false
+        view.bringSubviewToFront(carouselView)
         configureBottomView()
     }
 
@@ -227,9 +228,8 @@ class WalletSendPointsVC: BaseViewController {
             communLogoImageView.autoAlignAxis(toSuperviewAxis: .vertical)
             communLogoImageView.autoPinEdge(.top, to: .top, of: topView, withOffset: 20)
         } else {
-            topView.addSubview(carouselView)
-            carouselView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 64, vertical: 20), excludingEdge: .bottom)
-
+            view.addSubview(carouselView)
+            carouselView.autoAlignAxis(toSuperviewAxis: .vertical)
             carouselView.autoPinEdge(.top, to: .top, of: topView, withOffset: 20)
         }
 
@@ -605,6 +605,9 @@ extension WalletSendPointsVC: CircularCarouselDataSource {
         } else {
             imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
         }
+
+        updateSellerInfo()
+        updateSendInfoByEnteredPoints()
         
         return view!
     }
