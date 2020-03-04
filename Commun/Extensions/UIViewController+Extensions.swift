@@ -463,6 +463,9 @@ extension UIViewController {
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
                             SKStoreReviewController.requestReview()
                         }
+                    } else {
+                        let vc = CMFeedbackViewController()
+                        self.present(vc, animated: true, completion: nil)
                     }
                 })
             }

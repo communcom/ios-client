@@ -244,6 +244,7 @@
 "to"                                            =   "to";
 "the presence of non-alphanumeric characters side by side is not allowed"  =   "the presence of non-alphanumeric characters side by side is not allowed";
 "non-alphanumeric character cannot be at the beginning or end of a username"   =   "non-alphanumeric character cannot be at the beginning or end of a username";
+"text view feedback placeholder"                =   "describe the problem...";
 
 
 // U

@@ -420,7 +420,7 @@ class WalletSendPointsVC: BaseViewController {
         }
         
         let nc = BaseNavigationController(rootViewController: friendsListVC)
-        present(nc, animated: true, completion: nil)
+        present(nc, animated: true, completion: nil)        
     }
 
     @objc func clearButtonTapped(_ sender: UIButton) {

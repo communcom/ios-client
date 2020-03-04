@@ -159,6 +159,7 @@
 		B101CB6823E4631B00269253 /* ShareExtensionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101CB6723E4631B00269253 /* ShareExtensionData.swift */; };
 		B101CB6B23E4634900269253 /* ShareExtensionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101CB6723E4631B00269253 /* ShareExtensionData.swift */; };
 		B10DB961240F8789001BD0E4 /* CMAppLikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10DB960240F8789001BD0E4 /* CMAppLikeView.swift */; };
+		B10DB96B240FB99B001BD0E4 /* CMFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10DB96A240FB99B001BD0E4 /* CMFeedbackViewController.swift */; };
 		B16EF85623EADCA2002C2050 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B83234779FE00D8BADB /* UIImage.swift */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
@@ -729,6 +730,7 @@
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
 		B101CB6723E4631B00269253 /* ShareExtensionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionData.swift; sourceTree = "<group>"; };
 		B10DB960240F8789001BD0E4 /* CMAppLikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMAppLikeView.swift; sourceTree = "<group>"; };
+		B10DB96A240FB99B001BD0E4 /* CMFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFeedbackViewController.swift; sourceTree = "<group>"; };
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
 		B17BE49823FD6203004C6440 /* CMHint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHint.swift; sourceTree = "<group>"; };
@@ -1354,6 +1356,7 @@
 			children = (
 				3BB32F1423438C1F006572F3 /* CommunActionSheet */,
 				3BC613AB23420FFC00075570 /* SwipeDownToDismissViewController */,
+				B10DB96A240FB99B001BD0E4 /* CMFeedbackViewController.swift */,
 			);
 			path = UIViewControllers;
 			sourceTree = "<group>";
@@ -3583,6 +3586,7 @@
 				BC597A6B238BBDAC00103F4F /* FittingSizePresentationController.swift in Sources */,
 				3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */,
 				BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */,
+				B10DB96B240FB99B001BD0E4 /* CMFeedbackViewController.swift in Sources */,
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,
