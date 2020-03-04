@@ -128,6 +128,9 @@ class WalletSendPointsVC: BaseViewController {
     var sellerAmountLabelForNavBar: UILabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 20, weight: .bold), numberOfLines: 1, color: .white)
     var navigationBarTitleView = UIView(forAutoLayout: ())
 
+    var amountBorderView = UIView(forAutoLayout: ())
+    var alertLabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 12, weight: .bold), numberOfLines: 2, color: .appRedColor)
+
     // MARK: - Class Initialization
     init(withSelectedBalanceSymbol symbol: String, andUser user: ResponseAPIContentGetProfile?) {
         self.dataModel = SendPointsModel()
@@ -182,9 +185,7 @@ class WalletSendPointsVC: BaseViewController {
         scrollView.contentInset.top = y
         scrollView.contentOffset.y = -y
         navigationItem.titleView = navigationBarTitleView
-        UIView.animate(withDuration: 0.3) {
-            self.carouselView.alpha = 0
-        }
+        self.carouselView.alpha = 0
     }
 
     @objc func keyboardWillHide() {
@@ -192,7 +193,7 @@ class WalletSendPointsVC: BaseViewController {
         scrollView.contentInset.top = 270
         navigationItem.titleView = nil
         title = "send points".localized().uppercaseFirst
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.1) {
             self.carouselView.alpha = 1
         }
     }
@@ -280,6 +281,7 @@ class WalletSendPointsVC: BaseViewController {
         amountView.layer.cornerRadius = 10
         amountView.layer.borderWidth = 1
         amountView.layer.borderColor = UIColor.e2e6e8.cgColor
+        amountBorderView = amountView
 
         whiteView.addSubview(amountView)
         amountView.autoPinEdge(toSuperviewEdge: .left, withInset: 15)
@@ -297,6 +299,11 @@ class WalletSendPointsVC: BaseViewController {
 
         amountView.addSubview(clearPointsButton)
         clearPointsButton.autoPinTopAndTrailingToSuperView(inset: 33, xInset: 15)
+
+        whiteView.addSubview(alertLabel)
+        alertLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 15)
+        alertLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 15)
+        alertLabel.autoPinEdge(.top, to: .bottom, of: amountView, withOffset: 10)
 
         whiteView.addSubview(sendPointsButton)
         sendPointsButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 15, bottom: 30, right: 15), excludingEdge: .top)
@@ -559,17 +566,24 @@ extension WalletSendPointsVC: UITextFieldDelegate {
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard !string.isEmpty else { return true }
-        guard let text = textField.text, !(text.starts(with: "0") && string == "0") else { return false }
+        guard let text = textField.text else { return false }
+        guard let swiftRange = Range(range, in: text) else { return false }
+        let updatedText = text.replacingCharacters(in: swiftRange, with: string)
         guard CharacterSet(charactersIn: "0123456789.,").isSuperset(of: CharacterSet(charactersIn: string)) else { return false }
-        
-        let updatedText = text + string
-        let countDots = (text + string).filter({$0 == "."}).count
-        let countCommas = (text + string).filter({$0 == ","}).count
-        
+
+        let countDots = updatedText.filter({$0 == "."}).count
+        let countCommas = updatedText.filter({$0 == ","}).count
+
         guard countDots + countCommas <= 1 else { return false }
         guard !updatedText.hasSuffix(".") || !updatedText.hasSuffix(",") else { return false }
-        guard CGFloat(updatedText.float() ?? 0.0) <= dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount else { return false }
+
+        if CGFloat(updatedText.float() ?? 0.0) <= dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount {
+            amountBorderView.layer.borderColor = UIColor.e2e6e8.cgColor
+            alertLabel.text = nil
+        } else {
+            amountBorderView.layer.borderColor = UIColor.appRedColor.cgColor
+            alertLabel.text = "Insufficient funds: \(dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount) \(dataModel.transaction.symbol.sell)"
+        }
         
         if updatedText.count > 1 && updatedText.starts(with: "0") && !(updatedText.contains(",") || updatedText.contains(".")) {
             textField.text = nil
