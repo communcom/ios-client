@@ -197,9 +197,9 @@ DEPENDENCIES:
   - Segmentio
   - Starscream
   - SubviewAttachingTextView (from `https://github.com/communcom/SubviewAttachingTextView.git`)
-  - SwifterSwift/Foundation
-  - SwifterSwift/SwiftStdlib
-  - SwifterSwift/UIKit
+  - SwifterSwift/Foundation (from `https://github.com/communcom/SwifterSwift.git`)
+  - SwifterSwift/SwiftStdlib (from `https://github.com/communcom/SwifterSwift.git`)
+  - SwifterSwift/UIKit (from `https://github.com/communcom/SwifterSwift.git`)
   - SwiftLint
   - SwiftTheme
   - SwiftyGif (from `https://github.com/communcom/SwiftyGif.git`)
@@ -260,7 +260,6 @@ SPEC REPOS:
     - Segmentio
     - SipHash
     - Starscream
-    - SwifterSwift
     - SwiftLint
     - SwiftTheme
     - SwiftyJSON
@@ -275,6 +274,8 @@ EXTERNAL SOURCES:
     :git: "git@github.com:communcom/GoloGrypto.git"
   SubviewAttachingTextView:
     :git: https://github.com/communcom/SubviewAttachingTextView.git
+  SwifterSwift:
+    :git: https://github.com/communcom/SwifterSwift.git
   SwiftyGif:
     :git: https://github.com/communcom/SwiftyGif.git
   THPinViewController:
@@ -291,6 +292,9 @@ CHECKOUT OPTIONS:
   SubviewAttachingTextView:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
     :git: https://github.com/communcom/SubviewAttachingTextView.git
+  SwifterSwift:
+    :commit: 39f4854c6219c6cfb54c105393260bdf64372f51
+    :git: https://github.com/communcom/SwifterSwift.git
   SwiftyGif:
     :commit: dad6a37be372a3f61068d516348157794d58d857
     :git: https://github.com/communcom/SwiftyGif.git
@@ -351,7 +355,7 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SubviewAttachingTextView: 1f6a12782b5d53241f8a05424dfe81fae6c33602
-  SwifterSwift: a9e8e144832638c2850b43da5feaf9598c6ad65b
+  SwifterSwift: 1952ee4cc0dc9d01252d422d976ad9280b6e695a
   SwiftLint: 4105f061f9812b214568b736dab580ab2c73a582
   SwiftTheme: 45a12fe3d600546b99e8e4a52cec9b57eb5b1aec
   SwiftyGif: b85c6b33a9411859d9e1db998b6a8214aea942df
@@ -361,6 +365,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 05c49c354d6e35e3d072cefcbf06d1012a5380fe
+PODFILE CHECKSUM: 801f6403e628f84ff80e886bffd11fa81399795a
 
 COCOAPODS: 1.9.0.beta.3

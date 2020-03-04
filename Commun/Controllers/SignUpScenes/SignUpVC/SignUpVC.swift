@@ -265,9 +265,10 @@ class SignUpVC: UIViewController, SignUpRouter {
         }
         AnalyticsManger.shared.PhoneNumberEntered()
 
+        self.view.endEditing(true)
+        
         self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
         
-        self.view.endEditing(true)
         self.setupReCaptcha()
         
         // reCaptcha

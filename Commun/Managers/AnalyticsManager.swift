@@ -150,6 +150,9 @@ class AnalyticsManger {
 extension AnalyticsManger {
     private func sendEvent(name: String, props: Properties? = nil) {
         #if APPSTORE
+            if let userID = Config.currentUser?.id {
+                Amplitude.instance()?.setUserId(userID)
+            }
             if let props = props {
                 Amplitude.instance()?.logEvent(name, withEventProperties: props)
             } else {
