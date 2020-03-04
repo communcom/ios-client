@@ -166,6 +166,8 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                             }
 
                             strongSelf.hideHud()
+                            communWalletVC.appLiked()
+
 //                            strongSelf.setTabBarHidden(true)
                          }
                     }
