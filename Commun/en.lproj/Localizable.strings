@@ -86,6 +86,7 @@
 "follow"                                        =   "follow";
 "following"                                     =   "following";
 "follows you"                                   =   "follows you";
+"feedback"                                      =   "feedback";
 
 
 // G
@@ -129,7 +130,7 @@
 "logging out"                                   =   "logging out";
 "loading post"                                  =   "loading post";
 "liked"                                         =   "liked";
-                                
+
 
 // M
 "master key has been generated"                 =   "master key has been generated";
@@ -147,6 +148,8 @@
 "modal view top state title"                    =   "this post is featured in Top";
 "modal view top state note"                     =   "after a given time, it will get the reward";
 "modal view top state button title"             =   "learn more about reward";
+"modal view liked app title"                    =   "like the Commun?";
+"modal view liked app note"                     =   "we continually work on improving our app and\nvalue your opinion a lot";
 "modal view reward state title"                 =   "this post has been rewarded";
 "modal view reward state note"                  =   "this publication was interesting for Community members";
 "modal view reward state button title"          =   "learn more about reward";
@@ -161,6 +164,7 @@
 "no posts"                                      =   "no posts";
 "notifications"                                 =   "notifications";
 "no biometry on your device"                    =   "no biometry on your device";
+"no"                                            =   "no";
 
 
 // O
@@ -223,6 +227,7 @@
 "send report"                                   =   "report";
 "social network"                                =   "social network";
 "send points"                                   =   "send points";
+"send"                                          =   "send";
 
 
 // T
@@ -282,3 +287,4 @@
 "you have no notification"                      =   "you have no notification";
 "you have not made any"                         =   "you have not made any";
 "your socializing"                              =   "your socializing";
+"yes"                                           =   "yes";

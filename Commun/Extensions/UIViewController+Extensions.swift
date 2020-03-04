@@ -137,7 +137,6 @@ extension UIViewController {
     }
     
     var isModal: Bool {
-        
         let presentingIsModal = presentingViewController != nil
         let presentingIsNavigation = navigationController?.presentingViewController?.presentedViewController == navigationController
         let presentingIsTabBar = tabBarController?.presentingViewController is UITabBarController
@@ -441,6 +440,31 @@ extension UIViewController {
                 show ? .black: .clear)
             self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
             completion?()
+        }
+    }
+    
+    func appLiked() {
+        if !CMAppLike.verify() {
+            CMAppLike.updateRate()
+
+            let appLikeView = CMAppLikeView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 192.0))),
+                                            andParameters: .appLiked)
+            
+            let cardVC = CardViewController(contentView: appLikeView)
+            self.present(cardVC, animated: true, completion: {
+                AnalyticsManger.shared.showRate()
+            })
+            
+            appLikeView.completionDismissWithAction = { isLiked in
+                // value = true <-> `Yes`
+                self.dismiss(animated: true, completion: {
+                    AnalyticsManger.shared.rate(isLike: isLiked)
+
+//                    if value, let baseVC = self.parentViewController as? BaseViewController {
+//                        baseVC.load(url: postLink)
+//                    }
+                })
+            }
         }
     }
 }

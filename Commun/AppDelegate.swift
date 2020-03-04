@@ -138,6 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Closing animation
             let vc = controllerContainer.resolve(SplashViewController.self)!
             self.window?.rootViewController = vc
+        
         case .boarding:
             let vc: UIViewController
             
@@ -150,11 +151,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let nc = UINavigationController(rootViewController: vc)
             
             self.changeRootVC(nc)
+        
         case .authorized:
             // Retrieve favourites
             FavouritesList.shared.retrieve()
             
             self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+            
         case .registering:
             let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
             let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
@@ -171,6 +174,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 AuthorizationManager.shared.status.accept(.authorizing)
                 try! RestAPIManager.instance.logout()
                 return
+            
             default:
                 break
             }
@@ -320,8 +324,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data Saving support
 
-    func saveContext () {
+    func saveContext() {
         let context = persistentContainer.viewContext
+        
         if context.hasChanges {
             do {
                 try context.save()
@@ -334,6 +339,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 }
+
 
 // MARK: - Firebase Cloud Messaging (FCM)
 extension AppDelegate {

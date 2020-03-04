@@ -87,9 +87,17 @@
                                     <constraint firstAttribute="width" constant="35" id="aJj-KX-Fpr"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79b-EL-6JX">
+                                <rect key="frame" x="9" y="13" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="tapped:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="klf-ze-7yS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="79b-EL-6JX" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="9" id="Pdu-Pc-ETg"/>
                             <constraint firstItem="IfS-V6-9za" firstAttribute="top" secondItem="qQo-fb-NcH" secondAttribute="bottom" constant="14" id="S5D-R6-UkA" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" id="Tjd-Cq-itW"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="top" secondItem="oXF-w0-ktq" secondAttribute="top" id="UWO-ih-eU6" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -99,6 +107,7 @@
                             <constraint firstItem="zIG-dP-Ewi" firstAttribute="centerY" secondItem="JZ3-e2-Mok" secondAttribute="centerY" id="g8S-fO-23r"/>
                             <constraint firstItem="zIG-dP-Ewi" firstAttribute="centerX" secondItem="JZ3-e2-Mok" secondAttribute="centerX" constant="-106" id="jvu-nh-f2P"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="bottom" secondItem="IfS-V6-9za" secondAttribute="bottom" constant="20" id="kDl-Ko-m8v" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="79b-EL-6JX" firstAttribute="top" secondItem="bF6-IB-5mY" secondAttribute="top" constant="13" id="ldq-aR-yfL"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="trailing" secondItem="bF6-IB-5mY" secondAttribute="trailing" id="mLH-q0-tby"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="IfS-V6-9za" secondAttribute="trailing" constant="20" id="sit-PB-k0c" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                         </constraints>

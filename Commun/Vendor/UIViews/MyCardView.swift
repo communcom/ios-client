@@ -11,12 +11,14 @@ import Foundation
 enum CMCardViewParameters {
     case user
     case topState
+    case appLiked
     case rewardState
     
     var title: String {
         switch self {
         case .user: return "modal view user title".localized().uppercaseFirst
         case .topState: return "modal view top state title".localized().uppercaseFirst
+        case .appLiked: return "modal view liked app title".localized().uppercaseFirst
         case .rewardState: return "modal view reward state title".localized().uppercaseFirst
         }
     }
@@ -25,6 +27,7 @@ enum CMCardViewParameters {
         switch self {
         case .user: return "modal view user note".localized().uppercaseFirst
         case .topState: return "modal view top state note".localized().uppercaseFirst
+        case .appLiked: return "modal view liked app note".localized().uppercaseFirst
         case .rewardState: return "modal view reward state note".localized().uppercaseFirst
         }
     }
@@ -33,6 +36,7 @@ enum CMCardViewParameters {
         switch self {
         case .user: return "modal view user button title".localized().uppercaseFirst
         case .topState: return "modal view top state button title".localized().uppercaseFirst
+        case .appLiked: return ""
         case .rewardState: return "modal view reward state button title".localized().uppercaseFirst
         }
     }
@@ -42,7 +46,8 @@ class MyCardView: MyView {
     // MARK: - Properties
     var viewParameters: CMCardViewParameters!
     var completionDismissWithAction: ((Bool) -> Void)?
-    
+    var completionDismissWithAppLiked: ((Bool) -> Void)?
+
     // MARK: - Class Initialization
     init(withFrame frame: CGRect, andParameters viewParameters: CMCardViewParameters = .user) {
         self.viewParameters = viewParameters
@@ -62,5 +67,9 @@ class MyCardView: MyView {
     
     @objc func openLink(_ sender: UIButton) {
         completionDismissWithAction?(true)
+    }
+
+    @objc func appLiked(_ sender: UIButton) {
+        completionDismissWithAppLiked?(sender.tag == 1)
     }
 }
