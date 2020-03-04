@@ -19,7 +19,11 @@ class WalletSendPointsVC: BaseViewController {
     private let carouselHeight: CGFloat = 50
 
     lazy var scrollView: UIScrollView = {
-        return UIScrollView()
+        let scrollView = UIScrollView()
+        scrollView.contentSize = UIScreen.main.bounds.size
+        scrollView.alwaysBounceVertical = true
+        scrollView.isScrollEnabled = false
+        return scrollView
     }()
 
     lazy var carouselView: CircularCarousel = {
@@ -145,7 +149,6 @@ class WalletSendPointsVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        keyboardWillHide()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
                 
@@ -179,7 +182,9 @@ class WalletSendPointsVC: BaseViewController {
         scrollView.contentInset.top = y
         scrollView.contentOffset.y = -y
         navigationItem.titleView = navigationBarTitleView
-
+        UIView.animate(withDuration: 0.3) {
+            self.carouselView.alpha = 0
+        }
     }
 
     @objc func keyboardWillHide() {
@@ -187,6 +192,9 @@ class WalletSendPointsVC: BaseViewController {
         scrollView.contentInset.top = 270
         navigationItem.titleView = nil
         title = "send points".localized().uppercaseFirst
+        UIView.animate(withDuration: 0.3) {
+            self.carouselView.alpha = 1
+        }
     }
 
     private func setupUI() {
@@ -197,10 +205,8 @@ class WalletSendPointsVC: BaseViewController {
 
         view.addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewEdges()
-        scrollView.contentSize = UIScreen.main.bounds.size
-        scrollView.alwaysBounceVertical = true
-
-        scrollView.isScrollEnabled = false
+        keyboardWillHide()
+        // fix carusel
         view.bringSubviewToFront(carouselView)
         configureBottomView()
     }
