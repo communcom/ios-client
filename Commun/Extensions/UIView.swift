@@ -42,7 +42,14 @@ extension UIView {
         self.viewWithTag(9999) != nil
     }
     
-    func showLoading(cover: Bool = true, spinnerColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1), size: CGFloat? = nil, centerYOffset: CGFloat? = nil, offsetTop: CGFloat? = nil) {
+    func showLoading(
+        cover: Bool = true,
+        spinnerColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1),
+        size: CGFloat? = nil,
+        spinerLineWidth: CGFloat? = nil,
+        centerYOffset: CGFloat? = nil,
+        offsetTop: CGFloat? = nil
+    ) {
         // if loading view is existed
         if self.viewWithTag(9999) != nil {return}
         
@@ -61,10 +68,10 @@ extension UIView {
         self.bringSubviewToFront(coverView)
         
         // add spinnerView
-        let size = size ?? (height > 76 ? 60: height-16)
+        let size = size ?? (height > 76 ? 60: height-8)
         let spinnerView = ASSpinnerView()
         spinnerView.translatesAutoresizingMaskIntoConstraints = false
-        spinnerView.spinnerLineWidth = size/10
+        spinnerView.spinnerLineWidth = spinerLineWidth ?? size/10
         spinnerView.spinnerDuration = 0.3
         spinnerView.spinnerStrokeColor = spinnerColor.cgColor
         coverView.addSubview(spinnerView)
