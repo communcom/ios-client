@@ -38,13 +38,24 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.setNavigationBarHidden(true, animated: animated)
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if viewModel.items.value.filter({ $0.eventType == "reward" && $0.isNew }).count > 0 {
+            appLiked()
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         let height = headerView.height
+        
         if headerViewHeight == 0 {
             tableView.contentInset.top = height
             headerViewHeight = height
@@ -54,6 +65,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     
     override func viewWillSetUpTableView() {
         super.viewWillSetUpTableView()
+        
         title = "notifications".localized().uppercaseFirst
         view.backgroundColor = .white
         
@@ -104,6 +116,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     
     override func bind() {
         super.bind()
+       
         tableView.rx.contentOffset.map {$0.y}
             .skip(2)
             .subscribe(onNext: { (y) in
