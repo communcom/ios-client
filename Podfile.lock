@@ -92,8 +92,9 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.3.2):
     - GoogleUtilities/Logger
-  - ImageViewer.swift (3.0.9):
+  - ImageViewer.swift (3.0):
     - SDWebImage
+    - SwiftyGif
   - InitialsImageView (0.7.0)
   - libwebp (1.0.3):
     - libwebp/demux (= 1.0.3)
@@ -174,7 +175,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Messaging
   - "GoloCrypto (from `git@github.com:communcom/GoloGrypto.git`)"
-  - ImageViewer.swift
+  - ImageViewer.swift (from `https://github.com/communcom/ImageViewer.swift.git`)
   - InitialsImageView
   - ListPlaceholder
   - Localize-Swift (~> 2.0)
@@ -234,7 +235,6 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
-    - ImageViewer.swift
     - InitialsImageView
     - libwebp
     - ListPlaceholder
@@ -272,6 +272,8 @@ EXTERNAL SOURCES:
     :git: "git@github.com:communcom/eos-swift.git"
   GoloCrypto:
     :git: "git@github.com:communcom/GoloGrypto.git"
+  ImageViewer.swift:
+    :git: https://github.com/communcom/ImageViewer.swift.git
   SubviewAttachingTextView:
     :git: https://github.com/communcom/SubviewAttachingTextView.git
   SwifterSwift:
@@ -289,6 +291,9 @@ CHECKOUT OPTIONS:
   GoloCrypto:
     :commit: 49dc0567b352fe5685f6bdd4acc6f2f268555c8f
     :git: "git@github.com:communcom/GoloGrypto.git"
+  ImageViewer.swift:
+    :commit: 95677cce9b659e3368bc3c355bbecaedefce9ad2
+    :git: https://github.com/communcom/ImageViewer.swift.git
   SubviewAttachingTextView:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
     :git: https://github.com/communcom/SubviewAttachingTextView.git
@@ -328,7 +333,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 8e9b210c97d55fbff306cc5468ff91b9cb32dcf5
   GoogleDataTransportCCTSupport: ef79a4728b864946a8aafdbab770d5294faf3b5f
   GoogleUtilities: 547a86735c6f0ee30ad17e94df4fc21f616b71cb
-  ImageViewer.swift: b2a83488e089fd2250406d81c783c02b21e1d424
+  ImageViewer.swift: a669b8c3599a4ec5bafb087e160b7de580eb7e83
   InitialsImageView: 7a416d36fc6df5434198664db28a3ffb0228426d
   libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
   ListPlaceholder: 08ddaddf67520a20fc52cf37160fb56aa64d071d
@@ -365,6 +370,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 801f6403e628f84ff80e886bffd11fa81399795a
+PODFILE CHECKSUM: 2919984ea57d48337d487a2e8ed658d4229b3ae0
 
 COCOAPODS: 1.9.0.beta.3
