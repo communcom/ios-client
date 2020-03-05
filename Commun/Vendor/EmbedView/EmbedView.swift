@@ -12,18 +12,36 @@ import SafariServices
 import AVKit
 
 class EmbedView: UIView {
-    @IBOutlet weak private var contentView: UIView!
-    @IBOutlet weak private var coverImageView: UIImageView!
-    @IBOutlet weak private var providerNameLabel: UILabel!
-    @IBOutlet weak private var titleLabel: UILabel!
-    @IBOutlet weak private var subtitleLabel: UILabel!
-    @IBOutlet weak private var providerLabelView: UIView!
-    @IBOutlet weak private var titlesView: UIView!
+    // MARK: - UI Property
+    private lazy var coverImageView: UIImageView = UIImageView(forAutoLayout: ())
 
-    private var videoLayer: AVPlayerLayer?
-    private var player: AVPlayer?
+    private lazy var providerNameLabel: UILabel = {
+        let label = UILabel(forAutoLayout: ())
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        label.textColor = .white
+        return label
+    }()
 
-    private var isPostDetail = false
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel(forAutoLayout: ())
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.textColor = .black
+        return label
+    }()
+
+    private lazy var subtitleLabel: UILabel = {
+        let label = UILabel(forAutoLayout: ())
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        label.textColor = .appGrayColor
+        return label
+    }()
+
+    private lazy var providerLabelView: UIView = {
+        let view = UIView(forAutoLayout: ())
+        view.layer.cornerRadius = 12
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        return view
+    }()
 
     private lazy var loadingView: UIView = {
         let view = UIView()
@@ -48,43 +66,59 @@ class EmbedView: UIView {
         return activity
     }()
 
-    private var content: ResponseAPIContentBlock!
+    private lazy var contentView: UIView = UIView(forAutoLayout: ())
+    private lazy var titlesView: UIView = UIView(forAutoLayout: ())
 
+    // MARK: - Helper Property
+    private var content: ResponseAPIContentBlock!
+    private var videoLayer: AVPlayerLayer?
+    private var player: AVPlayer?
+    private var isPostDetail = false
+
+    // MARK: - View Lifecycle
     init(content: ResponseAPIContentBlock, isPostDetail: Bool = false) {
         super.init(frame: .zero)
         self.isPostDetail = isPostDetail
         self.content = content
-        self.configureXib()
+        self.addSubviews()
         self.configure(with: content)
     }
     
     init(localImage: UIImage) {
         super.init(frame: .zero)
         self.content = ResponseAPIContentBlock(id: 0, type: "image", attributes: nil, content: ResponseAPIContentBlockContent.string(""))
-        self.configureXib()
+        self.addSubviews()
         self.configure(with: localImage)
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureXib()
+        addSubviews()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureXib()
-    }
-
-    private func configureXib() {
-        Bundle.main.loadNibNamed("EmbedView", owner: self, options: nil)
-        addSubview(contentView)
-        contentView.frame = bounds
-        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         videoLayer?.frame = bounds
+    }
+
+    // MARK: - Functions
+    private func addSubviews() {
+        addSubview(coverImageView)
+        addSubview(titlesView)
+        titlesView.addSubview(titleLabel)
+        titlesView.addSubview(subtitleLabel)
+
+        coverImageView.addSubview(providerLabelView)
+        providerLabelView.addSubview(providerNameLabel)
+
+        providerNameLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
+
+        coverImageView.autoPinEdge(toSuperviewMargin: .right, withInset: 10)
+        coverImageView.autoPinEdge(toSuperviewMargin: .bottom, withInset: 10)
     }
     
     private func configure(with localImage: UIImage) {
@@ -96,7 +130,7 @@ class EmbedView: UIView {
         coverImageView.autoPinEdge(toSuperviewEdge: .left)
         coverImageView.autoPinEdge(toSuperviewEdge: .right)
 
-        NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
+        NSLayoutConstraint(item: coverImageView, attribute: .width, relatedBy: .equal, toItem: coverImageView, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
         
         coverImageView.image = localImage
         
@@ -195,7 +229,7 @@ class EmbedView: UIView {
             coverImageView.autoPinEdge(toSuperviewEdge: .left)
             coverImageView.autoPinEdge(toSuperviewEdge: .right)
 
-            NSLayoutConstraint(item: coverImageView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: newHeight).isActive = true
+            NSLayoutConstraint(item: coverImageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: newHeight).isActive = true
         }
 
         if let imageUrl = imageUrl {

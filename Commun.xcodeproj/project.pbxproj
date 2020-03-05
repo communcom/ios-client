@@ -147,7 +147,6 @@
 		AC0F9C30237C307300A5002C /* CyberSwift.framework in CyberSwift */ = {isa = PBXBuildFile; fileRef = AC759B97237C15C20069D169 /* CyberSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AC2423AA23E866C6006A39B5 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2423A923E866C6006A39B5 /* ShareViewController.swift */; };
 		AC3386A12371D1B6009DB3BB /* EmbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3386A02371D1B6009DB3BB /* EmbedView.swift */; };
-		AC3386A62371DDEA009DB3BB /* EmbedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC3386A52371DDEA009DB3BB /* EmbedView.xib */; };
 		AC5D7D8B2385A1C400EEC5ED /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */; };
 		AC6A7CBA23FC4C9A004CA486 /* DeviceScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A7CB923FC4C99004CA486 /* DeviceScreen.swift */; };
 		AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC88ADCF2386B12A00D72374 /* ShareHelper.swift */; };
@@ -716,7 +715,6 @@
 		AC0B05C123A93A1100474628 /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
 		AC2423A923E866C6006A39B5 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		AC3386A02371D1B6009DB3BB /* EmbedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedView.swift; sourceTree = "<group>"; };
-		AC3386A52371DDEA009DB3BB /* EmbedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbedView.xib; sourceTree = "<group>"; };
 		AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		AC6A7CB923FC4C99004CA486 /* DeviceScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceScreen.swift; sourceTree = "<group>"; };
 		AC759B91237C15C20069D169 /* CyberSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CyberSwift.xcodeproj; path = cyberSwift/CyberSwift.xcodeproj; sourceTree = "<group>"; };
@@ -1795,7 +1793,6 @@
 			isa = PBXGroup;
 			children = (
 				AC3386A02371D1B6009DB3BB /* EmbedView.swift */,
-				AC3386A52371DDEA009DB3BB /* EmbedView.xib */,
 				AC8C57BC238C408A00B0D260 /* InstagramView.swift */,
 				AC8C57C0238D494D00B0D260 /* InstagramView.xib */,
 			);
@@ -2982,7 +2979,6 @@
 				B1EA02EA2289882A00835244 /* SF-Pro-Text-BoldItalic.otf in Resources */,
 				B1EA02E22289882A00835244 /* SF-Pro-Display-RegularItalic.otf in Resources */,
 				3B77383923335829000965ED /* image-not-available.jpg in Resources */,
-				AC3386A62371DDEA009DB3BB /* EmbedView.xib in Resources */,
 				B1EA02E72289882A00835244 /* SF-Pro-Display-Ultralight.otf in Resources */,
 				B1D1CF9922F8A28A0071F1B6 /* InfoPlist.strings in Resources */,
 				AC8C57C1238D494D00B0D260 /* InstagramView.xib in Resources */,
