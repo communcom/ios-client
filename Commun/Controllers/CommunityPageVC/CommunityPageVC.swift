@@ -278,10 +278,12 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                             break
                         }
                     }
-                    return [
-                        AnimatableSectionModel<String, CustomElementType>(model: "leaders", items: leaders),
-                        AnimatableSectionModel<String, CustomElementType>(model: "nominees", items: nominees)
-                    ]
+                    
+                    var sections = [AnimatableSectionModel<String, CustomElementType>]()
+                    if !leaders.isEmpty {sections.append(AnimatableSectionModel<String, CustomElementType>(model: "leaders", items: leaders))}
+                    if !nominees.isEmpty {sections.append(AnimatableSectionModel<String, CustomElementType>(model: "nominees", items: nominees))}
+                    
+                    return sections
                 }
                 return [AnimatableSectionModel<String, CustomElementType>(model: "", items: items)]
             }
