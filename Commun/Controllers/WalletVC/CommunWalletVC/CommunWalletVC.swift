@@ -399,7 +399,7 @@ class CommunWalletVC: TransferHistoryVC {
     }
     
     @objc func myPointsSeeAllDidTouch() {
-        let vc = BalancesVC { balance in
+        let vc = MyPointsSeeAllBalancesVC { balance in
             self.openOtherBalancesWalletVC(withSelectedBalance: balance)
         }
         

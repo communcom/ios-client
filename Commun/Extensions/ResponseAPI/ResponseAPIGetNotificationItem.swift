@@ -45,32 +45,33 @@ extension ResponseAPIGetNotificationItem {
         case "reward":
             aStr.normal("you've got".localized().uppercaseFirst)
                 .normal(" ")
-                .normal("\(amount ?? "0") \(community?.communityId ?? "POINTS")")
+                .normal("\(amount ?? "0") \(community?.name ?? community?.communityId ?? "")")
                 .normal(" ")
-                .normal("as a reward".localized())
+                .normal("points".localized())
             
         case "transfer":
+            var pointType = self.pointType
+            if pointType == "token" {pointType = "Commun"}
+            
             if from?.username == nil {
                 aStr.normal("You received")
                     .normal(" ")
-                    .normal("\(amount ?? "0") \(community?.communityId ?? "points")")
+                    .normal("\(amount ?? "0") \(community?.name ?? community?.communityId ?? "points")")
             } else if from?.username?.lowercased() != "bounty" {
-                var pointType = self.pointType
-                if pointType == "token" {pointType = "Commun"}
                 aStr.semibold(from?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
                     .normal("sent you".localized())
                     .normal(" ")
                     .text("\(amount ?? "0") \(pointType ?? "points")", weight: .medium, color: .appMainColor)
             } else {
-                aStr.normal("you got a".localized().uppercaseFirst)
+                aStr.normal("you've got a".localized().uppercaseFirst)
                     .normal(" ")
                     .text("\(amount ?? "0") \(pointType ?? "points")", weight: .medium, color: .appMainColor)
                     .normal(" ")
                     .normal("bounty")
             }
         default:
-            aStr.normal("you got a new notification".localized().uppercaseFirst)
+            aStr.normal("you've got a new notification".localized().uppercaseFirst)
         }
         return aStr
     }

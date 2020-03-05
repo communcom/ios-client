@@ -8,8 +8,11 @@
 
 import Foundation
 import CyberSwift
+import RxCocoa
 
 class BalancesViewModel: ListViewModel<ResponseAPIWalletGetBalance> {
+    let searchResult = BehaviorRelay<[ResponseAPIWalletGetBalance]?>(value: nil)
+    
     convenience init(userId: String? = nil, balances: [ResponseAPIWalletGetBalance]? = nil) {
         let fetcher = BalancesListFetcher(userId: userId)
         self.init(fetcher: fetcher)
