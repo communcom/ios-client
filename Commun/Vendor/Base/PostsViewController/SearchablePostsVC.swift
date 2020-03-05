@@ -55,6 +55,14 @@ class SearchablePostsVC: PostsViewController, SearchableViewControllerType {
     override func bind() {
         super.bind()
         bindSearchBar()
+        
+        tableView.rx.contentOffset
+            .map {$0.y > 3}
+            .distinctUntilChanged()
+            .subscribe(onNext: { (show) in
+                self.navigationController?.navigationBar.showShadow(show)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func bindItems() {

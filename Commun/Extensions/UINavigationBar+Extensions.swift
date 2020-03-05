@@ -10,16 +10,11 @@ import Foundation
 import RxSwift
 
 extension UINavigationBar {
-    func showShadowWhenScrolling(_ scrollView: UIScrollView, whereOffsetYGreaterThan maxOffsetY: CGFloat) -> Disposable {
-        scrollView.rx.contentOffset
-            .map {$0.y > 3}
-            .distinctUntilChanged()
-            .subscribe(onNext: { (showShadow) in
-                if showShadow {
-                    self.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
-                } else {
-                    self.shadowOpacity = 0
-                }
-            })
+    func showShadow(_ show: Bool) {
+        if show {
+            self.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
+        } else {
+            self.shadowOpacity = 0
+        }
     }
 }
