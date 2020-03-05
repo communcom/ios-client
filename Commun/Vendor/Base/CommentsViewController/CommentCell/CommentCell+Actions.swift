@@ -57,6 +57,19 @@ extension CommentCell {
                 openProfile()
                 return
             }
+            
+            // tap on comment in UserProfileVC
+            if let comment = comment,
+                let userId = comment.parents.post?.userId,
+                let permlink = comment.parents.post?.permlink,
+                let communityId = comment.parents.post?.communityId,
+                let vc = parentViewController as? UserProfilePageVC
+            {
+                let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+                postPageVC.selectedComment = comment
+        
+                vc.show(postPageVC, sender: nil)
+            }
         }
     }
     
