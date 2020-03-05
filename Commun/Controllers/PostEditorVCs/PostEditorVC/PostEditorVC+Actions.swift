@@ -231,11 +231,13 @@ extension PostEditorVC {
             })
             .subscribe(onSuccess: { (userId, permlink) in
                 self.hideHud()
+                
                 // if editing post
                 if (self.viewModel.postForEdit) != nil {
                     self.dismiss(animated: true, completion: nil)
                 }
-                    // if creating post
+                
+                // if creating post
                 else {
                     // show post page
                     guard let communityId = self.viewModel.community.value?.communityId else {return}
@@ -243,11 +245,13 @@ extension PostEditorVC {
 
                     self.dismiss(animated: true) {
                         UIApplication.topViewController()?.show(postPageVC, sender: nil)
+                        postPageVC.appLiked()
                     }
                 }
             }) { (error) in
-                self.hideHud()
+                self.hideHud()               
                 let message = "post not found".localized().uppercaseFirst
+                
                 if let error = error as? CMError {
                     switch error {
                     case .invalidResponse(message: message, _):
@@ -298,7 +302,7 @@ extension PostEditorVC {
     
     // MARK: - Add link
     func addAgeLimit() {
-        //TODO: Change func
+        // TODO: Change func
         showAlert(title: "info".localized().uppercaseFirst, message: "add age limit 18+ (coming soon)".localized().uppercaseFirst, buttonTitles: ["OK".localized()], highlightedButtonIndex: 0)
     }
 }
