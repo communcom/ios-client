@@ -37,16 +37,8 @@ class SubsViewController<T: ListItemType, CellType: ListItemCellType>: ListViewC
     override func bind() {
         super.bind()
         if showShadowWhenScrollUp {
-            tableView.rx.contentOffset
-                .map {$0.y > 3}
-                .distinctUntilChanged()
-                .subscribe(onNext: { (showShadow) in
-                    if showShadow {
-                        self.navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
-                    } else {
-                        self.navigationController?.navigationBar.shadowOpacity = 0
-                    }
-                })
+            navigationController?.navigationBar
+                .showShadowWhenScrolling(tableView, whereOffsetYGreaterThan: 3)
                 .disposed(by: disposeBag)
         }
     }
