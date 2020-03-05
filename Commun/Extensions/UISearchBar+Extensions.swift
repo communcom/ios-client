@@ -13,7 +13,6 @@ extension UISearchBar {
         placeholder: String = "search".localized().uppercaseFirst
     ) -> UISearchBar {
         let sc = UISearchBar(frame: .zero)
-        sc.searchBarStyle = .minimal
         sc.tintColor = .appMainColor
         sc.setStyle(placeholder: placeholder)
         return sc

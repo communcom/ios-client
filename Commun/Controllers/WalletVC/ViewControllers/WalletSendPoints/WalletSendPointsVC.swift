@@ -15,21 +15,38 @@ import CircularCarousel
 class WalletSendPointsVC: BaseViewController {
     // MARK: - Properties
     var dataModel: SendPointsModel
-        
+    var buttonBottomConstraint: NSLayoutConstraint?
+
+    private let carouselHeight: CGFloat = 50
+
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.contentSize = UIScreen.main.bounds.size
+        scrollView.alwaysBounceVertical = true
+        scrollView.isScrollEnabled = false
+        return scrollView
+    }()
+
     lazy var carouselView: CircularCarousel = {
         let carouselViewInstance = CircularCarousel(width: .adaptive(width: 247.0), height: carouselHeight)
         carouselViewInstance.delegate = self
         carouselViewInstance.dataSource = self
-        
+
         return carouselViewInstance
     }()
 
-    let carouselHeight: CGFloat = .adaptive(height: 50.0)
+    let topView: UIView = {
+        return UIView(height: 225, backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1))
+    }()
 
-    let whiteView = UIView(width: .adaptive(width: 375.0), height: .adaptive(height: 543.0), backgroundColor: .white, cornerRadius: .adaptive(width: 25.0))
+    let whiteView = UIView(width: UIScreen.main.bounds.width,
+                           height: UIScreen.main.bounds.height - 269,
+                           backgroundColor: .white,
+                           cornerRadius: 25)
+
     let pointsToolbar: CMToolbarView = CMToolbarView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 375.0), height: .adaptive(height: 50.0))))
 
-    lazy var communLogoImageView = UIView.transparentCommunLogo(size: .adaptive(width: 50.0))
+    lazy var communLogoImageView = UIView.transparentCommunLogo(size: carouselHeight)
 
     // Balance
     var sellerNameLabel: UILabel = {
@@ -55,15 +72,15 @@ class WalletSendPointsVC: BaseViewController {
     }()
 
     // Friend
-    var friendAvatarImageView = UIView.createCircleCommunLogo(side: .adaptive(height: 40.0))
+    var friendAvatarImageView = UIView.createCircleCommunLogo(side: 40)
     
     let friendNameLabel: UILabel = UILabel(text: "select user".localized().uppercaseFirst,
-                                                font: .systemFont(ofSize: .adaptive(width: 15.0), weight: .semibold),
+                                                font: .systemFont(ofSize: 15, weight: .semibold),
                                                 numberOfLines: 1,
                                                 color: .black)
     
     let chooseFriendButton: UIButton = {
-        let chooseRecipientButtonInstance = UIButton.circle(size: .adaptive(width: 24.0),
+        let chooseRecipientButtonInstance = UIButton.circle(size: 24,
                                                             backgroundColor: .clear,
                                                             tintColor: .white,
                                                             imageName: "icon-select-user-grey-cyrcle-default",
@@ -85,7 +102,7 @@ class WalletSendPointsVC: BaseViewController {
         let pointsTextFieldInstance = UITextField()
         pointsTextFieldInstance.tune(withPlaceholder: String(format: "0 %@", "points".localized().uppercaseFirst),
                                      textColors: blackWhiteColorPickers,
-                                     font: .systemFont(ofSize: .adaptive(width: 17.0), weight: .semibold),
+                                     font: .systemFont(ofSize: 17, weight: .semibold),
                                      alignment: .left)
         
         pointsTextFieldInstance.keyboardType = .decimalPad
@@ -96,7 +113,7 @@ class WalletSendPointsVC: BaseViewController {
     }()
 
     let clearPointsButton: UIButton = {
-        let clearPointsButtonInstance = UIButton.circle(size: .adaptive(width: 24.0),
+        let clearPointsButtonInstance = UIButton.circle(size: 24,
                                                         backgroundColor: .clear,
                                                         tintColor: .white,
                                                         imageName: "icon-cancel-grey-cyrcle-default",
@@ -107,6 +124,13 @@ class WalletSendPointsVC: BaseViewController {
         
         return clearPointsButtonInstance
     }()
+
+    var sellerNameLabelForNavBar: UILabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 12, weight: .bold), numberOfLines: 1, color: .white)
+    var sellerAmountLabelForNavBar: UILabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 20, weight: .bold), numberOfLines: 1, color: .white)
+    var navigationBarTitleView = UIView(forAutoLayout: ())
+
+    var amountBorderView = UIView(forAutoLayout: ())
+    var alertLabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 12, weight: .bold), numberOfLines: 2, color: .appRedColor)
 
     // MARK: - Class Initialization
     init(withSelectedBalanceSymbol symbol: String, andUser user: ResponseAPIContentGetProfile?) {
@@ -128,13 +152,16 @@ class WalletSendPointsVC: BaseViewController {
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
                 
         dataModel.loadBalances { [weak self] success in
-            guard let strongSelf = self else { return }
-            
             if success {
-                strongSelf.setupView()
-                strongSelf.addGesture()
+                self?.setupUI()
+                self?.updateBuyerInfo()
+                self?.updateSellerInfo()
+                self?.addGesture()
             }
         }
         
@@ -152,6 +179,151 @@ class WalletSendPointsVC: BaseViewController {
         }
         
         bind()
+    }
+
+    @objc func keyboardWillShow(notification: Notification) {
+        self.view.layoutIfNeeded()
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.buttonBottomConstraint?.constant = -keyboardSize.height - 10
+        }
+        let y = (navigationController?.navigationBar.frame.size.height ?? 0) + (navigationController?.navigationBar.frame.origin.y ?? 0)
+        scrollView.contentInset.top = y
+        scrollView.contentOffset.y = -y
+        navigationItem.titleView = navigationBarTitleView
+        self.carouselView.alpha = 0
+
+        UIView.animate(withDuration: 0.1) {
+            self.carouselView.alpha = 1
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    @objc func keyboardWillHide() {
+        scrollView.contentOffset.y = -270
+        scrollView.contentInset.top = 270
+        navigationItem.titleView = nil
+        title = "send points".localized().uppercaseFirst
+
+        self.view.layoutIfNeeded()
+        self.buttonBottomConstraint?.constant = -30
+        UIView.animate(withDuration: 0.1) {
+            self.carouselView.alpha = 1
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    private func setupUI() {
+        view.backgroundColor = .appMainColor
+
+        configureNavigationBarTitleView()
+        configureTopView()
+
+        view.addSubview(scrollView)
+        scrollView.autoPinEdgesToSuperviewEdges()
+        keyboardWillHide()
+        // fix carusel
+        view.bringSubviewToFront(carouselView)
+        configureBottomView()
+    }
+
+    private func configureNavigationBarTitleView() {
+        navigationBarTitleView.addSubview(sellerNameLabelForNavBar)
+        navigationBarTitleView.addSubview(sellerAmountLabelForNavBar)
+
+        sellerNameLabelForNavBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        sellerAmountLabelForNavBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
+        sellerAmountLabelForNavBar.autoPinEdge(.top, to: .bottom, of: sellerNameLabelForNavBar)
+
+        sellerNameLabelForNavBar.textAlignment = .center
+        sellerAmountLabelForNavBar.textAlignment = .center
+    }
+
+    private func configureTopView() {
+        view.addSubview(topView)
+        topView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+
+        // add carouselView or commun logo
+        if dataModel.transaction.symbol.sell == Config.defaultSymbol {
+            topView.addSubview(communLogoImageView)
+            communLogoImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+            communLogoImageView.autoAlignAxis(toSuperviewAxis: .vertical)
+            communLogoImageView.autoPinEdge(.top, to: .top, of: topView, withOffset: 20)
+        } else {
+            view.addSubview(carouselView)
+            carouselView.autoAlignAxis(toSuperviewAxis: .vertical)
+            carouselView.autoPinEdge(.top, to: .top, of: topView, withOffset: 20)
+        }
+
+        topView.addSubview(sellerNameLabel)
+        sellerNameLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        sellerNameLabel.autoPinEdge(.top, to: .top, of: topView, withOffset: 90)
+
+        topView.addSubview(sellerAmountLabel)
+        sellerAmountLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        sellerAmountLabel.autoPinEdge(.top, to: .bottom, of: sellerNameLabel, withOffset: 5)
+    }
+
+    private func configureBottomView() {
+        whiteView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        scrollView.addSubview(whiteView)
+
+        // user view
+        let userView = UIView(height: 70)
+        userView.layer.cornerRadius = 10
+        userView.layer.borderWidth = 1
+        userView.layer.borderColor = UIColor.e2e6e8.cgColor
+
+        whiteView.addSubview(userView)
+        userView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 15, bottom: 0, right: 15), excludingEdge: .bottom)
+
+        let userStackView = UIStackView(axis: .horizontal, spacing: 10)
+        userStackView.alignment = .leading
+        userStackView.distribution = .fill
+
+        userStackView.addArrangedSubviews([friendAvatarImageView, friendNameLabel, chooseFriendButton])
+        friendNameLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        chooseFriendButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+
+        userView.addSubview(userStackView)
+        userStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 30, vertical: 30))
+
+        userView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chooseRecipientViewTapped)))
+        userView.isUserInteractionEnabled = true
+
+        // amount view
+        let amountView = UIView(height: 70)
+        amountView.layer.cornerRadius = 10
+        amountView.layer.borderWidth = 1
+        amountView.layer.borderColor = UIColor.e2e6e8.cgColor
+        amountBorderView = amountView
+
+        whiteView.addSubview(amountView)
+        amountView.autoPinEdge(toSuperviewEdge: .left, withInset: 15)
+        amountView.autoPinEdge(toSuperviewEdge: .right, withInset: 15)
+        amountView.autoPinEdge(.top, to: .bottom, of: userView, withOffset: 10)
+
+        let amountLabel = UILabel(text: "amount".localized().uppercaseFirst, font: UIFont.systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
+        amountView.addSubview(amountLabel)
+        amountLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 15)
+        amountLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 11)
+
+        amountView.addSubview(pointsTextField)
+
+        pointsTextField.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 33, left: 15, bottom: 11, right: 30))
+
+        amountView.addSubview(clearPointsButton)
+        clearPointsButton.autoPinTopAndTrailingToSuperView(inset: 33, xInset: 15)
+
+        whiteView.addSubview(alertLabel)
+        alertLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 15)
+        alertLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 15)
+        alertLabel.autoPinEdge(.top, to: .bottom, of: amountView, withOffset: 10)
+
+        view.addSubview(sendPointsButton)
+
+        sendPointsButton.autoPinEdge(toSuperviewEdge: .left, withInset: 15)
+        sendPointsButton.autoPinEdge(toSuperviewEdge: .right, withInset: 15)
+        buttonBottomConstraint = sendPointsButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 10)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -181,8 +353,7 @@ class WalletSendPointsVC: BaseViewController {
         
         pointsToolbar.frame.size = CGSize(width: .adaptive(width: 375.0), height: .adaptive(height: 50.0))
     }
-    
-    
+
     // MARK: - Custom Functions
     override func bind() {
         pointsTextField.delegate = self
@@ -196,90 +367,7 @@ class WalletSendPointsVC: BaseViewController {
             .disposed(by: disposeBag)
     }
 
-    func setupView() {
-        let balanceContentView = UIView(width: .adaptive(width: 375.0), height: .adaptive(height: 300.0), backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), cornerRadius: 0.0)
-        view.addSubview(balanceContentView)
-        balanceContentView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
-
-        let balanceStackView = UIStackView(axis: .vertical, spacing: .adaptive(height: 5.0))
-        balanceStackView.alignment = .fill
-        balanceStackView.distribution = .fillProportionally
-        balanceStackView.addArrangedSubviews([sellerNameLabel, sellerAmountLabel])
-        
-        balanceContentView.addSubview(balanceStackView)
-        balanceStackView.autoAlignAxis(toSuperviewAxis: .vertical)
-
-        if dataModel.transaction.symbol.sell == Config.defaultSymbol {
-            balanceContentView.addSubview(communLogoImageView)
-            communLogoImageView.autoPinEdge(toSuperviewEdge: .top, withInset: .adaptive(height: 20.0))
-            communLogoImageView.autoAlignAxis(toSuperviewAxis: .vertical)
-            balanceStackView.autoPinEdge(.top, to: .bottom, of: communLogoImageView, withOffset: .adaptive(height: 20.0))
-        } else {
-            balanceContentView.addSubview(carouselView)
-            carouselView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 64.0), vertical: .adaptive(height: 20.0)), excludingEdge: .bottom)
-
-            balanceStackView.autoPinEdge(.top, to: .bottom, of: carouselView, withOffset: .adaptive(height: 20.0))
-        }
-        
-        updateBuyerInfo()
-        updateSellerInfo()
-        dataModel.transaction.history == nil ? updateSendInfoByEnteredPoints() : updateSendInfoByHistory()
-
-        // Action view
-        whiteView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        view.addSubview(whiteView)
-        whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-                
-        let firstBorderView = UIView(width: .adaptive(width: 345.0), height: .adaptive(height: 70.0), backgroundColor: .white, cornerRadius: .adaptive(width: 10.0))
-        setup(borderedView: firstBorderView)
-        whiteView.addSubview(firstBorderView)
-        firstBorderView.autoPinTopAndLeadingToSuperView(inset: .adaptive(height: 20.0), xInset: .adaptive(width: 15.0))
-        firstBorderView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chooseRecipientViewTapped)))
-        firstBorderView.isUserInteractionEnabled = true
-
-        let recipientStackView = UIStackView(axis: .horizontal, spacing: .adaptive(width: 10.0))
-        recipientStackView.alignment = .leading
-        recipientStackView.distribution = .fill
-
-        recipientStackView.addArrangedSubviews([friendAvatarImageView, friendNameLabel, chooseFriendButton])
-        friendNameLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        chooseFriendButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-
-        firstBorderView.addSubview(recipientStackView)
-        recipientStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 30.0)))
-        
-        let secondBorderView = UIView(width: .adaptive(width: 345.0), height: .adaptive(height: 64.0), backgroundColor: .white, cornerRadius: .adaptive(width: 10.0))
-        setup(borderedView: secondBorderView)
-        whiteView.addSubview(secondBorderView)
-        secondBorderView.autoPinTopAndTrailingToSuperView(inset: .adaptive(height: 100.0), xInset: .adaptive(width: 15.0))
-        
-        let amountStackView = UIStackView(axis: .vertical, spacing: .adaptive(height: 8.0))
-        amountStackView.alignment = .fill
-        amountStackView.distribution = .fillProportionally
-        
-        let amountLabel = UILabel()
-        amountLabel.tune(withText: "amount".localized().uppercaseFirst,
-                         hexColors: grayishBluePickers,
-                         font: .systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold),
-                         alignment: .left,
-                         isMultiLines: false)
-        
-        amountStackView.addArrangedSubviews([amountLabel, pointsTextField])
-        pointsTextField.inputAccessoryView = pointsToolbar
-
-        secondBorderView.addSubview(amountStackView)
-        amountStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 22.0)))
-        
-        secondBorderView.addSubview(clearPointsButton)
-        clearPointsButton.autoPinTopAndTrailingToSuperView(inset: .adaptive(height: 20.0), xInset: .adaptive(width: 15.0))
-        
-        whiteView.addSubview(sendPointsButton)
-        sendPointsButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 20.0)), excludingEdge: .top)
-    }
-    
     private func setupNavBar() {
-        title = "send points".localized()
-
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
@@ -308,7 +396,7 @@ class WalletSendPointsVC: BaseViewController {
         var subtitle2 = ""
         
         if percent > 0 {
-            subtitle2 = String(format: "%.1f%% %@", percent, "will be burned 🔥".localized())
+            subtitle2 = String(format: "%.1f%% %@", percent, "will be burned")
             title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
         } else {
             title = NSMutableAttributedString(string: subtitle1)
@@ -325,9 +413,13 @@ class WalletSendPointsVC: BaseViewController {
                             ], range: NSRange(location: 0, length: subtitle1.count))
 
         title.addAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.0, weight: .semibold),
-                             NSAttributedString.Key.foregroundColor: UIColor(hexString: "#ffffff", transparency: 0.7)!,
+                             NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(1),
                              NSAttributedString.Key.paragraphStyle: style
                             ], range: NSRange(location: subtitle1.count + 1, length: subtitle2.count))
+
+        if percent > 0 {
+            title.append(NSAttributedString(string: " 🔥"))
+        }
 
         sendPointsButton.setAttributedTitle(title, for: .normal)
         sendPointsButton.titleLabel?.lineBreakMode = .byWordWrapping
@@ -341,7 +433,9 @@ class WalletSendPointsVC: BaseViewController {
     private func updateSellerInfo() {
         let sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell)
         sellerNameLabel.text = sellBalance.name
+        sellerNameLabelForNavBar.text = sellBalance.name
         sellerAmountLabel.text = sellBalance.amount == 0 ? "0" : Double(sellBalance.amount).currencyValueFormatted
+        sellerAmountLabelForNavBar.text = sellBalance.amount == 0 ? "0" : Double(sellBalance.amount).currencyValueFormatted
     }
     
     private func updateBuyerInfo() {
@@ -349,7 +443,7 @@ class WalletSendPointsVC: BaseViewController {
 
         if let friendName = dataModel.transaction.friend?.name {
             friendNameLabel.text = friendName
-            friendAvatarImageView.addCircleImage(byURL: dataModel.transaction.friend?.avatarURL, withPlaceholderName: friendName, andSide: .adaptive(height: 40.0))
+            friendAvatarImageView.addCircleImage(byURL: dataModel.transaction.friend?.avatarURL, withPlaceholderName: friendName, andSide: 40)
         } else {
             friendNameLabel.text = "select user".localized().uppercaseFirst
         }
@@ -384,16 +478,13 @@ class WalletSendPointsVC: BaseViewController {
 
         if !chooseFriendButton.isSelected {
             self.hintView?.display(inPosition: sendPointsButtonFrame.origin, withType: .chooseFriend, completion: {})
-        }
-        
-        else {
+        } else {
             self.hintView?.display(inPosition: sendPointsButtonFrame.origin, withType: .enterAmount, completion: {})
         }
         
         return false
     }
 
-    
     // MARK: - Actions
     @objc func pointsListButtonDidTouch() {
         let vc = BalancesVC { balance in
@@ -476,7 +567,6 @@ class WalletSendPointsVC: BaseViewController {
     }
 }
 
-
 // MARK: - UITextFieldDelegate
 extension WalletSendPointsVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -493,17 +583,24 @@ extension WalletSendPointsVC: UITextFieldDelegate {
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard !string.isEmpty else { return true }
-        guard let text = textField.text, !(text.starts(with: "0") && string == "0") else { return false }
+        guard let text = textField.text else { return false }
+        guard let swiftRange = Range(range, in: text) else { return false }
+        let updatedText = text.replacingCharacters(in: swiftRange, with: string)
         guard CharacterSet(charactersIn: "0123456789.,").isSuperset(of: CharacterSet(charactersIn: string)) else { return false }
-        
-        let updatedText = text + string
-        let countDots = (text + string).filter({$0 == "."}).count
-        let countCommas = (text + string).filter({$0 == ","}).count
-        
+
+        let countDots = updatedText.filter({$0 == "."}).count
+        let countCommas = updatedText.filter({$0 == ","}).count
+
         guard countDots + countCommas <= 1 else { return false }
         guard !updatedText.hasSuffix(".") || !updatedText.hasSuffix(",") else { return false }
-        guard CGFloat(updatedText.float() ?? 0.0) <= dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount else { return false }
+
+        if CGFloat(updatedText.float() ?? 0.0) <= dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount {
+            amountBorderView.layer.borderColor = UIColor.e2e6e8.cgColor
+            alertLabel.text = nil
+        } else {
+            amountBorderView.layer.borderColor = UIColor.appRedColor.cgColor
+            alertLabel.text = "Insufficient funds: \(dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount) \(dataModel.transaction.symbol.sell)"
+        }
         
         if updatedText.count > 1 && updatedText.starts(with: "0") && !(updatedText.contains(",") || updatedText.contains(".")) {
             textField.text = nil
@@ -514,7 +611,6 @@ extension WalletSendPointsVC: UITextFieldDelegate {
         return true
     }
 }
-
 
 // MARK: - CircularCarouselDataSource
 extension WalletSendPointsVC: CircularCarouselDataSource {
@@ -546,6 +642,9 @@ extension WalletSendPointsVC: CircularCarouselDataSource {
         } else {
             imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
         }
+
+        updateSellerInfo()
+        updateSendInfoByEnteredPoints()
         
         return view!
     }
@@ -554,7 +653,6 @@ extension WalletSendPointsVC: CircularCarouselDataSource {
         return dataModel.balances.firstIndex(where: { $0.symbol == dataModel.transaction.symbol.sell }) ?? 0
     }
 }
-
 
 // MARK: - CircularCarouselDelegate
 extension WalletSendPointsVC: CircularCarouselDelegate {
