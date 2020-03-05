@@ -89,11 +89,11 @@ class TransactionCompletedView: UIView {
     }()
     
     let homeButton: UIButton = {
-        let height: CGFloat = .adaptive(height: 50.0)
+        let height: CGFloat = 50
         let homeButtonInstance = UIButton(width: .adaptive(width: 335.0),
                                           height: height,
                                           label: "home".localized().uppercaseFirst,
-                                          labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
+                                          labelFont: .systemFont(ofSize: 15, weight: .bold),
                                           backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1),
                                           textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                           cornerRadius: height / 2)
@@ -102,27 +102,27 @@ class TransactionCompletedView: UIView {
     }()
 
     let backToWalletButton: UIButton = {
-        let height: CGFloat = .adaptive(height: 50.0)
+        let height: CGFloat = 50
         let backToWalletButtonInstance = UIButton(width: .adaptive(width: 335.0),
                                                   height: height,
                                                   label: "back to wallet".localized().uppercaseFirst,
-                                                  labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
+                                                  labelFont: .systemFont(ofSize: 15, weight: .bold),
                                                   backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                                   textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
-                                                  cornerRadius: height / 2)
+                                                  cornerRadius: 25)
         backToWalletButtonInstance.heightAnchor.constraint(equalToConstant: height).isActive = true
         return backToWalletButtonInstance
     }()
 
     let repeatButton: UIButton = {
-        let height: CGFloat = .adaptive(height: 50.0)
+        let height: CGFloat = 50
         let repeatButtonInstance = UIButton(width: .adaptive(width: 335.0),
                                             height: height,
                                             label: "repeat".localized().uppercaseFirst,
-                                            labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
+                                            labelFont: .systemFont(ofSize: 15, weight: .bold),
                                             backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                             textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
-                                            cornerRadius: height / 2)
+                                            cornerRadius: 25)
         repeatButtonInstance.heightAnchor.constraint(equalToConstant: height).isActive = true
         return repeatButtonInstance
     }()
@@ -132,7 +132,7 @@ class TransactionCompletedView: UIView {
         self.mode = mode
         self.isHistoryMode = !["buy", "sell", "send"].contains(mode.rawValue)
         
-        super.init(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 335.0), height: .adaptive(height: isHistoryMode ? 567.0 : 641.0))))
+        super.init(frame: .zero)
         setupView()
     }
     
@@ -156,16 +156,19 @@ class TransactionCompletedView: UIView {
         semiboldLabels = [transactionDateLabel, buyerBalanceOrFriendIDLabel, burnedPercentLabel]
         
         // Add content view
-        let contentView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: bounds.width, height: .adaptive(height: 497.0))))
+        let contentView = UIView(forAutoLayout: ())
         contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = .adaptive(width: 20.0)
+        contentView.layer.cornerRadius = 20
         contentView.clipsToBounds = true
         contentView.tag = 99
         
         // Add white view
         addSubview(contentView)
-        contentView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
-        contentView.heightAnchor.constraint(equalToConstant: contentView.bounds.height).isActive = true
+
+        contentView.autoPinEdge(toSuperviewEdge: .left)
+        contentView.autoPinEdge(toSuperviewEdge: .right)
+
+//        contentView.heightAnchor.constraint(equalToConstant: contentView.bounds.height).isActive = true
         
         // Add ready checkmark
         let readyCheckMarkButton = CommunButton.circle(size: .adaptive(width: 60.0),
@@ -275,6 +278,7 @@ class TransactionCompletedView: UIView {
         contentView.addSubview(blueBottomView)
         blueBottomView.heightAnchor.constraint(equalToConstant: .adaptive(height: 50.0)).isActive = true
         blueBottomView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 46.0), vertical: 0.0), excludingEdge: .top)
+        blueBottomView.autoPinEdge(.top, to: .bottom, of: debitedFromLabel, withOffset: 15)
         
         let senderStackView = UIStackView(axis: NSLayoutConstraint.Axis.horizontal, spacing: .adaptive(width: 10.0))
         senderStackView.alignment = .fill

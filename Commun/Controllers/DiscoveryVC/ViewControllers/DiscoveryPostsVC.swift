@@ -29,6 +29,7 @@ class DiscoveryPostsVC: PostsViewController {
     override func setUp() {
         super.setUp()
         view.backgroundColor = .f3f5fa
+        refreshControl.subviews.first?.bounds.origin.y = 15
     }
     
     override func setUpTableView() {

@@ -36,8 +36,13 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Methods
+    override func setUp() {
+        super.setUp()
+        refreshControl.subviews.first?.bounds.origin.y = -15
+    }
+
     override func setUpTableView() {
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.configureForAutoLayout()
