@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftTheme
 
 class PostMetaView: MyView {
     // MARK: - Enums

@@ -55,21 +55,6 @@ let controllerContainer: Container = {
         return vc
     })
     
-    container.register(KeysVC.self, factory: {_ in
-        let vc = KeysVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "KeysVC") as! KeysVC
-        return vc
-    })
-    
-    container.register(PickupAvatarVC.self, factory: { _ in
-        let vc = PickupAvatarVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "PickupAvatarVC") as! PickupAvatarVC
-        return vc
-    })
-    
-    container.register(CreateBioVC.self, factory: { _ in
-        let vc = CreateBioVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "CreateBioVC") as! CreateBioVC
-        return vc
-    })
-    
     // TabBar
     container.register(TabBarVC.self, factory: { _ in
         let vc = TabBarVC()

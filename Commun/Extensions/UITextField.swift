@@ -9,6 +9,14 @@
 import Foundation
 
 extension UITextField {
+    public func tune(withPlaceholder placeholder: String, textColor: UIColor?, font: UIFont?, alignment: NSTextAlignment) {
+        self.font = font
+        self.textColor = textColor
+        self.textAlignment = alignment
+        self.attributedPlaceholder = NSAttributedString(string: placeholder.localized().uppercaseFirst,
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.appGrayColor])
+    }
+
     static func decimalPad(
         backgroundColor: UIColor = .clear,
         placeholder: String = "0",

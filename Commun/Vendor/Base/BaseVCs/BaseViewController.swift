@@ -8,7 +8,6 @@
 
 import UIKit
 import RxSwift
-import SwiftTheme
 import SafariServices
 
 class BaseViewController: UIViewController {

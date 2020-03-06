@@ -78,7 +78,6 @@ def cyberswift_common_pods
   
   pod 'Checksum'
   pod 'Locksmith'
-  pod 'SwiftTheme'
   pod 'CryptoSwift'
   pod 'secp256k1.swift'
   pod 'Localize-Swift', '~> 2.0'

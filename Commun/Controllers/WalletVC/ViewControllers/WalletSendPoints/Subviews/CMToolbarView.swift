@@ -40,7 +40,7 @@ class CMToolbarView: UIView {
             
             actionButton.translatesAutoresizingMaskIntoConstraints = false
 
-            actionButton.tune(withTitle: "+\(title.formattedWithSeparator)", hexColors: [whiteColorPickers, lightGrayishBlueBlackColorPickers, lightGrayishBlueBlackColorPickers, lightGrayishBlueBlackColorPickers], font: UIFont.systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold), alignment: .center)
+            actionButton.tune(withTitle: "+\(title.formattedWithSeparator)", textColor: .white, font: UIFont.systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold), alignment: .center)
             
             actionButton.addTarget(self, action: #selector(selectPointTapped), for: .touchUpInside)
             actionButton.tag = index
@@ -69,7 +69,7 @@ class CMToolbarView: UIView {
         // Add label
         let addLabel = UILabel()
         addLabel.tune(withText: "add".localized().uppercaseFirst + ":",
-                      hexColors: whiteColorPickers,
+                      textColor: .white,
                       font: UIFont.systemFont(ofSize: .adaptive(width: 12.0), weight: .bold),
                       alignment: .left,
                       isMultiLines: false)

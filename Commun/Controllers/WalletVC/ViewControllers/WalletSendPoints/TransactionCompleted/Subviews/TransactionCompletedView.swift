@@ -28,7 +28,7 @@ class TransactionCompletedView: UIView {
     var boldLabels = [UILabel]() {
         didSet {
             boldLabels.forEach({ $0.tune(withText: "",
-                                         hexColors: blackWhiteColorPickers,
+                                         textColor: .black,
                                          font: UIFont.systemFont(ofSize: .adaptive(width: 17.0), weight: .bold),
                                          alignment: .center,
                                          isMultiLines: false)})
@@ -38,7 +38,7 @@ class TransactionCompletedView: UIView {
     var semiboldLabels = [UILabel]() {
         didSet {
             semiboldLabels.forEach({ $0.tune(withText: "",
-                                         hexColors: grayishBluePickers,
+                                         textColor: .appGrayColor,
                                          font: UIFont.systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold),
                                          alignment: .center,
                                          isMultiLines: false)})
@@ -51,7 +51,7 @@ class TransactionCompletedView: UIView {
     var transactionAmountLabel: UILabel = {
         let transactionAmountLabelInstance = UILabel()
         transactionAmountLabelInstance.tune(withText: "",
-                                            hexColors: blackWhiteColorPickers,
+                                            textColor: .black,
                                             font: UIFont.systemFont(ofSize: .adaptive(width: 20.0), weight: .bold),
                                             alignment: .right,
                                             isMultiLines: false)
@@ -62,7 +62,7 @@ class TransactionCompletedView: UIView {
     var transactionCurrencyLabel: UILabel = {
         let transactionCurrencyLabelInstance = UILabel()
         transactionCurrencyLabelInstance.tune(withText: "",
-                                              hexColors: grayishBluePickers,
+                                              textColor: .appGrayColor,
                                               font: UIFont.systemFont(ofSize: .adaptive(width: 20.0), weight: .regular),
                                               alignment: .left,
                                               isMultiLines: false)
@@ -80,7 +80,7 @@ class TransactionCompletedView: UIView {
     var sellerAmountLabel: UILabel = {
         let sellerAmountLabelInstance = UILabel()
         sellerAmountLabelInstance.tune(withText: "",
-                                       hexColors: whiteColorPickers,
+                                       textColor: .black,
                                        font: UIFont.systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
                                        alignment: .right,
                                        isMultiLines: false)
@@ -261,7 +261,7 @@ class TransactionCompletedView: UIView {
         // Add 'Debited from' label
         let debitedFromLabel = UILabel()
         debitedFromLabel.tune(withText: "debited from".localized().uppercaseFirst,
-                              hexColors: grayishBluePickers,
+                              textColor: .appGrayColor,
                               font: .systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold),
                               alignment: .center,
                               isMultiLines: false)
@@ -362,7 +362,7 @@ class TransactionCompletedView: UIView {
         sellerAmountLabel.text = transaction.sellBalance!.amount.formattedWithSeparator
 
         sellerNameLabel.tune(withText: transaction.sellBalance!.name,
-                             hexColors: whiteColorPickers,
+                             textColor: .black,
                              font: UIFont.systemFont(ofSize: .adaptive(width: 15.0), weight: .semibold),
                              alignment: .left,
                              isMultiLines: false)
@@ -406,7 +406,7 @@ class TransactionCompletedView: UIView {
 
     private func setColor(amount: CGFloat) {
         transactionAmountLabel.text = (amount > 0 ? "+" : "-") + String(Double(abs(amount)).currencyValueFormatted)
-        transactionAmountLabel.theme_textColor = amount > 0 ? softCyanLimeGreenColorPickers : blackWhiteColorPickers
-        transactionCurrencyLabel.theme_textColor = amount > 0 ? softCyanLimeGreenColorPickers : blackWhiteColorPickers
+        transactionAmountLabel.textColor = amount > 0 ? .appGreenColor : .black
+        transactionCurrencyLabel.textColor = amount > 0 ? .appGreenColor : .black
     }
 }
