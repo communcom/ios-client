@@ -32,26 +32,23 @@ let firstInstallAppKey = "com.commun.ios.firstInstallAppKey"
 class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Properties
     var window: UIWindow?
-    
     let notificationCenter = UNUserNotificationCenter.current()
     let notificationTappedRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
     let shareExtensionDataRelay = BehaviorRelay<ShareExtensionData?>(value: nil)
-    
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
-    
     private var bag = DisposeBag()
-
-    private func configureFirebase() {
-        #if APPSTORE
-            let fileName = "GoogleService-Info-Prod"
-        #else
-            let fileName = "GoogleService-Info-Dev"
-        #endif
-        let filePath = Bundle.main.path(forResource: fileName, ofType: "plist")
-        guard let fileopts = FirebaseOptions(contentsOfFile: filePath!)
-            else { assert(false, "Couldn't load config file"); return }
-        FirebaseApp.configure(options: fileopts)
-    }
+    
+    // MARK: - RootVCs
+    lazy var splashVC = controllerContainer.resolve(SplashViewController.self)!
+    lazy var welcomeNC: UINavigationController = {
+        let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
+        let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+        return welcomeNav
+    }()
+    lazy var boardingSetPasscodeVC = BoardingSetPasscodeVC()
+    lazy var backUpKeysVC = BackUpKeysVC()
+    lazy var boardingNC = UINavigationController()
+    lazy var tabBarVC = controllerContainer.resolve(TabBarVC.self)!
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -77,8 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.tintColor = .appMainColor
         
         // Logger
-//        Logger.showEvents = [.debug]
-//        Logger.shownApiMethods = ["registration.getState"]
+        Logger.showEvents = [.event, .request, .error]
+        Logger.shownApiMethods = ["content.getPosts", "auth.authorize"]
 
         // support webp image
         SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
@@ -116,12 +113,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch status {
         case .initializing:
             // Closing animation
-            let vc = controllerContainer.resolve(SplashViewController.self)!
-            self.window?.rootViewController = vc
+            self.window?.rootViewController = splashVC
         case .registering:
-            let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
-            let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
-            self.changeRootVC(welcomeNav)
+            self.changeRootVC(welcomeNC)
             
             let navigationBarAppearace = UINavigationBar.appearance()
             navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
@@ -131,21 +125,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let vc: UIViewController
             
             if KeychainManager.currentUser()?.registrationStep == .relogined {
-                vc = BoardingSetPasscodeVC()
+                vc = boardingSetPasscodeVC
             } else {
-                vc = BackUpKeysVC()
+                vc = backUpKeysVC
             }
             
-            let nc = UINavigationController(rootViewController: vc)
+            boardingNC.setViewControllers([vc], animated: false)
             
-            self.changeRootVC(nc)
+            self.changeRootVC(boardingNC)
         case .authorizing:
             break
         case .authorized:
             // Retrieve favourites
             FavouritesList.shared.retrieve()
-            
-            self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+            self.changeRootVC(tabBarVC)
         case .disconnected:
             break
         case .error(let error):
@@ -217,6 +210,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - Custom Functions
+    private func configureFirebase() {
+        #if APPSTORE
+            let fileName = "GoogleService-Info-Prod"
+        #else
+            let fileName = "GoogleService-Info-Dev"
+        #endif
+        let filePath = Bundle.main.path(forResource: fileName, ofType: "plist")
+        guard let fileopts = FirebaseOptions(contentsOfFile: filePath!)
+            else { assert(false, "Couldn't load config file"); return }
+        FirebaseApp.configure(options: fileopts)
+    }
+    
     private func configureNotifications() {
         // Set delegate for Messaging
         Messaging.messaging().delegate = self
