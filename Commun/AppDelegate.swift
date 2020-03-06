@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // badge
-        SocketManager.shared.unseenNotificationsRelay
+        NotificationsManager.shared.unseenNotificationsRelay
             .subscribe(onNext: { (count) in
                 UIApplication.shared.applicationIconBadgeNumber = Int(count)
             })
