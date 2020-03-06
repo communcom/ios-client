@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var boardingSetPasscodeVC = BoardingSetPasscodeVC()
     lazy var backUpKeysVC = BackUpKeysVC()
     lazy var boardingNC = UINavigationController()
-    lazy var tabBarVC = controllerContainer.resolve(TabBarVC.self)!
+    lazy var tabBarVC = TabBarVC()
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -74,8 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.tintColor = .appMainColor
         
         // Logger
-        Logger.showEvents = [.event, .request, .error]
-        Logger.shownApiMethods = ["content.getPosts", "auth.authorize"]
+//        Logger.showEvents = [.event, .request, .error, .info]
+//        Logger.shownApiMethods = ["content.getPosts", "auth.authorize"]
 
         // support webp image
         SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)

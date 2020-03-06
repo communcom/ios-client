@@ -70,12 +70,6 @@ let controllerContainer: Container = {
         return vc
     })
     
-    // TabBar
-    container.register(TabBarVC.self, factory: { _ in
-        let vc = TabBarVC()
-        return vc
-    })
-    
     // Profile scene
     container.register(ProfileEditCoverVC.self, factory: { _ in
         let vc = ProfileEditCoverVC.instanceController(fromStoryboard: "ProfilePageVC", withIdentifier: "ProfileEditCoverVC") as! ProfileEditCoverVC
