@@ -151,9 +151,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             self.changeRootVC(nc)
         case .authorized:
-            // Retrieve favourites
-            FavouritesList.shared.retrieve()
-            
             self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
         case .registering:
             let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
