@@ -57,7 +57,6 @@
 		3B62055A2346E4220017FEB7 /* PostEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6205592346E4220017FEB7 /* PostEditorVC.swift */; };
 		3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B63CD9222AA7AA200DC828B /* UIScrollView.swift */; };
 		3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */; };
-		3B6CB73023432D6F0097B2A1 /* FavouritesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6CB72F23432D6F0097B2A1 /* FavouritesList.swift */; };
 		3B6CB732234331830097B2A1 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6CB731234331830097B2A1 /* Array.swift */; };
 		3B6CB734234335130097B2A1 /* CommunActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6CB733234335130097B2A1 /* CommunActionSheet.swift */; };
 		3B77383923335829000965ED /* image-not-available.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3B77383823335829000965ED /* image-not-available.jpg */; };
@@ -587,7 +586,6 @@
 		3B6205592346E4220017FEB7 /* PostEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEditorVC.swift; sourceTree = "<group>"; };
 		3B63CD9222AA7AA200DC828B /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
-		3B6CB72F23432D6F0097B2A1 /* FavouritesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesList.swift; sourceTree = "<group>"; };
 		3B6CB731234331830097B2A1 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		3B6CB733234335130097B2A1 /* CommunActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunActionSheet.swift; sourceTree = "<group>"; };
 		3B77383823335829000965ED /* image-not-available.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "image-not-available.jpg"; path = "Commun/Assets.xcassets/image-not-available.imageset/image-not-available.jpg"; sourceTree = SOURCE_ROOT; };
@@ -1217,7 +1215,6 @@
 		3B6CB72E23432D510097B2A1 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				3B6CB72F23432D6F0097B2A1 /* FavouritesList.swift */,
 				ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */,
 			);
 			path = Managers;
@@ -3209,7 +3206,6 @@
 				BC99B65A23E17848004AA74E /* UISearchController.swift in Sources */,
 				3BAD8E832318FB1C005A8AB3 /* NSAttributedString.swift in Sources */,
 				BC18FA2723D56325005DC7E3 /* UITextField.swift in Sources */,
-				3B6CB73023432D6F0097B2A1 /* FavouritesList.swift in Sources */,
 				3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */,
 				BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */,
 				BC3AAF1923E0223F005E8DAB /* CurrenciesViewModel.swift in Sources */,
