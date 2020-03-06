@@ -34,7 +34,7 @@ class WalletConvertVC: BaseViewController {
     var historyItem: ResponseAPIWalletGetTransferHistoryItem?
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(axis: .horizontal)
+    lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     lazy var balanceNameLabel = UILabel.with(textSize: 17, weight: .semibold, textColor: .white)
     lazy var valueLabel = UILabel.with(textSize: 30, weight: .semibold, textColor: .white)
     lazy var whiteView = UIView(backgroundColor: .white)
