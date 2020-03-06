@@ -90,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
         // handle connected
-        AuthorizationManager.shared.status
+        AuthManager.shared.status
             .distinctUntilChanged()
             .subscribe(onNext: { (status) in
                 self.navigateWithAuthorizationStatus(status)
@@ -112,12 +112,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func navigateWithAuthorizationStatus(_ status: AuthorizationManager.Status) {
+    func navigateWithAuthorizationStatus(_ status: AuthManager.Status) {
         switch status {
-        case .authorizing:
+        case .initializing:
             // Closing animation
             let vc = controllerContainer.resolve(SplashViewController.self)!
             self.window?.rootViewController = vc
+        case .registering:
+            let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
+            let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+            self.changeRootVC(welcomeNav)
+            
+            let navigationBarAppearace = UINavigationBar.appearance()
+            navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+            navigationBarAppearace.largeTitleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
+                                                                NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold", size: .adaptive(width: 30.0))! ]
         case .boarding:
             let vc: UIViewController
             
@@ -130,25 +139,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let nc = UINavigationController(rootViewController: vc)
             
             self.changeRootVC(nc)
+        case .authorizing:
+            break
         case .authorized:
             // Retrieve favourites
             FavouritesList.shared.retrieve()
             
             self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
-        case .registering:
-            let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
-            let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
-            self.changeRootVC(welcomeNav)
-            
-            let navigationBarAppearace = UINavigationBar.appearance()
-            navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-            navigationBarAppearace.largeTitleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
-                                                                NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold", size: .adaptive(width: 30.0))! ]
-            
-        case .authorizingError(let error):
+        case .disconnected:
+            break
+        case .error(let error):
             switch error {
             case .userNotFound:
-                AuthorizationManager.shared.status.accept(.authorizing)
+                AuthManager.shared.status.accept(.initializing)
                 try! RestAPIManager.instance.logout()
                 return
             default:
@@ -199,18 +202,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         AnalyticsManger.shared.backgroundApp()
-        SocketManager.shared.disconnect()
+        AuthManager.shared.disconnect()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         showConnectingHud()
         AnalyticsManger.shared.foregroundApp()
-        SocketManager.shared.connect()
+        AuthManager.shared.connect()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
-        SocketManager.shared.disconnect()
+        AuthManager.shared.disconnect()
         self.saveContext()
     }
     

@@ -57,6 +57,6 @@ extension BoardingRouter where Self: UIViewController {
         try? KeychainManager.save([
             Config.settingStepKey: CurrentUserSettingStep.completed.rawValue
         ])
-        AuthorizationManager.shared.forceReAuthorize()
+        AuthManager.shared.reload()
     }
 }
