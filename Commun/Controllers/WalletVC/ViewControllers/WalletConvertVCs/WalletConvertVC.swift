@@ -178,6 +178,7 @@ class WalletConvertVC: BaseViewController {
     
     override func bind() {
         super.bind()
+        
         viewModel.state
             .subscribe(onNext: { (state) in
                 switch state {
@@ -233,12 +234,14 @@ class WalletConvertVC: BaseViewController {
                     
                     self?.convertButton.isDisabled = true
 //                    self?.convertButton.isEnabled = false
+                
                 case .finished:
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
                     
                     self?.convertButton.isDisabled = !(self?.shouldEnableConvertButton() ?? false)
 //                    self?.convertButton.isEnabled = self?.shouldEnableConvertButton() ?? false
+                
                 case .error:
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
@@ -252,11 +255,15 @@ class WalletConvertVC: BaseViewController {
         // errorLabel
         viewModel.errorSubject
             .subscribe(onNext: {[weak self] (error) in
+                guard self?.historyItem == nil else { return }
+                
                 switch error {
                 case .other(let error):
                     self?.errorLabel.text = "Error: " + error.localizedDescription
+                
                 case .insufficientFunds:
                     self?.errorLabel.text = "Error: Insufficient funds"
+                
                 default:
                     self?.errorLabel.text = nil
                 }
@@ -284,6 +291,7 @@ class WalletConvertVC: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.isTranslucent = true
         showNavigationBar(false, animated: true, completion: nil)
@@ -291,7 +299,7 @@ class WalletConvertVC: BaseViewController {
         
         setTabBarHidden(true)
     }
-    
+        
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         setTabBarHidden(false)
@@ -367,6 +375,7 @@ class WalletConvertVC: BaseViewController {
             view.borderWidth = 1
             return view
         }()
+        
         secondView.addSubview(convertBuyLabel)
         convertBuyLabel.autoPinTopAndLeadingToSuperView(inset: 10, xInset: 16)
         
@@ -385,7 +394,6 @@ class WalletConvertVC: BaseViewController {
     }
     
     func layoutBottom() {
-        
         // convertButton
         convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
         
@@ -513,8 +521,10 @@ class WalletConvertVC: BaseViewController {
 
 extension WalletConvertVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        historyItem = nil
+        
         // if deleting
-        if string.isEmpty {return true}
+        if string.isEmpty { return true }
         
         // get the current text, or use an empty string if that failed
         let currentText = textField.text ?? ""

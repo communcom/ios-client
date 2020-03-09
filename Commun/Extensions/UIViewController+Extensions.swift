@@ -181,6 +181,7 @@ extension UIViewController {
             if let id = item.user?.userId {
                 showProfileWithUserId(id)
             }
+        
         case "upvote", "reply", "mention":
             switch item.entityType {
             case "post":
@@ -191,6 +192,7 @@ extension UIViewController {
                     let postVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
                     show(postVC, sender: self)
                 }
+            
             case "comment":
                 if let userId = item.comment?.parents?.post?.userId,
                     let permlink = item.comment?.parents?.post?.permlink,
@@ -199,9 +201,11 @@ extension UIViewController {
                     let postVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
                     show(postVC, sender: self)
                 }
+           
             default:
                 break
             }
+        
         case "transfer":
             if item.from?.username == nil {
                 if let id = item.community?.communityId {
@@ -219,8 +223,9 @@ extension UIViewController {
             
         case "reward":
             if let id = item.community?.communityId {
-                showOtherBalanceWalletVC(symbol: id)
+                showOtherBalanceWalletVC(symbol: id, shouldResetNavigationBarOnPush: true)
             }
+        
         default:
             break
         }

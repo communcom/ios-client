@@ -12,6 +12,8 @@ import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
     // MARK: - Properties
+    var headerViewOffsetY: CGFloat = 0.0
+    
     var balancesVM: BalancesViewModel {
         (viewModel as! WalletViewModel).balancesVM
     }
@@ -71,30 +73,31 @@ class CommunWalletVC: TransferHistoryVC {
         return view
     }
 
+    
     // MARK: - Initializers
     convenience init() {
         self.init(viewModel: WalletViewModel(symbol: "CMN"))
     }
 
+    
+    // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.showNavigationBar(false, animated: true, completion: nil)
+        self.changeNavbar(y: headerViewOffsetY)
         self.setNavBarBackButton(tintColor: .white)
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.shadowImage?.clear()
-
+        
         self.setTabBarHidden(false)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.backgroundColor = .clear
-        UIApplication.shared.statusBarView?.backgroundColor = .clear
     }
 
+    
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
@@ -199,19 +202,17 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     private func changeNavbar(y: CGFloat) {
-        if 2...3 ~= y {
+        headerViewOffsetY = y
+        
+        if y >= 2 {
             UIView.animate(withDuration: 0.2, animations: {
-                self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
-                self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
-                self.navigationController?.navigationBar.barStyle = .default
-                UIApplication.shared.statusBarView?.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+                self.navigationController?.navigationBar.backgroundColor = .appMainColor
+                self.navigationController?.navigationBar.subviews.first?.backgroundColor = .appMainColor
             })
-        }
-
-        if 0..<2 ~= y {
+        } else {
             UIView.animate(withDuration: 0.2, animations: {
                 self.navigationController?.navigationBar.backgroundColor = .clear
-                UIApplication.shared.statusBarView?.backgroundColor = .clear
+                self.navigationController?.navigationBar.subviews.first?.backgroundColor = .clear
             })
         }
     }

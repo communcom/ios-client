@@ -34,6 +34,7 @@ class MyProfilePageVC: UserProfilePageVC {
         fatalError("init(coder:) has not been implemented")
     }
 
+        
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
@@ -76,7 +77,6 @@ class MyProfilePageVC: UserProfilePageVC {
             .subscribe(onNext: { showNavBar in
                 self.optionsButton.tintColor = !showNavBar ? .black : .white
                 self.title = !showNavBar ? self.username : nil
-//                self.navigationController?.navigationBar.isTranslucent = showNavBar
             })
             .disposed(by: disposeBag)
     }

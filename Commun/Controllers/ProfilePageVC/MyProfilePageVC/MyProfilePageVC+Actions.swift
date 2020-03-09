@@ -21,15 +21,18 @@ extension MyProfilePageVC {
     
     @objc func walletDidTouch() {
         let state = (viewModel as! MyProfilePageViewModel).balancesVM.state.value
+       
         switch state {
         case .error:
             (viewModel as! MyProfilePageViewModel).balancesVM.reload()
+      
         case .listEnded, .loading(false):
             let walletVC = CommunWalletVC()
             let nc = navigationController as? BaseNavigationController
             nc?.shouldResetNavigationBarOnPush = false
             show(walletVC, sender: nil)
             nc?.shouldResetNavigationBarOnPush = true
+        
         default:
             break
         }
@@ -82,6 +85,7 @@ extension MyProfilePageVC {
         
         // If updating
         let pickerVC = SinglePhotoPickerVC()
+       
         pickerVC.completion = { image in
             let coverEditVC = controllerContainer.resolve(ProfileEditCoverVC.self)!
             
@@ -211,9 +215,11 @@ extension MyProfilePageVC {
         }
         
         let editBioVC = MyProfileEditBioVC()
+       
         if !new {
             editBioVC.bio = headerView.descriptionLabel.text
         }
+       
         self.present(editBioVC, animated: true, completion: nil)
         
         editBioVC.didConfirm

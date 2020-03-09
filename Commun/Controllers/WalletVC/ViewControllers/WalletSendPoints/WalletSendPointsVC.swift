@@ -332,11 +332,6 @@ class WalletSendPointsVC: BaseViewController {
         setupNavBar()
         setNeedsStatusBarAppearanceUpdate()
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    
-    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -370,10 +365,6 @@ class WalletSendPointsVC: BaseViewController {
     private func setupNavBar() {
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.shadowImage?.clear()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
         if self.dataModel.transaction.symbol != Symbol(sell: "CMN", buy: "CMN") {
@@ -449,16 +440,20 @@ class WalletSendPointsVC: BaseViewController {
         }
     }
 
-    private func updateSendInfoByHistory() {
-        let amount = CGFloat(dataModel.transaction.history!.quantityValue)
-        let accuracy = amount >= 1_000.0 ? 2 : 4
+    func updateSendInfoByHistory() {
+         guard let history = dataModel.transaction.history else { return }
+         
+         let amount = CGFloat(history.quantityValue)
+         let accuracy = amount >= 1_000.0 ? 2 : 4
 
-        setSendButton(amount: amount, percent: 0.1)
-        pointsTextField.text = String(format: "%.*f", accuracy, amount)
+         setSendButton(amount: amount, percent: 0.1)
+         pointsTextField.text = String(format: "%.*f", accuracy, amount)
 
-        sendPointsButton.isDisabled = dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected
-    }
-    
+         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+             self.sendPointsButton.isDisabled = self.dataModel.checkHistoryAmounts() && self.chooseFriendButton.isSelected
+         }
+     }
+
     private func updateSendInfoByEnteredPoints() {
         guard let text = pointsTextField.text else { return }
         

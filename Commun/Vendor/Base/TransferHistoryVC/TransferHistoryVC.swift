@@ -153,11 +153,13 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                         
                         if let communWalletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {
                             strongSelf.navigationController?.popToViewController(communWalletVC, animated: false)
+                            (strongSelf.navigationController as? BaseNavigationController)?.shouldResetNavigationBarOnPush = false
 
                             switch selectedItem.meta.actionType {
                             case "transfer":
                                 communWalletVC.show(walletSendPointsVC, sender: nil)
-
+                                walletSendPointsVC.updateSendInfoByHistory()
+                                
                             case "convert":
                                 communWalletVC.routeToConvertScene(withTransacion: transaction)
                                 
@@ -167,8 +169,6 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
 
                             strongSelf.hideHud()
                             communWalletVC.appLiked()
-
-//                            strongSelf.setTabBarHidden(true)
                          }
                     }
                 }
