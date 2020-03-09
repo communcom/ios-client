@@ -34,7 +34,7 @@ class WalletConvertVC: BaseViewController {
     var historyItem: ResponseAPIWalletGetTransferHistoryItem?
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(axis: .horizontal)
+    lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     lazy var balanceNameLabel = UILabel.with(textSize: 17, weight: .semibold, textColor: .white)
     lazy var valueLabel = UILabel.with(textSize: 30, weight: .semibold, textColor: .white)
     lazy var whiteView = UIView(backgroundColor: .white)
@@ -72,9 +72,8 @@ class WalletConvertVC: BaseViewController {
     lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .red, textAlignment: .center)
     lazy var rateLabel = UILabel.with(text: "Rate: ", textSize: 12, weight: .medium, textAlignment: .center)
     
-    lazy var convertButton = CommunButton.default(height: .adaptive(height: 50.0), label: "convert".localized().uppercaseFirst, isHuggingContent: false, isDisabled: true)
-    
-    
+    lazy var convertButton = CommunButton.default(height: 50, label: "convert".localized().uppercaseFirst, isHuggingContent: false, isDisabled: true)
+
     // MARK: - Initializers
     init(balances: [ResponseAPIWalletGetBalance], symbol: String? = nil, historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) {
         currentSymbol = symbol == Config.defaultSymbol ? nil : symbol
@@ -90,8 +89,7 @@ class WalletConvertVC: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
+
     // MARK: - Methods
     override func setUp() {
         super.setUp()

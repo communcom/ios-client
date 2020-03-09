@@ -52,7 +52,7 @@ class WalletSendPointsVC: BaseViewController {
     var sellerNameLabel: UILabel = {
         let balanceNameLabelInstance = UILabel()
         balanceNameLabelInstance.tune(withText: "",
-                                      hexColors: whiteColorPickers,
+                                      textColor: .white,
                                       font: UIFont.systemFont(ofSize: .adaptive(width: 17.0), weight: .semibold),
                                       alignment: .center,
                                       isMultiLines: false)
@@ -63,7 +63,7 @@ class WalletSendPointsVC: BaseViewController {
     var sellerAmountLabel: UILabel = {
         let balanceCurrencyLabelInstance = UILabel()
         balanceCurrencyLabelInstance.tune(withText: "",
-                                          hexColors: whiteColorPickers,
+                                          textColor: .white,
                                           font: UIFont.systemFont(ofSize: .adaptive(width: 30.0), weight: .bold),
                                           alignment: .center,
                                           isMultiLines: false)
@@ -101,7 +101,7 @@ class WalletSendPointsVC: BaseViewController {
     let pointsTextField: UITextField = {
         let pointsTextFieldInstance = UITextField()
         pointsTextFieldInstance.tune(withPlaceholder: String(format: "0 %@", "points".localized().uppercaseFirst),
-                                     textColors: blackWhiteColorPickers,
+                                     textColor: .black,
                                      font: .systemFont(ofSize: 17, weight: .semibold),
                                      alignment: .left)
         

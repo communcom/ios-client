@@ -9,10 +9,16 @@
 import Foundation
 
 extension UITextView {
-    var selectedAString: NSAttributedString {
-        return attributedText.attributedSubstring(from: selectedRange)
+    public func tune(with textColor: UIColor?, font: UIFont?, alignment: NSTextAlignment) {
+        self.font = font
+        self.textColor = textColor
+        self.textAlignment = alignment
     }
-    
+
+    var selectedAString: NSAttributedString {
+        attributedText.attributedSubstring(from: selectedRange)
+    }
+
     func addAttachment(_ attachment: NSTextAttachment) {
         let attachmentAS = NSAttributedString(attachment: attachment)
         let currentMAS = NSMutableAttributedString(attributedString: attributedText)
@@ -20,23 +26,23 @@ extension UITextView {
         currentMAS.addAttributes(typingAttributes, range: NSRange(location: 0, length: currentMAS.length))
         attributedText = currentMAS
     }
-    
+
     func rangeOfText(_ text: String) -> UITextRange? {
         let range = attributedText.nsRangeOfText(text)
-        
+
         guard let start = position(from: beginningOfDocument, offset: range.location),
             let end = position(from: start, offset: range.length) else { return nil }
-        
+
         return textRange(from: start, to: end)
     }
-    
+
     func removeText(_ text: String) {
         guard let tRange = rangeOfText(text) else {return}
         textStorage.beginEditing()
         replace(tRange, withText: "")
         textStorage.endEditing()
     }
-    
+
     var currentCursorLocation: Int? {
         if let selectedRange = self.selectedTextRange {
             let cursorPosition = offset(from: beginningOfDocument, to: selectedRange.start)
@@ -44,21 +50,21 @@ extension UITextView {
         }
         return nil
     }
-    
+
     // MARK: - Hashtags
     func resolveHashTags() {
         if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive) {
             addAppLink(regex: regex, prefix: "\(URL.appURL)/")
         }
     }
-    
+
     // MARK: - Mentions
     func resolveMentions() {
         if let regex = try? NSRegularExpression(pattern: NSRegularExpression.mentionRegexPattern, options: .caseInsensitive) {
             addAppLink(regex: regex, prefix: "\(URL.appURL)/")
         }
     }
-    
+
     // MARK: - Link detector
     func resolveLinks() {
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
@@ -70,7 +76,7 @@ extension UITextView {
             textStorage.addAttributes([.link: url], range: match.range)
         }
     }
-    
+
     private func addAppLink(regex: NSRegularExpression, prefix: String? = nil) {
         let currentSelected = selectedRange
         let matches = regex.matchedStrings(in: text)

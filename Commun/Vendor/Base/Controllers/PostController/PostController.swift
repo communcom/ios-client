@@ -203,38 +203,6 @@ extension PostController {
             .disposed(by: disposeBag)
     }
     
-    func addPostToFavourite() {
-        let favourites = FavouritesList.shared.list
-        guard let post = post,
-            !favourites.contains(post.contentId.permlink),
-            let topController = UIApplication.topViewController()
-        else {
-            return
-        }
-        
-        FavouritesList.shared.add(permlink: post.contentId.permlink)
-            .subscribe(onCompleted: {
-                topController.showDone("added to favourite".localized().uppercaseFirst)
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func removeFromFavourite() {
-        let favourites = FavouritesList.shared.list
-        guard let post = post,
-            favourites.contains(post.contentId.permlink),
-            let topController = UIApplication.topViewController()
-        else {
-            return
-        }
-        
-        FavouritesList.shared.remove(permlink: post.contentId.permlink)
-            .subscribe(onCompleted: {
-                topController.showDone("removed from favourite".localized().uppercaseFirst)
-            })
-            .disposed(by: disposeBag)
-    }
-    
     // MARK: - Commented
     func postDidComment() {
         guard post != nil else {return}

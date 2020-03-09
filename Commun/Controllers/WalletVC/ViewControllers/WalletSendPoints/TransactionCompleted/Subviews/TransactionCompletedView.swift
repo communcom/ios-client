@@ -28,7 +28,7 @@ class TransactionCompletedView: UIView {
     var boldLabels = [UILabel]() {
         didSet {
             boldLabels.forEach({ $0.tune(withText: "",
-                                         hexColors: blackWhiteColorPickers,
+                                         textColor: .black,
                                          font: UIFont.systemFont(ofSize: .adaptive(width: 17.0), weight: .bold),
                                          alignment: .center,
                                          isMultiLines: false)})
@@ -38,7 +38,7 @@ class TransactionCompletedView: UIView {
     var semiboldLabels = [UILabel]() {
         didSet {
             semiboldLabels.forEach({ $0.tune(withText: "",
-                                         hexColors: grayishBluePickers,
+                                         textColor: .appGrayColor,
                                          font: UIFont.systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold),
                                          alignment: .center,
                                          isMultiLines: false)})
@@ -51,7 +51,7 @@ class TransactionCompletedView: UIView {
     var transactionAmountLabel: UILabel = {
         let transactionAmountLabelInstance = UILabel()
         transactionAmountLabelInstance.tune(withText: "",
-                                            hexColors: blackWhiteColorPickers,
+                                            textColor: .black,
                                             font: UIFont.systemFont(ofSize: .adaptive(width: 20.0), weight: .bold),
                                             alignment: .right,
                                             isMultiLines: false)
@@ -62,7 +62,7 @@ class TransactionCompletedView: UIView {
     var transactionCurrencyLabel: UILabel = {
         let transactionCurrencyLabelInstance = UILabel()
         transactionCurrencyLabelInstance.tune(withText: "",
-                                              hexColors: grayishBluePickers,
+                                              textColor: .appGrayColor,
                                               font: UIFont.systemFont(ofSize: .adaptive(width: 20.0), weight: .regular),
                                               alignment: .left,
                                               isMultiLines: false)
@@ -80,7 +80,7 @@ class TransactionCompletedView: UIView {
     var sellerAmountLabel: UILabel = {
         let sellerAmountLabelInstance = UILabel()
         sellerAmountLabelInstance.tune(withText: "",
-                                       hexColors: whiteColorPickers,
+                                       textColor: .black,
                                        font: UIFont.systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
                                        alignment: .right,
                                        isMultiLines: false)
@@ -89,11 +89,11 @@ class TransactionCompletedView: UIView {
     }()
     
     let homeButton: UIButton = {
-        let height: CGFloat = .adaptive(height: 50.0)
+        let height: CGFloat = 50
         let homeButtonInstance = UIButton(width: .adaptive(width: 335.0),
                                           height: height,
                                           label: "home".localized().uppercaseFirst,
-                                          labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
+                                          labelFont: .systemFont(ofSize: 15, weight: .bold),
                                           backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1),
                                           textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                           cornerRadius: height / 2)
@@ -102,27 +102,27 @@ class TransactionCompletedView: UIView {
     }()
 
     let backToWalletButton: UIButton = {
-        let height: CGFloat = .adaptive(height: 50.0)
+        let height: CGFloat = 50
         let backToWalletButtonInstance = UIButton(width: .adaptive(width: 335.0),
                                                   height: height,
                                                   label: "back to wallet".localized().uppercaseFirst,
-                                                  labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
+                                                  labelFont: .systemFont(ofSize: 15, weight: .bold),
                                                   backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                                   textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
-                                                  cornerRadius: height / 2)
+                                                  cornerRadius: 25)
         backToWalletButtonInstance.heightAnchor.constraint(equalToConstant: height).isActive = true
         return backToWalletButtonInstance
     }()
 
     let repeatButton: UIButton = {
-        let height: CGFloat = .adaptive(height: 50.0)
+        let height: CGFloat = 50
         let repeatButtonInstance = UIButton(width: .adaptive(width: 335.0),
                                             height: height,
                                             label: "repeat".localized().uppercaseFirst,
-                                            labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
+                                            labelFont: .systemFont(ofSize: 15, weight: .bold),
                                             backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                             textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
-                                            cornerRadius: height / 2)
+                                            cornerRadius: 25)
         repeatButtonInstance.heightAnchor.constraint(equalToConstant: height).isActive = true
         return repeatButtonInstance
     }()
@@ -132,7 +132,7 @@ class TransactionCompletedView: UIView {
         self.mode = mode
         self.isHistoryMode = !["buy", "sell", "send"].contains(mode.rawValue)
         
-        super.init(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 335.0), height: .adaptive(height: isHistoryMode ? 567.0 : 641.0))))
+        super.init(frame: .zero)
         setupView()
     }
     
@@ -156,16 +156,19 @@ class TransactionCompletedView: UIView {
         semiboldLabels = [transactionDateLabel, buyerBalanceOrFriendIDLabel, burnedPercentLabel]
         
         // Add content view
-        let contentView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: bounds.width, height: .adaptive(height: 497.0))))
+        let contentView = UIView(forAutoLayout: ())
         contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = .adaptive(width: 20.0)
+        contentView.layer.cornerRadius = 20
         contentView.clipsToBounds = true
         contentView.tag = 99
         
         // Add white view
         addSubview(contentView)
-        contentView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
-        contentView.heightAnchor.constraint(equalToConstant: contentView.bounds.height).isActive = true
+
+        contentView.autoPinEdge(toSuperviewEdge: .left)
+        contentView.autoPinEdge(toSuperviewEdge: .right)
+
+//        contentView.heightAnchor.constraint(equalToConstant: contentView.bounds.height).isActive = true
         
         // Add ready checkmark
         let readyCheckMarkButton = CommunButton.circle(size: .adaptive(width: 60.0),
@@ -258,7 +261,7 @@ class TransactionCompletedView: UIView {
         // Add 'Debited from' label
         let debitedFromLabel = UILabel()
         debitedFromLabel.tune(withText: "debited from".localized().uppercaseFirst,
-                              hexColors: grayishBluePickers,
+                              textColor: .appGrayColor,
                               font: .systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold),
                               alignment: .center,
                               isMultiLines: false)
@@ -275,6 +278,7 @@ class TransactionCompletedView: UIView {
         contentView.addSubview(blueBottomView)
         blueBottomView.heightAnchor.constraint(equalToConstant: .adaptive(height: 50.0)).isActive = true
         blueBottomView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 46.0), vertical: 0.0), excludingEdge: .top)
+        blueBottomView.autoPinEdge(.top, to: .bottom, of: debitedFromLabel, withOffset: 15)
         
         let senderStackView = UIStackView(axis: NSLayoutConstraint.Axis.horizontal, spacing: .adaptive(width: 10.0))
         senderStackView.alignment = .fill
@@ -358,7 +362,7 @@ class TransactionCompletedView: UIView {
         sellerAmountLabel.text = transaction.sellBalance!.amount.formattedWithSeparator
 
         sellerNameLabel.tune(withText: transaction.sellBalance!.name,
-                             hexColors: whiteColorPickers,
+                             textColor: .black,
                              font: UIFont.systemFont(ofSize: .adaptive(width: 15.0), weight: .semibold),
                              alignment: .left,
                              isMultiLines: false)
@@ -402,7 +406,7 @@ class TransactionCompletedView: UIView {
 
     private func setColor(amount: CGFloat) {
         transactionAmountLabel.text = (amount > 0 ? "+" : "-") + String(Double(abs(amount)).currencyValueFormatted)
-        transactionAmountLabel.theme_textColor = amount > 0 ? softCyanLimeGreenColorPickers : blackWhiteColorPickers
-        transactionCurrencyLabel.theme_textColor = amount > 0 ? softCyanLimeGreenColorPickers : blackWhiteColorPickers
+        transactionAmountLabel.textColor = amount > 0 ? .appGreenColor : .black
+        transactionCurrencyLabel.textColor = amount > 0 ? .appGreenColor : .black
     }
 }

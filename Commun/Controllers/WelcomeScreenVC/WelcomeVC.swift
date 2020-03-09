@@ -9,7 +9,6 @@
 import UIKit
 import RxSwift
 import CyberSwift
-import SwiftTheme
 
 class WelcomeVC: UIViewController {
     // MARK: - Properties
@@ -39,7 +38,7 @@ class WelcomeVC: UIViewController {
 
     @IBOutlet weak var topSignInButton: BlankButton! {
         didSet {
-            self.topSignInButton.commonInit(hexColors: [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
+            self.topSignInButton.commonInit(textColor: .black,
                                             font: UIFont.systemFont(ofSize: 15.0, weight: .medium),
                                             alignment: .right)
         }

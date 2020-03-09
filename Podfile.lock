@@ -152,7 +152,6 @@ PODS:
   - SwifterSwift/SwiftStdlib (5.1.0)
   - SwifterSwift/UIKit (5.1.0)
   - SwiftLint (0.38.0)
-  - SwiftTheme (0.5.0)
   - SwiftyGif (5.2.0)
   - SwiftyJSON (4.3.0)
   - Swinject (2.7.1)
@@ -202,7 +201,6 @@ DEPENDENCIES:
   - SwifterSwift/SwiftStdlib (from `https://github.com/communcom/SwifterSwift.git`)
   - SwifterSwift/UIKit (from `https://github.com/communcom/SwifterSwift.git`)
   - SwiftLint
-  - SwiftTheme
   - SwiftyGif (from `https://github.com/communcom/SwiftyGif.git`)
   - SwiftyJSON (~> 4.0)
   - Swinject
@@ -261,7 +259,6 @@ SPEC REPOS:
     - SipHash
     - Starscream
     - SwiftLint
-    - SwiftTheme
     - SwiftyJSON
     - Swinject
     - TLPhotoPicker
@@ -362,7 +359,6 @@ SPEC CHECKSUMS:
   SubviewAttachingTextView: 1f6a12782b5d53241f8a05424dfe81fae6c33602
   SwifterSwift: 1952ee4cc0dc9d01252d422d976ad9280b6e695a
   SwiftLint: 4105f061f9812b214568b736dab580ab2c73a582
-  SwiftTheme: 45a12fe3d600546b99e8e4a52cec9b57eb5b1aec
   SwiftyGif: b85c6b33a9411859d9e1db998b6a8214aea942df
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
@@ -370,6 +366,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 2919984ea57d48337d487a2e8ed658d4229b3ae0
+PODFILE CHECKSUM: 79c81dc0bf4829270297c1a39d50e0ee11f64208
 
 COCOAPODS: 1.9.0

@@ -29,7 +29,12 @@ class DiscoveryUsersVC: SubscriptionsVC {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    override func setUp() {
+        super.setUp()
+        refreshControl.subviews.first?.bounds.origin.y = 15
+    }
+
     override func bindItems() {
         let viewModel = self.viewModel as! SubscriptionsViewModel
         Observable.merge(

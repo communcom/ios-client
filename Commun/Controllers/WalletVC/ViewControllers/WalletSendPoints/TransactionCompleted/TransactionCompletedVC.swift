@@ -68,7 +68,7 @@ class TransactionCompletedVC: BaseViewController {
 
     // MARK: - Custom Functions
     private func setupNavBar() {
-        title = "send points".localized()
+        title = "send points".localized().uppercaseFirst
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
@@ -91,7 +91,6 @@ class TransactionCompletedVC: BaseViewController {
         
         view.addSubview(transactionCompletedView)
         transactionCompletedView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 40.0), vertical: .adaptive(height: 20.0)), excludingEdge: .top)
-        transactionCompletedView.heightAnchor.constraint(equalToConstant: transactionCompletedView.bounds.height).isActive = true
         
         // Actions
         self.transactionCompletedView.actions { [weak self] actionType in
