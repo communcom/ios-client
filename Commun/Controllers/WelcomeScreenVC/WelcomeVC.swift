@@ -131,5 +131,5 @@ class WelcomeVC: UIViewController {
         self.welcomePageVC.currentPage = indexNext
         self.welcomePageVC.showActionButtons(indexNext)
         self.pageControl.selectedIndex = indexNext
-    }    
+    }
 }

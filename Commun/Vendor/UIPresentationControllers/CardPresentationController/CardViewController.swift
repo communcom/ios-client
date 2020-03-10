@@ -26,6 +26,7 @@ class CardViewController: BaseViewController {
     
     override func setUp() {
         super.setUp()
+       
         contentView.configureForAutoLayout()
         
         view.addSubview(contentView)

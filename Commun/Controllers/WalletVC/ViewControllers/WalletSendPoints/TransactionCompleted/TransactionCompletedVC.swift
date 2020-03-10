@@ -111,6 +111,7 @@ class TransactionCompletedVC: BaseViewController {
                     tabBarVC.setTabBarHiden(false)
                     tabBarVC.switchTab(index: 0)
                     strongSelf.navigationController?.popToRootViewController(animated: false)
+                    tabBarVC.appLiked()
                 }
             }
         }
@@ -120,6 +121,7 @@ class TransactionCompletedVC: BaseViewController {
         if let walletVC = navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {
             navigationController?.popToViewController(walletVC, animated: true)
             walletVC.viewModel.reload()
+            walletVC.appLiked()
         }
     }
     

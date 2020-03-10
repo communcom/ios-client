@@ -150,6 +150,7 @@ extension UIImageView {
     
     func addTapToViewer() {
         self.isUserInteractionEnabled = true
+       
         setupImageViewer(options: [
             .theme(ImageViewerTheme.dark),
             .closeIcon(UIImage(named: "close-x")!),

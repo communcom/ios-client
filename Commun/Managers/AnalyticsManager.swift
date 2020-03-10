@@ -30,7 +30,7 @@ class AnalyticsManger {
         sendEvent(name: "Show Rate App")
     }
 
-    func rate(isLike: String) {
+    func rate(isLike: Bool) {
         sendEvent(name: "Rate App", props: ["Is Like": isLike])
     }
 
