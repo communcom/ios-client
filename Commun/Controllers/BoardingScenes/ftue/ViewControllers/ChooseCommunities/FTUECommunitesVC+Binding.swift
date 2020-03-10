@@ -124,8 +124,10 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .subscribe(onNext: { (isLoading) in
                 if isLoading {
                     self.nextButton.showLoading(cover: false, spinnerColor: UIColor.white.withAlphaComponent(0.7), size: 30, spinerLineWidth: 3)
+                    self.nextButton.setImage(nil, for: .normal)
                 } else {
                     self.nextButton.hideLoading()
+                    self.nextButton.setImage(UIImage(named: self.nextButtonImageName), for: .normal)
                 }
             })
             .disposed(by: disposeBag)
