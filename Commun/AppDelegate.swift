@@ -47,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     var boardingSetPasscodeVC: BoardingSetPasscodeVC { BoardingSetPasscodeVC() }
     var backUpKeysVC: BackUpKeysVC { BackUpKeysVC() }
-    lazy var boardingNC = UINavigationController()
     lazy var tabBarVC = TabBarVC()
 
     // MARK: - Class Functions
@@ -124,8 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else {
                 vc = backUpKeysVC
             }
-            boardingNC.setViewControllers([vc], animated: false)
-            
+            let boardingNC = UINavigationController(rootViewController: vc)
             self.changeRootVC(boardingNC)
         case .authorizing:
             break
@@ -136,8 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .error(let error):
             switch error {
             case .userNotFound:
-                AuthManager.shared.status.accept(.initializing)
-                try! RestAPIManager.instance.logout()
+                AuthManager.shared.logout()
                 return
             default:
                 break
