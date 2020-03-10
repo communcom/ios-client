@@ -23,7 +23,7 @@ class CMFeedbackViewController: UIViewController {
     lazy var textView: UITextView = {
         let textViewInstance = UITextView()
         textViewInstance.placeholder = "text view feedback placeholder".localized().uppercaseFirst
-        textViewInstance.tune(withTextColors: blackWhiteColorPickers, font: .systemFont(ofSize: .adaptive(width: 17.0), weight: .regular), alignment: .left)
+        textViewInstance.tune(with: .black, font: .systemFont(ofSize: .adaptive(width: 17.0), weight: .regular), alignment: .left)
         
         return textViewInstance
     }()
