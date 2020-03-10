@@ -12,6 +12,7 @@ import CyberSwift
 import MBProgressHUD
 import ReCaptcha
 import SafariServices
+import StoreKit
 
 public let reCaptchaTag: Int = 777
 
@@ -136,7 +137,6 @@ extension UIViewController {
     }
     
     var isModal: Bool {
-        
         let presentingIsModal = presentingViewController != nil
         let presentingIsNavigation = navigationController?.presentingViewController?.presentedViewController == navigationController
         let presentingIsTabBar = tabBarController?.presentingViewController is UITabBarController
@@ -181,6 +181,7 @@ extension UIViewController {
             if let id = item.user?.userId {
                 showProfileWithUserId(id)
             }
+        
         case "upvote", "reply", "mention":
             switch item.entityType {
             case "post":
@@ -191,6 +192,7 @@ extension UIViewController {
                     let postVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
                     show(postVC, sender: self)
                 }
+            
             case "comment":
                 if let userId = item.comment?.parents?.post?.userId,
                     let permlink = item.comment?.parents?.post?.permlink,
@@ -199,9 +201,11 @@ extension UIViewController {
                     let postVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
                     show(postVC, sender: self)
                 }
+           
             default:
                 break
             }
+        
         case "transfer":
             if item.from?.username == nil {
                 if let id = item.community?.communityId {
@@ -219,8 +223,9 @@ extension UIViewController {
             
         case "reward":
             if let id = item.community?.communityId {
-                showOtherBalanceWalletVC(symbol: id)
+                showOtherBalanceWalletVC(symbol: id, shouldResetNavigationBarOnPush: true)
             }
+        
         default:
             break
         }
@@ -440,6 +445,35 @@ extension UIViewController {
                 show ? .black: .clear)
             self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
             completion?()
+        }
+    }
+    
+    func appLiked() {
+        if !CMAppLike.verify() {
+            CMAppLike.updateRate()
+
+            let appLikeView = CMAppLikeView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 192.0))),
+                                            andParameters: .appLiked)
+            
+            let cardVC = CardViewController(contentView: appLikeView)
+            self.present(cardVC, animated: true, completion: {
+                AnalyticsManger.shared.showRate()
+            })
+            
+            appLikeView.completionDismissWithAppLiked = { isLiked in
+                self.dismiss(animated: true, completion: {
+                    AnalyticsManger.shared.rate(isLike: isLiked)
+
+                    if isLiked {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+                            SKStoreReviewController.requestReview()
+                        }
+                    } else {
+                        let vc = CMFeedbackViewController()
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                })
+            }
         }
     }
 }

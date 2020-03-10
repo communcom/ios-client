@@ -51,13 +51,15 @@ class WalletBuyCommunVC: WalletConvertVC {
         super.setUpCommunBalance()
         
         guard let balance = communBalance else {return}
+        
         buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
     }
     
     override func setUpCurrentBalance() {
         super.setUpCurrentBalance()
         
-        guard let balance = currentBalance else {return}
+        guard let balance = currentBalance else { return }
+        
         balanceNameLabel.text = balance.name
         valueLabel.text = balance.balanceValue.currencyValueFormatted
         convertSellLabel.text = "sell".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
@@ -155,6 +157,7 @@ class WalletBuyCommunVC: WalletConvertVC {
             let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue,
             value > 0
         else { return }
+       
         viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
     
@@ -185,6 +188,7 @@ class WalletBuyCommunVC: WalletConvertVC {
         let expectedValue = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue
         
         showIndetermineHudWithMessage("selling".localized().uppercaseFirst + " \(balance.symbol)")
+       
         BlockchainManager.instance.sellPoints(number: value, pointsCurrencyName: balance.symbol)
             .flatMapCompletable({ (transactionId) -> Completable in
                 self.hideHud()

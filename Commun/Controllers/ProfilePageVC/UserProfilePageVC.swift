@@ -67,15 +67,15 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     
     override func bind() {
         super.bind()
+        
         bindSegmentedControl()
-        
         bindCommunities()
-        
         forwardDelegate()
     }
     
     override func bindProfile() {
         super.bindProfile()
+        
         ResponseAPIContentGetProfile.observeItemChanged()
             .filter {$0.identity == self.viewModel.profile.value?.identity}
             .subscribe(onNext: { [weak self] (profile) in
@@ -114,6 +114,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         switch (viewModel as! UserProfilePageViewModel).segmentedItem.value {
         case .posts:
             tableView.addPostLoadingFooterView()
+        
         case .comments:
             tableView.addNotificationsLoadingFooterView()
         }
