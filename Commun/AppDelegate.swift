@@ -128,6 +128,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .authorizing:
             break
         case .authorized:
+            // create new TabBarVC when user logged out
+            if AuthManager.shared.isLoggedOut {
+                tabBarVC = TabBarVC()
+            }
+            
             self.changeRootVC(tabBarVC)
         case .disconnected:
             break
