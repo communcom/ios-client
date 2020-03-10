@@ -39,14 +39,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var bag = DisposeBag()
     
     // MARK: - RootVCs
-    lazy var splashVC = controllerContainer.resolve(SplashViewController.self)!
-    lazy var welcomeNC: UINavigationController = {
+    var splashVC: SplashViewController { controllerContainer.resolve(SplashViewController.self)! }
+    var welcomeNC: UINavigationController {
         let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
         let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
         return welcomeNav
-    }()
-    lazy var boardingSetPasscodeVC = BoardingSetPasscodeVC()
-    lazy var backUpKeysVC = BackUpKeysVC()
+    }
+    var boardingSetPasscodeVC: BoardingSetPasscodeVC { BoardingSetPasscodeVC() }
+    var backUpKeysVC: BackUpKeysVC { BackUpKeysVC() }
     lazy var boardingNC = UINavigationController()
     lazy var tabBarVC = TabBarVC()
 
@@ -116,11 +116,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = splashVC
         case .registering:
             self.changeRootVC(welcomeNC)
-            
-            let navigationBarAppearace = UINavigationBar.appearance()
-            navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-            navigationBarAppearace.largeTitleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
-                                                                NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold", size: .adaptive(width: 30.0))! ]
         case .boarding:
             let vc: UIViewController
 
