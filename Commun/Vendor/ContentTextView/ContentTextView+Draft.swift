@@ -13,32 +13,31 @@ extension ContentTextView {
         return UserDefaults.standard.dictionaryRepresentation().keys.contains(draftKey)
     }
     
-    func saveDraft(completion: (() -> Void)? = nil) {
-        parentViewController?
-            .showIndetermineHudWithMessage("archiving".localized().uppercaseFirst)
+    func saveDraft() {
         var draft = [Data]()
-        let aText = self.attributedText!
-        DispatchQueue(label: "archiving").async {
-            aText.enumerateAttributes(in: NSRange(location: 0, length: aText.length), options: []) { (attributes, range, _) in
-                if self.canContainAttachments {
-                    if let attachment = attributes[.attachment] as? TextAttachment {
-                        if let data = try? JSONEncoder().encode(attachment) {
-                            draft.append(data)
-                        }
-                        return
+        var aText = NSAttributedString()
+        if Thread.isMainThread {
+            aText = self.attributedText!
+        } else {
+            DispatchQueue.main.sync {
+                aText = self.attributedText!
+            }
+        }
+        aText.enumerateAttributes(in: NSRange(location: 0, length: aText.length), options: []) { (attributes, range, _) in
+            if self.canContainAttachments {
+                if let attachment = attributes[.attachment] as? TextAttachment {
+                    if let data = try? JSONEncoder().encode(attachment) {
+                        draft.append(data)
                     }
-                }
-                if let data = try? aText.data(from: range, documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd]) {
-                    draft.append(data)
+                    return
                 }
             }
-            if let data = try? JSONEncoder().encode(draft) {
-                UserDefaults.standard.set(data, forKey: self.draftKey)
+            if let data = try? aText.data(from: range, documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd]) {
+                draft.append(data)
             }
-            DispatchQueue.main.async {
-                self.parentViewController?.hideHud()
-                completion?()
-            }
+        }
+        if let data = try? JSONEncoder().encode(draft) {
+            UserDefaults.standard.set(data, forKey: self.draftKey)
         }
     }
     

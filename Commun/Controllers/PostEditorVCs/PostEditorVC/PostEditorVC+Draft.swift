@@ -42,7 +42,7 @@ extension PostEditorVC {
         }
     }
     
-    @objc func saveDraft(completion: (() -> Void)? = nil) {
+    @objc func saveDraft() {
         // save community
         if let community = viewModel.community.value,
             let encoded = try? JSONEncoder().encode(community) {
@@ -50,7 +50,7 @@ extension PostEditorVC {
         }
         
         // save content
-        contentTextView.saveDraft(completion: completion)
+        contentTextView.saveDraft()
     }
     
     @objc func removeDraft() {

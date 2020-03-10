@@ -52,8 +52,14 @@ extension PostEditorVC {
             buttonTitles: ["save".localized().uppercaseFirst, "delete".localized().uppercaseFirst],
             highlightedButtonIndex: 0) { (index) in
                 if index == 0 {
-                    self.saveDraft {
-                        self.dismiss(animated: true, completion: nil)
+                    self.showIndetermineHudWithMessage("archiving".localized().uppercaseFirst)
+                    
+                    DispatchQueue(label: "archiving").async {
+                        self.saveDraft()
+                        DispatchQueue.main.async {
+                            self.hideHud()
+                            self.dismiss(animated: true, completion: nil)
+                        }
                     }
                 } else if index == 1 {
                     // remove draft if exists

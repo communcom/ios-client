@@ -19,25 +19,19 @@ extension BasicEditorVC {
             UserDefaults.standard.dictionaryRepresentation().keys.contains(attachmentDraftKey)
     }
     
-    override func saveDraft(completion: (() -> Void)? = nil) {
-        showIndetermineHudWithMessage("archiving".localized().uppercaseFirst)
-        
-        DispatchQueue(label: "archiving").async {
-            var draft = [Data]()
-            if let attachment = self._viewModel.attachment.value {
-                if let data = try? JSONEncoder().encode(attachment) {
-                    draft.append(data)
-                }
-            }
-            
-            if let data = try? JSONEncoder().encode(draft) {
-                UserDefaults.standard.set(data, forKey: self.attachmentDraftKey)
-            }
-            
-            DispatchQueue.main.async {
-                super.saveDraft(completion: completion)
+    override func saveDraft() {
+        var draft = [Data]()
+        if let attachment = self._viewModel.attachment.value {
+            if let data = try? JSONEncoder().encode(attachment) {
+                draft.append(data)
             }
         }
+        
+        if let data = try? JSONEncoder().encode(draft) {
+            UserDefaults.standard.set(data, forKey: self.attachmentDraftKey)
+        }
+        
+        super.saveDraft()
     }
     
     override func getDraft() {
