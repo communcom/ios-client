@@ -4,6 +4,7 @@ PODS:
     - RxSwift (~> 4.0)
   - Alamofire (4.9.1)
   - Amplitude-iOS (4.9.3)
+  - AppsFlyerFramework (5.2.0)
   - ASSpinnerView (0.1.2)
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
@@ -163,6 +164,7 @@ DEPENDENCIES:
   - Action
   - Alamofire
   - Amplitude-iOS
+  - AppsFlyerFramework
   - ASSpinnerView
   - Checksum
   - CircularCarousel
@@ -213,6 +215,7 @@ SPEC REPOS:
     - Action
     - Alamofire
     - Amplitude-iOS
+    - AppsFlyerFramework
     - ASSpinnerView
     - BigInt
     - Checksum
@@ -308,6 +311,7 @@ SPEC CHECKSUMS:
   Action: 689181e4c3f6566844178d8a7da6fef39a9597fc
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Amplitude-iOS: 122e026c44db8460e5efcf84859aa290a0ae9786
+  AppsFlyerFramework: 9b2a932d826a278413dab7d59ffbe104a972132b
   ASSpinnerView: 526e037b85b9db87d55db55297986b7da3059aa8
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
@@ -366,6 +370,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 79c81dc0bf4829270297c1a39d50e0ee11f64208
+PODFILE CHECKSUM: 1edeef3679ed40b343d3c1686bed80caf97c83ba
 
 COCOAPODS: 1.9.0.beta.3

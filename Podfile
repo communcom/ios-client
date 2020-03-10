@@ -27,7 +27,8 @@ def common_pods_commun
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
-     
+  pod 'AppsFlyerFramework'
+  
   pod 'PureLayout'
   pod 'Alamofire'
   pod 'Swinject'

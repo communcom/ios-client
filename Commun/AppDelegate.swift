@@ -22,6 +22,7 @@ import RxCocoa
 import SDURLCache
 import SDWebImageWebPCoder
 import ListPlaceholder
+import AppsFlyerLib
 
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
@@ -59,6 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(true, forKey: firstInstallAppKey)
         }
 
+        configureAppsFlyer()
         AnalyticsManger.shared.sessionStart()
         // Use Firebase library to configure APIs
         configureFirebase()
@@ -199,6 +201,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
         AuthManager.shared.disconnect()
         self.saveContext()
+    }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        AppsFlyerTracker.shared().trackAppLaunch()
     }
 
     // MARK: - Custom Functions
@@ -406,6 +412,24 @@ extension AppDelegate: MessagingDelegate {
 
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
         Logger.log(message: "Received data message: \(remoteMessage.appData)", event: .severe)
+    }
+
+    func configureAppsFlyer() {
+        #if APPSTORE
+            AppsFlyerTracker.shared().appsFlyerDevKey = "roSnaCmLo7RUhprGGbQBc3"
+            AppsFlyerTracker.shared().appleAppID = Config.appStoreId
+            AppsFlyerTracker.shared().delegate = self
+        #endif
+    }
+}
+
+extension AppDelegate: AppsFlyerTrackerDelegate {
+    func onConversionDataSuccess(_ conversionInfo: [AnyHashable: Any]) {
+
+    }
+
+    func onConversionDataFail(_ error: Error) {
+
     }
 }
 

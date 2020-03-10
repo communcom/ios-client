@@ -9,6 +9,7 @@
 import Foundation
 import Amplitude_iOS
 import FirebaseAnalytics
+import AppsFlyerLib
 
 class AnalyticsManger {
     typealias Properties = [String: Any]
@@ -152,14 +153,18 @@ extension AnalyticsManger {
         #if APPSTORE
             if let userID = Config.currentUser?.id {
                 Amplitude.instance()?.setUserId(userID)
+                AppsFlyerTracker.shared().customerUserID = userID
             }
+
+            // Send to analytics
             if let props = props {
                 Amplitude.instance()?.logEvent(name, withEventProperties: props)
             } else {
                 Amplitude.instance()?.logEvent(name)
             }
-
+            // Send to Firebase
             Analytics.logEvent(name, parameters: props)
+            AppsFlyerTracker.shared().trackEvent(name, withValues: props)
         #endif
     }
 }
