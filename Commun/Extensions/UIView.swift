@@ -11,6 +11,26 @@ import CyberSwift
 import ASSpinnerView
 
 extension UIView {
+    // https://developer.apple.com/documentation/quartzcore/cashapelayer/1521921-linedashpattern#2825197
+    public func draw(lineColor color: UIColor = .lightGray, lineWidth width: CGFloat = 1.0, startPoint start: CGPoint, endPoint end: CGPoint, withDashPattern lineDashPattern: [NSNumber]? = nil) {
+        // Example of lineDashPattern: [nil, [2,3], [10, 5, 5, 5]]
+        let shapeLayer = CAShapeLayer()
+
+        shapeLayer.strokeColor = color.cgColor
+        shapeLayer.lineWidth = width
+        shapeLayer.lineDashPattern = lineDashPattern
+
+        let path = CGMutablePath()
+        path.addLines(between: [start, end])
+        shapeLayer.path = path
+
+        layer.addSublayer(shapeLayer)
+    }
+
+    public func copyView() -> UIView? {
+        NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as? UIView
+    }
+    
     func showErrorView(title: String? = nil, subtitle: String? = nil, retryButtonTitle: String? = nil, retryAction: (() -> Void)?) {
         // setup new errorView
         let errorView = ErrorView(title: title, subtitle: subtitle, retryButtonTitle: retryButtonTitle, retryAction: retryAction)

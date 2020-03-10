@@ -8,7 +8,6 @@
 
 import UIKit
 import CyberSwift
-import SwiftTheme
 
 class WelcomeItemVC: UIViewController {
     // MARK: - Properties
@@ -57,13 +56,13 @@ class WelcomeItemVC: UIViewController {
         // All-in-One
         case 1:
             self.titleLabel1.tune(withText: "all-in-one".localized(),
-                                  hexColors: blackWhiteColorPickers,
+                                  textColor: .black,
                                   font: UIFont.systemFont(ofSize: 36, weight: .bold),
                                   alignment: .center,
                                   isMultiLines: false)
             
             self.titleLabel2.tune(withText: "social network".localized(),
-                                  hexColors: blackWhiteColorPickers,
+                                  textColor: .black,
                                   font: UIFont.systemFont(ofSize: 36, weight: .regular),
                                   alignment: .center,
                                   isMultiLines: false)
@@ -78,13 +77,13 @@ class WelcomeItemVC: UIViewController {
         // Owned by users
         case 2:
             self.titleLabel2.tune(withText: "owned".localized().uppercaseFirst,
-                                  hexColors: blackWhiteColorPickers,
+                                  textColor: .black,
                                   font: UIFont.systemFont(ofSize: 36, weight: .bold),
                                   alignment: .center,
                                   isMultiLines: false)
             
             self.titleLabel3.tune(withText: "by users".localized(),
-                                  hexColors: blackWhiteColorPickers,
+                                  textColor: .black,
                                   font: UIFont.systemFont(ofSize: 36, weight: .regular),
                                   alignment: .center,
                                   isMultiLines: false)
@@ -97,19 +96,19 @@ class WelcomeItemVC: UIViewController {
         // Welcome
         default:
             self.titleLabel1.tune(withText: "welcome".localized().uppercaseFirst,
-                                  hexColors: blackWhiteColorPickers,
+                                  textColor: .black,
                                   font: UIFont.systemFont(ofSize: 36.0, weight: .regular),
                                   alignment: .center,
                                   isMultiLines: false)
             
             self.titleLabel2.tune(withText: "to".localized(),
-                                  hexColors: blackWhiteColorPickers,
+                                  textColor: .black,
                                   font: UIFont.systemFont(ofSize: 36.0, weight: .regular),
                                   alignment: .center,
                                   isMultiLines: false)
             
             self.titleLabel3.tune(withText: "Commun /",
-                                  hexColors: softBlueColorPickers,
+                                  textColor: .appMainColor,
                                   font: UIFont.systemFont(ofSize: 36.0, weight: .bold),
                                   alignment: .center,
                                   isMultiLines: false)

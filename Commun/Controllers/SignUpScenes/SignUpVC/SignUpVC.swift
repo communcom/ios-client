@@ -21,20 +21,20 @@ class SignUpVC: UIViewController, SignUpRouter {
     let disposeBag = DisposeBag()
     var locationManager: CLLocationManager!
     var shouldDefineLocation = true
-    
+
     private var recaptcha: ReCaptcha!
     private let locale = Locale(identifier: Locale.current.languageCode ?? "en")
     private var endpoint = ReCaptcha.Endpoint.default
-    
+
     // MARK: - IBOutlets
     @IBOutlet weak var countryButton: UIButton!
     @IBOutlet weak var flagLabel: UILabel!
-    
+
     @IBOutlet weak var placeholderSelectCountryLabel: UILabel! {
         didSet {
             self.placeholderSelectCountryLabel.tune(withText: "select country placeholder".localized().uppercaseFirst,
-                                                    hexColors: darkGrayishBluePickers,
-                                                    font: UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                                    textColor: .appGrayColor,
+                                                    font: UIFont.systemFont(ofSize: .adaptive(width: 17), weight: .regular),
                                                     alignment: .left,
                                                     isMultiLines: false)
         }
@@ -43,8 +43,8 @@ class SignUpVC: UIViewController, SignUpRouter {
     @IBOutlet weak var countryLabel: UILabel! {
         didSet {
             self.countryLabel.tune(withText: "",
-                                   hexColors: blackWhiteColorPickers,
-                                   font: UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                   textColor: .black,
+                                   font: UIFont.systemFont(ofSize: .adaptive(width: 17), weight: .regular),
                                    alignment: .left,
                                    isMultiLines: false)
         }
@@ -56,14 +56,14 @@ class SignUpVC: UIViewController, SignUpRouter {
             self.countryView.clipsToBounds = true
         }
     }
-    
+
     @IBOutlet weak var phoneNumberTextField: PhoneNumberTextField! {
         didSet {
             self.phoneNumberTextField.tune(withPlaceholder: "phone number placeholder".localized().uppercaseFirst,
-                                           textColors: blackWhiteColorPickers,
-                                           font: UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                           textColor: .black,
+                                           font: UIFont.systemFont(ofSize: .adaptive(width: 17), weight: .regular),
                                            alignment: .left)
-            
+
             // Configure textView
             let paddingView: UIView = UIView(width: 16 * Config.widthRatio, height: 20)
             phoneNumberTextField.leftView = paddingView
@@ -74,29 +74,29 @@ class SignUpVC: UIViewController, SignUpRouter {
             self.phoneNumberTextField.keyboardType = .numberPad
         }
     }
-    
+
     @IBOutlet weak var nextButton: StepButton!
-    
+
     lazy var termOfUseLabel = UILabel.with(textSize: 10, numberOfLines: 0, textAlignment: .center)
     lazy var signInLabel = UILabel.with(textSize: 15, textAlignment: .center)
-    
+
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
+
         // term of use
         view.addSubview(termOfUseLabel)
         termOfUseLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         termOfUseLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         termOfUseLabel.autoPinEdge(.bottom, to: .top, of: nextButton, withOffset: -16)
         termOfUseLabel.isUserInteractionEnabled = true
-        
+
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(tapTermOfUseLabel(gesture:)))
         termOfUseLabel.addGestureRecognizer(tap1)
-        
+
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 5
         style.alignment = .center
@@ -111,16 +111,16 @@ class SignUpVC: UIViewController, SignUpRouter {
             .applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "terms of use, Privacy Policy".localized().uppercaseFirst)
             .applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "blockchain Disclaimer".localized().uppercaseFirst)
         termOfUseLabel.attributedString = aStr
-        
+
         // sign in
         view.addSubview(signInLabel)
         signInLabel.autoPinEdge(.top, to: .bottom, of: nextButton, withOffset: 16)
         signInLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         signInLabel.isUserInteractionEnabled = true
-        
+
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(tapSignInLabel(gesture:)))
         signInLabel.addGestureRecognizer(tap2)
-        
+
         let aStr2 = NSAttributedString(
             string: "do you have account? Sign in".localized().uppercaseFirst,
             attributes: [.foregroundColor: UIColor.a5a7bd, .font: UIFont.systemFont(ofSize: 15)]
@@ -132,7 +132,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         self.setupBindings()
         self.setupActions()
     }
-    
+
     private var checkedStep = false
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -146,24 +146,24 @@ class SignUpVC: UIViewController, SignUpRouter {
             checkedStep = true
         }
     }
-    
+
     // MARK: - Custom Functions
     func setupBindings() {
         let country = viewModel.selectedCountry
-            
+
         country
             .filter {$0 != nil}
             .subscribe(onNext: { (_) in
                 self.shouldDefineLocation = false
             })
             .disposed(by: disposeBag)
-        
+
         // Bind country name
         let countryName = country.map {$0?.name}
         countryName.map {$0 ?? "select country".localized().uppercaseFirst}
             .bind(to: countryLabel.rx.text)
             .disposed(by: disposeBag)
-        
+
         countryName.map {$0 != nil}
             .subscribe(onNext: {[weak self] flag in
                 self?.placeholderSelectCountryLabel.isHidden = flag
@@ -185,7 +185,7 @@ class SignUpVC: UIViewController, SignUpRouter {
             .map {"+\($0.code)"}
             .bind(to: phoneNumberTextField.rx.text)
             .disposed(by: disposeBag)
-        
+
         // Bind phone
         phoneNumberTextField.rx.text.orEmpty
             .map {text -> String in
@@ -213,7 +213,7 @@ class SignUpVC: UIViewController, SignUpRouter {
                 }
             })
             .disposed(by: disposeBag)
-        
+
         // Bind button
         viewModel.phone
             .map {_ in self.viewModel.validatePhoneNumber()}
@@ -228,7 +228,7 @@ class SignUpVC: UIViewController, SignUpRouter {
             })
             .disposed(by: disposeBag)
     }
-    
+
     private func setupReCaptcha() {
         recaptcha = try! ReCaptcha(endpoint: endpoint, locale: locale)
 
@@ -251,12 +251,12 @@ class SignUpVC: UIViewController, SignUpRouter {
              self.present(nav, animated: true, completion: nil)
          }
      }
-    
+
     // MARK: - Gestures
     @IBAction func handlingTapGesture(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
-    
+
     // MARK: - Actions
     @IBAction func nextButtonTapped(_ sender: Any) {
         guard self.viewModel.validatePhoneNumber() else {
@@ -266,23 +266,23 @@ class SignUpVC: UIViewController, SignUpRouter {
         AnalyticsManger.shared.PhoneNumberEntered()
 
         self.view.endEditing(true)
-        
+
         self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
-        
+
         self.setupReCaptcha()
-        
+
         // reCaptcha
         self.recaptcha.validate(on: view,
                                 resetOnError: false,
                                 completion: { [weak self] (result: ReCaptchaResult) in
                                     guard let strongSelf = self else { return }
-                                    
+
                                     guard let captchaCode = try? result.dematerialize() else {
                                         print("XXX")
                                         return
                                     }
-                                    
-                                    print(captchaCode)                                    
+
+                                    print(captchaCode)
                                 strongSelf.view.viewWithTag(reCaptchaTag)?.removeFromSuperview()
 
                                     let phone = strongSelf.viewModel.phone.value
@@ -297,12 +297,12 @@ class SignUpVC: UIViewController, SignUpRouter {
                                     .disposed(by: strongSelf.disposeBag)
         })
     }
-    
+
     @objc func tapSignInLabel(gesture: UITapGestureRecognizer) {
         guard let text = signInLabel.text else {return}
         AnalyticsManger.shared.goToSingIn()
         let signInRange = (text as NSString).range(of: "sign in".localized().uppercaseFirst)
-        
+
         let nc = navigationController
         if gesture.didTapAttributedTextInLabel(label: signInLabel, inRange: signInRange) {
             navigationController?.popViewController(animated: true, {
@@ -311,20 +311,20 @@ class SignUpVC: UIViewController, SignUpRouter {
             })
         }
     }
-    
+
     @objc func tapTermOfUseLabel(gesture: UITapGestureRecognizer) {
         guard let text = termOfUseLabel.text else {return}
-        
+
         let termsOfUseRange = (text as NSString).range(of: "terms of use, Privacy Policy".localized().uppercaseFirst)
         let blockChainDisclaimerRange = (text as NSString).range(of: "blockchain Disclaimer".localized().uppercaseFirst)
-        
+
         if gesture.didTapAttributedTextInLabel(label: termOfUseLabel, inRange: termsOfUseRange) {
             showURL(string: "https://commun.com/doc/privacy")
         } else if gesture.didTapAttributedTextInLabel(label: termOfUseLabel, inRange: blockChainDisclaimerRange) {
             showURL(string: "https://commun.com/doc/disclaimer")
         }
     }
-    
+
     func showURL(string: String) {
         guard let url = URL(string: string) else {return}
         let safariVC = SFSafariViewController(url: url)
