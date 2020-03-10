@@ -134,8 +134,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             self.changeRootVC(tabBarVC)
-        case .disconnected:
-            break
         case .error(let error):
             switch error {
             case .userNotFound:
@@ -146,7 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
 
             if let splashVC = self.window?.rootViewController as? SplashViewController {
-                splashVC.showErrorScreen()
+                splashVC.showErrorScreen(title: "error".localized().uppercaseFirst, subtitle: error.localizedDescription)
             }
         }
     }

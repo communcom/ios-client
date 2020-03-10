@@ -51,8 +51,10 @@ class SplashViewController: UIViewController {
         }
     }
     
-    func showErrorScreen() {
-        view.showErrorView {[weak self] in
+    func showErrorScreen(title: String? = nil, subtitle: String? = nil, retryButtonTitle: String? = nil)
+    {
+        view.showErrorView(title: title, subtitle: subtitle, retryButtonTitle: retryButtonTitle)
+        { [weak self] in
             self?.reloadApp()
         }
     }
