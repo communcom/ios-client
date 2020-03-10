@@ -12,6 +12,10 @@ import RxCocoa
 class FTUECommunitiesViewModel: CommunitiesViewModel {
     let chosenCommunities = BehaviorRelay<[ResponseAPIContentGetCommunity]>(value: [])
     
+    init() {
+        super.init(type: .all, authorizationRequired: false)
+    }
+    
     override func updateItem(_ updatedItem: ResponseAPIContentGetCommunity) {
         super.updateItem(updatedItem)
         var newItems = chosenCommunities.value

@@ -153,7 +153,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 return RestAPIManager.instance.toBlockChain()
             })
             .subscribe(onCompleted: {
-                AuthorizationManager.shared.forceReAuthorize()
+                AuthManager.shared.reload()
             }, onError: {error in
                 self.hideHud()
                 self.handleSignUpError(error: error)
@@ -170,7 +170,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
         self.showIndetermineHudWithMessage("saving to blockchain")
         RestAPIManager.instance.toBlockChain()
             .subscribe(onCompleted: {
-                AuthorizationManager.shared.forceReAuthorize()
+                AuthManager.shared.reload()
             }) { (error) in
                 self.hideHud()
                 self.handleSignUpError(error: error)

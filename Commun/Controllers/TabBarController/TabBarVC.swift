@@ -308,7 +308,7 @@ class TabBarVC: UITabBarController {
             })
             .disposed(by: disposeBag)
             
-        SocketManager.shared
+        NotificationsManager.shared
             .unseenNotificationsRelay
             .subscribe(onNext: { (unseen) in
                 self.setNotificationRedMarkHidden(unseen == 0)
@@ -323,7 +323,7 @@ class TabBarVC: UITabBarController {
             .disposed(by: bag)
         
         // in-app notifications
-        SocketManager.shared.newNotificationsRelay
+        NotificationsManager.shared.newNotificationsRelay
             .filter {$0.count > 0}
             .map {$0.first!}
             .distinctUntilChanged()
@@ -366,7 +366,7 @@ class TabBarVC: UITabBarController {
 
 extension TabBarVC: NotificationViewDelegate {
     func notificationViewDidTap(_ notificationView: NotificationView) {
-        guard let notif = SocketManager.shared.newNotificationsRelay.value.first(where: {$0.identity == notificationView.identifier}) else {return}
+        guard let notif = NotificationsManager.shared.newNotificationsRelay.value.first(where: {$0.identity == notificationView.identifier}) else {return}
         (UIApplication.shared.delegate as! AppDelegate).notificationTappedRelay.accept(notif)
     }
 }

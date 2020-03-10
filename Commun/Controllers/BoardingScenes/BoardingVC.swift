@@ -84,7 +84,9 @@ class BoardingVC: BaseViewController {
         try? KeychainManager.save([
             Config.settingStepKey: CurrentUserSettingStep.completed.rawValue
         ])
-        AuthorizationManager.shared.forceReAuthorize()
+        AuthManager.shared.status.accept(.initializing)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            AuthManager.shared.status.accept(.authorized)
+        }
     }
-    
 }

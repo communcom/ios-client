@@ -51,8 +51,10 @@ class SplashViewController: UIViewController {
         }
     }
     
-    func showErrorScreen() {
-        view.showErrorView {[weak self] in
+    func showErrorScreen(title: String? = nil, subtitle: String? = nil, retryButtonTitle: String? = nil)
+    {
+        view.showErrorView(title: title, subtitle: subtitle, retryButtonTitle: retryButtonTitle)
+        { [weak self] in
             self?.reloadApp()
         }
     }
@@ -64,7 +66,7 @@ class SplashViewController: UIViewController {
     func reloadApp() {
         hideErrorView()
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            AuthorizationManager.shared.forceReAuthorize()
+            AuthManager.shared.reload()
         }
     }
     

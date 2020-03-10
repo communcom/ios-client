@@ -51,7 +51,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         return collectionView
     }()
     
-    let viewModel = FTUECommunitiesViewModel(type: .all)
+    let viewModel = FTUECommunitiesViewModel()
     let refreshControl = UIRefreshControl(forAutoLayout: ())
 
     // bottomBar

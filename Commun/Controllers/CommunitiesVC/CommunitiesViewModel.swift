@@ -19,8 +19,8 @@ class CommunitiesViewModel: ListViewModel<ResponseAPIContentGetCommunity> {
         return SearchViewModel(fetcher: fetcher)
     }()
     
-    init(type: GetCommunitiesType, userId: String? = nil, prefetch: Bool = true) {
-        let fetcher = CommunitiesListFetcher(type: type, userId: userId)
+    init(type: GetCommunitiesType, userId: String? = nil, authorizationRequired: Bool = true, prefetch: Bool = true) {
+        let fetcher = CommunitiesListFetcher(type: type, userId: userId, authorizationRequired: authorizationRequired)
         super.init(fetcher: fetcher, prefetch: prefetch)
         self.fetcher = fetcher
     }

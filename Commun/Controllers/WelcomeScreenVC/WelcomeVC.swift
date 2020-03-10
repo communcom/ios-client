@@ -65,6 +65,13 @@ class WelcomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let navigationBarAppearace = UINavigationBar.appearance()
+        navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+        navigationBarAppearace.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont.systemFont(ofSize: .adaptive(width: 30), weight: .bold)
+        ]
+        
         // if signUp is processing
         if KeychainManager.currentUser()?.registrationStep != nil
         {

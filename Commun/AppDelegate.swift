@@ -32,26 +32,22 @@ let firstInstallAppKey = "com.commun.ios.firstInstallAppKey"
 class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Properties
     var window: UIWindow?
-
     let notificationCenter = UNUserNotificationCenter.current()
     let notificationTappedRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
     let shareExtensionDataRelay = BehaviorRelay<ShareExtensionData?>(value: nil)
-
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
-
     private var bag = DisposeBag()
-
-    private func configureFirebase() {
-        #if APPSTORE
-            let fileName = "GoogleService-Info-Prod"
-        #else
-            let fileName = "GoogleService-Info-Dev"
-        #endif
-        let filePath = Bundle.main.path(forResource: fileName, ofType: "plist")
-        guard let fileopts = FirebaseOptions(contentsOfFile: filePath!)
-            else { assert(false, "Couldn't load config file"); return }
-        FirebaseApp.configure(options: fileopts)
+    
+    // MARK: - RootVCs
+    var splashVC: SplashViewController { controllerContainer.resolve(SplashViewController.self)! }
+    var welcomeNC: UINavigationController {
+        let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
+        let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+        return welcomeNav
     }
+    var boardingSetPasscodeVC: BoardingSetPasscodeVC { BoardingSetPasscodeVC() }
+    var backUpKeysVC: BackUpKeysVC { BackUpKeysVC() }
+    lazy var tabBarVC = TabBarVC()
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -77,8 +73,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.tintColor = .appMainColor
 
         // Logger
-//        Logger.showEvents = [.debug]
-//        Logger.shownApiMethods = ["registration.getState"]
+//        Logger.showEvents = [.event, .request, .error, .info]
+//        Logger.shownApiMethods = ["content.getPosts", "auth.authorize"]
 
         // support webp image
         SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
@@ -90,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
 
         // handle connected
-        AuthorizationManager.shared.status
+        AuthManager.shared.status
             .distinctUntilChanged()
             .subscribe(onNext: { (status) in
                 self.navigateWithAuthorizationStatus(status)
@@ -103,81 +99,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // badge
-        SocketManager.shared.unseenNotificationsRelay
+        NotificationsManager.shared.unseenNotificationsRelay
             .subscribe(onNext: { (count) in
                 UIApplication.shared.applicationIconBadgeNumber = Int(count)
             })
             .disposed(by: bag)
-
-        // show hud when reconnecting
-        SocketManager.shared.state
-            .subscribe(onNext: { (state) in
-                switch state {
-                case .disconnected:
-                    self.showConnectingHud()
-                default:
-                    return
-                }
-            })
-            .disposed(by: bag)
-
-        // hide hud after reconnecting
-        AuthorizationManager.shared.status
-            .filter {$0 != .authorizing}
-            .subscribe(onNext: { (_) in
-                self.window?.rootViewController?.hideHud()
-            })
-            .disposed(by: disposeBag)
-
+        
         return true
     }
-
-    func navigateWithAuthorizationStatus(_ status: AuthorizationManager.Status) {
+    
+    func navigateWithAuthorizationStatus(_ status: AuthManager.Status) {
         switch status {
-        case .authorizing:
+        case .initializing:
             // Closing animation
-            let vc = controllerContainer.resolve(SplashViewController.self)!
-            self.window?.rootViewController = vc
-        
+            self.window?.rootViewController = splashVC
+        case .registering:
+            self.changeRootVC(welcomeNC)
         case .boarding:
             let vc: UIViewController
 
             if KeychainManager.currentUser()?.registrationStep == .relogined {
-                vc = BoardingSetPasscodeVC()
+                vc = boardingSetPasscodeVC
             } else {
-                vc = BackUpKeysVC()
+                vc = backUpKeysVC
             }
-
-            let nc = UINavigationController(rootViewController: vc)
-
-            self.changeRootVC(nc)
-        
+            let boardingNC = UINavigationController(rootViewController: vc)
+            self.changeRootVC(boardingNC)
+        case .authorizing:
+            break
         case .authorized:
-            self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+            // create new TabBarVC when user logged out
+            if AuthManager.shared.isLoggedOut {
+                tabBarVC = TabBarVC()
+            }
             
-        case .registering:
-            let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
-            let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
-            self.changeRootVC(welcomeNav)
-
-            let navigationBarAppearace = UINavigationBar.appearance()
-            navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-            navigationBarAppearace.largeTitleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
-                                                                NSAttributedString.Key.font: UIFont.systemFont(ofSize: .adaptive(width: 30), weight: .bold)]
-
-        case .authorizingError(let error):
+            self.changeRootVC(tabBarVC)
+        case .error(let error):
             switch error {
             case .userNotFound:
-                AuthorizationManager.shared.status.accept(.authorizing)
-                try! RestAPIManager.instance.logout()
+                AuthManager.shared.logout()
                 return
-            
             default:
                 break
             }
 
             if let splashVC = self.window?.rootViewController as? SplashViewController {
-                splashVC.showErrorScreen()
+                splashVC.showErrorScreen(title: "error".localized().uppercaseFirst, subtitle: error.localizedDescription)
             }
         }
     }
@@ -220,22 +187,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         AnalyticsManger.shared.backgroundApp()
-        SocketManager.shared.disconnect()
+        AuthManager.shared.disconnect()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        showConnectingHud()
         AnalyticsManger.shared.foregroundApp()
-        SocketManager.shared.connect()
+        AuthManager.shared.connect()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
-        SocketManager.shared.disconnect()
+        AuthManager.shared.disconnect()
         self.saveContext()
     }
 
     // MARK: - Custom Functions
+    private func configureFirebase() {
+        #if APPSTORE
+            let fileName = "GoogleService-Info-Prod"
+        #else
+            let fileName = "GoogleService-Info-Dev"
+        #endif
+        let filePath = Bundle.main.path(forResource: fileName, ofType: "plist")
+        guard let fileopts = FirebaseOptions(contentsOfFile: filePath!)
+            else { assert(false, "Couldn't load config file"); return }
+        FirebaseApp.configure(options: fileopts)
+    }
+    
     private func configureNotifications() {
         // Set delegate for Messaging
         Messaging.messaging().delegate = self
@@ -321,9 +299,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data Saving support
 
-    func saveContext() {
+    func saveContext () {
         let context = persistentContainer.viewContext
-        
         if context.hasChanges {
             do {
                 try context.save()
@@ -336,7 +313,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 }
-
 
 // MARK: - Firebase Cloud Messaging (FCM)
 extension AppDelegate {

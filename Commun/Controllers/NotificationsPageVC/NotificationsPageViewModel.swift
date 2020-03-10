@@ -12,7 +12,7 @@ import RxCocoa
 class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> {
     var filter: BehaviorRelay<NotificationListFetcher.Filter>
     var unseenCount: BehaviorRelay<UInt64> {
-        SocketManager.shared.unseenNotificationsRelay
+        NotificationsManager.shared.unseenNotificationsRelay
     }
     var unseenTimestamp: String?
     
@@ -43,7 +43,7 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
     }
     
     func observeNewNotifications() {
-        SocketManager.shared.newNotificationsRelay
+        NotificationsManager.shared.newNotificationsRelay
             .subscribe(onNext: { (items) in
                 let newItems = self.fetcher.join(newItems: items)
                 self.items.accept(newItems)
