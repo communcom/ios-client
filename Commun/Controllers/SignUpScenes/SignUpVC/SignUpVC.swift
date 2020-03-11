@@ -16,6 +16,10 @@ class SignUpVC: SignUpBaseVC {
         var textColor: UIColor = .black
     }
     
+    class MethodTapGesture: UITapGestureRecognizer {
+        var method: Method?
+    }
+    
     // MARK: - Properties
     let methods: [Method] = [
         Method(serviceName: "phone"),
@@ -53,6 +57,11 @@ class SignUpVC: SignUpBaseVC {
             
             methodView.autoPinEdge(toSuperviewEdge: .leading)
             methodView.autoPinEdge(toSuperviewEdge: .trailing)
+            
+            methodView.isUserInteractionEnabled = true
+            let tap = MethodTapGesture(target: self, action: #selector(methodDidTap(_:)))
+            tap.method = method
+            methodView.addGestureRecognizer(tap)
         }
         
         scrollView.contentView.addSubview(stackView)
@@ -72,5 +81,14 @@ class SignUpVC: SignUpBaseVC {
         
         // pin bottom
         signInLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
+    }
+    
+    @objc func methodDidTap(_ gesture: MethodTapGesture) {
+        guard let method = gesture.method else {return}
+        signUpWithMethod(method)
+    }
+    
+    func signUpWithMethod(_ method: Method) {
+        
     }
 }
