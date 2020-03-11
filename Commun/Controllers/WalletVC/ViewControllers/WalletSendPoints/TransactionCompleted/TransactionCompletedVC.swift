@@ -91,9 +91,10 @@ class TransactionCompletedVC: BaseViewController {
         
         view.addSubview(transactionCompletedView)
         transactionCompletedView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 40.0), vertical: .adaptive(height: 20.0)), excludingEdge: .top)
-        
+        transactionCompletedView.heightAnchor.constraint(equalToConstant: 127.0).isActive = true
+
         // Actions
-        self.transactionCompletedView.actions { [weak self] actionType in
+        transactionCompletedView.actions { [weak self] actionType in
             guard let strongSelf = self else { return }
             
             switch actionType {
