@@ -28,7 +28,7 @@
                                 </connections>
                             </containerView>
                             <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9u7-LT-02r" userLabel="Top Sign In Button" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
-                                <rect key="frame" x="252" y="6" width="53" height="44"/>
+                                <rect key="frame" x="255" y="6" width="50" height="44"/>
                                 <accessibility key="accessibilityConfiguration" identifier="WelcomeSignInButton" label="WelcomeSignInButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="5Uy-kO-fpi" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
