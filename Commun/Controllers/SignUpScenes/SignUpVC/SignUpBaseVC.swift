@@ -16,12 +16,36 @@ class SignUpBaseVC: BaseViewController {
     
     lazy var termOfUseLabel: UILabel = {
         let label = UILabel.with(textSize: 10, numberOfLines: 0, textAlignment: .center)
+        
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+        style.alignment = .center
+        let aStr = NSAttributedString(
+            string: "By clicking the “Sign up” button, you agree to the\nTerms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst,
+            attributes: [
+                .foregroundColor: UIColor.a5a7bd,
+                .font: UIFont.systemFont(ofSize: 10),
+                .paragraphStyle: style
+            ]
+        )
+            .applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "terms of use, Privacy Policy".localized().uppercaseFirst)
+            .applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "blockchain Disclaimer".localized().uppercaseFirst)
+        label.attributedString = aStr
+        
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapTermOfUseLabel(gesture:))))
+        
         return label
     }()
     lazy var signInLabel: UILabel = {
         let label = UILabel.with(textSize: 15, textAlignment: .center)
+        let aStr2 = NSAttributedString(
+            string: "do you have account? Sign in".localized().uppercaseFirst,
+            attributes: [.foregroundColor: UIColor.a5a7bd, .font: UIFont.systemFont(ofSize: 15)]
+        )
+            .applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "sign in".localized().uppercaseFirst)
+        label.attributedString = aStr2
+        
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapSignInLabel(gesture:))))
         return label
