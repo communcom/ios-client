@@ -17,7 +17,7 @@ import SafariServices
 
 class SignUpWithPhoneVC: UIViewController, SignUpRouter {
     // MARK: - Properties
-    let viewModel = SignUpViewModel()
+    let viewModel = SignUpWithPhoneViewModel()
     let disposeBag = DisposeBag()
     var locationManager: CLLocationManager!
     var shouldDefineLocation = true

@@ -117,7 +117,7 @@
 		575945A122607F1F004041C9 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5759459F22607F1F004041C9 /* CountryCell.swift */; };
 		575945A222607F1F004041C9 /* CountryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 575945A022607F1F004041C9 /* CountryCell.xib */; };
 		575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECAB226066F800A7EC2D /* FormTextField.swift */; };
-		575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECAD22606D0800A7EC2D /* SignUpViewModel.swift */; };
+		575AECAE22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */; };
 		575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECB022606F6600A7EC2D /* SelectCountryVC.swift */; };
 		575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECB222606F7100A7EC2D /* SelectCountryViewModel.swift */; };
 		575AECB522606FA600A7EC2D /* SelectCountryVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 575AECB422606FA600A7EC2D /* SelectCountryVC.storyboard */; };
@@ -622,7 +622,7 @@
 		5759459F22607F1F004041C9 /* CountryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
 		575945A022607F1F004041C9 /* CountryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryCell.xib; sourceTree = "<group>"; };
 		575AECAB226066F800A7EC2D /* FormTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextField.swift; sourceTree = "<group>"; };
-		575AECAD22606D0800A7EC2D /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithPhoneViewModel.swift; sourceTree = "<group>"; };
 		575AECB022606F6600A7EC2D /* SelectCountryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCountryVC.swift; sourceTree = "<group>"; };
 		575AECB222606F7100A7EC2D /* SelectCountryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCountryViewModel.swift; sourceTree = "<group>"; };
 		575AECB422606FA600A7EC2D /* SelectCountryVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SelectCountryVC.storyboard; sourceTree = "<group>"; };
@@ -1609,10 +1609,7 @@
 		5797E0F6225DDA260026C4D5 /* SignUpVC */ = {
 			isa = PBXGroup;
 			children = (
-				5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */,
-				5797E0F7225DDA400026C4D5 /* SignUpWithPhoneVC.swift */,
-				3BA3779622E9DA6C0071AF3A /* SignUpWithPhoneVC+Location.swift */,
-				575AECAD22606D0800A7EC2D /* SignUpViewModel.swift */,
+				BCC2FAE82418E5D900A3DD87 /* SignUpWithPhoneVC */,
 			);
 			path = SignUpVC;
 			sourceTree = "<group>";
@@ -2586,6 +2583,17 @@
 			path = SubsViewController;
 			sourceTree = "<group>";
 		};
+		BCC2FAE82418E5D900A3DD87 /* SignUpWithPhoneVC */ = {
+			isa = PBXGroup;
+			children = (
+				5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */,
+				5797E0F7225DDA400026C4D5 /* SignUpWithPhoneVC.swift */,
+				3BA3779622E9DA6C0071AF3A /* SignUpWithPhoneVC+Location.swift */,
+				575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */,
+			);
+			path = SignUpWithPhoneVC;
+			sourceTree = "<group>";
+		};
 		BCCB993223756318005252CF /* Header */ = {
 			isa = PBXGroup;
 			children = (
@@ -3390,7 +3398,7 @@
 				BC8F814A23E27ECE0024C04A /* SendPointsModel.swift in Sources */,
 				BC8F814923E27ECE0024C04A /* SendPointCollectionCell.swift in Sources */,
 				BC9066F523A9E002000F9A3B /* TransferHistoryListFetcher.swift in Sources */,
-				575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */,
+				575AECAE22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift in Sources */,
 				BCCE0AAD23681B2400A183AA /* ProfileController.swift in Sources */,
 				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
 				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,

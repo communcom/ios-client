@@ -12,7 +12,7 @@ import RxCocoa
 import PhoneNumberKit
 import CyberSwift
 
-class SignUpViewModel {
+class SignUpWithPhoneViewModel {
     // MARK: - Properties
     let phone = BehaviorRelay<String>(value: "")
     let selectedCountry = BehaviorRelay<Country?>(value: nil)
