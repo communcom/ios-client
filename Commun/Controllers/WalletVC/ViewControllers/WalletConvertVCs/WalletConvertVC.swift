@@ -211,8 +211,10 @@ class WalletConvertVC: BaseViewController {
         UIResponder.isKeyboardShowed
             .filter {$0}
             .subscribe(onNext: { _ in
+                self.scrollView.contentInset.bottom = .adaptive(height: 90)
                 DispatchQueue.main.async {
-                    self.scrollView.scrollsToBottom()
+                    let bottomOffset = CGPoint(x: 0, y: self.view.safeAreaInsets.top + CGFloat.adaptive(height: 77))
+                    self.scrollView.setContentOffset(bottomOffset, animated: true)
                 }
             })
             .disposed(by: disposeBag)
@@ -287,7 +289,9 @@ class WalletConvertVC: BaseViewController {
         scrollView.rx.contentOffset
             .map {$0.y}
             .subscribe(onNext: { (offsetY) in
-                if offsetY >= self.view.safeAreaInsets.top + 96.5 {
+                print(self.view.safeAreaInsets.top)
+                print(offsetY)
+                if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 80) {
                     convertLogoContainerViewBottomConstraint.isActive = false
                     self.navigationController?.navigationBar.subviews.first?.backgroundColor = self.topColor
                     self.convertLogoTopView.heightConstraint?.constant = 30
@@ -298,13 +302,20 @@ class WalletConvertVC: BaseViewController {
                 }
                     
                 let titleLabel = UILabel.with(text: "convert".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .white, numberOfLines: 2, textAlignment: .center)
-                if offsetY >= self.view.safeAreaInsets.top + 44 {
-                    titleLabel.attributedText = NSMutableAttributedString()
-                        .text(self.balanceNameLabel.text ?? "", size: 14, weight: .semibold, color: .white)
-                        .text("\n")
-                        .text(self.valueLabel.text ?? "", size: 16, weight: .semibold, color: .white)
-                    self.balanceNameLabel.isHidden = true
-                    self.valueLabel.isHidden = true
+                
+                if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 6) {
+                    if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 33) {
+                        titleLabel.attributedText = NSMutableAttributedString()
+                            .text(self.balanceNameLabel.text ?? "", size: 14, weight: .semibold, color: .white)
+                            .text("\n")
+                            .text(self.valueLabel.text ?? "", size: 16, weight: .semibold, color: .white)
+                        self.balanceNameLabel.isHidden = true
+                        self.valueLabel.isHidden = true
+                    } else {
+                        titleLabel.text = self.balanceNameLabel.text
+                        self.balanceNameLabel.isHidden = true
+                        self.valueLabel.isHidden = false
+                    }
                 } else {
                     self.balanceNameLabel.isHidden = false
                     self.valueLabel.isHidden = false
