@@ -54,7 +54,7 @@ extension SignUpRouter where Self: UIViewController {
     func resetSignUpProcess() {
         try? KeychainManager.deleteUser()
         // Dismiss all screen
-        navigationController?.popToVC(type: SignUpVC.self) { signUpVC in
+        navigationController?.popToVC(type: SignUpWithPhoneVC.self) { signUpVC in
             signUpVC.phoneNumberTextField.text = nil
         }
     }

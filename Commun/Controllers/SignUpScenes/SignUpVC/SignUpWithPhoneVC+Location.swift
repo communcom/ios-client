@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 import CyberSwift
 
-extension SignUpVC: CLLocationManagerDelegate {
+extension SignUpWithPhoneVC: CLLocationManagerDelegate {
     func updateLocation() {
         // For use in foreground
         locationManager = CLLocationManager()

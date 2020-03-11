@@ -15,7 +15,7 @@ import CoreLocation
 import ReCaptcha
 import SafariServices
 
-class SignUpVC: UIViewController, SignUpRouter {
+class SignUpWithPhoneVC: UIViewController, SignUpRouter {
     // MARK: - Properties
     let viewModel = SignUpViewModel()
     let disposeBag = DisposeBag()

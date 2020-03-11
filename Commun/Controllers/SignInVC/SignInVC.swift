@@ -164,7 +164,7 @@ class SignInVC: BaseViewController {
     @objc func signUpButtonDidTouch() {
         let nc = self.navigationController
         navigationController?.popViewController(animated: true, {
-            let signUpVC = controllerContainer.resolve(SignUpVC.self)!
+            let signUpVC = controllerContainer.resolve(SignUpWithPhoneVC.self)!
             nc?.pushViewController(signUpVC)
         })
     }
