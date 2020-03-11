@@ -58,6 +58,8 @@ class WalletConvertVC: BaseViewController {
         return textField
     }()
     
+    lazy var convertLogoTopView = UIView(height: 30, backgroundColor: topColor)
+    
     private func createTextField() -> UITextField {
         let textField = UITextField(backgroundColor: .clear)
         textField.placeholder = "0"
@@ -94,7 +96,6 @@ class WalletConvertVC: BaseViewController {
     override func setUp() {
         super.setUp()
         
-        title = "convert".localized().uppercaseFirst
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         
         // backgroundColor
@@ -123,25 +124,6 @@ class WalletConvertVC: BaseViewController {
         whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         whiteView.autoPinEdge(.top, to: .bottom, of: valueLabel, withOffset: 40)
         
-        let convertLogoView: UIView = {
-            let view = UIView(width: 40, height: 40, backgroundColor: .appMainColor, cornerRadius: 20)
-            view.borderWidth = 2
-            view.borderColor = .white
-            let imageView = UIImageView(width: 23, height: 19, imageNamed: "wallet-convert")
-            view.addSubview(imageView)
-            imageView.autoAlignAxis(toSuperviewAxis: .vertical)
-            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-            return view
-        }()
-       
-        convertLogoView.isUserInteractionEnabled = true
-        let tap2 = UITapGestureRecognizer(target: self, action: #selector(changeMode))
-        convertLogoView.addGestureRecognizer(tap2)
-        
-        scrollView.contentView.addSubview(convertLogoView)
-        convertLogoView.autoPinEdge(.top, to: .top, of: whiteView, withOffset: -20)
-        convertLogoView.autoAlignAxis(toSuperviewAxis: .vertical)
-        
         // Buy container
         layoutBuyContainer()
         
@@ -163,6 +145,32 @@ class WalletConvertVC: BaseViewController {
         
         rateLabel.autoPinEdge(.top, to: .bottom, of: errorLabel, withOffset: 12)
         rateLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        // convert LogoView
+        view.addSubview(convertLogoTopView)
+        convertLogoTopView.autoPinEdge(toSuperviewEdge: .leading)
+        convertLogoTopView.autoPinEdge(toSuperviewEdge: .trailing)
+        convertLogoTopView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor)
+            .isActive = true
+        
+        let convertLogoView: UIView = {
+            let view = UIView(width: 40, height: 40, backgroundColor: .appMainColor, cornerRadius: 20)
+            view.borderWidth = 2
+            view.borderColor = .white
+            let imageView = UIImageView(width: 23, height: 19, imageNamed: "wallet-convert")
+            view.addSubview(imageView)
+            imageView.autoAlignAxis(toSuperviewAxis: .vertical)
+            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+            
+            view.isUserInteractionEnabled = true
+            let tap2 = UITapGestureRecognizer(target: self, action: #selector(changeMode))
+            view.addGestureRecognizer(tap2)
+            return view
+        }()
+        
+        view.addSubview(convertLogoView)
+        convertLogoView.autoPinEdge(.bottom, to: .bottom, of: convertLogoTopView, withOffset: 20)
+        convertLogoView.autoAlignAxis(toSuperviewAxis: .vertical)
         
         // pin bottom
         rateLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 20)
@@ -273,6 +281,40 @@ class WalletConvertVC: BaseViewController {
                 self?.bindRate()
             })
             .disposed(by: disposeBag)
+        
+        // scollView
+        let convertLogoContainerViewBottomConstraint = convertLogoTopView.autoPinEdge(.bottom, to: .top, of: whiteView)
+        scrollView.rx.contentOffset
+            .map {$0.y}
+            .subscribe(onNext: { (offsetY) in
+                if offsetY >= self.view.safeAreaInsets.top + 96.5 {
+                    convertLogoContainerViewBottomConstraint.isActive = false
+                    self.navigationController?.navigationBar.subviews.first?.backgroundColor = self.topColor
+                    self.convertLogoTopView.heightConstraint?.constant = 30
+                } else {
+                    convertLogoContainerViewBottomConstraint.isActive = true
+                    self.navigationController?.navigationBar.subviews.first?.backgroundColor = .clear
+                    self.convertLogoTopView.heightConstraint?.constant = 0
+                }
+                    
+                let titleLabel = UILabel.with(text: "convert".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .white, numberOfLines: 2, textAlignment: .center)
+                if offsetY >= self.view.safeAreaInsets.top + 44 {
+                    titleLabel.attributedText = NSMutableAttributedString()
+                        .text(self.balanceNameLabel.text ?? "", size: 14, weight: .semibold, color: .white)
+                        .text("\n")
+                        .text(self.valueLabel.text ?? "", size: 16, weight: .semibold, color: .white)
+                    self.balanceNameLabel.isHidden = true
+                    self.valueLabel.isHidden = true
+                } else {
+                    self.balanceNameLabel.isHidden = false
+                    self.valueLabel.isHidden = false
+                }
+                self.navigationItem.titleView = titleLabel
+                
+                self.view.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
+
     }
     
     func bindBuyPrice() {
@@ -296,6 +338,8 @@ class WalletConvertVC: BaseViewController {
         self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .white)
         
         setTabBarHidden(true)
+        
+        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 0, offset: CGSize(width: 0, height: 0), opacity: 0)
     }
         
     override func viewWillDisappear(_ animated: Bool) {
@@ -455,7 +499,6 @@ class WalletConvertVC: BaseViewController {
         return false
     }
 
-    
     // MARK: - Actions
     @objc func dismissKeyboard() {
         view.endEditing(true)
@@ -505,7 +548,6 @@ class WalletConvertVC: BaseViewController {
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
-
     
     // MARK: - Helpers
     func stringFromNumber(_ number: Double) -> String {
