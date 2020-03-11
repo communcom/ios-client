@@ -109,7 +109,9 @@ extension UIView {
     }
     
     func hideLoading() {
-        self.viewWithTag(9999)?.removeFromSuperview()
+        DispatchQueue.main.async {
+            self.viewWithTag(9999)?.removeFromSuperview()
+        }
     }
     
     func shake() {
