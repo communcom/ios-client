@@ -289,8 +289,6 @@ class WalletConvertVC: BaseViewController {
         scrollView.rx.contentOffset
             .map {$0.y}
             .subscribe(onNext: { (offsetY) in
-                print(self.view.safeAreaInsets.top)
-                print(offsetY)
                 if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 80) {
                     convertLogoContainerViewBottomConstraint.isActive = false
                     self.navigationController?.navigationBar.subviews.first?.backgroundColor = self.topColor
