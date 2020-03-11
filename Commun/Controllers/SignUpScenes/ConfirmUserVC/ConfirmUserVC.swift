@@ -199,14 +199,12 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
 
         RestAPIManager.instance.resendSmsCode()
                 .subscribe(onSuccess: { [weak self] (_) in
-                    guard let strongSelf = self else {
-                        return
+                    guard let self = self else { return }
+                    DispatchQueue.main.async {
+                        self.checkResendSmsCodeTime()
+                        self.showAlert(title: "info".localized().uppercaseFirst,
+                                       message: "successfully resend code".localized().uppercaseFirst)
                     }
-                    strongSelf.showAlert(title: "info".localized().uppercaseFirst,
-                            message: "successfully resend code".localized().uppercaseFirst,
-                            completion: { _ in
-                                strongSelf.checkResendSmsCodeTime()
-                            })
                 }) { [weak self] (error) in
                     self?.showError(error)
                 }
