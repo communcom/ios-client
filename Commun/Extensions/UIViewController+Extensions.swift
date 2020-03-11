@@ -300,9 +300,18 @@ extension UIViewController {
                 return
             }
         }
-        
-        let safariVC = SFSafariViewController(url: url)
-        present(safariVC, animated: true, completion: nil)
+
+        var rightURL: URL? = url
+
+        if !(["http", "https"].contains(url.scheme?.lowercased() ?? "")) {
+            let link = "http://" + url.absoluteString
+            rightURL = URL(string: link)
+        }
+
+        if let url = rightURL {
+            let safariVC = SFSafariViewController(url: url)
+            present(safariVC, animated: true, completion: nil)
+        }
     }
     
     // MARK: - ChildVC
