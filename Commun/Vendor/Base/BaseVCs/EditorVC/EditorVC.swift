@@ -45,8 +45,6 @@ class EditorVC: BaseViewController {
     override func setUp() {
         super.setUp()
         
-        view.backgroundColor = .white
-        
         // navigation bar
         let navigationBar = UIView(height: 44, backgroundColor: .white)
         view.addSubview(navigationBar)
