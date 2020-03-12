@@ -204,6 +204,16 @@ extension PostEditorVC {
     }
     
     // MARK: - Send post
+    func checkValues() -> Bool {
+        let actionButtonFrame = view.convert(actionButton.frame, from: toolbar)
+
+        if let hintType = hintType {
+            self.hintView?.display(inPosition: actionButtonFrame.origin, withType: hintType, andButtonHeight: actionButton.height, completion: {})
+        }
+        
+        return isContentValid
+    }
+    
     @objc override func send() {
         guard checkValues() else { return }
         

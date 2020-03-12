@@ -53,22 +53,28 @@ class BasicEditorVC: PostEditorVC {
     }
     
     override var isContentValid: Bool {
+        hintType = nil
+        
         let content = contentTextView.text.trimmed 
         
         // content are not empty
         let textIsNotEmpty = !content.isEmpty
+        if !textIsNotEmpty {hintType = .enterTextPhoto}
         
         // content inside limit
         let textInsideLimit = (content.count <= contentLettersLimit)
+        if !textInsideLimit {hintType = .error("content must less than \(contentLettersLimit) characters".localized().uppercaseFirst)}
         
         // compare content
         let textChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+        if !textChanged {hintType = .error("content wasn't changed".localized().uppercaseFirst)}
         
         // content valid
         let isTextValid = textIsNotEmpty && textInsideLimit && textChanged
         
         // text empty, but attachment exists
         let attachmentWithEmptyText = !textIsNotEmpty && ((viewModel as! BasicEditorViewModel).attachment.value != nil)
+        if !isTextValid && attachmentWithEmptyText {hintType = nil}
         
         // accept attachment without text or valid text
         return super.isContentValid && (isTextValid || attachmentWithEmptyText)

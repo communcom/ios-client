@@ -28,8 +28,11 @@ class PostEditorVC: EditorVC {
     }
     
     /// Define whenever content is valid to enable send button
+    var hintType: CMHint.HintType?
     var isContentValid: Bool {
-        viewModel.community.value != nil
+        let communityChosen = viewModel.community.value != nil
+        if !communityChosen {hintType = .chooseCommunity}
+        return communityChosen
     }
     
     var viewModel: PostEditorViewModel {
@@ -176,20 +179,5 @@ class PostEditorVC: EditorVC {
     
     func getContentBlock() -> Single<ResponseAPIContentBlock> {
         contentTextView.getContentBlock()
-    }
-    
-    func checkValues() -> Bool {
-        if isContentValid {return true}
-        let actionButtonFrame = view.convert(actionButton.frame, from: toolbar)
-
-        if viewModel.community.value == nil {
-            self.hintView?.display(inPosition: actionButtonFrame.origin, withType: .chooseCommunity, andButtonHeight: actionButton.height, completion: {})
-            return false
-        } else if contentTextView.text.isEmpty {
-            self.hintView?.display(inPosition: actionButtonFrame.origin, withType: .enterTextPhoto, andButtonHeight: actionButton.height, completion: {})
-            return false
-        }
-        
-        return true
     }
 }
