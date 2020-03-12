@@ -436,6 +436,7 @@
 		BCDEE7A123F4E99300DD3EB3 /* DiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE7A023F4E99300DD3EB3 /* DiscoveryVC.swift */; };
 		BCDEE7A423F4EDF500DD3EB3 /* DiscoveryAllVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE7A323F4EDF500DD3EB3 /* DiscoveryAllVC.swift */; };
 		BCE0AE122419EC58009CE0F8 /* BaseVerticalStackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE0AE112419EC58009CE0F8 /* BaseVerticalStackVC.swift */; };
+		BCE0AE1A241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE0AE19241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift */; };
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
 		BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */; };
 		BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */; };
@@ -947,6 +948,7 @@
 		BCDEE7A023F4E99300DD3EB3 /* DiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryVC.swift; sourceTree = "<group>"; };
 		BCDEE7A323F4EDF500DD3EB3 /* DiscoveryAllVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryAllVC.swift; sourceTree = "<group>"; };
 		BCE0AE112419EC58009CE0F8 /* BaseVerticalStackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVerticalStackVC.swift; sourceTree = "<group>"; };
+		BCE0AE19241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+ShareExtension.swift"; sourceTree = "<group>"; };
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentBlock.swift; sourceTree = "<group>"; };
 		BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+Actions.swift"; sourceTree = "<group>"; };
@@ -1022,6 +1024,7 @@
 				BCB2A6EF23556FC100B3582B /* BasicEditorVC+Tools.swift */,
 				3B25E5C3234C6E4E005BD1B8 /* BasicEditorVC+Link.swift */,
 				BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */,
+				BCE0AE19241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift */,
 			);
 			path = BasicEditorVC;
 			sourceTree = "<group>";
@@ -3070,6 +3073,7 @@
 			files = (
 				BCD00FB62373D280004A3952 /* CommunityMembersHeaderView.swift in Sources */,
 				BC8F814E23E27ECE0024C04A /* ConfirmPasscodeVC.swift in Sources */,
+				BCE0AE1A241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift in Sources */,
 				3BEC38EC230FED2B00662374 /* TextAttachment.swift in Sources */,
 				3B3C8B862347866D00D8BADB /* ContentTextView+Utilities.swift in Sources */,
 				BC74F503237957790018DB8E /* CommentsVC+CommentCellDelegate.swift in Sources */,

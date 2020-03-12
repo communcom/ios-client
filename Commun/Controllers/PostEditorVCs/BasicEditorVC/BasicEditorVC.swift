@@ -80,10 +80,6 @@ class BasicEditorVC: PostEditorVC {
         return super.isContentValid && (isTextValid || attachmentWithEmptyText)
     }
     
-    override var postTitle: String? {
-        return nil
-    }
-    
     var _viewModel = BasicEditorViewModel()
     override var viewModel: PostEditorViewModel {
         return _viewModel
@@ -104,30 +100,6 @@ class BasicEditorVC: PostEditorVC {
         
         loadShareExtensionData()
     }
-    
-    func loadShareExtensionData() {
-        if let shareExtensionData = shareExtensionData {
-            
-            if let text = shareExtensionData.text {
-                contentTextView.attributedText = NSAttributedString(string: text, attributes: contentTextView.defaultTypingAttributes)
-            }
-            
-            if let urlString = shareExtensionData.link {
-                parseLink(urlString)
-            }
-            
-            if let imageData = shareExtensionData.imageData, let image = UIImage(data: imageData) {
-                didChooseImageFromGallery(image)
-            }
-        }
-    }
-        
-    func hideExtensionWithCompletionHandler(completion:@escaping (Bool) -> Void) {
-        // Dismiss
-        UIView.animate(withDuration: 0.20, animations: {
-            self.navigationController!.view.transform = CGAffineTransform(translationX: 0, y: self.navigationController!.view.frame.size.height)
-        }, completion: completion)
-    }
 
     override func setUp() {
         super.setUp()
@@ -135,6 +107,20 @@ class BasicEditorVC: PostEditorVC {
 //        if viewModel.postForEdit == nil {
 //            appendTool(EditorToolbarItem.addArticle)
 //        }
+    }
+    
+    override func bind() {
+        super.bind()
+        
+        bindAttachments()
+    }
+    
+    override func didSelectTool(_ item: EditorToolbarItem) {
+        super.didSelectTool(item)
+        guard item.isEnabled else {return}
+        if item == .addArticle {
+            addArticle()
+        }
     }
     
     override func setUp(with post: ResponseAPIContentGetPost) -> Completable {
@@ -180,12 +166,6 @@ class BasicEditorVC: PostEditorVC {
                     .flatMapToCompletable()
             )
     }
-    
-    override func bind() {
-        super.bind()
-        
-        bindAttachments()
-    }
 
     // MARK: - GetContentBlock
     override func getContentBlock() -> Single<ResponseAPIContentBlock> {
@@ -216,12 +196,5 @@ class BasicEditorVC: PostEditorVC {
                 
                 return block!
             }
-    }
-
-    // MARK: - Actions
-    @objc func cancelButtonTapped(_ sender: UIBarButtonItem) {
-        self.hideExtensionWithCompletionHandler(completion: { (_) -> Void in
-            self.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
-        })
     }
 }

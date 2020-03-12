@@ -9,7 +9,7 @@
 import Foundation
 
 extension BasicEditorVC {
-    override func addArticle() {
+    func addArticle() {
         let showArticleVC = {[weak self] in
             weak var presentingViewController = self?.presentingViewController
             let attrStr = self?.contentTextView.attributedText

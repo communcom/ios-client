@@ -39,9 +39,7 @@ class PostEditorVC: EditorVC {
         fatalError("Must override")
     }
     
-    var postTitle: String? {
-        fatalError("Must override")
-    }
+    var postTitle: String? { nil }
     
     // MARK: - Subviews
     // community
@@ -149,10 +147,6 @@ class PostEditorVC: EditorVC {
         
         if item == .clearFormatting {
             contentTextView.clearFormatting()
-        }
-        
-        if item == .addArticle {
-            addArticle()
         }
         
         if item == .addPhoto {
