@@ -65,7 +65,9 @@ class SignUpVC: SignUpBaseVC {
         }
         
         scrollView.contentView.addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: .adaptive(height: 39)), excludingEdge: .bottom)
+        stackView.autoPinEdge(toSuperviewEdge: .top, withInset: 51)
+        stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: UIDevice.current.screenType == .iPhones_5_5s_5c_SE ? 16 : 39)
+        stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: UIDevice.current.screenType == .iPhones_5_5s_5c_SE ? 16 : 39)
         
         // terms of use
         scrollView.contentView.addSubview(termOfUseLabel)
@@ -75,12 +77,17 @@ class SignUpVC: SignUpBaseVC {
         
         // sign in label
         scrollView.contentView.addSubview(signInLabel)
-        signInLabel.autoPinEdge(.top, to: .bottom, of: termOfUseLabel, withOffset: .adaptive(height: 80))
+        signInLabel.topAnchor.constraint(greaterThanOrEqualTo: termOfUseLabel.bottomAnchor, constant: 16)
+            .isActive = true
         signInLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(height: 39))
         signInLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(height: 39))
         
         // pin bottom
-        signInLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
+        signInLabel.autoPinEdge(toSuperviewEdge: .bottom)
+        
+        let constraint = signInLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -28)
+        constraint.priority = .defaultLow
+        constraint.isActive = true
     }
     
     @objc func methodDidTap(_ gesture: MethodTapGesture) {

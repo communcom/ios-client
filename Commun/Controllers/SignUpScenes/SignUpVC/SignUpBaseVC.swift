@@ -10,8 +10,12 @@ import Foundation
 
 class SignUpBaseVC: BaseViewController {
     // MARK: - Properties
+    var termOfUseText: String {"By continuing, you agree to the Commun’s Terms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst}
+    var alreadyHasAccountText: String {"already have an account? Sign in".localized().uppercaseFirst}
     
     // MARK: - Subviews
+    lazy var backButton = UIButton.back()
+    lazy var titleLabel = UILabel.with(text: "sign up".localized().uppercaseFirst, textSize: 34, weight: .bold)
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     
     lazy var termOfUseLabel: UILabel = {
@@ -21,7 +25,7 @@ class SignUpBaseVC: BaseViewController {
         style.lineSpacing = 5
         style.alignment = .center
         let aStr = NSAttributedString(
-            string: "By clicking the “Sign up” button, you agree to the\nTerms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst,
+            string: termOfUseText,
             attributes: [
                 .foregroundColor: UIColor.a5a7bd,
                 .font: UIFont.systemFont(ofSize: 10),
@@ -40,7 +44,7 @@ class SignUpBaseVC: BaseViewController {
     lazy var signInLabel: UILabel = {
         let label = UILabel.with(textSize: 15, textAlignment: .center)
         let aStr2 = NSAttributedString(
-            string: "do you have account? Sign in".localized().uppercaseFirst,
+            string: alreadyHasAccountText,
             attributes: [.foregroundColor: UIColor.a5a7bd, .font: UIFont.systemFont(ofSize: 15)]
         )
             .applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "sign in".localized().uppercaseFirst)
@@ -56,15 +60,38 @@ class SignUpBaseVC: BaseViewController {
         super.setUp()
         
         // title
-        title = "sign up".localized().uppercaseFirst
-        navigationController?.navigationBar.prefersLargeTitles = true
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        view.addSubview(backButton)
+        backButton.autoPinTopAndLeadingToSuperViewSafeArea(inset: 10, xInset: 0)
+        
+        view.addSubview(titleLabel)
+        switch UIDevice.current.screenType {
+        case .iPhones_5_5s_5c_SE:
+            titleLabel.autoPinEdge(.leading, to: .trailing, of: backButton, withOffset: 24)
+            titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
+        default:
+            titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+            titleLabel.autoPinEdge(.top, to: .bottom, of: backButton, withOffset: 10)
+        }
         
         // scrollView
         view.addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        scrollView.autoPinEdge(toSuperviewEdge: .leading)
+        scrollView.autoPinEdge(toSuperviewEdge: .trailing)
+        scrollView.autoPinEdge(.top, to: .bottom, of: titleLabel)
         let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
         keyboardViewV.observeKeyboardHeight()
         self.view.addConstraint(keyboardViewV)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     // MARK: - Actions
