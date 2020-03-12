@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class NotificationsSettingsVC: BaseVerticalStackViewController, PNAlertViewDelegate {
+class NotificationsSettingsVC: VerticalActionsVC, PNAlertViewDelegate {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
     var pnAlertView: PNAlertView?

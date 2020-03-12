@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-class ReportVC: BaseVerticalStackViewController {
+class ReportVC: VerticalActionsVC {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
     let sendButton = CommunButton.default(height: .adaptive(height: 50.0), label: "send".localized().uppercaseFirst, isDisabled: true)
@@ -79,7 +79,7 @@ class ReportVC: BaseVerticalStackViewController {
         sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
     }
     
-    override func viewForAction(_ action: BaseVerticalStackViewController.Action) -> UIView {
+    override func viewForAction(_ action: VerticalActionsVC.Action) -> UIView {
         let actionView = ReportOptionView(height: 58, backgroundColor: .white)
         actionView.checkBox.isUserInteractionEnabled = false
         actionView.titleLabel.text = action.title

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BaseVerticalStackViewController: BaseViewController {
+class VerticalActionsVC: BaseViewController {
     // MARK: - NestedType
     struct Action {
         var title: String
