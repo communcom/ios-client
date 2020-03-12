@@ -151,7 +151,6 @@ class PostsFilterVC: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    
     // MARK: - Custom Functions
     private func setupNavigationBar() {
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) // items color
@@ -160,7 +159,6 @@ class PostsFilterVC: BaseViewController {
         navigationController?.navigationBar.shadowImage?.clear()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
     }
-    
     
     // MARK: - Actions
     @objc func closeButtonDidTouch() {
@@ -178,14 +176,12 @@ class PostsFilterVC: BaseViewController {
     }
 }
 
-
 // MARK: - UIViewControllerTransitioningDelegate
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return CustomHeightPresentationController(height: .adaptive(height: 443.0), presentedViewController: presented, presenting: presenting)
     }
 }
-
 
 // MARK: - UITableViewDelegate
 extension PostsFilterVC: UITableViewDelegate {

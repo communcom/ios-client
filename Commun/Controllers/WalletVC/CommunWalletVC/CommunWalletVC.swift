@@ -72,13 +72,11 @@ class CommunWalletVC: TransferHistoryVC {
         
         return view
     }
-
     
     // MARK: - Initializers
     convenience init() {
         self.init(viewModel: WalletViewModel(symbol: "CMN"))
     }
-
     
     // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
@@ -96,7 +94,6 @@ class CommunWalletVC: TransferHistoryVC {
         
         self.navigationController?.navigationBar.backgroundColor = .clear
     }
-
     
     // MARK: - Custom Functions
     override func setUp() {

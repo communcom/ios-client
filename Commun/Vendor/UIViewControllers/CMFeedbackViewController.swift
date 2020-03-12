@@ -28,7 +28,6 @@ class CMFeedbackViewController: UIViewController {
         return textViewInstance
     }()
     
-    
     // MARK: - Class Initialization
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -44,7 +43,6 @@ class CMFeedbackViewController: UIViewController {
     deinit {
         Logger.log(message: "Success", event: .severe)
     }
-    
 
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -52,7 +50,6 @@ class CMFeedbackViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-    
     
     // MARK: - Custom Functions
     private func bind() {
@@ -109,7 +106,6 @@ class CMFeedbackViewController: UIViewController {
         
         return true
     }
-
     
     // MARK: - Actions
     @objc func closeButtonTapped( _ sender: UIButton) {

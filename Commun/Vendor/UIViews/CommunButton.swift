@@ -109,7 +109,6 @@ class CommunButton: UIButton {
     }
 }
 
-
 extension Reactive where Base: CommunButton {
     /// Bindable sink for `disabled` property.
     var isDisabled: Binder<Bool> {

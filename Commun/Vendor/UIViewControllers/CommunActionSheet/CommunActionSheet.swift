@@ -291,7 +291,6 @@ class CommunActionSheet: SwipeDownDismissViewController {
         iconImageView.setImage(image)
     }
     
-    
     // MARK: - Actions
     @objc func closeButtonDidTouch(_ sender: Any) {
         dismiss(animated: true, completion: nil)

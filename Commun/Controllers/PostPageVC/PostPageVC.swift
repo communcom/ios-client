@@ -264,7 +264,6 @@ class PostPageVC: CommentsViewController {
         })
     }
     
-    
     // MARK: - Custom Functions
     func scrollTo(selectedComment: ResponseAPIContentGetComment) {
         
@@ -273,7 +272,6 @@ class PostPageVC: CommentsViewController {
             self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: commentIndex), at: .top, animated: true)
         }
     }
-    
     
     // MARK: - Actions
     @objc func openMorePostActions() {

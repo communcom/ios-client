@@ -71,7 +71,6 @@ class CMHint: UIView {
         return contentLabelInstance
     }()
     
-    
     // MARK: - Class Initialization
     init(type: HintType, isTabbarHidden: Bool) {
         self.type = type
@@ -90,7 +89,6 @@ class CMHint: UIView {
     deinit {
         print("XXX")
     }
-    
     
     // MARK: - Custom Functions
     func commonInit() {
@@ -149,7 +147,6 @@ class CMHint: UIView {
             }
         }
     }
-    
     
     // MARK: - Actions
     @objc func didSwiped(_ sender: UISwipeGestureRecognizer) {

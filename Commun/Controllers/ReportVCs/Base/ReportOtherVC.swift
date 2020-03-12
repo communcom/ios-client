@@ -15,7 +15,6 @@ class ReportOtherVC: BaseViewController {
     lazy var sendButton = CommunButton.default(height: .adaptive(height: 50), label: "send".localized().uppercaseFirst, cornerRadius: .adaptive(height: 25), isHuggingContent: false, isDisabled: true)
     var completion: ((String) -> Void)?
     
-    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
@@ -57,7 +56,6 @@ class ReportOtherVC: BaseViewController {
                         
         return true
     }
-
     
     // MARK: - Actions
     @objc func sendButtonDidTouch() {

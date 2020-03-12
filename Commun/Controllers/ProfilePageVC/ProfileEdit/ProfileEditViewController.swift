@@ -47,7 +47,6 @@ class ProfileEditViewController: UIViewController {
         }
     }
 
-
     @IBOutlet var backgroundViewsCollection: [UIView]! {
         didSet {
             self.backgroundViewsCollection.forEach {

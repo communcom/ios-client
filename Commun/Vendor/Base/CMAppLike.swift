@@ -13,7 +13,6 @@ struct CMAppLike: Codable {
     var wasShowing: Bool
     var currentVersion: UInt64
     
-    
     // MARK: - Functions
     static func verify() -> Bool {
         let appLike = read()

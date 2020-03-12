@@ -33,7 +33,6 @@ extension UIViewController {
             return hintViewInstance
         }
     }
-    
 
     // MARK: - Custom Functions
     class func instanceController(fromStoryboard storyboard: String, withIdentifier identifier: String) -> UIViewController {

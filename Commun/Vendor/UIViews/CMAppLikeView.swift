@@ -27,7 +27,6 @@ class CMAppLikeView: MyCardView {
                                              backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
                                              textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                              cornerRadius: 25.0)
-
     
     // MARK: - Custom Functions
     override func commonInit() {

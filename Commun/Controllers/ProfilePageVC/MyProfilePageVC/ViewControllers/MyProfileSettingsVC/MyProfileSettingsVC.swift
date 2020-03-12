@@ -97,7 +97,7 @@ class MyProfileSettingsVC: BaseViewController {
         logoutButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
 
         let versionBuildLabel = UILabel()
-        versionBuildLabel.tune(withText: Bundle.main.fullVersion, textColor: .appGrayColor, font: .systemFont(ofSize: .adaptive(width: 13.0) , weight: .regular), alignment: .center, isMultiLines: false)
+        versionBuildLabel.tune(withText: Bundle.main.fullVersion, textColor: .appGrayColor, font: .systemFont(ofSize: .adaptive(width: 13.0), weight: .regular), alignment: .center, isMultiLines: false)
 
         scrollView.contentView.addSubview(versionBuildLabel)
         versionBuildLabel.autoAlignAxis(.vertical, toSameAxisOf: scrollView.contentView)

@@ -175,7 +175,7 @@ class TransactionCompletedView: UIView {
         contentView.autoPinEdge(toSuperviewEdge: .right)
         
         // Add ready checkmark
-        let readyCheckMarkButton = CommunButton.circle(size:60.0,
+        let readyCheckMarkButton = CommunButton.circle(size: 60.0,
                                                        backgroundColor: #colorLiteral(red: 0.3125971854, green: 0.8584119678, blue: 0.6879913807, alpha: 1),
                                                        tintColor: UIColor.white,
                                                        imageName: "icon-checkmark-white",

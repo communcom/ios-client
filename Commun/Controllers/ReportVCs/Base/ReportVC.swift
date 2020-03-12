@@ -33,7 +33,6 @@ class ReportVC: VerticalActionsVC {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Methods
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -121,7 +120,6 @@ class ReportVC: VerticalActionsVC {
                         
         return true
     }
-
     
     // MARK: - Actions
     @objc func sendButtonDidTouch() {
