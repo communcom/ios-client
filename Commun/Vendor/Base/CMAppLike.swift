@@ -53,8 +53,4 @@ struct CMAppLike: Codable {
         
         save(appLike)
     }
-    
-//    func rateApplication() -> Bool {
-//
-//    }
 }
