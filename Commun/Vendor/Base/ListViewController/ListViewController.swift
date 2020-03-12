@@ -62,7 +62,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
             }
         )
         
-        dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
+        dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .top, reloadAnimation: .none)
 
         // pull to refresh
         setUpPullToRefresh()

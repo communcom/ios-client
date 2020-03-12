@@ -241,7 +241,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             }
         )
         
-        dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
+        dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .top, reloadAnimation: .none)
         
         viewModel.items
             .map { items in
