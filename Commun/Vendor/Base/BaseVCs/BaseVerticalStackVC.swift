@@ -22,15 +22,28 @@ class BaseVerticalStackVC: BaseViewController {
         view.backgroundColor = .f3f5fa
         
         // scrollView
+        viewWillSetUpScrollView()
+        setUpScrollView()
+        viewDidSetUpScrollView()
+        
+        // stackView
+        viewWillSetUpStackView()
+        setUpStackView()
+        setUpArrangedSubviews()
+        viewDidSetUpStackView()
+    }
+    
+    func viewWillSetUpScrollView() {}
+    
+    func setUpScrollView() {
         view.addSubview(scrollView)
         scrollViewTopConstraint = scrollView.autoPinEdge(toSuperviewEdge: .top)
         scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        
-        // stackView
-        setUpStackView()
-        setUpArrangedSubviews()
     }
     
+    func viewDidSetUpScrollView() {}
+    
+    func viewWillSetUpStackView() {}
     func setUpStackView() {
         scrollView.contentView.addSubview(stackView)
         stackViewTopConstraint = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
@@ -40,4 +53,6 @@ class BaseVerticalStackVC: BaseViewController {
     func setUpArrangedSubviews() {
         fatalError("Must override")
     }
+    
+    func viewDidSetUpStackView() {}
 }
