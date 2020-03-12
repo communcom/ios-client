@@ -61,8 +61,6 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         }
     }
 
-    @IBOutlet weak var nextButton: StepButton!
-
     @IBOutlet weak var resendButton: ResendButton! {
         didSet {
             self.resendButton.isEnabled = true
@@ -93,8 +91,6 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         self.title = "verification".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.setNavBarBackButton(title: "close")
-
-        nextButton.isEnabled = false
 
         self.pinCodeInputView.set(changeTextHandler: { _ in
             self.verify()
@@ -211,20 +207,14 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                 .disposed(by: disposeBag)
     }
 
-    @IBAction func nextButtonDidTouch(_ sender: Any) {
-        verify()
-    }
-
     func verify() {
         guard pinCodeInputView.text.count == ConfirmUserVC.numberOfDigits,
             let code = UInt64(pinCodeInputView.text) else {
-                nextButton.isEnabled = false
                 return
         }
         AnalyticsManger.shared.smsCodeEntered()
 
-        nextButton.isEnabled = true
-                showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
+        showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
 
         RestAPIManager.instance.verify(code: code)
             .subscribe(onSuccess: { [weak self] (_) in
