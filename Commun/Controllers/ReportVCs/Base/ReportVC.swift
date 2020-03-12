@@ -12,7 +12,7 @@ import CyberSwift
 class ReportVC: VerticalActionsVC {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
-    let sendButton = CommunButton.default(height: .adaptive(height: 50.0), label: "send".localized().uppercaseFirst, isDisabled: true)
+    let sendButton = CommunButton.default(height: 50, label: "send".localized().uppercaseFirst, isDisabled: true)
 
     // MARK: - Properties
     var choosedReasons: [BlockchainManager.ReportReason] {
@@ -21,7 +21,6 @@ class ReportVC: VerticalActionsVC {
     }
     
     var otherReason: String?
-    
     
     // MARK: - Initializers
     init() {
@@ -47,10 +46,6 @@ class ReportVC: VerticalActionsVC {
         title = "please select a reason".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
         closeButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
-    }
-    
-    override func layout() {
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
         
         let alertView = UIView(height: 62, backgroundColor: .white, cornerRadius: 10)
         scrollView.contentView.addSubview(alertView)
@@ -77,6 +72,11 @@ class ReportVC: VerticalActionsVC {
         sendButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         
         sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
+    }
+    
+    override func setUpStackView() {
+        scrollView.contentView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
     }
     
     override func viewForAction(_ action: VerticalActionsVC.Action) -> UIView {

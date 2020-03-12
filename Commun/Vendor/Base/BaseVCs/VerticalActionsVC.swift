@@ -8,7 +8,7 @@
 
 import Foundation
 
-class VerticalActionsVC: BaseViewController {
+class VerticalActionsVC: BaseVerticalStackVC {
     // MARK: - NestedType
     struct Action {
         var title: String
@@ -22,14 +22,8 @@ class VerticalActionsVC: BaseViewController {
         }
     }
     
-    // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
-    lazy var stackView = UIStackView(axis: .vertical, spacing: 2)
-    
     // MARK: - Properties
     var actions: [Action]
-    var scrollViewTopConstraint: NSLayoutConstraint?
-    var stackViewTopConstraint: NSLayoutConstraint?
     
     // MARK: - Initializers
     init(actions: [Action]) {
@@ -41,26 +35,6 @@ class VerticalActionsVC: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setUp() {
-        super.setUp()
-        view.backgroundColor = .f3f5fa
-        
-        // scrollView
-        view.addSubview(scrollView)
-        scrollViewTopConstraint = scrollView.autoPinEdge(toSuperviewEdge: .top)
-        scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        
-        // stackView
-        setUpStackView()
-        scrollView.contentView.addSubview(stackView)
-        layout()
-    }
-
-    func layout() {
-        stackViewTopConstraint = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10), excludingEdge: .top)
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         stackView.layoutIfNeeded()
@@ -68,7 +42,7 @@ class VerticalActionsVC: BaseViewController {
         stackView.arrangedSubviews.last?.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 10)
     }
     
-    func setUpStackView() {
+    override func setUpArrangedSubviews() {
         for action in actions {
             let actionView = viewForAction(action)
             stackView.addArrangedSubview(actionView)

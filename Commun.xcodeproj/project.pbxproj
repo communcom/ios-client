@@ -435,6 +435,7 @@
 		BCDEE78C23F28D4400DD3EB3 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE78B23F28D4400DD3EB3 /* Int.swift */; };
 		BCDEE7A123F4E99300DD3EB3 /* DiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE7A023F4E99300DD3EB3 /* DiscoveryVC.swift */; };
 		BCDEE7A423F4EDF500DD3EB3 /* DiscoveryAllVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE7A323F4EDF500DD3EB3 /* DiscoveryAllVC.swift */; };
+		BCE0AE122419EC58009CE0F8 /* BaseVerticalStackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE0AE112419EC58009CE0F8 /* BaseVerticalStackVC.swift */; };
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
 		BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */; };
 		BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */; };
@@ -945,6 +946,7 @@
 		BCDEE78B23F28D4400DD3EB3 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		BCDEE7A023F4E99300DD3EB3 /* DiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryVC.swift; sourceTree = "<group>"; };
 		BCDEE7A323F4EDF500DD3EB3 /* DiscoveryAllVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryAllVC.swift; sourceTree = "<group>"; };
+		BCE0AE112419EC58009CE0F8 /* BaseVerticalStackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVerticalStackVC.swift; sourceTree = "<group>"; };
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentBlock.swift; sourceTree = "<group>"; };
 		BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+Actions.swift"; sourceTree = "<group>"; };
@@ -1887,6 +1889,7 @@
 				BC31BA53235EBD6A0007D89A /* ProfileVC */,
 				BC3694F0236987AA00B2E078 /* EditorVC */,
 				BC22BBD3236C215900F40658 /* BaseTableViewController.swift */,
+				BCE0AE112419EC58009CE0F8 /* BaseVerticalStackVC.swift */,
 				BC22BBD8236C27C000F40658 /* VerticalActionsVC.swift */,
 				BCB4A4CB23701A80005EDAAD /* SubsViewController */,
 			);
@@ -3362,6 +3365,7 @@
 				B1FA77DA238BF7E0006E57D1 /* WelcomeItemVC.swift in Sources */,
 				BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */,
 				BC4F0A2C240900B9002C4F06 /* SearchablePostsVC.swift in Sources */,
+				BCE0AE122419EC58009CE0F8 /* BaseVerticalStackVC.swift in Sources */,
 				BC597A87238CE8FD00103F4F /* CommunityCollectionCell.swift in Sources */,
 				BC8F815223E27ECE0024C04A /* BuyCommunSelectCurrencyVC.swift in Sources */,
 				3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */,
