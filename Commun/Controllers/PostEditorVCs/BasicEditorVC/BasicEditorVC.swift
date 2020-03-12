@@ -169,7 +169,6 @@ class BasicEditorVC: PostEditorVC {
 
     // MARK: - GetContentBlock
     override func getContentBlock() -> Single<ResponseAPIContentBlock> {
-        // TODO: - Attachments
         var block: ResponseAPIContentBlock?
         var id: UInt64!
         return super.getContentBlock()
