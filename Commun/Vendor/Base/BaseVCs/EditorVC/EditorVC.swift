@@ -121,25 +121,6 @@ class EditorVC: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func setUpToolbarButtons() {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = .zero
-        layout.scrollDirection = .horizontal
-        buttonsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        buttonsCollectionView.showsHorizontalScrollIndicator = false
-        buttonsCollectionView.backgroundColor = .clear
-        buttonsCollectionView.configureForAutoLayout()
-        toolbar.addSubview(buttonsCollectionView)
-        
-        // layout
-        buttonsCollectionView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-        buttonsCollectionView.autoPinEdge(toSuperviewEdge: .left, withInset: 0)
-        buttonsCollectionView.autoSetDimension(.height, toSize: 35)
-        
-        buttonsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
-        buttonsCollectionView.register(EditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
-    }
-    
     func didSelectTool(_ item: EditorToolbarItem) {
         guard item.isEnabled else {return}
         
