@@ -170,7 +170,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
             }
         )
         
-        dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .top, reloadAnimation: .none)
+        dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
         
         viewModel.items
             .map { items in
