@@ -27,12 +27,22 @@ extension UISearchBar {
             searchTextField = (value(forKey: "searchField") as? UITextField) ?? UITextField()
         }
 
-        // change bg color
-        searchTextField.backgroundColor = .appLightGrayColor
-
-        // remove top tinted black view
-        let backgroundView = searchTextField.subviews.first
-        backgroundView?.subviews.forEach({ $0.removeFromSuperview() })
+        // Not work in ios 12
+//        // change bg color
+//        searchTextField.backgroundColor = .appLightGrayColor
+//
+//        // remove top tinted black view
+//        let backgroundView = searchTextField.subviews.first
+//        backgroundView?.subviews.forEach({ $0.removeFromSuperview() })
+        
+        // support ios 12
+        for subView in subviews
+        {
+            for subView1 in subView.subviews where subView1 is UITextField
+            {
+                subView1.backgroundColor = UIColor.appLightGrayColor
+            }
+        }
 
         // change icon color
         if let iconView = searchTextField.leftView as? UIImageView {

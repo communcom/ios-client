@@ -22,6 +22,11 @@ class MyPointsSeeAllBalancesVC: BalancesVC, SearchableViewControllerType {
     }
     
     // MARK: - Methods
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        searchController.roundCorners()
+    }
+    
     override func viewWillSetUpTableView() {
         layoutSearchBar()
         super.viewWillSetUpTableView()

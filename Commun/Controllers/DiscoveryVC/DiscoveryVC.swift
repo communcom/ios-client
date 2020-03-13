@@ -84,7 +84,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        searchController.roundCorner()
+        searchController.roundCorners()
         navigationController?.navigationBar.shadowOpacity = 0
         
         // avoid tabbar

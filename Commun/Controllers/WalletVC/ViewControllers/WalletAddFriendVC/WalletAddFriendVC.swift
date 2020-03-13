@@ -48,7 +48,7 @@ class WalletAddFriendVC: SubsViewController<ResponseAPIContentSearchItem, Wallet
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        searchController.roundCorner()
+        searchController.roundCorners()
     }
     
     override func viewWillSetUpTableView() {
