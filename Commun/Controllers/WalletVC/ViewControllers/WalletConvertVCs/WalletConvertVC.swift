@@ -185,37 +185,11 @@ class WalletConvertVC: BaseViewController {
     override func bind() {
         super.bind()
         
-        viewModel.state
-            .subscribe(onNext: { (state) in
-                switch state {
-                case .error(error: let error):
-                    #if !APPSTORE
-                        self.showError(error)
-                    #endif
-                    self.view.showErrorView {
-                        self.view.hideErrorView()
-                        self.viewModel.reload()
-                    }
-                default:
-                    break
-                }
-            })
-            .disposed(by: disposeBag)
+        bindState()
         
         viewModel.items
             .subscribe(onNext: { (balances) in
                 self.setUp(with: balances)
-            })
-            .disposed(by: disposeBag)
-        
-        UIResponder.isKeyboardShowed
-            .filter {$0}
-            .subscribe(onNext: { _ in
-                self.scrollView.contentInset.bottom = .adaptive(height: 90)
-                DispatchQueue.main.async {
-                    let bottomOffset = CGPoint(x: 0, y: self.view.safeAreaInsets.top + CGFloat.adaptive(height: 77))
-                    self.scrollView.setContentOffset(bottomOffset, animated: true)
-                }
             })
             .disposed(by: disposeBag)
         
@@ -281,45 +255,7 @@ class WalletConvertVC: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        // scollView
-        let convertLogoContainerViewBottomConstraint = convertLogoTopView.autoPinEdge(.bottom, to: .top, of: whiteView)
-        scrollView.rx.contentOffset
-            .map {$0.y}
-            .subscribe(onNext: { (offsetY) in
-                if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 80) {
-                    convertLogoContainerViewBottomConstraint.isActive = false
-                    self.navigationController?.navigationBar.subviews.first?.backgroundColor = self.topColor
-                    self.convertLogoTopView.heightConstraint?.constant = 30
-                } else {
-                    convertLogoContainerViewBottomConstraint.isActive = true
-                    self.navigationController?.navigationBar.subviews.first?.backgroundColor = .clear
-                    self.convertLogoTopView.heightConstraint?.constant = 0
-                }
-                    
-                let titleLabel = UILabel.with(text: "convert".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .white, numberOfLines: 2, textAlignment: .center)
-                
-                if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 6) {
-                    if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 33) {
-                        titleLabel.attributedText = NSMutableAttributedString()
-                            .text(self.balanceNameLabel.text ?? "", size: 14, weight: .semibold, color: .white)
-                            .text("\n")
-                            .text(self.valueLabel.text ?? "", size: 16, weight: .semibold, color: .white)
-                        self.balanceNameLabel.isHidden = true
-                        self.valueLabel.isHidden = true
-                    } else {
-                        titleLabel.text = self.balanceNameLabel.text
-                        self.balanceNameLabel.isHidden = true
-                        self.valueLabel.isHidden = false
-                    }
-                } else {
-                    self.balanceNameLabel.isHidden = false
-                    self.valueLabel.isHidden = false
-                }
-                self.navigationItem.titleView = titleLabel
-                
-                self.view.layoutIfNeeded()
-            })
-            .disposed(by: disposeBag)
+        bindScrollView()
 
     }
     
