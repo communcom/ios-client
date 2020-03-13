@@ -12,7 +12,7 @@ import CyberSwift
 class ReportVC: VerticalActionsVC {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
-    let sendButton = CommunButton.default(height: 50, label: "send".localized().uppercaseFirst, isDisabled: true)
+    let sendButton = CommunButton.default(height: 50, label: "send".localized().uppercaseFirst, isDisableGrayColor: true, isDisabled: true)
 
     // MARK: - Properties
     var choosedReasons: [BlockchainManager.ReportReason] {

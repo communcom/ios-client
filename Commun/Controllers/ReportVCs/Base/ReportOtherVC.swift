@@ -12,7 +12,7 @@ class ReportOtherVC: BaseViewController {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
     lazy var textView = UITextView(forAutoLayout: ())
-    lazy var sendButton = CommunButton.default(height: .adaptive(height: 50), label: "send".localized().uppercaseFirst, cornerRadius: .adaptive(height: 25), isHuggingContent: false, isDisabled: true)
+    lazy var sendButton = CommunButton.default(height: 50, label: "send".localized().uppercaseFirst, cornerRadius: 25, isHuggingContent: false, isDisableGrayColor: true, isDisabled: true)
     var completion: ((String) -> Void)?
     
     // MARK: - Methods
