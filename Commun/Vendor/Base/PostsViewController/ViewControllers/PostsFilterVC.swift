@@ -18,11 +18,11 @@ class PostsFilterVC: BaseViewController {
     var completion: ((PostsListFetcher.Filter) -> Void)?
     
     // MARK: - Subview
-    lazy var closeButton = UIButton.close(size: .adaptive(width: 30.0))
-    lazy var backButton = UIButton.circle(size: .adaptive(width: 30.0), backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
+    lazy var closeButton = UIButton.close(size: 30.0)
+    lazy var backButton = UIButton.circle(size: 30.0, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
     
     lazy var tableView = UITableView(forAutoLayout: ())
-    lazy var saveButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save".localized().uppercaseFirst)
+    lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst)
     
     // MARK: - Initializers
     init(filter: PostsListFetcher.Filter, isTimeFrameMode: Bool = false) {
@@ -69,8 +69,8 @@ class PostsFilterVC: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        navigationController?.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: .adaptive(width: 20.0))
-        navigationController?.navigationBar.frame.size.height = .adaptive(height: 58.0)
+        navigationController?.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20.0)
+        navigationController?.navigationBar.frame.size.height = 58.0
     }
     
     override func bind() {
@@ -179,13 +179,13 @@ class PostsFilterVC: BaseViewController {
 // MARK: - UIViewControllerTransitioningDelegate
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return CustomHeightPresentationController(height: .adaptive(height: 443.0), presentedViewController: presented, presenting: presenting)
+        return CustomHeightPresentationController(height: 443.0, presentedViewController: presented, presenting: presenting)
     }
 }
 
 // MARK: - UITableViewDelegate
 extension PostsFilterVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return .adaptive(height: 58.0)
+        return 58.0
     }
 }
