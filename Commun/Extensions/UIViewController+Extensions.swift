@@ -424,7 +424,7 @@ extension UIViewController {
 
     func scrollToTop() {
          func scrollToTop(view: UIView?) {
-             guard let view = view else { return }
+             guard let view = view, !(view is CMTopTabBar) else { return }
 
              switch view {
              case let scrollView as UIScrollView:
