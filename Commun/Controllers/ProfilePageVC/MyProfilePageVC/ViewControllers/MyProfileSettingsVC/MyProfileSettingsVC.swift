@@ -101,16 +101,20 @@ class MyProfileSettingsVC: BaseViewController {
 
         scrollView.contentView.addSubview(versionBuildLabel)
         versionBuildLabel.autoAlignAxis(.vertical, toSameAxisOf: scrollView.contentView)
-        versionBuildLabel.autoPinEdge(.bottom, to: .bottom, of: view, withOffset: .adaptive(height: -15.0 - tabBarHeight))
+        
+        let offset: CGFloat = tabBarHeight + 15.0
+        versionBuildLabel.autoPinEdge(.bottom, to: .bottom, of: view, withOffset: -offset)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         baseNavigationController?.changeStatusBarStyle(.default)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         if stackView.arrangedSubviews.count == 1 {
             stackView.arrangedSubviews.first?.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight, .bottomLeft, .bottomRight), radius: 10)
         } else {
@@ -121,6 +125,7 @@ class MyProfileSettingsVC: BaseViewController {
 
     func stackViewWithActions(actions: [CommunActionSheet.Action]) -> UIStackView {
         let stackView = UIStackView(axis: .vertical, spacing: 2)
+        
         for action in actions {
             let actionView = UIView(height: 65, backgroundColor: .white)
             actionView.isUserInteractionEnabled = true
