@@ -65,22 +65,19 @@ extension WalletConvertVC {
     }
     
     func bindScrollView() {
-        var keyboardOnOffset: CGFloat = 161.5
+        let keyboardOnOffset: CGFloat = 161.5
         var additionalBottomInset: CGFloat?
         switch UIDevice.current.screenType {
         case .iPhones_6_6s_7_8:
-            additionalBottomInset = 60
-            break
+            additionalBottomInset = 51
         case .iPhones_6Plus_6sPlus_7Plus_8Plus:
-            break
-        case .iPhones_X_XS:
-            break
+            additionalBottomInset = 110.5
+        case .iPhones_X_XS, .iPhone_11Pro:
+            additionalBottomInset = 97.5
         case .iPhone_XR_11:
-            break
+            additionalBottomInset = 171
         case .iPhone_XSMax_ProMax:
-            break
-        case .iPhone_11Pro:
-            break
+            additionalBottomInset = 171.5
         case .unknown:
             break
         default:
