@@ -130,12 +130,13 @@ extension UIImageView {
     }
 
     private func showBlur(_ show: Bool) {
+        let tag = ViewTag.blurView.rawValue
         if !UIAccessibility.isReduceTransparencyEnabled {
-            self.viewWithTag(9435)?.removeFromSuperview()
+            self.viewWithTag(tag)?.removeFromSuperview()
             if show {
                 let blurEffect = UIBlurEffect(style: .light)
                 let blurEffectView = UIVisualEffectView(effect: blurEffect)
-                blurEffectView.tag = 9435
+                blurEffectView.tag = tag
                 //always fill the view
                 blurEffectView.frame = self.bounds
                 blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -143,7 +144,7 @@ extension UIImageView {
                 addSubview(blurEffectView)
             }
         }
-        if let loadingView = viewWithTag(9999) {
+        if let loadingView = viewWithTag(ViewTag.loadingView.rawValue) {
             self.bringSubviewToFront(loadingView)
         }
     }

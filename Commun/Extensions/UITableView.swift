@@ -11,25 +11,14 @@ import ASSpinnerView
 import RxCocoa
 import RxSwift
 
-// Tags for footerView
-let loadingViewTag = 9999
-let postLoadingFooterViewTag = 99991
-let listErrorFooterViewTag = 99992
-
-let emptyPlaceholderViewTag = 99996
-
-let notificationsLoadingFooterViewTag = 99993
-let commentLoadingFooterViewTag = 99994
-let commentEmptyFooterViewTag   = 99995
-
 extension UITableView {
     func addLoadingFooterView() {
         // Prevent dupplicating
-        if tableFooterView?.tag == loadingViewTag {
+        if tableFooterView?.tag == ViewTag.loadingFooterView.rawValue {
             return
         }
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: self.width, height: 60))
-        containerView.tag = loadingViewTag
+        containerView.tag = ViewTag.loadingFooterView.rawValue
         let spinnerView = ASSpinnerView()
         spinnerView.spinnerLineWidth = 4
         spinnerView.spinnerDuration = 0.3
@@ -48,6 +37,7 @@ extension UITableView {
     
     func addPostLoadingFooterView() {
         // Prevent dupplicating
+        let postLoadingFooterViewTag = ViewTag.loadingFooterView.rawValue
         if tableFooterView?.tag == postLoadingFooterViewTag {
             return
         }
@@ -66,6 +56,7 @@ extension UITableView {
     }
     
     func addNotificationsLoadingFooterView() {
+        let notificationsLoadingFooterViewTag = ViewTag.notificationsLoadingFooterView.rawValue
         addLoadingFooterView(
             rowType: PlaceholderNotificationCell.self,
             tag: notificationsLoadingFooterViewTag,
@@ -108,6 +99,7 @@ extension UITableView {
     
     func addListErrorFooterView(with buttonHandler: Selector? = nil, on target: AnyObject) {
         // Prevent dupplicating
+        let listErrorFooterViewTag = ViewTag.listErrorFooterView.rawValue
         if tableFooterView?.tag == listErrorFooterViewTag {
             return
         }
@@ -173,6 +165,7 @@ extension UITableView {
     
     func addEmptyPlaceholderFooterView(emoji: String? = nil, title: String, description: String? = nil, buttonLabel: String? = nil, buttonAction: (() -> Void)? = nil) {
         // Prevent dupplicating
+        let emptyPlaceholderViewTag = ViewTag.emptyPlaceholderView.rawValue
         if tableFooterView?.tag == emptyPlaceholderViewTag {
             return
         }

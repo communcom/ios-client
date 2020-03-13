@@ -207,6 +207,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     // MARK: - State handling
     func handleLoading() {
+        let notificationsLoadingFooterViewTag = ViewTag.notificationsLoadingFooterView.rawValue
         tableView.addLoadingFooterView(
             rowType: PlaceholderNotificationCell.self,
             tag: notificationsLoadingFooterViewTag,

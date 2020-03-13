@@ -59,7 +59,8 @@ extension UIView {
     }
     
     var isLoading: Bool {
-        self.viewWithTag(9999) != nil
+        let loadingViewTag = ViewTag.loadingView.rawValue
+        return subviews.count(where: {$0.tag == loadingViewTag}) > 0
     }
     
     func showLoading(
@@ -71,13 +72,14 @@ extension UIView {
         offsetTop: CGFloat? = nil
     ) {
         // if loading view is existed
-        if self.viewWithTag(9999) != nil {return}
+        let loadingViewTag = ViewTag.loadingView.rawValue
+        if isLoading {return}
         
         // create cover view to cover all current view
         let coverView = UIView()
         coverView.backgroundColor = cover ? .white : .clear
         coverView.translatesAutoresizingMaskIntoConstraints = false
-        coverView.tag = 9999
+        coverView.tag = loadingViewTag
         self.addSubview(coverView)
         
         // add constraint for coverView
@@ -110,7 +112,10 @@ extension UIView {
     
     func hideLoading() {
         DispatchQueue.main.async {
-            self.viewWithTag(9999)?.removeFromSuperview()
+            let loadingViewTag = ViewTag.loadingView.rawValue
+            for subview in self.subviews where subview.tag == loadingViewTag {
+                subview.removeFromSuperview()
+            }
         }
     }
     
