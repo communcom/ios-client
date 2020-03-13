@@ -241,21 +241,18 @@ class WalletConvertVC: BaseViewController {
                     }
                     
                     self?.convertButton.isDisabled = true
-//                    self?.convertButton.isEnabled = false
                 
                 case .finished:
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
                     
                     self?.convertButton.isDisabled = !(self?.shouldEnableConvertButton() ?? false)
-//                    self?.convertButton.isEnabled = self?.shouldEnableConvertButton() ?? false
                 
                 case .error:
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
                     
                     self?.convertButton.isDisabled = true
-//                    self?.convertButton.isEnabled = false
                 }
             })
             .disposed(by: disposeBag)
@@ -547,15 +544,6 @@ class WalletConvertVC: BaseViewController {
     
     @objc func convertButtonDidTouch() {
         view.endEditing(true)
-    }
-    
-    @objc func pointsListButtonDidTouch() {
-        let vc = BalancesVC { balance in
-            self.currentBalance = balance
-        }
-        
-        let nc = BaseNavigationController(rootViewController: vc)
-        present(nc, animated: true, completion: nil)
     }
     
     // MARK: - Helpers

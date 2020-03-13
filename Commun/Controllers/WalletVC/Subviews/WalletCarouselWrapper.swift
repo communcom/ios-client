@@ -44,6 +44,10 @@ class WalletCarouselWrapper: MyView {
     func reloadData() {
         carousel.reloadData()
     }
+    
+    func scrollTo(itemAtIndex index: Int) {
+        carousel.scroll(toItemAtIndex: index, animated: true)
+    }
 }
 
 extension WalletCarouselWrapper: CircularCarouselDataSource, CircularCarouselDelegate {
