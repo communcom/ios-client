@@ -34,12 +34,12 @@ class EditorVC: BaseViewController {
     var buttonsCollectionView: UICollectionView!
     
     // PostButton
-    lazy var actionButton = CommunButton(height: .adaptive(height: 36.0),
+    lazy var actionButton = CommunButton(height: 36,
                                          label: "send".localized().uppercaseFirst,
-                                         labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .semibold),
+                                         labelFont: .systemFont(ofSize: 15.0, weight: .semibold),
                                          backgroundColor: .appMainColor,
                                          textColor: .white,
-                                         cornerRadius: .adaptive(height: 18.0),
+                                         cornerRadius: 18,
                                          contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
     
     override func setUp() {
