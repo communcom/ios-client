@@ -14,6 +14,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
     let viewModel = SetUserViewModel()
     
     // MARK: - Subviews
+    lazy var backButton: UIButton = .back()
     lazy var textField: UITextField = {
         let tf = UITextField(height: 56 * Config.heightRatio, backgroundColor: .f3f5fa, cornerRadius: 12 * Config.heightRatio)
         tf.font = .systemFont(ofSize: 17 * Config.heightRatio)
@@ -30,16 +31,19 @@ class SetUserVC: BaseViewController, SignUpRouter {
     lazy var nextButton = StepButton(height: 56, label: "next".localized().uppercaseFirst, labelFont: UIFont.boldSystemFont(ofSize: 17 * Config.heightRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 8)
     
     // MARK: - Methods
+    
     override func setUp() {
         super.setUp()
         self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.hidesBackButton = true
+        // backButton
+        setLeftNavBarButton(with: backButton)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         
         // label
         let label = UILabel.with(text: "create your username".localized().uppercaseFirst, textSize: 17)
         view.addSubview(label)
-        label.autoPinTopAndLeadingToSuperViewSafeArea(inset: 16)
+        label.autoPinTopAndLeadingToSuperViewSafeArea(inset: 20)
         
         // textfield
         view.addSubview(textField)
@@ -103,6 +107,10 @@ class SetUserVC: BaseViewController, SignUpRouter {
         viewModel.errorMessage
             .bind(to: errorLabel.rx.text)
             .disposed(by: disposeBag)
+    }
+    
+    @objc func backButtonTapped() {
+        resetSignUpProcess()
     }
     
     @objc func infoButtonTapped() {
