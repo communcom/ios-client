@@ -40,7 +40,7 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func layoutCarousel() {
-        scrollView.addSubview(carousel)
+        scrollView.contentView.addSubview(carousel)
         carousel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
         carousel.autoAlignAxis(toSuperviewAxis: .vertical)
         
