@@ -45,10 +45,8 @@ class ConfirmPasswordVC: CreatePasswordVC {
         
         self.view.endEditing(true)
         
-        try! RestAPIManager.instance.setPassword(currentPassword)
-        
         self.showIndetermineHudWithMessage("saving to blockchain")
-        RestAPIManager.instance.toBlockChain()
+        RestAPIManager.instance.toBlockChain(password: currentPassword)
             .subscribe(onCompleted: {
                 AuthManager.shared.reload()
             }) { (error) in

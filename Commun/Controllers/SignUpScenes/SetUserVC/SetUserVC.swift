@@ -84,7 +84,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
         
         // if username has already been set
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
-            navigateToSetPassword()
+            signUpNextStep()
         }
     }
     
@@ -139,7 +139,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
         self.view.endEditing(true)
         
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
-            navigateToSetPassword()
+            signUpNextStep()
             return
         }
         
@@ -159,13 +159,5 @@ class SetUserVC: BaseViewController, SignUpRouter {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
-    }
-    
-    func navigateToSetPassword() {
-        self.textField.text = KeychainManager.currentUser()?.name
-        
-        try! KeychainManager.save([Config.registrationStepKey: CurrentUserRegistrationStep.setPassword.rawValue])
-        
-        signUpNextStep()
     }
 }

@@ -60,7 +60,7 @@ class BackUpKeysVC: BoardingVC {
         let infoLabel = UILabel.with(numberOfLines: 0, textAlignment: .center)
         infoLabel.attributedText = NSMutableAttributedString()
             .text("commun doesn't have access to your password, and also in case of loss will not be able to recover it".localized().uppercaseFirst + ". ", size: 17 * Config.heightRatio, weight: .medium, color: .a5a7bd)
-            .text("save it securely".localized().uppercaseFirst, size: 17 * Config.heightRatio, weight: .medium)
+            .text("save it securely".localized().uppercaseFirst + "!", size: 17 * Config.heightRatio, weight: .medium)
         view.addSubview(infoLabel)
         infoLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 6)
         infoLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
