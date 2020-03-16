@@ -33,12 +33,28 @@ class ConfirmPasswordVC: CreatePasswordVC {
         }
     }
     
+    override func backButtonDidTouch() {
+        back()
+    }
+    
     override func validationDidComplete() {
         guard currentPassword == textField.text else {
             showErrorWithLocalizedMessage("passwords do not match")
             return
         }
         
-        // TODO: - toBlockchain
+        self.view.endEditing(true)
+        
+        try! RestAPIManager.instance.setPassword(currentPassword)
+        
+        self.showIndetermineHudWithMessage("saving to blockchain")
+        RestAPIManager.instance.toBlockChain()
+            .subscribe(onCompleted: {
+                AuthManager.shared.reload()
+            }) { (error) in
+                self.hideHud()
+                self.handleSignUpError(error: error)
+            }
+            .disposed(by: self.disposeBag)
     }
 }

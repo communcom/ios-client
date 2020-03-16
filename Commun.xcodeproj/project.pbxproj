@@ -407,7 +407,7 @@
 		BCB4A4C72370188B005EDAAD /* SubscribersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */; };
 		BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */; };
 		BCC2FAEA2418E72000A3DD87 /* SignUpBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAE92418E72000A3DD87 /* SignUpBaseVC.swift */; };
-		BCC2FAEC2418EA0800A3DD87 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */; };
+		BCC2FAEC2418EA0800A3DD87 /* SignUpMethodsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAEB2418EA0800A3DD87 /* SignUpMethodsVC.swift */; };
 		BCC60E1623A0D02C00D40013 /* FeedPageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */; };
 		BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB99302375503A005252CF /* PostPageVC+Binding.swift */; };
 		BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB993323756318005252CF /* PostHeaderTextView.swift */; };
@@ -926,7 +926,7 @@
 		BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersCell.swift; sourceTree = "<group>"; };
 		BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsViewController.swift; sourceTree = "<group>"; };
 		BCC2FAE92418E72000A3DD87 /* SignUpBaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBaseVC.swift; sourceTree = "<group>"; };
-		BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		BCC2FAEB2418EA0800A3DD87 /* SignUpMethodsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpMethodsVC.swift; sourceTree = "<group>"; };
 		BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageHeaderView.swift; sourceTree = "<group>"; };
 		BCCB99302375503A005252CF /* PostPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Binding.swift"; sourceTree = "<group>"; };
 		BCCB993323756318005252CF /* PostHeaderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
@@ -1218,10 +1218,10 @@
 			isa = PBXGroup;
 			children = (
 				BCC2FAE92418E72000A3DD87 /* SignUpBaseVC.swift */,
-				BC34B4CF241F1BDC00855DE2 /* CreatePasswordVC */,
+				5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */,
 				578B94D82263CBC300FB5BC6 /* ConfirmUserVC */,
 				5787C0C222650F8A00568CEC /* SetUserVC */,
-				5797E0F6225DDA260026C4D5 /* SignUpVC */,
+				BC34B4CF241F1BDC00855DE2 /* CreatePasswordVC */,
 				B17A970B228002440081B8E0 /* SignUpRouter.swift */,
 			);
 			path = SignUpScenes;
@@ -1628,13 +1628,13 @@
 			path = ConfirmUserVC;
 			sourceTree = "<group>";
 		};
-		5797E0F6225DDA260026C4D5 /* SignUpVC */ = {
+		5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */ = {
 			isa = PBXGroup;
 			children = (
-				BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */,
+				BCC2FAEB2418EA0800A3DD87 /* SignUpMethodsVC.swift */,
 				BCC2FAE82418E5D900A3DD87 /* SignUpWithPhoneVC */,
 			);
-			path = SignUpVC;
+			path = SignUpMethodsVCs;
 			sourceTree = "<group>";
 		};
 		57A1CA612270FC3300E2A1E3 /* LanguageVC */ = {
@@ -3443,7 +3443,7 @@
 				BC9066F523A9E002000F9A3B /* TransferHistoryListFetcher.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift in Sources */,
 				BCCE0AAD23681B2400A183AA /* ProfileController.swift in Sources */,
-				BCC2FAEC2418EA0800A3DD87 /* SignUpVC.swift in Sources */,
+				BCC2FAEC2418EA0800A3DD87 /* SignUpMethodsVC.swift in Sources */,
 				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
 				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CreatePasswordVC: SignUpBaseVC {
+class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     // MARK: - Nested type
     class ConstraintView: MyView {
         var constraint: CreatePasswordViewModel.Constraint?
@@ -161,6 +161,10 @@ class CreatePasswordVC: SignUpBaseVC {
     }
     
     // MARK: - Actions
+    override func backButtonDidTouch() {
+        resetSignUpProcess()
+    }
+    
     @objc func showPasswordDidTouch() {
         viewModel.isShowingPassword.accept(!viewModel.isShowingPassword.value)
     }

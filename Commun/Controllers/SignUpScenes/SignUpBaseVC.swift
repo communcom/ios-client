@@ -60,7 +60,7 @@ class SignUpBaseVC: BaseViewController {
         super.setUp()
         
         // title
-        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonDidTouch), for: .touchUpInside)
         view.addSubview(backButton)
         backButton.autoPinTopAndLeadingToSuperViewSafeArea(inset: 10, xInset: 0)
         
@@ -120,5 +120,10 @@ class SignUpBaseVC: BaseViewController {
                nc?.pushViewController(signInVC)
            })
        }
-   }
+    }
+    
+    @objc func backButtonDidTouch() {
+        back()
+    }
+    
 }
