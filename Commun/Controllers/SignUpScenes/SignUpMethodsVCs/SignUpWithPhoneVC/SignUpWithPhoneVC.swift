@@ -146,6 +146,11 @@ class SignUpWithPhoneVC: UIViewController, SignUpRouter {
             checkedStep = true
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 
     // MARK: - Custom Functions
     func setupBindings() {

@@ -47,17 +47,20 @@ class BackUpKeysVC: BoardingVC {
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor)
             .isActive = true
         
-        let titleLabel = UILabel.with(text: "Master password".localized().uppercaseFirst, textSize: 33 * Config.heightRatio, weight: .bold)
+        let titleLabel = UILabel.with(text: "you are the owner".localized().uppercaseFirst, textSize: 33 * Config.heightRatio, weight: .bold)
         view.addSubview(titleLabel)
         titleLabel.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 13)
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        let descriptionLabel = UILabel.with(text: "has been generated", textSize: 33 * Config.heightRatio)
+        let descriptionLabel = UILabel.with(text: "of your identity", textSize: 33 * Config.heightRatio)
         view.addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel)
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        let infoLabel = UILabel.with(text: "you need the master password to Log in\nWe don’t keep and can’t restore passwords\nSave it!".localized().uppercaseFirst, textSize: 17 * Config.heightRatio, weight: .regular, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+        let infoLabel = UILabel.with(numberOfLines: 0, textAlignment: .center)
+        infoLabel.attributedText = NSMutableAttributedString()
+            .text("commun doesn't have access to your password, and also in case of loss will not be able to recover it".localized().uppercaseFirst + ". ", size: 17 * Config.heightRatio, weight: .medium, color: .a5a7bd)
+            .text("save it securely".localized().uppercaseFirst + "!", size: 17 * Config.heightRatio, weight: .medium)
         view.addSubview(infoLabel)
         infoLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 6)
         infoLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
