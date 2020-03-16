@@ -14,7 +14,7 @@ class SignUpBaseVC: BaseViewController {
     var alreadyHasAccountText: String {"already have an account? Sign in".localized().uppercaseFirst}
     
     // MARK: - Subviews
-    lazy var backButton = UIButton.back()
+    lazy var backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
     lazy var titleLabel = UILabel.with(text: "sign up".localized().uppercaseFirst, textSize: 34, weight: .bold)
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     
