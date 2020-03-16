@@ -35,9 +35,13 @@ extension SignUpRouter where Self: UIViewController {
             let setUserVC = SetUserVC()
             vc = setUserVC
             
+        case .setPassword:
+            let createPasswordVC = CreatePasswordVC()
+            vc = createPasswordVC
+            
         case .toBlockChain:
             if let setUserVC = self as? SetUserVC {
-                setUserVC.handleToBlockchainStep()
+                setUserVC.navigateToSetPassword()
                 return
             }
             

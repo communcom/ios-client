@@ -84,7 +84,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
         
         // if username has already been set
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
-            handleToBlockchainStep()
+            navigateToSetPassword()
         }
     }
     
@@ -139,29 +139,17 @@ class SetUserVC: BaseViewController, SignUpRouter {
         self.view.endEditing(true)
         
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
-            handleToBlockchainStep()
+            navigateToSetPassword()
             return
         }
         
         showIndetermineHudWithMessage("setting username".localized().uppercaseFirst + "...")
         
-        RestAPIManager.instance.setUserName(userName).map {_ in ()}
-            .catchError({ error in
-                if let error = error as? CMError {
-                    if error.message == ErrorMessage.invalidStepTaken.rawValue,
-                        Config.currentUser?.registrationStep == .toBlockChain
-                    {
-                        return .just(())
-                    }
-                }
-                throw error
-            })
-            .flatMapCompletable({ (_) -> Completable in
-                self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
-                return RestAPIManager.instance.toBlockChain()
-            })
+        RestAPIManager.instance.setUserName(userName)
+            .flatMapToCompletable()
             .subscribe(onCompleted: {
-                AuthManager.shared.reload()
+                self.hideHud()
+                self.signUpNextStep()
             }, onError: {error in
                 self.hideHud()
                 self.handleSignUpError(error: error)
@@ -173,16 +161,11 @@ class SetUserVC: BaseViewController, SignUpRouter {
         view.endEditing(true)
     }
     
-    func handleToBlockchainStep() {
+    func navigateToSetPassword() {
         self.textField.text = KeychainManager.currentUser()?.name
-        self.showIndetermineHudWithMessage("saving to blockchain")
-        RestAPIManager.instance.toBlockChain()
-            .subscribe(onCompleted: {
-                AuthManager.shared.reload()
-            }) { (error) in
-                self.hideHud()
-                self.handleSignUpError(error: error)
-            }
-            .disposed(by: self.disposeBag)
+        
+        try! KeychainManager.save([Config.registrationStepKey: CurrentUserRegistrationStep.setPassword.rawValue])
+        
+        signUpNextStep()
     }
 }

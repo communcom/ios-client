@@ -1,5 +1,5 @@
 //
-//  SignUpVC.swift
+//  SignUpMethodsVC.swift
 //  Commun
 //
 //  Created by Chung Tran on 3/11/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SignUpVC: SignUpBaseVC {
+class SignUpMethodsVC: SignUpBaseVC {
     // MARK: - Nested type
     struct Method {
         var serviceName: String
