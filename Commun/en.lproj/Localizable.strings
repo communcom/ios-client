@@ -190,6 +190,7 @@
 "post top state description"                    =   "after a given time, it will get the reward";
 "post reward state title"                       =   "this post has been rewarded";
 "post reward state description"                 =   "this publication was interesting for Community members";
+"posts"                                         =   "posts";
 
 
 // R
@@ -287,5 +288,8 @@
 "you have a new notification"                   =   "you have a new notification";
 "you have no notification"                      =   "you have no notification";
 "you have not made any"                         =   "you have not made any";
+"you haven’t created any"                       =   "you haven’t created any";
+"you haven’t written any"                       =   "you haven’t written any";
 "your socializing"                              =   "your socializing";
 "yes"                                           =   "yes";
+"yet"                                           =   "yet";
