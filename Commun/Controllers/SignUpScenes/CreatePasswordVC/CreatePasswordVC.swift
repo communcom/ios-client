@@ -11,6 +11,7 @@ import Foundation
 class CreatePasswordVC: SignUpBaseVC {
     // MARK: - Nested type
     class ConstraintView: MyView {
+        var constraint: CreatePasswordViewModel.Constraint?
         let activeColor = UIColor.appMainColor
         let inactiveColor = UIColor.a5a7bd
         lazy var symbol = UILabel.with(textSize: 22, weight: .medium, textColor: inactiveColor, textAlignment: .center)
@@ -32,10 +33,11 @@ class CreatePasswordVC: SignUpBaseVC {
             }
         }
         
-        func setUp(with trait: CreatePasswordViewModel.Constraint) {
-            symbol.text = trait.symbol
-            title.text = trait.title.localized().uppercaseFirst
-            isActive = trait.isActive
+        func setUp(with constraint: CreatePasswordViewModel.Constraint) {
+            self.constraint = constraint
+            symbol.text = constraint.symbol
+            title.text = constraint.title.localized().uppercaseFirst
+            isActive = constraint.isSastified
         }
     }
     // MARK: - Properties
@@ -123,6 +125,13 @@ class CreatePasswordVC: SignUpBaseVC {
     
     override func bind() {
         super.bind()
+        // text field
+        textField.rx.text.orEmpty
+            .map {self.viewModel.validate(password: $0)}
+            .bind(to: nextButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        // viewModel
         viewModel.isShowingPassword
             .subscribe(onNext: { (isShowingPassword) in
                 self.textField.isSecureTextEntry = !isShowingPassword
@@ -131,17 +140,21 @@ class CreatePasswordVC: SignUpBaseVC {
             .disposed(by: disposeBag)
         
         viewModel.constraints
-            .map { constraints -> [ConstraintView] in
-                let constraintViews = constraints.map { constraint -> ConstraintView in
-                    let view = ConstraintView()
-                    view.setUp(with: constraint)
-                    return view
+            .subscribe(onNext: { constraints in
+                if self.constraintsStackView.arrangedSubviews.count == 0 {
+                    let constraintViews = constraints.map { constraint -> ConstraintView in
+                        let view = ConstraintView()
+                        view.setUp(with: constraint)
+                        return view
+                    }
+                    self.constraintsStackView.addArrangedSubviews(constraintViews)
+                } else {
+                    let constraintViews = self.constraintsStackView.arrangedSubviews as! [ConstraintView]
+                    for view in constraintViews {
+                        guard let changedConstraint = constraints.first(where: {$0.title == view.constraint?.title}) else {return}
+                        view.setUp(with: changedConstraint)
+                    }
                 }
-                return constraintViews
-            }
-            .subscribe(onNext: { views in
-                self.constraintsStackView.removeArrangedSubviews()
-                self.constraintsStackView.addArrangedSubviews(views)
             })
             .disposed(by: disposeBag)
     }
