@@ -1217,12 +1217,12 @@
 		3B986B6322CE4B8100C1E985 /* SignUpScenes */ = {
 			isa = PBXGroup;
 			children = (
+				B17A970B228002440081B8E0 /* SignUpRouter.swift */,
 				BCC2FAE92418E72000A3DD87 /* SignUpBaseVC.swift */,
 				5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */,
 				578B94D82263CBC300FB5BC6 /* ConfirmUserVC */,
 				5787C0C222650F8A00568CEC /* SetUserVC */,
 				BC34B4CF241F1BDC00855DE2 /* CreatePasswordVC */,
-				B17A970B228002440081B8E0 /* SignUpRouter.swift */,
 			);
 			path = SignUpScenes;
 			sourceTree = "<group>";
