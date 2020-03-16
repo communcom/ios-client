@@ -170,6 +170,30 @@ class CreatePasswordVC: SignUpBaseVC {
     }
     
     @objc func nextButtonDidTouch() {
+        if let failureConstraint = viewModel.constraints.value.first(where: {!$0.isSastified}) {
+            var message = "something went wrong".localized().uppercaseFirst
+            switch failureConstraint.title {
+            case "lowercase":
+                message = "password must contain at least one lowercase character".localized().uppercaseFirst
+            case "uppercase":
+                message = "password must contain at least one uppercase character".localized().uppercaseFirst
+            case "symbol":
+                message = "password must contain at least one special character".localized().uppercaseFirst
+            case "min length":
+                message = "password must contain at least 8 characters".localized().uppercaseFirst
+            default:
+                break
+            }
+            hintView?.display(inPosition: nextButton.frame.origin, withType: .error(message))
+            return
+        }
         
+        validationDidComplete()
+    }
+    
+    func validationDidComplete() {
+        guard let currentPassword = textField.text else {return}
+        let confirmVC = ConfirmPasswordVC(currentPassword: currentPassword)
+        show(confirmVC, sender: nil)
     }
 }

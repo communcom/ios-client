@@ -64,8 +64,6 @@ class CMHint: UIView {
                                            font: .systemFont(ofSize: .adaptive(width: 12.0), weight: .medium),
                                            numberOfLines: 0,
                                            color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
-        
-        contentLabelInstance.translatesAutoresizingMaskIntoConstraints = false
         contentLabelInstance.alpha = 0.6
         
         return contentLabelInstance
@@ -84,10 +82,6 @@ class CMHint: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        print("XXX")
     }
     
     // MARK: - Custom Functions
@@ -125,7 +119,7 @@ class CMHint: UIView {
         isUserInteractionEnabled = true
     }
 
-    func display(inPosition position: CGPoint, withType type: HintType = .enterText, andButtonHeight buttonHeight: CGFloat = .adaptive(height: 50.0), completion: (() -> Void)?) {
+    func display(inPosition position: CGPoint, withType type: HintType = .enterText, andButtonHeight buttonHeight: CGFloat = .adaptive(height: 50.0), completion: (() -> Void)? = nil) {
         contentLabel.text = type.introduced()
         
         // Show
