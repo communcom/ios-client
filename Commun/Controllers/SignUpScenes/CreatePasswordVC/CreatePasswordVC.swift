@@ -105,6 +105,7 @@ class CreatePasswordVC: SignUpBaseVC {
         
         // button
         view.addSubview(nextButton)
+        nextButton.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
         nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
         let constant: CGFloat
         switch UIDevice.current.screenType {
@@ -128,7 +129,7 @@ class CreatePasswordVC: SignUpBaseVC {
         // text field
         textField.rx.text.orEmpty
             .map {self.viewModel.validate(password: $0)}
-            .bind(to: nextButton.rx.isEnabled)
+            .bind(to: nextButton.rx.isDisabled)
             .disposed(by: disposeBag)
         
         // viewModel
@@ -166,5 +167,9 @@ class CreatePasswordVC: SignUpBaseVC {
     
     @objc func hideKeyboard() {
         view.endEditing(true)
+    }
+    
+    @objc func nextButtonDidTouch() {
+        
     }
 }
