@@ -403,6 +403,8 @@
 		BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C423701441005EDAAD /* SubscribersVC.swift */; };
 		BCB4A4C72370188B005EDAAD /* SubscribersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */; };
 		BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */; };
+		BCC2FAEA2418E72000A3DD87 /* SignUpBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAE92418E72000A3DD87 /* SignUpBaseVC.swift */; };
+		BCC2FAEC2418EA0800A3DD87 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */; };
 		BCC60E1623A0D02C00D40013 /* FeedPageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */; };
 		BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB99302375503A005252CF /* PostPageVC+Binding.swift */; };
 		BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB993323756318005252CF /* PostHeaderTextView.swift */; };
@@ -917,6 +919,8 @@
 		BCB4A4C423701441005EDAAD /* SubscribersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersVC.swift; sourceTree = "<group>"; };
 		BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersCell.swift; sourceTree = "<group>"; };
 		BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsViewController.swift; sourceTree = "<group>"; };
+		BCC2FAE92418E72000A3DD87 /* SignUpBaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBaseVC.swift; sourceTree = "<group>"; };
+		BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageHeaderView.swift; sourceTree = "<group>"; };
 		BCCB99302375503A005252CF /* PostPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Binding.swift"; sourceTree = "<group>"; };
 		BCCB993323756318005252CF /* PostHeaderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
@@ -1619,6 +1623,8 @@
 		5797E0F6225DDA260026C4D5 /* SignUpVC */ = {
 			isa = PBXGroup;
 			children = (
+				BCC2FAE92418E72000A3DD87 /* SignUpBaseVC.swift */,
+				BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */,
 				BCC2FAE82418E5D900A3DD87 /* SignUpWithPhoneVC */,
 			);
 			path = SignUpVC;
@@ -3300,6 +3306,7 @@
 				BC016D4E235EA1DE00F1319F /* BaseViewController.swift in Sources */,
 				3BE85D262327A50200C7E7F6 /* GridView.swift in Sources */,
 				BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */,
+				BCC2FAEA2418E72000A3DD87 /* SignUpBaseVC.swift in Sources */,
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
 				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
@@ -3416,6 +3423,7 @@
 				BC9066F523A9E002000F9A3B /* TransferHistoryListFetcher.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift in Sources */,
 				BCCE0AAD23681B2400A183AA /* ProfileController.swift in Sources */,
+				BCC2FAEC2418EA0800A3DD87 /* SignUpVC.swift in Sources */,
 				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
 				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,
