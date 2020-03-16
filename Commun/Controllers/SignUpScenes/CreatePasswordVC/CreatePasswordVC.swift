@@ -16,6 +16,15 @@ class CreatePasswordVC: SignUpBaseVC {
         lazy var symbol = UILabel.with(textSize: 22, weight: .medium, textColor: inactiveColor, textAlignment: .center)
         lazy var title = UILabel.with(textSize: 12, textColor: inactiveColor, textAlignment: .center)
         
+        override func commonInit() {
+            super.commonInit()
+            addSubview(symbol)
+            symbol.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+            addSubview(title)
+            title.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+            title.autoPinEdge(.top, to: .bottom, of: symbol, withOffset: 0)
+        }
+        
         var isActive = false {
             didSet {
                 symbol.textColor = isActive ? activeColor : inactiveColor
@@ -23,26 +32,14 @@ class CreatePasswordVC: SignUpBaseVC {
             }
         }
         
-        func setUp(with trait: Constraint) {
+        func setUp(with trait: CreatePasswordViewModel.Constraint) {
             symbol.text = trait.symbol
             title.text = trait.title.localized().uppercaseFirst
             isActive = trait.isActive
         }
     }
-    
-    struct Constraint {
-        var symbol: String
-        var title: String
-        var isActive = false
-    }
     // MARK: - Properties
     let viewModel = CreatePasswordViewModel()
-    let constraints: [Constraint] = [
-        Constraint(symbol: "a", title: "lowercase"),
-        Constraint(symbol: "A", title: "uppercase"),
-        Constraint(symbol: "$", title: "symbol"),
-        Constraint(symbol: "8+", title: "min length")
-    ]
     
     // MARK: - Subviews
     lazy var textField: UITextField = {
@@ -75,9 +72,13 @@ class CreatePasswordVC: SignUpBaseVC {
         return button
     }()
     
-    lazy var nextButton = CommunButton(width: 290, height: 56, label: "next".localized().uppercaseFirst, cornerRadius: 8, completionDisable: {
-        
-    })
+    lazy var constraintsStackView = UIStackView(axis: .horizontal, spacing: 16)
+    
+    lazy var nextButton: CommunButton = {
+        let button = CommunButton.default(height: 56, label: "next".localized().uppercaseFirst, cornerRadius: 8, isHuggingContent: false, isDisableGrayColor: true)
+        button.autoSetDimension(.width, toSize: 290)
+        return button
+    }()
     
     // MARK: - Methods
     override func setUp() {
@@ -95,21 +96,14 @@ class CreatePasswordVC: SignUpBaseVC {
         textField.autoAlignAxis(toSuperviewAxis: .vertical)
         
         // traits view
-        let stackView = UIStackView(axis: .horizontal, spacing: 16)
-        scrollView.contentView.addSubview(stackView)
-        stackView.autoPinEdge(.top, to: .bottom, of: textField, withOffset: 16)
-        stackView.autoAlignAxis(toSuperviewAxis: .vertical)
-        stackView.autoPinEdge(toSuperviewEdge: .bottom)
-        
-        let constraintViews = constraints.map { constraint -> ConstraintView in
-            let view = ConstraintView()
-            view.setUp(with: constraint)
-            return view
-        }
-        stackView.addArrangedSubviews(constraintViews)
+        scrollView.contentView.addSubview(constraintsStackView)
+        constraintsStackView.autoPinEdge(.top, to: .bottom, of: textField, withOffset: 16)
+        constraintsStackView.autoAlignAxis(toSuperviewAxis: .vertical)
+        constraintsStackView.autoPinEdge(toSuperviewEdge: .bottom)
         
         // button
         view.addSubview(nextButton)
+        nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
         let constant: CGFloat
         switch UIDevice.current.screenType {
         case .iPhones_5_5s_5c_SE:
@@ -120,7 +114,11 @@ class CreatePasswordVC: SignUpBaseVC {
         
         let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: nextButton, attribute: .bottom, multiplier: 1.0, constant: constant)
         keyboardViewV.observeKeyboardHeight()
-        self.view.addConstraint(keyboardViewV)
+        view.addConstraint(keyboardViewV)
+        
+        // hide keyboard
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
     }
     
     override func bind() {
@@ -128,7 +126,22 @@ class CreatePasswordVC: SignUpBaseVC {
         viewModel.isShowingPassword
             .subscribe(onNext: { (isShowingPassword) in
                 self.textField.isSecureTextEntry = !isShowingPassword
-                self.showPasswordButton.setImage(UIImage(named:(isShowingPassword ? "hide": "show") + "-password"), for: .normal)
+                self.showPasswordButton.setImage(UIImage(named: (isShowingPassword ? "hide" : "show") + "-password"), for: .normal)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.constraints
+            .map { constraints -> [ConstraintView] in
+                let constraintViews = constraints.map { constraint -> ConstraintView in
+                    let view = ConstraintView()
+                    view.setUp(with: constraint)
+                    return view
+                }
+                return constraintViews
+            }
+            .subscribe(onNext: { views in
+                self.constraintsStackView.removeArrangedSubviews()
+                self.constraintsStackView.addArrangedSubviews(views)
             })
             .disposed(by: disposeBag)
     }
@@ -136,5 +149,9 @@ class CreatePasswordVC: SignUpBaseVC {
     // MARK: - Actions
     @objc func showPasswordDidTouch() {
         viewModel.isShowingPassword.accept(!viewModel.isShowingPassword.value)
+    }
+    
+    @objc func hideKeyboard() {
+        view.endEditing(true)
     }
 }
