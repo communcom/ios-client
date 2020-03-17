@@ -25,7 +25,7 @@ class ExplanationView: MyView {
     lazy var learnMoreButton = UIButton(label: "learn more".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .medium), textColor: .white)
     
     // MARK: - Initializers
-    init(id: String, title: String, descriptionText: String, imageName: String? = nil) {
+    init(title: String, descriptionText: String, imageName: String? = nil) {
         self.title = title
         self.descriptionText = descriptionText
         self.imageName = imageName
@@ -77,5 +77,11 @@ class ExplanationView: MyView {
         
         backgroundColor = .appMainColor
         cornerRadius = 6
+        
+        closeButton.addTarget(self, action: #selector(buttonCloseDidTouch), for: .touchUpInside)
+    }
+    
+    @objc func buttonCloseDidTouch() {
+        removeFromSuperview()
     }
 }

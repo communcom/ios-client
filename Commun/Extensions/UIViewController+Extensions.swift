@@ -410,14 +410,24 @@ extension UIViewController {
         self.present(cardVC, animated: true, completion: nil)
     }
     
-    func showPopoverWithView(_ view: UIView, fromView: UIView, backgroundColor: UIColor = .appMainColor, permittedArrowDirections: UIPopoverArrowDirection = .any) {
-        let vc = CardViewController(contentView: view)
-        vc.modalPresentationStyle = .popover
-        vc.popoverPresentationController!.sourceView = fromView.superview
-        vc.popoverPresentationController!.sourceRect = fromView.frame
-        vc.popoverPresentationController!.permittedArrowDirections = permittedArrowDirections
-        vc.view.backgroundColor = backgroundColor
-        present(vc, animated: true, completion: nil)
+    func showExplanationView(title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0) {
+        let eView = ExplanationView(title: title, descriptionText: description, imageName: nil)
+        view.addSubview(eView)
+        if showAbove {
+            eView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 10)
+                .isActive = true
+        } else {
+            eView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+                .isActive = true
+        }
+        eView.autoPinEdge(toSuperviewEdge: .leading, withInset: marginLeft)
+        eView.autoPinEdge(toSuperviewEdge: .trailing, withInset: marginRight)
+        if showAbove {
+            eView.autoPinEdge(.bottom, to: .top, of: sender, withOffset: -10)
+        } else {
+            eView.autoPinEdge(.top, to: .bottom, of: sender, withOffset: 10)
+        }
+        
     }
 
     // MARK: - Actions
