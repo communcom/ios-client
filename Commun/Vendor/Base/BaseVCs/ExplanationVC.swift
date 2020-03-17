@@ -46,7 +46,7 @@ class ExplanationVC: BaseViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        var hStack: UIStackView = {
+        let hStack: UIStackView = {
             let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
             
             if self.imageName != nil {
@@ -56,21 +56,23 @@ class ExplanationVC: BaseViewController {
             var vStack: UIStackView {
                 let vStack = UIStackView(axis: .vertical, spacing: 20, alignment: .leading, distribution: .fill)
                 
-                var hStack: UIStackView {
+                let hStack: UIStackView = {
                     let hStack = UIStackView(axis: .horizontal, alignment: .top, distribution: .fill)
                     hStack.addArrangedSubviews([self.titleLabel, self.closeButton])
                     return hStack
-                }
+                }()
                 vStack.addArrangedSubview(hStack)
+                hStack.widthAnchor.constraint(equalTo: vStack.widthAnchor).isActive = true
                 
                 vStack.addArrangedSubview(self.descriptionLabel)
                 
-                var hStack2: UIStackView {
-                    let hStack = UIStackView(axis: .horizontal, alignment: .center, distribution: .fill)
+                let hStack2: UIStackView = {
+                    let hStack = UIStackView(axis: .horizontal, distribution: .equalSpacing)
                     hStack.addArrangedSubviews([self.dontShowAgainButton, self.learnMoreButton])
                     return hStack
-                }
+                }()
                 vStack.addArrangedSubview(hStack2)
+                hStack2.widthAnchor.constraint(equalTo: vStack.widthAnchor).isActive = true
                 
                 return vStack
             }
@@ -80,5 +82,7 @@ class ExplanationVC: BaseViewController {
         
         view.addSubview(hStack)
         hStack.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10))
+        
+        view.backgroundColor = .appMainColor
     }
 }
