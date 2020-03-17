@@ -1,5 +1,5 @@
 //
-//  PopoverViewController.swift
+//  ExplanationView.swift
 //  Commun
 //
 //  Created by Chung Tran on 3/17/20.
@@ -8,14 +8,10 @@
 
 import Foundation
 
-class ExplanationVC: BaseViewController {
+class ExplanationView: MyView {
     // MARK: - Properties
-    let id: String
-    var descriptionText: String {
-        didSet {
-            descriptionLabel.text = descriptionText
-        }
-    }
+    var title: String
+    var descriptionText: String
     var imageName: String?
     
     // MARK: - Subviews
@@ -30,22 +26,18 @@ class ExplanationVC: BaseViewController {
     
     // MARK: - Initializers
     init(id: String, title: String, descriptionText: String, imageName: String? = nil) {
-        self.id = id
+        self.title = title
         self.descriptionText = descriptionText
         self.imageName = imageName
-        super.init(nibName: nil, bundle: nil)
-        defer {
-            self.title = title
-        }
+        super.init(frame: .zero)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Methods
-    override func setUp() {
-        super.setUp()
+    override func commonInit() {
+        super.commonInit()
         let hStack: UIStackView = {
             let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
             
@@ -80,9 +72,10 @@ class ExplanationVC: BaseViewController {
             return hStack
         }()
         
-        view.addSubview(hStack)
+        addSubview(hStack)
         hStack.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10))
         
-        view.backgroundColor = .appMainColor
+        backgroundColor = .appMainColor
+        cornerRadius = 6
     }
 }
