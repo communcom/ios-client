@@ -132,6 +132,8 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
             .bind(to: nextButton.rx.isDisabled)
             .disposed(by: disposeBag)
         
+        textField.delegate = self
+        
         // viewModel
         viewModel.isShowingPassword
             .subscribe(onNext: { (isShowingPassword) in
@@ -199,5 +201,11 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         guard let currentPassword = textField.text else {return}
         let confirmVC = ConfirmPasswordVC(currentPassword: currentPassword)
         show(confirmVC, sender: nil)
+    }
+}
+
+extension CreatePasswordVC: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        string.rangeOfCharacter(from: .whitespaces) == nil
     }
 }
