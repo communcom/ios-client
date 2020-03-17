@@ -102,10 +102,10 @@ extension UIButton {
         return button
     }
 
-    static func close(size: CGFloat = 24, imageName: String = "close-x") -> UIButton {
-        let button = UIButton(width: size, height: size, backgroundColor: UIColor(hexString: "#F3F5FA"), cornerRadius: size / 2)
+    static func close(size: CGFloat = 24, imageName: String = "close-x", backgroundColor: UIColor = .f3f5fa, tintColor: UIColor = .appGrayColor) -> UIButton {
+        let button = UIButton(width: size, height: size, backgroundColor: backgroundColor, cornerRadius: size / 2)
         button.setImage(UIImage(named: imageName), for: .normal)
-        button.tintColor = .appGrayColor
+        button.tintColor = tintColor
         if size < 44 {
             button.touchAreaEdgeInsets = UIEdgeInsets(inset: (size - 44) / 2)
         }
