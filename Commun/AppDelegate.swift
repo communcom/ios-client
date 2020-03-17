@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let notificationTappedRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
     let shareExtensionDataRelay = BehaviorRelay<ShareExtensionData?>(value: nil)
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
-    private var bag = DisposeBag()
+    private var disposeBag = DisposeBag()
     
     // MARK: - RootVCs
     var splashVC: SplashViewController { controllerContainer.resolve(SplashViewController.self)! }
@@ -105,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .subscribe(onNext: { (count) in
                 UIApplication.shared.applicationIconBadgeNumber = Int(count)
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         return true
     }
@@ -144,10 +144,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             default:
                 break
             }
-
-            if let splashVC = self.window?.rootViewController as? SplashViewController {
-                splashVC.showErrorScreen(title: "error".localized().uppercaseFirst, subtitle: error.localizedDescription)
-            }
         }
     }
 
@@ -184,7 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }) { (error) in
                 completion(error)
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

@@ -9,8 +9,6 @@
 import UIKit
 import RxSwift
 
-let disposeBag = DisposeBag()
-
 enum ActionButtonType {
     case home
     case wallet
@@ -18,6 +16,7 @@ enum ActionButtonType {
 }
 
 class TransactionCompletedView: UIView {
+    let disposeBag = DisposeBag()
     // MARK: - Properties
     let repeatButtonsArray = ["transfer", "convert"]
     private var isHistoryMode: Bool = false

@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import RxSwift
 
 class SplashViewController: UIViewController {
     @IBOutlet weak var splashImageView: UIImageView!
     var errorView: UIView!
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,17 @@ class SplashViewController: UIViewController {
         zoomAnim.autoreverses = true
         splashImageView.layer.add(zoomAnim, forKey: "Loading")
         // Do any additional setup after loading the view.
+        
+        AuthManager.shared.status
+            .subscribe(onNext: { (status) in
+                switch status {
+                case .error(let error):
+                    self.showErrorScreen(title: "error".localized().uppercaseFirst, subtitle: error.localizedDescription)
+                default:
+                    self.view.hideErrorView()
+                }
+            })
+            .disposed(by: disposeBag)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
