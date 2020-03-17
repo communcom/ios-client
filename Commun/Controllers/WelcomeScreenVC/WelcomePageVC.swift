@@ -88,6 +88,7 @@ extension WelcomePageVC: UIPageViewControllerDelegate, UIPageViewControllerDataS
             return nil
         }
 
+        AnalyticsManger.shared.onboadringOpenScreen(page: nextIndex + 1)
         guard nextIndex < pages.count else { return pages.first }
         guard pages.count > nextIndex else { return nil }
 
@@ -100,8 +101,6 @@ extension WelcomePageVC: UIPageViewControllerDelegate, UIPageViewControllerDataS
 
             self.showActionButtons(viewControllerIndex)
             self.currentPage = viewControllerIndex
-//            self.timer?.invalidate()
-//            self.setUpCountDown()
         }
     }
 }

@@ -34,6 +34,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
     
     override func setUp() {
         super.setUp()
+        AnalyticsManger.shared.registrationOpenScreen(4)
         self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
         // backButton

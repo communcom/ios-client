@@ -23,7 +23,7 @@ class SelectCountryVC: UIViewController {
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        AnalyticsManger.shared.registrationOpenScreen(1)
         self.title = "select country".localized().uppercaseFirst
         
         tableView.register(UINib(nibName: "CountryCell", bundle: nil), forCellReuseIdentifier: "CountryCell")

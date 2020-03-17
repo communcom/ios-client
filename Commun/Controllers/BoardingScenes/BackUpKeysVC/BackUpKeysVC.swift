@@ -35,6 +35,7 @@ class BackUpKeysVC: BoardingVC {
     
     override func setUp() {
         super.setUp()
+        AnalyticsManger.shared.registrationOpenScreen(5)
         view.backgroundColor = .white
         
         let imageView = UIImageView(imageNamed: "masterkey-save")

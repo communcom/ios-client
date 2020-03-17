@@ -83,7 +83,7 @@ class SignUpWithPhoneVC: UIViewController, SignUpRouter {
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        AnalyticsManger.shared.registrationOpenScreen(2)
         self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
 

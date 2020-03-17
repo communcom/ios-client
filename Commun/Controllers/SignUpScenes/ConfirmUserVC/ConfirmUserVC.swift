@@ -87,7 +87,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        AnalyticsManger.shared.registrationOpenScreen(3)
         self.title = "verification".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.setNavBarBackButton(title: "close")
