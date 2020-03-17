@@ -423,9 +423,9 @@ extension UIViewController {
         eView.autoPinEdge(toSuperviewEdge: .leading, withInset: marginLeft)
         eView.autoPinEdge(toSuperviewEdge: .trailing, withInset: marginRight)
         if showAbove {
-            eView.autoPinEdge(.bottom, to: .top, of: sender, withOffset: -10)
+            eView.autoPinEdge(.bottom, to: .top, of: sender)
         } else {
-            eView.autoPinEdge(.top, to: .bottom, of: sender, withOffset: 10)
+            eView.autoPinEdge(.top, to: .bottom, of: sender)
         }
         
     }

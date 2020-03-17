@@ -72,11 +72,15 @@ class ExplanationView: MyView {
             return hStack
         }()
         
-        addSubview(hStack)
-        hStack.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10))
+        let containerView = UIView(backgroundColor: .appMainColor)
+        containerView.addSubview(hStack)
+        hStack.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
         
-        backgroundColor = .appMainColor
-        cornerRadius = 6
+        containerView.cornerRadius = 6
+        
+        addSubview(containerView)
+        containerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        containerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         
         closeButton.addTarget(self, action: #selector(buttonCloseDidTouch), for: .touchUpInside)
     }
