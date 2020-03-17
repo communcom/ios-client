@@ -409,6 +409,16 @@ extension UIViewController {
         let cardVC = CardViewController(contentView: view)
         self.present(cardVC, animated: true, completion: nil)
     }
+    
+    func showPopoverWithView(_ view: UIView, fromView: UIView, backgroundColor: UIColor = .appMainColor, permittedArrowDirections: UIPopoverArrowDirection = .any) {
+        let vc = CardViewController(contentView: view)
+        vc.modalPresentationStyle = .popover
+        vc.popoverPresentationController!.sourceView = fromView.superview
+        vc.popoverPresentationController!.sourceRect = fromView.frame
+        vc.popoverPresentationController!.permittedArrowDirections = permittedArrowDirections
+        vc.view.backgroundColor = backgroundColor
+        present(vc, animated: true, completion: nil)
+    }
 
     // MARK: - Actions
     @objc func popToPreviousVC() {
