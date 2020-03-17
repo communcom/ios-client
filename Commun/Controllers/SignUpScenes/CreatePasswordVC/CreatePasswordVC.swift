@@ -176,16 +176,21 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     }
     
     @objc func nextButtonDidTouch() {
+        if (textField.text ?? "").count > AuthManager.maxPasswordLength {
+            hintView?.display(inPosition: nextButton.frame.origin, withType: .error("password must contain no more than 52 characters".localized().uppercaseFirst))
+            return
+        }
+        
         if let failureConstraint = viewModel.constraints.value.first(where: {!$0.isSastified}) {
             var message = "something went wrong".localized().uppercaseFirst
             switch failureConstraint.title {
-            case "lowercase":
+            case CreatePasswordViewModel.lowercaseTitle:
                 message = "password must contain at least one lowercase character".localized().uppercaseFirst
-            case "uppercase":
+            case CreatePasswordViewModel.uppercaseTitle:
                 message = "password must contain at least one uppercase character".localized().uppercaseFirst
-            case "number":
+            case CreatePasswordViewModel.numberTitle:
                 message = "password must contain at least one digit".localized().uppercaseFirst
-            case "min length":
+            case CreatePasswordViewModel.minLengthTitle:
                 message = "password must contain at least 8 characters".localized().uppercaseFirst
             default:
                 break
