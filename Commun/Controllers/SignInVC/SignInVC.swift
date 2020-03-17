@@ -157,7 +157,7 @@ class SignInVC: BaseViewController {
     }
     
     func validate(cred: LoginCredential) -> Bool {
-        return cred.login.count > 3 && cred.key.count > 10
+        return cred.login.count > 3 && cred.key.count >= AuthManager.minPasswordLength
     }
     
     // MARK: - Actions

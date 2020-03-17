@@ -20,7 +20,7 @@ class CreatePasswordViewModel: BaseViewModel {
         Constraint(symbol: "a", title: "lowercase"),
         Constraint(symbol: "A", title: "uppercase"),
         Constraint(symbol: "1", title: "number"),
-        Constraint(symbol: "8+", title: "min length")
+        Constraint(symbol: "\(AuthManager.minPasswordLength)+", title: "min length")
     ])
     
     let isShowingPassword = BehaviorRelay<Bool>(value: false)
@@ -29,7 +29,7 @@ class CreatePasswordViewModel: BaseViewModel {
         let hasLowercasedCharacter = password.contains(where: {$0.isLowercase})
         let hasUppercasedCharacter = password.contains(where: {$0.isUppercase})
         let containsNumber = password.containsNumber
-        let isMoreThan8Character = password.count >= 8
+        let isMoreThanMinPasswordLength = password.count >= AuthManager.minPasswordLength
         
         // modify constraints
         let constraints = self.constraints.value.map {constraint -> Constraint in
@@ -42,7 +42,7 @@ class CreatePasswordViewModel: BaseViewModel {
             case "number":
                 constraint.isSastified = containsNumber
             case "min length":
-                constraint.isSastified = isMoreThan8Character
+                constraint.isSastified = isMoreThanMinPasswordLength
             default:
                 break
             }
@@ -50,6 +50,6 @@ class CreatePasswordViewModel: BaseViewModel {
         }
         self.constraints.accept(constraints)
         
-        return hasLowercasedCharacter && hasUppercasedCharacter && containsNumber && isMoreThan8Character
+        return hasLowercasedCharacter && hasUppercasedCharacter && containsNumber && isMoreThanMinPasswordLength
     }
 }
