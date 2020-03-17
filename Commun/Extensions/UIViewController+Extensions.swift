@@ -411,8 +411,9 @@ extension UIViewController {
     }
     
     func showExplanationView(title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0) {
-        let eView = ExplanationView(title: title, descriptionText: description, imageName: nil)
+        let eView = ExplanationView(title: title, descriptionText: description, imageName: nil, senderView: sender, showAbove: showAbove)
         view.addSubview(eView)
+        eView.fixArrowView()
         if showAbove {
             eView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 10)
                 .isActive = true

@@ -13,6 +13,8 @@ class ExplanationView: MyView {
     var title: String
     var descriptionText: String
     var imageName: String?
+    var senderView: UIView
+    var showAbove: Bool
     
     // MARK: - Subviews
     lazy var titleLabel = UILabel.with(text: title, textSize: 14, weight: .semibold, textColor: .white, numberOfLines: 0)
@@ -23,12 +25,15 @@ class ExplanationView: MyView {
     lazy var imageView = UIImageView(width: 100, height: 100, imageNamed: imageName)
     lazy var dontShowAgainButton = UIButton(label: "don't show this again".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .medium), textColor: .white)
     lazy var learnMoreButton = UIButton(label: "learn more".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .medium), textColor: .white)
+    lazy var arrowView = UIView(width: 10, height: 10, backgroundColor: .appMainColor, cornerRadius: 2)
     
     // MARK: - Initializers
-    init(title: String, descriptionText: String, imageName: String? = nil) {
+    init(title: String, descriptionText: String, imageName: String? = nil, senderView: UIView, showAbove: Bool) {
         self.title = title
         self.descriptionText = descriptionText
         self.imageName = imageName
+        self.senderView = senderView
+        self.showAbove = showAbove
         super.init(frame: .zero)
     }
     
@@ -79,10 +84,18 @@ class ExplanationView: MyView {
         containerView.cornerRadius = 6
         
         addSubview(containerView)
-        containerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        containerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        containerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: showAbove ? .bottom : .top)
+        containerView.autoPinEdge(toSuperviewEdge: showAbove ? .bottom : .top, withInset: 10)
+    
+        arrowView.transform = arrowView.transform.rotated(by: 45 / 180.0 * CGFloat.pi)
+        addSubview(arrowView)
+        arrowView.autoPinEdge(showAbove ? .bottom : .top, to: showAbove ? .bottom : .top, of: containerView, withOffset: showAbove ? 5 : -5)
         
         closeButton.addTarget(self, action: #selector(buttonCloseDidTouch), for: .touchUpInside)
+    }
+    
+    func fixArrowView() {
+        arrowView.autoAlignAxis(.vertical, toSameAxisOf: senderView)
     }
     
     @objc func buttonCloseDidTouch() {
