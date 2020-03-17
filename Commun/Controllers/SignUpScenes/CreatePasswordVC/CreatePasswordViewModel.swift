@@ -19,7 +19,7 @@ class CreatePasswordViewModel: BaseViewModel {
     let constraints = BehaviorRelay<[Constraint]>(value: [
         Constraint(symbol: "a", title: "lowercase"),
         Constraint(symbol: "A", title: "uppercase"),
-        Constraint(symbol: "$", title: "symbol"),
+        Constraint(symbol: "1", title: "number"),
         Constraint(symbol: "8+", title: "min length")
     ])
     
@@ -28,7 +28,7 @@ class CreatePasswordViewModel: BaseViewModel {
     func validate(password: String) -> Bool {
         let hasLowercasedCharacter = password.contains(where: {$0.isLowercase})
         let hasUppercasedCharacter = password.contains(where: {$0.isUppercase})
-        let containsSpecialCharacter = password.containsSpecialCharacter
+        let containsNumber = password.containsNumber
         let isMoreThan8Character = password.count >= 8
         
         // modify constraints
@@ -39,8 +39,8 @@ class CreatePasswordViewModel: BaseViewModel {
                 constraint.isSastified = hasLowercasedCharacter
             case "uppercase":
                 constraint.isSastified = hasUppercasedCharacter
-            case "symbol":
-                constraint.isSastified = containsSpecialCharacter
+            case "number":
+                constraint.isSastified = containsNumber
             case "min length":
                 constraint.isSastified = isMoreThan8Character
             default:
@@ -50,6 +50,6 @@ class CreatePasswordViewModel: BaseViewModel {
         }
         self.constraints.accept(constraints)
         
-        return hasLowercasedCharacter && hasUppercasedCharacter && containsSpecialCharacter && isMoreThan8Character
+        return hasLowercasedCharacter && hasUppercasedCharacter && containsNumber && isMoreThan8Character
     }
 }

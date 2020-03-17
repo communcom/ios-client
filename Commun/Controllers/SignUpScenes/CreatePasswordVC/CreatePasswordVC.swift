@@ -181,8 +181,8 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
                 message = "password must contain at least one lowercase character".localized().uppercaseFirst
             case "uppercase":
                 message = "password must contain at least one uppercase character".localized().uppercaseFirst
-            case "symbol":
-                message = "password must contain at least one special character".localized().uppercaseFirst
+            case "number":
+                message = "password must contain at least one digit".localized().uppercaseFirst
             case "min length":
                 message = "password must contain at least 8 characters".localized().uppercaseFirst
             default:
