@@ -20,7 +20,7 @@ class EnableBiometricsVC: BoardingVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        AnalyticsManger.shared.registrationOpenScreen(6)
         // retrieve policy
         let biometryType = LABiometryType.current
         

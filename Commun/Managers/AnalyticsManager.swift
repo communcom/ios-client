@@ -61,12 +61,33 @@ class AnalyticsManger {
         sendEvent(name: "ONB \(page) screen opend", props: props)
     }
 
+
+    func onboardingOpenScreen(_ number: Int) {
+        sendEvent(name: "Open screen 0.1.\(number)")
+    }
+
     func signUpButtonPressed() {
-        sendEvent(name: "Sign up ONB")
+        sendEvent(name: "Click get started 0.3.1")
+    }
+
+    func registrationOpenScreen(_ number: Int) {
+        sendEvent(name: "Open screen 1.1.\(number)")
+    }
+
+    func registrationWithGoogle() {
+        sendEvent(name: "Google auth")
+    }
+
+    func registrationWithFacebook() {
+        sendEvent(name: "Facebook auth")
+    }
+
+    func registrationWithAppale() {
+        sendEvent(name: "Apple auth")
     }
 
     func signInButtonPressed() {
-        sendEvent(name: "Sign in ONB")
+        sendEvent(name: "Click log in 0.1")
     }
 
     // MARK: - Sign UP
@@ -141,9 +162,7 @@ class AnalyticsManger {
     // MARK: - FTUE
     func ftueSubscribe(codes: [String]) {
         sendEvent(name: "Bounty subscribe", props: [
-            "commun_codes": codes,
-            "num": codes.count,
-            "bounty_commun_codes": codes.prefix(3)
+            "num": codes.count
         ])
     }
 }
