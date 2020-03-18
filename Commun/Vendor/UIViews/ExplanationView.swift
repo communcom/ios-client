@@ -10,11 +10,17 @@ import Foundation
 
 class ExplanationView: MyView {
     // MARK: - Properties
+    let id: String
     var title: String
     var descriptionText: String
     var imageName: String?
     var senderView: UIView
     var showAbove: Bool
+    
+    var userDefaultKey: String {"ExplanationView.\(id).showed"}
+    var shouldShow: Bool {
+        UserDefaults.standard.bool(forKey: userDefaultKey)
+    }
     
     // MARK: - Subviews
     lazy var titleLabel = UILabel.with(text: title, textSize: 14, weight: .semibold, textColor: .white, numberOfLines: 0)
@@ -28,7 +34,8 @@ class ExplanationView: MyView {
     lazy var arrowView = UIView(width: 10, height: 10, backgroundColor: .appMainColor, cornerRadius: 2)
     
     // MARK: - Initializers
-    init(title: String, descriptionText: String, imageName: String? = nil, senderView: UIView, showAbove: Bool) {
+    init(id: String, title: String, descriptionText: String, imageName: String? = nil, senderView: UIView, showAbove: Bool) {
+        self.id = id
         self.title = title
         self.descriptionText = descriptionText
         self.imageName = imageName
@@ -100,5 +107,14 @@ class ExplanationView: MyView {
     
     @objc func buttonCloseDidTouch() {
         removeFromSuperview()
+    }
+    
+    @objc func buttonDontShowAgainDidTouch() {
+        markAsShowed()
+        removeFromSuperview()
+    }
+    
+    func markAsShowed() {
+        UserDefaults.standard.set(true, forKey: userDefaultKey)
     }
 }

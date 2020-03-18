@@ -183,5 +183,28 @@ extension UIView {
         self.layer.cornerRadius = radius
         self.layer.borderColor = color.cgColor
         self.clipsToBounds = true
-    }    
+    }
+    
+    func addExplanationView(id: String, title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0) {
+        let eView = ExplanationView(id: id, title: title, descriptionText: description, imageName: nil, senderView: sender, showAbove: showAbove)
+        
+        if !eView.shouldShow {return}
+        
+        addSubview(eView)
+        eView.fixArrowView()
+        if showAbove {
+            eView.topAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.topAnchor, constant: 10)
+                .isActive = true
+        } else {
+            eView.bottomAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
+                .isActive = true
+        }
+        eView.autoPinEdge(toSuperviewEdge: .leading, withInset: marginLeft)
+        eView.autoPinEdge(toSuperviewEdge: .trailing, withInset: marginRight)
+        if showAbove {
+            eView.autoPinEdge(.bottom, to: .top, of: sender)
+        } else {
+            eView.autoPinEdge(.top, to: .bottom, of: sender)
+        }
+    }
 }

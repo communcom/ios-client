@@ -409,27 +409,6 @@ extension UIViewController {
         let cardVC = CardViewController(contentView: view)
         self.present(cardVC, animated: true, completion: nil)
     }
-    
-    func showExplanationView(title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0) {
-        let eView = ExplanationView(title: title, descriptionText: description, imageName: nil, senderView: sender, showAbove: showAbove)
-        view.addSubview(eView)
-        eView.fixArrowView()
-        if showAbove {
-            eView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 10)
-                .isActive = true
-        } else {
-            eView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
-                .isActive = true
-        }
-        eView.autoPinEdge(toSuperviewEdge: .leading, withInset: marginLeft)
-        eView.autoPinEdge(toSuperviewEdge: .trailing, withInset: marginRight)
-        if showAbove {
-            eView.autoPinEdge(.bottom, to: .top, of: sender)
-        } else {
-            eView.autoPinEdge(.top, to: .bottom, of: sender)
-        }
-        
-    }
 
     // MARK: - Actions
     @objc func popToPreviousVC() {
