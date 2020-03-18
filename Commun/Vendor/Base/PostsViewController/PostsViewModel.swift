@@ -47,31 +47,6 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         }
     }
     
-    override func updateItem(_ updatedItem: ResponseAPIContentGetPost) {
-        // fix rowHeight
-        let items = fetcher.items.value
-        if let index = items.firstIndex(where: {$0.identity == updatedItem.identity}) {
-            if items[index].topExplanation != updatedItem.topExplanation {
-                rowHeights[updatedItem.identity] = nil
-            }
-            if items[index].bottomExplanation != updatedItem.bottomExplanation {
-                rowHeights[updatedItem.identity] = nil
-            }
-        }
-        // perform update
-        super.updateItem(updatedItem)
-    }
-    
-    override func observeItemChange() {
-        super.observeItemChange()
-        
-        ResponseAPIContentGetPost.observeItemChanged()
-            .subscribe(onNext: { post in
-                self.updateItem(post)
-            })
-            .disposed(by: disposeBag)
-    }
-    
     func bindFilter() {
         filter.skip(1).distinctUntilChanged()
             .subscribe(onNext: {filter in
