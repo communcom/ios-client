@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol ExplanationViewDelegate: class {
-    func explanationViewButtonCloseDidTouch(_ explanationView: ExplanationView)
-}
-
 class ExplanationView: MyView {
     // MARK: - Static functions
     private static func userDefaultKeyForId(_ id: String) -> String {
@@ -39,7 +35,7 @@ class ExplanationView: MyView {
         ExplanationView.shouldShowViewWithId(id)
     }
     
-    weak var delegate: ExplanationViewDelegate?
+    var closeDidTouch: (() -> Void)?
     
     // MARK: - Subviews
     lazy var containerView = UIView(backgroundColor: .appMainColor)
@@ -133,20 +129,19 @@ class ExplanationView: MyView {
     }
     
     @objc func buttonCloseDidTouch() {
-        if delegate == nil {
-            ExplanationView.markAsShown(id)
+        if closeDidTouch == nil {
             removeFromSuperview()
         } else {
-            delegate?.explanationViewButtonCloseDidTouch(self)
+            closeDidTouch?()
         }
     }
     
     @objc func buttonDontShowAgainDidTouch() {
-        if delegate == nil {
-            ExplanationView.markAsShown(id)
+        ExplanationView.markAsShown(id)
+        if closeDidTouch == nil {
             removeFromSuperview()
         } else {
-            delegate?.explanationViewButtonCloseDidTouch(self)
+            closeDidTouch?()
         }
     }
     

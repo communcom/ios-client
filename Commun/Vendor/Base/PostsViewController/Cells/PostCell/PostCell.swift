@@ -131,7 +131,12 @@ class PostCell: MyTableViewCell, ListItemCellType {
         eView.autoPinEdge(toSuperviewEdge: .bottom)
         eView.autoPinEdge(toSuperviewEdge: .leading)
         eView.autoPinEdge(toSuperviewEdge: .trailing)
-        eView.delegate = self
+        
+        eView.closeDidTouch = {
+            var post = self.post
+            post?.topExplanation = .hidden
+            post?.notifyChanged()
+        }
     }
     
     private func setBottomViewWithExplanation(_ explanation: ResponseAPIContentGetPost.BottomExplanationType?)
@@ -178,18 +183,11 @@ class PostCell: MyTableViewCell, ListItemCellType {
         eView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         eView.autoPinEdge(toSuperviewEdge: .leading)
         eView.autoPinEdge(toSuperviewEdge: .trailing)
-        eView.delegate = self
-    }
-}
-
-extension PostCell: ExplanationViewDelegate {
-    func explanationViewButtonCloseDidTouch(_ explanationView: ExplanationView) {
-        guard var post = post else {return}
-        if explanationView.showAbove {
-            post.topExplanation = .hidden
-        } else {
-            post.bottomExplanation = .hidden
+        
+        eView.closeDidTouch = {
+            var post = self.post
+            post?.bottomExplanation = .hidden
+            post?.notifyChanged()
         }
-        post.notifyChanged()
     }
 }
