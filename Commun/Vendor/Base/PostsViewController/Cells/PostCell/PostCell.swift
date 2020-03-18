@@ -97,15 +97,14 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     private func setTopViewWithExplanation(_ explanation: ResponseAPIContentGetPost.TopExplanationType?)
     {
-        let failureHandler: () -> Void = {
+        guard var post = post,
+            let ex = explanation,
+            ExplanationView.shouldShowViewWithId(ex.rawValue)
+        else {
             if self.topViewHeightConstraint?.isActive != true {
                 self.topView.removeAllExplanationViews()
                 self.topViewHeightConstraint?.isActive = true
             }
-        }
-        
-        guard let ex = explanation else {
-            failureHandler()
             return
         }
         
@@ -124,11 +123,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
         
         let eView = ExplanationView(id: ex.rawValue, title: title, descriptionText: label, imageName: nil, senderView: senderView, showAbove: true)
         
-        if !eView.shouldShow {
-            failureHandler()
-            return
-        }
-        
         topView.addSubview(eView)
         eView.fixArrowView()
         eView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
@@ -136,23 +130,22 @@ class PostCell: MyTableViewCell, ListItemCellType {
         eView.autoPinEdge(toSuperviewEdge: .leading)
         eView.autoPinEdge(toSuperviewEdge: .trailing)
         
-        eView.didRemoveFromSuperView = {
-            self.post?.topExplanation = nil
-            self.post?.notifyChanged()
+        eView.closeHandler = {
+            post.topExplanation = nil
+            post.notifyChanged()
         }
     }
     
     private func setBottomViewWithExplanation(_ explanation: ResponseAPIContentGetPost.BottomExplanationType?)
     {
-        let failureHandler: () -> Void = {
-            self.bottomView.removeAllExplanationViews()
+        guard var post = post,
+            let ex = explanation,
+            ExplanationView.shouldShowViewWithId(ex.rawValue)
+        else {
             if self.bottomViewHeigthConstraint?.isActive != true {
+                self.bottomView.removeAllExplanationViews()
                 self.bottomViewHeigthConstraint?.isActive = true
             }
-        }
-        
-        guard let explanation = explanation else {
-            failureHandler()
             return
         }
         
@@ -162,7 +155,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         let title: String
         let label: String
         let senderView: UIView
-        switch explanation {
+        switch ex {
         case .shareYourPost:
             title = "share your post".localized().uppercaseFirst
             label = "great, your post is successfully published!\nShare it with your friends to receive more rewards!".localized().uppercaseFirst
@@ -177,12 +170,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
             senderView = postStatsView.commentsCountButton
         }
         
-        let eView = ExplanationView(id: explanation.rawValue, title: title, descriptionText: label, imageName: nil, senderView: senderView, showAbove: false)
-        
-        if !eView.shouldShow {
-            failureHandler()
-            return
-        }
+        let eView = ExplanationView(id: ex.rawValue, title: title, descriptionText: label, imageName: nil, senderView: senderView, showAbove: false)
         
         bottomView.addSubview(eView)
         eView.fixArrowView()
@@ -191,9 +179,9 @@ class PostCell: MyTableViewCell, ListItemCellType {
         eView.autoPinEdge(toSuperviewEdge: .leading)
         eView.autoPinEdge(toSuperviewEdge: .trailing)
         
-        eView.didRemoveFromSuperView = {
-            self.post?.bottomExplanation = nil
-            self.post?.notifyChanged()
+        eView.closeHandler = {
+            post.bottomExplanation = nil
+            post.notifyChanged()
         }
     }
 }

@@ -9,6 +9,19 @@
 import Foundation
 
 class ExplanationView: MyView {
+    // MARK: - Static functions
+    private static func userDefaultKeyForId(_ id: String) -> String {
+        "ExplanationView.\(id).showed"
+    }
+    
+    static func shouldShowViewWithId(_ id: String) -> Bool {
+        !UserDefaults.standard.bool(forKey: userDefaultKeyForId(id))
+    }
+    
+    static func markAsShown(_ id: String) {
+        UserDefaults.standard.set(true, forKey: userDefaultKeyForId(id))
+    }
+    
     // MARK: - Properties
     let id: String
     var title: String
@@ -18,12 +31,11 @@ class ExplanationView: MyView {
     var showAbove: Bool
     let learnMoreLink: String
     
-    var userDefaultKey: String {"ExplanationView.\(id).showed"}
     var shouldShow: Bool {
-        !UserDefaults.standard.bool(forKey: userDefaultKey)
+        ExplanationView.shouldShowViewWithId(id)
     }
     
-    var didRemoveFromSuperView: (() -> Void)?
+    var closeHandler: (() -> Void)?
     
     // MARK: - Subviews
     lazy var containerView = UIView(backgroundColor: .appMainColor)
@@ -117,22 +129,24 @@ class ExplanationView: MyView {
     }
     
     @objc func buttonCloseDidTouch() {
-        markAsShowed()
-        removeFromSuperview()
-        didRemoveFromSuperView?()
+        if closeHandler == nil {
+            ExplanationView.markAsShown(id)
+            removeFromSuperview()
+        } else {
+            closeHandler?()
+        }
     }
     
     @objc func buttonDontShowAgainDidTouch() {
-        markAsShowed()
-        removeFromSuperview()
-        didRemoveFromSuperView?()
+        if closeHandler == nil {
+            ExplanationView.markAsShown(id)
+            removeFromSuperview()
+        } else {
+            closeHandler?()
+        }
     }
     
     @objc func buttonLearnMoreDidTouch() {
         (parentViewController as? BaseViewController)?.load(url: learnMoreLink)
-    }
-    
-    func markAsShowed() {
-        UserDefaults.standard.set(true, forKey: userDefaultKey)
     }
 }
