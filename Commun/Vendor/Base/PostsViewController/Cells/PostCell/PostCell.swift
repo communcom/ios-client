@@ -97,8 +97,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     private func setTopViewWithExplanation(_ explanation: ResponseAPIContentGetPost.TopExplanationType?)
     {
-        guard var post = post,
-            let ex = explanation,
+        guard let ex = explanation,
             ExplanationView.shouldShowViewWithId(ex.rawValue)
         else {
             if self.topViewHeightConstraint?.isActive != true {
@@ -129,17 +128,12 @@ class PostCell: MyTableViewCell, ListItemCellType {
         eView.autoPinEdge(toSuperviewEdge: .bottom)
         eView.autoPinEdge(toSuperviewEdge: .leading)
         eView.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        eView.closeHandler = {
-            post.topExplanation = nil
-            post.notifyChanged()
-        }
+        eView.delegate = self
     }
     
     private func setBottomViewWithExplanation(_ explanation: ResponseAPIContentGetPost.BottomExplanationType?)
     {
-        guard var post = post,
-            let ex = explanation,
+        guard let ex = explanation,
             ExplanationView.shouldShowViewWithId(ex.rawValue)
         else {
             if self.bottomViewHeigthConstraint?.isActive != true {
@@ -178,10 +172,18 @@ class PostCell: MyTableViewCell, ListItemCellType {
         eView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         eView.autoPinEdge(toSuperviewEdge: .leading)
         eView.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        eView.closeHandler = {
+        eView.delegate = self
+    }
+}
+
+extension PostCell: ExplanationViewDelegate {
+    func explanationViewButtonCloseDidTouch(_ explanationView: ExplanationView) {
+        guard var post = post else {return}
+        if explanationView.showAbove {
+            post.topExplanation = nil
+        } else {
             post.bottomExplanation = nil
-            post.notifyChanged()
         }
+        post.notifyChanged()
     }
 }
