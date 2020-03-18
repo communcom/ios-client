@@ -95,4 +95,8 @@ class PostStatsView: MyView {
         // Shares count
         //        self.sharesCountLabel.text = "\(post.viewsCount ?? 0)"
     }
+    
+    func fillShareCountButton(_ fill: Bool = true) {
+        shareButton.setImage(UIImage(named: fill ? "share-count-fill" : "share-count"), for: .normal)
+    }
 }

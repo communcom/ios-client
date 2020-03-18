@@ -145,6 +145,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
             ex != .hidden,
             ExplanationView.shouldShowViewWithId(ex.rawValue)
         else {
+            postStatsView.fillShareCountButton(false)
             if self.bottomViewHeigthConstraint?.isActive != true {
                 self.bottomView.removeAllExplanationViews()
                 self.bottomViewHeigthConstraint?.isActive = true
@@ -163,6 +164,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
             title = "share your post".localized().uppercaseFirst
             label = "great, your post is successfully published!\nShare it with your friends to receive more rewards!".localized().uppercaseFirst
             senderView = postStatsView.shareButton
+            postStatsView.fillShareCountButton()
         case .rewardsForLikes:
             title = "rewards for like".localized().uppercaseFirst
             label = "yes, you get rewards for likes as well, and they have more value than you think!\nUpvoting or downvoting of posts decides if it’s going to be successful and receive the reward.".localized().uppercaseFirst
