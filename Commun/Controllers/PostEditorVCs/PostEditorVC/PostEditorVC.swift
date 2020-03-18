@@ -18,6 +18,7 @@ class PostEditorVC: EditorVC {
     // MARK: - Properties
     var chooseCommunityAfterLoading: Bool
     var parseDraftAfterLoading: Bool
+    var explanationViewShowed = false
     
     // MARK: - Computed properties
     var contentLettersLimit: UInt {30000}

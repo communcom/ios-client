@@ -19,7 +19,7 @@ class ExplanationView: MyView {
     
     var userDefaultKey: String {"ExplanationView.\(id).showed"}
     var shouldShow: Bool {
-        UserDefaults.standard.bool(forKey: userDefaultKey)
+        !UserDefaults.standard.bool(forKey: userDefaultKey)
     }
     
     // MARK: - Subviews
@@ -106,6 +106,7 @@ class ExplanationView: MyView {
     }
     
     @objc func buttonCloseDidTouch() {
+        markAsShowed()
         removeFromSuperview()
     }
     

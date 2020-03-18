@@ -16,6 +16,9 @@ extension PostEditorVC: UITextViewDelegate {
                 DispatchQueue(label: "archiving").async {
                     self.saveDraft()
                 }
+                if textView.text.isEmpty {
+                    showExplanationView()
+                }
             }
             return shouldChange
         }

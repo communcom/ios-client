@@ -186,6 +186,8 @@ extension UIView {
     }
     
     func addExplanationView(id: String, title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0) {
+        guard subviews.first(where: {$0 is ExplanationView}) == nil else {return}
+        
         let eView = ExplanationView(id: id, title: title, descriptionText: description, imageName: nil, senderView: sender, showAbove: showAbove)
         
         if !eView.shouldShow {return}

@@ -28,7 +28,7 @@ extension PostEditorVC {
     
     // MARK: - Images
     @objc func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
-        fatalError("Must override")
+        showExplanationView()
     }
     
     @objc func didAddLink(_ urlString: String, placeholder: String? = nil) {
@@ -68,6 +68,13 @@ extension PostEditorVC {
                     // close
                     self.dismiss(animated: true, completion: nil)
                 }
+        }
+    }
+    
+    func showExplanationView() {
+        if !explanationViewShowed {
+            view.addExplanationView(id: "how-do-i-get-rewards", title: "How do I get rewards for my posts?", description: "After you publish the post, community members will have N hours to evaluate it with their votes.\nIf your post reaches the Top 10 of the day, you are guaranteed to receive the reward.", from: actionButton, marginLeft: 54, marginRight: 10)
+            explanationViewShowed = true
         }
     }
     

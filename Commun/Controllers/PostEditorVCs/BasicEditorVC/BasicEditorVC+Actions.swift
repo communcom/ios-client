@@ -20,6 +20,7 @@ extension BasicEditorVC {
     }
 
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
+        super.didChooseImageFromGallery(image, description: description)
         if link != nil {return}
         var attributes = ResponseAPIContentBlockAttributes(
             description: description

@@ -11,6 +11,7 @@ import Foundation
 extension ArticleEditorVC {
     // MARK: - overriding actions
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
+        super.didChooseImageFromGallery(image, description: description)
         _contentTextView.addImage(image, description: description)
     }
     
