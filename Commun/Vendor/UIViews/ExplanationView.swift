@@ -24,6 +24,7 @@ class ExplanationView: MyView {
     }
     
     // MARK: - Subviews
+    lazy var containerView = UIView(backgroundColor: .appMainColor)
     lazy var titleLabel = UILabel.with(text: title, textSize: 14, weight: .semibold, textColor: .white, numberOfLines: 0)
     lazy var closeButton = UIButton.close(backgroundColor: .clear, tintColor: .white)
     
@@ -86,7 +87,6 @@ class ExplanationView: MyView {
             return hStack
         }()
         
-        let containerView = UIView(backgroundColor: .appMainColor)
         containerView.addSubview(hStack)
         hStack.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
         
@@ -103,6 +103,11 @@ class ExplanationView: MyView {
         closeButton.addTarget(self, action: #selector(buttonCloseDidTouch), for: .touchUpInside)
         learnMoreButton.addTarget(self, action: #selector(buttonLearnMoreDidTouch), for: .touchUpInside)
         dontShowAgainButton.addTarget(self, action: #selector(buttonDontShowAgainDidTouch), for: .touchUpInside)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        containerView.addShadow(ofColor: .black, radius: 10, offset: .zero, opacity: 0.25)
     }
     
     func fixArrowView() {
