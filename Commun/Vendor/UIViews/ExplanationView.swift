@@ -23,6 +23,8 @@ class ExplanationView: MyView {
         !UserDefaults.standard.bool(forKey: userDefaultKey)
     }
     
+    var didRemoveFromSuperView: (() -> Void)?
+    
     // MARK: - Subviews
     lazy var containerView = UIView(backgroundColor: .appMainColor)
     lazy var titleLabel = UILabel.with(text: title, textSize: 14, weight: .semibold, textColor: .white, numberOfLines: 0)
@@ -117,11 +119,13 @@ class ExplanationView: MyView {
     @objc func buttonCloseDidTouch() {
         markAsShowed()
         removeFromSuperview()
+        didRemoveFromSuperView?()
     }
     
     @objc func buttonDontShowAgainDidTouch() {
         markAsShowed()
         removeFromSuperview()
+        didRemoveFromSuperView?()
     }
     
     @objc func buttonLearnMoreDidTouch() {

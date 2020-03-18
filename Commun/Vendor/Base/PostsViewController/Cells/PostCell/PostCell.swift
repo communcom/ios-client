@@ -13,9 +13,11 @@ class PostCell: MyTableViewCell, ListItemCellType {
     // MARK: - Properties
     var post: ResponseAPIContentGetPost?
     weak var delegate: PostCellDelegate?
+    var topViewHeightConstraint: NSLayoutConstraint?
+    var bottomViewHeigthConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
-    lazy var topView = UIView(height: 0, backgroundColor: .f3f5fa)
+    lazy var topView = UIView(backgroundColor: .f3f5fa)
     lazy var metaView = PostMetaView(height: 40.0)
     
     lazy var moreActionButton: UIButton = {
@@ -29,7 +31,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     lazy var postStatsView = PostStatsView(forAutoLayout: ())
 
-    lazy var bottomView = UIView(height: 10, backgroundColor: .f3f5fa)
+    lazy var bottomView = UIView(backgroundColor: .f3f5fa)
     
     // MARK: - Layout
     override func setUpViews() {
@@ -42,6 +44,8 @@ class PostCell: MyTableViewCell, ListItemCellType {
         topView.autoPinEdge(toSuperviewEdge: .top)
         topView.autoPinEdge(toSuperviewEdge: .leading)
         topView.autoPinEdge(toSuperviewEdge: .trailing)
+        
+        topViewHeightConstraint = topView.autoSetDimension(.height, toSize: 0)
         
         // Meta view
         contentView.addSubview(metaView)
@@ -65,6 +69,8 @@ class PostCell: MyTableViewCell, ListItemCellType {
         bottomView.autoPinEdge(.top, to: .bottom, of: postStatsView, withOffset: 10)
         bottomView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
+        bottomViewHeigthConstraint = bottomView.autoSetDimension(.height, toSize: 10)
+        
         // layout content
         layoutContent()
         
@@ -84,5 +90,64 @@ class PostCell: MyTableViewCell, ListItemCellType {
         self.post = post
         metaView.setUp(post: post)
         postStatsView.setUp(with: post)
+        
+        setBottomViewWithExplanation(post.bottomExplanation)
+    }
+    
+    private func setBottomViewWithExplanation(_ explanation: ResponseAPIContentGetPost.BottomExplanationType?)
+    {
+        let failureHandler: () -> Void = {
+            self.bottomView.removeAllExplanationViews()
+            if self.bottomViewHeigthConstraint?.isActive != true {
+                self.bottomViewHeigthConstraint?.isActive = true
+            }
+        }
+        
+        guard let explanation = explanation else {
+            failureHandler()
+            return
+        }
+        
+        bottomView.removeAllExplanationViews()
+        bottomViewHeigthConstraint?.isActive = false
+        
+        let title: String
+        let label: String
+        let senderView: UIView
+        switch explanation {
+        case .shareYourPost:
+            title = "share your post".localized().uppercaseFirst
+            label = "great, your post is successfully published!\nShare it with your friends to receive more rewards!".localized().uppercaseFirst
+            senderView = postStatsView.shareButton
+        case .rewardsForLikes:
+            title = "rewards for like".localized().uppercaseFirst
+            label = "yes, you get rewards for likes as well, and they have more value than you think!\nUpvoting or downvoting of posts decides if it’s going to be successful and receive the reward.".localized().uppercaseFirst
+            senderView = postStatsView.voteContainerView
+        case .rewardsForComments:
+            title = "rewards for comment".localized().uppercaseFirst
+            label = "wow, this post will get the reward!\nDo you want to get rewards too? Create a post - it’s the best way to get them!".localized().uppercaseFirst
+            senderView = postStatsView.commentsCountButton
+        }
+        
+        let eView = ExplanationView(id: explanation.rawValue, title: title, descriptionText: label, imageName: nil, senderView: senderView, showAbove: false)
+        
+        if !eView.shouldShow {
+            failureHandler()
+            return
+        }
+        
+        eView.markAsShowed()
+        
+        bottomView.addSubview(eView)
+        eView.fixArrowView()
+        eView.autoPinEdge(toSuperviewEdge: .top)
+        eView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        eView.autoPinEdge(toSuperviewEdge: .leading)
+        eView.autoPinEdge(toSuperviewEdge: .trailing)
+        
+        eView.didRemoveFromSuperView = {
+            self.post?.bottomExplanation = nil
+            self.post?.notifyChanged()
+        }
     }
 }
