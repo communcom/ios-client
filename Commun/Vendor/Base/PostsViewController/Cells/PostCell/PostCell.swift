@@ -15,6 +15,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     weak var delegate: PostCellDelegate?
     
     // MARK: - Subviews
+    lazy var topView = UIView(height: 0, backgroundColor: .f3f5fa)
     lazy var metaView = PostMetaView(height: 40.0)
     
     lazy var moreActionButton: UIButton = {
@@ -27,6 +28,8 @@ class PostCell: MyTableViewCell, ListItemCellType {
     }()
     
     lazy var postStatsView = PostStatsView(forAutoLayout: ())
+
+    lazy var bottomView = UIView(height: 10, backgroundColor: .f3f5fa)
     
     // MARK: - Layout
     override func setUpViews() {
@@ -34,14 +37,22 @@ class PostCell: MyTableViewCell, ListItemCellType {
         
         selectionStyle = .none
         
+        // Top view
+        contentView.addSubview(topView)
+        topView.autoPinEdge(toSuperviewEdge: .top)
+        topView.autoPinEdge(toSuperviewEdge: .leading)
+        topView.autoPinEdge(toSuperviewEdge: .trailing)
+        
         // Meta view
         contentView.addSubview(metaView)
-        metaView.autoPinEdge(toSuperviewEdge: .top, withInset: .adaptive(height: 16.0))
-        metaView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16.0))
+        metaView.autoPinEdge(.top, to: .bottom, of: topView, withOffset: .adaptive(height: 16))
+        metaView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16))
 
         // moreAction buttons
         contentView.addSubview(moreActionButton)
-        moreActionButton.autoPinTopAndTrailingToSuperView(inset: .adaptive(height: 16.0), xInset: .adaptive(width: 4.0))
+        moreActionButton.autoPinEdge(.top, to: .bottom, of: topView, withOffset: .adaptive(height: 16))
+        moreActionButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 4))
+        
         metaView.autoPinEdge(.trailing, to: .leading, of: moreActionButton, withOffset: .adaptive(width: 4.0))
         
         // postStatsView
@@ -50,11 +61,9 @@ class PostCell: MyTableViewCell, ListItemCellType {
         postStatsView.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 16))
 
         // separator
-        let separatorView = UIView(height: .adaptive(height: 10.0))
-        separatorView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
-        contentView.addSubview(separatorView)
-        separatorView.autoPinEdge(.top, to: .bottom, of: postStatsView, withOffset: 10)
-        separatorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        contentView.addSubview(bottomView)
+        bottomView.autoPinEdge(.top, to: .bottom, of: postStatsView, withOffset: 10)
+        bottomView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
         // layout content
         layoutContent()
