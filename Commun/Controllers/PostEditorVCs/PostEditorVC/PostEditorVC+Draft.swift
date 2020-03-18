@@ -43,9 +43,11 @@ extension PostEditorVC {
     }
     
     @objc func saveDraft() {
+        guard let community = viewModel.community.value,
+            !contentTextView.text.isEmpty else {return}
+        
         // save community
-        if let community = viewModel.community.value,
-            let encoded = try? JSONEncoder().encode(community) {
+        if let encoded = try? JSONEncoder().encode(community) {
             UserDefaults.standard.set(encoded, forKey: communityDraftKey)
         }
         
