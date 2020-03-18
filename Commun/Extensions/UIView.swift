@@ -187,11 +187,11 @@ extension UIView {
     
     @discardableResult
     func addExplanationView(id: String, title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0, learnMoreLink: String = "https://commun.com/faq") -> ExplanationView {
-        guard subviews.first(where: {($0 as? ExplanationView)?.id == id}) == nil else {return}
+        if let eView = subviews.first(where: {($0 as? ExplanationView)?.id == id}) as? ExplanationView {return eView}
         
         let eView = ExplanationView(id: id, title: title, descriptionText: description, imageName: nil, senderView: sender, showAbove: showAbove, learnMoreLink: learnMoreLink)
         
-        if !eView.shouldShow {return}
+        if !eView.shouldShow {return eView}
         
         addSubview(eView)
         eView.fixArrowView()
@@ -210,5 +210,11 @@ extension UIView {
             eView.autoPinEdge(.top, to: .bottom, of: sender)
         }
         return eView
+    }
+    
+    func removeAllExplanationViews() {
+        for subview in subviews where subview is ExplanationView {
+            subview.removeFromSuperview()
+        }
     }
 }
