@@ -81,7 +81,9 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         button.autoSetDimension(.width, toSize: 290)
         return button
     }()
-    
+
+    lazy var unsupportSymbolError = UILabel.with(textSize: 12, weight: .medium, textColor: .appRedColor, numberOfLines: 2, textAlignment: .center)
+
     // MARK: - Methods
     override func setUp() {
         super.setUp()
@@ -122,6 +124,12 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         // hide keyboard
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+
+        view.addSubview(unsupportSymbolError)
+        unsupportSymbolError.autoPinEdge(.bottom, to: .top, of: nextButton, withOffset: -9)
+        unsupportSymbolError.autoAlignAxis(toSuperviewAxis: .vertical)
+        unsupportSymbolError.text = "only Latin characters, digits and special symbols\nare allowed".localized().uppercaseFirst
+        unsupportSymbolError.isHidden = true
     }
     
     override func bind() {
@@ -131,6 +139,10 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
             .map {self.viewModel.validate(password: $0)}
             .bind(to: nextButton.rx.isDisabled)
             .disposed(by: disposeBag)
+
+        textField.rx.text.subscribe { (event) in
+            self.unsupportSymbolError.isHidden = self.viewModel.isValidSymbols(string: event.element ?? "")
+        }.disposed(by: disposeBag)
         
         textField.delegate = self
         

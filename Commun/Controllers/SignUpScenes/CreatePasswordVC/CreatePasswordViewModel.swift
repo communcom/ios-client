@@ -56,6 +56,19 @@ class CreatePasswordViewModel: BaseViewModel {
         }
         self.constraints.accept(constraints)
         
-        return hasLowercasedCharacter && hasUppercasedCharacter && containsNumber && isMoreThanMinPasswordLength && isMoreThanMaxPasswordLength
+        return hasLowercasedCharacter && hasUppercasedCharacter && containsNumber && isMoreThanMinPasswordLength && isMoreThanMaxPasswordLength && isValidSymbols(string: password)
+    }
+
+    func isValidSymbols(string: String?) -> Bool {
+        guard let string = string else {
+            return true
+        }
+
+        let allowedCharacters = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz!@#$%^&*(),.?\":{}|<>/[]'~`_+;=-").inverted
+
+        let components = string.components(separatedBy: allowedCharacters)
+        let filtered = components.joined(separator: "")
+
+        return string == filtered
     }
 }
