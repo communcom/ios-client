@@ -91,7 +91,55 @@ class PostCell: MyTableViewCell, ListItemCellType {
         metaView.setUp(post: post)
         postStatsView.setUp(with: post)
         
+        setTopViewWithExplanation(post.topExplanation)
         setBottomViewWithExplanation(post.bottomExplanation)
+    }
+    
+    private func setTopViewWithExplanation(_ explanation: ResponseAPIContentGetPost.TopExplanationType?)
+    {
+        let failureHandler: () -> Void = {
+            if self.topViewHeightConstraint?.isActive != true {
+                self.topView.removeAllExplanationViews()
+                self.topViewHeightConstraint?.isActive = true
+            }
+        }
+        
+        guard let ex = explanation else {
+            failureHandler()
+            return
+        }
+        
+        topView.removeAllExplanationViews()
+        topViewHeightConstraint?.isActive = false
+        
+        let title: String
+        let label: String
+        let senderView: UIView
+        switch ex {
+        case .reward:
+            title = "what does it mean?".localized().uppercaseFirst
+            label = "wow, this post will get the reward!\nDo you want to get rewards too? Create a post - it’s the best way to get them!".localized().uppercaseFirst
+            senderView = metaView//.stateButton
+        }
+        
+        let eView = ExplanationView(id: ex.rawValue, title: title, descriptionText: label, imageName: nil, senderView: senderView, showAbove: true)
+        
+        if !eView.shouldShow {
+            failureHandler()
+            return
+        }
+        
+        topView.addSubview(eView)
+        eView.fixArrowView()
+        eView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        eView.autoPinEdge(toSuperviewEdge: .bottom)
+        eView.autoPinEdge(toSuperviewEdge: .leading)
+        eView.autoPinEdge(toSuperviewEdge: .trailing)
+        
+        eView.didRemoveFromSuperView = {
+            self.post?.topExplanation = nil
+            self.post?.notifyChanged()
+        }
     }
     
     private func setBottomViewWithExplanation(_ explanation: ResponseAPIContentGetPost.BottomExplanationType?)
@@ -135,8 +183,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
             failureHandler()
             return
         }
-        
-        eView.markAsShowed()
         
         bottomView.addSubview(eView)
         eView.fixArrowView()
