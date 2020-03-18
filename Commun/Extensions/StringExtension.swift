@@ -110,7 +110,13 @@ extension String {
     
     var containsSpecialCharacter: Bool {
        let regex = ".*[^A-Za-z0-9].*"
-       let testString = NSPredicate(format:"SELF MATCHES %@", regex)
+       let testString = NSPredicate(format: "SELF MATCHES %@", regex)
        return testString.evaluate(with: self)
+    }
+    
+    var containsNumber: Bool {
+        let regex = ".*[0-9]+.*"
+        let testString = NSPredicate(format: "SELF MATCHES %@", regex)
+        return testString.evaluate(with: self)
     }
 }

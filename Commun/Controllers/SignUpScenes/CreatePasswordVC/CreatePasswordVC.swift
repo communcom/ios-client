@@ -132,6 +132,8 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
             .bind(to: nextButton.rx.isDisabled)
             .disposed(by: disposeBag)
         
+        textField.delegate = self
+        
         // viewModel
         viewModel.isShowingPassword
             .subscribe(onNext: { (isShowingPassword) in
@@ -174,16 +176,21 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     }
     
     @objc func nextButtonDidTouch() {
+        if (textField.text ?? "").count > AuthManager.maxPasswordLength {
+            hintView?.display(inPosition: nextButton.frame.origin, withType: .error("password must contain no more than 52 characters".localized().uppercaseFirst))
+            return
+        }
+        
         if let failureConstraint = viewModel.constraints.value.first(where: {!$0.isSastified}) {
             var message = "something went wrong".localized().uppercaseFirst
             switch failureConstraint.title {
-            case "lowercase":
+            case CreatePasswordViewModel.lowercaseTitle:
                 message = "password must contain at least one lowercase character".localized().uppercaseFirst
-            case "uppercase":
+            case CreatePasswordViewModel.uppercaseTitle:
                 message = "password must contain at least one uppercase character".localized().uppercaseFirst
-            case "symbol":
-                message = "password must contain at least one special character".localized().uppercaseFirst
-            case "min length":
+            case CreatePasswordViewModel.numberTitle:
+                message = "password must contain at least one digit".localized().uppercaseFirst
+            case CreatePasswordViewModel.minLengthTitle:
                 message = "password must contain at least 8 characters".localized().uppercaseFirst
             default:
                 break
@@ -199,5 +206,11 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         guard let currentPassword = textField.text else {return}
         let confirmVC = ConfirmPasswordVC(currentPassword: currentPassword)
         show(confirmVC, sender: nil)
+    }
+}
+
+extension CreatePasswordVC: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        string.rangeOfCharacter(from: .whitespaces) == nil
     }
 }

@@ -47,16 +47,6 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         }
     }
     
-    override func observeItemChange() {
-        super.observeItemChange()
-        
-        ResponseAPIContentGetPost.observeItemChanged()
-            .subscribe(onNext: { post in
-                self.updateItem(post)
-            })
-            .disposed(by: disposeBag)
-    }
-    
     func bindFilter() {
         filter.skip(1).distinctUntilChanged()
             .subscribe(onNext: {filter in

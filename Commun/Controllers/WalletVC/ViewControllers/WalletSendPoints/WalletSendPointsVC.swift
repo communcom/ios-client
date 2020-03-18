@@ -267,6 +267,10 @@ class WalletSendPointsVC: BaseViewController {
         whiteView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         scrollView.addSubview(whiteView)
 
+        whiteView.autoPinEdge(toSuperviewEdge: .left)
+        whiteView.autoPinEdge(toSuperviewEdge: .right)
+        whiteView.autoPinEdge(toSuperviewEdge: .top)
+
         // user view
         let userView = UIView(height: 70)
         userView.layer.cornerRadius = 10

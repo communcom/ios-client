@@ -25,7 +25,7 @@ class TabBarVC: UITabBarController {
     
     // MARK: - Properties
     let viewModel = TabBarViewModel()
-    let bag = DisposeBag()
+    let disposeBag = DisposeBag()
     
     // MARK: - Subviews
     private lazy var tabBarContainerView = UIView(backgroundColor: .white)
@@ -240,7 +240,7 @@ class TabBarVC: UITabBarController {
                     }
                     vm.markAllAsViewed(timestamp: timestamp)
                 })
-                .disposed(by: bag)
+                .disposed(by: disposeBag)
         }
     }
     
@@ -263,14 +263,14 @@ class TabBarVC: UITabBarController {
             .subscribe(onNext: { (item) in
                 self.selectedViewController?.navigateWithNotificationItem(item)
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         appDelegate.deepLinkPath
             .filter {!$0.isEmpty}
             .subscribe(onNext: { (path) in
                 self.navigateWithDeeplinkPath(path)
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         appDelegate.shareExtensionDataRelay
             .filter {$0 != nil}
@@ -320,7 +320,7 @@ class TabBarVC: UITabBarController {
                     vm?.markAllAsViewed(timestamp: Date().iso8601String)
                 }
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         // in-app notifications
         NotificationsManager.shared.newNotificationsRelay

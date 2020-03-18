@@ -36,7 +36,8 @@ class SignUpMethodsVC: SignUpBaseVC {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        
+
+        AnalyticsManger.shared.registrationOpenScreen(0)
         // set up stack view
         for method in methods {
             let methodView = UIView(height: 44, backgroundColor: method.backgroundColor, cornerRadius: 6)

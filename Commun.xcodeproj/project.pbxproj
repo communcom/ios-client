@@ -458,6 +458,7 @@
 		BCF74A62236180B900B91089 /* SubscribersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF74A61236180B900B91089 /* SubscribersViewModel.swift */; };
 		BCF74A6523618BA800B91089 /* ResponseAPIContentGetCommunity.json in Resources */ = {isa = PBXBuildFile; fileRef = BCF74A63236182B200B91089 /* ResponseAPIContentGetCommunity.json */; };
 		BCF74A6723618D9000B91089 /* CMSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */; };
+		BCFFE93C2420C4DE007D7BB8 /* ExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFFE93B2420C4DE007D7BB8 /* ExplanationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -977,6 +978,7 @@
 		BCF74A61236180B900B91089 /* SubscribersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersViewModel.swift; sourceTree = "<group>"; };
 		BCF74A63236182B200B91089 /* ResponseAPIContentGetCommunity.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetCommunity.json; sourceTree = "<group>"; };
 		BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSegmentedControl.swift; sourceTree = "<group>"; };
+		BCFFE93B2420C4DE007D7BB8 /* ExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplanationView.swift; sourceTree = "<group>"; };
 		C1D6A6DAA916F8782899DFE5 /* Pods-CommunTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommunTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CommunTests/Pods-CommunTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E39D739679788606CBFBCD64 /* Pods-CommunShare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommunShare.release.xcconfig"; path = "Pods/Target Support Files/Pods-CommunShare/Pods-CommunShare.release.xcconfig"; sourceTree = "<group>"; };
 		E6AD60B1BEE1B7FAB1F11C8E /* Pods-CommunShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommunShare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CommunShare/Pods-CommunShare.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2569,6 +2571,7 @@
 				ACD76C9723B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift */,
 				B17BE49823FD6203004C6440 /* CMHint.swift */,
 				B10DB960240F8789001BD0E4 /* CMAppLikeView.swift */,
+				BCFFE93B2420C4DE007D7BB8 /* ExplanationView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -3313,6 +3316,7 @@
 				BC465927238E563F00AF9C29 /* BackUpKeysVC.swift in Sources */,
 				BC016D43235DA0D400F1319F /* PostCell.swift in Sources */,
 				BC69F7CF236FC63F0097F870 /* BaseViewModel.swift in Sources */,
+				BCFFE93C2420C4DE007D7BB8 /* ExplanationView.swift in Sources */,
 				BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */,
 				BC597A8E238D0CEC00103F4F /* FTUEChosenCommunityCell.swift in Sources */,
 				57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */,

@@ -17,9 +17,8 @@ class CommunButton: UIButton {
         didSet {
             if isDisableGrayColor {
                 backgroundColor = isDisabled ? .appGrayColor : .appMainColor
-            } else {
-                alpha = isDisabled ? 0.5 : 1
             }
+            alpha = isDisabled ? 0.5 : 1
         }
     }
 
@@ -27,9 +26,8 @@ class CommunButton: UIButton {
         didSet {
             if isDisableGrayColor {
                 backgroundColor = isEnabled ? UIColor.appMainColor : .appGrayColor
-            } else {
-                alpha = isEnabled ? 1.0 : 0.5
             }
+            alpha = isEnabled ? 1.0 : 0.5
         }
     }
     
