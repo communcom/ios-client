@@ -24,6 +24,7 @@ class WalletSendPointsVC: BaseViewController {
         scrollView.contentSize = UIScreen.main.bounds.size
         scrollView.alwaysBounceVertical = true
         scrollView.isScrollEnabled = false
+        
         return scrollView
     }()
 
@@ -533,7 +534,7 @@ class WalletSendPointsVC: BaseViewController {
             guard let friendID = self.dataModel.transaction.friend?.id, numberValue > 0 else { return }
 
             self.dataModel.transaction.operationDate = Date()
-
+            
             self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
 
             BlockchainManager.instance.transferPoints(to: friendID, number: Double(numberValue), currency: self.dataModel.transaction.symbol.sell)
@@ -557,7 +558,6 @@ class WalletSendPointsVC: BaseViewController {
                     strongSelf.sendPointsButton.isSelected = false
             }
             .disposed(by: self.disposeBag)
-            //*/
         }
     }
     

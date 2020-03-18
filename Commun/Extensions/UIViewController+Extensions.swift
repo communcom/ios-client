@@ -460,10 +460,11 @@ extension UIViewController {
         if !CMAppLike.verify() {
             CMAppLike.updateRate()
 
-            let appLikeView = CMAppLikeView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 192.0))),
+            let appLikeView = CMAppLikeView(withFrame: CGRect(origin: .zero, size: CGSize(width: 355.0, height: 192.0)),
                                             andParameters: .appLiked)
             
             let cardVC = CardViewController(contentView: appLikeView)
+            
             self.present(cardVC, animated: true, completion: {
                 AnalyticsManger.shared.showRate()
             })
