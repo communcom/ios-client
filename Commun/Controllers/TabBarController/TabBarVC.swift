@@ -252,7 +252,32 @@ class TabBarVC: UITabBarController {
         {
             community = comm
         }
-        let basicEditorScene = BasicEditorVC(community: community)
+        let basicEditorScene = BasicEditorVC(community: community) { post in
+            var post = post
+            post.bottomExplanation = .shareYourPost
+            
+            if let items = ((UIApplication.topViewController() as? MyProfilePageVC)?.viewModel as? UserProfilePageViewModel)?.postsVM.items
+            {
+                items.accept([post] + items.value)
+                return
+            }
+            
+            if let communityPageVC = UIApplication.topViewController() as? CommunityPageVC,
+                let items = (communityPageVC.viewModel as? CommunityPageViewModel)?.postsVM.items,
+                communityPageVC.community?.identity == post.community?.identity
+            {
+                items.accept([post] + items.value)
+                return
+            }
+            
+            if let items = (UIApplication.topViewController() as? FeedPageVC)?.viewModel.items {
+                items.accept([post] + items.value)
+                return
+            }
+            
+            let postPageVC = PostPageVC(post: post)
+            UIApplication.topViewController()?.show(postPageVC, sender: nil)
+        }
         self.present(basicEditorScene, animated: true, completion: nil)
     }
     

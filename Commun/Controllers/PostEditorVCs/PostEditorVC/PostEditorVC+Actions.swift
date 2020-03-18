@@ -263,13 +263,31 @@ extension PostEditorVC {
                 
                 // if creating post
                 else {
-                    // show post page
                     guard let communityId = self.viewModel.community.value?.communityId else {return}
-                    let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+                    
+                    let showPostPage: () -> Void = {
+                        // show post page
+                        let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
 
-                    self.dismiss(animated: true) {
-                        UIApplication.topViewController()?.show(postPageVC, sender: nil)
-                        postPageVC.appLiked()
+                        self.dismiss(animated: true) {
+                            UIApplication.topViewController()?.show(postPageVC, sender: nil)
+                            postPageVC.appLiked()
+                        }
+                    }
+                    // completion handler
+                    if let completion = self.completion {
+                        RestAPIManager.instance.loadPost(userId: userId, permlink: permlink, communityId: communityId)
+                            .subscribe(onSuccess: { (post) in
+                                self.dismiss(animated: true) {
+                                    completion(post)
+                                }
+                            }) { (_) in
+                                showPostPage()
+                            }
+                            .disposed(by: self.disposeBag)
+                        return
+                    } else {
+                        showPostPage()
                     }
                 }
             }) { (error) in

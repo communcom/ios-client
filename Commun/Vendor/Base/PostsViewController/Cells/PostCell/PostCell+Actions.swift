@@ -42,15 +42,8 @@ extension PostCell {
     }
 
     @objc func shareButtonTapped(button: UIButton) {
-        guard var post = post else { return }
+        guard let post = post else { return }
         ShareHelper.share(post: post)
-        
-        let id = ResponseAPIContentGetPost.BottomExplanationType.shareYourPost.rawValue
-        if ExplanationView.shouldShowViewWithId(id)
-        {
-            post.bottomExplanation = .shareYourPost
-            post.notifyChanged()
-        }
     }
     
     @objc func commentCountsButtonDidTouch() {
