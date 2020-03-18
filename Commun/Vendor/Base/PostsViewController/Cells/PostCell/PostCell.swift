@@ -170,7 +170,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
             return
         }
         
-        let eView = ExplanationView(id: ex.rawValue, title: title, descriptionText: label, imageName: nil, senderView: senderView, showAbove: false)
+        let eView = ExplanationView(id: ex.rawValue, title: title, descriptionText: label, imageName: "explanation-\(ex.rawValue)", senderView: senderView, showAbove: false)
         
         bottomView.addSubview(eView)
         eView.fixArrowView()
