@@ -255,6 +255,7 @@ extension PostEditorVC {
             })
             .subscribe(onSuccess: { (userId, permlink) in
                 self.hideHud()
+                self.removeDraft()
                 
                 // if editing post
                 if (self.viewModel.postForEdit) != nil {
