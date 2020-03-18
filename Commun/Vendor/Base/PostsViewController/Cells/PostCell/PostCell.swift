@@ -98,6 +98,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     private func setTopViewWithExplanation(_ explanation: ResponseAPIContentGetPost.TopExplanationType?)
     {
         guard let ex = explanation,
+            ex != .hidden,
             ExplanationView.shouldShowViewWithId(ex.rawValue)
         else {
             if self.topViewHeightConstraint?.isActive != true {
@@ -118,6 +119,8 @@ class PostCell: MyTableViewCell, ListItemCellType {
             title = "what does it mean?".localized().uppercaseFirst
             label = "wow, this post will get the reward!\nDo you want to get rewards too? Create a post - it’s the best way to get them!".localized().uppercaseFirst
             senderView = metaView//.stateButton
+        default:
+            return
         }
         
         let eView = ExplanationView(id: ex.rawValue, title: title, descriptionText: label, imageName: nil, senderView: senderView, showAbove: true)
@@ -134,6 +137,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     private func setBottomViewWithExplanation(_ explanation: ResponseAPIContentGetPost.BottomExplanationType?)
     {
         guard let ex = explanation,
+            ex != .hidden,
             ExplanationView.shouldShowViewWithId(ex.rawValue)
         else {
             if self.bottomViewHeigthConstraint?.isActive != true {
@@ -162,6 +166,8 @@ class PostCell: MyTableViewCell, ListItemCellType {
             title = "rewards for comment".localized().uppercaseFirst
             label = "wow, this post will get the reward!\nDo you want to get rewards too? Create a post - it’s the best way to get them!".localized().uppercaseFirst
             senderView = postStatsView.commentsCountButton
+        default:
+            return
         }
         
         let eView = ExplanationView(id: ex.rawValue, title: title, descriptionText: label, imageName: nil, senderView: senderView, showAbove: false)
@@ -180,9 +186,9 @@ extension PostCell: ExplanationViewDelegate {
     func explanationViewButtonCloseDidTouch(_ explanationView: ExplanationView) {
         guard var post = post else {return}
         if explanationView.showAbove {
-            post.topExplanation = nil
+            post.topExplanation = .hidden
         } else {
-            post.bottomExplanation = nil
+            post.bottomExplanation = .hidden
         }
         post.notifyChanged()
     }
