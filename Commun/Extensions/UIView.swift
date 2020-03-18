@@ -185,10 +185,10 @@ extension UIView {
         self.clipsToBounds = true
     }
     
-    func addExplanationView(id: String, title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0) {
+    func addExplanationView(id: String, title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0, learnMoreLink: String = "https://commun.com/faq") {
         guard subviews.first(where: {($0 as? ExplanationView)?.id == id}) == nil else {return}
         
-        let eView = ExplanationView(id: id, title: title, descriptionText: description, imageName: nil, senderView: sender, showAbove: showAbove)
+        let eView = ExplanationView(id: id, title: title, descriptionText: description, imageName: nil, senderView: sender, showAbove: showAbove, learnMoreLink: learnMoreLink)
         
         if !eView.shouldShow {return}
         

@@ -16,6 +16,7 @@ class ExplanationView: MyView {
     var imageName: String?
     var senderView: UIView
     var showAbove: Bool
+    let learnMoreLink: String
     
     var userDefaultKey: String {"ExplanationView.\(id).showed"}
     var shouldShow: Bool {
@@ -34,13 +35,14 @@ class ExplanationView: MyView {
     lazy var arrowView = UIView(width: 10, height: 10, backgroundColor: .appMainColor, cornerRadius: 2)
     
     // MARK: - Initializers
-    init(id: String, title: String, descriptionText: String, imageName: String? = nil, senderView: UIView, showAbove: Bool) {
+    init(id: String, title: String, descriptionText: String, imageName: String? = nil, senderView: UIView, showAbove: Bool, learnMoreLink: String = "https://commun.com/faq") {
         self.id = id
         self.title = title
         self.descriptionText = descriptionText
         self.imageName = imageName
         self.senderView = senderView
         self.showAbove = showAbove
+        self.learnMoreLink = learnMoreLink
         super.init(frame: .zero)
     }
     
@@ -99,6 +101,8 @@ class ExplanationView: MyView {
         arrowView.autoPinEdge(showAbove ? .bottom : .top, to: showAbove ? .bottom : .top, of: containerView, withOffset: showAbove ? 5 : -5)
         
         closeButton.addTarget(self, action: #selector(buttonCloseDidTouch), for: .touchUpInside)
+        learnMoreButton.addTarget(self, action: #selector(buttonLearnMoreDidTouch), for: .touchUpInside)
+        dontShowAgainButton.addTarget(self, action: #selector(buttonDontShowAgainDidTouch), for: .touchUpInside)
     }
     
     func fixArrowView() {
@@ -113,6 +117,10 @@ class ExplanationView: MyView {
     @objc func buttonDontShowAgainDidTouch() {
         markAsShowed()
         removeFromSuperview()
+    }
+    
+    @objc func buttonLearnMoreDidTouch() {
+        (parentViewController as? BaseViewController)?.load(url: learnMoreLink)
     }
     
     func markAsShowed() {
