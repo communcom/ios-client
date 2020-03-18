@@ -71,6 +71,8 @@ class BaseViewController: UIViewController {
 // MARK: - SFSafariViewControllerDelegate
 extension BaseViewController: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        dismiss(animated: true)
+        if !isModal {
+            dismiss(animated: true, completion: nil)
+        }
     }
 }

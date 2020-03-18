@@ -37,6 +37,8 @@ extension PostEditorVC {
         
         // retrieve content
         contentTextView.getDraft {
+            self.showExplanationViewIfNeeded()
+            
             // remove draft
             self.removeDraft()
         }
