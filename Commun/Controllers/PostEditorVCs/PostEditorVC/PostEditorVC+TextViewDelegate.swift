@@ -13,12 +13,10 @@ extension PostEditorVC: UITextViewDelegate {
         if textView == contentTextView {
             let shouldChange = contentTextView.shouldChangeCharacterInRange(range, replacementText: text)
             if shouldChange {
-                DispatchQueue(label: "archiving").async {
-                    self.saveDraft()
-                }
-                if textView.text.isEmpty {
-                    showExplanationView()
-                }
+//                DispatchQueue(label: "archiving").async {
+//                    self.saveDraft()
+//                }
+                showExplanationViewIfNeeded()
             }
             return shouldChange
         }

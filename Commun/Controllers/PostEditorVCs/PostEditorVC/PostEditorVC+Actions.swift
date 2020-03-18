@@ -28,7 +28,7 @@ extension PostEditorVC {
     
     // MARK: - Images
     @objc func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
-        showExplanationView()
+        showExplanationViewIfNeeded()
     }
     
     @objc func didAddLink(_ urlString: String, placeholder: String? = nil) {
@@ -71,7 +71,7 @@ extension PostEditorVC {
         }
     }
     
-    func showExplanationView() {
+    func showExplanationViewIfNeeded() {
         if !explanationViewShowed {
             view.addExplanationView(id: "how-do-i-get-rewards", title: "How do I get rewards for my posts?", description: "After you publish the post, community members will have N hours to evaluate it with their votes.\nIf your post reaches the Top 10 of the day, you are guaranteed to receive the reward.", from: actionButton, marginLeft: 54, marginRight: 10, learnMoreLink: "https://commun.com/faq#How%20can%20you%20get%20the%20points?")
             explanationViewShowed = true
