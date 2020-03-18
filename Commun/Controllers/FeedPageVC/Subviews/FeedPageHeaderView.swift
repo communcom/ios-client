@@ -67,18 +67,7 @@ class FeedPageHeaderView: MyTableHeaderView {
     }
     
     func openEditor(completion: ((BasicEditorVC) -> Void)? = nil) {
-        let editorVC = BasicEditorVC(chooseCommunityAfterLoading: completion == nil) { post in
-            var post = post
-            post.bottomExplanation = .shareYourPost
-            
-            guard let items = (self.parentViewController as? FeedPageVC)?.viewModel.items else {
-                // show post page
-                let postPageVC = PostPageVC(post: post)
-                self.parentViewController?.show(postPageVC, sender: nil)
-                return
-            }
-            items.accept([post] + items.value)
-        }
+        let editorVC = BasicEditorVC(chooseCommunityAfterLoading: completion == nil)
         
         parentViewController?.present(editorVC, animated: true, completion: {
             completion?(editorVC)

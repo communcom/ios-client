@@ -264,31 +264,7 @@ extension PostEditorVC {
                 // if creating post
                 else {
                     guard let communityId = self.viewModel.community.value?.communityId else {return}
-                    
-                    let showPostPage: () -> Void = {
-                        // show post page
-                        let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
-
-                        self.dismiss(animated: true) {
-                            UIApplication.topViewController()?.show(postPageVC, sender: nil)
-                            postPageVC.appLiked()
-                        }
-                    }
-                    // completion handler
-                    if let completion = self.completion {
-                        RestAPIManager.instance.loadPost(userId: userId, permlink: permlink, communityId: communityId)
-                            .subscribe(onSuccess: { (post) in
-                                self.dismiss(animated: true) {
-                                    completion(post)
-                                }
-                            }) { (_) in
-                                showPostPage()
-                            }
-                            .disposed(by: self.disposeBag)
-                        return
-                    } else {
-                        showPostPage()
-                    }
+                    self.handlePostCreated(userId: userId, permlink: permlink, communityId: communityId)
                 }
             }) { (error) in
                 self.hideHud()               
@@ -346,6 +322,50 @@ extension PostEditorVC {
     func addAgeLimit() {
         // TODO: Change func
         showAlert(title: "info".localized().uppercaseFirst, message: "add age limit 18+ (coming soon)".localized().uppercaseFirst, buttonTitles: ["OK".localized()], highlightedButtonIndex: 0)
+    }
+    
+    // MARK: - Handlers
+    private func handlePostCreated(userId: String, permlink: String, communityId: String) {
+        // completion handler
+        RestAPIManager.instance.loadPost(userId: userId, permlink: permlink, communityId: communityId)
+            .subscribe(onSuccess: { (post) in
+                self.dismiss(animated: true) {
+                    var post = post
+                    post.bottomExplanation = .shareYourPost
+                    
+                    if let items = ((UIApplication.topViewController() as? MyProfilePageVC)?.viewModel as? UserProfilePageViewModel)?.postsVM.items
+                    {
+                        items.accept([post] + items.value)
+                        return
+                    }
+                    
+                    if let communityPageVC = UIApplication.topViewController() as? CommunityPageVC,
+                        let items = (communityPageVC.viewModel as? CommunityPageViewModel)?.postsVM.items,
+                        communityPageVC.community?.identity == post.community?.identity
+                    {
+                        items.accept([post] + items.value)
+                        return
+                    }
+                    
+                    if let items = (UIApplication.topViewController() as? FeedPageVC)?.viewModel.items {
+                        items.accept([post] + items.value)
+                        return
+                    }
+                    
+                    let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+                    UIApplication.topViewController()?.show(postPageVC, sender: nil)
+                    postPageVC.appLiked()
+                }
+            }) { (_) in
+                // show post page
+                let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+
+                self.dismiss(animated: true) {
+                    UIApplication.topViewController()?.show(postPageVC, sender: nil)
+                    postPageVC.appLiked()
+                }
+            }
+            .disposed(by: self.disposeBag)
     }
 }
 

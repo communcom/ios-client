@@ -19,7 +19,6 @@ class PostEditorVC: EditorVC {
     var chooseCommunityAfterLoading: Bool
     var parseDraftAfterLoading: Bool
     var explanationViewShowed = false
-    var completion: ((ResponseAPIContentGetPost) -> Void)?
     
     // MARK: - Computed properties
     var contentLettersLimit: UInt {30000}
@@ -55,10 +54,9 @@ class PostEditorVC: EditorVC {
     }
     
     // MARK: - Initializers
-    init(post: ResponseAPIContentGetPost? = nil, community: ResponseAPIContentGetCommunity? = nil, chooseCommunityAfterLoading: Bool = true, parseDraftAfterLoading: Bool = true, completion: ((ResponseAPIContentGetPost) -> Void)? = nil) {
+    init(post: ResponseAPIContentGetPost? = nil, community: ResponseAPIContentGetCommunity? = nil, chooseCommunityAfterLoading: Bool = true, parseDraftAfterLoading: Bool = true) {
         self.chooseCommunityAfterLoading = chooseCommunityAfterLoading
         self.parseDraftAfterLoading = parseDraftAfterLoading
-        self.completion = completion
         super.init(nibName: nil, bundle: nil)
         viewModel.postForEdit = post
         viewModel.community.accept(community)
