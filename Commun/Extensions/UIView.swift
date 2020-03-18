@@ -185,7 +185,8 @@ extension UIView {
         self.clipsToBounds = true
     }
     
-    func addExplanationView(id: String, title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0, learnMoreLink: String = "https://commun.com/faq") {
+    @discardableResult
+    func addExplanationView(id: String, title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0, learnMoreLink: String = "https://commun.com/faq") -> ExplanationView {
         guard subviews.first(where: {($0 as? ExplanationView)?.id == id}) == nil else {return}
         
         let eView = ExplanationView(id: id, title: title, descriptionText: description, imageName: nil, senderView: sender, showAbove: showAbove, learnMoreLink: learnMoreLink)
@@ -208,5 +209,6 @@ extension UIView {
         } else {
             eView.autoPinEdge(.top, to: .bottom, of: sender)
         }
+        return eView
     }
 }
