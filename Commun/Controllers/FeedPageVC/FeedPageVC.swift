@@ -137,7 +137,7 @@ final class FeedPageVC: PostsViewController {
                 UIView.animate(withDuration: 0.3) {
                     self.headerView.layoutIfNeeded()
                 }
-                self.showDone("congratulations!\nYou've got gift Points!".localized().uppercaseFirst)
+                self.showDone("done".localized().uppercaseFirst + "!")
             }) { (error) in
                 self.headerView.getButton.hideLoading()
                 self.showError(error)
