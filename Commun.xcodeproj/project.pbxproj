@@ -151,6 +151,9 @@
 		AC8C57C1238D494D00B0D260 /* InstagramView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8C57C0238D494D00B0D260 /* InstagramView.xib */; };
 		ACCCF74323A9105E00AF4FDE /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = ACCCF74023A9105E00AF4FDE /* countries.json */; };
 		ACD76C9823B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD76C9723B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift */; };
+		ACE812D624238215001D9AE2 /* FacebookLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE812D224238215001D9AE2 /* FacebookLoginManager.swift */; };
+		ACE812D724238215001D9AE2 /* GoogleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE812D524238215001D9AE2 /* GoogleLoginManager.swift */; };
+		ACE812D924238283001D9AE2 /* SocialLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE812D824238283001D9AE2 /* SocialLoginManager.swift */; };
 		ACFA282623AB8A00009B77A6 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */; };
 		B101CB6823E4631B00269253 /* ShareExtensionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101CB6723E4631B00269253 /* ShareExtensionData.swift */; };
 		B101CB6B23E4634900269253 /* ShareExtensionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101CB6723E4631B00269253 /* ShareExtensionData.swift */; };
@@ -671,6 +674,9 @@
 		AC8C57C0238D494D00B0D260 /* InstagramView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstagramView.xib; sourceTree = "<group>"; };
 		ACCCF74023A9105E00AF4FDE /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		ACD76C9723B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryAccessDeniedView.swift; sourceTree = "<group>"; };
+		ACE812D224238215001D9AE2 /* FacebookLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookLoginManager.swift; sourceTree = "<group>"; };
+		ACE812D524238215001D9AE2 /* GoogleLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleLoginManager.swift; sourceTree = "<group>"; };
+		ACE812D824238283001D9AE2 /* SocialLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialLoginManager.swift; sourceTree = "<group>"; };
 		ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
 		B101CB6723E4631B00269253 /* ShareExtensionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionData.swift; sourceTree = "<group>"; };
@@ -1610,6 +1616,7 @@
 		57840A192240DB1200338FD5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				ACE812CE24238179001D9AE2 /* Social */,
 				3B197C83226A33BF008CF10D /* Mocking */,
 				57840A1A2240DB9400338FD5 /* NetworkService.swift */,
 			);
@@ -1741,6 +1748,16 @@
 				AC759B99237C15C20069D169 /* CyberSwiftTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		ACE812CE24238179001D9AE2 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				ACE812D824238283001D9AE2 /* SocialLoginManager.swift */,
+				ACE812D224238215001D9AE2 /* FacebookLoginManager.swift */,
+				ACE812D524238215001D9AE2 /* GoogleLoginManager.swift */,
+			);
+			path = Social;
 			sourceTree = "<group>";
 		};
 		B1A8AC1922E6FD4800032030 /* UIButton */ = {
@@ -2761,6 +2778,7 @@
 				3BEA223E22B3DA9C00FF42DA /* Frameworks */,
 				3BEA223F22B3DA9C00FF42DA /* Resources */,
 				48F94592FF8ED0FB6517B193 /* [CP] Embed Pods Frameworks */,
+				9737550C3659C1C82234B912 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2785,6 +2803,7 @@
 				AC0F9C31237C307300A5002C /* CyberSwift */,
 				ACCCF73B23A8ED8E00AF4FDE /* SwiftLint */,
 				B1AB195423E1B9EC00CAD9EC /* Embed App Extensions */,
+				76798F505CB7D63E850779A6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2993,6 +3012,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		76798F505CB7D63E850779A6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Commun/Pods-Commun-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Commun/Pods-Commun-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Commun/Pods-Commun-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9737550C3659C1C82234B912 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CommunTests/Pods-CommunTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CommunTests/Pods-CommunTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CommunTests/Pods-CommunTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A763FF25490FA583CA98714C /* [CP] Embed Pods Frameworks */ = {
@@ -3316,6 +3369,7 @@
 				BCAF5B20241B433400C157B5 /* ViewTag.swift in Sources */,
 				3B8DDF68234B388500B213F0 /* UITextView+PureLayout.swift in Sources */,
 				BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */,
+				ACE812D924238283001D9AE2 /* SocialLoginManager.swift in Sources */,
 				BCB2A6EA23556E1E00B3582B /* BasicEditorVC+Draft.swift in Sources */,
 				3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */,
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,
@@ -3328,6 +3382,7 @@
 				BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */,
 				BC597A8E238D0CEC00103F4F /* FTUEChosenCommunityCell.swift in Sources */,
 				57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */,
+				ACE812D624238215001D9AE2 /* FacebookLoginManager.swift in Sources */,
 				BCABF13D2366EA14006B05F5 /* ProfileHeaderView.swift in Sources */,
 				BCCC33EE23752C22004E46EF /* CommentsViewController.swift in Sources */,
 				BCCE0AA22367E60A00A183AA /* SubscriptionsViewModel.swift in Sources */,
@@ -3380,6 +3435,7 @@
 				BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */,
 				B1A8AC1B22E6FF5400032030 /* BlankButton.swift in Sources */,
 				BC3AF38723FBEC9000528EEB /* DiscoveryPostsVC.swift in Sources */,
+				ACE812D724238215001D9AE2 /* GoogleLoginManager.swift in Sources */,
 				575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */,
 				3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */,
 				BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */,

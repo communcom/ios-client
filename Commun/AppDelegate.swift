@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let shareExtensionDataRelay = BehaviorRelay<ShareExtensionData?>(value: nil)
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
     private var disposeBag = DisposeBag()
-    
+
     // MARK: - RootVCs
     var splashVC: SplashViewController { controllerContainer.resolve(SplashViewController.self)! }
     var welcomeNC: UINavigationController {
@@ -454,6 +454,6 @@ extension AppDelegate {
             return false
         }
 
-        return true
+        return OpenSocialLink.application(app, open: url, options: options)
     }
 }
