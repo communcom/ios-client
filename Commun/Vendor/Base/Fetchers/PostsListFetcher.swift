@@ -68,8 +68,10 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         }
     }
     
+    // MARK: - Properties
     var filter: Filter
     
+    // MARK: - Initializers
     required init(filter: Filter) {
         self.filter = filter
         super.init()
@@ -88,21 +90,57 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         return super.join(newItems: items).filter { $0.document != nil}
     }
 
-    func loadRewards(fromPosts posts: [ResponseAPIContentGetPost]) {
+    private func loadRewards(fromPosts posts: [ResponseAPIContentGetPost]) {
         let contentIds = posts.map { RequestAPIContentId(responseAPI: $0.contentId) }
         
-        DispatchQueue.main.async {
-            RestAPIManager.instance.rewardsGetStateBulk(posts: contentIds)
-                .map({ $0.mosaics })
-                .subscribe(onSuccess: { (mosaics) in
-                    mosaics.forEach({ (mosaic) in
-                        if var post = posts.first(where: { $0.contentId.userId == mosaic.contentId.userId && $0.contentId.permlink == mosaic.contentId.permlink }) {
-                            post.mosaic = mosaic
-                            post.notifyChanged()
-                        }
-                    })
-                })
-                .disposed(by: self.disposeBag)
+        RestAPIManager.instance.rewardsGetStateBulk(posts: contentIds)
+            .map({ $0.mosaics })
+            .subscribe(onSuccess: { (mosaics) in
+                self.showMosaics(mosaics)
+            })
+            .disposed(by: self.disposeBag)
+    }
+    
+    private func showMosaics(_ mosaics: [ResponseAPIRewardsGetStateBulkMosaic]) {
+        // add mosaics
+        var posts = self.items.value
+            .map {post -> ResponseAPIContentGetPost in
+                var post = post
+                // clear explanation
+                post.topExplanation = nil
+                
+                // add mosaics
+                if let mosaic = mosaics.first(where: {$0.contentId.userId == post.contentId.userId && $0.contentId.permlink == post.contentId.permlink})
+                {
+                    post.mosaic = mosaic
+                }
+                return post
+            }
+        
+        // add explanation
+        if ExplanationView.shouldShowViewWithId(
+            ResponseAPIContentGetPost.TopExplanationType.reward.rawValue)
+        {
+            var lastShownRewardExplantionIndex: Int?
+            for (index, post) in posts.enumerated() {
+                let showReward: () -> Void = {
+                    posts[index].topExplanation = .reward
+                    lastShownRewardExplantionIndex = index
+                }
+    
+                if lastShownRewardExplantionIndex == nil {
+                    if index >= 3 && post.mosaic?.isRewarded == true {
+                        showReward()
+                    }
+                } else {
+                    if index >= 40 + lastShownRewardExplantionIndex! && post.mosaic?.isRewarded == true {
+                        showReward()
+                    }
+                }
+            }
         }
+        
+        // assign value
+        self.items.accept(posts)
     }
 }

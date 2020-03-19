@@ -118,16 +118,16 @@ class PostCell: MyTableViewCell, ListItemCellType {
         case .reward:
             title = "what does it mean?".localized().uppercaseFirst
             label = "wow, this post will get the reward!\nDo you want to get rewards too? Create a post - it’s the best way to get them!".localized().uppercaseFirst
-            senderView = metaView//.stateButton
+            senderView = metaView.stateButton
         default:
             return
         }
         
-        let eView = ExplanationView(id: ex.rawValue, title: title, descriptionText: label, imageName: nil, senderView: senderView, showAbove: true)
+        let eView = ExplanationView(id: ex.rawValue, title: title, descriptionText: label, imageName: "explanation-\(ex.rawValue)", senderView: senderView, showAbove: true)
         
         topView.addSubview(eView)
         eView.fixArrowView()
-        eView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        eView.autoPinEdge(toSuperviewEdge: .top)
         eView.autoPinEdge(toSuperviewEdge: .bottom)
         eView.autoPinEdge(toSuperviewEdge: .leading)
         eView.autoPinEdge(toSuperviewEdge: .trailing)
