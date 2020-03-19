@@ -28,6 +28,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
             bindFilter()
             observeUserEvents()
             observeCommunityEvents()
+            observeExplanationViewStopShowing()
         }
     }
     
@@ -163,6 +164,29 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
             })
             .disposed(by: disposeBag)
             
+    }
+    
+    func observeExplanationViewStopShowing() {
+        // type reward
+        UserDefaults.standard.rx.observe(
+            Bool.self,
+            ExplanationView.userDefaultKeyForId(
+                ResponseAPIContentGetPost.TopExplanationType.reward.rawValue
+            )
+        )
+            .filter {$0 == true}
+            .subscribe(onNext: { _ in
+                let posts = self.items.value.map {post -> ResponseAPIContentGetPost in
+                    var post = post
+                    if post.topExplanation == .reward {
+                        post.topExplanation = .hidden
+                        self.rowHeights[post.identity] = nil
+                    }
+                    return post
+                }
+                self.items.accept(posts)
+            })
+            .disposed(by: disposeBag)
     }
 
     func changeFilter(

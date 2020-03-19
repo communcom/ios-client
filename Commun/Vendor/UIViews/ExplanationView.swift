@@ -10,7 +10,7 @@ import Foundation
 
 class ExplanationView: MyView {
     // MARK: - Static functions
-    private static func userDefaultKeyForId(_ id: String) -> String {
+    static func userDefaultKeyForId(_ id: String) -> String {
         "ExplanationView.\(id).showed"
     }
     
