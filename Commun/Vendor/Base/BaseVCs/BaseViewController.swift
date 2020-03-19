@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import SafariServices
+import SwipeTransition
 
 class BaseViewController: UIViewController {
     // MARK: - Properties
@@ -24,6 +25,8 @@ class BaseViewController: UIViewController {
         setUp()
         
         bind()
+        
+        backSwipe()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +52,16 @@ class BaseViewController: UIViewController {
     
     func bind() {
         
+    }
+    
+    func backSwipe() {
+        switch self {
+        case is WelcomeVC:
+            self.navigationController?.swipeBack?.isEnabled = false
+            
+        default:
+            self.navigationController?.swipeBack?.isEnabled = true
+        }
     }
     
     func setTabBarHidden(_ value: Bool) {
