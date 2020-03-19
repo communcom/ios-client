@@ -28,6 +28,7 @@ class BaseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(true, animated: false)
         }
@@ -35,6 +36,7 @@ class BaseViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(false, animated: false)
         }

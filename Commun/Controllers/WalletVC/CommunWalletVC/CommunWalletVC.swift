@@ -87,6 +87,11 @@ class CommunWalletVC: TransferHistoryVC {
         self.setNavBarBackButton(tintColor: .white)
         
         self.setTabBarHidden(false)
+        
+        if #available(iOS 13.0, *) {
+            self.navigationController?.navigationBar.backgroundColor = .clear
+            self.navigationController?.navigationBar.subviews.first?.backgroundColor = .clear
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
