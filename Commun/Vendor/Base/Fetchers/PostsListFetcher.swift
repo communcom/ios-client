@@ -107,7 +107,12 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
             .map {post -> ResponseAPIContentGetPost in
                 var post = post
                 // clear explanation
-                post.topExplanation = nil
+                if post.topExplanation != .hidden {
+                    post.topExplanation = nil
+                }
+                if post.bottomExplanation != .hidden {
+                    post.bottomExplanation = nil
+                }
                 
                 // add mosaics
                 if let mosaic = mosaics.first(where: {$0.contentId.userId == post.contentId.userId && $0.contentId.permlink == post.contentId.permlink})
@@ -122,12 +127,32 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
             ResponseAPIContentGetPost.TopExplanationType.reward.rawValue)
         {
             var lastShownRewardExplantionIndex: Int?
+            var lastShownCommentExplanationIndex: Int?
             for (index, post) in posts.enumerated() {
+                // show reward explanation
                 let showReward: () -> Void = {
-                    posts[index].topExplanation = .reward
+                    if posts[index].topExplanation != .hidden {
+                        posts[index].topExplanation = .reward
+                    }
                     lastShownRewardExplantionIndex = index
                 }
+                
+                // show rewards for comment explanation
+                let showComment: () -> Void = {
+                    if posts[index].bottomExplanation != .hidden {
+                        posts[index].bottomExplanation = .rewardsForComments
+                    }
+                    lastShownCommentExplanationIndex = index
+                }
+                
+                // show rewards for like explanation
+                let showLike: () -> Void = {
+                    if posts[index].bottomExplanation != .hidden {
+                        posts[index].bottomExplanation = .rewardsForLikes
+                    }
+                }
     
+                // check index and show needed explanation
                 if lastShownRewardExplantionIndex == nil {
                     if index >= 3 && post.mosaic?.isRewarded == true {
                         showReward()
@@ -135,6 +160,16 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
                 } else {
                     if index >= 40 + lastShownRewardExplantionIndex! && post.mosaic?.isRewarded == true {
                         showReward()
+                    }
+                    
+                    if index == 7 + lastShownRewardExplantionIndex! {
+                        showComment()
+                    }
+                    
+                    if let commentIndex = lastShownCommentExplanationIndex,
+                        index == 7 + commentIndex
+                    {
+                        showLike()
                     }
                 }
             }

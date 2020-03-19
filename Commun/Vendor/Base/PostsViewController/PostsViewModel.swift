@@ -187,6 +187,48 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
                 self.items.accept(posts)
             })
             .disposed(by: disposeBag)
+        
+        // type comment
+        UserDefaults.standard.rx.observe(
+            Bool.self,
+            ExplanationView.userDefaultKeyForId(
+                ResponseAPIContentGetPost.BottomExplanationType.rewardsForComments.rawValue
+            )
+        )
+            .filter {$0 == true}
+            .subscribe(onNext: { _ in
+                let posts = self.items.value.map {post -> ResponseAPIContentGetPost in
+                    var post = post
+                    if post.bottomExplanation == .rewardsForComments {
+                        post.topExplanation = .hidden
+                        self.rowHeights[post.identity] = nil
+                    }
+                    return post
+                }
+                self.items.accept(posts)
+            })
+            .disposed(by: disposeBag)
+        
+        // type comment
+        UserDefaults.standard.rx.observe(
+            Bool.self,
+            ExplanationView.userDefaultKeyForId(
+                ResponseAPIContentGetPost.BottomExplanationType.rewardsForLikes.rawValue
+            )
+        )
+            .filter {$0 == true}
+            .subscribe(onNext: { _ in
+                let posts = self.items.value.map {post -> ResponseAPIContentGetPost in
+                    var post = post
+                    if post.bottomExplanation == .rewardsForLikes {
+                        post.topExplanation = .hidden
+                        self.rowHeights[post.identity] = nil
+                    }
+                    return post
+                }
+                self.items.accept(posts)
+            })
+            .disposed(by: disposeBag)
     }
 
     func changeFilter(

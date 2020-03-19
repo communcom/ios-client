@@ -146,6 +146,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
             ExplanationView.shouldShowViewWithId(ex.rawValue)
         else {
             postStatsView.fillShareCountButton(false)
+            postStatsView.fillCommentCountButton(false)
             if self.bottomViewHeigthConstraint?.isActive != true {
                 self.bottomView.removeAllExplanationViews()
                 self.bottomViewHeigthConstraint?.isActive = true
@@ -173,6 +174,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
             title = "rewards for comment".localized().uppercaseFirst
             label = "wow, this post will get the reward!\nDo you want to get rewards too? Create a post - it’s the best way to get them!".localized().uppercaseFirst
             senderView = postStatsView.commentsCountButton
+            postStatsView.fillCommentCountButton()
         default:
             return
         }
