@@ -16,7 +16,17 @@ final class FeedPageVC: PostsViewController {
     var headerView: FeedPageHeaderView!
     var floatViewHeight: CGFloat = 0
     var lastContentOffset: CGFloat = 0
-
+    
+    // MARK: - Initializers
+    init() {
+        let viewModel = FeedPageViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time, userId: Config.currentUser?.id), prefetch: true)
+        super.init(viewModel: viewModel)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
@@ -40,6 +50,8 @@ final class FeedPageVC: PostsViewController {
         view.bringSubviewToFront(statusBarView)
         
         headerView = FeedPageHeaderView(tableView: tableView)
+        
+        headerView.getButton.addTarget(self, action: #selector(promoGetButtonDidTouch), for: .touchUpInside)
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,6 +99,17 @@ final class FeedPageVC: PostsViewController {
                 })
             }
         }.disposed(by: disposeBag)
+        
+        // promo
+        (viewModel as! FeedPageViewModel).claimedPromos
+            .filter {$0 != nil}
+            .map {$0!}
+            .subscribe(onNext: { (claimedPromos) in
+                if !claimedPromos.contains("DANK") {
+                    self.headerView.showPromoBanner()
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func filterChanged(filter: PostsListFetcher.Filter) {
@@ -102,5 +125,10 @@ final class FeedPageVC: PostsViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
+    }
+    
+    // MARK: - Actions
+    @objc func promoGetButtonDidTouch() {
+        
     }
 }
