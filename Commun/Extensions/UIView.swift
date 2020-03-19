@@ -65,6 +65,7 @@ extension UIView {
     
     func showLoading(
         cover: Bool = true,
+        coverColor: UIColor = .white,
         spinnerColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1),
         size: CGFloat? = nil,
         spinerLineWidth: CGFloat? = nil,
@@ -77,7 +78,7 @@ extension UIView {
         
         // create cover view to cover all current view
         let coverView = UIView()
-        coverView.backgroundColor = cover ? .white : .clear
+        coverView.backgroundColor = cover ? coverColor : .clear
         coverView.translatesAutoresizingMaskIntoConstraints = false
         coverView.tag = loadingViewTag
         self.addSubview(coverView)
@@ -185,13 +186,14 @@ extension UIView {
         self.clipsToBounds = true
     }
     
-    @discardableResult
-    func addExplanationView(id: String, title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0, learnMoreLink: String = "https://commun.com/faq") -> ExplanationView {
-        if let eView = subviews.first(where: {($0 as? ExplanationView)?.id == id}) as? ExplanationView {return eView}
+    func addExplanationView(id: String, title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0, learnMoreLink: String = "https://commun.com/faq") {
+        if subviews.first(where: {($0 as? ExplanationView)?.id == id}) != nil {return}
+        
+        if !ExplanationView.shouldShowViewWithId(id) {
+            return
+        }
         
         let eView = ExplanationView(id: id, title: title, descriptionText: description, imageName: nil, senderView: sender, showAbove: showAbove, learnMoreLink: learnMoreLink)
-        
-        if !eView.shouldShow {return eView}
         
         addSubview(eView)
         eView.fixArrowView()
@@ -209,7 +211,6 @@ extension UIView {
         } else {
             eView.autoPinEdge(.top, to: .bottom, of: sender)
         }
-        return eView
     }
     
     func removeAllExplanationViews() {

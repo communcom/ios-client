@@ -334,6 +334,7 @@
 		BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74A18123643C6400D94EF2 /* CommunityController.swift */; };
 		BC74F503237957790018DB8E /* CommentsVC+CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74F502237957790018DB8E /* CommentsVC+CommentCellDelegate.swift */; };
 		BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */; };
+		BC753FF624235A9E000616B5 /* FeedPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC753FF524235A9E000616B5 /* FeedPageViewModel.swift */; };
 		BC7A88FB23FE73C300B8CF6E /* WalletAddFriendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7A88FA23FE73C300B8CF6E /* WalletAddFriendVC.swift */; };
 		BC7C8CBD23FF7AC70038DF5E /* WalletAddFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7C8CBC23FF7AC70038DF5E /* WalletAddFriendCell.swift */; };
 		BC7D608A237BF3F1007D8C1A /* MyProfileBlacklistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D6089237BF3F1007D8C1A /* MyProfileBlacklistVC.swift */; };
@@ -395,6 +396,7 @@
 		BCABF13D2366EA14006B05F5 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF13C2366EA14006B05F5 /* ProfileHeaderView.swift */; };
 		BCAF5B20241B433400C157B5 /* ViewTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF5B1F241B433400C157B5 /* ViewTag.swift */; };
 		BCAF5B24241B78DF00C157B5 /* WalletConvertVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF5B23241B78DF00C157B5 /* WalletConvertVC+Binding.swift */; };
+		BCAFFF2F24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */; };
 		BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E52355536D00B3582B /* UITableViewCell.swift */; };
@@ -854,6 +856,7 @@
 		BC74A18123643C6400D94EF2 /* CommunityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityController.swift; sourceTree = "<group>"; };
 		BC74F502237957790018DB8E /* CommentsVC+CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsVC+CommentCellDelegate.swift"; sourceTree = "<group>"; };
 		BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+CommentCellDelegate.swift"; sourceTree = "<group>"; };
+		BC753FF524235A9E000616B5 /* FeedPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageViewModel.swift; sourceTree = "<group>"; };
 		BC7A88FA23FE73C300B8CF6E /* WalletAddFriendVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAddFriendVC.swift; sourceTree = "<group>"; };
 		BC7C8CBC23FF7AC70038DF5E /* WalletAddFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAddFriendCell.swift; sourceTree = "<group>"; };
 		BC7D6089237BF3F1007D8C1A /* MyProfileBlacklistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileBlacklistVC.swift; sourceTree = "<group>"; };
@@ -915,6 +918,7 @@
 		BCABF13C2366EA14006B05F5 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		BCAF5B1F241B433400C157B5 /* ViewTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTag.swift; sourceTree = "<group>"; };
 		BCAF5B23241B78DF00C157B5 /* WalletConvertVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WalletConvertVC+Binding.swift"; sourceTree = "<group>"; };
+		BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCommunityExplanationView.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
 		BCB2A6E52355536D00B3582B /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
@@ -1499,6 +1503,7 @@
 			children = (
 				BC4692BB2390C3A60064A38B /* Subviews */,
 				BC4692BE2390D1E10064A38B /* FeedPageVC.swift */,
+				BC753FF524235A9E000616B5 /* FeedPageViewModel.swift */,
 			);
 			path = FeedPageVC;
 			sourceTree = "<group>";
@@ -2498,6 +2503,7 @@
 			isa = PBXGroup;
 			children = (
 				BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */,
+				BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */,
 			);
 			path = EditorChooseCommunityVC;
 			sourceTree = "<group>";
@@ -3240,9 +3246,11 @@
 				BCD01A4523F66311003B0E1E /* CommunityPageVCType.swift in Sources */,
 				B17BE49923FD6203004C6440 /* CMHint.swift in Sources */,
 				3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */,
+				BCAFFF2F24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift in Sources */,
 				BC9066F723A9E1AC000F9A3B /* TransferHistoryViewModel.swift in Sources */,
 				B1FA77D9238BF7E0006E57D1 /* WelcomeVC.swift in Sources */,
 				5797E0F8225DDA400026C4D5 /* SignUpWithPhoneVC.swift in Sources */,
+				BC753FF624235A9E000616B5 /* FeedPageViewModel.swift in Sources */,
 				3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */,
 				3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */,
 				BC702C96236298CC00D9E88A /* CommunityAboutCell.swift in Sources */,

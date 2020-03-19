@@ -9,6 +9,19 @@
 import Foundation
 
 class ExplanationView: MyView {
+    // MARK: - Static functions
+    static func userDefaultKeyForId(_ id: String) -> String {
+        "ExplanationView.\(id).showed"
+    }
+    
+    static func shouldShowViewWithId(_ id: String) -> Bool {
+        !UserDefaults.standard.bool(forKey: userDefaultKeyForId(id))
+    }
+    
+    static func markAsShown(_ id: String) {
+        UserDefaults.standard.set(true, forKey: userDefaultKeyForId(id))
+    }
+    
     // MARK: - Properties
     let id: String
     var title: String
@@ -18,10 +31,11 @@ class ExplanationView: MyView {
     var showAbove: Bool
     let learnMoreLink: String
     
-    var userDefaultKey: String {"ExplanationView.\(id).showed"}
     var shouldShow: Bool {
-        !UserDefaults.standard.bool(forKey: userDefaultKey)
+        ExplanationView.shouldShowViewWithId(id)
     }
+    
+    var closeDidTouch: (() -> Void)?
     
     // MARK: - Subviews
     lazy var containerView = UIView(backgroundColor: .appMainColor)
@@ -30,7 +44,7 @@ class ExplanationView: MyView {
     
     lazy var descriptionLabel = UILabel.with(text: descriptionText, textSize: 12, textColor: .white, numberOfLines: 0)
     
-    lazy var imageView = UIImageView(width: 100, height: 100, imageNamed: imageName)
+    lazy var imageView = UIImageView(width: .adaptive(width: 100), height: .adaptive(width: 100), imageNamed: imageName, contentMode: .scaleAspectFit)
     lazy var dontShowAgainButton = UIButton(label: "don't show this again".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), textColor: .white)
     lazy var learnMoreButton = UIButton(label: "learn more".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), textColor: .white)
     lazy var arrowView = UIView(width: 10, height: 10, backgroundColor: .appMainColor, cornerRadius: 2)
@@ -54,14 +68,14 @@ class ExplanationView: MyView {
     override func commonInit() {
         super.commonInit()
         let hStack: UIStackView = {
-            let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
+            let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
             
             if self.imageName != nil {
                 hStack.addArrangedSubview(self.imageView)
             }
             
             var vStack: UIStackView {
-                let vStack = UIStackView(axis: .vertical, spacing: 20, alignment: .leading, distribution: .fill)
+                let vStack = UIStackView(axis: .vertical, spacing: .adaptive(width: 20), alignment: .leading, distribution: .fill)
                 
                 let hStack: UIStackView = {
                     let hStack = UIStackView(axis: .horizontal, alignment: .top, distribution: .fill)
@@ -88,7 +102,7 @@ class ExplanationView: MyView {
         }()
         
         containerView.addSubview(hStack)
-        hStack.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        hStack.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 16))
         
         containerView.cornerRadius = 6
         
@@ -115,20 +129,23 @@ class ExplanationView: MyView {
     }
     
     @objc func buttonCloseDidTouch() {
-        markAsShowed()
-        removeFromSuperview()
+        if closeDidTouch == nil {
+            removeFromSuperview()
+        } else {
+            closeDidTouch?()
+        }
     }
     
     @objc func buttonDontShowAgainDidTouch() {
-        markAsShowed()
-        removeFromSuperview()
+        ExplanationView.markAsShown(id)
+        if closeDidTouch == nil {
+            removeFromSuperview()
+        } else {
+            closeDidTouch?()
+        }
     }
     
     @objc func buttonLearnMoreDidTouch() {
         (parentViewController as? BaseViewController)?.load(url: learnMoreLink)
-    }
-    
-    func markAsShowed() {
-        UserDefaults.standard.set(true, forKey: userDefaultKey)
     }
 }

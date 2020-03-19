@@ -106,7 +106,7 @@ class PostMetaView: MyView {
         trailingConstraint?.isActive = false
         trailingConstraint = nil
         
-        guard let mosaicItem = mosaic, mosaicItem.topCount > 0, let rewardString = mosaicItem.reward.components(separatedBy: " ").first, let rewardDouble = Double(rewardString), rewardDouble > 0 else {
+        guard let mosaicItem = mosaic, mosaicItem.isRewarded else {
             stackViewTrailingConstraint = stackView.autoPinEdge(toSuperviewEdge: .trailing)
             stackViewTrailingConstraint?.isActive = true
             return
@@ -121,7 +121,7 @@ class PostMetaView: MyView {
         trailingConstraint?.isActive = true
         
         let isRewardState = mosaicItem.isClosed
-        stateButtonLabel.text = isRewardState ? rewardDouble.currencyValueFormatted : "top".localized().uppercaseFirst
+        stateButtonLabel.text = isRewardState ? mosaicItem.rewardDouble.currencyValueFormatted : "top".localized().uppercaseFirst
         stateButton.tag = Int(isRewardState.int)
     }
     

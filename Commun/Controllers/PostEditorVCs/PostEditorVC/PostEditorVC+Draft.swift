@@ -45,8 +45,12 @@ extension PostEditorVC {
     }
     
     @objc func saveDraft() {
+        var text = ""
+        DispatchQueue.main.sync {
+            text = contentTextView.text
+        }
         guard let community = viewModel.community.value,
-            !contentTextView.text.isEmpty else {return}
+            !text.isEmpty else {return}
         
         // save community
         if let encoded = try? JSONEncoder().encode(community) {
