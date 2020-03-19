@@ -151,7 +151,7 @@ extension UIViewController {
 //        }
         
         // Open other user's profile
-        if userId != Config.currentUser?.id {
+        if userId != Config.currentUser?.id && username != Config.currentUser?.name {
             let profileVC = UserProfilePageVC(userId: userId, username: username)
             show(profileVC, sender: nil)
             return
