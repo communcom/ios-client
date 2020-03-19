@@ -17,7 +17,6 @@ enum SocialNetwork: String {
 
 protocol SocialLoginManagerDelegate: AnyObject {
     func successLogin(with social: SocialNetwork, token: String)
-    func failedLogin(with social: SocialNetwork)
 }
 
 protocol SocialLoginManagerInput {

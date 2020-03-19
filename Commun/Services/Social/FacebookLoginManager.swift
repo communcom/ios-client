@@ -27,8 +27,6 @@ class FacebookLoginManager: NSObject, SocialLoginManagerInput {
             guard let self = self else { return }
             if let token = result?.token?.tokenString {
                 self.delegate?.successLogin(with: .fb, token: token)
-            } else {
-                self.delegate?.failedLogin(with: .fb)
             }
         }
     }

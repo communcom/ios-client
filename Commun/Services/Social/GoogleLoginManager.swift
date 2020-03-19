@@ -15,17 +15,15 @@ class GoogleLoginManager: NSObject, SocialLoginManagerInput {
 
     private let manager = GIDSignIn.sharedInstance()
 
-    static func register() {
+    override init() {
+        super.init()
+        manager?.delegate = self
+
         #if APPSTORE
         GIDSignIn.sharedInstance().clientID = "537042616174-n6ad5epkjq1dup8g3dsuqcnsqdlmgrc6.apps.googleusercontent.com"
         #else
         GIDSignIn.sharedInstance().clientID = "537042616174-temhloimlc21rtfkr2mrvojm912k2muk.apps.googleusercontent.com"
         #endif
-    }
-
-    override init() {
-        super.init()
-        manager?.delegate = self
     }
 
     func login() {
@@ -37,10 +35,7 @@ class GoogleLoginManager: NSObject, SocialLoginManagerInput {
 
 extension GoogleLoginManager: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        guard let token = user?.authentication.idToken else {
-            self.delegate?.failedLogin(with: .google)
-            return
-        }
+        guard let token = user?.authentication.idToken else { return }
         self.delegate?.successLogin(with: .google, token: token)
     }
 

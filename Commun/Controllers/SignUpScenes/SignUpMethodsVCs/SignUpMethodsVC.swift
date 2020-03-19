@@ -9,6 +9,9 @@
 import Foundation
 
 class SignUpMethodsVC: SignUpBaseVC {
+    static private let facebook = "facebook"
+    static private let google = "google"
+    static private let phone = "phone"
     // MARK: - Nested type
     struct Method {
         var serviceName: String
@@ -22,12 +25,12 @@ class SignUpMethodsVC: SignUpBaseVC {
     
     // MARK: - Properties
     let methods: [Method] = [
-        Method(serviceName: "phone"),
-        Method(serviceName: "google"),
-        Method(serviceName: "instagram"),
-        Method(serviceName: "twitter", backgroundColor: UIColor(hexString: "#4AA1EC")!, textColor: .white),
-        Method(serviceName: "facebook", backgroundColor: UIColor(hexString: "#415A94")!, textColor: .white),
-        Method(serviceName: "apple", backgroundColor: .black, textColor: .white)
+        Method(serviceName: phone),
+        Method(serviceName: google),
+//        Method(serviceName: "instagram"),
+//        Method(serviceName: "twitter", backgroundColor: UIColor(hexString: "#4AA1EC")!, textColor: .white),
+        Method(serviceName: facebook, backgroundColor: UIColor(hexString: "#415A94")!, textColor: .white)
+//        Method(serviceName: "apple", backgroundColor: .black, textColor: .white)
     ]
     
     // MARK: - Subviews
@@ -95,8 +98,50 @@ class SignUpMethodsVC: SignUpBaseVC {
         guard let method = gesture.method else {return}
         signUpWithMethod(method)
     }
-    
+
+    private var manager: SocialLoginManagerInput?
+    private lazy var loginManager = SocialLoginManager()
+
     func signUpWithMethod(_ method: Method) {
-        
+        if method.serviceName == SignUpMethodsVC.phone {
+            let signUpVC = controllerContainer.resolve(SignUpWithPhoneVC.self)!
+            show(signUpVC, sender: nil)
+            return
+        }
+
+        if method.serviceName == SignUpMethodsVC.facebook {
+            manager = FacebookLoginManager()
+        } else if method.serviceName == SignUpMethodsVC.google {
+            manager = GoogleLoginManager()
+        }
+
+        manager?.viewController = self
+        manager?.delegate = self
+        manager?.login()
+    }
+}
+
+extension SignUpMethodsVC: SocialLoginManagerDelegate {
+    func successLogin(with social: SocialNetwork, token: String) {
+        loginManager.getIdentityFromToken(token, social: social) { [weak self] (identity) in
+            guard let self = self else { return }
+                if let identity = identity, let key = identity.identity {
+
+                    try? KeychainManager.save([
+                        Config.currentUserProviderKey: CurrentUserRegistrationStep.setUserName.rawValue,
+                        Config.currentUserIdentityKey: key
+                    ])
+
+//                    let keyStore = NSUbiquitousKeyValueStore()
+//                    keyStore.set(identity.provider, forKey: Config.currentUserProviderKey)
+//                    keyStore.set(key, forKey: Config.currentUserIdentityKey)
+//                    keyStore.set(CurrentUserRegistrationStep.setUserName.rawValue, forKey: Config.registrationStepKey)
+                    DispatchQueue.main.async {
+                        self.navigationController?.pushViewController(SetUserVC())
+                    }
+                } else {
+                    print("error")
+                }
+        }
     }
 }
