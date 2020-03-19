@@ -10,7 +10,7 @@ import Foundation
 
 class ExplanationView: MyView {
     // MARK: - Static functions
-    private static func userDefaultKeyForId(_ id: String) -> String {
+    static func userDefaultKeyForId(_ id: String) -> String {
         "ExplanationView.\(id).showed"
     }
     
@@ -68,7 +68,7 @@ class ExplanationView: MyView {
     override func commonInit() {
         super.commonInit()
         let hStack: UIStackView = {
-            let hStack = UIStackView(axis: .horizontal, spacing: 0, alignment: .center, distribution: .fill)
+            let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
             
             if self.imageName != nil {
                 hStack.addArrangedSubview(self.imageView)

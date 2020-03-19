@@ -49,7 +49,7 @@ class PostStatsView: MyView {
     
     // MARK: - Methods
     private func createDescriptionLabel() -> UILabel {
-        UILabel.with(textSize: .adaptive(width: 12.0), weight: .medium, textColor: #colorLiteral(red: 0.6470588235, green: 0.6549019608, blue: 0.7411764706, alpha: 1), numberOfLines: 1)
+        UILabel.with(textSize: .adaptive(width: 12.0), weight: .medium, textColor: .a5a7bd, numberOfLines: 1)
     }
     
     override func commonInit() {
@@ -98,5 +98,10 @@ class PostStatsView: MyView {
     
     func fillShareCountButton(_ fill: Bool = true) {
         shareButton.setImage(UIImage(named: fill ? "share-count-fill" : "share-count"), for: .normal)
+    }
+    
+    func fillCommentCountButton(_ fill: Bool = true) {
+        commentsCountButton.setImage(UIImage(named: fill ? "comment-count-fill" : "comment-count"), for: .normal)
+        commentsCountLabel.textColor = fill ? .appMainColor : .a5a7bd
     }
 }

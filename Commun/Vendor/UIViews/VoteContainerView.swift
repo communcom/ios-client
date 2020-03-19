@@ -10,6 +10,9 @@ import Foundation
 import CyberSwift
 
 class VoteContainerView: MyView {
+    // MARK: - Properties
+    var votes: ResponseAPIContentVotes?
+    
     // MARK: - Subviews
     lazy var upVoteButton = UIButton.vote(type: .upvote)
     lazy var downVoteButton = UIButton.vote(type: .downvote)
@@ -36,6 +39,8 @@ class VoteContainerView: MyView {
     }
     
     func setUp(with votes: ResponseAPIContentVotes, userID: String?) {
+        self.votes = votes
+        
         upVoteButton.tintColor         = votes.hasUpVote ?? false ? .appMainColor : .a5a7bd
         likeCountLabel.text            = "\(((votes.upCount ?? 0) - (votes.downCount ?? 0)).kmFormatted)"
         downVoteButton.tintColor       = votes.hasDownVote ?? false ? .appMainColor : .a5a7bd
@@ -76,5 +81,18 @@ class VoteContainerView: MyView {
         self.downVoteButton.layer.add(fadeAnim, forKey: "Fade")
         
         CATransaction.commit()
+    }
+    
+    func fill(_ fill: Bool = true) {
+        guard let votes = votes else {return}
+        backgroundColor = fill ? .appMainColor : .f3f5fa
+        
+        let voteActiveColor: UIColor = fill ? .f3f5fa : .appMainColor
+        let voteInactiveColor: UIColor = fill ? UIColor.f3f5fa.withAlphaComponent(0.5) : .a5a7bd
+        
+        upVoteButton.tintColor         = votes.hasUpVote ?? false ? voteActiveColor : voteInactiveColor
+        likeCountLabel.text            = "\(((votes.upCount ?? 0) - (votes.downCount ?? 0)).kmFormatted)"
+        downVoteButton.tintColor       = votes.hasDownVote ?? false ? voteActiveColor : voteInactiveColor
+        likeCountLabel.textColor = votes.hasUpVote ?? false || votes.hasDownVote ?? false ? voteActiveColor : voteInactiveColor
     }
 }

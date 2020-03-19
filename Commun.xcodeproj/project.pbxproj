@@ -395,6 +395,7 @@
 		BCABF13D2366EA14006B05F5 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF13C2366EA14006B05F5 /* ProfileHeaderView.swift */; };
 		BCAF5B20241B433400C157B5 /* ViewTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF5B1F241B433400C157B5 /* ViewTag.swift */; };
 		BCAF5B24241B78DF00C157B5 /* WalletConvertVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF5B23241B78DF00C157B5 /* WalletConvertVC+Binding.swift */; };
+		BCAFFF2F24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */; };
 		BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E52355536D00B3582B /* UITableViewCell.swift */; };
@@ -915,6 +916,7 @@
 		BCABF13C2366EA14006B05F5 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		BCAF5B1F241B433400C157B5 /* ViewTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTag.swift; sourceTree = "<group>"; };
 		BCAF5B23241B78DF00C157B5 /* WalletConvertVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WalletConvertVC+Binding.swift"; sourceTree = "<group>"; };
+		BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCommunityExplanationView.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
 		BCB2A6E52355536D00B3582B /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
@@ -2498,6 +2500,7 @@
 			isa = PBXGroup;
 			children = (
 				BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */,
+				BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */,
 			);
 			path = EditorChooseCommunityVC;
 			sourceTree = "<group>";
@@ -3240,6 +3243,7 @@
 				BCD01A4523F66311003B0E1E /* CommunityPageVCType.swift in Sources */,
 				B17BE49923FD6203004C6440 /* CMHint.swift in Sources */,
 				3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */,
+				BCAFFF2F24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift in Sources */,
 				BC9066F723A9E1AC000F9A3B /* TransferHistoryViewModel.swift in Sources */,
 				B1FA77D9238BF7E0006E57D1 /* WelcomeVC.swift in Sources */,
 				5797E0F8225DDA400026C4D5 /* SignUpWithPhoneVC.swift in Sources */,
