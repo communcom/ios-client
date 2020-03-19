@@ -118,14 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .registering:
             self.changeRootVC(welcomeNC)
         case .boarding:
-            let vc: UIViewController
-
-            if KeychainManager.currentUser()?.registrationStep == .relogined {
-                vc = boardingSetPasscodeVC
-            } else {
-                vc = backUpKeysVC
-            }
-            let boardingNC = UINavigationController(rootViewController: vc)
+            let boardingNC = UINavigationController(rootViewController: boardingSetPasscodeVC)
             self.changeRootVC(boardingNC)
         case .authorizing:
             break

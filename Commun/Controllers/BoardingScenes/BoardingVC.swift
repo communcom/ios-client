@@ -69,10 +69,6 @@ class BoardingVC: BaseViewController {
             vc = controllerContainer.resolve(EnableBiometricsVC.self)!
         case .ftue:
             vc = FTUEVC()
-//        case .setAvatar:
-//            vc = controllerContainer.resolve(PickupAvatarVC.self)!
-//        case .setBio:
-//            vc = controllerContainer.resolve(CreateBioVC.self)!
         default:
             return
         }

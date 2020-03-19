@@ -57,7 +57,7 @@ class SocialLoginManager {
                 completion(nil)
                 return
             }
-
+            
             completion(model)
         }
 

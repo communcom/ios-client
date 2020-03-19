@@ -49,10 +49,26 @@ class ConfirmPasswordVC: CreatePasswordVC {
         RestAPIManager.instance.toBlockChain(password: currentPassword)
             .subscribe(onCompleted: {
                 AuthManager.shared.reload()
+                self.savePasswordToIcloud()
             }) { (error) in
                 self.hideHud()
                 self.handleSignUpError(error: error)
             }
             .disposed(by: self.disposeBag)
+    }
+
+    private func savePasswordToIcloud() {
+        if let user = Config.currentUser, let userName = user.name, let password = user.masterKey {
+                   var domain = "dev.commun.com"
+                   #if APPSTORE
+                       domain = "commun.com"
+                   #endif
+
+                   SecAddSharedWebCredential(domain as CFString, userName as CFString, password as CFString) { (error) in
+                       if error != nil {
+                           AnalyticsManger.shared.passwordBackuped()
+                       }
+                   }
+               }
     }
 }

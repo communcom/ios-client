@@ -125,6 +125,12 @@ extension SignUpMethodsVC: SocialLoginManagerDelegate {
     func successLogin(with social: SocialNetwork, token: String) {
         loginManager.getIdentityFromToken(token, social: social) { [weak self] (identity) in
             guard let self = self else { return }
+            DispatchQueue.main.async {
+                if (identity?.oauthState ?? "") == "registered" {
+                    self.showErrorWithMessage("account already registered".localized().uppercaseFirst)
+                    return
+                }
+
                 if let identity = identity, let key = identity.identity {
 
                     try? KeychainManager.save([
@@ -132,16 +138,12 @@ extension SignUpMethodsVC: SocialLoginManagerDelegate {
                         Config.currentUserIdentityKey: key
                     ])
 
-//                    let keyStore = NSUbiquitousKeyValueStore()
-//                    keyStore.set(identity.provider, forKey: Config.currentUserProviderKey)
-//                    keyStore.set(key, forKey: Config.currentUserIdentityKey)
-//                    keyStore.set(CurrentUserRegistrationStep.setUserName.rawValue, forKey: Config.registrationStepKey)
-                    DispatchQueue.main.async {
-                        self.navigationController?.pushViewController(SetUserVC())
-                    }
+                    self.navigationController?.pushViewController(SetUserVC())
+
                 } else {
-                    print("error")
+                    self.showErrorWithMessage("undefined error".localized().uppercaseFirst)
                 }
+            }
         }
     }
 }
