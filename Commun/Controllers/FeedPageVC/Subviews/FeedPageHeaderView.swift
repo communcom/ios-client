@@ -12,13 +12,38 @@ import RxSwift
 class FeedPageHeaderView: MyTableHeaderView {
     // MARK: - Properties
     let disposeBag = DisposeBag()
+    var postingViewBottomConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
+    lazy var postingView = UIView(backgroundColor: .white)
     lazy var avatarImageView = MyAvatarImageView(size: 35)
     lazy var openEditorWithPhotoImageView: UIImageView = {
         let iv = UIImageView(width: 24, height: 24, imageNamed: "editor-open-photo")
         iv.tintColor = .a5a7bd
         return iv
+    }()
+    
+    lazy var promoBannerView: UIView = {
+        let bannerView = UIView(backgroundColor: .white, cornerRadius: 10)
+        let imageView = UIImageView(imageNamed: "dankmeme_facebook")
+        bannerView.addSubview(imageView)
+        imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 355 / 244.84)
+            .isActive = true
+        
+        let footerView = UIView(height: 64, backgroundColor: .white)
+        bannerView.addSubview(footerView)
+        footerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        
+        let label = UILabel.with(text: "just click the button and get Dank Meme points!".localized().uppercaseFirst, textSize: 15, weight: .medium, textColor: .a5a7bd, numberOfLines: 0)
+        footerView.addSubview(label)
+        label.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)
+        
+        let getButton = UIButton(width: 90, height: 34, label: "get".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 17)
+        footerView.addSubview(getButton)
+        getButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        getButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        return bannerView
     }()
 
     // MARK: - Methods
@@ -26,10 +51,9 @@ class FeedPageHeaderView: MyTableHeaderView {
         super.commonInit()
         backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
         
-        let postingView = UIView(backgroundColor: .white)
         addSubview(postingView)
-
-        postingView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
+        postingView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
+        postingViewBottomConstraint = postingView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         
         postingView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 0), excludingEdge: .trailing)
@@ -56,6 +80,22 @@ class FeedPageHeaderView: MyTableHeaderView {
         openEditorWithPhotoImageView.addGestureRecognizer(tapGesture2)
     }
     
+    func showPromoBanner() {
+        postingViewBottomConstraint?.isActive = false
+        promoBannerView.removeFromSuperview()
+        addSubview(promoBannerView)
+        promoBannerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
+        
+        postingViewBottomConstraint = promoBannerView.autoPinEdge(.top, to: .bottom, of: postingView, withOffset: 10)
+    }
+    
+    func hidePromoBanner() {
+        postingViewBottomConstraint?.isActive = false
+        promoBannerView.removeFromSuperview()
+        postingViewBottomConstraint = postingView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+    }
+    
+    // MARK: - Actions
     @objc func postButtonDidTouch(_ sender: Any) {
         openEditor()
     }
