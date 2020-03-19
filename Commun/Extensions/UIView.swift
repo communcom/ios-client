@@ -65,6 +65,7 @@ extension UIView {
     
     func showLoading(
         cover: Bool = true,
+        coverColor: UIColor = .white,
         spinnerColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1),
         size: CGFloat? = nil,
         spinerLineWidth: CGFloat? = nil,
@@ -77,7 +78,7 @@ extension UIView {
         
         // create cover view to cover all current view
         let coverView = UIView()
-        coverView.backgroundColor = cover ? .white : .clear
+        coverView.backgroundColor = cover ? coverColor : .clear
         coverView.translatesAutoresizingMaskIntoConstraints = false
         coverView.tag = loadingViewTag
         self.addSubview(coverView)

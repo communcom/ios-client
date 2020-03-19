@@ -15,6 +15,10 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
         super.init(viewModel: viewModel)
     }
     
+    init(viewModel: PostsViewModel) {
+        super.init(viewModel: viewModel)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
