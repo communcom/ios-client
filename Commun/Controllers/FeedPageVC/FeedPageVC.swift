@@ -129,6 +129,19 @@ final class FeedPageVC: PostsViewController {
     
     // MARK: - Actions
     @objc func promoGetButtonDidTouch() {
-        
+        headerView.getButton.showLoading(cover: true, coverColor: .appMainColor, spinnerColor: .white, size: 20)
+        RestAPIManager.instance.getAirdrop(communityId: "DANK")
+            .subscribe(onSuccess: { (_) in
+                self.headerView.getButton.hideLoading()
+                self.headerView.hidePromoBanner()
+                UIView.animate(withDuration: 0.3) {
+                    self.headerView.layoutIfNeeded()
+                }
+                self.showDone("congratulations!\nYou've got gift Points!".localized().uppercaseFirst)
+            }) { (error) in
+                self.headerView.getButton.hideLoading()
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }
