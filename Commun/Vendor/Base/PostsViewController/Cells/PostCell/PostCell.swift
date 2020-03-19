@@ -147,6 +147,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         else {
             postStatsView.fillShareCountButton(false)
             postStatsView.fillCommentCountButton(false)
+            postStatsView.voteContainerView.fill(false)
             if self.bottomViewHeigthConstraint?.isActive != true {
                 self.bottomView.removeAllExplanationViews()
                 self.bottomViewHeigthConstraint?.isActive = true
@@ -170,6 +171,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
             title = "rewards for like".localized().uppercaseFirst
             label = "yes, you get rewards for likes as well, and they have more value than you think!\nUpvoting or downvoting of posts decides if it’s going to be successful and receive the reward.".localized().uppercaseFirst
             senderView = postStatsView.voteContainerView
+            postStatsView.voteContainerView.fill()
         case .rewardsForComments:
             title = "rewards for comment".localized().uppercaseFirst
             label = "wow, this post will get the reward!\nDo you want to get rewards too? Create a post - it’s the best way to get them!".localized().uppercaseFirst
