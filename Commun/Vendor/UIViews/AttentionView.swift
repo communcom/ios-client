@@ -16,7 +16,8 @@ class AttentionView: MyView {
     let backButtonLabel: String
     let ignoreButtonLabel: String
     var ignoreAction: (() -> Void)?
-    
+    var backAction: (() -> Void)?
+
     // MARK: - Initializers
     init(title: String = "attention".localized().uppercaseFirst, subtitle: String, descriptionText: String, backButtonLabel: String = "back".localized().uppercaseFirst, ignoreButtonLabel: String) {
         self.title = title
@@ -98,8 +99,12 @@ class AttentionView: MyView {
     
     // MARK: - Actions
     @objc func closeButtonTapped(_ sender: UIButton) {
-        AnalyticsManger.shared.passwordNotBackuped(back: true)
-        parentViewController?.dismiss(animated: true, completion: nil)
+        if let backAction = backAction {
+            backAction()
+        } else {
+            AnalyticsManger.shared.passwordNotBackuped(back: true)
+            parentViewController?.dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc func continueButtonTapped(_ sender: UIButton) {

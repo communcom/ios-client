@@ -197,13 +197,14 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     
     @objc func generateMasterPasswordButtonDidTouch() {
         showAttention(
-            subtitle: "you are about to select the advanced mode and continue with the Master Password".localized().uppercaseFirst,
-            descriptionText: "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
-            ignoreButtonLabel: "continue with Master Password".localized().uppercaseFirst)
-        {
-            let vc = GenerateMasterPasswordVC()
-            self.show(vc, sender: nil)
-        }
+            subtitle: "you want to select the advanced mode and continue with the Master Password".localized().uppercaseFirst,
+            descriptionText: "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
+            ignoreButtonLabel: "continue with Master Password".localized().uppercaseFirst,
+            ignoreAction: {
+                let vc = GenerateMasterPasswordVC()
+                self.show(vc, sender: nil)
+            }
+        )
     }
     
     @objc func hideKeyboard() {
