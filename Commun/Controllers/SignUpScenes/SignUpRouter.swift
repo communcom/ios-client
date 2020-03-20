@@ -71,10 +71,10 @@ extension SignUpRouter where Self: UIViewController {
             case .registration(let message, let currentStep):
                 if message == ErrorMessage.invalidStepTaken.rawValue {
                     // save state
-                    try? KeychainManager.save([
-                        Config.currentUserProviderKey: currentStep,
-                        Config.registrationUserPhoneKey: phone
-                    ])
+                    var dataToSave = [String: Any]()
+                    dataToSave[Config.registrationUserPhoneKey] = phone
+                    dataToSave[Config.registrationStepKey] = currentStep
+                    try! KeychainManager.save(dataToSave)
                     getState()
                     return
                 }

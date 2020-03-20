@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import RxSwift
 
-class SignUpMethodsVC: SignUpBaseVC {
+class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
     static private let facebook = "facebook"
     static private let google = "google"
     static private let phone = "phone"
@@ -32,7 +33,6 @@ class SignUpMethodsVC: SignUpBaseVC {
         Method(serviceName: facebook, backgroundColor: UIColor(hexString: "#415A94")!, textColor: .white)
 //        Method(serviceName: "apple", backgroundColor: .black, textColor: .white)
     ]
-    private var loginManager: SocialLoginManager?
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 12, alignment: .center, distribution: .fill)
@@ -114,44 +114,34 @@ class SignUpMethodsVC: SignUpBaseVC {
             return
         }
 
+        var manager: SocialLoginManager
         if method.serviceName == SignUpMethodsVC.facebook {
-            loginManager = FacebookLoginManager()
+            manager = FacebookLoginManager()
         } else if method.serviceName == SignUpMethodsVC.google {
-            loginManager = GoogleLoginManager()
-        }
-
-        loginManager?.viewController = self
-        loginManager?.delegate = self
-        loginManager?.login()
-    }
-}
-
-extension SignUpMethodsVC: SocialLoginManagerDelegate {
-    func loginManager(_ manager: SocialLoginManager, didSuccessfullyLoginWithToken token: String) {
-        manager.getIdentityFromToken(token) { [weak self] identity in
-            DispatchQueue.main.async {
-                self?.handleSuccessfulLoginWithIdentity(identity)
-            }
-        }
-    }
-    
-    private func handleSuccessfulLoginWithIdentity(_ identity: SocialIdentity?) {
-        if (identity?.oauthState ?? "") == "registered" {
-            self.showErrorWithMessage("account is already registered".localized().uppercaseFirst)
+            manager = GoogleLoginManager()
+        } else {
             return
         }
 
-        if let identity = identity, let key = identity.identity {
-
-            try? KeychainManager.save([
-                Config.currentUserProviderKey: CurrentUserRegistrationStep.setUserName.rawValue,
-                Config.currentUserIdentityKey: key
-            ])
-
-            self.navigationController?.pushViewController(SetUserVC())
-
-        } else {
-            self.showErrorWithMessage("undefined error".localized().uppercaseFirst)
-        }
+        manager.viewController = self
+        manager.login()
+            .flatMap { token -> Single<SocialIdentity> in
+                self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
+                return manager.getIdentityFromToken(token)
+            }
+            .subscribe(onSuccess: { (identity) in
+                self.hideHud()
+                
+                try? KeychainManager.save([
+                    Config.registrationStepKey: CurrentUserRegistrationStep.setUserName.rawValue,
+                    Config.currentUserIdentityKey: identity.identity!
+                ])
+                
+                self.signUpNextStep()
+            }, onError: { (error) in
+                self.hideHud()
+                self.showError(error)
+            })
+            .disposed(by: disposeBag)
     }
 }

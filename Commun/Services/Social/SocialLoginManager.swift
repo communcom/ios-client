@@ -9,21 +9,17 @@
 import UIKit
 import FBSDKCoreKit
 import GoogleSignIn
+import RxSwift
 
 enum SocialNetwork: String {
     case fb
     case google
 }
 
-protocol SocialLoginManagerDelegate: AnyObject {
-    func loginManager(_ manager: SocialLoginManager, didSuccessfullyLoginWithToken token: String)
-}
-
 protocol SocialLoginManager {
     var network: SocialNetwork { get }
-    var delegate: SocialLoginManagerDelegate? { get set }
     var viewController: UIViewController? { get set }
-    func login()
+    func login() -> Single<String>
 }
 
 struct SocialIdentity: Decodable {
@@ -33,7 +29,7 @@ struct SocialIdentity: Decodable {
 }
 
 extension SocialLoginManager {
-    func getIdentityFromToken(_ token: String, completion: @escaping (SocialIdentity?) -> Void) {
+    func getIdentityFromToken(_ token: String) -> Single<SocialIdentity> {
 
         var baseURL = "https://dev-3.commun.com/oauth/"
         #if APPSTORE
@@ -47,22 +43,21 @@ extension SocialLoginManager {
         case .google:
             url = URL(string: "\(baseURL)google-token?access_token=\(token)")!
         }
-
-        let task = URLSession.shared.dataTask(with: url) {(data, _, _) in
-            guard let data = data else {
-                completion(nil)
-                return
+        
+        return URLSession.shared.rx.data(request: URLRequest(url: url))
+            .take(1)
+            .asSingle()
+            .map { data -> SocialIdentity in
+                let identity = try JSONDecoder().decode(SocialIdentity.self, from: data)
+                if identity.oauthState == "registered" {
+                    throw CMError.registration(message: ErrorMessage.accountHasBeenRegistered.rawValue)
+                }
+                if identity.identity == nil {
+                    throw CMError.registration(message: ErrorMessage.couldNotRetrieveUserIdentity.rawValue)
+                }
+                return identity
             }
-
-            guard let model = try? JSONDecoder().decode(SocialIdentity.self, from: data) else {
-                completion(nil)
-                return
-            }
-            
-            completion(model)
-        }
-
-        task.resume()
+            .observeOn(MainScheduler.instance)
     }
 }
 

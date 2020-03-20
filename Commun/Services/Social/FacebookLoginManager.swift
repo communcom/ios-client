@@ -8,12 +8,12 @@
 
 import Foundation
 import FBSDKLoginKit
+import RxSwift
 
 class FacebookLoginManager: NSObject, SocialLoginManager {
     var network: SocialNetwork { .fb }
     
     weak var viewController: UIViewController?
-    weak var delegate: SocialLoginManagerDelegate?
 
     private let manager = LoginManager()
     private let permissons = ["public_profile"]
@@ -22,14 +22,18 @@ class FacebookLoginManager: NSObject, SocialLoginManager {
         super.init()
         Settings.appID = "150680096143077"
     }
-
-    func login() {
-        manager.logOut()
-        manager.logIn(permissions: permissons, from: self.viewController) { [weak self] result, _ in
-            guard let self = self else { return }
-            if let token = result?.token?.tokenString {
-                self.delegate?.loginManager(self, didSuccessfullyLoginWithToken: token)
+    
+    func login() -> Single<String> {
+        Single<String>.create {single in
+            self.manager.logOut()
+            self.manager.logIn(permissions: self.permissons, from: self.viewController) { (result, error) in
+                if let token = result?.token?.tokenString {
+                    single(.success(token))
+                    return
+                }
+                single(.error(error ?? CMError.registration(message: "could not retrieve token")))
             }
+            return Disposables.create {}
         }
     }
 
