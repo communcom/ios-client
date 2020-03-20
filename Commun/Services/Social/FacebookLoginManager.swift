@@ -31,7 +31,9 @@ class FacebookLoginManager: NSObject, SocialLoginManager {
                     single(.success(token))
                     return
                 }
-                single(.error(error ?? CMError.registration(message: "could not retrieve token")))
+                if let error = error {
+                    single(.error(error))
+                }
             }
             return Disposables.create {}
         }
