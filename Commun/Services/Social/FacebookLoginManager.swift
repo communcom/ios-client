@@ -11,7 +11,7 @@ import FBSDKLoginKit
 import RxSwift
 
 class FacebookLoginManager: NSObject, SocialLoginManager {
-    var network: SocialNetwork { .fb }
+    var network: SocialNetwork { .facebook }
     
     weak var viewController: UIViewController?
 

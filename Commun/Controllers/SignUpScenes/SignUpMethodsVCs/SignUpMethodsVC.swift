@@ -10,8 +10,6 @@ import Foundation
 import RxSwift
 
 class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
-    static private let facebook = "facebook"
-    static private let google = "google"
     static private let phone = "phone"
     // MARK: - Nested type
     struct Method {
@@ -25,14 +23,27 @@ class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
     }
     
     // MARK: - Properties
-    let methods: [Method] = [
-        Method(serviceName: phone),
-        Method(serviceName: google),
-//        Method(serviceName: "instagram"),
-//        Method(serviceName: "twitter", backgroundColor: UIColor(hexString: "#4AA1EC")!, textColor: .white),
-        Method(serviceName: facebook, backgroundColor: UIColor(hexString: "#415A94")!, textColor: .white)
-//        Method(serviceName: "apple", backgroundColor: .black, textColor: .white)
-    ]
+    let methods: [Method] = {
+        [Method(serviceName: phone)] +
+        SocialNetwork.allCases.map { network in
+            var backgroundColor: UIColor?
+            var textColor: UIColor?
+            switch network {
+            case .facebook:
+                backgroundColor = UIColor(hexString: "#415A94")!
+                textColor = .white
+//            case .twitter:
+//                backgroundColor = UIColor(hexString: "#4AA1EC")!
+//                textColor = .white
+//            case .apple:
+//                backgroundColor = .black
+//                textColor: .white
+            case .google:
+                break
+            }
+            return Method(serviceName: network.rawValue, backgroundColor: backgroundColor ?? .clear, textColor: textColor ?? .black)
+        }
+    }()
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 12, alignment: .center, distribution: .fill)
@@ -115,9 +126,9 @@ class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
         }
 
         var manager: SocialLoginManager
-        if method.serviceName == SignUpMethodsVC.facebook {
+        if method.serviceName == SocialNetwork.facebook.rawValue {
             manager = FacebookLoginManager()
-        } else if method.serviceName == SignUpMethodsVC.google {
+        } else if method.serviceName == SocialNetwork.google.rawValue {
             manager = GoogleLoginManager()
         } else {
             return

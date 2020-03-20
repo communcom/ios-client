@@ -11,8 +11,8 @@ import FBSDKCoreKit
 import GoogleSignIn
 import RxSwift
 
-enum SocialNetwork: String {
-    case fb
+enum SocialNetwork: String, CaseIterable {
+    case facebook
     case google
 }
 
@@ -36,13 +36,7 @@ extension SocialLoginManager {
         baseURL = "https://commun.com/oauth/"
         #endif
 
-        let url: URL!
-        switch network {
-        case .fb:
-            url = URL(string: "\(baseURL)facebook-token?access_token=\(token)")!
-        case .google:
-            url = URL(string: "\(baseURL)google-token?access_token=\(token)")!
-        }
+        let url = URL(string: "\(baseURL + network.rawValue)-token?access_token=\(token)")!
         
         return URLSession.shared.rx.data(request: URLRequest(url: url))
             .take(1)
