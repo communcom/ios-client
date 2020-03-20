@@ -184,6 +184,31 @@ class AnalyticsManger {
             "num": codes.count
         ])
     }
+
+    // MARK: - Password
+    func openEnterPassword() {
+        sendEvent(name: "Сlick use master password (enter password)")
+    }
+
+    func useMasterPassword() {
+        sendEvent(name: "Open screen enter password")
+    }
+
+    func openReEnterPassword() {
+        sendEvent(name: "Open screen confirm password")
+    }
+
+    func passwordCreated() {
+        sendEvent(name: "Сlick next (confirm password)")
+    }
+
+    func openNotKeepPasswordAttention() {
+        sendEvent(name: "Open screen Attention")
+    }
+
+    func saveItMassterPassword() {
+        sendEvent(name: "Click continue (Attention)")
+    }
 }
 
 extension AnalyticsManger {

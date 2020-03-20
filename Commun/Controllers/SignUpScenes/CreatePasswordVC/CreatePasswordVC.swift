@@ -88,7 +88,7 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     override func setUp() {
         super.setUp()
         titleLabel.text = "create Password".localized().uppercaseFirst
-        
+        AnalyticsManger.shared.openEnterPassword()
         // text field
         scrollView.contentView.addSubview(textField)
         switch UIDevice.current.screenType {
@@ -203,6 +203,7 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
             descriptionText: "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
             ignoreButtonLabel: "continue with Master Password".localized().uppercaseFirst,
             ignoreAction: {
+                AnalyticsManger.shared.useMasterPassword()
                 let vc = GenerateMasterPasswordVC()
                 self.show(vc, sender: nil)
             }

@@ -24,6 +24,7 @@ class ConfirmPasswordVC: CreatePasswordVC {
     
     override func setUp() {
         super.setUp()
+        AnalyticsManger.shared.openReEnterPassword()
         titleLabel.text = "confirm password".localized().uppercaseFirst
         if UIDevice.current.screenType != .iPhones_5_5s_5c_SE {
             let label = UILabel.with(text: "re-enter your password".localized().uppercaseFirst, textSize: 17)
@@ -48,12 +49,26 @@ class ConfirmPasswordVC: CreatePasswordVC {
         }
         
         self.view.endEditing(true)
-        
+        showAttention()
+    }
+
+    private func showAttention() {
+        showAttention(subtitle: "we do not keep master passwords and have no opportunity to restore them.".localized().uppercaseFirst,
+                      descriptionText: "Unfortunately, blockchain doesn’t allow us to restore passwords. It means that it is a user’s responsibility to keep the password in a safe place to be able to access it anytime.\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
+                      backButtonLabel: "save to iCloud".localized().uppercaseFirst,
+                      ignoreButtonLabel: "continue".localized().uppercaseFirst, ignoreAction: {
+                            self.sendData()
+                        }, backAction: {
+                            self.savePasswordToIcloud()
+        })
+    }
+
+    private func sendData() {
         self.showIndetermineHudWithMessage("saving to blockchain")
         RestAPIManager.instance.toBlockChain(password: currentPassword)
             .subscribe(onCompleted: {
+                AnalyticsManger.shared.passwordCreated()
                 AuthManager.shared.reload()
-                self.savePasswordToIcloud()
             }) { (error) in
                 self.hideHud()
                 self.handleSignUpError(error: error)
