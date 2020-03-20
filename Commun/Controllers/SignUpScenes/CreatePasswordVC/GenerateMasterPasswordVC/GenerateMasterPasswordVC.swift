@@ -8,11 +8,11 @@
 
 import Foundation
 
-class BackUpKeysVC: BoardingVC {
+class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
     // MARK: - Properties
-    override var step: CurrentUserSettingStep {.backUpICloud}
-    override var nextStep: CurrentUserSettingStep? {.setPasscode}
-
+    var masterPassword: String?
+    
+    // MARK: - Subviews
     lazy var copyButton = UIButton.circle(size: 24, backgroundColor: .a5a7bd, tintColor: .white, imageName: "copy", imageEdgeInsets: UIEdgeInsets(inset: 6))
     lazy var backUpICloudButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save to  iCloud".localized().uppercaseFirst)
 
@@ -79,7 +79,7 @@ class BackUpKeysVC: BoardingVC {
         masterPasswordContainer.addSubview(masterPasswordLabel)
         masterPasswordLabel.autoPinTopAndLeadingToSuperView(inset: 10, xInset: 16)
         
-        let masterPasswordContentLabel = UILabel.with(text: Config.currentUser?.masterKey, textSize: 17 * Config.heightRatio, weight: .bold)
+        let masterPasswordContentLabel = UILabel.with(textSize: 17 * Config.heightRatio, weight: .bold)
         masterPasswordContainer.addSubview(masterPasswordContentLabel)
         masterPasswordContentLabel.autoPinEdge(.top, to: .bottom, of: masterPasswordLabel, withOffset: 8)
         masterPasswordContentLabel.autoPinBottomAndLeadingToSuperView(inset: 10, xInset: 16)
@@ -99,6 +99,10 @@ class BackUpKeysVC: BoardingVC {
         backUpICloudButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         backUpICloudButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         backUpICloudButton.addTarget(self, action: #selector(backupIcloudDidTouch), for: .touchUpInside)
+        
+        // generate master password
+        masterPassword = String.randomString(length: 51)
+        masterPasswordContentLabel.text = masterPassword
     }
     
     @objc func copyButtonDidTouch() {
@@ -112,7 +116,7 @@ class BackUpKeysVC: BoardingVC {
         let masterPasswordAttentionView = MasterPasswordAttention(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 581.0))))
             //MasterPasswordAttention(forAutoLayout: ())
         masterPasswordAttentionView.ignoreSavingAction = {
-            self.next()
+            self.toBlockchain()
         }
         showCardWithView(masterPasswordAttentionView)
     }
@@ -136,12 +140,24 @@ class BackUpKeysVC: BoardingVC {
                             self?.backupAlert?.dismiss(animated: true, completion: nil)
                         }
                     } else {
-                        self?.next()
+                        self?.toBlockchain()
                         AnalyticsManger.shared.passwordBackuped()
                     }
                 }
             }
         }
+    }
+    
+    private func toBlockchain() {
+        self.showIndetermineHudWithMessage("saving to blockchain")
+        RestAPIManager.instance.toBlockChain(password: masterPassword)
+            .subscribe(onCompleted: {
+                AuthManager.shared.reload()
+            }) { (error) in
+                self.hideHud()
+                self.handleSignUpError(error: error)
+            }
+            .disposed(by: self.disposeBag)
     }
     
     func save() {

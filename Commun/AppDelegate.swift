@@ -47,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return welcomeNav
     }
     var boardingSetPasscodeVC: BoardingSetPasscodeVC { BoardingSetPasscodeVC() }
-    var backUpKeysVC: BackUpKeysVC { BackUpKeysVC() }
     lazy var tabBarVC = TabBarVC()
 
     // MARK: - Class Functions
