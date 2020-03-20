@@ -137,7 +137,7 @@ extension SignUpMethodsVC: SocialLoginManagerDelegate {
     
     private func handleSuccessfulLoginWithIdentity(_ identity: SocialIdentity?) {
         if (identity?.oauthState ?? "") == "registered" {
-            self.showErrorWithMessage("account already registered".localized().uppercaseFirst)
+            self.showErrorWithMessage("account is already registered".localized().uppercaseFirst)
             return
         }
 
