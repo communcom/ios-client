@@ -121,6 +121,9 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         keyboardViewV.observeKeyboardHeight()
         view.addConstraint(keyboardViewV)
         
+        // generateMasterPasswordButton
+        setUpGenerateMasterPasswordButton()
+        
         // hide keyboard
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
@@ -130,6 +133,15 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         unsupportSymbolError.autoAlignAxis(toSuperviewAxis: .vertical)
         unsupportSymbolError.text = "only Latin characters, digits and special symbols\nare allowed".localized().uppercaseFirst
         unsupportSymbolError.isHidden = true
+    }
+    
+    func setUpGenerateMasterPasswordButton() {
+        let button = UIButton(label: "i want to use Master Password".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
+        view.addSubview(button)
+        button.autoAlignAxis(toSuperviewAxis: .vertical)
+        button.autoPinEdge(.bottom, to: .top, of: nextButton, withOffset: -16)
+        
+        button.addTarget(self, action: #selector(generateMasterPasswordButtonDidTouch), for: .touchUpInside)
     }
     
     override func bind() {
@@ -181,6 +193,17 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     
     @objc func showPasswordDidTouch() {
         viewModel.isShowingPassword.accept(!viewModel.isShowingPassword.value)
+    }
+    
+    @objc func generateMasterPasswordButtonDidTouch() {
+        showAttention(
+            subtitle: "you are about to select the advanced mode and continue with the Master Password".localized().uppercaseFirst,
+            descriptionText: "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
+            ignoreButtonLabel: "continue with Master Password".localized().uppercaseFirst)
+        {
+            let vc = GenerateMasterPasswordVC()
+            self.show(vc, sender: nil)
+        }
     }
     
     @objc func hideKeyboard() {

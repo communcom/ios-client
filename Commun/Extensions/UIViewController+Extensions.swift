@@ -417,7 +417,7 @@ extension UIViewController {
             subtitle: subtitle,
             descriptionText: descriptionText,
             backButtonLabel: backButtonLabel,
-            ignoreButtonLabel: "continue without backup".localized().uppercaseFirst
+            ignoreButtonLabel: ignoreButtonLabel
         )
         attentionView.ignoreAction = ignoreAction
         showCardWithView(attentionView)

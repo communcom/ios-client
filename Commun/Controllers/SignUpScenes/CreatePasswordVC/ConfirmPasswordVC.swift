@@ -33,6 +33,10 @@ class ConfirmPasswordVC: CreatePasswordVC {
         }
     }
     
+    override func setUpGenerateMasterPasswordButton() {
+        // do nothing
+    }
+    
     override func backButtonDidTouch() {
         back()
     }
