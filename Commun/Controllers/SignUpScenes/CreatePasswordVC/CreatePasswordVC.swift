@@ -92,8 +92,10 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         // text field
         scrollView.contentView.addSubview(textField)
         switch UIDevice.current.screenType {
-        case .iPhones_5_5s_5c_SE, .iPhones_6_6s_7_8:
+        case .iPhones_5_5s_5c_SE:
             textField.autoPinEdge(toSuperviewEdge: .top, withInset: 36)
+        case .iPhones_6_6s_7_8:
+            textField.autoPinEdge(toSuperviewEdge: .top, withInset: 50)
         default:
             textField.autoPinEdge(toSuperviewEdge: .top, withInset: 83)
         }
