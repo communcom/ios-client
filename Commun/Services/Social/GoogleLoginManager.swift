@@ -9,7 +9,9 @@
 import Foundation
 import GoogleSignIn
 
-class GoogleLoginManager: NSObject, SocialLoginManagerInput {
+class GoogleLoginManager: NSObject, SocialLoginManager {
+    var network: SocialNetwork { .google }
+    
     weak var delegate: SocialLoginManagerDelegate?
     weak var viewController: UIViewController?
 
@@ -36,7 +38,6 @@ class GoogleLoginManager: NSObject, SocialLoginManagerInput {
 extension GoogleLoginManager: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         guard let token = user?.authentication.idToken else { return }
-        self.delegate?.successLogin(with: .google, token: token)
+        self.delegate?.loginManager(self, didSuccessfullyLoginWithToken: token)
     }
-
 }

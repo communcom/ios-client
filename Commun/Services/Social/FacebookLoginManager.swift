@@ -9,7 +9,9 @@
 import Foundation
 import FBSDKLoginKit
 
-class FacebookLoginManager: NSObject, SocialLoginManagerInput {
+class FacebookLoginManager: NSObject, SocialLoginManager {
+    var network: SocialNetwork { .fb }
+    
     weak var viewController: UIViewController?
     weak var delegate: SocialLoginManagerDelegate?
 
@@ -26,7 +28,7 @@ class FacebookLoginManager: NSObject, SocialLoginManagerInput {
         manager.logIn(permissions: permissons, from: self.viewController) { [weak self] result, _ in
             guard let self = self else { return }
             if let token = result?.token?.tokenString {
-                self.delegate?.successLogin(with: .fb, token: token)
+                self.delegate?.loginManager(self, didSuccessfullyLoginWithToken: token)
             }
         }
     }

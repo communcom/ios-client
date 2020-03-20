@@ -32,6 +32,7 @@ class SignUpMethodsVC: SignUpBaseVC {
         Method(serviceName: facebook, backgroundColor: UIColor(hexString: "#415A94")!, textColor: .white)
 //        Method(serviceName: "apple", backgroundColor: .black, textColor: .white)
     ]
+    private var loginManager: SocialLoginManager?
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 12, alignment: .center, distribution: .fill)
@@ -106,9 +107,6 @@ class SignUpMethodsVC: SignUpBaseVC {
         signUpWithMethod(method)
     }
 
-    private var manager: SocialLoginManagerInput?
-    private lazy var loginManager = SocialLoginManager()
-
     func signUpWithMethod(_ method: Method) {
         if method.serviceName == SignUpMethodsVC.phone {
             let signUpVC = controllerContainer.resolve(SignUpWithPhoneVC.self)!
@@ -117,40 +115,43 @@ class SignUpMethodsVC: SignUpBaseVC {
         }
 
         if method.serviceName == SignUpMethodsVC.facebook {
-            manager = FacebookLoginManager()
+            loginManager = FacebookLoginManager()
         } else if method.serviceName == SignUpMethodsVC.google {
-            manager = GoogleLoginManager()
+            loginManager = GoogleLoginManager()
         }
 
-        manager?.viewController = self
-        manager?.delegate = self
-        manager?.login()
+        loginManager?.viewController = self
+        loginManager?.delegate = self
+        loginManager?.login()
     }
 }
 
 extension SignUpMethodsVC: SocialLoginManagerDelegate {
-    func successLogin(with social: SocialNetwork, token: String) {
-        loginManager.getIdentityFromToken(token, social: social) { [weak self] (identity) in
-            guard let self = self else { return }
+    func loginManager(_ manager: SocialLoginManager, didSuccessfullyLoginWithToken token: String) {
+        manager.getIdentityFromToken(token) { [weak self] identity in
             DispatchQueue.main.async {
-                if (identity?.oauthState ?? "") == "registered" {
-                    self.showErrorWithMessage("account already registered".localized().uppercaseFirst)
-                    return
-                }
-
-                if let identity = identity, let key = identity.identity {
-
-                    try? KeychainManager.save([
-                        Config.currentUserProviderKey: CurrentUserRegistrationStep.setUserName.rawValue,
-                        Config.currentUserIdentityKey: key
-                    ])
-
-                    self.navigationController?.pushViewController(SetUserVC())
-
-                } else {
-                    self.showErrorWithMessage("undefined error".localized().uppercaseFirst)
-                }
+                self?.handleSuccessfulLoginWithIdentity(identity)
             }
+        }
+    }
+    
+    private func handleSuccessfulLoginWithIdentity(_ identity: SocialIdentity?) {
+        if (identity?.oauthState ?? "") == "registered" {
+            self.showErrorWithMessage("account already registered".localized().uppercaseFirst)
+            return
+        }
+
+        if let identity = identity, let key = identity.identity {
+
+            try? KeychainManager.save([
+                Config.currentUserProviderKey: CurrentUserRegistrationStep.setUserName.rawValue,
+                Config.currentUserIdentityKey: key
+            ])
+
+            self.navigationController?.pushViewController(SetUserVC())
+
+        } else {
+            self.showErrorWithMessage("undefined error".localized().uppercaseFirst)
         }
     }
 }

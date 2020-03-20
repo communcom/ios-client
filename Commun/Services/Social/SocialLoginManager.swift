@@ -16,10 +16,11 @@ enum SocialNetwork: String {
 }
 
 protocol SocialLoginManagerDelegate: AnyObject {
-    func successLogin(with social: SocialNetwork, token: String)
+    func loginManager(_ manager: SocialLoginManager, didSuccessfullyLoginWithToken token: String)
 }
 
-protocol SocialLoginManagerInput {
+protocol SocialLoginManager {
+    var network: SocialNetwork { get }
     var delegate: SocialLoginManagerDelegate? { get set }
     var viewController: UIViewController? { get set }
     func login()
@@ -31,8 +32,8 @@ struct SocialIdentity: Decodable {
     let provider: String?
 }
 
-class SocialLoginManager {
-    func getIdentityFromToken(_ token: String, social: SocialNetwork, completion: @escaping (SocialIdentity?) -> Void) {
+extension SocialLoginManager {
+    func getIdentityFromToken(_ token: String, completion: @escaping (SocialIdentity?) -> Void) {
 
         var baseURL = "https://dev-3.commun.com/oauth/"
         #if APPSTORE
@@ -40,7 +41,7 @@ class SocialLoginManager {
         #endif
 
         let url: URL!
-        switch social {
+        switch network {
         case .fb:
             url = URL(string: "\(baseURL)facebook-token?access_token=\(token)")!
         case .google:
