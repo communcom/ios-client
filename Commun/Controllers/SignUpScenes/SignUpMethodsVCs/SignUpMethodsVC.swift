@@ -51,7 +51,8 @@ class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        
+        AnalyticsManger.shared.openRegistrationSelection()
+
         switch UIDevice.current.screenType {
         case .iPhones_5_5s_5c_SE:
             titleLabel.font = .systemFont(ofSize: 34, weight: .bold)
@@ -128,8 +129,10 @@ class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
         var manager: SocialLoginManager
         if method.serviceName == SocialNetwork.facebook.rawValue {
             manager = FacebookLoginManager()
+            AnalyticsManger.shared.openFacebookSignUp()
         } else if method.serviceName == SocialNetwork.google.rawValue {
             manager = GoogleLoginManager()
+            AnalyticsManger.shared.openGoogleSignUp()
         } else {
             return
         }
@@ -142,7 +145,13 @@ class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
             }
             .subscribe(onSuccess: { (identity) in
                 self.hideHud()
-                
+
+                if method.serviceName == SocialNetwork.facebook.rawValue {
+                    AnalyticsManger.shared.getFacebookSignUpData()
+                } else {
+                    AnalyticsManger.shared.getGoogleSignUpData()
+                }
+
                 try? KeychainManager.save([
                     Config.registrationStepKey: CurrentUserRegistrationStep.setUserName.rawValue,
                     Config.currentUserIdentityKey: identity.identity!
