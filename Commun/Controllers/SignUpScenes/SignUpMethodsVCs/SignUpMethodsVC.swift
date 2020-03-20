@@ -39,6 +39,13 @@ class SignUpMethodsVC: SignUpBaseVC {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
+        switch UIDevice.current.screenType {
+        case .iPhones_5_5s_5c_SE:
+            titleLabel.font = .systemFont(ofSize: 34, weight: .bold)
+        default:
+            break
+        }
 
         AnalyticsManger.shared.registrationOpenScreen(0)
         // set up stack view
