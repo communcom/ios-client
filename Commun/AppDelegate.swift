@@ -443,7 +443,7 @@ extension AppDelegate {
         case "commun://createPost":
             self.shareExtensionDataRelay.accept(UserDefaults.appGroups.loadShareExtensionData())
         default:
-            return false
+            break
         }
 
         return OpenSocialLink.application(app, open: url, options: options)
