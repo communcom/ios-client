@@ -409,6 +409,19 @@ extension UIViewController {
         let cardVC = CardViewController(contentView: view)
         self.present(cardVC, animated: true, completion: nil)
     }
+    
+    func showAttention(title: String = "attention".localized().uppercaseFirst, subtitle: String, descriptionText: String, backButtonLabel: String = "back".localized().uppercaseFirst, ignoreButtonLabel: String, ignoreAction: @escaping () -> Void)
+    {
+        let attentionView = AttentionView(
+            title: title,
+            subtitle: subtitle,
+            descriptionText: descriptionText,
+            backButtonLabel: backButtonLabel,
+            ignoreButtonLabel: "continue without backup".localized().uppercaseFirst
+        )
+        attentionView.ignoreAction = ignoreAction
+        showCardWithView(attentionView)
+    }
 
     // MARK: - Actions
     @objc func popToPreviousVC() {
