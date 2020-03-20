@@ -124,35 +124,38 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
 
     var backupAlert: UIAlertController?
     @objc func backupIcloudDidTouch() {
-        save()
-        if let user = Config.currentUser, let userName = user.name, let password = user.masterKey {
-            var domain = "dev.commun.com"
-            #if APPSTORE
-                domain = "commun.com"
-            #endif
+        guard let password = masterPassword, let userName = Config.currentUser?.name
+        else {return}
+        
+        var domain = "dev.commun.com"
+        #if APPSTORE
+            domain = "commun.com"
+        #endif
 
-            SecAddSharedWebCredential(domain as CFString, userName as CFString, password as CFString) { [weak self] (error) in
-                DispatchQueue.main.async {
-                    if error != nil {
-                        self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password in iCloud!".localized().uppercaseFirst, message: "You need to enable Keychain, then your password will be safe and sound.\nGo to your phone Settings\nthen to Passwords & Accounts > AutoFill Passwords > Enable Keychain".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
-                            if index == 0 {
-                                self?.backupIcloudDidTouch()
-                            }
-                            self?.backupAlert?.dismiss(animated: true, completion: nil)
+        SecAddSharedWebCredential(domain as CFString, userName as CFString, password as CFString) { [weak self] (error) in
+            DispatchQueue.main.async {
+                if error != nil {
+                    self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password in iCloud!".localized().uppercaseFirst, message: "You need to enable Keychain, then your password will be safe and sound.\nGo to your phone Settings\nthen to Passwords & Accounts > AutoFill Passwords > Enable Keychain".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                        if index == 0 {
+                            self?.backupIcloudDidTouch()
                         }
-                    } else {
-                        self?.toBlockchain()
-                        AnalyticsManger.shared.passwordBackuped()
+                        self?.backupAlert?.dismiss(animated: true, completion: nil)
                     }
+                } else {
+                    self?.toBlockchain(saveToIcloud: true)
+                    AnalyticsManger.shared.passwordBackuped()
                 }
             }
         }
     }
     
-    private func toBlockchain() {
+    private func toBlockchain(saveToIcloud: Bool = false) {
         self.showIndetermineHudWithMessage("saving to blockchain")
         RestAPIManager.instance.toBlockChain(password: masterPassword)
             .subscribe(onCompleted: {
+                if saveToIcloud {
+                    self.save()
+                }
                 AuthManager.shared.reload()
             }) { (error) in
                 self.hideHud()
