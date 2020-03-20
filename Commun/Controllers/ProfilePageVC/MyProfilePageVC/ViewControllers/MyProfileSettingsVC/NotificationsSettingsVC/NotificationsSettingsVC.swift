@@ -82,7 +82,7 @@ class NotificationsSettingsVC: VerticalActionsVC, PNAlertViewDelegate {
             .subscribe(onNext: { [weak self] (disabledTypes) in
                 guard let strongSelf = self else {return}
                 for view in strongSelf.settingViews {
-                    view.switchButton.isOn = !disabledTypes.contains(view.notificationType)
+                    view.switchButton.isOn = !(disabledTypes ?? []).contains(view.notificationType)
                 }
             })
             .disposed(by: disposeBag)

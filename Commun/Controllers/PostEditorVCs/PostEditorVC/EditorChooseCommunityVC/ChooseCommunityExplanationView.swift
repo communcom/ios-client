@@ -24,9 +24,9 @@ class ChooseCommunityExplanationView: MyTableHeaderView {
         containerView.addSubview(closeButton)
         closeButton.autoPinTopAndTrailingToSuperView(inset: 6)
         
-        let headerLabel = UILabel.with(text: "choose community".localized().uppercaseFirst, textSize: 14, weight: .semibold)
+        let headerLabel = UILabel.with(text: "communiries".localized().uppercaseFirst, textSize: 15, weight: .bold)
         containerView.addSubview(headerLabel)
-        headerLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        headerLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
         headerLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 12)
         
         learnMoreButton.setImage(UIImage(named: "choose-community-learn-more"), for: .normal)
@@ -36,10 +36,10 @@ class ChooseCommunityExplanationView: MyTableHeaderView {
         
         let descriptionLabel = UILabel.with(text: "choose community in which you want to create a post".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd, numberOfLines: 0)
         containerView.addSubview(descriptionLabel)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 15)
         
         descriptionLabel.autoPinEdge(.top, to: .bottom, of: headerLabel, withOffset: 6)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 15)
     }
 }

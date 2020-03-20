@@ -13,7 +13,7 @@ import RxSwift
 class NotificationSettingsViewModel: BaseViewModel {
     // MARK: - Properties
     let loadingState    = BehaviorRelay<LoadingState>(value: .loading)
-    let disabledTypes   = BehaviorRelay<[String]>(value: [])
+    let disabledTypes   = BehaviorRelay<[String]?>(value: [])
     
     override init() {
         super.init()
