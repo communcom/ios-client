@@ -54,7 +54,7 @@ extension SignUpRouter where Self: UIViewController {
 
 extension SignUpRouter where Self: UIViewController {
     // MARK: - Handler
-    func handleSignUpError(error: Error, with phone: String? = nil) {
+    func handleSignUpError(error: Error, with phone: String? = Config.currentUser?.phoneNumber) {
         // get phone
         let identity: String? = Config.currentUser?.identity
 
