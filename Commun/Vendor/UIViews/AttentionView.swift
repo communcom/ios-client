@@ -99,12 +99,13 @@ class AttentionView: MyView {
     
     // MARK: - Actions
     @objc func closeButtonTapped(_ sender: UIButton) {
-        if let backAction = backAction {
-            backAction()
-        } else {
+        if backAction == nil {
             AnalyticsManger.shared.passwordNotBackuped(back: true)
-            parentViewController?.dismiss(animated: true, completion: nil)
         }
+
+        parentViewController?.dismiss(animated: true, completion: {
+            self.backAction?()
+        })
     }
     
     @objc func continueButtonTapped(_ sender: UIButton) {
