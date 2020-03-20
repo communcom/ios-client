@@ -29,7 +29,7 @@ class ConfirmPasswordVC: CreatePasswordVC {
         if UIDevice.current.screenType != .iPhones_5_5s_5c_SE {
             let label = UILabel.with(text: "re-enter your password".localized().uppercaseFirst, textSize: 17)
             scrollView.contentView.addSubview(label)
-            label.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+            label.autoPinEdge(toSuperviewEdge: .top, withInset: 15)
             label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         }
     }

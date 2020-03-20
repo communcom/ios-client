@@ -42,7 +42,7 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     }
     // MARK: - Properties
     let viewModel = CreatePasswordViewModel()
-    
+    var masterPasswordButton: UIButton?
     // MARK: - Subviews
     lazy var textField: UITextField = {
         let tf = UITextField(width: 290, height: 56, backgroundColor: .f3f5fa, cornerRadius: 12)
@@ -94,10 +94,8 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         switch UIDevice.current.screenType {
         case .iPhones_5_5s_5c_SE:
             textField.autoPinEdge(toSuperviewEdge: .top, withInset: 36)
-        case .iPhones_6_6s_7_8:
-            textField.autoPinEdge(toSuperviewEdge: .top, withInset: 50)
         default:
-            textField.autoPinEdge(toSuperviewEdge: .top, withInset: 83)
+            textField.autoPinEdge(toSuperviewEdge: .top, withInset: 50)
         }
         textField.autoAlignAxis(toSuperviewAxis: .vertical)
         
@@ -144,6 +142,7 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         button.autoPinEdge(.bottom, to: .top, of: nextButton, withOffset: -16)
         
         button.addTarget(self, action: #selector(generateMasterPasswordButtonDidTouch), for: .touchUpInside)
+        masterPasswordButton = button
     }
     
     override func bind() {
@@ -155,7 +154,9 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
             .disposed(by: disposeBag)
 
         textField.rx.text.subscribe { (event) in
-            self.unsupportSymbolError.isHidden = self.viewModel.isValidSymbols(string: event.element ?? "")
+            let text = event.element ?? ""
+            self.unsupportSymbolError.isHidden = self.viewModel.isValidSymbols(string: text)
+            self.masterPasswordButton?.isHidden = text!.count > 0
         }.disposed(by: disposeBag)
         
         textField.delegate = self
@@ -243,8 +244,13 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     
     func validationDidComplete() {
         guard let currentPassword = textField.text else {return}
-        let confirmVC = ConfirmPasswordVC(currentPassword: currentPassword)
-        show(confirmVC, sender: nil)
+        view.endEditing(true)
+
+        // fix animation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            let confirmVC = ConfirmPasswordVC(currentPassword: currentPassword)
+            self.show(confirmVC, sender: nil)
+        }
     }
 }
 
