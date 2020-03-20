@@ -1,21 +1,41 @@
 //
-//  MasterPasswordAttention.swift
+//  AttentionView.swift
 //  Commun
 //
-//  Created by Sergey Monastyrskiy on 25.11.2019.
-//  Copyright © 2019 Commun Limited. All rights reserved.
+//  Created by Chung Tran on 3/20/20.
+//  Copyright © 2020 Commun Limited. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class MasterPasswordAttention: MyCardView {
+class AttentionView: MyView {
     // MARK: - Properties
-    var ignoreSavingAction: (() -> Void)?
+    let title: String
+    let subtitle: String
+    let descriptionText: String
+    let backButtonLabel: String
+    let ignoreButtonLabel: String
+    var ignoreAction: (() -> Void)?
+    
+    // MARK: - Initializers
+    init(title: String = "attention".localized().uppercaseFirst, subtitle: String, descriptionText: String, backButtonLabel: String = "back".localized().uppercaseFirst, ignoreButtonLabel: String) {
+        self.title = title
+        self.subtitle = subtitle
+        self.descriptionText = descriptionText
+        self.backButtonLabel = backButtonLabel
+        self.ignoreButtonLabel = ignoreButtonLabel
+        super.init(frame: .zero)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Custom Functions
     override func commonInit() {
         super.commonInit()
         backgroundColor = .white
+        configureForAutoLayout()
         
         let closeButton = UIButton.close(size: 30 * Config.heightRatio)
         addSubview(closeButton)
@@ -27,7 +47,7 @@ class MasterPasswordAttention: MyCardView {
         imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 30 * Config.heightRatio)
         imageView.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        let attentionLabel = UILabel.with(text: "attention".localized().uppercaseFirst, textSize: 30 * Config.heightRatio, weight: .bold)
+        let attentionLabel = UILabel.with(text: title, textSize: 30 * Config.heightRatio, weight: .bold)
         addSubview(attentionLabel)
         attentionLabel.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 20 * Config.heightRatio)
         attentionLabel.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -36,7 +56,7 @@ class MasterPasswordAttention: MyCardView {
         paragraphStyle.lineSpacing = 8 * Config.heightRatio
         paragraphStyle.alignment = .center
         
-        let firstAStr = NSAttributedString(string: "We do not keep master passwords and have no opportunity to restore them.".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.systemFont(ofSize: 17 * Config.heightRatio, weight: .semibold)])
+        let firstAStr = NSAttributedString(string: subtitle, attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.systemFont(ofSize: 17 * Config.heightRatio, weight: .semibold)])
         
         let firstDescriptionLabel = UILabel.with(textSize: 17 * Config.heightRatio, numberOfLines: 0, textAlignment: .center)
         firstDescriptionLabel.attributedText = firstAStr
@@ -45,7 +65,7 @@ class MasterPasswordAttention: MyCardView {
         firstDescriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.heightRatio)
         firstDescriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.heightRatio)
         
-        let secondAStr = NSAttributedString(string: "Unfortunately for our comfort, blockchain doesn’t allow us to restore passwords. It means that it’s every user’s responsibility to keep the password in a safe place and be able to access it anytime.\nWe strongly recommend you to save your password and make a copy of it.".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.systemFont(ofSize: 17 * Config.heightRatio)])
+        let secondAStr = NSAttributedString(string: descriptionText, attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.systemFont(ofSize: 17 * Config.heightRatio)])
         
         let secondDescriptionLabel = UILabel.with(textSize: 15 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
         secondDescriptionLabel.attributedText = secondAStr
@@ -54,7 +74,7 @@ class MasterPasswordAttention: MyCardView {
         secondDescriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.heightRatio)
         secondDescriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.heightRatio)
         
-        let backButton = CommunButton.default(height: 50 * Config.heightRatio, label: "back".localized().uppercaseFirst, isHuggingContent: false)
+        let backButton = CommunButton.default(height: 50 * Config.heightRatio, label: backButtonLabel, isHuggingContent: false)
         addSubview(backButton)
         backButton.autoPinEdge(.top, to: .bottom, of: secondDescriptionLabel, withOffset: 30 * Config.heightRatio)
         backButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.heightRatio)
@@ -62,7 +82,7 @@ class MasterPasswordAttention: MyCardView {
         
         backButton.addTarget(self, action: #selector(closeButtonTapped(_:)), for: .touchUpInside)
         
-        let ignoreButton = CommunButton.default(height: 50 * Config.heightRatio, label: "continue without backup".localized().uppercaseFirst, isHuggingContent: false)
+        let ignoreButton = CommunButton.default(height: 50 * Config.heightRatio, label: ignoreButtonLabel, isHuggingContent: false)
         ignoreButton.backgroundColor = .f3f5fa
         ignoreButton.setTitleColor(.appMainColor, for: .normal)
         addSubview(ignoreButton)
@@ -85,6 +105,10 @@ class MasterPasswordAttention: MyCardView {
     @objc func continueButtonTapped(_ sender: UIButton) {
         AnalyticsManger.shared.passwordNotBackuped(back: false)
         close()
-        ignoreSavingAction?()
+        ignoreAction?()
+    }
+    
+    @objc func close() {
+        parentViewController?.dismiss(animated: true, completion: nil)
     }
 }
