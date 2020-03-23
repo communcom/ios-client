@@ -125,11 +125,6 @@ class SetUserVC: BaseViewController, SignUpRouter {
     }
     
     @objc func buttonNextDidTouch(_ sender: Any) {
-        guard KeychainManager.currentUser()?.phoneNumber != nil else {
-            resetSignUpProcess()
-            return
-        }
-        
         guard let userName = textField.text,
             viewModel.isUserNameValid(userName) else {
                 return

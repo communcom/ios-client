@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import RxSwift
 
-class SignUpMethodsVC: SignUpBaseVC {
+class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
+    static private let phone = "phone"
     // MARK: - Nested type
     struct Method {
         var serviceName: String
@@ -21,14 +23,27 @@ class SignUpMethodsVC: SignUpBaseVC {
     }
     
     // MARK: - Properties
-    let methods: [Method] = [
-        Method(serviceName: "phone"),
-        Method(serviceName: "google"),
-        Method(serviceName: "instagram"),
-        Method(serviceName: "twitter", backgroundColor: UIColor(hexString: "#4AA1EC")!, textColor: .white),
-        Method(serviceName: "facebook", backgroundColor: UIColor(hexString: "#415A94")!, textColor: .white),
-        Method(serviceName: "apple", backgroundColor: .black, textColor: .white)
-    ]
+    let methods: [Method] = {
+        [Method(serviceName: phone)] +
+        SocialNetwork.allCases.map { network in
+            var backgroundColor: UIColor?
+            var textColor: UIColor?
+            switch network {
+            case .facebook:
+                backgroundColor = UIColor(hexString: "#415A94")!
+                textColor = .white
+//            case .twitter:
+//                backgroundColor = UIColor(hexString: "#4AA1EC")!
+//                textColor = .white
+//            case .apple:
+//                backgroundColor = .black
+//                textColor: .white
+            case .google:
+                break
+            }
+            return Method(serviceName: network.rawValue, backgroundColor: backgroundColor ?? .clear, textColor: textColor ?? .black)
+        }
+    }()
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 12, alignment: .center, distribution: .fill)
@@ -36,6 +51,14 @@ class SignUpMethodsVC: SignUpBaseVC {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        AnalyticsManger.shared.openRegistrationSelection()
+
+        switch UIDevice.current.screenType {
+        case .iPhones_5_5s_5c_SE:
+            titleLabel.font = .systemFont(ofSize: 34, weight: .bold)
+        default:
+            break
+        }
 
         AnalyticsManger.shared.registrationOpenScreen(0)
         // set up stack view
@@ -95,8 +118,50 @@ class SignUpMethodsVC: SignUpBaseVC {
         guard let method = gesture.method else {return}
         signUpWithMethod(method)
     }
-    
+
     func signUpWithMethod(_ method: Method) {
-        
+        if method.serviceName == SignUpMethodsVC.phone {
+            let signUpVC = controllerContainer.resolve(SignUpWithPhoneVC.self)!
+            show(signUpVC, sender: nil)
+            return
+        }
+
+        var manager: SocialLoginManager
+        if method.serviceName == SocialNetwork.facebook.rawValue {
+            manager = FacebookLoginManager()
+            AnalyticsManger.shared.openFacebookSignUp()
+        } else if method.serviceName == SocialNetwork.google.rawValue {
+            manager = GoogleLoginManager()
+            AnalyticsManger.shared.openGoogleSignUp()
+        } else {
+            return
+        }
+
+        manager.viewController = self
+        manager.login()
+            .flatMap { token -> Single<SocialIdentity> in
+                self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
+                return manager.getIdentityFromToken(token)
+            }
+            .subscribe(onSuccess: { (identity) in
+                self.hideHud()
+
+                if method.serviceName == SocialNetwork.facebook.rawValue {
+                    AnalyticsManger.shared.getFacebookSignUpData()
+                } else {
+                    AnalyticsManger.shared.getGoogleSignUpData()
+                }
+
+                try? KeychainManager.save([
+                    Config.registrationStepKey: CurrentUserRegistrationStep.setUserName.rawValue,
+                    Config.currentUserIdentityKey: identity.identity!
+                ])
+                
+                self.signUpNextStep()
+            }, onError: { (error) in
+                self.hideHud()
+                self.showError(error)
+            })
+            .disposed(by: disposeBag)
     }
 }

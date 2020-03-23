@@ -42,7 +42,7 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     }
     // MARK: - Properties
     let viewModel = CreatePasswordViewModel()
-    
+    var masterPasswordButton: UIButton?
     // MARK: - Subviews
     lazy var textField: UITextField = {
         let tf = UITextField(width: 290, height: 56, backgroundColor: .f3f5fa, cornerRadius: 12)
@@ -88,14 +88,14 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     override func setUp() {
         super.setUp()
         titleLabel.text = "create Password".localized().uppercaseFirst
-        
+        AnalyticsManger.shared.openEnterPassword()
         // text field
         scrollView.contentView.addSubview(textField)
         switch UIDevice.current.screenType {
         case .iPhones_5_5s_5c_SE:
             textField.autoPinEdge(toSuperviewEdge: .top, withInset: 36)
         default:
-            textField.autoPinEdge(toSuperviewEdge: .top, withInset: 83)
+            textField.autoPinEdge(toSuperviewEdge: .top, withInset: 50)
         }
         textField.autoAlignAxis(toSuperviewAxis: .vertical)
         
@@ -121,6 +121,9 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         keyboardViewV.observeKeyboardHeight()
         view.addConstraint(keyboardViewV)
         
+        // generateMasterPasswordButton
+        setUpGenerateMasterPasswordButton()
+        
         // hide keyboard
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
@@ -132,6 +135,16 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         unsupportSymbolError.isHidden = true
     }
     
+    func setUpGenerateMasterPasswordButton() {
+        let button = UIButton(label: "i want to use Master Password".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
+        view.addSubview(button)
+        button.autoAlignAxis(toSuperviewAxis: .vertical)
+        button.autoPinEdge(.bottom, to: .top, of: nextButton, withOffset: -16)
+        
+        button.addTarget(self, action: #selector(generateMasterPasswordButtonDidTouch), for: .touchUpInside)
+        masterPasswordButton = button
+    }
+    
     override func bind() {
         super.bind()
         // text field
@@ -141,7 +154,9 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
             .disposed(by: disposeBag)
 
         textField.rx.text.subscribe { (event) in
-            self.unsupportSymbolError.isHidden = self.viewModel.isValidSymbols(string: event.element ?? "")
+            let text = event.element ?? ""
+            self.unsupportSymbolError.isHidden = self.viewModel.isValidSymbols(string: text)
+            self.masterPasswordButton?.isHidden = text!.count > 0
         }.disposed(by: disposeBag)
         
         textField.delegate = self
@@ -183,6 +198,19 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         viewModel.isShowingPassword.accept(!viewModel.isShowingPassword.value)
     }
     
+    @objc func generateMasterPasswordButtonDidTouch() {
+        showAttention(
+            subtitle: "you want to select the advanced mode and continue with the Master Password".localized().uppercaseFirst,
+            descriptionText: "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
+            ignoreButtonLabel: "continue with Master Password".localized().uppercaseFirst,
+            ignoreAction: {
+                AnalyticsManger.shared.useMasterPassword()
+                let vc = GenerateMasterPasswordVC()
+                self.show(vc, sender: nil)
+            }
+        )
+    }
+    
     @objc func hideKeyboard() {
         view.endEditing(true)
     }
@@ -216,8 +244,13 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     
     func validationDidComplete() {
         guard let currentPassword = textField.text else {return}
-        let confirmVC = ConfirmPasswordVC(currentPassword: currentPassword)
-        show(confirmVC, sender: nil)
+        view.endEditing(true)
+
+        // fix animation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            let confirmVC = ConfirmPasswordVC(currentPassword: currentPassword)
+            self.show(confirmVC, sender: nil)
+        }
     }
 }
 

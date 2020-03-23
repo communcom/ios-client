@@ -61,7 +61,6 @@ class AnalyticsManger {
         sendEvent(name: "ONB \(page) screen opend", props: props)
     }
 
-
     func onboardingOpenScreen(_ number: Int) {
         sendEvent(name: "Open screen 0.1.\(number)")
     }
@@ -93,6 +92,26 @@ class AnalyticsManger {
     // MARK: - Sign UP
     func goToSingIn() {
         sendEvent(name: "Go to sign in")
+    }
+
+    func openRegistrationSelection() {
+        sendEvent(name: "Open Sign Up")
+    }
+
+    func openGoogleSignUp() {
+        sendEvent(name: "Open screen 1.2.1")
+    }
+
+    func getGoogleSignUpData() {
+        sendEvent(name: "Google auth")
+    }
+
+    func getFacebookSignUpData() {
+        sendEvent(name: "Open screen 1.2.1")
+    }
+
+    func openFacebookSignUp() {
+        sendEvent(name: "Facebook auth")
     }
 
     func countrySelected(phoneCode: String, available: Bool) {
@@ -164,6 +183,31 @@ class AnalyticsManger {
         sendEvent(name: "Bounty subscribe", props: [
             "num": codes.count
         ])
+    }
+
+    // MARK: - Password
+    func openEnterPassword() {
+        sendEvent(name: "Сlick use master password (enter password)")
+    }
+
+    func useMasterPassword() {
+        sendEvent(name: "Open screen enter password")
+    }
+
+    func openReEnterPassword() {
+        sendEvent(name: "Open screen confirm password")
+    }
+
+    func passwordCreated() {
+        sendEvent(name: "Сlick next (confirm password)")
+    }
+
+    func openNotKeepPasswordAttention() {
+        sendEvent(name: "Open screen Attention")
+    }
+
+    func saveItMassterPassword() {
+        sendEvent(name: "Click continue (Attention)")
     }
 }
 

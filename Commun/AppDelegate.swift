@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let shareExtensionDataRelay = BehaviorRelay<ShareExtensionData?>(value: nil)
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
     private var disposeBag = DisposeBag()
-    
+
     // MARK: - RootVCs
     var splashVC: SplashViewController { controllerContainer.resolve(SplashViewController.self)! }
     var welcomeNC: UINavigationController {
@@ -47,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return welcomeNav
     }
     var boardingSetPasscodeVC: BoardingSetPasscodeVC { BoardingSetPasscodeVC() }
-    var backUpKeysVC: BackUpKeysVC { BackUpKeysVC() }
     lazy var tabBarVC = TabBarVC()
 
     // MARK: - Class Functions
@@ -118,14 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .registering:
             self.changeRootVC(welcomeNC)
         case .boarding:
-            let vc: UIViewController
-
-            if KeychainManager.currentUser()?.registrationStep == .relogined {
-                vc = boardingSetPasscodeVC
-            } else {
-                vc = backUpKeysVC
-            }
-            let boardingNC = UINavigationController(rootViewController: vc)
+            let boardingNC = UINavigationController(rootViewController: boardingSetPasscodeVC)
             self.changeRootVC(boardingNC)
         case .authorizing:
             break
@@ -451,9 +443,9 @@ extension AppDelegate {
         case "commun://createPost":
             self.shareExtensionDataRelay.accept(UserDefaults.appGroups.loadShareExtensionData())
         default:
-            return false
+            break
         }
 
-        return true
+        return OpenSocialLink.application(app, open: url, options: options)
     }
 }

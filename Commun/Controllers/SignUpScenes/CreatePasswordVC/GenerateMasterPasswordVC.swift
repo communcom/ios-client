@@ -8,11 +8,11 @@
 
 import Foundation
 
-class BackUpKeysVC: BoardingVC {
+class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
     // MARK: - Properties
-    override var step: CurrentUserSettingStep {.backUpICloud}
-    override var nextStep: CurrentUserSettingStep? {.setPasscode}
-
+    var masterPassword: String?
+    
+    // MARK: - Subviews
     lazy var copyButton = UIButton.circle(size: 24, backgroundColor: .a5a7bd, tintColor: .white, imageName: "copy", imageEdgeInsets: UIEdgeInsets(inset: 6))
     lazy var backUpICloudButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save to  iCloud".localized().uppercaseFirst)
 
@@ -79,7 +79,7 @@ class BackUpKeysVC: BoardingVC {
         masterPasswordContainer.addSubview(masterPasswordLabel)
         masterPasswordLabel.autoPinTopAndLeadingToSuperView(inset: 10, xInset: 16)
         
-        let masterPasswordContentLabel = UILabel.with(text: Config.currentUser?.masterKey, textSize: 17 * Config.heightRatio, weight: .bold)
+        let masterPasswordContentLabel = UILabel.with(textSize: 17 * Config.heightRatio, weight: .bold)
         masterPasswordContainer.addSubview(masterPasswordContentLabel)
         masterPasswordContentLabel.autoPinEdge(.top, to: .bottom, of: masterPasswordLabel, withOffset: 8)
         masterPasswordContentLabel.autoPinBottomAndLeadingToSuperView(inset: 10, xInset: 16)
@@ -99,6 +99,10 @@ class BackUpKeysVC: BoardingVC {
         backUpICloudButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         backUpICloudButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         backUpICloudButton.addTarget(self, action: #selector(backupIcloudDidTouch), for: .touchUpInside)
+        
+        // generate master password
+        masterPassword = String.randomString(length: 51)
+        masterPasswordContentLabel.text = masterPassword
     }
     
     @objc func copyButtonDidTouch() {
@@ -109,39 +113,56 @@ class BackUpKeysVC: BoardingVC {
     }
     
     @objc func iSavedItButtonDidTouch() {
-        let masterPasswordAttentionView = MasterPasswordAttention(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 581.0))))
-            //MasterPasswordAttention(forAutoLayout: ())
-        masterPasswordAttentionView.ignoreSavingAction = {
-            self.next()
-        }
-        showCardWithView(masterPasswordAttentionView)
+        showAttention(subtitle: "we do not keep master passwords and have no opportunity to restore them.".localized().uppercaseFirst,
+                      descriptionText: "Unfortunately, blockchain doesn’t allow us to restore passwords. It means that it is a user’s responsibility to keep the password in a safe place to be able to access it anytime.\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
+                      backButtonLabel: "save to iCloud".localized().uppercaseFirst,
+                      ignoreButtonLabel: "continue".localized().uppercaseFirst, ignoreAction: {
+                            self.toBlockchain()
+                        }, backAction: {
+                            self.backupIcloudDidTouch()
+        })
     }
 
     var backupAlert: UIAlertController?
     @objc func backupIcloudDidTouch() {
-        save()
-        if let user = Config.currentUser, let userName = user.name, let password = user.masterKey {
-            var domain = "dev.commun.com"
-            #if APPSTORE
-                domain = "commun.com"
-            #endif
+        guard let password = masterPassword, let userName = Config.currentUser?.name
+        else {return}
+        
+        var domain = "dev.commun.com"
+        #if APPSTORE
+            domain = "commun.com"
+        #endif
 
-            SecAddSharedWebCredential(domain as CFString, userName as CFString, password as CFString) { [weak self] (error) in
-                DispatchQueue.main.async {
-                    if error != nil {
-                        self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password in iCloud!".localized().uppercaseFirst, message: "You need to enable Keychain, then your password will be safe and sound.\nGo to your phone Settings\nthen to Passwords & Accounts > AutoFill Passwords > Enable Keychain".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
-                            if index == 0 {
-                                self?.backupIcloudDidTouch()
-                            }
-                            self?.backupAlert?.dismiss(animated: true, completion: nil)
+        SecAddSharedWebCredential(domain as CFString, userName as CFString, password as CFString) { [weak self] (error) in
+            DispatchQueue.main.async {
+                if error != nil {
+                    self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password in iCloud!".localized().uppercaseFirst, message: "You need to enable Keychain, then your password will be safe and sound.\nGo to your phone Settings\nthen to Passwords & Accounts > AutoFill Passwords > Enable Keychain".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                        if index == 0 {
+                            self?.backupIcloudDidTouch()
                         }
-                    } else {
-                        self?.next()
-                        AnalyticsManger.shared.passwordBackuped()
+                        self?.backupAlert?.dismiss(animated: true, completion: nil)
                     }
+                } else {
+                    self?.toBlockchain(saveToIcloud: true)
+                    AnalyticsManger.shared.passwordBackuped()
                 }
             }
         }
+    }
+    
+    private func toBlockchain(saveToIcloud: Bool = false) {
+        self.showIndetermineHudWithMessage("saving to blockchain")
+        RestAPIManager.instance.toBlockChain(password: masterPassword)
+            .subscribe(onCompleted: {
+                if saveToIcloud {
+                    self.save()
+                }
+                AuthManager.shared.reload()
+            }) { (error) in
+                self.hideHud()
+                self.handleSignUpError(error: error)
+            }
+            .disposed(by: self.disposeBag)
     }
     
     func save() {

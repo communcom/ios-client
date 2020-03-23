@@ -48,22 +48,21 @@ extension SignUpRouter where Self: UIViewController {
     func resetSignUpProcess() {
         try? KeychainManager.deleteUser()
         // Dismiss all screen
-        navigationController?.popToVC(type: SignUpWithPhoneVC.self) { signUpVC in
-            signUpVC.phoneNumberTextField.text = nil
-        }
+        navigationController?.popToVC(type: SignUpMethodsVC.self)
     }
 }
 
 extension SignUpRouter where Self: UIViewController {
     // MARK: - Handler
-    func handleSignUpError(error: Error, with phone: String? = nil) {
+    func handleSignUpError(error: Error, with phone: String? = Config.currentUser?.phoneNumber) {
         // get phone
-        guard let phone = phone ?? Config.currentUser?.phoneNumber else {
+        let identity: String? = Config.currentUser?.identity
+
+        if phone == nil && identity == nil {
             // reset if phone not found
             self.showError(error, showPleaseTryAgain: true) {
                 self.resetSignUpProcess()
             }
-            return
         }
         
         // catch error

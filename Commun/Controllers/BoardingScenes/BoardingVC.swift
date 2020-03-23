@@ -45,12 +45,6 @@ class BoardingVC: BaseViewController {
         let step = KeychainManager.currentUser()?.settingStep ?? .setPasscode
         
         if KeychainManager.currentUser()?.registrationStep == .relogined {
-            // skip backup iCloud when relogined
-            if step == .backUpICloud {
-                jumpTo(step: .setPasscode)
-                return
-            }
-            
             // skip all step after ftue
             if step == .ftue {
                 endBoarding()
@@ -61,18 +55,12 @@ class BoardingVC: BaseViewController {
         var vc: UIViewController
         
         switch step {
-        case .backUpICloud:
-            vc = BackUpKeysVC()
         case .setPasscode:
             vc = BoardingSetPasscodeVC()
         case .setFaceId:
             vc = controllerContainer.resolve(EnableBiometricsVC.self)!
         case .ftue:
             vc = FTUEVC()
-//        case .setAvatar:
-//            vc = controllerContainer.resolve(PickupAvatarVC.self)!
-//        case .setBio:
-//            vc = controllerContainer.resolve(CreateBioVC.self)!
         default:
             return
         }

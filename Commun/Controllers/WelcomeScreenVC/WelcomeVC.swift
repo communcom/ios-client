@@ -112,8 +112,8 @@ class WelcomeVC: UIViewController {
     
     // MARK: - Custom Functions
     func navigateToSignUp() {
-        let signUpVC = controllerContainer.resolve(SignUpWithPhoneVC.self)!
-        show(signUpVC, sender: nil)
+        let controller = SignUpMethodsVC()
+        show(controller, sender: nil)
     }
     
     // MARK: - Actions

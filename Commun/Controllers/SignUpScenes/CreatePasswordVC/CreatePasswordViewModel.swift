@@ -64,7 +64,7 @@ class CreatePasswordViewModel: BaseViewModel {
             return true
         }
 
-        let allowedCharacters = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz!@#$%^&*(),.?\":{}|<>/[]'~`_+;=-").inverted
+        let allowedCharacters = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*(),.?\":{}|<>/[]'~`_+;=-").inverted
 
         let components = string.components(separatedBy: allowedCharacters)
         let filtered = components.joined(separator: "")
