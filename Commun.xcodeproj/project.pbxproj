@@ -429,6 +429,7 @@
 		BCCE0AAF2368217000A183AA /* MyProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AAE2368217000A183AA /* MyProfilePageVC.swift */; };
 		BCCE0AB22368225600A183AA /* MyProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AB12368225600A183AA /* MyProfileHeaderView.swift */; };
 		BCCE0AB723682D1B00A183AA /* MyProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AB623682D1B00A183AA /* MyProfilePageVC+Actions.swift */; };
+		BCCE668B2428A64B004F47DC /* PasswordConstraintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE668A2428A64B004F47DC /* PasswordConstraintView.swift */; };
 		BCD00FB42373C8BD004A3952 /* LeaderCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB32373C8BD004A3952 /* LeaderCollectionCell.swift */; };
 		BCD00FB62373D280004A3952 /* CommunityMembersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */; };
 		BCD00FB82373D78D004A3952 /* CommunityMembersVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB72373D78D004A3952 /* CommunityMembersVC+Binding.swift */; };
@@ -951,6 +952,7 @@
 		BCCE0AAE2368217000A183AA /* MyProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePageVC.swift; sourceTree = "<group>"; };
 		BCCE0AB12368225600A183AA /* MyProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileHeaderView.swift; sourceTree = "<group>"; };
 		BCCE0AB623682D1B00A183AA /* MyProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
+		BCCE668A2428A64B004F47DC /* PasswordConstraintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordConstraintView.swift; sourceTree = "<group>"; };
 		BCD00FB32373C8BD004A3952 /* LeaderCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderCollectionCell.swift; sourceTree = "<group>"; };
 		BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMembersHeaderView.swift; sourceTree = "<group>"; };
 		BCD00FB72373D78D004A3952 /* CommunityMembersVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityMembersVC+Binding.swift"; sourceTree = "<group>"; };
@@ -1968,6 +1970,7 @@
 		BC34B4CF241F1BDC00855DE2 /* CreatePasswordVC */ = {
 			isa = PBXGroup;
 			children = (
+				BCCE668E2428A6CB004F47DC /* Subviews */,
 				BC27F0DE241F200900050AF6 /* CreatePasswordViewModel.swift */,
 				BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */,
 				BC27F0E2241F594A00050AF6 /* ConfirmPasswordVC.swift */,
@@ -2669,6 +2672,14 @@
 			isa = PBXGroup;
 			children = (
 				BCCE0AB12368225600A183AA /* MyProfileHeaderView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		BCCE668E2428A6CB004F47DC /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BCCE668A2428A64B004F47DC /* PasswordConstraintView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -3527,6 +3538,7 @@
 				BC9066E723A9D48A000F9A3B /* TransferHistoryVC.swift in Sources */,
 				BC69F7D8236FF6790097F870 /* SubscriptionsCommunityCell.swift in Sources */,
 				3BAE92A922DE553D00E97AE8 /* ScalableLayoutConstraint.swift in Sources */,
+				BCCE668B2428A64B004F47DC /* PasswordConstraintView.swift in Sources */,
 				BC8F814F23E27ECE0024C04A /* TransactionCompletedView.swift in Sources */,
 				BC4692BD2390C3B20064A38B /* FeedPageFloatView.swift in Sources */,
 				BCB2A6EC23556E7100B3582B /* ArticleEditorVC+Draft.swift in Sources */,
