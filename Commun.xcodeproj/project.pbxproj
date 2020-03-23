@@ -790,9 +790,6 @@
 		BC4692FF239663980064A38B /* ForceUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateView.swift; sourceTree = "<group>"; };
 		BC469303239673CB0064A38B /* MyProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePageViewModel.swift; sourceTree = "<group>"; };
 		BC469305239677E00064A38B /* MyProfilePageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfilePageVC+Binding.swift"; sourceTree = "<group>"; };
-		BC46933D239E314E0064A38B /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
-		BC46933F239E42E20064A38B /* SignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
-		BC469346239F3A2C0064A38B /* QRScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerViewController.swift; sourceTree = "<group>"; };
 		BC472D9523A3755B00822371 /* CardPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPresentationController.swift; sourceTree = "<group>"; };
 		BC472D9A23A376CB00822371 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		BC472D9C23A37AAB00822371 /* UserNameRulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameRulesView.swift; sourceTree = "<group>"; };
@@ -1702,9 +1699,6 @@
 				B1D7AD5723A10650007D1A13 /* SignInVC.swift */,
 				B1D7AD5923A10659007D1A13 /* SignInViewModel.swift */,
 				B1D7AD5B23A10664007D1A13 /* QRScannerViewController.swift */,
-				BC46933D239E314E0064A38B /* SignInVC.swift */,
-				BC46933F239E42E20064A38B /* SignInViewModel.swift */,
-				BC469346239F3A2C0064A38B /* QRScannerViewController.swift */,
 			);
 			path = SignInVC;
 			sourceTree = "<group>";
