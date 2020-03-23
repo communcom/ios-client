@@ -75,12 +75,6 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     }()
     
     lazy var constraintsStackView = UIStackView(axis: .horizontal, spacing: 16)
-    
-    lazy var nextButton: CommunButton = {
-        let button = CommunButton.default(height: 56, label: "next".localized().uppercaseFirst, cornerRadius: 8, isHuggingContent: false, isDisableGrayColor: true)
-        button.autoSetDimension(.width, toSize: 290)
-        return button
-    }()
 
     lazy var unsupportSymbolError = UILabel.with(textSize: 12, weight: .medium, textColor: .appRedColor, numberOfLines: 2, textAlignment: .center)
 
