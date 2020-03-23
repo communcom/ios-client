@@ -1,5 +1,5 @@
 //
-//  SignUpVC.swift
+//  BaseSignUpVC.swift
 //  Commun
 //
 //  Created by Chung Tran on 3/11/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SignUpBaseVC: BaseViewController {
+class BaseSignUpVC: BaseViewController {
     // MARK: - Properties
     var termOfUseText: String {"By continuing, you agree to the Commun’s Terms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst}
     var alreadyHasAccountText: String {"already have an account? Sign in".localized().uppercaseFirst}

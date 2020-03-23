@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class SignUpVC: SignUpBaseVC, SignUpRouter {
+class SignUpVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Nested type
     struct Method {
         var serviceName: String

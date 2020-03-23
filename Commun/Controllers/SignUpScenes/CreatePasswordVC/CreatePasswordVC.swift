@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
+class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Nested type
     class ConstraintView: MyView {
         var constraint: CreatePasswordViewModel.Constraint?
