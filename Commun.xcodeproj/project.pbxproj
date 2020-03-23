@@ -430,6 +430,8 @@
 		BCCE0AB22368225600A183AA /* MyProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AB12368225600A183AA /* MyProfileHeaderView.swift */; };
 		BCCE0AB723682D1B00A183AA /* MyProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AB623682D1B00A183AA /* MyProfilePageVC+Actions.swift */; };
 		BCCE668B2428A64B004F47DC /* PasswordConstraintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE668A2428A64B004F47DC /* PasswordConstraintView.swift */; };
+		BCCE66902428A9B8004F47DC /* SignUpPhoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE668F2428A9B8004F47DC /* SignUpPhoneVC.swift */; };
+		BCCE66922428AA08004F47DC /* UITextField+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE66912428AA08004F47DC /* UITextField+PureLayout.swift */; };
 		BCD00FB42373C8BD004A3952 /* LeaderCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB32373C8BD004A3952 /* LeaderCollectionCell.swift */; };
 		BCD00FB62373D280004A3952 /* CommunityMembersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */; };
 		BCD00FB82373D78D004A3952 /* CommunityMembersVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB72373D78D004A3952 /* CommunityMembersVC+Binding.swift */; };
@@ -953,6 +955,8 @@
 		BCCE0AB12368225600A183AA /* MyProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileHeaderView.swift; sourceTree = "<group>"; };
 		BCCE0AB623682D1B00A183AA /* MyProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
 		BCCE668A2428A64B004F47DC /* PasswordConstraintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordConstraintView.swift; sourceTree = "<group>"; };
+		BCCE668F2428A9B8004F47DC /* SignUpPhoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPhoneVC.swift; sourceTree = "<group>"; };
+		BCCE66912428AA08004F47DC /* UITextField+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+PureLayout.swift"; sourceTree = "<group>"; };
 		BCD00FB32373C8BD004A3952 /* LeaderCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderCollectionCell.swift; sourceTree = "<group>"; };
 		BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMembersHeaderView.swift; sourceTree = "<group>"; };
 		BCD00FB72373D78D004A3952 /* CommunityMembersVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityMembersVC+Binding.swift"; sourceTree = "<group>"; };
@@ -1099,6 +1103,7 @@
 				3B8DDF67234B388500B213F0 /* UITextView+PureLayout.swift */,
 				BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */,
 				BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */,
+				BCCE66912428AA08004F47DC /* UITextField+PureLayout.swift */,
 			);
 			path = PureLayout;
 			sourceTree = "<group>";
@@ -1645,6 +1650,7 @@
 			isa = PBXGroup;
 			children = (
 				BCC2FAE82418E5D900A3DD87 /* SignUpWithPhoneVC */,
+				BCCE668F2428A9B8004F47DC /* SignUpPhoneVC.swift */,
 			);
 			path = SignUpMethodsVCs;
 			sourceTree = "<group>";
@@ -3322,6 +3328,7 @@
 				BC08E8C52403C72E00436A5C /* PNAlertViewDelegate.swift in Sources */,
 				BC46592D238E681500AF9C29 /* BoardingSetPasscodeVC.swift in Sources */,
 				BC8F815523E27ECE0024C04A /* WalletBuyCommunVC.swift in Sources */,
+				BCCE66902428A9B8004F47DC /* SignUpPhoneVC.swift in Sources */,
 				B1C3712D2383D0F3000BAE2F /* ProfileEditViewController.swift in Sources */,
 				3B3C8B8F2347876000D8BADB /* ArticleEditorTextView+Utilities.swift in Sources */,
 				BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */,
@@ -3329,6 +3336,7 @@
 				BC7D608A237BF3F1007D8C1A /* MyProfileBlacklistVC.swift in Sources */,
 				BC8F815723E27ECE0024C04A /* WalletConvertViewModel.swift in Sources */,
 				BC40719E23CF0137000027A3 /* NotificationsListFetcher.swift in Sources */,
+				BCCE66922428AA08004F47DC /* UITextField+PureLayout.swift in Sources */,
 				3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */,
 				BC4F0A3224091460002C4F06 /* SearchableVCType.swift in Sources */,
 				BCABF1392366DF2B006B05F5 /* UserProfilePageVC.swift in Sources */,

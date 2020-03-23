@@ -68,22 +68,6 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
         constraintsStackView.autoAlignAxis(toSuperviewAxis: .vertical)
         constraintsStackView.autoPinEdge(toSuperviewEdge: .bottom)
         
-        // button
-        view.addSubview(nextButton)
-        nextButton.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
-        nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        let constant: CGFloat
-        switch UIDevice.current.screenType {
-        case .iPhones_5_5s_5c_SE:
-            constant = 16
-        default:
-            constant = 40
-        }
-        
-        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: nextButton, attribute: .bottom, multiplier: 1.0, constant: constant)
-        keyboardViewV.observeKeyboardHeight()
-        view.addConstraint(keyboardViewV)
-        
         // generateMasterPasswordButton
         setUpGenerateMasterPasswordButton()
         
@@ -96,6 +80,11 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
         unsupportSymbolError.autoAlignAxis(toSuperviewAxis: .vertical)
         unsupportSymbolError.text = "only Latin characters, digits and special symbols\nare allowed".localized().uppercaseFirst
         unsupportSymbolError.isHidden = true
+    }
+    
+    override func viewDidSetUpScrollView() {
+        setUpNextButton()
+        nextButton.autoPinEdge(.top, to: .bottom, of: scrollView)
     }
     
     func setUpGenerateMasterPasswordButton() {
@@ -178,7 +167,7 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
         view.endEditing(true)
     }
     
-    @objc func nextButtonDidTouch() {
+    @objc override func nextButtonDidTouch() {
         if (textField.text ?? "").count > AuthManager.maxPasswordLength {
             hintView?.display(inPosition: nextButton.frame.origin, withType: .error("password must contain no more than 52 characters".localized().uppercaseFirst))
             return
