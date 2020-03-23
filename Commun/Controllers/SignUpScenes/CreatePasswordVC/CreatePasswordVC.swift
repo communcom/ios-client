@@ -70,10 +70,6 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
         
         // generateMasterPasswordButton
         setUpGenerateMasterPasswordButton()
-        
-        // hide keyboard
-        view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
 
         view.addSubview(unsupportSymbolError)
         unsupportSymbolError.autoPinEdge(.bottom, to: .top, of: nextButton, withOffset: -9)
@@ -85,6 +81,23 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     override func viewDidSetUpScrollView() {
         setUpNextButton()
         nextButton.autoPinEdge(.top, to: .bottom, of: scrollView)
+    }
+    
+    func setUpNextButton() {
+        view.addSubview(nextButton)
+        nextButton.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
+        nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
+        let constant: CGFloat
+        switch UIDevice.current.screenType {
+        case .iPhones_5_5s_5c_SE:
+            constant = 16
+        default:
+            constant = 40
+        }
+        
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: nextButton, attribute: .bottom, multiplier: 1.0, constant: constant)
+        keyboardViewV.observeKeyboardHeight()
+        view.addConstraint(keyboardViewV)
     }
     
     func setUpGenerateMasterPasswordButton() {
@@ -161,10 +174,6 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
                 self.show(vc, sender: nil)
             }
         )
-    }
-    
-    @objc func hideKeyboard() {
-        view.endEditing(true)
     }
     
     @objc override func nextButtonDidTouch() {

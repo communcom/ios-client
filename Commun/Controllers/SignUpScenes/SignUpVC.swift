@@ -55,12 +55,8 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         super.setUp()
         AnalyticsManger.shared.openRegistrationSelection()
 
-        switch UIDevice.current.screenType {
-        case .iPhones_5_5s_5c_SE:
-            titleLabel.font = .systemFont(ofSize: 34, weight: .bold)
-        default:
-            break
-        }
+        // override font size
+        titleLabel.font = .systemFont(ofSize: 34, weight: .bold)
 
         AnalyticsManger.shared.registrationOpenScreen(0)
         // set up stack view
