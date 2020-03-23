@@ -1,5 +1,5 @@
 //
-//  SignUpMethodsVC.swift
+//  SignUpVC.swift
 //  Commun
 //
 //  Created by Chung Tran on 3/11/20.
@@ -9,8 +9,7 @@
 import Foundation
 import RxSwift
 
-class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
-    static private let phone = "phone"
+class SignUpVC: SignUpBaseVC, SignUpRouter {
     // MARK: - Nested type
     struct Method {
         var serviceName: String
@@ -22,9 +21,12 @@ class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
         var method: Method?
     }
     
+    // MARK: - Constants
+    private let phoneServiceName = "phone"
+    
     // MARK: - Properties
-    let methods: [Method] = {
-        [Method(serviceName: phone)] +
+    lazy var methods: [Method] = {
+        [Method(serviceName: phoneServiceName)] +
         SocialNetwork.allCases.map { network in
             var backgroundColor: UIColor?
             var textColor: UIColor?
@@ -120,7 +122,7 @@ class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
     }
 
     func signUpWithMethod(_ method: Method) {
-        if method.serviceName == SignUpMethodsVC.phone {
+        if method.serviceName == phoneServiceName {
             let signUpVC = controllerContainer.resolve(SignUpWithPhoneVC.self)!
             show(signUpVC, sender: nil)
             return
