@@ -47,11 +47,11 @@ class SubsViewController<T: ListItemType, CellType: ListItemCellType>: ListViewC
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         baseNavigationController?.resetNavigationBar()
     }
-    
+
     override func handleLoading() {
         tableView.addNotificationsLoadingFooterView()
     }
