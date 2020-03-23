@@ -43,7 +43,7 @@ class DiscoveryAllViewModel: SearchViewModel {
                 $0.communityValue == nil ? nil : ResponseAPIContentSearchItem.community($0.communityValue!)
             }.prefix(5)
         }
-        return Observable.zip(users, communities).map {Array($0) + Array($1)}
+        return Observable.combineLatest(users, communities).map {Array($0) + Array($1)}
     }
     
     var subscriptionsFetcherState: Observable<ListFetcherState> {
