@@ -36,12 +36,9 @@ extension PostEditorVC {
     }
     
     // MARK: - Immutable actions
-    @objc func shouldSaveDraft() -> Bool {
-        viewModel.postForEdit == nil && !contentTextView.text.isEmpty
-    }
     @objc override func close() {
-        
         guard shouldSaveDraft() else {
+            removeDraft()
             back()
             return
         }
