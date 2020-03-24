@@ -17,22 +17,19 @@ class SignUpWithPhoneVC: BaseSignUpVC {
     // MARK: - Subviews
     lazy var selectCountryView: UIView = {
         let view = UIView(width: 290, height: 56, backgroundColor: .f3f5fa, cornerRadius: 12)
-        view.addSubview(selectCountryPlaceholderLabel)
-        selectCountryPlaceholderLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        selectCountryPlaceholderLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectCountryDidTouch)))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chooseCountry)))
         return view
     }()
     
     lazy var selectCountryPlaceholderLabel = UILabel.with(text: "select country placeholder".localized().uppercaseFirst, textSize: 17, textColor: UIColor(hexString: "#9B9FA2")!)
     
-    lazy var flagImageView = UIImageView(width: 56, height: 56)
+    lazy var flagView = UILabel(width: 56, height: 56)
     lazy var countryNameLabel = UILabel.with(textSize: 17)
     
     lazy var phoneTextField: PhoneNumberTextField = {
         let tf = PhoneNumberTextField(width: 290, height: 56, backgroundColor: .f3f5fa, cornerRadius: 12)
-        let paddingView = UIView(width: 16 * Config.widthRatio, height: 20)
+        let paddingView = UIView(width: 16, height: 20)
         tf.leftView = paddingView
         tf.leftViewMode = .always
         tf.placeholder = "phone number placeholder".localized().uppercaseFirst
@@ -88,10 +85,18 @@ class SignUpWithPhoneVC: BaseSignUpVC {
     override func bind() {
         super.bind()
         
+        bindCountry()
+        
+        bindPhoneNumber()
     }
     
     // MARK: - Actions
-    @objc func selectCountryDidTouch() {
-        
+    @objc func chooseCountry() {
+        if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
+            self.view.endEditing(true)
+            countryVC.bindViewModel(SelectCountryViewModel(withModel: self.viewModel))
+            let nav = UINavigationController(rootViewController: countryVC)
+            self.present(nav, animated: true, completion: nil)
+        }
     }
 }
