@@ -46,11 +46,25 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
             return Method(serviceName: network.rawValue, backgroundColor: backgroundColor ?? .clear, textColor: textColor ?? .black)
         }
     }()
+    private var isStepChecked = false
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 12, alignment: .center, distribution: .fill)
     
     // MARK: - Methods
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !isStepChecked {
+            // if signUp is processing
+            if let step = KeychainManager.currentUser()?.registrationStep,
+                step != .firstStep
+            {
+                getState(showError: false)
+            }
+            isStepChecked = true
+        }
+    }
+    
     override func setUp() {
         super.setUp()
         AnalyticsManger.shared.openRegistrationSelection()
