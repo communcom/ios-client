@@ -119,8 +119,6 @@
 		57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1A2240DB9400338FD5 /* NetworkService.swift */; };
 		57840A202240DDEB00338FD5 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1F2240DDEB00338FD5 /* Container.swift */; };
 		5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787C0C522650FA500568CEC /* SetUserViewModel.swift */; };
-		578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B94D92263CBD800FB5BC6 /* ConfirmUserVC.swift */; };
-		578B94DC2263CBE300FB5BC6 /* ConfirmUserVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 578B94DB2263CBE300FB5BC6 /* ConfirmUserVC.storyboard */; };
 		57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1CA622270FC4700E2A1E3 /* LanguageVC.swift */; };
 		57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57A1CA642270FCF000E2A1E3 /* LanguageVC.storyboard */; };
 		57A95197224178010020F55D /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A95196224178010020F55D /* PostController.swift */; };
@@ -642,8 +640,6 @@
 		57840A1A2240DB9400338FD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		57840A1F2240DDEB00338FD5 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		5787C0C522650FA500568CEC /* SetUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUserViewModel.swift; sourceTree = "<group>"; };
-		578B94D92263CBD800FB5BC6 /* ConfirmUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmUserVC.swift; sourceTree = "<group>"; };
-		578B94DB2263CBE300FB5BC6 /* ConfirmUserVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConfirmUserVC.storyboard; sourceTree = "<group>"; };
 		57A1CA622270FC4700E2A1E3 /* LanguageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageVC.swift; sourceTree = "<group>"; };
 		57A1CA642270FCF000E2A1E3 /* LanguageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LanguageVC.storyboard; sourceTree = "<group>"; };
 		57A95196224178010020F55D /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
@@ -1237,7 +1233,6 @@
 				BCC2FAE92418E72000A3DD87 /* BaseSignUpVC.swift */,
 				BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */,
 				5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */,
-				578B94D82263CBC300FB5BC6 /* ConfirmUserVC */,
 				5787C0C222650F8A00568CEC /* SetUserVC */,
 				BC34B4CF241F1BDC00855DE2 /* CreatePasswordVC */,
 			);
@@ -1606,15 +1601,6 @@
 				5787C0C522650FA500568CEC /* SetUserViewModel.swift */,
 			);
 			path = SetUserVC;
-			sourceTree = "<group>";
-		};
-		578B94D82263CBC300FB5BC6 /* ConfirmUserVC */ = {
-			isa = PBXGroup;
-			children = (
-				578B94D92263CBD800FB5BC6 /* ConfirmUserVC.swift */,
-				578B94DB2263CBE300FB5BC6 /* ConfirmUserVC.storyboard */,
-			);
-			path = ConfirmUserVC;
 			sourceTree = "<group>";
 		};
 		5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */ = {
@@ -2953,7 +2939,6 @@
 				BC9066F323A9DFC2000F9A3B /* ResponseAPIWalletGetTransferHistory.json in Resources */,
 				BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */,
 				571B14F9223A935C00630C8F /* Main.storyboard in Resources */,
-				578B94DC2263CBE300FB5BC6 /* ConfirmUserVC.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3451,7 +3436,6 @@
 				BCD3BC8D23AC66740036C947 /* UICollectionView+PureLayout.swift in Sources */,
 				BC286C3523A2187100801A26 /* MyImageView.swift in Sources */,
 				BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */,
-				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				BCCE0AB22368225600A183AA /* MyProfileHeaderView.swift in Sources */,
 				BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */,
 				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,

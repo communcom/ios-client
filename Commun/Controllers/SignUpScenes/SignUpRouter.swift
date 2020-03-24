@@ -27,8 +27,8 @@ extension SignUpRouter where Self: UIViewController {
         
         switch step {
         case .verify:
-            let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self)!
-            vc = confirmUserVC
+            let verifyUserVC = VerifyUserVC()
+            vc = verifyUserVC
             
         case .setUserName:
             let setUserVC = SetUserVC()
