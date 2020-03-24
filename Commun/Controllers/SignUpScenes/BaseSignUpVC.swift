@@ -16,6 +16,7 @@ class BaseSignUpVC: BaseViewController {
     // MARK: - Subviews
     lazy var backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
     lazy var titleLabel = UILabel.with(text: "sign up".localized().uppercaseFirst, textSize: 34, weight: .bold)
+    lazy var subtitleLabel = UILabel.with(textSize: 17, numberOfLines: 0)
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     
     lazy var termOfUseLabel: UILabel = {
