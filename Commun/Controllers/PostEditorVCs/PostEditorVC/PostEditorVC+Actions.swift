@@ -347,12 +347,12 @@ extension PostEditorVC {
                     
                     if let items = (UIApplication.topViewController() as? FeedPageVC)?.viewModel.items {
                         items.accept([post] + items.value)
+                        (UIApplication.topViewController() as! FeedPageVC).appLiked()
                         return
                     }
                     
                     let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
                     UIApplication.topViewController()?.show(postPageVC, sender: nil)
-                    postPageVC.appLiked()
                 }
             }) { (_) in
                 // show post page

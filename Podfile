@@ -69,6 +69,10 @@ def common_pods_commun
   pod 'SwiftLint'
   pod 'CircularCarousel'
   pod 'NotificationView'
+  
+  pod "SwipeTransition"
+  pod "SwipeTransitionAutoSwipeBack"
+  pod "SwipeTransitionAutoSwipeToDismiss"
 
   #Social Login
   pod 'FBSDKLoginKit', '6.0.0'
