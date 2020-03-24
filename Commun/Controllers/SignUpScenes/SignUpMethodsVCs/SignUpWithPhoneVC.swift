@@ -1,5 +1,5 @@
 //
-//  SignUpPhoneVC.swift
+//  SignUpWithPhoneVC.swift
 //  Commun
 //
 //  Created by Chung Tran on 3/23/20.
@@ -9,7 +9,11 @@
 import Foundation
 import PhoneNumberKit
 
-class SignUpPhoneVC: BaseSignUpVC {
+class SignUpWithPhoneVC: BaseSignUpVC {
+    // MARK: - Properties
+    let viewModel = SignUpWithPhoneViewModel()
+    var shouldDefineLocation = true
+    
     // MARK: - Subviews
     lazy var selectCountryView: UIView = {
         let view = UIView(width: 290, height: 56, backgroundColor: .f3f5fa, cornerRadius: 12)
@@ -32,6 +36,7 @@ class SignUpPhoneVC: BaseSignUpVC {
         tf.leftView = paddingView
         tf.leftViewMode = .always
         tf.placeholder = "phone number placeholder".localized().uppercaseFirst
+        tf.setPlaceHolderTextColor(UIColor(hexString: "#9B9FA2")!)
         return tf
     }()
     
@@ -42,6 +47,9 @@ class SignUpPhoneVC: BaseSignUpVC {
         
         // override font size
         titleLabel.font = .systemFont(ofSize: 34, weight: .bold)
+        
+        // get location
+        updateLocation()
     }
     
     override func setUpScrollView() {
@@ -75,6 +83,11 @@ class SignUpPhoneVC: BaseSignUpVC {
         
         // pin bottom
         signInLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 31)
+    }
+    
+    override func bind() {
+        super.bind()
+        
     }
     
     // MARK: - Actions

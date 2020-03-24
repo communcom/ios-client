@@ -119,7 +119,7 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
 
     func signUpWithMethod(_ method: Method) {
         if method.serviceName == phoneServiceName {
-            let signUpVC = controllerContainer.resolve(SignUpWithPhoneVC.self)!
+            let signUpVC = SignUpWithPhoneVC()
             show(signUpVC, sender: nil)
             return
         }
