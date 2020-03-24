@@ -139,7 +139,7 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
     
     @objc func smsCodeButtonTapped(button: UIBarButtonItem) {
         pinCodeInputView.insertText(button.title!)
-        removeAccessoryView()
+//        removeAccessoryView()
     }
     
     @objc func resendButtonTapped() {
@@ -166,7 +166,7 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
     }
     
     func verify() {
-       guard pinCodeInputView.text.count == ConfirmUserVC.numberOfDigits,
+       guard pinCodeInputView.text.count == numberOfDigits,
            let code = UInt64(pinCodeInputView.text) else {
                return
        }
@@ -195,16 +195,16 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
     }
     
     // MARK: - accessoryView
-    func addAccessoryView(withSmsCode smsCode: String) {
-        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: .adaptive(height: 44.0)))
-        let smsCodeButton = UIBarButtonItem(title: smsCode, style: .plain, target: self, action: #selector(smsCodeButtonTapped(button:)))
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolBar.items = [spacer, smsCodeButton, spacer]
-        toolBar.tintColor = UIColor(hexString: "#6A80F5")
-        pinCodeInputView.inputAccessoryView = toolBar
-    }
-
-    func removeAccessoryView() {
-        pinCodeInputView.inputAccessoryView = nil
-    }
+//    func addAccessoryView(withSmsCode smsCode: String) {
+//        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: .adaptive(height: 44.0)))
+//        let smsCodeButton = UIBarButtonItem(title: smsCode, style: .plain, target: self, action: #selector(smsCodeButtonTapped(button:)))
+//        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//        toolBar.items = [spacer, smsCodeButton, spacer]
+//        toolBar.tintColor = UIColor(hexString: "#6A80F5")
+//        pinCodeInputView.inputAccessoryView = toolBar
+//    }
+//
+//    func removeAccessoryView() {
+//        pinCodeInputView.inputAccessoryView = nil
+//    }
 }
