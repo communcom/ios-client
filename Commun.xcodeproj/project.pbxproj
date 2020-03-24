@@ -1834,6 +1834,7 @@
 				BC9066FD23AB2279000F9A3B /* TransferHistoryVC */,
 				BC18FA1C23D54DB1005DC7E3 /* CurrenciesVC */,
 				BC619B0F237268240005BB94 /* CommunitiesVC */,
+				BC5A34832429BD90001C5054 /* CountriesVC */,
 				BCD01A4423F66311003B0E1E /* CommunityPageVCType.swift */,
 				B1B103F3240E65A200253DE8 /* CMAppLike.swift */,
 				BC4F0A3124091460002C4F06 /* SearchableVCType.swift */,
@@ -2215,14 +2216,14 @@
 			path = ChooseCommunities;
 			sourceTree = "<group>";
 		};
-		BC5A34832429BD90001C5054 /* SelectCountryVC */ = {
+		BC5A34832429BD90001C5054 /* CountriesVC */ = {
 			isa = PBXGroup;
 			children = (
 				BC5A348A2429C06C001C5054 /* Subviews */,
 				BC5A34842429BDB5001C5054 /* CountriesVC.swift */,
 				BC5A348B2429C0DA001C5054 /* Country.swift */,
 			);
-			path = SelectCountryVC;
+			path = CountriesVC;
 			sourceTree = "<group>";
 		};
 		BC5A348A2429C06C001C5054 /* Subviews */ = {
@@ -2669,7 +2670,6 @@
 		BCCE669D2429B843004F47DC /* SignUpWithPhoneVC */ = {
 			isa = PBXGroup;
 			children = (
-				BC5A34832429BD90001C5054 /* SelectCountryVC */,
 				BCCE668F2428A9B8004F47DC /* SignUpWithPhoneVC.swift */,
 				BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */,
 				BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */,
