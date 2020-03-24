@@ -1,5 +1,5 @@
 //
-//  SignUpVC.swift
+//  BaseSignUpVC.swift
 //  Commun
 //
 //  Created by Chung Tran on 3/11/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SignUpBaseVC: BaseViewController {
+class BaseSignUpVC: BaseViewController {
     // MARK: - Properties
     var termOfUseText: String {"By continuing, you agree to the Commun’s Terms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst}
     var alreadyHasAccountText: String {"already have an account? Sign in".localized().uppercaseFirst}
@@ -55,6 +55,13 @@ class SignUpBaseVC: BaseViewController {
         return label
     }()
     
+    lazy var nextButton: CommunButton = {
+        let button = CommunButton.default(height: 56, label: "next".localized().uppercaseFirst, cornerRadius: 8, isHuggingContent: false, isDisableGrayColor: true)
+        button.autoSetDimension(.width, toSize: 290)
+        button.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
@@ -76,10 +83,29 @@ class SignUpBaseVC: BaseViewController {
         }
         
         // scrollView
+        viewWillSetUpScrollView()
+        
+        setUpScrollView()
+        
+        viewDidSetUpScrollView()
+        
+        // dismiss keyboard
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+    }
+    
+    func viewWillSetUpScrollView() {
+        
+    }
+    
+    func setUpScrollView() {
         view.addSubview(scrollView)
         scrollView.autoPinEdge(toSuperviewEdge: .leading)
         scrollView.autoPinEdge(toSuperviewEdge: .trailing)
         scrollView.autoPinEdge(.top, to: .bottom, of: titleLabel)
+    }
+    
+    func viewDidSetUpScrollView() {
         let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
         keyboardViewV.observeKeyboardHeight()
         self.view.addConstraint(keyboardViewV)
@@ -127,4 +153,9 @@ class SignUpBaseVC: BaseViewController {
         back()
     }
     
+    @objc func nextButtonDidTouch() {}
+    
+    @objc func hideKeyboard() {
+        view.endEditing(true)
+    }
 }

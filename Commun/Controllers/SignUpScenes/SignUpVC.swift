@@ -1,5 +1,5 @@
 //
-//  SignUpMethodsVC.swift
+//  SignUpVC.swift
 //  Commun
 //
 //  Created by Chung Tran on 3/11/20.
@@ -9,8 +9,7 @@
 import Foundation
 import RxSwift
 
-class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
-    static private let phone = "phone"
+class SignUpVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Nested type
     struct Method {
         var serviceName: String
@@ -22,9 +21,12 @@ class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
         var method: Method?
     }
     
+    // MARK: - Constants
+    private let phoneServiceName = "phone"
+    
     // MARK: - Properties
-    let methods: [Method] = {
-        [Method(serviceName: phone)] +
+    lazy var methods: [Method] = {
+        [Method(serviceName: phoneServiceName)] +
         SocialNetwork.allCases.map { network in
             var backgroundColor: UIColor?
             var textColor: UIColor?
@@ -44,21 +46,31 @@ class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
             return Method(serviceName: network.rawValue, backgroundColor: backgroundColor ?? .clear, textColor: textColor ?? .black)
         }
     }()
+    private var isStepChecked = false
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 12, alignment: .center, distribution: .fill)
     
     // MARK: - Methods
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !isStepChecked {
+            // if signUp is processing
+            if let step = KeychainManager.currentUser()?.registrationStep,
+                step != .firstStep
+            {
+                getState(showError: false)
+            }
+            isStepChecked = true
+        }
+    }
+    
     override func setUp() {
         super.setUp()
         AnalyticsManger.shared.openRegistrationSelection()
 
-        switch UIDevice.current.screenType {
-        case .iPhones_5_5s_5c_SE:
-            titleLabel.font = .systemFont(ofSize: 34, weight: .bold)
-        default:
-            break
-        }
+        // override font size
+        titleLabel.font = .systemFont(ofSize: 34, weight: .bold)
 
         AnalyticsManger.shared.registrationOpenScreen(0)
         // set up stack view
@@ -120,8 +132,8 @@ class SignUpMethodsVC: SignUpBaseVC, SignUpRouter {
     }
 
     func signUpWithMethod(_ method: Method) {
-        if method.serviceName == SignUpMethodsVC.phone {
-            let signUpVC = controllerContainer.resolve(SignUpWithPhoneVC.self)!
+        if method.serviceName == phoneServiceName {
+            let signUpVC = SignUpWithPhoneVC()
             show(signUpVC, sender: nil)
             return
         }

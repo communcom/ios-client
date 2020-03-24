@@ -1,19 +1,19 @@
 //
-//  SignupVC+Location.swift
+//  SignUpWithPhoneVC+Location.swift
 //  Commun
 //
-//  Created by Chung Tran on 7/25/19.
-//  Copyright © 2019 Commun Limited. All rights reserved.
+//  Created by Chung Tran on 3/24/20.
+//  Copyright © 2020 Commun Limited. All rights reserved.
 //
 
 import Foundation
 import CoreLocation
-import CyberSwift
 
 extension SignUpWithPhoneVC: CLLocationManagerDelegate {
     func updateLocation() {
         // For use in foreground
-        locationManager = CLLocationManager()
+
+        let locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {
@@ -32,7 +32,7 @@ extension SignUpWithPhoneVC: CLLocationManagerDelegate {
             guard let placemarks = placemarks, placemarks.count > 0 else {return}
             let placemark = placemarks[0]
             guard let countryCode = placemark.isoCountryCode,
-                let country = SelectCountryViewModel.getCountriesList().first(where: {$0.countryCode == countryCode})
+                let country = Country.getAll().first(where: {$0.countryCode == countryCode})
             else { return }
 
             if country.available {

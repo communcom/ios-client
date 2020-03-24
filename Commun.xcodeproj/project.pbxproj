@@ -74,7 +74,6 @@
 		3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */; };
 		3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9BEB3C2300EC7D003C70B3 /* EmptyView.swift */; };
 		3B9BEB3F2300EC9C003C70B3 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B9BEB3E2300EC9C003C70B3 /* EmptyView.xib */; };
-		3BA3779722E9DA6C0071AF3A /* SignUpWithPhoneVC+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3779622E9DA6C0071AF3A /* SignUpWithPhoneVC+Location.swift */; };
 		3BA4D089229315D60022A69D /* UIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D088229315D60022A69D /* UIResponder.swift */; };
 		3BAD8E812318D838005A8AB3 /* UITextView+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAD8E802318D838005A8AB3 /* UITextView+UILabel.swift */; };
 		3BAD8E832318FB1C005A8AB3 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAD8E822318FB1C005A8AB3 /* NSAttributedString.swift */; };
@@ -114,20 +113,14 @@
 		5721AE41226E543E00133BFF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5721AE40226E543E00133BFF /* WebKit.framework */; };
 		5721E87122650AC0003BE04B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5721E87022650AC0003BE04B /* StringExtension.swift */; };
 		572517322243935C0033125C /* ControllerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572517312243935C0033125C /* ControllerContainer.swift */; };
-		575945A122607F1F004041C9 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5759459F22607F1F004041C9 /* CountryCell.swift */; };
-		575945A222607F1F004041C9 /* CountryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 575945A022607F1F004041C9 /* CountryCell.xib */; };
 		575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECAB226066F800A7EC2D /* FormTextField.swift */; };
 		575AECAE22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */; };
-		575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECB022606F6600A7EC2D /* SelectCountryVC.swift */; };
-		575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECB222606F7100A7EC2D /* SelectCountryViewModel.swift */; };
-		575AECB522606FA600A7EC2D /* SelectCountryVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 575AECB422606FA600A7EC2D /* SelectCountryVC.storyboard */; };
 		576DC921223E42C800EDED41 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC920223E42C800EDED41 /* UIViewController+Extensions.swift */; };
 		57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1A2240DB9400338FD5 /* NetworkService.swift */; };
 		57840A202240DDEB00338FD5 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1F2240DDEB00338FD5 /* Container.swift */; };
 		5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787C0C522650FA500568CEC /* SetUserViewModel.swift */; };
 		578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B94D92263CBD800FB5BC6 /* ConfirmUserVC.swift */; };
 		578B94DC2263CBE300FB5BC6 /* ConfirmUserVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 578B94DB2263CBE300FB5BC6 /* ConfirmUserVC.storyboard */; };
-		5797E0F8225DDA400026C4D5 /* SignUpWithPhoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797E0F7225DDA400026C4D5 /* SignUpWithPhoneVC.swift */; };
 		57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1CA622270FC4700E2A1E3 /* LanguageVC.swift */; };
 		57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57A1CA642270FCF000E2A1E3 /* LanguageVC.storyboard */; };
 		57A95197224178010020F55D /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A95196224178010020F55D /* PostController.swift */; };
@@ -160,7 +153,6 @@
 		B10DB961240F8789001BD0E4 /* CMAppLikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10DB960240F8789001BD0E4 /* CMAppLikeView.swift */; };
 		B10DB96B240FB99B001BD0E4 /* CMFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10DB96A240FB99B001BD0E4 /* CMFeedbackViewController.swift */; };
 		B16EF85623EADCA2002C2050 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B83234779FE00D8BADB /* UIImage.swift */; };
-		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
 		B17BE49923FD6203004C6440 /* CMHint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17BE49823FD6203004C6440 /* CMHint.swift */; };
 		B182FF7F23F5318C00AC18D1 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182FF7E23F5318C00AC18D1 /* Bundle+Extensions.swift */; };
@@ -310,6 +302,10 @@
 		BC597A8C238D09C400103F4F /* FTUECommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */; };
 		BC597A8E238D0CEC00103F4F /* FTUEChosenCommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A8D238D0CEC00103F4F /* FTUEChosenCommunityCell.swift */; };
 		BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A93238D1C6100103F4F /* AuthorizeOnWebVC.swift */; };
+		BC5A34852429BDB5001C5054 /* CountriesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34842429BDB5001C5054 /* CountriesVC.swift */; };
+		BC5A34882429C066001C5054 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34862429C065001C5054 /* CountryCell.swift */; };
+		BC5A34892429C066001C5054 /* CountryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC5A34872429C066001C5054 /* CountryCell.xib */; };
+		BC5A348C2429C0DA001C5054 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A348B2429C0DA001C5054 /* Country.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -411,8 +407,8 @@
 		BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C423701441005EDAAD /* SubscribersVC.swift */; };
 		BCB4A4C72370188B005EDAAD /* SubscribersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */; };
 		BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */; };
-		BCC2FAEA2418E72000A3DD87 /* SignUpBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAE92418E72000A3DD87 /* SignUpBaseVC.swift */; };
-		BCC2FAEC2418EA0800A3DD87 /* SignUpMethodsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAEB2418EA0800A3DD87 /* SignUpMethodsVC.swift */; };
+		BCC2FAEA2418E72000A3DD87 /* BaseSignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAE92418E72000A3DD87 /* BaseSignUpVC.swift */; };
+		BCC2FAEC2418EA0800A3DD87 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */; };
 		BCC60E1623A0D02C00D40013 /* FeedPageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */; };
 		BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB99302375503A005252CF /* PostPageVC+Binding.swift */; };
 		BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB993323756318005252CF /* PostHeaderTextView.swift */; };
@@ -429,6 +425,12 @@
 		BCCE0AAF2368217000A183AA /* MyProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AAE2368217000A183AA /* MyProfilePageVC.swift */; };
 		BCCE0AB22368225600A183AA /* MyProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AB12368225600A183AA /* MyProfileHeaderView.swift */; };
 		BCCE0AB723682D1B00A183AA /* MyProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AB623682D1B00A183AA /* MyProfilePageVC+Actions.swift */; };
+		BCCE668B2428A64B004F47DC /* PasswordConstraintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE668A2428A64B004F47DC /* PasswordConstraintView.swift */; };
+		BCCE66902428A9B8004F47DC /* SignUpWithPhoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE668F2428A9B8004F47DC /* SignUpWithPhoneVC.swift */; };
+		BCCE66922428AA08004F47DC /* UITextField+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE66912428AA08004F47DC /* UITextField+PureLayout.swift */; };
+		BCCE66982429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */; };
+		BCCE669A2429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */; };
+		BCCE669C2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE669B2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift */; };
 		BCD00FB42373C8BD004A3952 /* LeaderCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB32373C8BD004A3952 /* LeaderCollectionCell.swift */; };
 		BCD00FB62373D280004A3952 /* CommunityMembersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */; };
 		BCD00FB82373D78D004A3952 /* CommunityMembersVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB72373D78D004A3952 /* CommunityMembersVC+Binding.swift */; };
@@ -589,7 +591,6 @@
 		3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
 		3B9BEB3C2300EC7D003C70B3 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		3B9BEB3E2300EC9C003C70B3 /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
-		3BA3779622E9DA6C0071AF3A /* SignUpWithPhoneVC+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUpWithPhoneVC+Location.swift"; sourceTree = "<group>"; };
 		3BA4D088229315D60022A69D /* UIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIResponder.swift; sourceTree = "<group>"; };
 		3BAD8E802318D838005A8AB3 /* UITextView+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+UILabel.swift"; sourceTree = "<group>"; };
 		3BAD8E822318FB1C005A8AB3 /* NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
@@ -634,21 +635,14 @@
 		5721AE40226E543E00133BFF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5721E87022650AC0003BE04B /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		572517312243935C0033125C /* ControllerContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerContainer.swift; sourceTree = "<group>"; };
-		5759459F22607F1F004041C9 /* CountryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
-		575945A022607F1F004041C9 /* CountryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryCell.xib; sourceTree = "<group>"; };
 		575AECAB226066F800A7EC2D /* FormTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextField.swift; sourceTree = "<group>"; };
 		575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithPhoneViewModel.swift; sourceTree = "<group>"; };
-		575AECB022606F6600A7EC2D /* SelectCountryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCountryVC.swift; sourceTree = "<group>"; };
-		575AECB222606F7100A7EC2D /* SelectCountryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCountryViewModel.swift; sourceTree = "<group>"; };
-		575AECB422606FA600A7EC2D /* SelectCountryVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SelectCountryVC.storyboard; sourceTree = "<group>"; };
 		576DC920223E42C800EDED41 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		57840A1A2240DB9400338FD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		57840A1F2240DDEB00338FD5 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		5787C0C522650FA500568CEC /* SetUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUserViewModel.swift; sourceTree = "<group>"; };
 		578B94D92263CBD800FB5BC6 /* ConfirmUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmUserVC.swift; sourceTree = "<group>"; };
 		578B94DB2263CBE300FB5BC6 /* ConfirmUserVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConfirmUserVC.storyboard; sourceTree = "<group>"; };
-		5797E0F7225DDA400026C4D5 /* SignUpWithPhoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithPhoneVC.swift; sourceTree = "<group>"; };
-		5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUpVC.storyboard; sourceTree = "<group>"; };
 		57A1CA622270FC4700E2A1E3 /* LanguageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageVC.swift; sourceTree = "<group>"; };
 		57A1CA642270FCF000E2A1E3 /* LanguageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LanguageVC.storyboard; sourceTree = "<group>"; };
 		57A95196224178010020F55D /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
@@ -832,6 +826,10 @@
 		BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC597A8D238D0CEC00103F4F /* FTUEChosenCommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUEChosenCommunityCell.swift; sourceTree = "<group>"; };
 		BC597A93238D1C6100103F4F /* AuthorizeOnWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeOnWebVC.swift; sourceTree = "<group>"; };
+		BC5A34842429BDB5001C5054 /* CountriesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesVC.swift; sourceTree = "<group>"; };
+		BC5A34862429C065001C5054 /* CountryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
+		BC5A34872429C066001C5054 /* CountryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryCell.xib; sourceTree = "<group>"; };
+		BC5A348B2429C0DA001C5054 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -933,8 +931,8 @@
 		BCB4A4C423701441005EDAAD /* SubscribersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersVC.swift; sourceTree = "<group>"; };
 		BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersCell.swift; sourceTree = "<group>"; };
 		BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsViewController.swift; sourceTree = "<group>"; };
-		BCC2FAE92418E72000A3DD87 /* SignUpBaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBaseVC.swift; sourceTree = "<group>"; };
-		BCC2FAEB2418EA0800A3DD87 /* SignUpMethodsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpMethodsVC.swift; sourceTree = "<group>"; };
+		BCC2FAE92418E72000A3DD87 /* BaseSignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSignUpVC.swift; sourceTree = "<group>"; };
+		BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageHeaderView.swift; sourceTree = "<group>"; };
 		BCCB99302375503A005252CF /* PostPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Binding.swift"; sourceTree = "<group>"; };
 		BCCB993323756318005252CF /* PostHeaderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
@@ -951,6 +949,12 @@
 		BCCE0AAE2368217000A183AA /* MyProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePageVC.swift; sourceTree = "<group>"; };
 		BCCE0AB12368225600A183AA /* MyProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileHeaderView.swift; sourceTree = "<group>"; };
 		BCCE0AB623682D1B00A183AA /* MyProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
+		BCCE668A2428A64B004F47DC /* PasswordConstraintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordConstraintView.swift; sourceTree = "<group>"; };
+		BCCE668F2428A9B8004F47DC /* SignUpWithPhoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithPhoneVC.swift; sourceTree = "<group>"; };
+		BCCE66912428AA08004F47DC /* UITextField+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+PureLayout.swift"; sourceTree = "<group>"; };
+		BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUpWithPhoneVC+Location.swift"; sourceTree = "<group>"; };
+		BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUpWithPhoneVC+Binding.swift"; sourceTree = "<group>"; };
+		BCCE669B2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SingUpWithPhoneVC+Actions.swift"; sourceTree = "<group>"; };
 		BCD00FB32373C8BD004A3952 /* LeaderCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderCollectionCell.swift; sourceTree = "<group>"; };
 		BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMembersHeaderView.swift; sourceTree = "<group>"; };
 		BCD00FB72373D78D004A3952 /* CommunityMembersVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityMembersVC+Binding.swift"; sourceTree = "<group>"; };
@@ -1097,6 +1101,7 @@
 				3B8DDF67234B388500B213F0 /* UITextView+PureLayout.swift */,
 				BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */,
 				BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */,
+				BCCE66912428AA08004F47DC /* UITextField+PureLayout.swift */,
 			);
 			path = PureLayout;
 			sourceTree = "<group>";
@@ -1227,7 +1232,8 @@
 			isa = PBXGroup;
 			children = (
 				B17A970B228002440081B8E0 /* SignUpRouter.swift */,
-				BCC2FAE92418E72000A3DD87 /* SignUpBaseVC.swift */,
+				BCC2FAE92418E72000A3DD87 /* BaseSignUpVC.swift */,
+				BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */,
 				5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */,
 				578B94D82263CBC300FB5BC6 /* ConfirmUserVC */,
 				5787C0C222650F8A00568CEC /* SetUserVC */,
@@ -1432,7 +1438,6 @@
 				5725173A2243E4510033125C /* PostPageVC */,
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
 				BC561E7E238B76AD004C53EB /* ReportVCs */,
-				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
 				57FB179E224C077300563BF7 /* SignInVC */,
 				3B986B6322CE4B8100C1E985 /* SignUpScenes */,
 				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
@@ -1464,40 +1469,12 @@
 			path = PostPageVC;
 			sourceTree = "<group>";
 		};
-		5759459E22607F07004041C9 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				575945A322607F23004041C9 /* CountryCell */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		575945A322607F23004041C9 /* CountryCell */ = {
-			isa = PBXGroup;
-			children = (
-				5759459F22607F1F004041C9 /* CountryCell.swift */,
-				575945A022607F1F004041C9 /* CountryCell.xib */,
-			);
-			path = CountryCell;
-			sourceTree = "<group>";
-		};
 		575AECAA226066F000A7EC2D /* FormTextField */ = {
 			isa = PBXGroup;
 			children = (
 				575AECAB226066F800A7EC2D /* FormTextField.swift */,
 			);
 			path = FormTextField;
-			sourceTree = "<group>";
-		};
-		575AECAF22606F5200A7EC2D /* SelectCountryVC */ = {
-			isa = PBXGroup;
-			children = (
-				5759459E22607F07004041C9 /* Cell */,
-				575AECB222606F7100A7EC2D /* SelectCountryViewModel.swift */,
-				575AECB022606F6600A7EC2D /* SelectCountryVC.swift */,
-				575AECB422606FA600A7EC2D /* SelectCountryVC.storyboard */,
-			);
-			path = SelectCountryVC;
 			sourceTree = "<group>";
 		};
 		576DC917223E41CA00EDED41 /* FeedPageVC */ = {
@@ -1641,8 +1618,7 @@
 		5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */ = {
 			isa = PBXGroup;
 			children = (
-				BCC2FAEB2418EA0800A3DD87 /* SignUpMethodsVC.swift */,
-				BCC2FAE82418E5D900A3DD87 /* SignUpWithPhoneVC */,
+				BCCE669D2429B843004F47DC /* SignUpWithPhoneVC */,
 			);
 			path = SignUpMethodsVCs;
 			sourceTree = "<group>";
@@ -1858,6 +1834,7 @@
 				BC9066FD23AB2279000F9A3B /* TransferHistoryVC */,
 				BC18FA1C23D54DB1005DC7E3 /* CurrenciesVC */,
 				BC619B0F237268240005BB94 /* CommunitiesVC */,
+				BC5A34832429BD90001C5054 /* CountriesVC */,
 				BCD01A4423F66311003B0E1E /* CommunityPageVCType.swift */,
 				B1B103F3240E65A200253DE8 /* CMAppLike.swift */,
 				BC4F0A3124091460002C4F06 /* SearchableVCType.swift */,
@@ -1968,6 +1945,7 @@
 		BC34B4CF241F1BDC00855DE2 /* CreatePasswordVC */ = {
 			isa = PBXGroup;
 			children = (
+				BCCE668E2428A6CB004F47DC /* Subviews */,
 				BC27F0DE241F200900050AF6 /* CreatePasswordViewModel.swift */,
 				BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */,
 				BC27F0E2241F594A00050AF6 /* ConfirmPasswordVC.swift */,
@@ -2236,6 +2214,25 @@
 				BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */,
 			);
 			path = ChooseCommunities;
+			sourceTree = "<group>";
+		};
+		BC5A34832429BD90001C5054 /* CountriesVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC5A348A2429C06C001C5054 /* Subviews */,
+				BC5A34842429BDB5001C5054 /* CountriesVC.swift */,
+				BC5A348B2429C0DA001C5054 /* Country.swift */,
+			);
+			path = CountriesVC;
+			sourceTree = "<group>";
+		};
+		BC5A348A2429C06C001C5054 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BC5A34862429C065001C5054 /* CountryCell.swift */,
+				BC5A34872429C066001C5054 /* CountryCell.xib */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		BC619B0F237268240005BB94 /* CommunitiesVC */ = {
@@ -2622,17 +2619,6 @@
 			path = SubsViewController;
 			sourceTree = "<group>";
 		};
-		BCC2FAE82418E5D900A3DD87 /* SignUpWithPhoneVC */ = {
-			isa = PBXGroup;
-			children = (
-				5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */,
-				5797E0F7225DDA400026C4D5 /* SignUpWithPhoneVC.swift */,
-				3BA3779622E9DA6C0071AF3A /* SignUpWithPhoneVC+Location.swift */,
-				575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */,
-			);
-			path = SignUpWithPhoneVC;
-			sourceTree = "<group>";
-		};
 		BCCB993223756318005252CF /* Header */ = {
 			isa = PBXGroup;
 			children = (
@@ -2671,6 +2657,26 @@
 				BCCE0AB12368225600A183AA /* MyProfileHeaderView.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		BCCE668E2428A6CB004F47DC /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BCCE668A2428A64B004F47DC /* PasswordConstraintView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		BCCE669D2429B843004F47DC /* SignUpWithPhoneVC */ = {
+			isa = PBXGroup;
+			children = (
+				BCCE668F2428A9B8004F47DC /* SignUpWithPhoneVC.swift */,
+				BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */,
+				BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */,
+				BCCE669B2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift */,
+				575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */,
+			);
+			path = SignUpWithPhoneVC;
 			sourceTree = "<group>";
 		};
 		BCD00FB22373C8A4004A3952 /* Subviews */ = {
@@ -2903,12 +2909,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1C3712C2383D0F3000BAE2F /* ProfileEdit.storyboard in Resources */,
-				575945A222607F1F004041C9 /* CountryCell.xib in Resources */,
 				BC016D47235DA0D400F1319F /* PlaceholderPostCell.xib in Resources */,
 				57FB179C224BFBD700563BF7 /* README.md in Resources */,
 				BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */,
 				3B9BEB3F2300EC9C003C70B3 /* EmptyView.xib in Resources */,
-				575AECB522606FA600A7EC2D /* SelectCountryVC.storyboard in Resources */,
 				3B77383923335829000965ED /* image-not-available.jpg in Resources */,
 				B1D1CF9922F8A28A0071F1B6 /* InfoPlist.strings in Resources */,
 				AC8C57C1238D494D00B0D260 /* InstagramView.xib in Resources */,
@@ -2924,8 +2928,8 @@
 				BC3694ED236979A700B2E078 /* ProfilePageVC.storyboard in Resources */,
 				3B8DDF5E234B122500B213F0 /* colorPalette.plist in Resources */,
 				BC40719A23CEF801000027A3 /* PlaceholderNotificationCell.xib in Resources */,
+				BC5A34892429C066001C5054 /* CountryCell.xib in Resources */,
 				BCF74A6523618BA800B91089 /* ResponseAPIContentGetCommunity.json in Resources */,
-				B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */,
 				B1AF88B12415FE9D00330352 /* Localizable.strings in Resources */,
 				57FB179B224BFBD700563BF7 /* LICENSE in Resources */,
 				B1FA77D5238BF7A6006E57D1 /* WelcomeVC.storyboard in Resources */,
@@ -3148,6 +3152,7 @@
 				BC74F503237957790018DB8E /* CommentsVC+CommentCellDelegate.swift in Sources */,
 				3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */,
 				3B5CB30322A56BD500757533 /* UITapGestureRecognizer.swift in Sources */,
+				BC5A34882429C066001C5054 /* CountryCell.swift in Sources */,
 				BC3AD9DC23838E920026EAB4 /* CommentFormViewModel.swift in Sources */,
 				3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */,
 				BC3694FB23699C0F00B2E078 /* BasicEditorVC+Actions.swift in Sources */,
@@ -3169,8 +3174,8 @@
 				BCCB993623756375005252CF /* PostHeaderView.swift in Sources */,
 				B1D7AD5823A10650007D1A13 /* SignInVC.swift in Sources */,
 				BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */,
+				BCCE669A2429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift in Sources */,
 				BC7D6090237BF764007D8C1A /* BlacklistViewModel.swift in Sources */,
-				575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */,
 				BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */,
 				BC016D50235EA23C00F1319F /* PostsViewController.swift in Sources */,
 				BC016D54235EA32600F1319F /* PostsViewModel.swift in Sources */,
@@ -3234,7 +3239,6 @@
 				BC8F814823E27ECE0024C04A /* WalletCarouselWrapper.swift in Sources */,
 				3B8DDF65234B219D00B213F0 /* ArticleEditorVC+TextViewDelegate.swift in Sources */,
 				BC597A67238B9C2600103F4F /* CustomHeightPresentationController.swift in Sources */,
-				3BA3779722E9DA6C0071AF3A /* SignUpWithPhoneVC+Location.swift in Sources */,
 				BC384F1A23862C580021A2A9 /* CommunityPageVC+Actions.swift in Sources */,
 				BCD3BC8B23AB313E0036C947 /* UIStackView.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,
@@ -3272,6 +3276,7 @@
 				BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
 				AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */,
+				BCCE669C2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift in Sources */,
 				BC8F815323E27ECE0024C04A /* BuyCommunVC.swift in Sources */,
 				BC384F1E23862FBC0021A2A9 /* CommunityPageVC+Binding.swift in Sources */,
 				BCD01A4523F66311003B0E1E /* CommunityPageVCType.swift in Sources */,
@@ -3280,7 +3285,6 @@
 				BCAFFF2F24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift in Sources */,
 				BC9066F723A9E1AC000F9A3B /* TransferHistoryViewModel.swift in Sources */,
 				B1FA77D9238BF7E0006E57D1 /* WelcomeVC.swift in Sources */,
-				5797E0F8225DDA400026C4D5 /* SignUpWithPhoneVC.swift in Sources */,
 				BC753FF624235A9E000616B5 /* FeedPageViewModel.swift in Sources */,
 				3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */,
 				3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */,
@@ -3311,13 +3315,16 @@
 				BC08E8C52403C72E00436A5C /* PNAlertViewDelegate.swift in Sources */,
 				BC46592D238E681500AF9C29 /* BoardingSetPasscodeVC.swift in Sources */,
 				BC8F815523E27ECE0024C04A /* WalletBuyCommunVC.swift in Sources */,
+				BCCE66902428A9B8004F47DC /* SignUpWithPhoneVC.swift in Sources */,
 				B1C3712D2383D0F3000BAE2F /* ProfileEditViewController.swift in Sources */,
 				3B3C8B8F2347876000D8BADB /* ArticleEditorTextView+Utilities.swift in Sources */,
 				BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */,
 				BC69F7D1236FD1690097F870 /* NotificationSettingsView.swift in Sources */,
 				BC7D608A237BF3F1007D8C1A /* MyProfileBlacklistVC.swift in Sources */,
+				BC5A34852429BDB5001C5054 /* CountriesVC.swift in Sources */,
 				BC8F815723E27ECE0024C04A /* WalletConvertViewModel.swift in Sources */,
 				BC40719E23CF0137000027A3 /* NotificationsListFetcher.swift in Sources */,
+				BCCE66922428AA08004F47DC /* UITextField+PureLayout.swift in Sources */,
 				3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */,
 				BC4F0A3224091460002C4F06 /* SearchableVCType.swift in Sources */,
 				BCABF1392366DF2B006B05F5 /* UserProfilePageVC.swift in Sources */,
@@ -3369,7 +3376,7 @@
 				BC016D4E235EA1DE00F1319F /* BaseViewController.swift in Sources */,
 				3BE85D262327A50200C7E7F6 /* GridView.swift in Sources */,
 				BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */,
-				BCC2FAEA2418E72000A3DD87 /* SignUpBaseVC.swift in Sources */,
+				BCC2FAEA2418E72000A3DD87 /* BaseSignUpVC.swift in Sources */,
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
 				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
@@ -3472,7 +3479,6 @@
 				BC22BBD2236C213D00F40658 /* SelectLanguageVC.swift in Sources */,
 				BC4F9343240E60AD00BB935F /* UserProfilePageVC+UITableViewDelegate.swift in Sources */,
 				BCD01A0423F65231003B0E1E /* UINavigationController.swift in Sources */,
-				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				BC472D9623A3755C00822371 /* CardPresentationController.swift in Sources */,
 				BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */,
 				BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */,
@@ -3489,7 +3495,7 @@
 				BC7540092424B2CD000616B5 /* AttentionView.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift in Sources */,
 				BCCE0AAD23681B2400A183AA /* ProfileController.swift in Sources */,
-				BCC2FAEC2418EA0800A3DD87 /* SignUpMethodsVC.swift in Sources */,
+				BCC2FAEC2418EA0800A3DD87 /* SignUpVC.swift in Sources */,
 				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
 				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,
@@ -3515,20 +3521,22 @@
 				BC8F815623E27ECE0024C04A /* WalletSellCommunVC.swift in Sources */,
 				B101CB6B23E4634900269253 /* ShareExtensionData.swift in Sources */,
 				BC8F814223E27ECE0024C04A /* WalletCarousel.swift in Sources */,
-				575945A122607F1F004041C9 /* CountryCell.swift in Sources */,
 				BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */,
 				3BF381812331D9CD00C02123 /* URL.swift in Sources */,
 				BC3694EF2369850100B2E078 /* EditorVC.swift in Sources */,
 				AC6A7CBA23FC4C9A004CA486 /* DeviceScreen.swift in Sources */,
 				BCD01A9723FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift in Sources */,
+				BC5A348C2429C0DA001C5054 /* Country.swift in Sources */,
 				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				BC8F814523E27ECE0024C04A /* WalletTableHeaderView.swift in Sources */,
 				BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */,
 				BC9066E723A9D48A000F9A3B /* TransferHistoryVC.swift in Sources */,
 				BC69F7D8236FF6790097F870 /* SubscriptionsCommunityCell.swift in Sources */,
 				3BAE92A922DE553D00E97AE8 /* ScalableLayoutConstraint.swift in Sources */,
+				BCCE668B2428A64B004F47DC /* PasswordConstraintView.swift in Sources */,
 				BC8F814F23E27ECE0024C04A /* TransactionCompletedView.swift in Sources */,
 				BC4692BD2390C3B20064A38B /* FeedPageFloatView.swift in Sources */,
+				BCCE66982429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift in Sources */,
 				BCB2A6EC23556E7100B3582B /* ArticleEditorVC+Draft.swift in Sources */,
 				BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */,
 				B182FF7F23F5318C00AC18D1 /* Bundle+Extensions.swift in Sources */,

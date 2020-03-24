@@ -112,7 +112,7 @@ class WelcomeVC: UIViewController {
     
     // MARK: - Custom Functions
     func navigateToSignUp() {
-        let controller = SignUpMethodsVC()
+        let controller = SignUpVC()
         show(controller, sender: nil)
     }
     
