@@ -9,7 +9,7 @@
 import Foundation
 import PhoneNumberKit
 
-class SignUpWithPhoneVC: BaseSignUpVC {
+class SignUpWithPhoneVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Properties
     let viewModel = SignUpWithPhoneViewModel()
     var shouldDefineLocation = true
@@ -24,7 +24,7 @@ class SignUpWithPhoneVC: BaseSignUpVC {
     
     lazy var selectCountryPlaceholderLabel = UILabel.with(text: "select country placeholder".localized().uppercaseFirst, textSize: 17, textColor: UIColor(hexString: "#9B9FA2")!)
     
-    lazy var flagView = UILabel(width: 56, height: 56)
+    lazy var flagView = UILabel.with(textSize: 28)
     lazy var countryNameLabel = UILabel.with(textSize: 17)
     
     lazy var phoneTextField: PhoneNumberTextField = {
@@ -90,13 +90,7 @@ class SignUpWithPhoneVC: BaseSignUpVC {
         bindPhoneNumber()
     }
     
-    // MARK: - Actions
-    @objc func chooseCountry() {
-        if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
-            self.view.endEditing(true)
-            countryVC.bindViewModel(SelectCountryViewModel(withModel: self.viewModel))
-            let nav = UINavigationController(rootViewController: countryVC)
-            self.present(nav, animated: true, completion: nil)
-        }
+    override func nextButtonDidTouch() {
+        handleNextAction()
     }
 }

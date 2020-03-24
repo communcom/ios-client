@@ -34,7 +34,8 @@ extension SignUpWithPhoneVC {
                     self.flagView.autoAlignAxis(toSuperviewAxis: .horizontal)
                     
                     self.selectCountryView.addSubview(self.countryNameLabel)
-                    self.countryNameLabel.autoPinEdge(.leading, to: .trailing, of: self.flagView, withOffset: 10)
+                    self.countryNameLabel.autoPinEdge(.leading, to: .trailing, of: self.flagView, withOffset: 16)
+                    self.countryNameLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
                     self.countryNameLabel.text = name
                 }
             })

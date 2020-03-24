@@ -58,6 +58,7 @@ class BaseSignUpVC: BaseViewController {
     lazy var nextButton: CommunButton = {
         let button = CommunButton.default(height: 56, label: "next".localized().uppercaseFirst, cornerRadius: 8, isHuggingContent: false, isDisableGrayColor: true)
         button.autoSetDimension(.width, toSize: 290)
+        button.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
         return button
     }()
     

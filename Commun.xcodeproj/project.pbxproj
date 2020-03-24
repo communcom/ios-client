@@ -431,6 +431,7 @@
 		BCCE66922428AA08004F47DC /* UITextField+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE66912428AA08004F47DC /* UITextField+PureLayout.swift */; };
 		BCCE66982429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */; };
 		BCCE669A2429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */; };
+		BCCE669C2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE669B2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift */; };
 		BCD00FB42373C8BD004A3952 /* LeaderCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB32373C8BD004A3952 /* LeaderCollectionCell.swift */; };
 		BCD00FB62373D280004A3952 /* CommunityMembersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */; };
 		BCD00FB82373D78D004A3952 /* CommunityMembersVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FB72373D78D004A3952 /* CommunityMembersVC+Binding.swift */; };
@@ -955,6 +956,7 @@
 		BCCE66912428AA08004F47DC /* UITextField+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+PureLayout.swift"; sourceTree = "<group>"; };
 		BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUpWithPhoneVC+Location.swift"; sourceTree = "<group>"; };
 		BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUpWithPhoneVC+Binding.swift"; sourceTree = "<group>"; };
+		BCCE669B2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SingUpWithPhoneVC+Actions.swift"; sourceTree = "<group>"; };
 		BCD00FB32373C8BD004A3952 /* LeaderCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderCollectionCell.swift; sourceTree = "<group>"; };
 		BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMembersHeaderView.swift; sourceTree = "<group>"; };
 		BCD00FB72373D78D004A3952 /* CommunityMembersVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityMembersVC+Binding.swift"; sourceTree = "<group>"; };
@@ -1650,6 +1652,7 @@
 				BCCE668F2428A9B8004F47DC /* SignUpWithPhoneVC.swift */,
 				BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */,
 				BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */,
+				BCCE669B2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift */,
 				575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */,
 			);
 			path = SignUpMethodsVCs;
@@ -3277,6 +3280,7 @@
 				BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
 				AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */,
+				BCCE669C2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift in Sources */,
 				BC8F815323E27ECE0024C04A /* BuyCommunVC.swift in Sources */,
 				BC384F1E23862FBC0021A2A9 /* CommunityPageVC+Binding.swift in Sources */,
 				BCD01A4523F66311003B0E1E /* CommunityPageVCType.swift in Sources */,
