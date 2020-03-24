@@ -51,6 +51,8 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     override func setUp() {
         super.setUp()
         titleLabel.text = "create Password".localized().uppercaseFirst
+        titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
+        
         AnalyticsManger.shared.openEnterPassword()
         // text field
         scrollView.contentView.addSubview(textField)

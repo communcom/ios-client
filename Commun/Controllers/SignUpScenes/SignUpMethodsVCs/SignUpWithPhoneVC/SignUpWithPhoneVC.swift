@@ -42,9 +42,6 @@ class SignUpWithPhoneVC: BaseSignUpVC, SignUpRouter {
         super.setUp()
         AnalyticsManger.shared.registrationOpenScreen(2)
         
-        // override font size
-        titleLabel.font = .systemFont(ofSize: 34, weight: .bold)
-        
         // get location
         updateLocation()
     }
