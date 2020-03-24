@@ -30,12 +30,6 @@ let controllerContainer: Container = {
     })
     
     // Authorization scene
-    
-    container.register(SelectCountryVC.self, factory: { _ in
-        let vc = SelectCountryVC.instanceController(fromStoryboard: "SelectCountryVC", withIdentifier: "SelectCountryVC") as! SelectCountryVC
-        return vc
-    })
-    
     container.register(ConfirmUserVC.self, factory: { _ in
         let vc = ConfirmUserVC.instanceController(fromStoryboard: "ConfirmUserVC", withIdentifier: "ConfirmUserVC") as! ConfirmUserVC
         return vc

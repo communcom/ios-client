@@ -113,13 +113,8 @@
 		5721AE41226E543E00133BFF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5721AE40226E543E00133BFF /* WebKit.framework */; };
 		5721E87122650AC0003BE04B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5721E87022650AC0003BE04B /* StringExtension.swift */; };
 		572517322243935C0033125C /* ControllerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572517312243935C0033125C /* ControllerContainer.swift */; };
-		575945A122607F1F004041C9 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5759459F22607F1F004041C9 /* CountryCell.swift */; };
-		575945A222607F1F004041C9 /* CountryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 575945A022607F1F004041C9 /* CountryCell.xib */; };
 		575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECAB226066F800A7EC2D /* FormTextField.swift */; };
 		575AECAE22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */; };
-		575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECB022606F6600A7EC2D /* SelectCountryVC.swift */; };
-		575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECB222606F7100A7EC2D /* SelectCountryViewModel.swift */; };
-		575AECB522606FA600A7EC2D /* SelectCountryVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 575AECB422606FA600A7EC2D /* SelectCountryVC.storyboard */; };
 		576DC921223E42C800EDED41 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC920223E42C800EDED41 /* UIViewController+Extensions.swift */; };
 		57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1A2240DB9400338FD5 /* NetworkService.swift */; };
 		57840A202240DDEB00338FD5 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1F2240DDEB00338FD5 /* Container.swift */; };
@@ -307,6 +302,10 @@
 		BC597A8C238D09C400103F4F /* FTUECommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */; };
 		BC597A8E238D0CEC00103F4F /* FTUEChosenCommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A8D238D0CEC00103F4F /* FTUEChosenCommunityCell.swift */; };
 		BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A93238D1C6100103F4F /* AuthorizeOnWebVC.swift */; };
+		BC5A34852429BDB5001C5054 /* CountriesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34842429BDB5001C5054 /* CountriesVC.swift */; };
+		BC5A34882429C066001C5054 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34862429C065001C5054 /* CountryCell.swift */; };
+		BC5A34892429C066001C5054 /* CountryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC5A34872429C066001C5054 /* CountryCell.xib */; };
+		BC5A348C2429C0DA001C5054 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A348B2429C0DA001C5054 /* Country.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -636,13 +635,8 @@
 		5721AE40226E543E00133BFF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5721E87022650AC0003BE04B /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		572517312243935C0033125C /* ControllerContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerContainer.swift; sourceTree = "<group>"; };
-		5759459F22607F1F004041C9 /* CountryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
-		575945A022607F1F004041C9 /* CountryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryCell.xib; sourceTree = "<group>"; };
 		575AECAB226066F800A7EC2D /* FormTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextField.swift; sourceTree = "<group>"; };
 		575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithPhoneViewModel.swift; sourceTree = "<group>"; };
-		575AECB022606F6600A7EC2D /* SelectCountryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCountryVC.swift; sourceTree = "<group>"; };
-		575AECB222606F7100A7EC2D /* SelectCountryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCountryViewModel.swift; sourceTree = "<group>"; };
-		575AECB422606FA600A7EC2D /* SelectCountryVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SelectCountryVC.storyboard; sourceTree = "<group>"; };
 		576DC920223E42C800EDED41 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		57840A1A2240DB9400338FD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		57840A1F2240DDEB00338FD5 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
@@ -832,6 +826,10 @@
 		BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC597A8D238D0CEC00103F4F /* FTUEChosenCommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUEChosenCommunityCell.swift; sourceTree = "<group>"; };
 		BC597A93238D1C6100103F4F /* AuthorizeOnWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeOnWebVC.swift; sourceTree = "<group>"; };
+		BC5A34842429BDB5001C5054 /* CountriesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesVC.swift; sourceTree = "<group>"; };
+		BC5A34862429C065001C5054 /* CountryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
+		BC5A34872429C066001C5054 /* CountryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryCell.xib; sourceTree = "<group>"; };
+		BC5A348B2429C0DA001C5054 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -1440,7 +1438,6 @@
 				5725173A2243E4510033125C /* PostPageVC */,
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
 				BC561E7E238B76AD004C53EB /* ReportVCs */,
-				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
 				57FB179E224C077300563BF7 /* SignInVC */,
 				3B986B6322CE4B8100C1E985 /* SignUpScenes */,
 				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
@@ -1472,40 +1469,12 @@
 			path = PostPageVC;
 			sourceTree = "<group>";
 		};
-		5759459E22607F07004041C9 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				575945A322607F23004041C9 /* CountryCell */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		575945A322607F23004041C9 /* CountryCell */ = {
-			isa = PBXGroup;
-			children = (
-				5759459F22607F1F004041C9 /* CountryCell.swift */,
-				575945A022607F1F004041C9 /* CountryCell.xib */,
-			);
-			path = CountryCell;
-			sourceTree = "<group>";
-		};
 		575AECAA226066F000A7EC2D /* FormTextField */ = {
 			isa = PBXGroup;
 			children = (
 				575AECAB226066F800A7EC2D /* FormTextField.swift */,
 			);
 			path = FormTextField;
-			sourceTree = "<group>";
-		};
-		575AECAF22606F5200A7EC2D /* SelectCountryVC */ = {
-			isa = PBXGroup;
-			children = (
-				5759459E22607F07004041C9 /* Cell */,
-				575AECB222606F7100A7EC2D /* SelectCountryViewModel.swift */,
-				575AECB022606F6600A7EC2D /* SelectCountryVC.swift */,
-				575AECB422606FA600A7EC2D /* SelectCountryVC.storyboard */,
-			);
-			path = SelectCountryVC;
 			sourceTree = "<group>";
 		};
 		576DC917223E41CA00EDED41 /* FeedPageVC */ = {
@@ -2246,6 +2215,25 @@
 			path = ChooseCommunities;
 			sourceTree = "<group>";
 		};
+		BC5A34832429BD90001C5054 /* SelectCountryVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC5A348A2429C06C001C5054 /* Subviews */,
+				BC5A34842429BDB5001C5054 /* CountriesVC.swift */,
+				BC5A348B2429C0DA001C5054 /* Country.swift */,
+			);
+			path = SelectCountryVC;
+			sourceTree = "<group>";
+		};
+		BC5A348A2429C06C001C5054 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BC5A34862429C065001C5054 /* CountryCell.swift */,
+				BC5A34872429C066001C5054 /* CountryCell.xib */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		BC619B0F237268240005BB94 /* CommunitiesVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -2681,6 +2669,7 @@
 		BCCE669D2429B843004F47DC /* SignUpWithPhoneVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC5A34832429BD90001C5054 /* SelectCountryVC */,
 				BCCE668F2428A9B8004F47DC /* SignUpWithPhoneVC.swift */,
 				BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */,
 				BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */,
@@ -2920,12 +2909,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1C3712C2383D0F3000BAE2F /* ProfileEdit.storyboard in Resources */,
-				575945A222607F1F004041C9 /* CountryCell.xib in Resources */,
 				BC016D47235DA0D400F1319F /* PlaceholderPostCell.xib in Resources */,
 				57FB179C224BFBD700563BF7 /* README.md in Resources */,
 				BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */,
 				3B9BEB3F2300EC9C003C70B3 /* EmptyView.xib in Resources */,
-				575AECB522606FA600A7EC2D /* SelectCountryVC.storyboard in Resources */,
 				3B77383923335829000965ED /* image-not-available.jpg in Resources */,
 				B1D1CF9922F8A28A0071F1B6 /* InfoPlist.strings in Resources */,
 				AC8C57C1238D494D00B0D260 /* InstagramView.xib in Resources */,
@@ -2941,6 +2928,7 @@
 				BC3694ED236979A700B2E078 /* ProfilePageVC.storyboard in Resources */,
 				3B8DDF5E234B122500B213F0 /* colorPalette.plist in Resources */,
 				BC40719A23CEF801000027A3 /* PlaceholderNotificationCell.xib in Resources */,
+				BC5A34892429C066001C5054 /* CountryCell.xib in Resources */,
 				BCF74A6523618BA800B91089 /* ResponseAPIContentGetCommunity.json in Resources */,
 				B1AF88B12415FE9D00330352 /* Localizable.strings in Resources */,
 				57FB179B224BFBD700563BF7 /* LICENSE in Resources */,
@@ -3164,6 +3152,7 @@
 				BC74F503237957790018DB8E /* CommentsVC+CommentCellDelegate.swift in Sources */,
 				3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */,
 				3B5CB30322A56BD500757533 /* UITapGestureRecognizer.swift in Sources */,
+				BC5A34882429C066001C5054 /* CountryCell.swift in Sources */,
 				BC3AD9DC23838E920026EAB4 /* CommentFormViewModel.swift in Sources */,
 				3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */,
 				BC3694FB23699C0F00B2E078 /* BasicEditorVC+Actions.swift in Sources */,
@@ -3187,7 +3176,6 @@
 				BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */,
 				BCCE669A2429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift in Sources */,
 				BC7D6090237BF764007D8C1A /* BlacklistViewModel.swift in Sources */,
-				575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */,
 				BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */,
 				BC016D50235EA23C00F1319F /* PostsViewController.swift in Sources */,
 				BC016D54235EA32600F1319F /* PostsViewModel.swift in Sources */,
@@ -3333,6 +3321,7 @@
 				BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */,
 				BC69F7D1236FD1690097F870 /* NotificationSettingsView.swift in Sources */,
 				BC7D608A237BF3F1007D8C1A /* MyProfileBlacklistVC.swift in Sources */,
+				BC5A34852429BDB5001C5054 /* CountriesVC.swift in Sources */,
 				BC8F815723E27ECE0024C04A /* WalletConvertViewModel.swift in Sources */,
 				BC40719E23CF0137000027A3 /* NotificationsListFetcher.swift in Sources */,
 				BCCE66922428AA08004F47DC /* UITextField+PureLayout.swift in Sources */,
@@ -3490,7 +3479,6 @@
 				BC22BBD2236C213D00F40658 /* SelectLanguageVC.swift in Sources */,
 				BC4F9343240E60AD00BB935F /* UserProfilePageVC+UITableViewDelegate.swift in Sources */,
 				BCD01A0423F65231003B0E1E /* UINavigationController.swift in Sources */,
-				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				BC472D9623A3755C00822371 /* CardPresentationController.swift in Sources */,
 				BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */,
 				BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */,
@@ -3533,12 +3521,12 @@
 				BC8F815623E27ECE0024C04A /* WalletSellCommunVC.swift in Sources */,
 				B101CB6B23E4634900269253 /* ShareExtensionData.swift in Sources */,
 				BC8F814223E27ECE0024C04A /* WalletCarousel.swift in Sources */,
-				575945A122607F1F004041C9 /* CountryCell.swift in Sources */,
 				BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */,
 				3BF381812331D9CD00C02123 /* URL.swift in Sources */,
 				BC3694EF2369850100B2E078 /* EditorVC.swift in Sources */,
 				AC6A7CBA23FC4C9A004CA486 /* DeviceScreen.swift in Sources */,
 				BCD01A9723FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift in Sources */,
+				BC5A348C2429C0DA001C5054 /* Country.swift in Sources */,
 				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				BC8F814523E27ECE0024C04A /* WalletTableHeaderView.swift in Sources */,
 				BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */,
