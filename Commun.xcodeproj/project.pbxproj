@@ -1649,11 +1649,7 @@
 		5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */ = {
 			isa = PBXGroup;
 			children = (
-				BCCE668F2428A9B8004F47DC /* SignUpWithPhoneVC.swift */,
-				BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */,
-				BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */,
-				BCCE669B2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift */,
-				575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */,
+				BCCE669D2429B843004F47DC /* SignUpWithPhoneVC */,
 			);
 			path = SignUpMethodsVCs;
 			sourceTree = "<group>";
@@ -2680,6 +2676,18 @@
 				BCCE668A2428A64B004F47DC /* PasswordConstraintView.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		BCCE669D2429B843004F47DC /* SignUpWithPhoneVC */ = {
+			isa = PBXGroup;
+			children = (
+				BCCE668F2428A9B8004F47DC /* SignUpWithPhoneVC.swift */,
+				BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */,
+				BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */,
+				BCCE669B2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift */,
+				575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */,
+			);
+			path = SignUpWithPhoneVC;
 			sourceTree = "<group>";
 		};
 		BCD00FB22373C8A4004A3952 /* Subviews */ = {
