@@ -74,7 +74,6 @@ class BaseSignUpVC: BaseViewController {
         view.addSubview(titleLabel)
         switch UIDevice.current.screenType {
         case .iPhones_5_5s_5c_SE:
-            titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
             titleLabel.autoPinEdge(.leading, to: .trailing, of: backButton, withOffset: 24)
             titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
         default:

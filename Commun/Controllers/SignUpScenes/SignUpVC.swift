@@ -69,9 +69,6 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         super.setUp()
         AnalyticsManger.shared.openRegistrationSelection()
 
-        // override font size
-        titleLabel.font = .systemFont(ofSize: 34, weight: .bold)
-
         AnalyticsManger.shared.registrationOpenScreen(0)
         // set up stack view
         for method in methods {
