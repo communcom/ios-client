@@ -68,13 +68,4 @@ extension EditorVC {
             appendTool(tool)
         }
     }
-    
-    // MARK: - tools
-    func hideKeyboard() {
-        view.endEditing(true)
-    }
-    
-    @objc func addArticle() {
-        // for overriding in BasicEditorVC
-    }
 }

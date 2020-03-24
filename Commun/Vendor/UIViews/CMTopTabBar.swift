@@ -25,7 +25,7 @@ class CMTopTabBar: MyView {
     var selectedIndex: BehaviorRelay<Int>
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(axis: .vertical, contentInset: contentInset)
+    lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .horizontal, contentInset: contentInset)
     
     // MARK: - Init
     init(height: CGFloat, labels: [String], selectedIndex: Int = 0, spacing: CGFloat = 5, contentInset: UIEdgeInsets = .zero) {

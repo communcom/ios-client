@@ -9,10 +9,10 @@
 import Foundation
 import CyberSwift
 
-class ReportVC: BaseVerticalStackViewController {
+class ReportVC: VerticalActionsVC {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
-    let sendButton = CommunButton.default(height: .adaptive(height: 50.0), label: "send".localized().uppercaseFirst, isDisabled: true)
+    let sendButton = CommunButton.default(height: 50, label: "send".localized().uppercaseFirst, isDisableGrayColor: true, isDisabled: true)
 
     // MARK: - Properties
     var choosedReasons: [BlockchainManager.ReportReason] {
@@ -21,7 +21,6 @@ class ReportVC: BaseVerticalStackViewController {
     }
     
     var otherReason: String?
-    
     
     // MARK: - Initializers
     init() {
@@ -33,7 +32,6 @@ class ReportVC: BaseVerticalStackViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     // MARK: - Methods
     override func viewDidLayoutSubviews() {
@@ -47,10 +45,6 @@ class ReportVC: BaseVerticalStackViewController {
         title = "please select a reason".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
         closeButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
-    }
-    
-    override func layout() {
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
         
         let alertView = UIView(height: 62, backgroundColor: .white, cornerRadius: 10)
         scrollView.contentView.addSubview(alertView)
@@ -79,7 +73,12 @@ class ReportVC: BaseVerticalStackViewController {
         sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
     }
     
-    override func viewForAction(_ action: BaseVerticalStackViewController.Action) -> UIView {
+    override func setUpStackView() {
+        scrollView.contentView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
+    }
+    
+    override func viewForAction(_ action: VerticalActionsVC.Action) -> UIView {
         let actionView = ReportOptionView(height: 58, backgroundColor: .white)
         actionView.checkBox.isUserInteractionEnabled = false
         actionView.titleLabel.text = action.title
@@ -121,7 +120,6 @@ class ReportVC: BaseVerticalStackViewController {
                         
         return true
     }
-
     
     // MARK: - Actions
     @objc func sendButtonDidTouch() {

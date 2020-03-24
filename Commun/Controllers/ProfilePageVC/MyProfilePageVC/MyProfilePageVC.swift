@@ -23,7 +23,7 @@ class MyProfilePageVC: UserProfilePageVC {
     
     // MARK: - Initializers
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
-        MyProfilePageViewModel(profileId: userId)
+        MyProfilePageViewModel(userId: userId)
     }
     
     init() {
@@ -33,7 +33,7 @@ class MyProfilePageVC: UserProfilePageVC {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+        
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
@@ -75,8 +75,7 @@ class MyProfilePageVC: UserProfilePageVC {
             .map { $0 < -43 }
             .subscribe(onNext: { showNavBar in
                 self.optionsButton.tintColor = !showNavBar ? .black : .white
-                self.title = !showNavBar ? self.userName : nil
-//                self.navigationController?.navigationBar.isTranslucent = showNavBar
+                self.title = !showNavBar ? self.username : nil
             })
             .disposed(by: disposeBag)
     }
@@ -107,13 +106,13 @@ class MyProfilePageVC: UserProfilePageVC {
         userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
 
-        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.userId ?? "")", textSize: 12, textColor: .appMainColor)
+        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.userId ?? "")", textSize: 12, weight: .semibold, textColor: .appMainColor)
         headerView.addSubview(userIdLabel)
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
-        showCommunActionSheet(style: .profile, headerView: headerView, actions: [
+        showCommunActionSheet(headerView: headerView, actions: [
             // remove from MVP
 //            CommunActionSheet.Action(title: "saved".localized().uppercaseFirst, icon: UIImage(named: "profile_options_saved"), handle: {
 //                #warning("change filter")
@@ -139,28 +138,12 @@ class MyProfilePageVC: UserProfilePageVC {
             }),
             CommunActionSheet.Action(title: "settings".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_settings"),
+                                     style: .profile,
                                      marginTop: 14,
                                      handle: {
                                         let vc = MyProfileSettingsVC()
                                         self.show(vc, sender: self)
             })
-//            CommunActionSheet.Action(title: "logout".localized().uppercaseFirst, icon: nil, handle: {
-//                self.showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
-//
-//                    if index == 0 {
-//                        self.navigationController?.showIndetermineHudWithMessage("logging out".localized().uppercaseFirst)
-//                        RestAPIManager.instance.logout()
-//                            .subscribe(onCompleted: {
-//                                self.navigationController?.hideHud()
-//                                AppDelegate.reloadSubject.onNext(true)
-//                            }, onError: { (error) in
-//                                self.navigationController?.hideHud()
-//                                self.navigationController?.showError(error)
-//                            })
-//                            .disposed(by: self.disposeBag)
-//                    }
-//                }
-//            }, tintColor: UIColor(hexString: "#ED2C5B")!, marginTop: 14)
         ]) {
             
         }

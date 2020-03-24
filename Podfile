@@ -27,7 +27,8 @@ def common_pods_commun
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
-     
+  pod 'AppsFlyerFramework'
+  
   pod 'PureLayout'
   pod 'Alamofire'
   pod 'Swinject'
@@ -38,9 +39,9 @@ def common_pods_commun
   
   pod "InitialsImageView"
   
-  pod 'SwifterSwift/SwiftStdlib'   # Standard Library Extensions
-  pod 'SwifterSwift/Foundation'    # Foundation Extensions
-  pod 'SwifterSwift/UIKit'         # UIKit Extensions
+  pod 'SwifterSwift/SwiftStdlib', :git => "https://github.com/communcom/SwifterSwift.git"   # Standard Library Extensions
+  pod 'SwifterSwift/Foundation', :git => "https://github.com/communcom/SwifterSwift.git"    # Foundation Extensions
+  pod 'SwifterSwift/UIKit', :git => "https://github.com/communcom/SwifterSwift.git"         # UIKit Extensions
   
   pod 'Segmentio'
   
@@ -58,7 +59,7 @@ def common_pods_commun
   
   pod 'THPinViewController', :git => "https://github.com/communcom/THPinViewController.git", :branch => "commun"
   
-  pod 'ImageViewer.swift'
+  pod 'ImageViewer.swift', :git => "https://github.com/communcom/ImageViewer.swift.git"
   pod 'SDURLCache', '~> 1.3'
   pod 'UITextView+Placeholder'
   
@@ -69,6 +70,11 @@ def common_pods_commun
   pod 'CircularCarousel'
   pod 'NotificationView'
 
+  #Social Login
+  pod 'FBSDKLoginKit', '6.0.0'
+  pod 'FBSDKCoreKit', '6.0.0'
+  pod 'GoogleSignIn', '5.0.2'
+
 end
 
 def cyberswift_common_pods
@@ -78,7 +84,6 @@ def cyberswift_common_pods
   
   pod 'Checksum'
   pod 'Locksmith'
-  pod 'SwiftTheme'
   pod 'CryptoSwift'
   pod 'secp256k1.swift'
   pod 'Localize-Swift', '~> 2.0'

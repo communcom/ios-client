@@ -14,6 +14,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
     let viewModel = SetUserViewModel()
     
     // MARK: - Subviews
+    lazy var backButton: UIButton = .back()
     lazy var textField: UITextField = {
         let tf = UITextField(height: 56 * Config.heightRatio, backgroundColor: .f3f5fa, cornerRadius: 12 * Config.heightRatio)
         tf.font = .systemFont(ofSize: 17 * Config.heightRatio)
@@ -30,16 +31,20 @@ class SetUserVC: BaseViewController, SignUpRouter {
     lazy var nextButton = StepButton(height: 56, label: "next".localized().uppercaseFirst, labelFont: UIFont.boldSystemFont(ofSize: 17 * Config.heightRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 8)
     
     // MARK: - Methods
+    
     override func setUp() {
         super.setUp()
+        AnalyticsManger.shared.registrationOpenScreen(4)
         self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.hidesBackButton = true
+        // backButton
+        setLeftNavBarButton(with: backButton)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         
         // label
         let label = UILabel.with(text: "create your username".localized().uppercaseFirst, textSize: 17)
         view.addSubview(label)
-        label.autoPinTopAndLeadingToSuperViewSafeArea(inset: 16)
+        label.autoPinTopAndLeadingToSuperViewSafeArea(inset: 20)
         
         // textfield
         view.addSubview(textField)
@@ -80,7 +85,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
         
         // if username has already been set
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
-            handleToBlockchainStep()
+            signUpNextStep()
         }
     }
     
@@ -105,6 +110,10 @@ class SetUserVC: BaseViewController, SignUpRouter {
             .disposed(by: disposeBag)
     }
     
+    @objc func backButtonTapped() {
+        resetSignUpProcess()
+    }
+    
     @objc func infoButtonTapped() {
         AnalyticsManger.shared.userNameHelp()
         let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 386.0))))
@@ -116,11 +125,6 @@ class SetUserVC: BaseViewController, SignUpRouter {
     }
     
     @objc func buttonNextDidTouch(_ sender: Any) {
-        guard KeychainManager.currentUser()?.phoneNumber != nil else {
-            resetSignUpProcess()
-            return
-        }
-        
         guard let userName = textField.text,
             viewModel.isUserNameValid(userName) else {
                 return
@@ -131,29 +135,17 @@ class SetUserVC: BaseViewController, SignUpRouter {
         self.view.endEditing(true)
         
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
-            handleToBlockchainStep()
+            signUpNextStep()
             return
         }
         
         showIndetermineHudWithMessage("setting username".localized().uppercaseFirst + "...")
         
-        RestAPIManager.instance.setUserName(userName).map {_ in ()}
-            .catchError({ error in
-                if let error = error as? CMError {
-                    if error.message == ErrorMessage.invalidStepTaken.rawValue,
-                        Config.currentUser?.registrationStep == .toBlockChain
-                    {
-                        return .just(())
-                    }
-                }
-                throw error
-            })
-            .flatMapCompletable({ (_) -> Completable in
-                self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
-                return RestAPIManager.instance.toBlockChain()
-            })
+        RestAPIManager.instance.setUserName(userName)
+            .flatMapToCompletable()
             .subscribe(onCompleted: {
-                AuthorizationManager.shared.forceReAuthorize()
+                self.hideHud()
+                self.signUpNextStep()
             }, onError: {error in
                 self.hideHud()
                 self.handleSignUpError(error: error)
@@ -163,18 +155,5 @@ class SetUserVC: BaseViewController, SignUpRouter {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
-    }
-    
-    func handleToBlockchainStep() {
-        self.textField.text = KeychainManager.currentUser()?.name
-        self.showIndetermineHudWithMessage("saving to blockchain")
-        RestAPIManager.instance.toBlockChain()
-            .subscribe(onCompleted: {
-                AuthorizationManager.shared.forceReAuthorize()
-            }) { (error) in
-                self.hideHud()
-                self.handleSignUpError(error: error)
-            }
-            .disposed(by: self.disposeBag)
     }
 }

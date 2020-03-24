@@ -14,6 +14,33 @@ class CommunActionSheet: SwipeDownDismissViewController {
         case `default`
         case profile
         case follow
+        
+        var defaultMargin: CGFloat {
+            switch self {
+            case .default, .follow:
+                return 16
+            case .profile:
+                return 10
+            }
+        }
+        
+        var actionViewHeight: CGFloat {
+            switch self {
+            case .default, .follow:
+                return 50
+            case .profile:
+                return 65
+            }
+        }
+        
+        var actionViewSeparatorSpace: CGFloat {
+            switch self {
+            case .default, .follow:
+                return 8
+            case .profile:
+                return 2
+            }
+        }
     }
     
     struct Action {
@@ -31,35 +58,9 @@ class CommunActionSheet: SwipeDownDismissViewController {
     }
     
     // MARK: - Constants
-    var defaultMargin: CGFloat {
-        switch style {
-        case .default, .follow:
-            return 16
-        case .profile:
-            return 10
-        }
-    }
-    
     let buttonSize: CGFloat = 30
     var headerHeight: CGFloat = 40
     let headerToButtonsSpace: CGFloat = 23
-    var actionViewHeight: CGFloat {
-        switch style {
-        case .default, .follow:
-            return 50
-        case .profile:
-            return 65
-        }
-    }
-    
-    var actionViewSeparatorSpace: CGFloat {
-        switch style {
-        case .default, .follow:
-            return 8
-        case .profile:
-            return 2
-        }
-    }
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 24.0), height: .adaptive(height: 24.0))))
@@ -71,9 +72,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
         return activity
     }()
 
-    
     // MARK: - Properties
-    var style: Style
     var backgroundColor = UIColor(hexString: "#F7F7F9")
     var actions: [Action]?
 
@@ -81,14 +80,16 @@ class CommunActionSheet: SwipeDownDismissViewController {
     var textAlignment: NSTextAlignment = .center
 
     var height: CGFloat {
-        let actionsCount = actions?.count ?? 0
+        guard let actions = actions, actions.count > 0 else {return 0}
         
-        let actionButtonsHeight = CGFloat(actionsCount) * (actionViewSeparatorSpace + actionViewHeight)
+        let buttonsHeight = actions.reduce(0) { (result, action) -> CGFloat in
+            result + action.style.actionViewSeparatorSpace + action.style.actionViewHeight
+        }
         
-        return defaultMargin
+        return actions.first!.style.defaultMargin
             + headerHeight
             + headerToButtonsSpace
-            + actionButtonsHeight
+            + buttonsHeight
             + (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
     }
     
@@ -119,8 +120,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
     }()
     
     // MARK: - Initializer
-    init(style: Style = .default) {
-        self.style = style
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -183,26 +183,26 @@ class CommunActionSheet: SwipeDownDismissViewController {
             
             view.addSubview(actionView)
             
-            let topInset: CGFloat = defaultMargin + headerHeight + headerToButtonsSpace + CGFloat(index) * (actionViewSeparatorSpace + actionViewHeight) + action.marginTop
+            let topInset: CGFloat = action.style.defaultMargin + headerHeight + headerToButtonsSpace + CGFloat(index) * (action.style.actionViewSeparatorSpace + action.style.actionViewHeight) + action.marginTop
             
             actionView.autoPinEdge(toSuperviewEdge: .top, withInset: topInset)
-            actionView.autoSetDimension(.height, toSize: actionViewHeight)
-            actionView.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultMargin)
-            actionView.autoPinEdge(toSuperviewEdge: .trailing, withInset: defaultMargin)
+            actionView.autoSetDimension(.height, toSize: action.style.actionViewHeight)
+            actionView.autoPinEdge(toSuperviewEdge: .leading, withInset: action.style.defaultMargin)
+            actionView.autoPinEdge(toSuperviewEdge: .trailing, withInset: action.style.defaultMargin)
             
             // icon
             let iconImageView = UIImageView(forAutoLayout: ())
            
-            if style == .default || style == .follow {
+            if action.style == .default || action.style == .follow {
                 iconImageView.tintColor = action.tintColor
             }
             
             iconImageView.image = action.icon
             actionView.addSubview(iconImageView)
             
-            switch style {
+            switch action.style {
             case .default, .follow:
-                iconImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: defaultMargin)
+                iconImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: action.style.defaultMargin)
                 iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
                 iconImageView.autoSetDimensions(to: CGSize(width: 24, height: 24))
             
@@ -217,11 +217,11 @@ class CommunActionSheet: SwipeDownDismissViewController {
             
             actionView.addSubview(titleLabel)
             
-            switch style {
+            switch action.style {
             case .default, .follow:
-                titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultMargin)
+                titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: action.style.defaultMargin)
                 titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-                titleLabel.autoPinEdge(.trailing, to: .leading, of: iconImageView, withOffset: -defaultMargin)
+                titleLabel.autoPinEdge(.trailing, to: .leading, of: iconImageView, withOffset: -action.style.defaultMargin)
                 
                 if action.style == .follow {
                     titleLabel.tag = 777
@@ -229,7 +229,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
                 }
             
             case .profile:
-                titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
+                titleLabel.font = .systemFont(ofSize: 17, weight: .medium)
                 titleLabel.autoPinEdge(.leading, to: .trailing, of: iconImageView, withOffset: 10)
                 titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
             }
@@ -290,7 +290,6 @@ class CommunActionSheet: SwipeDownDismissViewController {
 
         iconImageView.setImage(image)
     }
-    
     
     // MARK: - Actions
     @objc func closeButtonDidTouch(_ sender: Any) {

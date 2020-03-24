@@ -18,7 +18,7 @@ class SignInVC: BaseViewController {
     let viewModel = SignInViewModel()
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(axis: .horizontal)
+    lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     
     lazy var loginTextField: UITextField = {
         let textField = createTextField()
@@ -157,14 +157,14 @@ class SignInVC: BaseViewController {
     }
     
     func validate(cred: LoginCredential) -> Bool {
-        return cred.login.count > 3 && cred.key.count > 10
+        return cred.login.count > 3 && cred.key.count >= AuthManager.minPasswordLength
     }
     
     // MARK: - Actions
     @objc func signUpButtonDidTouch() {
         let nc = self.navigationController
         navigationController?.popViewController(animated: true, {
-            let signUpVC = controllerContainer.resolve(SignUpVC.self)!
+            let signUpVC = controllerContainer.resolve(SignUpWithPhoneVC.self)!
             nc?.pushViewController(signUpVC)
         })
     }
@@ -181,7 +181,7 @@ class SignInVC: BaseViewController {
             )
             .subscribe(onCompleted: {
                 AnalyticsManger.shared.signInStatus(success: true)
-                AuthorizationManager.shared.forceReAuthorize()
+                AuthManager.shared.reload()
             }, onError: { [weak self] (error) in
                 AnalyticsManger.shared.signInStatus(success: false)
                 self?.configure(signingIn: false)

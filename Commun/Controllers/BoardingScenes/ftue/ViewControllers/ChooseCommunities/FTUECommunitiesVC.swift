@@ -12,6 +12,7 @@ import RxSwift
 class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     // MARK: - Constants
     let bottomBarHeight: CGFloat = 114
+    let nextButtonImageName = "next-arrow"
     
     // MARK: - Properties
     lazy var headerView = UIView(forAutoLayout: ())
@@ -25,7 +26,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         return searchBar
     }()
     
-    lazy var nextButton = CommunButton.circle(size: 50, backgroundColor: .appMainColor, tintColor: .white, imageName: "next-arrow", imageEdgeInsets: UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 7))
+    lazy var nextButton = CommunButton.circle(size: 50, backgroundColor: .appMainColor, tintColor: .white, imageName: nextButtonImageName, imageEdgeInsets: UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 7))
     
     lazy var communitiesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -51,7 +52,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         return collectionView
     }()
     
-    let viewModel = FTUECommunitiesViewModel(type: .all)
+    let viewModel = FTUECommunitiesViewModel()
     let refreshControl = UIRefreshControl(forAutoLayout: ())
 
     // bottomBar

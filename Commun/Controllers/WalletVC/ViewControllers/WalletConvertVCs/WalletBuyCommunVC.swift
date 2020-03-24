@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class WalletBuyCommunVC: WalletConvertVC {
-    lazy var carousel = WalletCarouselWrapper(height: 50)
+    lazy var walletCarouselWrapper = WalletCarouselWrapper(height: 50)
     
     override func setUp() {
         super.setUp()
@@ -21,7 +21,7 @@ class WalletBuyCommunVC: WalletConvertVC {
         
         setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(pointsListButtonDidTouch))
 
-        carousel.scrollingHandler = { index in
+        walletCarouselWrapper.scrollingHandler = { index in
             self.currentBalance = self.viewModel.items.value[safe: index + 1]
         }
     }
@@ -32,32 +32,34 @@ class WalletBuyCommunVC: WalletConvertVC {
         viewModel.items
             .map {$0.filter {$0.symbol != Config.defaultSymbol}}
             .subscribe(onNext: { (items) in
-                self.carousel.balances = items
-                self.carousel.currentIndex = items.firstIndex(where: {$0.symbol == self.currentSymbol}) ?? 0
-                self.carousel.reloadData()
+                self.walletCarouselWrapper.balances = items
+                self.walletCarouselWrapper.currentIndex = items.firstIndex(where: {$0.symbol == self.currentSymbol}) ?? 0
+                self.walletCarouselWrapper.reloadData()
             })
             .disposed(by: disposeBag)
     }
     
     override func layoutCarousel() {
-        scrollView.addSubview(carousel)
-        carousel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
-        carousel.autoAlignAxis(toSuperviewAxis: .vertical)
+        scrollView.addSubview(walletCarouselWrapper)
+        walletCarouselWrapper.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+        walletCarouselWrapper.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        balanceNameLabel.autoPinEdge(.top, to: .bottom, of: carousel, withOffset: 20)
+        balanceNameLabel.autoPinEdge(.top, to: .bottom, of: walletCarouselWrapper, withOffset: 20)
     }
     
     override func setUpCommunBalance() {
         super.setUpCommunBalance()
         
         guard let balance = communBalance else {return}
+        
         buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
     }
     
     override func setUpCurrentBalance() {
         super.setUpCurrentBalance()
         
-        guard let balance = currentBalance else {return}
+        guard let balance = currentBalance else { return }
+        
         balanceNameLabel.text = balance.name
         valueLabel.text = balance.balanceValue.currencyValueFormatted
         convertSellLabel.text = "sell".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
@@ -155,6 +157,7 @@ class WalletBuyCommunVC: WalletConvertVC {
             let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue,
             value > 0
         else { return }
+       
         viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
     
@@ -185,6 +188,7 @@ class WalletBuyCommunVC: WalletConvertVC {
         let expectedValue = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue
         
         showIndetermineHudWithMessage("selling".localized().uppercaseFirst + " \(balance.symbol)")
+       
         BlockchainManager.instance.sellPoints(number: value, pointsCurrencyName: balance.symbol)
             .flatMapCompletable({ (transactionId) -> Completable in
                 self.hideHud()
@@ -231,5 +235,19 @@ class WalletBuyCommunVC: WalletConvertVC {
                 self?.showError(error)
             }
             .disposed(by: disposeBag)
+    }
+    
+    
+    // MARK: - Actions
+    @objc func pointsListButtonDidTouch() {
+        let vc = BalancesVC { balance in
+            self.currentBalance = balance
+                    
+            let balanceIndex = self.viewModel.items.value.firstIndex(of: balance) ?? 0
+            self.walletCarouselWrapper.scrollTo(itemAtIndex: balanceIndex == 0 ? 0 : balanceIndex - 1)
+        }
+        
+        let nc = BaseNavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
     }
 }

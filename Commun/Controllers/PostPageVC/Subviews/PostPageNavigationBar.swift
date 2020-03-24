@@ -16,7 +16,7 @@ class PostPageNavigationBar: MyView, CommunityController {
     var community: ResponseAPIContentGetCommunity?
     
     // MARK: - Subviews
-    lazy var backButton: UIButton = .back(tintColor: .a5a7bd)
+    lazy var backButton: UIButton = .back(tintColor: .a5a7bd, contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
     
     lazy var postMetaView = PostMetaView(height: 40)
     

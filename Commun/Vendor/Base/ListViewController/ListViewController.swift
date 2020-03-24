@@ -62,7 +62,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
             }
         )
         
-        dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
+        dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .top, reloadAnimation: .none)
 
         // pull to refresh
         setUpPullToRefresh()
@@ -207,6 +207,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     // MARK: - State handling
     func handleLoading() {
+        let notificationsLoadingFooterViewTag = ViewTag.notificationsLoadingFooterView.rawValue
         tableView.addLoadingFooterView(
             rowType: PlaceholderNotificationCell.self,
             tag: notificationsLoadingFooterViewTag,

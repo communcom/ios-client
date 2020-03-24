@@ -56,6 +56,13 @@ extension BasicEditorVC {
     
     func bindAttachments() {
         _viewModel.attachment
+            .do(onNext: { (attachment) in
+                if attachment != nil {
+                    DispatchQueue(label: "archiving").async {
+                        self.saveDraft()
+                    }
+                }
+            })
             .subscribe(onNext: { [weak self] (attachment) in
                 self?.attachmentView.removeSubviews()
                 

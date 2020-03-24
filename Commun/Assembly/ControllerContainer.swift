@@ -30,8 +30,8 @@ let controllerContainer: Container = {
     })
     
     // Authorization scene
-    container.register(SignUpVC.self, factory: { _ in
-        let vc = SignUpVC.instanceController(fromStoryboard: "SignUpVC", withIdentifier: "SignUpVC") as! SignUpVC
+    container.register(SignUpWithPhoneVC.self, factory: { _ in
+        let vc = SignUpWithPhoneVC.instanceController(fromStoryboard: "SignUpVC", withIdentifier: "SignUpWithPhoneVC") as! SignUpWithPhoneVC
         return vc
     })
     
@@ -52,27 +52,6 @@ let controllerContainer: Container = {
     
     container.register(EnableBiometricsVC.self, factory: {_ in
         let vc = EnableBiometricsVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "EnableBiometricsVC") as! EnableBiometricsVC
-        return vc
-    })
-    
-    container.register(KeysVC.self, factory: {_ in
-        let vc = KeysVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "KeysVC") as! KeysVC
-        return vc
-    })
-    
-    container.register(PickupAvatarVC.self, factory: { _ in
-        let vc = PickupAvatarVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "PickupAvatarVC") as! PickupAvatarVC
-        return vc
-    })
-    
-    container.register(CreateBioVC.self, factory: { _ in
-        let vc = CreateBioVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "CreateBioVC") as! CreateBioVC
-        return vc
-    })
-    
-    // TabBar
-    container.register(TabBarVC.self, factory: { _ in
-        let vc = TabBarVC()
         return vc
     })
     

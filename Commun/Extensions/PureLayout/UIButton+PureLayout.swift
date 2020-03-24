@@ -102,10 +102,10 @@ extension UIButton {
         return button
     }
 
-    static func close(size: CGFloat = 24, imageName: String = "close-x") -> UIButton {
-        let button = UIButton(width: size, height: size, backgroundColor: UIColor(hexString: "#F3F5FA"), cornerRadius: size / 2)
+    static func close(size: CGFloat = 24, imageName: String = "close-x", backgroundColor: UIColor = .f3f5fa, tintColor: UIColor = .appGrayColor) -> UIButton {
+        let button = UIButton(width: size, height: size, backgroundColor: backgroundColor, cornerRadius: size / 2)
         button.setImage(UIImage(named: imageName), for: .normal)
-        button.tintColor = .appGrayColor
+        button.tintColor = tintColor
         if size < 44 {
             button.touchAreaEdgeInsets = UIEdgeInsets(inset: (size - 44) / 2)
         }
@@ -123,11 +123,12 @@ extension UIButton {
         return button
     }
     
-    static func back(width: CGFloat = 40, height: CGFloat = 40, tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 30)) -> UIButton {
+    static func back(width: CGFloat = 43, height: CGFloat = 44, tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 31)) -> UIButton {
         let button = UIButton(width: width, height: height)
         button.tintColor = tintColor
-        button.setImage(UIImage(named: "back-button"), for: .normal)
-        button.touchAreaEdgeInsets = UIEdgeInsets(inset: -2)
+        button.setImage(UIImage(named: "left-arrow"), for: .normal)
+        button.contentEdgeInsets = contentInsets
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: 0, left: -9.5, bottom: 0, right: 0)
         return button
     }
     

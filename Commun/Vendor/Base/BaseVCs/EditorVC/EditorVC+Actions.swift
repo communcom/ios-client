@@ -16,4 +16,8 @@ extension EditorVC {
     @objc func send() {
         
     }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
+    }
 }

@@ -36,8 +36,13 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Methods
+    override func setUp() {
+        super.setUp()
+        refreshControl.subviews.first?.bounds.origin.y = -15
+    }
+
     override func setUpTableView() {
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.configureForAutoLayout()
@@ -180,7 +185,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
 
 extension DiscoveryAllVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 55
+        return 40
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -193,14 +198,12 @@ extension DiscoveryAllVC: UITableViewDelegate {
         
         let label = UILabel.with(text: dataSource.sectionModels[section].model.localized().uppercaseFirst, textSize: 15, weight: .semibold)
         headerView.addSubview(label)
-        label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        label.autoAlignAxis(toSuperviewAxis: .horizontal)
+        label.autoPinBottomAndLeadingToSuperView(inset: 5, xInset: 16)
         
         if dataSource.sectionModels[section].items.count == 5 {
             let seeAllLabel = UILabel.with(text: "see all".localized(), textSize: 15, weight: .semibold, textColor: .appMainColor)
             headerView.addSubview(seeAllLabel)
-            seeAllLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-            seeAllLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+            seeAllLabel.autoPinBottomAndTrailingToSuperView(inset: 5, xInset: 16)
             
             switch dataSource.sectionModels[section].model {
             case "communities":

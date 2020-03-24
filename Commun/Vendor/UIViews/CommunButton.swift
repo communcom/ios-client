@@ -15,7 +15,10 @@ class CommunButton: UIButton {
     
     var isDisabled: Bool = false {
         didSet {
-            alpha = isDisabled ? 0.5 : 1.0
+            if isDisableGrayColor {
+                backgroundColor = isDisabled ? .appGrayColor : .appMainColor
+            }
+            alpha = isDisabled ? 0.5 : 1
         }
     }
 
@@ -23,9 +26,8 @@ class CommunButton: UIButton {
         didSet {
             if isDisableGrayColor {
                 backgroundColor = isEnabled ? UIColor.appMainColor : .appGrayColor
-            } else {
-                alpha = isEnabled ? 1.0 : 0.5
             }
+            alpha = isEnabled ? 1.0 : 0.5
         }
     }
     
@@ -108,7 +110,6 @@ class CommunButton: UIButton {
         }
     }
 }
-
 
 extension Reactive where Base: CommunButton {
     /// Bindable sink for `disabled` property.

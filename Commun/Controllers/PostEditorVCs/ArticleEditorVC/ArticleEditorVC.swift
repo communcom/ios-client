@@ -39,23 +39,29 @@ class ArticleEditorVC: PostEditorVC {
     }
     
     override var isContentValid: Bool {
+        hintType = nil
+        
         let title = titleTextView.text.trimmed
         let content = contentTextView.text.trimmed
         
         // both title and content are not empty
         let titleAndContentAreNotEmpty = !title.isEmpty && !content.isEmpty
+        if !titleAndContentAreNotEmpty {hintType = .error("title and content must not be empty".localized().uppercaseFirst)}
         
         // title is not beyond limit
         let titleIsInsideLimit =
             (title.count >= self.titleMinLettersLimit) &&
                 (title.utf8.count <= self.titleBytesLimit)
+        if !titleIsInsideLimit {hintType = .error("title must less than \(titleMinLettersLimit) characters".localized().uppercaseFirst)}
         
         // content inside limit
         let contentInsideLimit = (content.count <= contentLettersLimit)
+        if !contentInsideLimit {hintType = .error("content must less than \(contentLettersLimit) characters".localized().uppercaseFirst)}
         
         // compare content
         var contentChanged = (title != viewModel.postForEdit?.document?.attributes?.title)
         contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+        if !contentChanged {hintType = .error("content wasn't changed".localized().uppercaseFirst)}
         
         // reassign result
         return super.isContentValid && titleAndContentAreNotEmpty && titleIsInsideLimit && contentInsideLimit && contentChanged

@@ -12,6 +12,7 @@ import CyberSwift
 import MBProgressHUD
 import ReCaptcha
 import SafariServices
+import StoreKit
 
 public let reCaptchaTag: Int = 777
 
@@ -32,7 +33,6 @@ extension UIViewController {
             return hintViewInstance
         }
     }
-    
 
     // MARK: - Custom Functions
     class func instanceController(fromStoryboard storyboard: String, withIdentifier identifier: String) -> UIViewController {
@@ -54,15 +54,14 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showCommunActionSheet(style: CommunActionSheet.Style = .default,
-                               headerView: UIView? = nil,
+    func showCommunActionSheet(headerView: UIView? = nil,
                                title: String? = nil,
                                titleFont: UIFont = .systemFont(ofSize: 15, weight: .semibold),
                                titleAlignment: NSTextAlignment = .left,
                                actions: [CommunActionSheet.Action],
                                completion: (() -> Void)? = nil) {
 
-        let actionSheet = CommunActionSheet(style: style)
+        let actionSheet = CommunActionSheet()
         actionSheet.title = title
         actionSheet.headerView = headerView
         actionSheet.actions = actions
@@ -137,7 +136,6 @@ extension UIViewController {
     }
     
     var isModal: Bool {
-        
         let presentingIsModal = presentingViewController != nil
         let presentingIsNavigation = navigationController?.presentingViewController?.presentedViewController == navigationController
         let presentingIsTabBar = tabBarController?.presentingViewController is UITabBarController
@@ -145,7 +143,7 @@ extension UIViewController {
         return presentingIsModal || presentingIsNavigation || presentingIsTabBar
     }
     
-    func showProfileWithUserId(_ userId: String) {
+    func showProfileWithUserId(_ userId: String?, username: String? = nil) {
         // if profile was opened, shake it off!!
 //        if let profileVC = self as? UserProfilePageVC, profileVC.userId == userId {
 //            profileVC.view.shake()
@@ -153,8 +151,8 @@ extension UIViewController {
 //        }
         
         // Open other user's profile
-        if userId != Config.currentUser?.id {
-            let profileVC = UserProfilePageVC(userId: userId)
+        if userId != Config.currentUser?.id && username != Config.currentUser?.name {
+            let profileVC = UserProfilePageVC(userId: userId, username: username)
             show(profileVC, sender: nil)
             return
         } else {
@@ -182,6 +180,7 @@ extension UIViewController {
             if let id = item.user?.userId {
                 showProfileWithUserId(id)
             }
+        
         case "upvote", "reply", "mention":
             switch item.entityType {
             case "post":
@@ -192,6 +191,7 @@ extension UIViewController {
                     let postVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
                     show(postVC, sender: self)
                 }
+            
             case "comment":
                 if let userId = item.comment?.parents?.post?.userId,
                     let permlink = item.comment?.parents?.post?.permlink,
@@ -200,9 +200,11 @@ extension UIViewController {
                     let postVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
                     show(postVC, sender: self)
                 }
+           
             default:
                 break
             }
+        
         case "transfer":
             if item.from?.username == nil {
                 if let id = item.community?.communityId {
@@ -220,8 +222,9 @@ extension UIViewController {
             
         case "reward":
             if let id = item.community?.communityId {
-                showOtherBalanceWalletVC(symbol: id)
+                showOtherBalanceWalletVC(symbol: id, shouldResetNavigationBarOnPush: true)
             }
+        
         default:
             break
         }
@@ -268,8 +271,8 @@ extension UIViewController {
             if path.count == 1 {
                 if path[0].starts(with: "@") {
                     // user's profile
-                    let userId = String(path[0].dropFirst())
-                    showProfileWithUserId(userId)
+                    let username = String(path[0].dropFirst())
+                    showProfileWithUserId(nil, username: username)
                     return
                 } else if !path[0].isEmpty {
                     // community
@@ -296,9 +299,18 @@ extension UIViewController {
                 return
             }
         }
-        
-        let safariVC = SFSafariViewController(url: url)
-        present(safariVC, animated: true, completion: nil)
+
+        var rightURL: URL? = url
+
+        if !(["http", "https"].contains(url.scheme?.lowercased() ?? "")) {
+            let link = "http://" + url.absoluteString
+            rightURL = URL(string: link)
+        }
+
+        if let url = rightURL {
+            let safariVC = SFSafariViewController(url: url)
+            present(safariVC, animated: true, completion: nil)
+        }
     }
     
     // MARK: - ChildVC
@@ -397,6 +409,20 @@ extension UIViewController {
         let cardVC = CardViewController(contentView: view)
         self.present(cardVC, animated: true, completion: nil)
     }
+    
+    func showAttention(title: String = "attention".localized().uppercaseFirst, subtitle: String, descriptionText: String, backButtonLabel: String = "back".localized().uppercaseFirst, ignoreButtonLabel: String, ignoreAction: @escaping () -> Void, backAction: (() -> Void)? = nil)
+    {
+        let attentionView = AttentionView(
+            title: title,
+            subtitle: subtitle,
+            descriptionText: descriptionText,
+            backButtonLabel: backButtonLabel,
+            ignoreButtonLabel: ignoreButtonLabel
+        )
+        attentionView.ignoreAction = ignoreAction
+        attentionView.backAction = backAction
+        showCardWithView(attentionView)
+    }
 
     // MARK: - Actions
     @objc func popToPreviousVC() {
@@ -412,7 +438,7 @@ extension UIViewController {
 
     func scrollToTop() {
          func scrollToTop(view: UIView?) {
-             guard let view = view else { return }
+             guard let view = view, !(view is CMTopTabBar) else { return }
 
              switch view {
              case let scrollView as UIScrollView:
@@ -441,6 +467,36 @@ extension UIViewController {
                 show ? .black: .clear)
             self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
             completion?()
+        }
+    }
+    
+    func appLiked() {
+        if !CMAppLike.verify() {
+            CMAppLike.updateRate()
+
+            let appLikeView = CMAppLikeView(withFrame: CGRect(origin: .zero, size: CGSize(width: 355.0, height: 192.0)),
+                                            andParameters: .appLiked)
+            
+            let cardVC = CardViewController(contentView: appLikeView)
+            
+            self.present(cardVC, animated: true, completion: {
+                AnalyticsManger.shared.showRate()
+            })
+            
+            appLikeView.completionDismissWithAppLiked = { isLiked in
+                self.dismiss(animated: true, completion: {
+                    AnalyticsManger.shared.rate(isLike: isLiked)
+
+                    if isLiked {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+                            SKStoreReviewController.requestReview()
+                        }
+                    } else {
+                        let vc = CMFeedbackViewController()
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                })
+            }
         }
     }
 }

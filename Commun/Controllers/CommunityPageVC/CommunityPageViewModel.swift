@@ -44,24 +44,13 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     lazy var rulesSubject = PublishSubject<[ResponseAPIContentGetCommunityRule]>()
     
     // MARK: - Initializers
-    convenience init(community: ResponseAPIContentGetCommunity?) {
-        self.init()
-        self.profileForRequest = community
-        self.init(profileId: community?.communityId)
+    init(communityId: String?) {
+        super.init(profileId: communityId)
     }
     
-    convenience init(communityId: String?) {
-        self.init(profileId: communityId)
-    }
-    
-    convenience init(communityAlias: String) {
-        self.init()
+    init(communityAlias: String) {
         self.communityAlias = communityAlias
-        
-        defer {
-            loadProfile()
-            bind()
-        }
+        super.init(profileId: nil)
     }
     
     // MARK: - Methods

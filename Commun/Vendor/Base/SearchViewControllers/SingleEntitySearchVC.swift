@@ -32,7 +32,7 @@ class SingleEntitySearchVC: ListViewController<ResponseAPIContentSearchItem, Sub
     // MARK: - Methods
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        searchController.roundCorner()
+        searchController.roundCorners()
     }
     
     override func setUp() {

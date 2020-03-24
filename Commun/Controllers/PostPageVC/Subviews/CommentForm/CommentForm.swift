@@ -62,7 +62,7 @@ class CommentForm: MyView {
         super.commonInit()
         
         // bottom stackView
-        stackView.alignment = .leading
+        stackView.alignment = .bottom
         stackView.distribution = .fillProportionally
         
         addSubview(stackView)

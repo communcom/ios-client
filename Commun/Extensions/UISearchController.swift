@@ -20,20 +20,36 @@ extension UISearchController {
     }
     
     func setStyle(placeholder: String = "search".localized().uppercaseFirst) {
+        hidesNavigationBarDuringPresentation = false
+        obscuresBackgroundDuringPresentation = false
+        
         let searchTextField: UITextField
 
         if #available(iOS 13, *) {
             searchTextField = searchBar.searchTextField
         } else {
-            searchTextField = (searchBar.value(forKey: "searchField") as? UITextField) ?? UITextField()
+            guard let tf = (searchBar.value(forKey: "searchField") as? UITextField) else {
+                return
+            }
+            searchTextField = tf
         }
 
-        // change bg color
-        searchTextField.backgroundColor = .appLightGrayColor
-
-        // remove top tinted black view
-        let backgroundView = searchTextField.subviews.first
-        backgroundView?.subviews.forEach({ $0.removeFromSuperview() })
+        // Not work in ios 12
+//        // change bg color
+//        searchTextField.backgroundColor = .appLightGrayColor
+//
+//        // remove top tinted black view
+//        let backgroundView = searchTextField.subviews.first
+//        backgroundView?.subviews.forEach({ $0.removeFromSuperview() })
+        
+        // support ios 12
+        for subView in searchBar.subviews
+        {
+            for subView1 in subView.subviews where subView1 is UITextField
+            {
+                subView1.backgroundColor = UIColor.appLightGrayColor
+            }
+        }
 
         // change icon color
         if let iconView = searchTextField.leftView as? UIImageView {
@@ -62,12 +78,9 @@ extension UISearchController {
         } else {
             searchBar.placeholder = placeholder
         }
-
-        hidesNavigationBarDuringPresentation = false
-        obscuresBackgroundDuringPresentation = false
     }
     
-    func roundCorner(cornerRadius: CGFloat? = nil) {
+    func roundCorners(cornerRadius: CGFloat? = nil) {
         searchBar.textField?.cornerRadius = cornerRadius ?? ((searchBar.textField?.height ?? 0) / 2)
     }
 }

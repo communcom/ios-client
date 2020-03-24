@@ -11,7 +11,14 @@ import Foundation
 extension PostEditorVC: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if textView == contentTextView {
-            return contentTextView.shouldChangeCharacterInRange(range, replacementText: text)
+            let shouldChange = contentTextView.shouldChangeCharacterInRange(range, replacementText: text)
+            if shouldChange {
+                DispatchQueue(label: "archiving").async {
+                    self.saveDraft()
+                }
+                showExplanationViewIfNeeded()
+            }
+            return shouldChange
         }
         return true
     }

@@ -223,7 +223,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         // bio
         descriptionLabel.text = nil
-        if let description = userProfile.personal?.biography {
+        if let description = userProfile.personal?.biography?.trimmed {
             if description.count <= 180 {
                 descriptionLabel.text = description
             } else {

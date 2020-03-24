@@ -12,7 +12,7 @@ import SwifterSwift
 import CyberSwift
 import NotificationView
 
-public let tabBarHeight: CGFloat = .adaptive(height: 60.0) + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
+public let tabBarHeight: CGFloat = 60 + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
 
 class TabBarVC: UITabBarController {
     // MARK: - Constants
@@ -25,7 +25,7 @@ class TabBarVC: UITabBarController {
     
     // MARK: - Properties
     let viewModel = TabBarViewModel()
-    let bag = DisposeBag()
+    let disposeBag = DisposeBag()
     
     // MARK: - Subviews
     private lazy var tabBarContainerView = UIView(backgroundColor: .white)
@@ -164,8 +164,8 @@ class TabBarVC: UITabBarController {
     var tabBarItemAdd: UIButton {
         let button = UIButton(type: .system)
         
-        let itemSize: CGFloat = .adaptive(height: 45)
-        let itemPadding: CGFloat = .adaptive(height: 14)
+        let itemSize: CGFloat = 45
+        let itemPadding: CGFloat = 14
         
         let view = UIView(width: itemSize, height: itemSize, backgroundColor: .appMainColor)
         view.cornerRadius = itemSize / 2
@@ -240,7 +240,7 @@ class TabBarVC: UITabBarController {
                     }
                     vm.markAllAsViewed(timestamp: timestamp)
                 })
-                .disposed(by: bag)
+                .disposed(by: disposeBag)
         }
     }
     
@@ -263,14 +263,14 @@ class TabBarVC: UITabBarController {
             .subscribe(onNext: { (item) in
                 self.selectedViewController?.navigateWithNotificationItem(item)
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         appDelegate.deepLinkPath
             .filter {!$0.isEmpty}
             .subscribe(onNext: { (path) in
                 self.navigateWithDeeplinkPath(path)
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         appDelegate.shareExtensionDataRelay
             .filter {$0 != nil}
@@ -308,7 +308,7 @@ class TabBarVC: UITabBarController {
             })
             .disposed(by: disposeBag)
             
-        SocketManager.shared
+        NotificationsManager.shared
             .unseenNotificationsRelay
             .subscribe(onNext: { (unseen) in
                 self.setNotificationRedMarkHidden(unseen == 0)
@@ -320,14 +320,15 @@ class TabBarVC: UITabBarController {
                     vm?.markAllAsViewed(timestamp: Date().iso8601String)
                 }
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         // in-app notifications
-        SocketManager.shared.newNotificationsRelay
+        NotificationsManager.shared.newNotificationsRelay
             .filter {$0.count > 0}
-            .subscribe(onNext: { (items) in
-                guard let notif = items.first else {return}
-                self.showNotificationViewWithNotification(notif)
+            .map {$0.first!}
+            .distinctUntilChanged()
+            .subscribe(onNext: { (item) in
+                self.showNotificationViewWithNotification(item)
             })
             .disposed(by: disposeBag)
     }
@@ -365,7 +366,7 @@ class TabBarVC: UITabBarController {
 
 extension TabBarVC: NotificationViewDelegate {
     func notificationViewDidTap(_ notificationView: NotificationView) {
-        guard let notif = SocketManager.shared.newNotificationsRelay.value.first(where: {$0.identity == notificationView.identifier}) else {return}
+        guard let notif = NotificationsManager.shared.newNotificationsRelay.value.first(where: {$0.identity == notificationView.identifier}) else {return}
         (UIApplication.shared.delegate as! AppDelegate).notificationTappedRelay.accept(notif)
     }
 }

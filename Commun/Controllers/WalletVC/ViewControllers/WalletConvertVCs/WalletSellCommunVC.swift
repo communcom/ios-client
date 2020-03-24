@@ -18,19 +18,24 @@ class WalletSellCommunVC: WalletConvertVC {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
         balanceNameLabel.text = "Commun"
         convertSellLabel.text = "sell".localized().uppercaseFirst + " Commun"
     }
     
     override func setUpCommunBalance() {
         super.setUpCommunBalance()
+        
         guard let balance = communBalance else {return}
+        
         valueLabel.text = balance.balanceValue.currencyValueFormatted
     }
     
     override func setUpCurrentBalance() {
         super.setUpCurrentBalance()
+        
         guard let balance = currentBalance else {return}
+        
         buyLogoImageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
         buyNameLabel.text = balance.name ?? balance.symbol
         buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
@@ -45,7 +50,6 @@ class WalletSellCommunVC: WalletConvertVC {
         }
         
         convertButton.isDisabled = !shouldEnableConvertButton()
-//        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
@@ -56,12 +60,11 @@ class WalletSellCommunVC: WalletConvertVC {
         }
         
         convertButton.isDisabled = !shouldEnableConvertButton()
-//        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func layoutCarousel() {
         let communLogo = UIView.transparentCommunLogo(size: 50)
-        scrollView.addSubview(communLogo)
+        scrollView.contentView.addSubview(communLogo)
         communLogo.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
         communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
         

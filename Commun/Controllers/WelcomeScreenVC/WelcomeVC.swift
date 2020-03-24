@@ -9,7 +9,6 @@
 import UIKit
 import RxSwift
 import CyberSwift
-import SwiftTheme
 
 class WelcomeVC: UIViewController {
     // MARK: - Properties
@@ -39,7 +38,7 @@ class WelcomeVC: UIViewController {
 
     @IBOutlet weak var topSignInButton: BlankButton! {
         didSet {
-            self.topSignInButton.commonInit(hexColors: [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
+            self.topSignInButton.commonInit(textColor: .black,
                                             font: UIFont.systemFont(ofSize: 15.0, weight: .medium),
                                             alignment: .right)
         }
@@ -65,6 +64,13 @@ class WelcomeVC: UIViewController {
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let navigationBarAppearace = UINavigationBar.appearance()
+        navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+        navigationBarAppearace.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont.systemFont(ofSize: .adaptive(width: 30), weight: .bold)
+        ]
         
         // if signUp is processing
         if KeychainManager.currentUser()?.registrationStep != nil
@@ -106,8 +112,8 @@ class WelcomeVC: UIViewController {
     
     // MARK: - Custom Functions
     func navigateToSignUp() {
-        let signUpVC = controllerContainer.resolve(SignUpVC.self)!
-        show(signUpVC, sender: nil)
+        let controller = SignUpMethodsVC()
+        show(controller, sender: nil)
     }
     
     // MARK: - Actions
@@ -132,5 +138,5 @@ class WelcomeVC: UIViewController {
         self.welcomePageVC.currentPage = indexNext
         self.welcomePageVC.showActionButtons(indexNext)
         self.pageControl.selectedIndex = indexNext
-    }    
+    }
 }

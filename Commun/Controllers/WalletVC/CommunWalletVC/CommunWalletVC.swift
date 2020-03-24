@@ -12,6 +12,8 @@ import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
     // MARK: - Properties
+    var headerViewOffsetY: CGFloat = 0.0
+    
     var balancesVM: BalancesViewModel {
         (viewModel as! WalletViewModel).balancesVM
     }
@@ -34,11 +36,13 @@ class CommunWalletVC: TransferHistoryVC {
     
     // MARK: - Subviews
     lazy var headerView: CommunWalletHeaderView = createHeaderView()
+    
     func createHeaderView() -> CommunWalletHeaderView {
         let headerView = CommunWalletHeaderView(forAutoLayout: ())
         headerView.dataSource = self
         return headerView
     }
+   
     lazy var tableHeaderView = WalletTableHeaderView(tableView: tableView)
     var myPointsCollectionView: UICollectionView {tableHeaderView.myPointsCollectionView}
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
@@ -65,41 +69,37 @@ class CommunWalletVC: TransferHistoryVC {
         view.addSubview(barPointLabel)
         barPointLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         barPointLabel.autoPinEdge(.top, to: .bottom, of: barTitleLabel, withOffset: 3)
+        
         return view
     }
-
+    
     // MARK: - Initializers
     convenience init() {
         self.init(viewModel: WalletViewModel(symbol: "CMN"))
     }
-
+    
+    // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.showNavigationBar(false, animated: true, completion: nil)
+        self.changeNavbar(y: headerViewOffsetY)
         self.setNavBarBackButton(tintColor: .white)
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
-        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
-        self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
-
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.shadowImage?.clear()
-
+        
         self.setTabBarHidden(false)
         
-        baseNavigationController?.changeStatusBarStyle(barStyle)
-        UIApplication.shared.statusBarView?.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+        if #available(iOS 13.0, *) {
+            self.navigationController?.navigationBar.backgroundColor = .clear
+            self.navigationController?.navigationBar.subviews.first?.backgroundColor = .clear
+        }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = .clear
-        UIApplication.shared.statusBarView?.backgroundColor = .clear
+        self.navigationController?.navigationBar.backgroundColor = .clear
     }
-
+    
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
@@ -116,11 +116,11 @@ class CommunWalletVC: TransferHistoryVC {
     
     override func viewWillSetUpTableView() {
         super.viewWillSetUpTableView()
+        
         view.addSubview(headerView)
         headerTopConstraint = headerView.autoPinEdge(toSuperviewEdge: .top)
         headerView.autoPinEdge(toSuperviewEdge: .left)
         headerView.autoPinEdge(toSuperviewEdge: .right)
-//        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
     }
     
     override func setUpTableView() {
@@ -204,26 +204,24 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     private func changeNavbar(y: CGFloat) {
-        if 2...3 ~= y {
+        headerViewOffsetY = y
+        
+        if y >= 2 {
             UIView.animate(withDuration: 0.2, animations: {
-                self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
-                self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
-                self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
-                self.navigationController?.navigationBar.barStyle = .default
-                UIApplication.shared.statusBarView?.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+                self.navigationController?.navigationBar.backgroundColor = .appMainColor
+                self.navigationController?.navigationBar.subviews.first?.backgroundColor = .appMainColor
             })
-        }
-
-        if 0..<2 ~= y {
+        } else {
             UIView.animate(withDuration: 0.2, animations: {
                 self.navigationController?.navigationBar.backgroundColor = .clear
-                UIApplication.shared.statusBarView?.backgroundColor = .clear
+                self.navigationController?.navigationBar.subviews.first?.backgroundColor = .clear
             })
         }
     }
     
     override func bindItems() {
         super.bindItems()
+        
         balancesVM.items
             .distinctUntilChanged()
             .subscribe(onNext: { (_) in
@@ -404,7 +402,7 @@ class CommunWalletVC: TransferHistoryVC {
     }
     
     @objc func myPointsSeeAllDidTouch() {
-        let vc = BalancesVC { balance in
+        let vc = MyPointsSeeAllBalancesVC { balance in
             self.openOtherBalancesWalletVC(withSelectedBalance: balance)
         }
         
@@ -424,9 +422,22 @@ class CommunWalletVC: TransferHistoryVC {
     }
     
     private func openOtherBalancesWalletVC(withSelectedBalance balance: ResponseAPIWalletGetBalance?) {
-        let viewModel = (self.viewModel as! WalletViewModel)
-        guard let balance = balance else {return}
-        let vc = OtherBalancesWalletVC(balances: viewModel.balancesVM.items.value, symbol: balance.symbol, subscriptions: viewModel.subscriptionsVM.items.value, history: viewModel.items.value)
+        guard   let selectedBalance = balance,
+                let balances = (self.viewModel as? WalletViewModel)?.balancesVM.items.value,
+                let subscriptions = (self.viewModel as? WalletViewModel)?.subscriptionsVM.items.value,
+                var selectedBalanceIndex = balances.firstIndex(where: { $0.symbol == selectedBalance.symbol })
+        else { return }
+        
+        guard headerView.carousel == nil else {
+            if selectedBalanceIndex == 0 {
+                selectedBalanceIndex = 1
+            }
+            
+            headerView.carousel!.scroll(toItemAtIndex: selectedBalanceIndex - 1, animated: true)
+            return
+        }
+        
+        let vc = OtherBalancesWalletVC(balances: balances, symbol: selectedBalance.symbol, subscriptions: subscriptions, history: viewModel.items.value)
         let nc = navigationController as? BaseNavigationController
         nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)

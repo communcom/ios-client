@@ -48,6 +48,7 @@ class PostPageVC: CommentsViewController {
     // MARK: - Life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.setNavigationBarHidden(true, animated: animated)
         tabBarController?.tabBar.isHidden = true
         
@@ -263,7 +264,6 @@ class PostPageVC: CommentsViewController {
         })
     }
     
-    
     // MARK: - Custom Functions
     func scrollTo(selectedComment: ResponseAPIContentGetComment) {
         
@@ -272,7 +272,6 @@ class PostPageVC: CommentsViewController {
             self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: commentIndex), at: .top, animated: true)
         }
     }
-    
     
     // MARK: - Actions
     @objc func openMorePostActions() {

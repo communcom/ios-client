@@ -27,7 +27,7 @@ class SelectCountryViewModel {
     let disposeBag = DisposeBag()
     
     // MARK: - Class Initialization
-    init(withModel model: SignUpViewModel) {
+    init(withModel model: SignUpWithPhoneViewModel) {
         let countries = SelectCountryViewModel.getCountriesList()
         
         search

@@ -105,30 +105,38 @@ extension UIImageView {
         showLoading(cover: false, spinnerColor: .white)
 
         if let placeholderUrl = placeholderUrl {
-            showBlur(true)
-            sd_setImage(with: placeholderUrl, placeholderImage: nil) { [weak self] (image, _, _, _) in
-                self?.sd_setImage(with: newUrl, placeholderImage: image) { [weak self] (image, _, _, _) in
-                    self?.showBlur(false)
-                    self?.hideLoading()
-                    if image == nil {
-                        self?.sd_setImageCachedError(with: newUrl, completion: nil)
+            self.showBlur(true)
+            self.sd_setImage(with: placeholderUrl, placeholderImage: self.image) { [weak self] (image, _, _, _) in
+                DispatchQueue.main.async {
+                    self?.image = image
+                    self?.sd_setImage(with: newUrl, placeholderImage: image) { [weak self] (image, _, _, _) in
+                        DispatchQueue.main.async {
+                            self?.showBlur(false)
+                            self?.hideLoading()
+                            if image == nil {
+                                self?.sd_setImageCachedError(with: newUrl, completion: nil)
+                            }
+                        }
                     }
                 }
+
             }
         } else {
-            sd_setImage(with: newUrl, placeholderImage: image) { [weak self] (_, _, _, _) in
+            self.sd_setImage(with: newUrl, placeholderImage: self.image) { [weak self] (_, _, _, _) in
                 self?.hideLoading()
             }
         }
+
     }
 
     private func showBlur(_ show: Bool) {
+        let tag = ViewTag.blurView.rawValue
         if !UIAccessibility.isReduceTransparencyEnabled {
-            self.viewWithTag(9435)?.removeFromSuperview()
+            self.viewWithTag(tag)?.removeFromSuperview()
             if show {
                 let blurEffect = UIBlurEffect(style: .light)
                 let blurEffectView = UIVisualEffectView(effect: blurEffect)
-                blurEffectView.tag = 9435
+                blurEffectView.tag = tag
                 //always fill the view
                 blurEffectView.frame = self.bounds
                 blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -136,13 +144,14 @@ extension UIImageView {
                 addSubview(blurEffectView)
             }
         }
-        if let loadingView = viewWithTag(9999) {
+        if let loadingView = viewWithTag(ViewTag.loadingView.rawValue) {
             self.bringSubviewToFront(loadingView)
         }
     }
     
     func addTapToViewer() {
         self.isUserInteractionEnabled = true
+       
         setupImageViewer(options: [
             .theme(ImageViewerTheme.dark),
             .closeIcon(UIImage(named: "close-x")!),

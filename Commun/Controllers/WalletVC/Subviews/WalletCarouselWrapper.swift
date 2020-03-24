@@ -12,7 +12,7 @@ import CircularCarousel
 class WalletCarouselWrapper: MyView {
     // MARK: - Constants
     var carouselHeight: CGFloat
-    
+
     // MARK: - Properties
     var currentIndex: Int = 0
     var scrollingHandler: ((Int) -> Void)?
@@ -22,8 +22,10 @@ class WalletCarouselWrapper: MyView {
     private lazy var carousel = CircularCarousel(width: 300)
     
     init(height: CGFloat) {
-        carouselHeight = height
+        self.carouselHeight = height
+        
         super.init(frame: .zero)
+        
         configureForAutoLayout()
         autoSetDimension(.height, toSize: height)
     }
@@ -42,6 +44,10 @@ class WalletCarouselWrapper: MyView {
     func reloadData() {
         carousel.reloadData()
     }
+    
+    func scrollTo(itemAtIndex index: Int) {
+        carousel.scroll(toItemAtIndex: index, animated: true)
+    }
 }
 
 extension WalletCarouselWrapper: CircularCarouselDataSource, CircularCarouselDelegate {
@@ -52,6 +58,7 @@ extension WalletCarouselWrapper: CircularCarouselDataSource, CircularCarouselDel
     func numberOfItems(inCarousel carousel: CircularCarousel) -> Int {
         return balances?.count ?? 0
     }
+    
     func carousel(_: CircularCarousel, viewForItemAt indexPath: IndexPath, reuseView: UIView?) -> UIView {
         guard let balance = balances?[safe: indexPath.row] else {return UIView()}
         

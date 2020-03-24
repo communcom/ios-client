@@ -53,29 +53,31 @@ class BasicEditorVC: PostEditorVC {
     }
     
     override var isContentValid: Bool {
+        hintType = nil
+        
         let content = contentTextView.text.trimmed 
         
         // content are not empty
         let textIsNotEmpty = !content.isEmpty
+        if !textIsNotEmpty {hintType = .enterTextPhoto}
         
         // content inside limit
         let textInsideLimit = (content.count <= contentLettersLimit)
+        if !textInsideLimit {hintType = .error("content must less than \(contentLettersLimit) characters".localized().uppercaseFirst)}
         
         // compare content
         let textChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+        if !textChanged {hintType = .error("content wasn't changed".localized().uppercaseFirst)}
         
         // content valid
         let isTextValid = textIsNotEmpty && textInsideLimit && textChanged
         
         // text empty, but attachment exists
         let attachmentWithEmptyText = !textIsNotEmpty && ((viewModel as! BasicEditorViewModel).attachment.value != nil)
+        if !isTextValid && attachmentWithEmptyText {hintType = nil}
         
         // accept attachment without text or valid text
         return super.isContentValid && (isTextValid || attachmentWithEmptyText)
-    }
-    
-    override var postTitle: String? {
-        return nil
     }
     
     var _viewModel = BasicEditorViewModel()
@@ -98,30 +100,6 @@ class BasicEditorVC: PostEditorVC {
         
         loadShareExtensionData()
     }
-    
-    func loadShareExtensionData() {
-        if let shareExtensionData = shareExtensionData {
-            
-            if let text = shareExtensionData.text {
-                contentTextView.attributedText = NSAttributedString(string: text, attributes: contentTextView.defaultTypingAttributes)
-            }
-            
-            if let urlString = shareExtensionData.link {
-                parseLink(urlString)
-            }
-            
-            if let imageData = shareExtensionData.imageData, let image = UIImage(data: imageData) {
-                didChooseImageFromGallery(image)
-            }
-        }
-    }
-        
-    func hideExtensionWithCompletionHandler(completion:@escaping (Bool) -> Void) {
-        // Dismiss
-        UIView.animate(withDuration: 0.20, animations: {
-            self.navigationController!.view.transform = CGAffineTransform(translationX: 0, y: self.navigationController!.view.frame.size.height)
-        }, completion: completion)
-    }
 
     override func setUp() {
         super.setUp()
@@ -129,6 +107,20 @@ class BasicEditorVC: PostEditorVC {
 //        if viewModel.postForEdit == nil {
 //            appendTool(EditorToolbarItem.addArticle)
 //        }
+    }
+    
+    override func bind() {
+        super.bind()
+        
+        bindAttachments()
+    }
+    
+    override func didSelectTool(_ item: EditorToolbarItem) {
+        super.didSelectTool(item)
+        guard item.isEnabled else {return}
+        if item == .addArticle {
+            addArticle()
+        }
     }
     
     override func setUp(with post: ResponseAPIContentGetPost) -> Completable {
@@ -174,16 +166,9 @@ class BasicEditorVC: PostEditorVC {
                     .flatMapToCompletable()
             )
     }
-    
-    override func bind() {
-        super.bind()
-        
-        bindAttachments()
-    }
 
     // MARK: - GetContentBlock
     override func getContentBlock() -> Single<ResponseAPIContentBlock> {
-        // TODO: - Attachments
         var block: ResponseAPIContentBlock?
         var id: UInt64!
         return super.getContentBlock()
@@ -210,12 +195,5 @@ class BasicEditorVC: PostEditorVC {
                 
                 return block!
             }
-    }
-
-    // MARK: - Actions
-    @objc func cancelButtonTapped(_ sender: UIBarButtonItem) {
-        self.hideExtensionWithCompletionHandler(completion: { (_) -> Void in
-            self.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
-        })
     }
 }

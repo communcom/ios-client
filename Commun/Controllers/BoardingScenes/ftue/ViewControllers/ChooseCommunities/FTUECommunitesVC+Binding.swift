@@ -109,6 +109,28 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .distinctUntilChanged()
             .bind(to: nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
+        
+        viewModel.chosenCommunities
+            .map {chosenCommunities -> Bool in
+                // if 3 or more communities was succesfully subscribed
+                if chosenCommunities.count(where: {$0.isBeingJoined == false}) >= 3 {
+                    return false
+                }
+                
+                // if there are some communities are being subscribed
+                return chosenCommunities.count(where: {$0.isBeingJoined == true}) > 0
+            }
+            .distinctUntilChanged()
+            .subscribe(onNext: { (isLoading) in
+                if isLoading {
+                    self.nextButton.showLoading(cover: false, spinnerColor: UIColor.white.withAlphaComponent(0.7), size: 30, spinerLineWidth: 3)
+                    self.nextButton.setImage(nil, for: .normal)
+                } else {
+                    self.nextButton.hideLoading()
+                    self.nextButton.setImage(UIImage(named: self.nextButtonImageName), for: .normal)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func observeCommunityFollowed() {

@@ -115,7 +115,6 @@ class PostHeaderView: MyTableHeaderView, PostController {
         layoutSubviews()
     }
     
-    
     // MARK: - Actions
     @objc func upVoteButtonDidTouch(_ sender: Any) {
         upVote()

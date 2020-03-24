@@ -125,7 +125,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             .filter {$0 != nil}
             .map {$0!}
             .do(onNext: { (_) in
-                self._headerView.selectedIndex.accept(0)
+                self._headerView.selectedIndex.accept(self._headerView.selectedIndex.value)
             })
             .subscribe(onNext: { [weak self] (item) in
                 self?.setUp(profile: item)

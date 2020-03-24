@@ -34,18 +34,16 @@ class EditorVC: BaseViewController {
     var buttonsCollectionView: UICollectionView!
     
     // PostButton
-    lazy var actionButton = CommunButton(height: .adaptive(height: 36.0),
+    lazy var actionButton = CommunButton(height: 36,
                                          label: "send".localized().uppercaseFirst,
-                                         labelFont: .systemFont(ofSize: .adaptive(width: 15.0), weight: .semibold),
+                                         labelFont: .systemFont(ofSize: 15.0, weight: .semibold),
                                          backgroundColor: .appMainColor,
                                          textColor: .white,
-                                         cornerRadius: .adaptive(height: 18.0),
+                                         cornerRadius: 18,
                                          contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
     
     override func setUp() {
         super.setUp()
-        
-        view.backgroundColor = .white
         
         // navigation bar
         let navigationBar = UIView(height: 44, backgroundColor: .white)
@@ -119,25 +117,6 @@ class EditorVC: BaseViewController {
         
         buttonsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-    }
-    
-    func setUpToolbarButtons() {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = .zero
-        layout.scrollDirection = .horizontal
-        buttonsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        buttonsCollectionView.showsHorizontalScrollIndicator = false
-        buttonsCollectionView.backgroundColor = .clear
-        buttonsCollectionView.configureForAutoLayout()
-        toolbar.addSubview(buttonsCollectionView)
-        
-        // layout
-        buttonsCollectionView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-        buttonsCollectionView.autoPinEdge(toSuperviewEdge: .left, withInset: 0)
-        buttonsCollectionView.autoSetDimension(.height, toSize: 35)
-        
-        buttonsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
-        buttonsCollectionView.register(EditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
     }
     
     func didSelectTool(_ item: EditorToolbarItem) {

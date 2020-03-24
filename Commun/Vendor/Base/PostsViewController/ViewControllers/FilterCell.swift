@@ -10,9 +10,9 @@ import Foundation
 
 class FilterCell: MyTableViewCell {
     // MARK: - Properties
-    lazy var titleLabel = UILabel.with(textSize: CGFloat.adaptive(width: 15.0), weight: .semibold)
-    lazy var checkBox = CommunCheckbox(width: CGFloat.adaptive(width: 24.0), height: CGFloat.adaptive(width: 24.0), cornerRadius: CGFloat.adaptive(width: 6.0))
-    lazy var separator = UIView(height: CGFloat.adaptive(height: 2.0), backgroundColor: .f7f7f9)
+    lazy var titleLabel = UILabel.with(textSize: 15.0, weight: .semibold)
+    lazy var checkBox = CommunCheckbox(width: 24.0, height: 24.0, cornerRadius: 6.0)
+    lazy var separator = UIView(height: 2.0, backgroundColor: .f7f7f9)
     
     // MARK: - Custom Functions
     override var roundedCorner: UIRectCorner {
@@ -25,11 +25,11 @@ class FilterCell: MyTableViewCell {
     override func setUpViews() {
         super.setUpViews()
         contentView.addSubview(titleLabel)
-        titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(width: 15.0))
+        titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15.0)
         titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         contentView.addSubview(checkBox)
-        checkBox.autoPinEdge(toSuperviewEdge: .trailing, withInset: CGFloat.adaptive(width: 15.0))
+        checkBox.autoPinEdge(toSuperviewEdge: .trailing, withInset: 15.0)
         checkBox.autoAlignAxis(toSuperviewAxis: .horizontal)
         checkBox.isUserInteractionEnabled = false
         checkBox.notShowOffCheckbox = true

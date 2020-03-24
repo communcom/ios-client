@@ -8,12 +8,12 @@
 
 import UIKit
 import RxSwift
-import SwiftTheme
 import SafariServices
 
 class BaseViewController: UIViewController {
     // MARK: - Properties
     lazy var disposeBag = DisposeBag()
+    var shouldHideNavigationBar: Bool {false}
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -24,6 +24,22 @@ class BaseViewController: UIViewController {
         setUp()
         
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if shouldHideNavigationBar {
+            navigationController?.setNavigationBarHidden(true, animated: false)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if shouldHideNavigationBar {
+            navigationController?.setNavigationBarHidden(false, animated: false)
+        }
     }
     
     // MARK: - Custom Functions
@@ -57,6 +73,8 @@ class BaseViewController: UIViewController {
 // MARK: - SFSafariViewControllerDelegate
 extension BaseViewController: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        dismiss(animated: true)
+        if !isModal {
+            dismiss(animated: true, completion: nil)
+        }
     }
 }

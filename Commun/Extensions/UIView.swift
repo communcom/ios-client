@@ -11,6 +11,26 @@ import CyberSwift
 import ASSpinnerView
 
 extension UIView {
+    // https://developer.apple.com/documentation/quartzcore/cashapelayer/1521921-linedashpattern#2825197
+    public func draw(lineColor color: UIColor = .lightGray, lineWidth width: CGFloat = 1.0, startPoint start: CGPoint, endPoint end: CGPoint, withDashPattern lineDashPattern: [NSNumber]? = nil) {
+        // Example of lineDashPattern: [nil, [2,3], [10, 5, 5, 5]]
+        let shapeLayer = CAShapeLayer()
+
+        shapeLayer.strokeColor = color.cgColor
+        shapeLayer.lineWidth = width
+        shapeLayer.lineDashPattern = lineDashPattern
+
+        let path = CGMutablePath()
+        path.addLines(between: [start, end])
+        shapeLayer.path = path
+
+        layer.addSublayer(shapeLayer)
+    }
+
+    public func copyView() -> UIView? {
+        NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as? UIView
+    }
+    
     func showErrorView(title: String? = nil, subtitle: String? = nil, retryButtonTitle: String? = nil, retryAction: (() -> Void)?) {
         // setup new errorView
         let errorView = ErrorView(title: title, subtitle: subtitle, retryButtonTitle: retryButtonTitle, retryAction: retryAction)
@@ -39,18 +59,28 @@ extension UIView {
     }
     
     var isLoading: Bool {
-        self.viewWithTag(9999) != nil
+        let loadingViewTag = ViewTag.loadingView.rawValue
+        return subviews.count(where: {$0.tag == loadingViewTag}) > 0
     }
     
-    func showLoading(cover: Bool = true, spinnerColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1), size: CGFloat? = nil, centerYOffset: CGFloat? = nil, offsetTop: CGFloat? = nil) {
+    func showLoading(
+        cover: Bool = true,
+        coverColor: UIColor = .white,
+        spinnerColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1),
+        size: CGFloat? = nil,
+        spinerLineWidth: CGFloat? = nil,
+        centerYOffset: CGFloat? = nil,
+        offsetTop: CGFloat? = nil
+    ) {
         // if loading view is existed
-        if self.viewWithTag(9999) != nil {return}
+        let loadingViewTag = ViewTag.loadingView.rawValue
+        if isLoading {return}
         
         // create cover view to cover all current view
         let coverView = UIView()
-        coverView.backgroundColor = cover ? .white : .clear
+        coverView.backgroundColor = cover ? coverColor : .clear
         coverView.translatesAutoresizingMaskIntoConstraints = false
-        coverView.tag = 9999
+        coverView.tag = loadingViewTag
         self.addSubview(coverView)
         
         // add constraint for coverView
@@ -61,10 +91,10 @@ extension UIView {
         self.bringSubviewToFront(coverView)
         
         // add spinnerView
-        let size = size ?? (height > 76 ? 60: height-16)
+        let size = size ?? (height > 76 ? 60: height-8)
         let spinnerView = ASSpinnerView()
         spinnerView.translatesAutoresizingMaskIntoConstraints = false
-        spinnerView.spinnerLineWidth = size/10
+        spinnerView.spinnerLineWidth = spinerLineWidth ?? size/10
         spinnerView.spinnerDuration = 0.3
         spinnerView.spinnerStrokeColor = spinnerColor.cgColor
         coverView.addSubview(spinnerView)
@@ -82,7 +112,12 @@ extension UIView {
     }
     
     func hideLoading() {
-        self.viewWithTag(9999)?.removeFromSuperview()
+        DispatchQueue.main.async {
+            let loadingViewTag = ViewTag.loadingView.rawValue
+            for subview in self.subviews where subview.tag == loadingViewTag {
+                subview.removeFromSuperview()
+            }
+        }
     }
     
     func shake() {
@@ -149,5 +184,38 @@ extension UIView {
         self.layer.cornerRadius = radius
         self.layer.borderColor = color.cgColor
         self.clipsToBounds = true
-    }    
+    }
+    
+    func addExplanationView(id: String, title: String, description: String, imageName: String? = nil, from sender: UIView, showAbove: Bool = true, marginLeft: CGFloat = 0, marginRight: CGFloat = 0, learnMoreLink: String = "https://commun.com/faq") {
+        if subviews.first(where: {($0 as? ExplanationView)?.id == id}) != nil {return}
+        
+        if !ExplanationView.shouldShowViewWithId(id) {
+            return
+        }
+        
+        let eView = ExplanationView(id: id, title: title, descriptionText: description, imageName: nil, senderView: sender, showAbove: showAbove, learnMoreLink: learnMoreLink)
+        
+        addSubview(eView)
+        eView.fixArrowView()
+        if showAbove {
+            eView.topAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.topAnchor, constant: 10)
+                .isActive = true
+        } else {
+            eView.bottomAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
+                .isActive = true
+        }
+        eView.autoPinEdge(toSuperviewEdge: .leading, withInset: marginLeft)
+        eView.autoPinEdge(toSuperviewEdge: .trailing, withInset: marginRight)
+        if showAbove {
+            eView.autoPinEdge(.bottom, to: .top, of: sender)
+        } else {
+            eView.autoPinEdge(.top, to: .bottom, of: sender)
+        }
+    }
+    
+    func removeAllExplanationViews() {
+        for subview in subviews where subview is ExplanationView {
+            subview.removeFromSuperview()
+        }
+    }
 }

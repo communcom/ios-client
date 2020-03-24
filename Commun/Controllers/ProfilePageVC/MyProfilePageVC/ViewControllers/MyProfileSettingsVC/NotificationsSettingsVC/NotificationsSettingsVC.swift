@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class NotificationsSettingsVC: BaseVerticalStackViewController, PNAlertViewDelegate {
+class NotificationsSettingsVC: VerticalActionsVC, PNAlertViewDelegate {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
     var pnAlertView: PNAlertView?
@@ -82,7 +82,7 @@ class NotificationsSettingsVC: BaseVerticalStackViewController, PNAlertViewDeleg
             .subscribe(onNext: { [weak self] (disabledTypes) in
                 guard let strongSelf = self else {return}
                 for view in strongSelf.settingViews {
-                    view.switchButton.isOn = !disabledTypes.contains(view.notificationType)
+                    view.switchButton.isOn = !(disabledTypes ?? []).contains(view.notificationType)
                 }
             })
             .disposed(by: disposeBag)
