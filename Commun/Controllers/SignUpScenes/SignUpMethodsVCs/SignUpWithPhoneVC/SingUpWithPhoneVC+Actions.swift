@@ -11,12 +11,22 @@ import ReCaptcha
 
 extension SignUpWithPhoneVC {
     @objc func chooseCountry() {
-        if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
-            self.view.endEditing(true)
-            countryVC.bindViewModel(SelectCountryViewModel(withModel: self.viewModel))
-            let nav = UINavigationController(rootViewController: countryVC)
-            self.present(nav, animated: true, completion: nil)
+        self.view.endEditing(true)
+        
+        let vc = CountriesVC()
+        let nav = UINavigationController(rootViewController: vc)
+        
+        vc.selectionHandler = {country in
+            AnalyticsManger.shared.countrySelected(phoneCode: country.code, available: country.available)
+            if country.available {
+                self.viewModel.selectedCountry.accept(country)
+                nav.dismiss(animated: true, completion: nil)
+            } else {
+                self.showAlert(title: "sorry".uppercaseFirst.localized(), message: "but we don’t support your region yet".uppercaseFirst.localized())
+            }
         }
+        
+        present(nav, animated: true, completion: nil)
     }
     
     private func setupReCaptcha() -> ReCaptcha {

@@ -9,9 +9,11 @@
 import Foundation
 import RxCocoa
 
-class CountriesVC: BaseViewController {
+class CountriesVC: BaseViewController, UISearchResultsUpdating {
     // MARK: - Properties
-    lazy var countries = BehaviorRelay<[Country]>(value: Country.getAll())
+    var selectionHandler: ((Country) -> Void)?
+    let allCountries = Country.getAll()
+    lazy var countries = BehaviorRelay<[Country]>(value: allCountries)
     lazy var searchController = UISearchController(searchResultsController: nil)
     
     // MARK: - Subviews
@@ -35,10 +37,11 @@ class CountriesVC: BaseViewController {
         
         navigationItem.leftBarButtonItem = closeButton
         
-        self.navigationItem.searchController = searchController
-        self.navigationItem.hidesSearchBarWhenScrolling = false
-        self.definesPresentationContext = true
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
         searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
         
         // Set up tableView
         view.addSubview(tableView)
@@ -56,5 +59,23 @@ class CountriesVC: BaseViewController {
                 (cell as! CountryCell).setupCountry(model)
             }
             .disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(Country.self)
+            .subscribe(onNext: selectionHandler)
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - SearchResultUpdating
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else {
+            countries.accept(allCountries)
+            return
+        }
+        
+        if text.trimmed.isEmpty {
+            countries.accept(allCountries)
+        } else {
+            countries.accept(allCountries.filter {$0.name.lowercased().contains(text.lowercased())})
+        }
     }
 }
