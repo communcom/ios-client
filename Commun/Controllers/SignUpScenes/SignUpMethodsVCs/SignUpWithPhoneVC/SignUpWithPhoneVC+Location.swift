@@ -12,8 +12,6 @@ import CoreLocation
 extension SignUpWithPhoneVC: CLLocationManagerDelegate {
     func updateLocation() {
         // For use in foreground
-
-        let locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {

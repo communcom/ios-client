@@ -29,21 +29,6 @@ extension SignUpWithPhoneVC {
         present(nav, animated: true, completion: nil)
     }
     
-    private func setupReCaptcha() -> ReCaptcha {
-        let recaptcha = try! ReCaptcha(endpoint: ReCaptcha.Endpoint.default, locale: Locale(identifier: Locale.current.languageCode ?? "en"))
-
-        #if DEBUG
-        recaptcha.forceVisibleChallenge = false
-        #endif
-
-        recaptcha.configureWebView { [weak self] webview in
-            webview.frame = self?.view.bounds ?? CGRect.zero
-            webview.tag = reCaptchaTag
-            self?.hideHud()
-        }
-        return recaptcha
-    }
-    
     func handleNextAction() {
         guard self.viewModel.validatePhoneNumber() else {
             self.showAlert(title: "error".localized().uppercaseFirst, message: "wrong phone number".localized().uppercaseFirst)
@@ -55,7 +40,7 @@ extension SignUpWithPhoneVC {
 
         self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
 
-        self.setupReCaptcha().validate(on: view,
+        recaptcha.validate(on: view,
                                 resetOnError: false,
                                 completion: { [weak self] (result: ReCaptchaResult) in
                                     guard let strongSelf = self else { return }

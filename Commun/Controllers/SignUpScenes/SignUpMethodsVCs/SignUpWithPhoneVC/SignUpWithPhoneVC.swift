@@ -8,11 +8,28 @@
 
 import Foundation
 import PhoneNumberKit
+import CoreLocation
+import ReCaptcha
 
 class SignUpWithPhoneVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Properties
     let viewModel = SignUpWithPhoneViewModel()
     var shouldDefineLocation = true
+    let locationManager = CLLocationManager()
+    lazy var recaptcha: ReCaptcha = {
+        let recaptcha = try! ReCaptcha(endpoint: ReCaptcha.Endpoint.default, locale: Locale(identifier: Locale.current.languageCode ?? "en"))
+
+        #if DEBUG
+        recaptcha.forceVisibleChallenge = false
+        #endif
+
+        recaptcha.configureWebView { [weak self] webview in
+            webview.frame = self?.view.bounds ?? CGRect.zero
+            webview.tag = reCaptchaTag
+            self?.hideHud()
+        }
+        return recaptcha
+    }()
     
     // MARK: - Subviews
     lazy var selectCountryView: UIView = {
