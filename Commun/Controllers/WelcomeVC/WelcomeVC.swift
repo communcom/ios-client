@@ -9,25 +9,21 @@
 import Foundation
 
 class WelcomeVC: BaseViewController {
+    override var shouldHideNavigationBar: Bool {true}
+    
     // MARK: - Properties
+    lazy var pageVC = WelcomePageVC()
     
     // MARK: - Subviews
     lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
     lazy var pageControl = CMPageControll(numberOfPages: 3)
+    lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fillEqually)
+    
+    lazy var nextButton = CommunButton.default(height: 50, label: "next".localized().uppercaseFirst, isHuggingContent: false)
+    lazy var bottomSignInButton = UIButton(height: 50, label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), backgroundColor: .f3f5fa, textColor: .appMainColor, cornerRadius: 25)
+    lazy var signUpButton = CommunButton.default(height: 50, label: "sign up".localized().uppercaseFirst, isHuggingContent: false)
     
     // MARK: - Methods
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
     
     override func setUp() {
         super.setUp()
@@ -52,20 +48,69 @@ class WelcomeVC: BaseViewController {
         // top sign in button
         view.addSubview(topSignInButton)
         topSignInButton.autoPinTopAndTrailingToSuperViewSafeArea(inset: 0, xInset: 16)
+        topSignInButton.addTarget(self, action: #selector(signInButtonTap(_:)), for: .touchUpInside)
         
         // page control
         view.addSubview(pageControl)
         pageControl.autoAlignAxis(.horizontal, toSameAxisOf: topSignInButton)
         pageControl.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        
-        
         pageControl.selectedIndex = 0
+        
+        // button stack view
+        view.addSubview(buttonStackView)
+        buttonStackView.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16)
+        buttonStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+        buttonStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        buttonStackView.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        buttonStackView.addArrangedSubviews([
+            nextButton,
+            signUpButton,
+            bottomSignInButton
+        ])
+        
+        bottomSignInButton.addTarget(self, action: #selector(signInButtonTap(_:)), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(signInButtonTap(_:)), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(nextButtonTap(_:)), for: .touchUpInside)
+        
+        // add pageVC
+        addChild(pageVC)
+        pageVC.view.configureForAutoLayout()
+        view.addSubview(pageVC.view)
+        pageVC.view.autoPinEdge(.top, to: .bottom, of: pageControl, withOffset: 16)
+        pageVC.view.autoPinEdge(.bottom, to: .top, of: buttonStackView, withOffset: -16)
+        pageVC.view.autoPinEdge(toSuperviewEdge: .leading)
+        pageVC.view.autoPinEdge(toSuperviewEdge: .trailing)
+        pageVC.didMove(toParent: self)
     }
     
     // MARK: - Actions
     func navigateToSignUp() {
         let controller = SignUpVC()
         show(controller, sender: nil)
+    }
+    
+    @objc func signInButtonTap(_ sender: UIButton) {
+        if sender == topSignInButton {
+            AnalyticsManger.shared.onboadringOpenScreen(page: pageControl.selectedIndex + 1, tapSignIn: true)
+        } else {
+            AnalyticsManger.shared.signInButtonPressed()
+        }
+        let signInVC = SignInVC()
+        navigationController?.pushViewController(signInVC)
+    }
+    
+    @objc func signUpButtonTap(_ sender: Any) {
+        AnalyticsManger.shared.signUpButtonPressed()
+        self.navigateToSignUp()
+    }
+    
+    @objc func nextButtonTap(_ sender: Any) {
+        let indexNext = pageVC.currentPage + 1
+        AnalyticsManger.shared.onboadringOpenScreen(page: indexNext + 1)
+        pageVC.currentPage = indexNext
+        pageVC.showActionButtons(indexNext)
+        pageControl.selectedIndex = indexNext
     }
 }

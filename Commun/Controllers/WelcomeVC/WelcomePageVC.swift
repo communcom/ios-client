@@ -51,10 +51,10 @@ class WelcomePageVC: UIPageViewController {
     func showActionButtons(_ index: Int) {
         if let welcomeVC = self.parent as? WelcomeVC {
             let lastScreenIndex = totalPages - 1
-//            welcomeVC.nextButton.isHidden = index == lastScreenIndex
-//            welcomeVC.signUpButton.isHidden = index != lastScreenIndex
+            welcomeVC.nextButton.isHidden = index == lastScreenIndex
+            welcomeVC.signUpButton.isHidden = index != lastScreenIndex
             welcomeVC.topSignInButton.isHidden = index == lastScreenIndex
-//            welcomeVC.bottomSignInButton.isHidden = index != lastScreenIndex
+            welcomeVC.bottomSignInButton.isHidden = index != lastScreenIndex
             welcomeVC.pageControl.selectedIndex = index
 //            welcomeVC.coinImageView.isHidden = index != lastScreenIndex
         }
