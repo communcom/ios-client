@@ -14,6 +14,7 @@ class WelcomeVC: BaseViewController {
     
     // MARK: - Properties
     lazy var pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+    var currentPage = 0
     
     // MARK: - Subviews
     lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
@@ -91,16 +92,27 @@ class WelcomeVC: BaseViewController {
         
         // add pageVC
         pageVC.dataSource = self
+        pageVC.delegate = self
         addChild(pageVC)
         containerView.addSubview(pageVC.view)
         pageVC.didMove(toParent: self)
         kickOff()
     }
     
+    func showActionButtons(_ index: Int) {
+        let lastScreenIndex = numberOfPages - 1
+        nextButton.isHidden = index == lastScreenIndex
+        signUpButton.isHidden = index != lastScreenIndex
+        topSignInButton.isHidden = index == lastScreenIndex
+        bottomSignInButton.isHidden = index != lastScreenIndex
+//        coinImageView.isHidden = index != lastScreenIndex
+    }
+    
     // MARK: - Actions
     private func kickOff() {
         let firstVC = WelcomeItemVC(index: 0)
-        pageVC.setViewControllers([firstVC], direction: .forward, animated: false, completion: nil)
+        pageVC.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
+        showActionButtons(0)
     }
     
     func navigateToSignUp() {
@@ -124,15 +136,16 @@ class WelcomeVC: BaseViewController {
     }
     
     @objc func nextButtonTap(_ sender: Any) {
-//        let indexNext = pageVC.currentPage + 1
-//        AnalyticsManger.shared.onboadringOpenScreen(page: indexNext + 1)
-//        pageVC.currentPage = indexNext
-//        pageVC.showActionButtons(indexNext)
-//        pageControl.selectedIndex = indexNext
+        let nextIndex = currentPage + 1
+        AnalyticsManger.shared.onboadringOpenScreen(page: nextIndex)
+        pageVC.setViewControllers([WelcomeItemVC(index: nextIndex)], direction: .forward, animated: true, completion: nil)
+        currentPage = nextIndex
+        showActionButtons(nextIndex)
+        pageControl.selectedIndex = nextIndex
     }
 }
 
-extension WelcomeVC: UIPageViewControllerDataSource {
+extension WelcomeVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let vc = viewController as? WelcomeItemVC,
             vc.index != 0
@@ -145,5 +158,14 @@ extension WelcomeVC: UIPageViewControllerDataSource {
             vc.index < numberOfPages - 1
         else {return nil}
         return WelcomeItemVC(index: vc.index + 1)
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if let vc = pageVC.viewControllers?.first as? WelcomeItemVC {
+            let index = vc.index
+            showActionButtons(index)
+            pageControl.selectedIndex = index
+            currentPage = index
+        }
     }
 }
