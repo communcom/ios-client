@@ -39,10 +39,6 @@ class ReferralUsersVC: SubsViewController<ResponseAPIContentGetProfile, Subscrib
         return cell
     }
     
-    override func modelSelected(_ user: ResponseAPIContentGetProfile) {
-        // do nothing
-    }
-    
     @objc func shareButtonDidTouch() {
         
     }
