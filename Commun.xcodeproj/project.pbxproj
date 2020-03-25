@@ -119,8 +119,6 @@
 		57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1A2240DB9400338FD5 /* NetworkService.swift */; };
 		57840A202240DDEB00338FD5 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1F2240DDEB00338FD5 /* Container.swift */; };
 		5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787C0C522650FA500568CEC /* SetUserViewModel.swift */; };
-		578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B94D92263CBD800FB5BC6 /* ConfirmUserVC.swift */; };
-		578B94DC2263CBE300FB5BC6 /* ConfirmUserVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 578B94DB2263CBE300FB5BC6 /* ConfirmUserVC.storyboard */; };
 		57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1CA622270FC4700E2A1E3 /* LanguageVC.swift */; };
 		57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57A1CA642270FCF000E2A1E3 /* LanguageVC.storyboard */; };
 		57A95197224178010020F55D /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A95196224178010020F55D /* PostController.swift */; };
@@ -307,6 +305,7 @@
 		BC5A34882429C066001C5054 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34862429C065001C5054 /* CountryCell.swift */; };
 		BC5A34892429C066001C5054 /* CountryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC5A34872429C066001C5054 /* CountryCell.xib */; };
 		BC5A348C2429C0DA001C5054 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A348B2429C0DA001C5054 /* Country.swift */; };
+		BC5A34932429EF8C001C5054 /* VerifyUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34922429EF8C001C5054 /* VerifyUserVC.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -642,8 +641,6 @@
 		57840A1A2240DB9400338FD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		57840A1F2240DDEB00338FD5 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		5787C0C522650FA500568CEC /* SetUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUserViewModel.swift; sourceTree = "<group>"; };
-		578B94D92263CBD800FB5BC6 /* ConfirmUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmUserVC.swift; sourceTree = "<group>"; };
-		578B94DB2263CBE300FB5BC6 /* ConfirmUserVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConfirmUserVC.storyboard; sourceTree = "<group>"; };
 		57A1CA622270FC4700E2A1E3 /* LanguageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageVC.swift; sourceTree = "<group>"; };
 		57A1CA642270FCF000E2A1E3 /* LanguageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LanguageVC.storyboard; sourceTree = "<group>"; };
 		57A95196224178010020F55D /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
@@ -832,6 +829,7 @@
 		BC5A34862429C065001C5054 /* CountryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
 		BC5A34872429C066001C5054 /* CountryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryCell.xib; sourceTree = "<group>"; };
 		BC5A348B2429C0DA001C5054 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		BC5A34922429EF8C001C5054 /* VerifyUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyUserVC.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -1237,7 +1235,6 @@
 				BCC2FAE92418E72000A3DD87 /* BaseSignUpVC.swift */,
 				BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */,
 				5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */,
-				578B94D82263CBC300FB5BC6 /* ConfirmUserVC */,
 				5787C0C222650F8A00568CEC /* SetUserVC */,
 				BC34B4CF241F1BDC00855DE2 /* CreatePasswordVC */,
 			);
@@ -1606,15 +1603,6 @@
 				5787C0C522650FA500568CEC /* SetUserViewModel.swift */,
 			);
 			path = SetUserVC;
-			sourceTree = "<group>";
-		};
-		578B94D82263CBC300FB5BC6 /* ConfirmUserVC */ = {
-			isa = PBXGroup;
-			children = (
-				578B94D92263CBD800FB5BC6 /* ConfirmUserVC.swift */,
-				578B94DB2263CBE300FB5BC6 /* ConfirmUserVC.storyboard */,
-			);
-			path = ConfirmUserVC;
 			sourceTree = "<group>";
 		};
 		5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */ = {
@@ -2238,6 +2226,14 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		BC5A348F2429EF47001C5054 /* VerifyUserVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC5A34922429EF8C001C5054 /* VerifyUserVC.swift */,
+			);
+			path = VerifyUserVC;
+			sourceTree = "<group>";
+		};
 		BC619B0F237268240005BB94 /* CommunitiesVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -2673,6 +2669,7 @@
 		BCCE669D2429B843004F47DC /* SignUpWithPhoneVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC5A348F2429EF47001C5054 /* VerifyUserVC */,
 				BCCE668F2428A9B8004F47DC /* SignUpWithPhoneVC.swift */,
 				BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */,
 				BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */,
@@ -2945,7 +2942,6 @@
 				BC9066F323A9DFC2000F9A3B /* ResponseAPIWalletGetTransferHistory.json in Resources */,
 				BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */,
 				571B14F9223A935C00630C8F /* Main.storyboard in Resources */,
-				578B94DC2263CBE300FB5BC6 /* ConfirmUserVC.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3274,6 +3270,7 @@
 				BCC60E1623A0D02C00D40013 /* FeedPageHeaderView.swift in Sources */,
 				BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */,
 				BC9066FA23A9E34C000F9A3B /* TransferHistoryItemCell.swift in Sources */,
+				BC5A34932429EF8C001C5054 /* VerifyUserVC.swift in Sources */,
 				BC6B7657236A9D4600A7AF2A /* CommunityRuleCell.swift in Sources */,
 				BCF74A6723618D9000B91089 /* CMSegmentedControl.swift in Sources */,
 				B1D7AD5C23A10664007D1A13 /* QRScannerViewController.swift in Sources */,
@@ -3443,7 +3440,6 @@
 				BCD3BC8D23AC66740036C947 /* UICollectionView+PureLayout.swift in Sources */,
 				BC286C3523A2187100801A26 /* MyImageView.swift in Sources */,
 				BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */,
-				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				BCCE0AB22368225600A183AA /* MyProfileHeaderView.swift in Sources */,
 				BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */,
 				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,
