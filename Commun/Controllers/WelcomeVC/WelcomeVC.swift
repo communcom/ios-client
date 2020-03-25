@@ -12,7 +12,7 @@ class WelcomeVC: BaseViewController {
     // MARK: - Properties
     
     // MARK: - Subviews
-    lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold))
+    lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
     lazy var pageControl = CMPageControll(numberOfPages: 3)
     
     // MARK: - Methods
@@ -51,7 +51,7 @@ class WelcomeVC: BaseViewController {
         
         // top sign in button
         view.addSubview(topSignInButton)
-        topSignInButton.autoPinTopAndTrailingToSuperViewSafeArea()
+        topSignInButton.autoPinTopAndTrailingToSuperViewSafeArea(inset: 0, xInset: 16)
         
         // page control
         view.addSubview(pageControl)
