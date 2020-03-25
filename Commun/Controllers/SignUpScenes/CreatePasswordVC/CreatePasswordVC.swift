@@ -51,7 +51,13 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     override func setUp() {
         super.setUp()
         titleLabel.text = "create Password".localized().uppercaseFirst
-        titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
+        
+        switch UIDevice.current.screenType {
+        case .iPhones_5_5s_5c_SE:
+            titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
+        default:
+            break
+        }
         
         AnalyticsManger.shared.openEnterPassword()
         // text field
