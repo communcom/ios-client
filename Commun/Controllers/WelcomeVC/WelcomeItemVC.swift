@@ -9,8 +9,12 @@
 import Foundation
 
 class WelcomeItemVC: BaseViewController {
+    // MARK: - Constants
+    let spacing: CGFloat = 16
+    
     // MARK: - Properties
     let index: Int
+    var imageViewHeightConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
     lazy var imageView = UIImageView(imageNamed: "image-welcome-item-\(index)", contentMode: .scaleAspectFit)
@@ -30,11 +34,13 @@ class WelcomeItemVC: BaseViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
         view.addSubview(imageView)
         imageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        imageView.setContentHuggingPriority(.defaultLow, for: .vertical)
         
         view.addSubview(titleLabel)
-        titleLabel.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: .adaptive(height: 46))
+        titleLabel.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: spacing)
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 60, relation: .greaterThanOrEqual)
@@ -62,7 +68,7 @@ class WelcomeItemVC: BaseViewController {
         titleLabel.attributedText = titleAString
         
         view.addSubview(descriptionLabel)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: .adaptive(height: 25))
+        descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: spacing)
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16, relation: .greaterThanOrEqual)
@@ -98,5 +104,19 @@ class WelcomeItemVC: BaseViewController {
         descriptionLabel.attributedText = descriptionAS
         
         descriptionLabel.autoPinEdge(toSuperviewEdge: .bottom)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let titleHeight = titleLabel.intrinsicContentSize.height
+        let descriptionHeight = descriptionLabel.intrinsicContentSize.height
+        let height = view.height - titleHeight - descriptionHeight - 2 * spacing
+        
+        if let constraint = imageViewHeightConstraint {
+            constraint.constant = height
+            view.layoutIfNeeded()
+        } else {
+            imageViewHeightConstraint = imageView.autoSetDimension(.height, toSize: height)
+        }
     }
 }

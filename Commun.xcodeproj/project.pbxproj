@@ -301,7 +301,6 @@
 		BC5A348C2429C0DA001C5054 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A348B2429C0DA001C5054 /* Country.swift */; };
 		BC5A34932429EF8C001C5054 /* VerifyUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34922429EF8C001C5054 /* VerifyUserVC.swift */; };
 		BC5A34A0242B08D6001C5054 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A349F242B08D6001C5054 /* WelcomeVC.swift */; };
-		BC5A34A2242B0CBC001C5054 /* WelcomePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34A1242B0CBC001C5054 /* WelcomePageVC.swift */; };
 		BC5A34A4242B0DA3001C5054 /* WelcomeItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34A3242B0DA3001C5054 /* WelcomeItemVC.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
@@ -822,7 +821,6 @@
 		BC5A348B2429C0DA001C5054 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		BC5A34922429EF8C001C5054 /* VerifyUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyUserVC.swift; sourceTree = "<group>"; };
 		BC5A349F242B08D6001C5054 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
-		BC5A34A1242B0CBC001C5054 /* WelcomePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePageVC.swift; sourceTree = "<group>"; };
 		BC5A34A3242B0DA3001C5054 /* WelcomeItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeItemVC.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
@@ -2219,7 +2217,6 @@
 			isa = PBXGroup;
 			children = (
 				BC5A349F242B08D6001C5054 /* WelcomeVC.swift */,
-				BC5A34A1242B0CBC001C5054 /* WelcomePageVC.swift */,
 				BC5A34A3242B0DA3001C5054 /* WelcomeItemVC.swift */,
 			);
 			path = WelcomeVC;
@@ -3164,7 +3161,6 @@
 				B1D7AD5823A10650007D1A13 /* SignInVC.swift in Sources */,
 				BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */,
 				BCCE669A2429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift in Sources */,
-				BC5A34A2242B0CBC001C5054 /* WelcomePageVC.swift in Sources */,
 				BC7D6090237BF764007D8C1A /* BlacklistViewModel.swift in Sources */,
 				BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */,
 				BC016D50235EA23C00F1319F /* PostsViewController.swift in Sources */,

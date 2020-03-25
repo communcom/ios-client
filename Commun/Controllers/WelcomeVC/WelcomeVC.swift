@@ -10,13 +10,15 @@ import Foundation
 
 class WelcomeVC: BaseViewController {
     override var shouldHideNavigationBar: Bool {true}
+    let numberOfPages = 3
     
     // MARK: - Properties
-    lazy var pageVC = WelcomePageVC()
+    lazy var pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     // MARK: - Subviews
     lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
     lazy var pageControl = CMPageControll(numberOfPages: 3)
+    lazy var containerView = UIView(forAutoLayout: ())
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fillEqually)
     
     lazy var nextButton = CommunButton.default(height: 50, label: "next".localized().uppercaseFirst, isHuggingContent: false)
@@ -24,6 +26,12 @@ class WelcomeVC: BaseViewController {
     lazy var signUpButton = CommunButton.default(height: 50, label: "sign up".localized().uppercaseFirst, isHuggingContent: false)
     
     // MARK: - Methods
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        pageVC.view.translatesAutoresizingMaskIntoConstraints = false
+        pageVC.view.autoPinEdgesToSuperviewEdges()
+        containerView.setNeedsLayout()
+    }
     
     override func setUp() {
         super.setUp()
@@ -74,18 +82,27 @@ class WelcomeVC: BaseViewController {
         signUpButton.addTarget(self, action: #selector(signInButtonTap(_:)), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(nextButtonTap(_:)), for: .touchUpInside)
         
+        // container view
+        view.addSubview(containerView)
+        containerView.autoPinEdge(.top, to: .bottom, of: pageControl, withOffset: 16)
+        containerView.autoPinEdge(.bottom, to: .top, of: buttonStackView, withOffset: -16)
+        containerView.autoPinEdge(toSuperviewEdge: .leading)
+        containerView.autoPinEdge(toSuperviewEdge: .trailing)
+        
         // add pageVC
+        pageVC.dataSource = self
         addChild(pageVC)
-        pageVC.view.configureForAutoLayout()
-        view.addSubview(pageVC.view)
-        pageVC.view.autoPinEdge(.top, to: .bottom, of: pageControl, withOffset: 16)
-        pageVC.view.autoPinEdge(.bottom, to: .top, of: buttonStackView, withOffset: -16)
-        pageVC.view.autoPinEdge(toSuperviewEdge: .leading)
-        pageVC.view.autoPinEdge(toSuperviewEdge: .trailing)
+        containerView.addSubview(pageVC.view)
         pageVC.didMove(toParent: self)
+        kickOff()
     }
     
     // MARK: - Actions
+    private func kickOff() {
+        let firstVC = WelcomeItemVC(index: 0)
+        pageVC.setViewControllers([firstVC], direction: .forward, animated: false, completion: nil)
+    }
+    
     func navigateToSignUp() {
         let controller = SignUpVC()
         show(controller, sender: nil)
@@ -107,10 +124,26 @@ class WelcomeVC: BaseViewController {
     }
     
     @objc func nextButtonTap(_ sender: Any) {
-        let indexNext = pageVC.currentPage + 1
-        AnalyticsManger.shared.onboadringOpenScreen(page: indexNext + 1)
-        pageVC.currentPage = indexNext
-        pageVC.showActionButtons(indexNext)
-        pageControl.selectedIndex = indexNext
+//        let indexNext = pageVC.currentPage + 1
+//        AnalyticsManger.shared.onboadringOpenScreen(page: indexNext + 1)
+//        pageVC.currentPage = indexNext
+//        pageVC.showActionButtons(indexNext)
+//        pageControl.selectedIndex = indexNext
+    }
+}
+
+extension WelcomeVC: UIPageViewControllerDataSource {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let vc = viewController as? WelcomeItemVC,
+            vc.index != 0
+        else {return nil}
+        return WelcomeItemVC(index: vc.index - 1)
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let vc = viewController as? WelcomeItemVC,
+            vc.index < numberOfPages - 1
+        else {return nil}
+        return WelcomeItemVC(index: vc.index + 1)
     }
 }
