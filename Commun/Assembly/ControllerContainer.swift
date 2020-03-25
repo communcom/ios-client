@@ -12,17 +12,6 @@ import Swinject
 let controllerContainer: Container = {
     let container = Container()
     
-    // Welcome scene
-    container.register(WelcomeVC.self, factory: { _ in
-        let vc = WelcomeVC.instanceController(fromStoryboard: "WelcomeVC", withIdentifier: "WelcomeVC") as! WelcomeVC
-        return vc
-    })
-    
-    container.register(WelcomeItemVC.self, factory: { _ in
-        let vc = WelcomeItemVC.instanceController(fromStoryboard: "WelcomeItemVC", withIdentifier: "WelcomeItemVC") as! WelcomeItemVC
-        return vc
-    })
-    
     // Authorization scene
     container.register(BoardingVC.self, factory: { _ in
         let vc = BoardingVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "BoardingVC") as! BoardingVC

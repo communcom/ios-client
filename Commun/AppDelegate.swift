@@ -42,8 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - RootVCs
     var splashVC: SplashVC { SplashVC() }
     var welcomeNC: UINavigationController {
-        let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
-        let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+        let welcomeVC = WelcomeVC()
+        let welcomeNav = UINavigationController(rootViewController: welcomeVC)
         return welcomeNav
     }
     var boardingSetPasscodeVC: BoardingSetPasscodeVC { BoardingSetPasscodeVC() }
