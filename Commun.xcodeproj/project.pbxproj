@@ -302,6 +302,7 @@
 		BC5A34932429EF8C001C5054 /* VerifyUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34922429EF8C001C5054 /* VerifyUserVC.swift */; };
 		BC5A34A0242B08D6001C5054 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A349F242B08D6001C5054 /* WelcomeVC.swift */; };
 		BC5A34A2242B0CBC001C5054 /* WelcomePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34A1242B0CBC001C5054 /* WelcomePageVC.swift */; };
+		BC5A34A4242B0DA3001C5054 /* WelcomeItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34A3242B0DA3001C5054 /* WelcomeItemVC.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -822,6 +823,7 @@
 		BC5A34922429EF8C001C5054 /* VerifyUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyUserVC.swift; sourceTree = "<group>"; };
 		BC5A349F242B08D6001C5054 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		BC5A34A1242B0CBC001C5054 /* WelcomePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePageVC.swift; sourceTree = "<group>"; };
+		BC5A34A3242B0DA3001C5054 /* WelcomeItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeItemVC.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -2218,6 +2220,7 @@
 			children = (
 				BC5A349F242B08D6001C5054 /* WelcomeVC.swift */,
 				BC5A34A1242B0CBC001C5054 /* WelcomePageVC.swift */,
+				BC5A34A3242B0DA3001C5054 /* WelcomeItemVC.swift */,
 			);
 			path = WelcomeVC;
 			sourceTree = "<group>";
@@ -3235,6 +3238,7 @@
 				BC597A89238CF20500103F4F /* FTUECommunityCell.swift in Sources */,
 				BC4AD65423B09CB4008546A4 /* BalanceCell.swift in Sources */,
 				3BC613B32342162700075570 /* SwipeDownDismissViewController.swift in Sources */,
+				BC5A34A4242B0DA3001C5054 /* WelcomeItemVC.swift in Sources */,
 				BC6B7653236A74F000A7AF2A /* MyProfileEditBioVC.swift in Sources */,
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
 				BC52914023793D330022EC7F /* CommentForm.swift in Sources */,
