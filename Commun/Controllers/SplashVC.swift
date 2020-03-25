@@ -9,20 +9,25 @@
 import UIKit
 import RxSwift
 
-class SplashViewController: UIViewController {
-    @IBOutlet weak var splashImageView: UIImageView!
+class SplashVC: BaseViewController {
+    lazy var slashImageView = UIImageView(width: 60, height: 130.5, imageNamed: "slash")
     var errorView: UIView!
-    private let disposeBag = DisposeBag()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func setUp() {
+        super.setUp()
+        view.backgroundColor = .appMainColor
+        
+        view.addSubview(slashImageView)
+        slashImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        slashImageView.autoAlignAxis(toSuperviewAxis: .vertical)
+        
         let zoomAnim = CABasicAnimation(keyPath: "transform.scale")
         zoomAnim.fromValue = 1
         zoomAnim.toValue = 1.2
         zoomAnim.duration = 0.8
         zoomAnim.repeatCount = .infinity
         zoomAnim.autoreverses = true
-        splashImageView.layer.add(zoomAnim, forKey: "Loading")
+        slashImageView.layer.add(zoomAnim, forKey: "Loading")
         // Do any additional setup after loading the view.
         
         AuthManager.shared.status
@@ -52,12 +57,12 @@ class SplashViewController: UIViewController {
     }
     
     func animateSplash(_ completion: @escaping () -> Void) {
-        splashImageView.layer.removeAnimation(forKey: "Loading")
+        slashImageView.layer.removeAnimation(forKey: "Loading")
         UIView.animate(withDuration: 0.3, animations: {
-            self.splashImageView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+            self.slashImageView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         }) { (_) in
             UIView.animate(withDuration: 0.3, animations: {
-                self.splashImageView.transform = CGAffineTransform(scaleX: 30, y: 30)
+                self.slashImageView.transform = CGAffineTransform(scaleX: 30, y: 30)
             }, completion: { _ in
                 completion()
             })

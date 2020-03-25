@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var disposeBag = DisposeBag()
 
     // MARK: - RootVCs
-    var splashVC: SplashViewController { controllerContainer.resolve(SplashViewController.self)! }
+    var splashVC: SplashVC { SplashVC() }
     var welcomeNC: UINavigationController {
         let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
         let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
@@ -51,6 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = splashVC
+        
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
             // Analytics
@@ -106,6 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
             .disposed(by: disposeBag)
         
+        window!.makeKeyAndVisible()
         return true
     }
     
@@ -146,7 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
 
-        if let currentVC = window?.rootViewController as? SplashViewController {
+        if let currentVC = window?.rootViewController as? SplashVC {
             currentVC.animateSplash {
                 self.window?.rootViewController = rootVC
             }
