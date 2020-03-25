@@ -34,7 +34,7 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
             return itemView
         })
     
-    lazy var resendButton = UIButton(labelFont: .boldSystemFont(ofSize: 15))
+    lazy var resendButton = UIButton(labelFont: .systemFont(ofSize: 15, weight: .semibold))
     
     // MARK: - Methods
     override func viewDidAppear(_ animated: Bool) {
@@ -93,16 +93,18 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
         resendButton.autoAlignAxis(toSuperviewAxis: .vertical)
         resendButton.autoPinEdge(toSuperviewEdge: .bottom)
 
-        resendButton.setTitleColor(.appGrayColor, for: .disabled)
         resendButton.addTarget(self, action: #selector(resendButtonTapped), for: .touchUpInside)
     }
     
     private func setResendButtonEnabled(_ enabled: Bool = true) {
-        resendButton.isEnabled = enabled
         if enabled {
+            resendButton.isUserInteractionEnabled = true
+            resendButton.setTitleColor(.appMainColor, for: .normal)
             resendButton.setTitle("resend verification code".localized().uppercaseFirst, for: .normal)
         } else {
-            resendButton.setTitle("resend verification code".localized().uppercaseFirst + "0:\(String(describing: resendSeconds).addFirstZero())", for: .disabled)
+            resendButton.isUserInteractionEnabled = false
+            resendButton.setTitleColor(.appGrayColor, for: .normal)
+            resendButton.setTitle("resend verification code".localized().uppercaseFirst + " 0:\(String(describing: resendSeconds).addFirstZero())", for: .normal)
         }
     }
     
@@ -115,8 +117,6 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
             setResendButtonEnabled()
             return
         }
-
-        resendButton.isEnabled = false
 
         let dateNextSmsRetry = date.convert(toDateFormat: .nextSmsDateType)
         resendSeconds = Date().seconds(date: dateNextSmsRetry)
