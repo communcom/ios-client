@@ -327,6 +327,7 @@
 		BC7445D6242B57A9009915EA /* ReferralUsersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7445D5242B57A9009915EA /* ReferralUsersListFetcher.swift */; };
 		BC7445D9242B58A0009915EA /* ReferralUsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7445D8242B58A0009915EA /* ReferralUsersViewModel.swift */; };
 		BC7445DB242B58FA009915EA /* ReferralUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7445DA242B58FA009915EA /* ReferralUsersVC.swift */; };
+		BC7445DE242BB131009915EA /* ReferralHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7445DD242BB131009915EA /* ReferralHeaderView.swift */; };
 		BC7470B02410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7470AF2410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift */; };
 		BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74A18123643C6400D94EF2 /* CommunityController.swift */; };
 		BC74F503237957790018DB8E /* CommentsVC+CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74F502237957790018DB8E /* CommentsVC+CommentCellDelegate.swift */; };
@@ -850,6 +851,7 @@
 		BC7445D5242B57A9009915EA /* ReferralUsersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralUsersListFetcher.swift; sourceTree = "<group>"; };
 		BC7445D8242B58A0009915EA /* ReferralUsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralUsersViewModel.swift; sourceTree = "<group>"; };
 		BC7445DA242B58FA009915EA /* ReferralUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralUsersVC.swift; sourceTree = "<group>"; };
+		BC7445DD242BB131009915EA /* ReferralHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralHeaderView.swift; sourceTree = "<group>"; };
 		BC7470AF2410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPointsSeeAllBalancesVC.swift; sourceTree = "<group>"; };
 		BC74A18123643C6400D94EF2 /* CommunityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityController.swift; sourceTree = "<group>"; };
 		BC74F502237957790018DB8E /* CommentsVC+CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsVC+CommentCellDelegate.swift"; sourceTree = "<group>"; };
@@ -2293,6 +2295,7 @@
 			children = (
 				BC7445D8242B58A0009915EA /* ReferralUsersViewModel.swift */,
 				BC7445DA242B58FA009915EA /* ReferralUsersVC.swift */,
+				BC7445DD242BB131009915EA /* ReferralHeaderView.swift */,
 			);
 			path = ReferralUsersVC;
 			sourceTree = "<group>";
@@ -3432,6 +3435,7 @@
 				BC3AF37F23FBC24400528EEB /* DiscoverySuggestionCell.swift in Sources */,
 				3B0E9C66227050E3002AB1C2 /* UIImageView.swift in Sources */,
 				3BA4D089229315D60022A69D /* UIResponder.swift in Sources */,
+				BC7445DE242BB131009915EA /* ReferralHeaderView.swift in Sources */,
 				BCD00FB82373D78D004A3952 /* CommunityMembersVC+Binding.swift in Sources */,
 				BCB2A6EE23556EE400B3582B /* BasicEditorVC+Layout.swift in Sources */,
 				3B3C8B84234779FE00D8BADB /* UIImage.swift in Sources */,
