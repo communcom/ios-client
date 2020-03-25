@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - RootVCs
     var splashVC: SplashVC { SplashVC() }
     var welcomeNC: UINavigationController {
-        let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
+        let welcomeVC = WelcomeVC()
         let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
         return welcomeNav
     }
