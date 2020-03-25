@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var splashVC: SplashVC { SplashVC() }
     var welcomeNC: UINavigationController {
         let welcomeVC = WelcomeVC()
-        let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+        let welcomeNav = UINavigationController(rootViewController: welcomeVC)
         return welcomeNav
     }
     var boardingSetPasscodeVC: BoardingSetPasscodeVC { BoardingSetPasscodeVC() }
