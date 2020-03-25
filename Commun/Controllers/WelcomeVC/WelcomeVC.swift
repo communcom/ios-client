@@ -24,7 +24,20 @@ class WelcomeVC: BaseViewController {
     
     lazy var nextButton = CommunButton.default(height: 50, label: "next".localized().uppercaseFirst, isHuggingContent: false)
     lazy var bottomSignInButton = UIButton(height: 50, label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), backgroundColor: .f3f5fa, textColor: .appMainColor, cornerRadius: 25)
-    lazy var signUpButton = CommunButton.default(height: 50, label: "sign up".localized().uppercaseFirst, isHuggingContent: false)
+    lazy var signUpButton: UIView = {
+        let view = UIView(height: 50, backgroundColor: .appMainColor, cornerRadius: 25)
+        let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+        hStack.addArrangedSubviews([
+            UILabel.with(text: "start and get 30 points".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .white),
+            UIImageView(width: 35, height: 33, imageNamed: "coin-reward")
+        ])
+        view.addSubview(hStack)
+        hStack.autoCenterInSuperview()
+        
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(signUpButtonTap(_:))))
+        return view
+    }()
     
     // MARK: - Methods
     override func viewDidLayoutSubviews() {
@@ -80,7 +93,6 @@ class WelcomeVC: BaseViewController {
         ])
         
         bottomSignInButton.addTarget(self, action: #selector(signInButtonTap(_:)), for: .touchUpInside)
-        signUpButton.addTarget(self, action: #selector(signInButtonTap(_:)), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(nextButtonTap(_:)), for: .touchUpInside)
         
         // container view
