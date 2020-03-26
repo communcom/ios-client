@@ -11,7 +11,6 @@
 		3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B06862F2346FFA6008953C5 /* CommunButton.swift */; };
 		3B068632234700DC008953C5 /* BasicEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B068631234700DC008953C5 /* BasicEditorVC.swift */; };
 		3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B06863323470A33008953C5 /* BasicEditorTextView.swift */; };
-		3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */; };
 		3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */; };
 		3B0E9C66227050E3002AB1C2 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C65227050E3002AB1C2 /* UIImageView.swift */; };
 		3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C6B2270634B002AB1C2 /* ProfileChooseAvatarVC.swift */; };
@@ -376,6 +375,7 @@
 		BC99B65A23E17848004AA74E /* UISearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC99B65923E17848004AA74E /* UISearchController.swift */; };
 		BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */ = {isa = PBXBuildFile; fileRef = BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */; };
 		BCA0039D23716AA1002A68BA /* LeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA0039C23716AA1002A68BA /* LeaderController.swift */; };
+		BCA5B722242C94DB00C8F693 /* MyProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA5B721242C94DB00C8F693 /* MyProfileEditCoverVC.swift */; };
 		BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA97112236004F500AE37E1 /* CommentsViewModel.swift */; };
 		BCA9711D2360347D00AE37E1 /* CommunityPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9711C2360347D00AE37E1 /* CommunityPageVC.swift */; };
 		BCA9711F2360380400AE37E1 /* CommunityPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */; };
@@ -524,7 +524,6 @@
 		3B06862F2346FFA6008953C5 /* CommunButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunButton.swift; sourceTree = "<group>"; };
 		3B068631234700DC008953C5 /* BasicEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorVC.swift; sourceTree = "<group>"; };
 		3B06863323470A33008953C5 /* BasicEditorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorTextView.swift; sourceTree = "<group>"; };
-		3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCoverVC.swift; sourceTree = "<group>"; };
 		3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalDraggableImageView.swift; sourceTree = "<group>"; };
 		3B0E9C65227050E3002AB1C2 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		3B0E9C6B2270634B002AB1C2 /* ProfileChooseAvatarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileChooseAvatarVC.swift; sourceTree = "<group>"; };
@@ -896,6 +895,7 @@
 		BC99B65923E17848004AA74E /* UISearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISearchController.swift; sourceTree = "<group>"; };
 		BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetLeaders.json; sourceTree = "<group>"; };
 		BCA0039C23716AA1002A68BA /* LeaderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderController.swift; sourceTree = "<group>"; };
+		BCA5B721242C94DB00C8F693 /* MyProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditCoverVC.swift; sourceTree = "<group>"; };
 		BCA97112236004F500AE37E1 /* CommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		BCA9711C2360347D00AE37E1 /* CommunityPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageVC.swift; sourceTree = "<group>"; };
 		BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewModel.swift; sourceTree = "<group>"; };
@@ -1161,12 +1161,12 @@
 				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
 				BC7445D7242B5849009915EA /* ReferralUsersVC */,
 				BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */,
-				3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */,
 				3B0E9C6F22706965002AB1C2 /* ProfileChooseAvatarVC */,
 				BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */,
 				BC22BBCD236C18A900F40658 /* MyProfileSettingsVC */,
 				BC7D6088237BF3C8007D8C1A /* MyProfileBlacklistVC */,
 				BC1E865A242C853500CF202F /* MyProfileEditVC.swift */,
+				BCA5B721242C94DB00C8F693 /* MyProfileEditCoverVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3380,7 +3380,6 @@
 				BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */,
 				BC06A99F23E7CAEE000B690E /* SearchListFetcher.swift in Sources */,
 				BC597A70238BD03C00103F4F /* FilterCell.swift in Sources */,
-				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
 				BCD812482410A2B80035EE13 /* UINavigationBar+Extensions.swift in Sources */,
 				BC4692BF2390D1E10064A38B /* FeedPageVC.swift in Sources */,
 				BC4692DB2394B0540064A38B /* ProfileCellDelegate.swift in Sources */,
@@ -3388,6 +3387,7 @@
 				BC4692D22391160E0064A38B /* LeaderCellDelegate.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
 				BC40719923CEF801000027A3 /* PlaceholderNotificationCell.swift in Sources */,
+				BCA5B722242C94DB00C8F693 /* MyProfileEditCoverVC.swift in Sources */,
 				BC7445D6242B57A9009915EA /* ReferralUsersListFetcher.swift in Sources */,
 				BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */,
 				BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */,
