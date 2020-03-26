@@ -2,7 +2,6 @@ PODS:
   - Action (3.11.0):
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-  - Alamofire (4.9.1)
   - Amplitude-iOS (4.9.3)
   - AppAuth (1.3.0):
     - AppAuth/Core (= 1.3.0)
@@ -192,7 +191,6 @@ PODS:
 
 DEPENDENCIES:
   - Action
-  - Alamofire
   - Amplitude-iOS
   - AppsFlyerFramework
   - ASSpinnerView
@@ -247,7 +245,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Action
-    - Alamofire
     - Amplitude-iOS
     - AppAuth
     - AppsFlyerFramework
@@ -350,7 +347,6 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Action: 689181e4c3f6566844178d8a7da6fef39a9597fc
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Amplitude-iOS: 122e026c44db8460e5efcf84859aa290a0ae9786
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
   AppsFlyerFramework: 9b2a932d826a278413dab7d59ffbe104a972132b
@@ -418,6 +414,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: cac4a0025b4c53c4849b526f799109b3f3548b7c
+PODFILE CHECKSUM: 84747a9350d6246bd6dfbe1baf1c1a05ba672263
 
 COCOAPODS: 1.9.1

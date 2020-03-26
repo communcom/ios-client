@@ -30,7 +30,6 @@ def common_pods_commun
   pod 'AppsFlyerFramework'
   
   pod 'PureLayout'
-  pod 'Alamofire'
   pod 'SDWebImage'
   pod 'SDWebImageWebPCoder'
   pod 'Action'
