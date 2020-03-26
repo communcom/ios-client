@@ -98,6 +98,7 @@ extension MyProfilePageVC {
                 self.coverImageView.image = image
                 self.coverImageView.showLoading(cover: false, spinnerColor: .white)
                 
+                guard let image = image else {return}
                 NetworkService.shared.uploadImage(image)
                     .flatMap { url -> Single<String> in
                         return NetworkService.shared.updateMeta(params: ["cover_url": url]).andThen(Single<String>.just(url))

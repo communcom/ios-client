@@ -12,7 +12,7 @@ class MyProfileEditCoverVC: BaseViewController {
     // MARK: - Properties
     var joinedDateString: String?
     var coverImageViewAspectRatioConstraint: NSLayoutConstraint?
-    var completion: ((UIImage) -> Void)?
+    var completion: ((UIImage?) -> Void)?
     
     // MARK: - Subviews
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
@@ -22,6 +22,8 @@ class MyProfileEditCoverVC: BaseViewController {
     override func setUp() {
         super.setUp()
         title = "change position".localized().uppercaseFirst
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonDidTap(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidTap(_:)))
         
         view.addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
@@ -78,5 +80,14 @@ class MyProfileEditCoverVC: BaseViewController {
         
         coverImageViewAspectRatioConstraint = coverImage.heightAnchor.constraint(equalTo: coverImage.widthAnchor, multiplier: image.size.height / image.size.width)
         coverImageViewAspectRatioConstraint?.isActive = true
+    }
+    
+    @objc func cancelButtonDidTap(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func doneButtonDidTap(_ sender: Any) {
+        let image = scrollView.cropImageView(coverImage, disableHorizontal: true)
+        completion?(image)
     }
 }
