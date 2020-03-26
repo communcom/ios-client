@@ -33,7 +33,7 @@ protocol LanguageVCDelegate: class {
     func didSelectLanguage(_ language: Language)
 }
 
-class LanguageVC: UIViewController {
+class LanguageVC: BaseViewController {
     // MARK: - Properties
     var searchController = UISearchController(searchResultsController: nil) // С поиском будут доработки
     
@@ -41,13 +41,14 @@ class LanguageVC: UIViewController {
     var didChangeLanguage = PublishSubject<Language>()
     
     // MARK: - IBOutlets
-    @IBOutlet weak var tableView: UITableView!
+    lazy var tableView = UITableView(forAutoLayout: ())
     
     // MARK: - Class Functions
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.title = "Interface language"
+    override func setUp() {
+        super.setUp()
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea()
+        title = "Interface language"
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -57,10 +58,6 @@ class LanguageVC: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-    }
-    
-    deinit {
-        didChangeLanguage.onCompleted()
     }
     
     // MARK: - Custom Functions

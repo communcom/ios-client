@@ -23,11 +23,6 @@ let controllerContainer: Container = {
         return vc
     })
     
-    container.register(LanguageVC.self, factory: { _ in
-        let vc = LanguageVC.instanceController(fromStoryboard: "LanguageVC", withIdentifier: "LanguageVC") as! LanguageVC
-        return vc
-    })
-    
     // ProfileEdit scene
     container.register(ProfileEditViewController.self, factory: { _ in
         let vc = ProfileEditViewController.instanceController(fromStoryboard: "ProfileEdit", withIdentifier: "ProfileEditVC") as! ProfileEditViewController
