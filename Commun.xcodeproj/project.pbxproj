@@ -85,7 +85,6 @@
 		3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB32F1823438D4F006572F3 /* DimmingPresentationController.swift */; };
 		3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB32F1A234436EF006572F3 /* PostMetaView.swift */; };
 		3BB32F1D23445618006572F3 /* VCWithParallax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB32F1C23445618006572F3 /* VCWithParallax.swift */; };
-		3BB342B222CA64EA009546B2 /* Boarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BB342B122CA64EA009546B2 /* Boarding.storyboard */; };
 		3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB48ACF22D5F84D00F11B6A /* SetPasscodeVC.swift */; };
 		3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B4822734AE4008F1C64 /* UIColor.swift */; };
 		3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC6139D23419EFC00075570 /* HalfSizePresentationController.swift */; };
@@ -598,7 +597,6 @@
 		3BB32F1823438D4F006572F3 /* DimmingPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
 		3BB32F1A234436EF006572F3 /* PostMetaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMetaView.swift; sourceTree = "<group>"; };
 		3BB32F1C23445618006572F3 /* VCWithParallax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCWithParallax.swift; sourceTree = "<group>"; };
-		3BB342B122CA64EA009546B2 /* Boarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Boarding.storyboard; sourceTree = "<group>"; };
 		3BB48ACF22D5F84D00F11B6A /* SetPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasscodeVC.swift; sourceTree = "<group>"; };
 		3BB86B4822734AE4008F1C64 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		3BC6139D23419EFC00075570 /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
@@ -1302,7 +1300,6 @@
 				BC46592C238E681500AF9C29 /* BoardingSetPasscodeVC.swift */,
 				3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */,
 				BC597A7A238CBFD400103F4F /* ftue */,
-				3BB342B122CA64EA009546B2 /* Boarding.storyboard */,
 			);
 			path = BoardingScenes;
 			sourceTree = "<group>";
@@ -2923,7 +2920,6 @@
 				571B14FE223A935D00630C8F /* Assets.xcassets in Resources */,
 				3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */,
 				BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */,
-				3BB342B222CA64EA009546B2 /* Boarding.storyboard in Resources */,
 				BC247D0523823B650062C979 /* ResponseAPIContentGetProfile.json in Resources */,
 				BC422E4423D00B08000AE946 /* ResponseAPIGetNotifications.json in Resources */,
 				BC9066F323A9DFC2000F9A3B /* ResponseAPIWalletGetTransferHistory.json in Resources */,
