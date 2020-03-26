@@ -40,14 +40,21 @@ class ReferralUsersVC: SubsViewController<ResponseAPIContentGetProfile, Subscrib
     }
     
     @objc func shareButtonDidTouch() {
+        let string = "Sign up for the promotional code \(Config.currentUser?.id ?? "") and get 1 Commun free"
         
+        ShareHelper.share([
+            string,
+            URL(string: "https://commun.com/?invite=\(Config.currentUser?.id ?? "")")!]
+        )
     }
     
     @objc func copyButtonDidTouch() {
-        
+        let string = "Sign up for the promotional code \(Config.currentUser?.id ?? "") and get 1 Commun free"
+        UIPasteboard.general.string = "\(string)\nhttps://commun.com/?invite=\(Config.currentUser?.id ?? "")"
+        self.showDone("copied to clipboard".localized().uppercaseFirst)
     }
     
     @objc func infoButtonDidTouch() {
-        
+        load(url: "https://commun.com/faq")
     }
 }
