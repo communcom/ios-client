@@ -10,7 +10,9 @@ import Foundation
 
 class MyProfileEditCoverVC: BaseViewController {
     // MARK: - Properties
-    var profile: ResponseAPIContentGetProfile?
+    var joinedDateString: String?
+    var coverImageViewAspectRatioConstraint: NSLayoutConstraint?
+    var completion: ((UIImage) -> Void)?
     
     // MARK: - Subviews
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
@@ -29,8 +31,9 @@ class MyProfileEditCoverVC: BaseViewController {
         scrollView.contentView.addSubview(coverImage)
         coverImage.autoPinEdgesToSuperviewEdges()
         
-        coverImage.heightAnchor.constraint(equalTo: coverImage.widthAnchor, multiplier: coverImage.image!.size.height / coverImage.image!.size.width)
-            .isActive = true
+        coverImageViewAspectRatioConstraint = coverImage.heightAnchor.constraint(equalTo: coverImage.widthAnchor, multiplier: coverImage.image!.size.height / coverImage.image!.size.width)
+        coverImageViewAspectRatioConstraint?.isActive = true
+        
         coverImage.widthAnchor.constraint(equalTo: view.widthAnchor)
             .isActive = true
         
@@ -63,9 +66,17 @@ class MyProfileEditCoverVC: BaseViewController {
         userNameLabel.autoPinEdge(.top, to: .top, of: avatarImageView)
         userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         
-        let joinDateLabel = UILabel.with(text: Formatter.joinedText(with: profile?.registration?.time), textSize: 12, weight: .semibold, textColor: .a5a7bd)
+        let joinDateLabel = UILabel.with(text: Formatter.joinedText(with: joinedDateString), textSize: 12, weight: .semibold, textColor: .a5a7bd)
         view.addSubview(joinDateLabel)
         joinDateLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 4)
         joinDateLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+    }
+    
+    func updateWithImage(_ image: UIImage) {
+        coverImage.image = image
+        coverImageViewAspectRatioConstraint?.isActive = false
+        
+        coverImageViewAspectRatioConstraint = coverImage.heightAnchor.constraint(equalTo: coverImage.widthAnchor, multiplier: image.size.height / image.size.width)
+        coverImageViewAspectRatioConstraint?.isActive = true
     }
 }

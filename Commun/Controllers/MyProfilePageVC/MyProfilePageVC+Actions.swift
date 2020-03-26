@@ -87,39 +87,32 @@ extension MyProfilePageVC {
         let pickerVC = SinglePhotoPickerVC()
        
         pickerVC.completion = { image in
-            let coverEditVC = controllerContainer.resolve(ProfileEditCoverVC.self)!
-            
-            self.viewModel.profile.filter {$0 != nil}.map {$0!}
-                .bind(to: coverEditVC.profile)
-                .disposed(by: self.disposeBag)
-            
+            let coverEditVC = MyProfileEditCoverVC()
             coverEditVC.modalPresentationStyle = .fullScreen
-            pickerVC.present(coverEditVC, animated: true, completion: {
-                    coverEditVC.updateImage(image)
-            })
-            
-            coverEditVC.didSelectImage
-                .do(onNext: { image in
-                    coverEditVC.dismiss(animated: true, completion: {
-                        pickerVC.dismiss(animated: true, completion: nil)
+            coverEditVC.joinedDateString = self.viewModel.profile.value?.registration?.time
+            coverEditVC.updateWithImage(image)
+            coverEditVC.completion = {image in
+                coverEditVC.dismiss(animated: true, completion: {
+                    pickerVC.dismiss(animated: true, completion: nil)
+                })
+                self.coverImageView.image = image
+                self.coverImageView.showLoading(cover: false, spinnerColor: .white)
+                
+                NetworkService.shared.uploadImage(image)
+                    .flatMap { url -> Single<String> in
+                        return NetworkService.shared.updateMeta(params: ["cover_url": url]).andThen(Single<String>.just(url))
+                    }
+                    .subscribe(onSuccess: { [weak self] (_) in
+                        self?.coverImageView.hideLoading()
+                    }, onError: { [weak self] (error) in
+                        self?.coverImageView.hideLoading()
+                        self?.coverImageView.image = originalImage
+                        self?.showError(error)
                     })
-                    self.coverImageView.image = image
-                    self.coverImageView.showLoading(cover: false, spinnerColor: .white)
-                })
-                // Upload image
-                .flatMap {NetworkService.shared.uploadImage($0)}
-                // Save to db
-                .flatMap { url -> Single<String> in
-                    return NetworkService.shared.updateMeta(params: ["cover_url": url]).andThen(Single<String>.just(url))
-                }
-                .subscribe(onNext: { [weak self] (_) in
-                    self?.coverImageView.hideLoading()
-                }, onError: { [weak self] (error) in
-                    self?.coverImageView.hideLoading()
-                    self?.coverImageView.image = originalImage
-                    self?.showError(error)
-                })
-                .disposed(by: self.disposeBag)
+                    .disposed(by: self.disposeBag)
+            }
+            
+            pickerVC.present(coverEditVC, animated: true, completion: nil)
         }
         
         pickerVC.modalPresentationStyle = .fullScreen
