@@ -159,9 +159,6 @@
 		B1AB195523E1B9EC00CAD9EC /* CommunShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B1AB194A23E1B9EB00CAD9EC /* CommunShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B1AF88B12415FE9D00330352 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1AF88B32415FE9D00330352 /* Localizable.strings */; };
 		B1B103F4240E65A200253DE8 /* CMAppLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B103F3240E65A200253DE8 /* CMAppLike.swift */; };
-		B1C3712C2383D0F3000BAE2F /* ProfileEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */; };
-		B1C3712D2383D0F3000BAE2F /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */; };
-		B1C371362383E43C000BAE2F /* ProfileEditViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */; };
 		B1D1CF9922F8A28A0071F1B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1D1CF9B22F8A28A0071F1B6 /* InfoPlist.strings */; };
 		B1D78C0923E335D100772BD9 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D78C0823E335D100772BD9 /* UserDefaults+Extensions.swift */; };
 		B1D78C0A23E339C400772BD9 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D78C0823E335D100772BD9 /* UserDefaults+Extensions.swift */; };
@@ -192,6 +189,7 @@
 		BC18FA2123D54E26005DC7E3 /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */; };
 		BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */; };
 		BC18FA2723D56325005DC7E3 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2623D56325005DC7E3 /* UITextField.swift */; };
+		BC1E865B242C853500CF202F /* MyProfileEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1E865A242C853500CF202F /* MyProfileEditVC.swift */; };
 		BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */; };
 		BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */; };
 		BC22BBCC236C0E0300F40658 /* UIStackView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */; };
@@ -682,9 +680,6 @@
 		B1AB195B23E1BA0900CAD9EC /* CommunShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CommunShare.entitlements; sourceTree = "<group>"; };
 		B1AF88B22415FE9D00330352 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1B103F3240E65A200253DE8 /* CMAppLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMAppLike.swift; sourceTree = "<group>"; };
-		B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileEdit.storyboard; sourceTree = "<group>"; };
-		B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
-		B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditViewController+Actions.swift"; sourceTree = "<group>"; };
 		B1D1CF9A22F8A28A0071F1B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B1D78C0823E335D100772BD9 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		B1D7AD5523A10581007D1A13 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -714,6 +709,7 @@
 		BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
 		BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesVC.swift; sourceTree = "<group>"; };
 		BC18FA2623D56325005DC7E3 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		BC1E865A242C853500CF202F /* MyProfileEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditVC.swift; sourceTree = "<group>"; };
 		BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileSettingsVC.swift; sourceTree = "<group>"; };
 		BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentHuggingScrollView.swift; sourceTree = "<group>"; };
 		BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+PureLayout.swift"; sourceTree = "<group>"; };
@@ -1170,6 +1166,7 @@
 				BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */,
 				BC22BBCD236C18A900F40658 /* MyProfileSettingsVC */,
 				BC7D6088237BF3C8007D8C1A /* MyProfileBlacklistVC */,
+				BC1E865A242C853500CF202F /* MyProfileEditVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1726,9 +1723,6 @@
 		B1C371262383D0D6000BAE2F /* ProfileEdit */ = {
 			isa = PBXGroup;
 			children = (
-				B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */,
-				B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */,
-				B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */,
 			);
 			path = ProfileEdit;
 			sourceTree = "<group>";
@@ -2910,7 +2904,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1C3712C2383D0F3000BAE2F /* ProfileEdit.storyboard in Resources */,
 				BC016D47235DA0D400F1319F /* PlaceholderPostCell.xib in Resources */,
 				57FB179C224BFBD700563BF7 /* README.md in Resources */,
 				BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */,
@@ -3315,7 +3308,6 @@
 				BC46592D238E681500AF9C29 /* BoardingSetPasscodeVC.swift in Sources */,
 				BC8F815523E27ECE0024C04A /* WalletBuyCommunVC.swift in Sources */,
 				BCCE66902428A9B8004F47DC /* SignUpWithPhoneVC.swift in Sources */,
-				B1C3712D2383D0F3000BAE2F /* ProfileEditViewController.swift in Sources */,
 				3B3C8B8F2347876000D8BADB /* ArticleEditorTextView+Utilities.swift in Sources */,
 				BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */,
 				BC69F7D1236FD1690097F870 /* NotificationSettingsView.swift in Sources */,
@@ -3336,7 +3328,6 @@
 				BC597A8C238D09C400103F4F /* FTUECommunitiesViewModel.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashVC.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,
-				B1C371362383E43C000BAE2F /* ProfileEditViewController+Actions.swift in Sources */,
 				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,
 				BCDEE7A123F4E99300DD3EB3 /* DiscoveryVC.swift in Sources */,
 				BC69F7DA236FFA190097F870 /* SubsItemCell.swift in Sources */,
@@ -3509,6 +3500,7 @@
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
 				BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */,
+				BC1E865B242C853500CF202F /* MyProfileEditVC.swift in Sources */,
 				3B3C8B982347911D00D8BADB /* PostEditorViewModel.swift in Sources */,
 				BC4692FB239645C70064A38B /* CommunityLeaderFollowCell.swift in Sources */,
 				BC8F814423E27ECE0024C04A /* CommunWalletHeaderView.swift in Sources */,

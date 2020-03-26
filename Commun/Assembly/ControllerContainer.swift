@@ -22,12 +22,6 @@ let controllerContainer: Container = {
         let vc = ProfileChooseAvatarVC.instanceController(fromStoryboard: "ProfilePageVC", withIdentifier: "ProfileChooseAvatarVC") as! ProfileChooseAvatarVC
         return vc
     })
-    
-    // ProfileEdit scene
-    container.register(ProfileEditViewController.self, factory: { _ in
-        let vc = ProfileEditViewController.instanceController(fromStoryboard: "ProfileEdit", withIdentifier: "ProfileEditVC") as! ProfileEditViewController
-        return vc
-    })
 
     return container
 }()
