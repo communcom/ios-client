@@ -1164,6 +1164,7 @@
 		3B51581F226E1D3700108F17 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
 				BC7445D7242B5849009915EA /* ReferralUsersVC */,
 				BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */,
 				3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */,
@@ -1263,11 +1264,10 @@
 			path = ContentTextView;
 			sourceTree = "<group>";
 		};
-		3BAF69C122675ADB0055CCEB /* ProfilePageVC */ = {
+		3BAF69C122675ADB0055CCEB /* UserProfilePageVC */ = {
 			isa = PBXGroup;
 			children = (
 				3B51581A226DE27200108F17 /* Cells */,
-				BCCE0AB02368221700A183AA /* MyProfilePageVC */,
 				B1C371262383D0D6000BAE2F /* ProfileEdit */,
 				BCABF13A2366E94B006B05F5 /* Subviews */,
 				BCABF1382366DF2B006B05F5 /* UserProfilePageVC.swift */,
@@ -1277,7 +1277,7 @@
 				BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */,
 				BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */,
 			);
-			path = ProfilePageVC;
+			path = UserProfilePageVC;
 			sourceTree = "<group>";
 		};
 		3BB32F1423438C1F006572F3 /* CommunActionSheet */ = {
@@ -1429,16 +1429,16 @@
 				3B986B6322CE4B8100C1E985 /* SignUpScenes */,
 				57FB179E224C077300563BF7 /* SignInVC */,
 				3BB48AD122D641C800F11B6A /* BoardingScenes */,
+				571B1509223A94CD00630C8F /* TabBarController */,
 				576DC917223E41CA00EDED41 /* FeedPageVC */,
 				BCDEE79D23F4E97300DD3EB3 /* DiscoveryVC */,
 				BC4071A423CF0982000027A3 /* NotificationsPageVC */,
-				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
+				BCCE0AB02368221700A183AA /* MyProfilePageVC */,
+				3BAF69C122675ADB0055CCEB /* UserProfilePageVC */,
 				BCA971192360339B00AE37E1 /* CommunityPageVC */,
-				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
 				3B6205582346E40A0017FEB7 /* PostEditorVCs */,
 				5725173A2243E4510033125C /* PostPageVC */,
 				BC561E7E238B76AD004C53EB /* ReportVCs */,
-				571B1509223A94CD00630C8F /* TabBarController */,
 				BC8F811723E27ECE0024C04A /* WalletVC */,
 			);
 			path = Controllers;
