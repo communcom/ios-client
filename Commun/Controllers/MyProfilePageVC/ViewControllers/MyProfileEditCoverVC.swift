@@ -25,6 +25,7 @@ class MyProfileEditCoverVC: BaseViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonDidTap(_:)))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidTap(_:)))
         
+        scrollView.showsVerticalScrollIndicator = false
         view.addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         scrollView.widthAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 414 / 158)

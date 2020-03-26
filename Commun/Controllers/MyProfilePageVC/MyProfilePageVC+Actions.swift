@@ -113,7 +113,8 @@ extension MyProfilePageVC {
                     .disposed(by: self.disposeBag)
             }
             
-            pickerVC.present(coverEditVC, animated: true, completion: nil)
+            let nc = BaseNavigationController(rootViewController: coverEditVC)
+            pickerVC.present(nc, animated: true, completion: nil)
         }
         
         pickerVC.modalPresentationStyle = .fullScreen
