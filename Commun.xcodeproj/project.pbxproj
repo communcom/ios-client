@@ -109,7 +109,6 @@
 		571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B150A223A94DE00630C8F /* TabBarVC.swift */; };
 		5721AE41226E543E00133BFF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5721AE40226E543E00133BFF /* WebKit.framework */; };
 		5721E87122650AC0003BE04B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5721E87022650AC0003BE04B /* StringExtension.swift */; };
-		572517322243935C0033125C /* ControllerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572517312243935C0033125C /* ControllerContainer.swift */; };
 		575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECAB226066F800A7EC2D /* FormTextField.swift */; };
 		575AECAE22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */; };
 		576DC921223E42C800EDED41 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC920223E42C800EDED41 /* UIViewController+Extensions.swift */; };
@@ -627,7 +626,6 @@
 		571B150A223A94DE00630C8F /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		5721AE40226E543E00133BFF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5721E87022650AC0003BE04B /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
-		572517312243935C0033125C /* ControllerContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerContainer.swift; sourceTree = "<group>"; };
 		575AECAB226066F800A7EC2D /* FormTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextField.swift; sourceTree = "<group>"; };
 		575AECAD22606D0800A7EC2D /* SignUpWithPhoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithPhoneViewModel.swift; sourceTree = "<group>"; };
 		576DC920223E42C800EDED41 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
@@ -1395,7 +1393,6 @@
 			children = (
 				B12684EF22C1E56B0046C838 /* Commun.entitlements */,
 				571B14F3223A935C00630C8F /* AppDelegate.swift */,
-				57840A182240DAFF00338FD5 /* Assembly */,
 				AC5D7D872385A1AC00EEC5ED /* Helpers */,
 				578409EA223FAC0000338FD5 /* Vendor */,
 				3B6CB72E23432D510097B2A1 /* Managers */,
@@ -1566,14 +1563,6 @@
 				BCAF5B1F241B433400C157B5 /* ViewTag.swift */,
 			);
 			path = Vendor;
-			sourceTree = "<group>";
-		};
-		57840A182240DAFF00338FD5 /* Assembly */ = {
-			isa = PBXGroup;
-			children = (
-				572517312243935C0033125C /* ControllerContainer.swift */,
-			);
-			path = Assembly;
 			sourceTree = "<group>";
 		};
 		57840A192240DB1200338FD5 /* Services */ = {
@@ -3498,7 +3487,6 @@
 				BC529142237941920022EC7F /* CommentTextView.swift in Sources */,
 				BC3694F523698FEE00B2E078 /* EditorVC+Actions.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
-				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
 				BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */,
 				BC1E865B242C853500CF202F /* MyProfileEditVC.swift in Sources */,
 				3B3C8B982347911D00D8BADB /* PostEditorViewModel.swift in Sources */,

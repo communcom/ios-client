@@ -31,7 +31,6 @@ def common_pods_commun
   
   pod 'PureLayout'
   pod 'Alamofire'
-  pod 'Swinject'
   pod 'SDWebImage'
   pod 'SDWebImageWebPCoder'
   pod 'Action'

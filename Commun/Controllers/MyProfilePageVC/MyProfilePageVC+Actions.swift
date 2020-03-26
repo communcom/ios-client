@@ -144,7 +144,7 @@ extension MyProfilePageVC {
         }
         
         // On updating
-        let chooseAvatarVC = controllerContainer.resolve(ProfileChooseAvatarVC.self)!
+        let chooseAvatarVC = ProfileChooseAvatarVC.instanceController(fromStoryboard: "ProfilePageVC", withIdentifier: "ProfileChooseAvatarVC") as! ProfileChooseAvatarVC
         self.present(chooseAvatarVC, animated: true, completion: nil)
         
         return chooseAvatarVC.viewModel.didSelectImage
