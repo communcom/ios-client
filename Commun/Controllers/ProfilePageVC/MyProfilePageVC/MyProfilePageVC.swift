@@ -120,6 +120,16 @@ class MyProfilePageVC: UserProfilePageVC {
 //                vc.title = "saved posts".localized().uppercaseFirst
 //                self.show(vc, sender: self)
 //            }),
+            CommunActionSheet.Action(title: "referral".localized().uppercaseFirst,
+                                     icon: UIImage(named: "profile_options_referral"),
+                                     style: .profile,
+                                     handle: {
+                                        let vc = ReferralUsersVC()
+                                        vc.title = "referral".localized().uppercaseFirst
+                                        self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
+                                        self.baseNavigationController?.changeStatusBarStyle(.default)
+                                        self.show(vc, sender: self)
+            }),
             CommunActionSheet.Action(title: "liked".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_liked"),
                                      style: .profile,
