@@ -64,7 +64,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrW-xH-jrY" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrW-xH-jrY">
                                 <rect key="frame" x="103.5" y="684" width="207" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="ProfileChooseAvatarRequestAccessButton" label="ProfileChooseAvatarRequestAccessButton"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>

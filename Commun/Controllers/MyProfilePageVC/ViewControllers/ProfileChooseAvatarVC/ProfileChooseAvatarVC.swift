@@ -15,7 +15,7 @@ class ProfileChooseAvatarVC: UIViewController {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var avatarScrollView: UIScrollView!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var requestAccessButton: BlankButton!
+    @IBOutlet weak var requestAccessButton: UIButton!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     

@@ -28,7 +28,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
     
     lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#F53D5B")!, numberOfLines: 0, textAlignment: .center)
     
-    lazy var nextButton = StepButton(height: 56, label: "next".localized().uppercaseFirst, labelFont: UIFont.boldSystemFont(ofSize: 17 * Config.heightRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 8)
+    lazy var nextButton = CommunButton.default(height: 56, label: "next".localized().uppercaseFirst, cornerRadius: 8, isHuggingContent: false, isDisableGrayColor: true)
     
     // MARK: - Methods
     
@@ -102,7 +102,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 return false
             }
             .map {self.viewModel.isUserNameValid($0)}
-            .bind(to: nextButton.rx.isEnabled)
+            .bind(to: nextButton.rx.isDisabled)
             .disposed(by: disposeBag)
         
         viewModel.errorMessage
