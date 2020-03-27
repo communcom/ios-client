@@ -111,7 +111,6 @@
 		AC0F9C30237C307300A5002C /* CyberSwift.framework in CyberSwift */ = {isa = PBXBuildFile; fileRef = AC759B97237C15C20069D169 /* CyberSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AC2423AA23E866C6006A39B5 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2423A923E866C6006A39B5 /* ShareViewController.swift */; };
 		AC2CCB762412924C00C2DFD4 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2CCB722412924C00C2DFD4 /* UIButton+Extensions.swift */; };
-		AC2CCB772412924C00C2DFD4 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2CCB752412924C00C2DFD4 /* UILabel+Extensions.swift */; };
 		AC2CCB792412962D00C2DFD4 /* BoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2CCB782412962D00C2DFD4 /* BoardingVC.swift */; };
 		AC3386A12371D1B6009DB3BB /* EmbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3386A02371D1B6009DB3BB /* EmbedView.swift */; };
 		AC5D7D8B2385A1C400EEC5ED /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */; };
@@ -611,7 +610,6 @@
 		AC0B05C123A93A1100474628 /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
 		AC2423A923E866C6006A39B5 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		AC2CCB722412924C00C2DFD4 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
-		AC2CCB752412924C00C2DFD4 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		AC2CCB782412962D00C2DFD4 /* BoardingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardingVC.swift; sourceTree = "<group>"; };
 		AC3386A02371D1B6009DB3BB /* EmbedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedView.swift; sourceTree = "<group>"; };
 		AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
@@ -2448,7 +2446,6 @@
 			isa = PBXGroup;
 			children = (
 				AC2CCB722412924C00C2DFD4 /* UIButton+Extensions.swift */,
-				AC2CCB752412924C00C2DFD4 /* UILabel+Extensions.swift */,
 				3BDD9A0E228F07EF00B2A1DA /* UIApplication+Extensions.swift */,
 				3BB86B4822734AE4008F1C64 /* UIColor+Extensions.swift */,
 				3B0E9C65227050E3002AB1C2 /* UIImageView+Extensions.swift */,
@@ -3053,7 +3050,6 @@
 				BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */,
 				BC016D50235EA23C00F1319F /* PostsViewController.swift in Sources */,
 				BC016D54235EA32600F1319F /* PostsViewModel.swift in Sources */,
-				AC2CCB772412924C00C2DFD4 /* UILabel+Extensions.swift in Sources */,
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,
 				BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */,
 				BCF4339723F5385100EB07CE /* SingleEntitySearchVC.swift in Sources */,

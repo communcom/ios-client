@@ -68,12 +68,12 @@ class CMToolbarView: UIView {
         setGradientBackground()
         
         // Add label
-        let addLabel = UILabel()
-        addLabel.tune(withText: "add".localized().uppercaseFirst + ":",
-                      textColor: .white,
-                      font: UIFont.systemFont(ofSize: .adaptive(width: 12.0), weight: .bold),
-                      alignment: .left,
-                      isMultiLines: false)
+        let addLabel = UILabel.with(
+            text: "add".localized().uppercaseFirst + ":",
+            textSize: .adaptive(width: 12.0),
+            weight: .bold,
+            textColor: .white
+        )
 
         addSubview(addLabel)
         addLabel.autoPinTopAndLeadingToSuperView(inset: .adaptive(height: 19.0), xInset: .adaptive(width: 15.0))
