@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 class DiscoveryPostsVC: PostsViewController {
+    override var shouldHideNavigationBar: Bool {true}
+    
     override var listLoadingStateObservable: Observable<ListFetcherState> {
         let viewModel = self.viewModel as! PostsViewModel
         return Observable.merge(

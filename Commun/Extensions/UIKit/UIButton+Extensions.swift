@@ -11,21 +11,6 @@ import UIKit
 private var pTouchAreaEdgeInsets: UIEdgeInsets = .zero
 
 extension UIButton {
-    /// hexColors: [normal, highlighted, selected, disabled]
-    public func tune(withTitle title: String,
-                     textColor: UIColor?,
-                     font: UIFont?,
-                     alignment: NSTextAlignment) {
-        self.titleLabel?.font = font
-        self.titleLabel?.textAlignment = alignment
-        self.contentMode = .scaleAspectFill
-        self.backgroundColor = backgroundColor
-        if let textColor = textColor {
-            self.setTitleColor(textColor, for: .normal)
-        }
-        self.setTitle(title.localized(), for: .normal)
-    }
-
     // MARK: - expansion of the touch area
     public var touchAreaEdgeInsets: UIEdgeInsets {
         get {
