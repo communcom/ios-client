@@ -110,6 +110,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.showsVerticalScrollIndicator = false
+        
         return tableView
     }
     
@@ -135,8 +136,15 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         title = profile.name
         
         // cover
-        if let urlString = profile.coverUrl {
-            coverImageView.setImageDetectGif(with: urlString)
+        if let coverURL = profile.coverUrl {
+            coverImageView.setImageDetectGif(with: coverURL)
+            
+            let imageViewTemp = UIImageView(frame: CGRect(origin: CGPoint(x: 0.0, y: -70.0), size: CGSize(width: UIScreen.main.bounds.width, height: 70.0)))
+            imageViewTemp.backgroundColor = .clear
+            imageViewTemp.addTapToViewer(with: coverURL)
+            imageViewTemp.highlightedImage = coverImageView.image
+            
+            tableView.addSubview(imageViewTemp)
         }
         
         // header
@@ -151,7 +159,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             })
             .disposed(by: disposeBag)
     }
-    
+       
     override func handleListLoading() {
         switch (viewModel as! CommunityPageViewModel).segmentedItem.value {
         case .posts:
@@ -299,7 +307,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             let postPageVC = PostPageVC(post: post)
             self.show(postPageVC, sender: nil)
         case is CommunityLeaderCell:
-            //TODO: Tap a leaderCell
+            // TODO: - Tap a leaderCell
             break
         default:
             break
@@ -314,7 +322,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         avatarImageView.setAvatar(urlString: profile.avatarUrl, namePlaceHolder: profile.name)
         headerView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-        
+                
         let userNameLabel = UILabel.with(text: profile.name, textSize: 15, weight: .semibold)
         headerView.addSubview(userNameLabel)
         userNameLabel.autoPinEdge(toSuperviewEdge: .top)
@@ -350,6 +358,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         }
     }
 }
+
 
 // MARK: - UITableViewDelegate
 extension CommunityPageVC: UITableViewDelegate {

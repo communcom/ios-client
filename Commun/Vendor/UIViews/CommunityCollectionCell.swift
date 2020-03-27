@@ -22,6 +22,7 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+    
     lazy var avatarImageView: MyAvatarImageView = {
         let avatar = MyAvatarImageView(size: 50)
         avatar.backgroundColor = .white

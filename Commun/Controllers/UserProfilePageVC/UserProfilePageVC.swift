@@ -102,8 +102,15 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         username = profile.username
 
         // cover
-        if let urlString = profile.coverUrl {
-            coverImageView.setImageDetectGif(with: urlString)
+        if let coverURL = profile.coverUrl {
+            coverImageView.setImageDetectGif(with: coverURL)
+            
+            let imageViewTemp = UIImageView(frame: CGRect(origin: CGPoint(x: 0.0, y: -70.0), size: CGSize(width: UIScreen.main.bounds.width, height: 70.0)))
+            imageViewTemp.backgroundColor = .clear
+            imageViewTemp.addTapToViewer(with: coverURL)
+            imageViewTemp.highlightedImage = coverImageView.image
+
+            tableView.addSubview(imageViewTemp)
         }
         
         // header

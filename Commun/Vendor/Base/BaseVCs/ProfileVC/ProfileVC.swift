@@ -205,12 +205,15 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+       
         if originInsetBottom == nil && tableView.contentInset.bottom > 0 {
             originInsetBottom = tableView.contentInset.bottom
         }
     }
 }
 
+
+// MARK: - CMSegmentedControlDelegate
 extension ProfileVC: CMSegmentedControlDelegate {
     func segmentedControl(_ segmentedControl: CMSegmentedControl, didTapOptionAtIndex: Int) {
         // Add additional space to bottom of tableView to prevent jumping lag when swich tab
