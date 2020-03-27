@@ -35,9 +35,9 @@ extension UIViewController {
     }
 
     // MARK: - Custom Functions
-    class func instanceController(fromStoryboard storyboard: String, withIdentifier identifier: String) -> UIViewController {
+    static func fromStoryboard(_ storyboard: String, withIdentifier identifier: String) -> Self {
         let st = UIStoryboard(name: storyboard, bundle: nil)
-        return st.instantiateViewController(withIdentifier: identifier)
+        return st.instantiateViewController(withIdentifier: identifier) as! Self
     }
     
     func showActionSheet(title: String? = nil, message: String? = nil, actions: [UIAlertAction] = [], cancelCompletion: (() -> Void)? = nil) {
