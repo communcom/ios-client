@@ -50,6 +50,7 @@ class ProfileHeaderView: MyTableHeaderView {
     
     override func commonInit() {
         super.commonInit()
+        
         backgroundColor = .white
         
         addSubview(avatarImageView)
@@ -79,6 +80,7 @@ class ProfileHeaderView: MyTableHeaderView {
     
     override func reassignTableHeaderView() {
         super.reassignTableHeaderView()
+        
         roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
     }
 }

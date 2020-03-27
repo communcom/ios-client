@@ -119,8 +119,8 @@ class MyAvatarImageView: MyView {
         imageView.setImageForName(id, backgroundColor: color, circular: true, textAttributes: nil, gradient: false)
     }
     
-    func addTapToViewer() {
-        imageView.addTapToViewer()
+    func addTapToViewer(with imageURL: String? = nil) {
+        imageView.addTapToViewer(with: imageURL)
     }
     
     func addTapToOpenUserProfile(profileId: String?) {

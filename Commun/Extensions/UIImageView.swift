@@ -149,14 +149,20 @@ extension UIImageView {
         }
     }
     
-    func addTapToViewer() {
+    func addTapToViewer(with imageURL: String? = nil) {
         self.isUserInteractionEnabled = true
        
-        setupImageViewer(options: [
+        let options: [ImageViewerOption] = [
             .theme(ImageViewerTheme.dark),
             .closeIcon(UIImage(named: "close-x")!),
-            .rightNavItemIcon(UIImage(named: "image-share")!, delegate: self)
-        ])
+            .rightNavItemIcon(UIImage(named: "share-white")!, delegate: self)
+        ]
+        
+        if let stringURL = imageURL {
+            setupImageViewer(url: URL(string: stringURL)!, options: options)
+        } else {
+            setupImageViewer(options: options)
+        }
     }
     
     func observeCurrentUserAvatar() -> Disposable {
@@ -184,9 +190,15 @@ extension Reactive where Base: UIImageView {
     }
 }
 
+
+// MARK: - RightNavItemDelegate
 extension UIImageView: RightNavItemDelegate {
     public func imageViewer(_ imageViewer: ImageCarouselViewController, didTapRightNavItem index: Int) {
-        guard let image = image else {return}
-        ShareHelper.share(image: image)
+        guard let image1 = image else {
+            guard let image2 = highlightedImage else { return }
+            ShareHelper.share(image: image2)
+            return
+        }
+        ShareHelper.share(image: image1)
     }
 }

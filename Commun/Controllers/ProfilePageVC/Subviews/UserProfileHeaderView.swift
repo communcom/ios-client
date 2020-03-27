@@ -204,12 +204,16 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     
     func setUp(with userProfile: ResponseAPIContentGetProfile) {
         self.profile = userProfile
+        
         if self.profile?.isInBlacklist == true {
             self.profile?.isSubscribed = false
         }
         
         // avatar
-        avatarImageView.setAvatar(urlString: userProfile.avatarUrl, namePlaceHolder: userProfile.username)
+        if let avatarURL = userProfile.avatarUrl {
+            avatarImageView.setAvatar(urlString: avatarURL, namePlaceHolder: userProfile.username)
+            avatarImageView.addTapToViewer(with: avatarURL)
+        }
         
         // name
         nameLabel.text = userProfile.username
@@ -223,6 +227,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         // bio
         descriptionLabel.text = nil
+        
         if let description = userProfile.personal?.biography?.trimmed {
             if description.count <= 180 {
                 descriptionLabel.text = description
@@ -230,7 +235,8 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
                 descriptionLabel.text = String(description.prefix(177)) + "..."
             }
         }
-        //TODO: fix these number later
+       
+        // TODO: fix these number later
         // stats
         followersCountLabel.text = "\(userProfile.subscribers?.usersCount ?? 0)"
         followingsCountLabel.text = "\(userProfile.subscriptions?.usersCount ?? 0)"
