@@ -32,7 +32,7 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if shouldHideNavigationBar {
+        if shouldHideNavigationBar && navigationController?.navigationBar.isHidden == false {
             navigationController?.setNavigationBarHidden(true, animated: false)
         }
     }
@@ -40,7 +40,7 @@ class BaseViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if shouldHideNavigationBar {
+        if shouldHideNavigationBar && navigationController?.navigationBar.isHidden == true {
             navigationController?.setNavigationBarHidden(false, animated: false)
         }
     }

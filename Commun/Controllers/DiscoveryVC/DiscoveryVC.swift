@@ -242,15 +242,12 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         contentView.insertSubview(newVC.view, belowSubview: oldVC.view)
         newVC.view.autoPinEdgesToSuperviewEdges()
         
-        // Transtion
-        UIView.transition(from: oldVC.view, to: newVC.view, duration: 0.3, options: [.transitionCrossDissolve]) { (_) in
-            oldVC.view.removeFromSuperview()
-            oldVC.removeFromParent()
-            newVC.didMove(toParent: self)
-            
-            // assign current childVC
-            self.currentChildVC = newVC
-        }
+        oldVC.view.removeFromSuperview()
+        oldVC.removeFromParent()
+        newVC.didMove(toParent: self)
+        
+        // assign current childVC
+        currentChildVC = newVC
     }
     
     private func addSubview(_ subView: UIView, toView parentView: UIView) {
