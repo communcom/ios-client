@@ -83,6 +83,11 @@ extension UIView {
         autoPinEdge(toSuperviewSafeArea: .top, withInset: inset)
     }
     
+    func autoPinTopAndTrailingToSuperViewSafeArea(inset: CGFloat = 0, xInset: CGFloat? = nil) {
+        autoPinEdge(toSuperviewSafeArea: .trailing, withInset: xInset ?? inset)
+        autoPinEdge(toSuperviewSafeArea: .top, withInset: inset)
+    }
+    
     func autoPinBottomToSuperViewSafeAreaAvoidKeyboard(inset: CGFloat = 0) {
         let keyboardViewV = KeyboardLayoutConstraint(item: superview!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: inset)
         keyboardViewV.observeKeyboardHeight()

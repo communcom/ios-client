@@ -27,8 +27,8 @@ extension SignUpRouter where Self: UIViewController {
         
         switch step {
         case .verify:
-            let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self)!
-            vc = confirmUserVC
+            let verifyUserVC = VerifyUserVC()
+            vc = verifyUserVC
             
         case .setUserName:
             let setUserVC = SetUserVC()
@@ -48,7 +48,7 @@ extension SignUpRouter where Self: UIViewController {
     func resetSignUpProcess() {
         try? KeychainManager.deleteUser()
         // Dismiss all screen
-        navigationController?.popToVC(type: SignUpMethodsVC.self)
+        navigationController?.popToVC(type: SignUpVC.self)
     }
 }
 

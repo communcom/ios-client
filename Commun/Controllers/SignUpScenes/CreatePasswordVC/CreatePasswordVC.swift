@@ -8,38 +8,7 @@
 
 import Foundation
 
-class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
-    // MARK: - Nested type
-    class ConstraintView: MyView {
-        var constraint: CreatePasswordViewModel.Constraint?
-        let activeColor = UIColor.appMainColor
-        let inactiveColor = UIColor.a5a7bd
-        lazy var symbol = UILabel.with(textSize: 22, weight: .medium, textColor: inactiveColor, textAlignment: .center)
-        lazy var title = UILabel.with(textSize: 12, textColor: inactiveColor, textAlignment: .center)
-        
-        override func commonInit() {
-            super.commonInit()
-            addSubview(symbol)
-            symbol.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-            addSubview(title)
-            title.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-            title.autoPinEdge(.top, to: .bottom, of: symbol, withOffset: 0)
-        }
-        
-        var isActive = false {
-            didSet {
-                symbol.textColor = isActive ? activeColor : inactiveColor
-                title.textColor = isActive ? activeColor : inactiveColor
-            }
-        }
-        
-        func setUp(with constraint: CreatePasswordViewModel.Constraint) {
-            self.constraint = constraint
-            symbol.text = constraint.symbol
-            title.text = constraint.title.localized().uppercaseFirst
-            isActive = constraint.isSastified
-        }
-    }
+class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Properties
     let viewModel = CreatePasswordViewModel()
     var masterPasswordButton: UIButton?
@@ -75,12 +44,6 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     }()
     
     lazy var constraintsStackView = UIStackView(axis: .horizontal, spacing: 16)
-    
-    lazy var nextButton: CommunButton = {
-        let button = CommunButton.default(height: 56, label: "next".localized().uppercaseFirst, cornerRadius: 8, isHuggingContent: false, isDisableGrayColor: true)
-        button.autoSetDimension(.width, toSize: 290)
-        return button
-    }()
 
     lazy var unsupportSymbolError = UILabel.with(textSize: 12, weight: .medium, textColor: .appRedColor, numberOfLines: 2, textAlignment: .center)
 
@@ -88,6 +51,14 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     override func setUp() {
         super.setUp()
         titleLabel.text = "create Password".localized().uppercaseFirst
+        
+        switch UIDevice.current.screenType {
+        case .iPhones_5_5s_5c_SE:
+            titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
+        default:
+            break
+        }
+        
         AnalyticsManger.shared.openEnterPassword()
         // text field
         scrollView.contentView.addSubview(textField)
@@ -105,7 +76,22 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         constraintsStackView.autoAlignAxis(toSuperviewAxis: .vertical)
         constraintsStackView.autoPinEdge(toSuperviewEdge: .bottom)
         
-        // button
+        // generateMasterPasswordButton
+        setUpGenerateMasterPasswordButton()
+
+        view.addSubview(unsupportSymbolError)
+        unsupportSymbolError.autoPinEdge(.bottom, to: .top, of: nextButton, withOffset: -9)
+        unsupportSymbolError.autoAlignAxis(toSuperviewAxis: .vertical)
+        unsupportSymbolError.text = "only Latin characters, digits and special symbols\nare allowed".localized().uppercaseFirst
+        unsupportSymbolError.isHidden = true
+    }
+    
+    override func viewDidSetUpScrollView() {
+        setUpNextButton()
+        nextButton.autoPinEdge(.top, to: .bottom, of: scrollView)
+    }
+    
+    func setUpNextButton() {
         view.addSubview(nextButton)
         nextButton.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
         nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -120,19 +106,6 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: nextButton, attribute: .bottom, multiplier: 1.0, constant: constant)
         keyboardViewV.observeKeyboardHeight()
         view.addConstraint(keyboardViewV)
-        
-        // generateMasterPasswordButton
-        setUpGenerateMasterPasswordButton()
-        
-        // hide keyboard
-        view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
-
-        view.addSubview(unsupportSymbolError)
-        unsupportSymbolError.autoPinEdge(.bottom, to: .top, of: nextButton, withOffset: -9)
-        unsupportSymbolError.autoAlignAxis(toSuperviewAxis: .vertical)
-        unsupportSymbolError.text = "only Latin characters, digits and special symbols\nare allowed".localized().uppercaseFirst
-        unsupportSymbolError.isHidden = true
     }
     
     func setUpGenerateMasterPasswordButton() {
@@ -172,14 +145,14 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         viewModel.constraints
             .subscribe(onNext: { constraints in
                 if self.constraintsStackView.arrangedSubviews.count == 0 {
-                    let constraintViews = constraints.map { constraint -> ConstraintView in
-                        let view = ConstraintView()
+                    let constraintViews = constraints.map { constraint -> PasswordConstraintView in
+                        let view = PasswordConstraintView()
                         view.setUp(with: constraint)
                         return view
                     }
                     self.constraintsStackView.addArrangedSubviews(constraintViews)
                 } else {
-                    let constraintViews = self.constraintsStackView.arrangedSubviews as! [ConstraintView]
+                    let constraintViews = self.constraintsStackView.arrangedSubviews as! [PasswordConstraintView]
                     for view in constraintViews {
                         guard let changedConstraint = constraints.first(where: {$0.title == view.constraint?.title}) else {return}
                         view.setUp(with: changedConstraint)
@@ -211,11 +184,7 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         )
     }
     
-    @objc func hideKeyboard() {
-        view.endEditing(true)
-    }
-    
-    @objc func nextButtonDidTouch() {
+    @objc override func nextButtonDidTouch() {
         if (textField.text ?? "").count > AuthManager.maxPasswordLength {
             hintView?.display(inPosition: nextButton.frame.origin, withType: .error("password must contain no more than 52 characters".localized().uppercaseFirst))
             return

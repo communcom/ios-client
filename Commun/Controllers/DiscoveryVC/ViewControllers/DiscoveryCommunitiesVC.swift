@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 class DiscoveryCommunitiesVC: CommunitiesVC {
+    override var shouldHideNavigationBar: Bool {true}
+    
     override var listLoadingStateObservable: Observable<ListFetcherState> {
         let viewModel = self.viewModel as! CommunitiesViewModel
         return viewModel.mergedState

@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import SafariServices
+//import SwipeTransition
 
 class BaseViewController: UIViewController {
     // MARK: - Properties
@@ -24,12 +25,14 @@ class BaseViewController: UIViewController {
         setUp()
         
         bind()
+        
+//        backSwipe()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if shouldHideNavigationBar {
+        if shouldHideNavigationBar && navigationController?.navigationBar.isHidden == false {
             navigationController?.setNavigationBarHidden(true, animated: false)
         }
     }
@@ -37,7 +40,7 @@ class BaseViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if shouldHideNavigationBar {
+        if shouldHideNavigationBar && navigationController?.navigationBar.isHidden == true {
             navigationController?.setNavigationBarHidden(false, animated: false)
         }
     }
@@ -49,6 +52,20 @@ class BaseViewController: UIViewController {
     
     func bind() {
         
+    }
+    
+    func backSwipe() {
+//        SwipeBackConfiguration.shared = CMSwipeBackConfiguration()
+//        SwipeBackConfiguration.shared.parallaxFactor = 0.6
+//        SwipeToDismissConfiguration.shared.dismissHeightRatio = 0.3
+//
+//        switch self {
+//        case is WelcomeVC:
+//            self.navigationController?.swipeBack?.isEnabled = false
+//
+//        default:
+//            self.navigationController?.swipeBack?.isEnabled = true
+//        }
     }
     
     func setTabBarHidden(_ value: Bool) {

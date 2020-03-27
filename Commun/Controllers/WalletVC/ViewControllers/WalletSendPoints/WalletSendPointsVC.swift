@@ -50,27 +50,9 @@ class WalletSendPointsVC: BaseViewController {
     lazy var communLogoImageView = UIView.transparentCommunLogo(size: carouselHeight)
 
     // Balance
-    var sellerNameLabel: UILabel = {
-        let balanceNameLabelInstance = UILabel()
-        balanceNameLabelInstance.tune(withText: "",
-                                      textColor: .white,
-                                      font: UIFont.systemFont(ofSize: .adaptive(width: 17.0), weight: .semibold),
-                                      alignment: .center,
-                                      isMultiLines: false)
-        
-        return balanceNameLabelInstance
-    }()
+    var sellerNameLabel = UILabel.with(textSize: .adaptive(width: 17.0), weight: .semibold, textColor: .white, textAlignment: .center)
 
-    var sellerAmountLabel: UILabel = {
-        let balanceCurrencyLabelInstance = UILabel()
-        balanceCurrencyLabelInstance.tune(withText: "",
-                                          textColor: .white,
-                                          font: UIFont.systemFont(ofSize: .adaptive(width: 30.0), weight: .bold),
-                                          alignment: .center,
-                                          isMultiLines: false)
-        
-        return balanceCurrencyLabelInstance
-    }()
+    var sellerAmountLabel = UILabel.with(textSize: .adaptive(width: 30.0), weight: .bold, textColor: .white, textAlignment: .center)
 
     // Friend
     var friendAvatarImageView = UIView.createCircleCommunLogo(side: 40)

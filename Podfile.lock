@@ -2,7 +2,6 @@ PODS:
   - Action (3.11.0):
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-  - Alamofire (4.9.1)
   - Amplitude-iOS (4.9.3)
   - AppAuth (1.3.0):
     - AppAuth/Core (= 1.3.0)
@@ -172,7 +171,6 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.0)
   - secp256k1.swift (0.1.4)
-  - Segmentio (4.1)
   - SipHash (1.2.2)
   - Starscream (3.1.1)
   - SubviewAttachingTextView (1.3.0)
@@ -182,14 +180,17 @@ PODS:
   - SwiftLint (0.38.0)
   - SwiftyGif (5.2.0)
   - SwiftyJSON (4.3.0)
-  - Swinject (2.7.1)
+  - SwipeTransition (0.4.2)
+  - SwipeTransitionAutoSwipeBack (0.4.2):
+    - SwipeTransition (~> 0.4.2)
+  - SwipeTransitionAutoSwipeToDismiss (0.4.2):
+    - SwipeTransition (~> 0.4.2)
   - THPinViewController (1.2.8)
   - TLPhotoPicker (2.0.7)
   - "UITextView+Placeholder (1.3.3)"
 
 DEPENDENCIES:
   - Action
-  - Alamofire
   - Amplitude-iOS
   - AppsFlyerFramework
   - ASSpinnerView
@@ -226,7 +227,6 @@ DEPENDENCIES:
   - SDWebImage
   - SDWebImageWebPCoder
   - secp256k1.swift
-  - Segmentio
   - Starscream
   - SubviewAttachingTextView (from `https://github.com/communcom/SubviewAttachingTextView.git`)
   - SwifterSwift/Foundation (from `https://github.com/communcom/SwifterSwift.git`)
@@ -235,7 +235,9 @@ DEPENDENCIES:
   - SwiftLint
   - SwiftyGif (from `https://github.com/communcom/SwiftyGif.git`)
   - SwiftyJSON (~> 4.0)
-  - Swinject
+  - SwipeTransition
+  - SwipeTransitionAutoSwipeBack
+  - SwipeTransitionAutoSwipeToDismiss
   - THPinViewController (from `https://github.com/communcom/THPinViewController.git`, branch `commun`)
   - TLPhotoPicker
   - "UITextView+Placeholder"
@@ -243,7 +245,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Action
-    - Alamofire
     - Amplitude-iOS
     - AppAuth
     - AppsFlyerFramework
@@ -294,12 +295,13 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageWebPCoder
     - secp256k1.swift
-    - Segmentio
     - SipHash
     - Starscream
     - SwiftLint
     - SwiftyJSON
-    - Swinject
+    - SwipeTransition
+    - SwipeTransitionAutoSwipeBack
+    - SwipeTransitionAutoSwipeToDismiss
     - TLPhotoPicker
     - "UITextView+Placeholder"
 
@@ -345,7 +347,6 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Action: 689181e4c3f6566844178d8a7da6fef39a9597fc
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Amplitude-iOS: 122e026c44db8460e5efcf84859aa290a0ae9786
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
   AppsFlyerFramework: 9b2a932d826a278413dab7d59ffbe104a972132b
@@ -399,7 +400,6 @@ SPEC CHECKSUMS:
   SDWebImage: 5bf6aec6481ae2a062bdc59f9d6c1d1e552090e0
   SDWebImageWebPCoder: 947093edd1349d820c40afbd9f42acb6cdecd987
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
-  Segmentio: ab29def64e1bff6e6e9b97671788a99bed3f1d9f
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SubviewAttachingTextView: 1f6a12782b5d53241f8a05424dfe81fae6c33602
@@ -407,11 +407,13 @@ SPEC CHECKSUMS:
   SwiftLint: 4105f061f9812b214568b736dab580ab2c73a582
   SwiftyGif: b85c6b33a9411859d9e1db998b6a8214aea942df
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
+  SwipeTransition: 03f6f995646bdff37946af75c442692b011cb348
+  SwipeTransitionAutoSwipeBack: 64605a9e0d9bef917ba23f26f23bbe3ce8af4158
+  SwipeTransitionAutoSwipeToDismiss: 8a477d96c7cefc133daf30ea60f627d4ab262498
   THPinViewController: 7c8df68f412ca0b3fa42a84848c382bc343372f3
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 4f55a954fc27a0a3adef894b766b1d911cb1c5b3
+PODFILE CHECKSUM: 84747a9350d6246bd6dfbe1baf1c1a05ba672263
 
 COCOAPODS: 1.9.1

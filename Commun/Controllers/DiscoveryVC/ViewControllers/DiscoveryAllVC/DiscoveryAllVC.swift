@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, SubscribersCell>, CommunityCellDelegate, ProfileCellDelegate {
+    override var shouldHideNavigationBar: Bool {true}
+    
     // MARK: - Properties
     var seeAllHandler: ((Int) -> Void)?
     override var isInfiniteScrollingEnabled: Bool {false}

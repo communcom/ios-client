@@ -74,16 +74,18 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     lazy var contentView = UIView(forAutoLayout: ())
     
     // MARK: - Methods
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         navigationController?.setNavigationBarHidden(false, animated: animated)
         baseNavigationController?.resetNavigationBar()
         baseNavigationController?.changeStatusBarStyle(.default)
         extendedLayoutIncludesOpaqueBars = true
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         searchController.roundCorners()
         navigationController?.navigationBar.shadowOpacity = 0
         
@@ -94,6 +96,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     // MARK: - Setup
     override func setUp() {
         super.setUp()
+        
         // modify view
         view.backgroundColor = .f3f5fa
         
@@ -239,15 +242,12 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         contentView.insertSubview(newVC.view, belowSubview: oldVC.view)
         newVC.view.autoPinEdgesToSuperviewEdges()
         
-        // Transtion
-        UIView.transition(from: oldVC.view, to: newVC.view, duration: 0.3, options: [.transitionCrossDissolve]) { (_) in
-            oldVC.view.removeFromSuperview()
-            oldVC.removeFromParent()
-            newVC.didMove(toParent: self)
-            
-            // assign current childVC
-            self.currentChildVC = newVC
-        }
+        oldVC.view.removeFromSuperview()
+        oldVC.removeFromParent()
+        newVC.didMove(toParent: self)
+        
+        // assign current childVC
+        currentChildVC = newVC
     }
     
     private func addSubview(_ subView: UIView, toView parentView: UIView) {

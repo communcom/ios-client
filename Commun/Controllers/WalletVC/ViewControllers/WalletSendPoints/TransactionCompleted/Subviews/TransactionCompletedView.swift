@@ -22,70 +22,24 @@ class TransactionCompletedView: UIView {
     private var isHistoryMode: Bool = false
     var mode: TransActionType!
 
-    var buyerAvatarImageView: UIImageView = UIImageView.circle(size: 40.0, imageName: "tux")
-
-    var boldLabels = [UILabel]() {
-        didSet {
-            boldLabels.forEach({ $0.tune(withText: "",
-                                         textColor: .black,
-                                         font: UIFont.systemFont(ofSize: 17.0, weight: .bold),
-                                         alignment: .center,
-                                         isMultiLines: false)})
-        }
-    }
+    var buyerAvatarImageView = UIImageView.circle(size: 40.0, imageName: "tux")
     
-    var semiboldLabels = [UILabel]() {
-        didSet {
-            semiboldLabels.forEach({ $0.tune(withText: "",
-                                         textColor: .appGrayColor,
-                                         font: UIFont.systemFont(ofSize: 12.0, weight: .semibold),
-                                         alignment: .center,
-                                         isMultiLines: false)})
-        }
-    }
+    var transactionDateLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
+    var transactionTitleLabel = UILabel.with(textSize: 17, weight: .bold, textAlignment: .center)
 
-    var transactionDateLabel: UILabel = UILabel()
-    var transactionTitleLabel: UILabel = UILabel()
+    var transactionAmountLabel = UILabel.with(textSize: 20, weight: .bold, textAlignment: .right)
 
-    var transactionAmountLabel: UILabel = {
-        let transactionAmountLabelInstance = UILabel()
-        transactionAmountLabelInstance.tune(withText: "",
-                                            textColor: .black,
-                                            font: UIFont.systemFont(ofSize: 20.0, weight: .bold),
-                                            alignment: .right,
-                                            isMultiLines: false)
+    var transactionCurrencyLabel = UILabel.with(textSize: 20, textColor: .appGrayColor)
         
-        return transactionAmountLabelInstance
-    }()
+    var buyerNameLabel = UILabel.with(textSize: 17, weight: .bold, textAlignment: .center)
+    var buyerBalanceOrFriendIDLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
+    var burnedPercentLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
 
-    var transactionCurrencyLabel: UILabel = {
-        let transactionCurrencyLabelInstance = UILabel()
-        transactionCurrencyLabelInstance.tune(withText: "",
-                                              textColor: .appGrayColor,
-                                              font: UIFont.systemFont(ofSize: 20.0, weight: .regular),
-                                              alignment: .left,
-                                              isMultiLines: false)
-        
-        return transactionCurrencyLabelInstance
-    }()
-        
-    var buyerNameLabel: UILabel = UILabel()
-    var buyerBalanceOrFriendIDLabel: UILabel = UILabel()
-    var burnedPercentLabel: UILabel = UILabel()
-
-    let sellerNameLabel = UILabel()
+    let sellerNameLabel = UILabel.with(textSize: 15, weight: .semibold)
+    
     var sellerAvatarImageView: UIImageView = UIImageView.circle(size: 30.0)
 
-    var sellerAmountLabel: UILabel = {
-        let sellerAmountLabelInstance = UILabel()
-        sellerAmountLabelInstance.tune(withText: "",
-                                       textColor: .black,
-                                       font: UIFont.systemFont(ofSize: 15.0, weight: .bold),
-                                       alignment: .right,
-                                       isMultiLines: false)
-
-        return sellerAmountLabelInstance
-    }()
+    var sellerAmountLabel = UILabel.with(textSize: 15, weight: .bold, textAlignment: .right)
     
     let homeButton: UIButton = {
         let height: CGFloat = 50
@@ -157,8 +111,6 @@ class TransactionCompletedView: UIView {
         }
         
         backgroundColor = .clear
-        boldLabels = [transactionTitleLabel, buyerNameLabel]
-        semiboldLabels = [transactionDateLabel, buyerBalanceOrFriendIDLabel, burnedPercentLabel]
         
         // Add content view
         let contentView = UIView(forAutoLayout: ())
@@ -262,12 +214,13 @@ class TransactionCompletedView: UIView {
         rightBottomCircle.autoPinBottomAndTrailingToSuperView(inset: 97.0, xInset: -12.0)
         
         // Add 'Debited from' label
-        let debitedFromLabel = UILabel()
-        debitedFromLabel.tune(withText: "debited from".localized().uppercaseFirst,
-                              textColor: .appGrayColor,
-                              font: .systemFont(ofSize: 12.0, weight: .semibold),
-                              alignment: .center,
-                              isMultiLines: false)
+        let debitedFromLabel = UILabel.with(
+            text: "debited from".localized().uppercaseFirst,
+            textSize: 12,
+            weight: .semibold,
+            textColor: .appGrayColor,
+            textAlignment: .center
+        )
         
         contentView.addSubview(debitedFromLabel)
         debitedFromLabel.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -364,11 +317,7 @@ class TransactionCompletedView: UIView {
 
         sellerAmountLabel.text = transaction.sellBalance!.amount.formattedWithSeparator
 
-        sellerNameLabel.tune(withText: transaction.sellBalance!.name,
-                             textColor: .black,
-                             font: UIFont.systemFont(ofSize: 15.0, weight: .semibold),
-                             alignment: .left,
-                             isMultiLines: false)
+        sellerNameLabel.text = transaction.sellBalance!.name
     }
     
     func updateBuyerInfo(fromTransaction transaction: Transaction) {
