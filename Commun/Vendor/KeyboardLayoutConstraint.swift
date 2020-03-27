@@ -23,7 +23,7 @@ import UIKit
 
 #if !os(tvOS)
 @available(tvOS, unavailable)
-class KeyboardLayoutConstraint: ScalableLayoutConstraint {
+class KeyboardLayoutConstraint: NSLayoutConstraint {
     
     private var offset: CGFloat = 0
     private var keyboardVisibleHeight: CGFloat = 0

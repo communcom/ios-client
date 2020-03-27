@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CommunCheckbox: UIButton {
+class CMCheckbox: UIButton {
     var notShowOffCheckbox = false
 
     override init(frame: CGRect) {

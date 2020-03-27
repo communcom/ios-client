@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -35,14 +35,14 @@
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="5gJ-3q-oWA" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstAttribute="height" constant="40" id="5gJ-3q-oWA"/>
                             <constraint firstItem="n5T-hh-dX3" firstAttribute="centerY" secondItem="lzF-eX-vVz" secondAttribute="centerY" id="UcH-7E-IGe"/>
                         </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="lzF-eX-vVz" secondAttribute="trailing" constant="16" id="3qZ-er-8PN" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                    <constraint firstItem="lzF-eX-vVz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="LNK-ID-63e" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                    <constraint firstAttribute="trailing" secondItem="lzF-eX-vVz" secondAttribute="trailing" constant="16" id="3qZ-er-8PN"/>
+                    <constraint firstItem="lzF-eX-vVz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="LNK-ID-63e"/>
                     <constraint firstItem="lzF-eX-vVz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gJg-58-wXg"/>
                 </constraints>
             </tableViewCellContentView>
