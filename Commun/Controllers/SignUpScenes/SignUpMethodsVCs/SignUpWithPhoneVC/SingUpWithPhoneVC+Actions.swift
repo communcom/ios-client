@@ -60,7 +60,7 @@ extension SignUpWithPhoneVC {
                                             strongSelf.signUpNextStep()
                                         }) { (error) in
                                             strongSelf.hideHud()
-                                            strongSelf.handleSignUpError(error: error, with: strongSelf.viewModel.phone.value)
+                                            strongSelf.handleSignUpError(error: error, phone: strongSelf.viewModel.phone.value)
                                     }
                                     .disposed(by: strongSelf.disposeBag)
         })

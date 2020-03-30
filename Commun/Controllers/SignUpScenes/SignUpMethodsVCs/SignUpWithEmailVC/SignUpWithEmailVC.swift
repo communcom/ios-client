@@ -76,7 +76,7 @@ class SignUpWithEmailVC: BaseSignUpMethodVC {
                         strongSelf.signUpNextStep()
                     }) { (error) in
                         strongSelf.hideHud()
-                        strongSelf.handleSignUpError(error: error, with: email)
+                        strongSelf.handleSignUpError(error: error, email: email)
                 }
                 .disposed(by: strongSelf.disposeBag)
             }
