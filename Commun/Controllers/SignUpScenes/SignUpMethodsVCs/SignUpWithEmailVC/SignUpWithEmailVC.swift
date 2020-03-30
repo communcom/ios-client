@@ -53,4 +53,14 @@ class SignUpWithEmailVC: BaseSignUpMethodVC {
             .bind(to: nextButton.rx.isDisabled)
             .disposed(by: disposeBag)
     }
+    
+    override func nextButtonDidTouch() {
+        // TODO: - Analystic manager
+//        AnalyticsManger.shared.PhoneNumberEntered()
+
+        self.view.endEditing(true)
+        self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
+        
+        
+    }
 }

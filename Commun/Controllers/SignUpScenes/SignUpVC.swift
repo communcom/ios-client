@@ -130,12 +130,21 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
     }
 
     func signUpWithMethod(_ method: Method) {
+        // Sign up with phone
         if method.serviceName == phoneServiceName {
             let signUpVC = SignUpWithPhoneVC()
             show(signUpVC, sender: nil)
             return
         }
+        
+        // Sign up with email
+        if method.serviceName == emailServiceName {
+            let signUpVC = SignUpWithEmailVC()
+            show(signUpVC, sender: nil)
+            return
+        }
 
+        // Sign up via social network
         var manager: SocialLoginManager
         if method.serviceName == SocialNetwork.facebook.rawValue {
             manager = FacebookLoginManager()
