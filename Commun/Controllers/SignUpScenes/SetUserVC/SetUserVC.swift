@@ -28,12 +28,13 @@ class SetUserVC: BaseViewController, SignUpRouter {
     
     lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#F53D5B")!, numberOfLines: 0, textAlignment: .center)
     
-    lazy var nextButton = StepButton(height: 56, label: "next".localized().uppercaseFirst, labelFont: UIFont.boldSystemFont(ofSize: 17 * Config.heightRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 8)
+    lazy var nextButton = CommunButton.default(height: 56, label: "next".localized().uppercaseFirst, cornerRadius: 8, isHuggingContent: false, isDisableGrayColor: true)
     
     // MARK: - Methods
     
     override func setUp() {
         super.setUp()
+        AnalyticsManger.shared.registrationOpenScreen(4)
         self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
         // backButton
@@ -84,7 +85,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
         
         // if username has already been set
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
-            handleToBlockchainStep()
+            signUpNextStep()
         }
     }
     
@@ -101,7 +102,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 return false
             }
             .map {self.viewModel.isUserNameValid($0)}
-            .bind(to: nextButton.rx.isEnabled)
+            .bind(to: nextButton.rx.isDisabled)
             .disposed(by: disposeBag)
         
         viewModel.errorMessage
@@ -124,11 +125,6 @@ class SetUserVC: BaseViewController, SignUpRouter {
     }
     
     @objc func buttonNextDidTouch(_ sender: Any) {
-        guard KeychainManager.currentUser()?.phoneNumber != nil else {
-            resetSignUpProcess()
-            return
-        }
-        
         guard let userName = textField.text,
             viewModel.isUserNameValid(userName) else {
                 return
@@ -139,29 +135,17 @@ class SetUserVC: BaseViewController, SignUpRouter {
         self.view.endEditing(true)
         
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
-            handleToBlockchainStep()
+            signUpNextStep()
             return
         }
         
         showIndetermineHudWithMessage("setting username".localized().uppercaseFirst + "...")
         
-        RestAPIManager.instance.setUserName(userName).map {_ in ()}
-            .catchError({ error in
-                if let error = error as? CMError {
-                    if error.message == ErrorMessage.invalidStepTaken.rawValue,
-                        Config.currentUser?.registrationStep == .toBlockChain
-                    {
-                        return .just(())
-                    }
-                }
-                throw error
-            })
-            .flatMapCompletable({ (_) -> Completable in
-                self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
-                return RestAPIManager.instance.toBlockChain()
-            })
+        RestAPIManager.instance.setUserName(userName)
+            .flatMapToCompletable()
             .subscribe(onCompleted: {
-                AuthManager.shared.reload()
+                self.hideHud()
+                self.signUpNextStep()
             }, onError: {error in
                 self.hideHud()
                 self.handleSignUpError(error: error)
@@ -171,18 +155,5 @@ class SetUserVC: BaseViewController, SignUpRouter {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
-    }
-    
-    func handleToBlockchainStep() {
-        self.textField.text = KeychainManager.currentUser()?.name
-        self.showIndetermineHudWithMessage("saving to blockchain")
-        RestAPIManager.instance.toBlockChain()
-            .subscribe(onCompleted: {
-                AuthManager.shared.reload()
-            }) { (error) in
-                self.hideHud()
-                self.handleSignUpError(error: error)
-            }
-            .disposed(by: self.disposeBag)
     }
 }

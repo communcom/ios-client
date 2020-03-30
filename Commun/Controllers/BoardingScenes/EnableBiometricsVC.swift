@@ -10,17 +10,18 @@ import UIKit
 import LocalAuthentication
 
 class EnableBiometricsVC: BoardingVC {
+    override var shouldHideNavigationBar: Bool {true}
+    
     override var step: CurrentUserSettingStep {.setFaceId}
     override var nextStep: CurrentUserSettingStep? {.ftue}
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var headerLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var enableButton: StepButton!
+    lazy var imageView = UIImageView(width: 100, height: 100)
+    lazy var headerLabel = UILabel.with(textSize: 17, weight: .bold, textAlignment: .center)
+    lazy var descriptionLabel = UILabel.with(textSize: 17, textColor: .a5a7bd, numberOfLines: 2, textAlignment: .center)
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    override func setUp() {
+        super.setUp()
+        AnalyticsManger.shared.registrationOpenScreen(6)
         // retrieve policy
         let biometryType = LABiometryType.current
         
@@ -31,30 +32,53 @@ class EnableBiometricsVC: BoardingVC {
             }
         }
         
+        // layout
+        let containerView = UIView(forAutoLayout: ())
+        view.addSubview(containerView)
+        containerView.autoAlignAxis(.horizontal, toSameAxisOf: view, withOffset: -50)
+        containerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 46)
+        containerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 46)
+        
+        containerView.addSubview(imageView)
+        imageView.autoPinEdge(toSuperviewEdge: .top)
+        imageView.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        containerView.addSubview(headerLabel)
+        headerLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        headerLabel.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 32)
+        
+        containerView.addSubview(descriptionLabel)
+        descriptionLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        descriptionLabel.autoPinEdge(.top, to: .bottom, of: headerLabel, withOffset: 16)
+        descriptionLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        
         imageView.image = biometryType.icon
         headerLabel.text = String(format: "%@ %@", "enable".localized().uppercaseFirst, biometryType.stringValue)
         descriptionLabel.text = String(format: "%@ %@ %@", "enable".localized().uppercaseFirst, biometryType.stringValue, "to secure your transactions".localized())
-        enableButton.setTitle(String(format: "%@ %@", "enable".localized().uppercaseFirst, biometryType.stringValue), for: .normal)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        // buttons
+        let skipButton = UIButton(width: 290, height: 56, label: "skip".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), textColor: .appMainColor)
+        view.addSubview(skipButton)
+        skipButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16)
+        skipButton.autoAlignAxis(toSuperviewAxis: .vertical)
+        skipButton.addTarget(self, action: #selector(skipButtonDidTouch(_:)), for: .touchUpInside)
+        
+        let enableButton = CommunButton.default(height: 56, label: String(format: "%@ %@", "enable".localized().uppercaseFirst, biometryType.stringValue), isHuggingContent: false)
+        view.addSubview(enableButton)
+        enableButton.autoAlignAxis(toSuperviewAxis: .vertical)
+        enableButton.autoSetDimension(.width, toSize: 290)
+        enableButton.autoPinEdge(.bottom, to: .top, of: skipButton, withOffset: -10)
+        enableButton.addTarget(self, action: #selector(enableButtonDidTouch(_:)), for: .touchUpInside)
     }
     
     // MARK: - Actions
-    @IBAction func enableButtonDidTouch(_ sender: Any) {
+    @objc func enableButtonDidTouch(_ sender: Any) {
         AnalyticsManger.shared.activateFaceID(true)
         UserDefaults.standard.set(true, forKey: Config.currentUserBiometryAuthEnabled)
         next()
     }
     
-    @IBAction func skipButtonDidTouch(_ sender: Any) {
+    @objc func skipButtonDidTouch(_ sender: Any) {
         AnalyticsManger.shared.activateFaceID(false)
         next()
     }

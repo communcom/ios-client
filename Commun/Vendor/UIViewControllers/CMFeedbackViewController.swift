@@ -70,7 +70,8 @@ class CMFeedbackViewController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 
         view.addSubview(closeButton)
-        closeButton.autoPinTopAndTrailingToSuperView(inset: 15.0, xInset: 15.0)
+        closeButton.autoPinEdge(toSuperviewSafeArea: .top, withInset: 15.0)
+        closeButton.autoPinEdge(toSuperviewSafeArea: .trailing, withInset: 15.0)
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
 
         view.addSubview(titleLabel)

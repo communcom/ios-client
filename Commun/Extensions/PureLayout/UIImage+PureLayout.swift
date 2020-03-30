@@ -25,7 +25,8 @@ extension UIImageView {
         height: CGFloat? = nil,
         backgroundColor: UIColor? = nil,
         cornerRadius: CGFloat? = nil,
-        imageNamed: String? = nil
+        imageNamed: String? = nil,
+        contentMode: UIImageView.ContentMode? = nil
     ) {
         self.init(forAutoLayout: ())
         if let width = width {
@@ -43,6 +44,10 @@ extension UIImageView {
         
         if let imageNamed = imageNamed {
             image = UIImage(named: imageNamed)
+        }
+        
+        if let contentMode = contentMode {
+            self.contentMode = contentMode
         }
     }
 }

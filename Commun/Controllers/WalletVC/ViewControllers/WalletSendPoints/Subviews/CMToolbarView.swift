@@ -33,14 +33,15 @@ class CMToolbarView: UIView {
 
         // Add buttons
         for (index, title) in titles.enumerated() {
-            let actionButton = UIButton.init(width: .adaptive(width: 69.0 + CGFloat(7 * index)),
-                                             height: .adaptive(height: 30.0),
-                                             backgroundColor: UIColor(hexString: "#ffffff", transparency: 0.1),
-                                             cornerRadius: .adaptive(width: 10.0))
-            
-            actionButton.translatesAutoresizingMaskIntoConstraints = false
-
-            actionButton.tune(withTitle: "+\(title.formattedWithSeparator)", textColor: .white, font: UIFont.systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold), alignment: .center)
+            let actionButton = UIButton(
+                width: .adaptive(width: 69.0 + CGFloat(7 * index)),
+                height: .adaptive(height: 30.0),
+                label: "+\(title.formattedWithSeparator)",
+                labelFont: .systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold),
+                backgroundColor: UIColor(hexString: "#ffffff", transparency: 0.1),
+                textColor: .white,
+                cornerRadius: .adaptive(width: 10.0)
+            )
             
             actionButton.addTarget(self, action: #selector(selectPointTapped), for: .touchUpInside)
             actionButton.tag = index
@@ -67,12 +68,12 @@ class CMToolbarView: UIView {
         setGradientBackground()
         
         // Add label
-        let addLabel = UILabel()
-        addLabel.tune(withText: "add".localized().uppercaseFirst + ":",
-                      textColor: .white,
-                      font: UIFont.systemFont(ofSize: .adaptive(width: 12.0), weight: .bold),
-                      alignment: .left,
-                      isMultiLines: false)
+        let addLabel = UILabel.with(
+            text: "add".localized().uppercaseFirst + ":",
+            textSize: .adaptive(width: 12.0),
+            weight: .bold,
+            textColor: .white
+        )
 
         addSubview(addLabel)
         addLabel.autoPinTopAndLeadingToSuperView(inset: .adaptive(height: 19.0), xInset: .adaptive(width: 15.0))

@@ -157,14 +157,14 @@ class SignInVC: BaseViewController {
     }
     
     func validate(cred: LoginCredential) -> Bool {
-        return cred.login.count > 3 && cred.key.count > 10
+        return cred.login.count > 3 && cred.key.count >= AuthManager.minPasswordLength
     }
     
     // MARK: - Actions
     @objc func signUpButtonDidTouch() {
         let nc = self.navigationController
         navigationController?.popViewController(animated: true, {
-            let signUpVC = controllerContainer.resolve(SignUpWithPhoneVC.self)!
+            let signUpVC = SignUpVC()
             nc?.pushViewController(signUpVC)
         })
     }

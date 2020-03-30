@@ -8,7 +8,6 @@
 
 import RxSwift
 import Foundation
-import Alamofire
 import CyberSwift
 import SwifterSwift
 import SDWebImage

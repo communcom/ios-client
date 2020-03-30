@@ -37,21 +37,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let notificationTappedRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
     let shareExtensionDataRelay = BehaviorRelay<ShareExtensionData?>(value: nil)
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
-    private var bag = DisposeBag()
-    
+    private var disposeBag = DisposeBag()
+
     // MARK: - RootVCs
-    var splashVC: SplashViewController { controllerContainer.resolve(SplashViewController.self)! }
+    var splashVC: SplashVC { SplashVC() }
     var welcomeNC: UINavigationController {
-        let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
-        let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+        let welcomeVC = WelcomeVC()
+        let welcomeNav = UINavigationController(rootViewController: welcomeVC)
         return welcomeNav
     }
     var boardingSetPasscodeVC: BoardingSetPasscodeVC { BoardingSetPasscodeVC() }
-    var backUpKeysVC: BackUpKeysVC { BackUpKeysVC() }
     lazy var tabBarVC = TabBarVC()
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = splashVC
+        
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
             // Analytics
@@ -105,8 +107,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .subscribe(onNext: { (count) in
                 UIApplication.shared.applicationIconBadgeNumber = Int(count)
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
+        window!.makeKeyAndVisible()
         return true
     }
     
@@ -118,14 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .registering:
             self.changeRootVC(welcomeNC)
         case .boarding:
-            let vc: UIViewController
-
-            if KeychainManager.currentUser()?.registrationStep == .relogined {
-                vc = boardingSetPasscodeVC
-            } else {
-                vc = backUpKeysVC
-            }
-            let boardingNC = UINavigationController(rootViewController: vc)
+            let boardingNC = UINavigationController(rootViewController: boardingSetPasscodeVC)
             self.changeRootVC(boardingNC)
         case .authorizing:
             break
@@ -144,10 +140,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             default:
                 break
             }
-
-            if let splashVC = self.window?.rootViewController as? SplashViewController {
-                splashVC.showErrorScreen(title: "error".localized().uppercaseFirst, subtitle: error.localizedDescription)
-            }
         }
     }
 
@@ -158,7 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
 
-        if let currentVC = window?.rootViewController as? SplashViewController {
+        if let currentVC = window?.rootViewController as? SplashVC {
             currentVC.animateSplash {
                 self.window?.rootViewController = rootVC
             }
@@ -184,7 +176,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }) { (error) in
                 completion(error)
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -455,9 +447,9 @@ extension AppDelegate {
         case "commun://createPost":
             self.shareExtensionDataRelay.accept(UserDefaults.appGroups.loadShareExtensionData())
         default:
-            return false
+            break
         }
 
-        return true
+        return OpenSocialLink.application(app, open: url, options: options)
     }
 }

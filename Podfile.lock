@@ -2,8 +2,12 @@ PODS:
   - Action (3.11.0):
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-  - Alamofire (4.9.1)
   - Amplitude-iOS (4.9.3)
+  - AppAuth (1.3.0):
+    - AppAuth/Core (= 1.3.0)
+    - AppAuth/ExternalUserAgent (= 1.3.0)
+  - AppAuth/Core (1.3.0)
+  - AppAuth/ExternalUserAgent (1.3.0)
   - AppsFlyerFramework (5.2.0)
   - ASSpinnerView (0.1.2)
   - BigInt (3.1.0):
@@ -19,6 +23,16 @@ PODS:
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
   - Fabric (1.10.2)
+  - FBSDKCoreKit (6.0.0):
+    - FBSDKCoreKit/Basics (= 6.0.0)
+    - FBSDKCoreKit/Core (= 6.0.0)
+  - FBSDKCoreKit/Basics (6.0.0)
+  - FBSDKCoreKit/Core (6.0.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (6.0.0):
+    - FBSDKLoginKit/Login (= 6.0.0)
+  - FBSDKLoginKit/Login (6.0.0):
+    - FBSDKCoreKit (~> 6.0.0)
   - Firebase/Analytics (6.13.0):
     - Firebase/Core
   - Firebase/Core (6.13.0):
@@ -75,6 +89,10 @@ PODS:
   - GoogleDataTransportCCTSupport (1.2.2):
     - GoogleDataTransport (~> 3.2)
     - nanopb (~> 0.3.901)
+  - GoogleSignIn (5.0.2):
+    - AppAuth (~> 1.2)
+    - GTMAppAuth (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleUtilities/AppDelegateSwizzler (6.3.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -93,6 +111,14 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.3.2):
     - GoogleUtilities/Logger
+  - GTMAppAuth (1.0.0):
+    - AppAuth/Core (~> 1.0)
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.3.1):
+    - GTMSessionFetcher/Full (= 1.3.1)
+  - GTMSessionFetcher/Core (1.3.1)
+  - GTMSessionFetcher/Full (1.3.1):
+    - GTMSessionFetcher/Core (= 1.3.1)
   - ImageViewer.swift (3.0):
     - SDWebImage
     - SwiftyGif
@@ -145,7 +171,6 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.0)
   - secp256k1.swift (0.1.4)
-  - Segmentio (4.1)
   - SipHash (1.2.2)
   - Starscream (3.1.1)
   - SubviewAttachingTextView (1.3.0)
@@ -155,14 +180,17 @@ PODS:
   - SwiftLint (0.38.0)
   - SwiftyGif (5.2.0)
   - SwiftyJSON (4.3.0)
-  - Swinject (2.7.1)
+  - SwipeTransition (0.4.2)
+  - SwipeTransitionAutoSwipeBack (0.4.2):
+    - SwipeTransition (~> 0.4.2)
+  - SwipeTransitionAutoSwipeToDismiss (0.4.2):
+    - SwipeTransition (~> 0.4.2)
   - THPinViewController (1.2.8)
   - TLPhotoPicker (2.0.7)
   - "UITextView+Placeholder (1.3.3)"
 
 DEPENDENCIES:
   - Action
-  - Alamofire
   - Amplitude-iOS
   - AppsFlyerFramework
   - ASSpinnerView
@@ -172,10 +200,13 @@ DEPENDENCIES:
   - CryptoSwift
   - "eosswift (from `git@github.com:communcom/eos-swift.git`)"
   - Fabric
+  - FBSDKCoreKit (= 6.0.0)
+  - FBSDKLoginKit (= 6.0.0)
   - Firebase/Analytics
   - Firebase/Core
   - Firebase/Messaging
   - "GoloCrypto (from `git@github.com:communcom/GoloGrypto.git`)"
+  - GoogleSignIn (= 5.0.2)
   - ImageViewer.swift (from `https://github.com/communcom/ImageViewer.swift.git`)
   - InitialsImageView
   - ListPlaceholder
@@ -196,7 +227,6 @@ DEPENDENCIES:
   - SDWebImage
   - SDWebImageWebPCoder
   - secp256k1.swift
-  - Segmentio
   - Starscream
   - SubviewAttachingTextView (from `https://github.com/communcom/SubviewAttachingTextView.git`)
   - SwifterSwift/Foundation (from `https://github.com/communcom/SwifterSwift.git`)
@@ -205,7 +235,9 @@ DEPENDENCIES:
   - SwiftLint
   - SwiftyGif (from `https://github.com/communcom/SwiftyGif.git`)
   - SwiftyJSON (~> 4.0)
-  - Swinject
+  - SwipeTransition
+  - SwipeTransitionAutoSwipeBack
+  - SwipeTransitionAutoSwipeToDismiss
   - THPinViewController (from `https://github.com/communcom/THPinViewController.git`, branch `commun`)
   - TLPhotoPicker
   - "UITextView+Placeholder"
@@ -213,8 +245,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Action
-    - Alamofire
     - Amplitude-iOS
+    - AppAuth
     - AppsFlyerFramework
     - ASSpinnerView
     - BigInt
@@ -224,6 +256,8 @@ SPEC REPOS:
     - CryptoSwift
     - Differentiator
     - Fabric
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -235,7 +269,10 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
+    - GoogleSignIn
     - GoogleUtilities
+    - GTMAppAuth
+    - GTMSessionFetcher
     - InitialsImageView
     - libwebp
     - ListPlaceholder
@@ -258,12 +295,13 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageWebPCoder
     - secp256k1.swift
-    - Segmentio
     - SipHash
     - Starscream
     - SwiftLint
     - SwiftyJSON
-    - Swinject
+    - SwipeTransition
+    - SwipeTransitionAutoSwipeBack
+    - SwipeTransitionAutoSwipeToDismiss
     - TLPhotoPicker
     - "UITextView+Placeholder"
 
@@ -309,8 +347,8 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Action: 689181e4c3f6566844178d8a7da6fef39a9597fc
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Amplitude-iOS: 122e026c44db8460e5efcf84859aa290a0ae9786
+  AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
   AppsFlyerFramework: 9b2a932d826a278413dab7d59ffbe104a972132b
   ASSpinnerView: 526e037b85b9db87d55db55297986b7da3059aa8
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
@@ -321,6 +359,8 @@ SPEC CHECKSUMS:
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   eosswift: 3e1af4e3f7d5d5f255647e68eb869b08061777f5
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
+  FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
   Firebase: 458d109512200d1aca2e1b9b6cf7d68a869a4a46
   FirebaseAnalytics: 45f36d9c429fc91d206283900ab75390cd05ee8a
   FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3
@@ -333,7 +373,10 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
   GoogleDataTransport: 8e9b210c97d55fbff306cc5468ff91b9cb32dcf5
   GoogleDataTransportCCTSupport: ef79a4728b864946a8aafdbab770d5294faf3b5f
+  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GoogleUtilities: 547a86735c6f0ee30ad17e94df4fc21f616b71cb
+  GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
+  GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
   ImageViewer.swift: a669b8c3599a4ec5bafb087e160b7de580eb7e83
   InitialsImageView: 7a416d36fc6df5434198664db28a3ffb0228426d
   libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
@@ -357,7 +400,6 @@ SPEC CHECKSUMS:
   SDWebImage: 5bf6aec6481ae2a062bdc59f9d6c1d1e552090e0
   SDWebImageWebPCoder: 947093edd1349d820c40afbd9f42acb6cdecd987
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
-  Segmentio: ab29def64e1bff6e6e9b97671788a99bed3f1d9f
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SubviewAttachingTextView: 1f6a12782b5d53241f8a05424dfe81fae6c33602
@@ -365,11 +407,13 @@ SPEC CHECKSUMS:
   SwiftLint: 4105f061f9812b214568b736dab580ab2c73a582
   SwiftyGif: b85c6b33a9411859d9e1db998b6a8214aea942df
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
+  SwipeTransition: 03f6f995646bdff37946af75c442692b011cb348
+  SwipeTransitionAutoSwipeBack: 64605a9e0d9bef917ba23f26f23bbe3ce8af4158
+  SwipeTransitionAutoSwipeToDismiss: 8a477d96c7cefc133daf30ea60f627d4ab262498
   THPinViewController: 7c8df68f412ca0b3fa42a84848c382bc343372f3
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 1edeef3679ed40b343d3c1686bed80caf97c83ba
+PODFILE CHECKSUM: 84747a9350d6246bd6dfbe1baf1c1a05ba672263
 
 COCOAPODS: 1.9.1

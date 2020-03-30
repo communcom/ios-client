@@ -14,6 +14,10 @@ class EditorChooseCommunityVC: SubscriptionsVC {
     
     var panGestureRecognizer: UIPanGestureRecognizer?
     var interactor: SwipeDownInteractor?
+    let chooseCommunityExplanationViewId = "choose-community"
+    
+    // MARK: - Subviews
+    lazy var explanationView = ChooseCommunityExplanationView(tableView: tableView)
     
     // MARK: - Initializers
     init(completion: ((ResponseAPIContentGetCommunity) -> Void)?) {
@@ -33,6 +37,11 @@ class EditorChooseCommunityVC: SubscriptionsVC {
         interactor = SwipeDownInteractor()
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         view.addGestureRecognizer(panGestureRecognizer!)
+        
+        if ExplanationView.shouldShowViewWithId(chooseCommunityExplanationViewId) {
+            explanationView.closeButton.addTarget(self, action: #selector(closeExplanationDidTouch), for: .touchUpInside)
+            explanationView.learnMoreButton.addTarget(self, action: #selector(learnMoreExplanationDidTouch), for: .touchUpInside)
+        }
     }
         
     override func modelSelected(_ item: ResponseAPIContentGetSubscriptionsItem) {
@@ -72,6 +81,15 @@ class EditorChooseCommunityVC: SubscriptionsVC {
         default:
             break
         }
+    }
+    
+    @objc func closeExplanationDidTouch() {
+        ExplanationView.markAsShown(chooseCommunityExplanationViewId)
+        tableView.tableHeaderView = nil
+    }
+    
+    @objc func learnMoreExplanationDidTouch() {
+        load(url: "https://commun.com/faq")
     }
 }
 

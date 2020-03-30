@@ -37,15 +37,27 @@ extension PostEditorVC {
         
         // retrieve content
         contentTextView.getDraft {
+            self.showExplanationViewIfNeeded()
+            
             // remove draft
             self.removeDraft()
         }
     }
     
+    @objc func shouldSaveDraft() -> Bool {
+        viewModel.postForEdit == nil && !contentTextView.text.trimmed.isEmpty
+    }
+    
     @objc func saveDraft() {
+        var shouldSave = true
+        DispatchQueue.main.sync {
+            shouldSave = self.shouldSaveDraft()
+        }
+        guard let community = viewModel.community.value,
+            shouldSave else {return}
+        
         // save community
-        if let community = viewModel.community.value,
-            let encoded = try? JSONEncoder().encode(community) {
+        if let encoded = try? JSONEncoder().encode(community) {
             UserDefaults.standard.set(encoded, forKey: communityDraftKey)
         }
         

@@ -204,7 +204,10 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         }
         
         // avatar
-        avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
+        if let avatarURL = community.avatarUrl {
+            avatarImageView.setAvatar(urlString: avatarURL, namePlaceHolder: community.name)
+            avatarImageView.addTapToViewer(with: avatarURL)
+        }
         
         // name
         nameLabel.text = community.name

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Profile Choose AvatarVC-->
+        <scene sceneID="s6I-xZ-46g">
+            <objects>
+                <viewController storyboardIdentifier="ProfileChooseAvatarVC" id="RCm-RG-Dsz" customClass="ProfileChooseAvatarVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ElT-l7-2TL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qve-N3-QQi">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <color key="tintColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <navigationItem title="Change position" id="4WX-Gf-cxW">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="AsR-Cp-Z8E"/>
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="3XE-ch-LV0"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wWE-La-Qnk">
+                                <rect key="frame" x="0.0" y="502" width="414" height="394"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NzU-aN-cc2">
+                                    <size key="itemSize" width="138" height="132"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoLibraryCell" id="LZp-il-hHW" customClass="PhotoLibraryCell" customModule="Commun" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="138" height="132"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="138" height="132"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GGa-9V-Hrf">
+                                                    <rect key="frame" x="0.0" y="0.0" width="138" height="132"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="PhotoLibraryCellImageView" label="PhotoLibraryCellImageView">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="GGa-9V-Hrf" firstAttribute="leading" secondItem="LZp-il-hHW" secondAttribute="leading" id="NDJ-qz-EG7"/>
+                                            <constraint firstAttribute="bottom" secondItem="GGa-9V-Hrf" secondAttribute="bottom" id="fqw-II-UDW"/>
+                                            <constraint firstItem="GGa-9V-Hrf" firstAttribute="top" secondItem="LZp-il-hHW" secondAttribute="top" id="kQE-lN-FQi"/>
+                                            <constraint firstAttribute="trailing" secondItem="GGa-9V-Hrf" secondAttribute="trailing" id="nzN-fG-QBx"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="GGa-9V-Hrf" id="TNG-p6-HfZ"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrW-xH-jrY">
+                                <rect key="frame" x="103.5" y="684" width="207" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileChooseAvatarRequestAccessButton" label="ProfileChooseAvatarRequestAccessButton"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <state key="normal" title="Allow access to photo library"/>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" maximumZoomScale="4" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWO-YU-pEf">
+                                <rect key="frame" x="0.0" y="88" width="414" height="414"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G0v-Ih-Sla">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="ProfileChooseAvatarAvatarImageView" label="ProfileChooseAvatarAvatarImageView">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.7044358221" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cWO-YU-pEf" secondAttribute="height" multiplier="1:1" id="Kj5-Xm-nkl"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="RCm-RG-Dsz" id="Hff-fo-Rei"/>
+                                </connections>
+                            </scrollView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageAvatarExclude" translatesAutoresizingMaskIntoConstraints="NO" id="E6j-i5-oFa">
+                                <rect key="frame" x="0.0" y="88" width="414" height="414"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="E6j-i5-oFa" secondAttribute="height" multiplier="1:1" id="8QY-Am-RZi"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="qve-N3-QQi" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="0wu-Ob-6qy"/>
+                            <constraint firstItem="cWO-YU-pEf" firstAttribute="top" secondItem="qve-N3-QQi" secondAttribute="bottom" id="27r-BL-Q2C"/>
+                            <constraint firstItem="E6j-i5-oFa" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="GXG-xk-6Ms"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="MZF-MI-q9C"/>
+                            <constraint firstItem="qve-N3-QQi" firstAttribute="top" secondItem="dvz-pB-kSV" secondAttribute="top" id="MkO-Vf-dRq"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="Q15-3v-Sff"/>
+                            <constraint firstAttribute="bottom" secondItem="wWE-La-Qnk" secondAttribute="bottom" id="TBw-4A-Wsf"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="atg-5u-KaP"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="top" secondItem="cWO-YU-pEf" secondAttribute="bottom" id="baE-aV-Xgk"/>
+                            <constraint firstAttribute="bottom" secondItem="wWE-La-Qnk" secondAttribute="bottom" id="dsh-Je-4JR"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="j0A-lM-oKv"/>
+                            <constraint firstItem="nrW-xH-jrY" firstAttribute="centerX" secondItem="wWE-La-Qnk" secondAttribute="centerX" id="q1V-x6-a4e"/>
+                            <constraint firstItem="cWO-YU-pEf" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="q3i-A6-oSV"/>
+                            <constraint firstItem="cWO-YU-pEf" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="rTP-U3-meo"/>
+                            <constraint firstItem="nrW-xH-jrY" firstAttribute="centerY" secondItem="wWE-La-Qnk" secondAttribute="centerY" id="s7Y-hH-yvq"/>
+                            <constraint firstItem="E6j-i5-oFa" firstAttribute="top" secondItem="qve-N3-QQi" secondAttribute="bottom" id="uZI-RD-QKD"/>
+                            <constraint firstItem="E6j-i5-oFa" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="z2f-ft-LSu"/>
+                            <constraint firstItem="qve-N3-QQi" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="ztJ-8D-qtH"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="dvz-pB-kSV"/>
+                    </view>
+                    <connections>
+                        <outlet property="avatarImageView" destination="G0v-Ih-Sla" id="gxh-ci-mtc"/>
+                        <outlet property="avatarScrollView" destination="cWO-YU-pEf" id="iCx-ZM-WET"/>
+                        <outlet property="cancelButton" destination="AsR-Cp-Z8E" id="kVB-qL-XQm"/>
+                        <outlet property="collectionView" destination="wWE-La-Qnk" id="YUY-Z3-LoB"/>
+                        <outlet property="doneButton" destination="3XE-ch-LV0" id="DTl-D7-bBO"/>
+                        <outlet property="requestAccessButton" destination="nrW-xH-jrY" id="xXP-tr-tvt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zub-GA-37r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1257.9710144927537" y="-263.16964285714283"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ProfilePageAvatarExclude" width="375" height="375"/>
+    </resources>
+</document>

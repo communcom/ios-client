@@ -24,6 +24,7 @@ class WalletSendPointsVC: BaseViewController {
         scrollView.contentSize = UIScreen.main.bounds.size
         scrollView.alwaysBounceVertical = true
         scrollView.isScrollEnabled = false
+        
         return scrollView
     }()
 
@@ -49,27 +50,9 @@ class WalletSendPointsVC: BaseViewController {
     lazy var communLogoImageView = UIView.transparentCommunLogo(size: carouselHeight)
 
     // Balance
-    var sellerNameLabel: UILabel = {
-        let balanceNameLabelInstance = UILabel()
-        balanceNameLabelInstance.tune(withText: "",
-                                      textColor: .white,
-                                      font: UIFont.systemFont(ofSize: .adaptive(width: 17.0), weight: .semibold),
-                                      alignment: .center,
-                                      isMultiLines: false)
-        
-        return balanceNameLabelInstance
-    }()
+    var sellerNameLabel = UILabel.with(textSize: .adaptive(width: 17.0), weight: .semibold, textColor: .white, textAlignment: .center)
 
-    var sellerAmountLabel: UILabel = {
-        let balanceCurrencyLabelInstance = UILabel()
-        balanceCurrencyLabelInstance.tune(withText: "",
-                                          textColor: .white,
-                                          font: UIFont.systemFont(ofSize: .adaptive(width: 30.0), weight: .bold),
-                                          alignment: .center,
-                                          isMultiLines: false)
-        
-        return balanceCurrencyLabelInstance
-    }()
+    var sellerAmountLabel = UILabel.with(textSize: .adaptive(width: 30.0), weight: .bold, textColor: .white, textAlignment: .center)
 
     // Friend
     var friendAvatarImageView = UIView.createCircleCommunLogo(side: 40)
@@ -266,6 +249,10 @@ class WalletSendPointsVC: BaseViewController {
     private func configureBottomView() {
         whiteView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         scrollView.addSubview(whiteView)
+
+        whiteView.autoPinEdge(toSuperviewEdge: .left)
+        whiteView.autoPinEdge(toSuperviewEdge: .right)
+        whiteView.autoPinEdge(toSuperviewEdge: .top)
 
         // user view
         let userView = UIView(height: 70)
@@ -529,7 +516,7 @@ class WalletSendPointsVC: BaseViewController {
             guard let friendID = self.dataModel.transaction.friend?.id, numberValue > 0 else { return }
 
             self.dataModel.transaction.operationDate = Date()
-
+            
             self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
 
             BlockchainManager.instance.transferPoints(to: friendID, number: Double(numberValue), currency: self.dataModel.transaction.symbol.sell)
@@ -553,7 +540,6 @@ class WalletSendPointsVC: BaseViewController {
                     strongSelf.sendPointsButton.isSelected = false
             }
             .disposed(by: self.disposeBag)
-            //*/
         }
     }
     

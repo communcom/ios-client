@@ -28,7 +28,7 @@ extension PostEditorVC {
     
     // MARK: - Images
     @objc func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
-        fatalError("Must override")
+        showExplanationViewIfNeeded()
     }
     
     @objc func didAddLink(_ urlString: String, placeholder: String? = nil) {
@@ -36,12 +36,9 @@ extension PostEditorVC {
     }
     
     // MARK: - Immutable actions
-    @objc func shouldSaveDraft() -> Bool {
-        viewModel.postForEdit == nil && !contentTextView.text.isEmpty
-    }
     @objc override func close() {
-        
         guard shouldSaveDraft() else {
+            removeDraft()
             back()
             return
         }
@@ -68,6 +65,14 @@ extension PostEditorVC {
                     // close
                     self.dismiss(animated: true, completion: nil)
                 }
+        }
+    }
+    
+    func showExplanationViewIfNeeded() {
+        if !explanationViewShowed {
+            view.addExplanationView(id: "how-do-i-get-rewards", title: "How do I get rewards for my posts?", description: "After you publish the post, community members will have 48    hours to like or dislike it. If your post reaches the Top 10 posts of the day, you will be rewarded.", from: actionButton, marginLeft: 54, marginRight: 10, learnMoreLink: "https://commun.com/faq#How%20can%20you%20get%20the%20points?")
+            ExplanationView.markAsShown("how-do-i-get-rewards")
+            explanationViewShowed = true
         }
     }
     
@@ -247,6 +252,7 @@ extension PostEditorVC {
             })
             .subscribe(onSuccess: { (userId, permlink) in
                 self.hideHud()
+                self.removeDraft()
                 
                 // if editing post
                 if (self.viewModel.postForEdit) != nil {
@@ -255,14 +261,8 @@ extension PostEditorVC {
                 
                 // if creating post
                 else {
-                    // show post page
                     guard let communityId = self.viewModel.community.value?.communityId else {return}
-                    let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
-
-                    self.dismiss(animated: true) {
-                        UIApplication.topViewController()?.show(postPageVC, sender: nil)
-                        postPageVC.appLiked()
-                    }
+                    self.handlePostCreated(userId: userId, permlink: permlink, communityId: communityId)
                 }
             }) { (error) in
                 self.hideHud()               
@@ -320,6 +320,50 @@ extension PostEditorVC {
     func addAgeLimit() {
         // TODO: Change func
         showAlert(title: "info".localized().uppercaseFirst, message: "add age limit 18+ (coming soon)".localized().uppercaseFirst, buttonTitles: ["OK".localized()], highlightedButtonIndex: 0)
+    }
+    
+    // MARK: - Handlers
+    private func handlePostCreated(userId: String, permlink: String, communityId: String) {
+        // completion handler
+        RestAPIManager.instance.loadPost(userId: userId, permlink: permlink, communityId: communityId)
+            .subscribe(onSuccess: { (post) in
+                self.dismiss(animated: true) {
+                    var post = post
+                    post.bottomExplanation = .shareYourPost
+                    
+                    if let items = ((UIApplication.topViewController() as? MyProfilePageVC)?.viewModel as? UserProfilePageViewModel)?.postsVM.items
+                    {
+                        items.accept([post] + items.value)
+                        return
+                    }
+                    
+                    if let communityPageVC = UIApplication.topViewController() as? CommunityPageVC,
+                        let items = (communityPageVC.viewModel as? CommunityPageViewModel)?.postsVM.items,
+                        communityPageVC.community?.identity == post.community?.identity
+                    {
+                        items.accept([post] + items.value)
+                        return
+                    }
+                    
+                    if let items = (UIApplication.topViewController() as? FeedPageVC)?.viewModel.items {
+                        items.accept([post] + items.value)
+                        (UIApplication.topViewController() as! FeedPageVC).appLiked()
+                        return
+                    }
+                    
+                    let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+                    UIApplication.topViewController()?.show(postPageVC, sender: nil)
+                }
+            }) { (_) in
+                // show post page
+                let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+
+                self.dismiss(animated: true) {
+                    UIApplication.topViewController()?.show(postPageVC, sender: nil)
+                    postPageVC.appLiked()
+                }
+            }
+            .disposed(by: self.disposeBag)
     }
 }
 

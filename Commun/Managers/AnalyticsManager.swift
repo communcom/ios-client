@@ -61,17 +61,57 @@ class AnalyticsManger {
         sendEvent(name: "ONB \(page) screen opend", props: props)
     }
 
+    func onboardingOpenScreen(_ number: Int) {
+        sendEvent(name: "Open screen 0.1.\(number)")
+    }
+
     func signUpButtonPressed() {
-        sendEvent(name: "Sign up ONB")
+        sendEvent(name: "Click get started 0.3.1")
+    }
+
+    func registrationOpenScreen(_ number: Int) {
+        sendEvent(name: "Open screen 1.1.\(number)")
+    }
+
+    func registrationWithGoogle() {
+        sendEvent(name: "Google auth")
+    }
+
+    func registrationWithFacebook() {
+        sendEvent(name: "Facebook auth")
+    }
+
+    func registrationWithAppale() {
+        sendEvent(name: "Apple auth")
     }
 
     func signInButtonPressed() {
-        sendEvent(name: "Sign in ONB")
+        sendEvent(name: "Click log in 0.1")
     }
 
     // MARK: - Sign UP
     func goToSingIn() {
         sendEvent(name: "Go to sign in")
+    }
+
+    func openRegistrationSelection() {
+        sendEvent(name: "Open Sign Up")
+    }
+
+    func openGoogleSignUp() {
+        sendEvent(name: "Open screen 1.2.1")
+    }
+
+    func getGoogleSignUpData() {
+        sendEvent(name: "Google auth")
+    }
+
+    func getFacebookSignUpData() {
+        sendEvent(name: "Open screen 1.2.1")
+    }
+
+    func openFacebookSignUp() {
+        sendEvent(name: "Facebook auth")
     }
 
     func countrySelected(phoneCode: String, available: Bool) {
@@ -141,10 +181,33 @@ class AnalyticsManger {
     // MARK: - FTUE
     func ftueSubscribe(codes: [String]) {
         sendEvent(name: "Bounty subscribe", props: [
-            "commun_codes": codes,
-            "num": codes.count,
-            "bounty_commun_codes": codes.prefix(3)
+            "num": codes.count
         ])
+    }
+
+    // MARK: - Password
+    func openEnterPassword() {
+        sendEvent(name: "Сlick use master password (enter password)")
+    }
+
+    func useMasterPassword() {
+        sendEvent(name: "Open screen enter password")
+    }
+
+    func openReEnterPassword() {
+        sendEvent(name: "Open screen confirm password")
+    }
+
+    func passwordCreated() {
+        sendEvent(name: "Сlick next (confirm password)")
+    }
+
+    func openNotKeepPasswordAttention() {
+        sendEvent(name: "Open screen Attention")
+    }
+
+    func saveItMassterPassword() {
+        sendEvent(name: "Click continue (Attention)")
     }
 }
 

@@ -30,8 +30,6 @@ def common_pods_commun
   pod 'AppsFlyerFramework'
   
   pod 'PureLayout'
-  pod 'Alamofire'
-  pod 'Swinject'
   pod 'SDWebImage'
   pod 'SDWebImageWebPCoder'
   pod 'Action'
@@ -42,8 +40,6 @@ def common_pods_commun
   pod 'SwifterSwift/SwiftStdlib', :git => "https://github.com/communcom/SwifterSwift.git"   # Standard Library Extensions
   pod 'SwifterSwift/Foundation', :git => "https://github.com/communcom/SwifterSwift.git"    # Foundation Extensions
   pod 'SwifterSwift/UIKit', :git => "https://github.com/communcom/SwifterSwift.git"         # UIKit Extensions
-  
-  pod 'Segmentio'
   
   pod 'MBProgressHUD', '~> 1.1.0'
   pod 'TLPhotoPicker'
@@ -69,6 +65,15 @@ def common_pods_commun
   pod 'SwiftLint'
   pod 'CircularCarousel'
   pod 'NotificationView'
+  
+  pod "SwipeTransition"
+  pod "SwipeTransitionAutoSwipeBack"
+  pod "SwipeTransitionAutoSwipeToDismiss"
+
+  #Social Login
+  pod 'FBSDKLoginKit', '6.0.0'
+  pod 'FBSDKCoreKit', '6.0.0'
+  pod 'GoogleSignIn', '5.0.2'
 
 end
 

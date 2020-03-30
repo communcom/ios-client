@@ -55,17 +55,15 @@ class CMHint: UIView {
     private var tabbarHeight: CGFloat = 0.0
     
     var topicLabel = UILabel(text: "warning".localized().uppercaseFirst,
-                             font: .systemFont(ofSize: .adaptive(width: 15.0), weight: .bold),
+                             font: .systemFont(ofSize: 15.0, weight: .bold),
                              numberOfLines: 0,
                              color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
 
     lazy var contentLabel: UILabel = {
         let contentLabelInstance = UILabel(text: "",
-                                           font: .systemFont(ofSize: .adaptive(width: 12.0), weight: .medium),
+                                           font: .systemFont(ofSize: 12.0, weight: .medium),
                                            numberOfLines: 0,
                                            color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
-        
-        contentLabelInstance.translatesAutoresizingMaskIntoConstraints = false
         contentLabelInstance.alpha = 0.6
         
         return contentLabelInstance
@@ -76,8 +74,7 @@ class CMHint: UIView {
         self.type = type
         self.tabbarHeight = CGFloat((!isTabbarHidden).int) * tabBarHeight
         
-        super.init(frame: CGRect(origin: CGPoint(x: .adaptive(width: 15.0), y: DeviceScreen.ScreenSize.height + 100.0),
-                                 size: CGSize(width: .adaptive(width: 345.0), height: .adaptive(height: 64.0))))
+        super.init(frame: CGRect(origin: CGPoint(x: 15.0, y: DeviceScreen.ScreenSize.height + 100.0), size: CGSize(width: 345.0, height: 64.0)))
 
         commonInit()
     }
@@ -86,35 +83,31 @@ class CMHint: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("XXX")
-    }
-    
     // MARK: - Custom Functions
     func commonInit() {
         alpha = 0.0
         backgroundColor = #colorLiteral(red: 0.141, green: 0.141, blue: 0.173, alpha: 1)
-        layer.cornerRadius = .adaptive(width: 10.0)
+        layer.cornerRadius = 10.0
         
         let labelsStackView = UIStackView(arrangedSubviews: [topicLabel, contentLabel],
                                           axis: .vertical,
-                                          spacing: .adaptive(height: 2.0),
+                                          spacing: 2.0,
                                           alignment: .fill,
                                           distribution: .fillProportionally)
         
-        let imageView = UIImageView(width: .adaptive(width: 30.0),
-                                    height: .adaptive(width: 30.0),
-                                    cornerRadius: .adaptive(width: 30.0) / 2,
+        let imageView = UIImageView(width: 30.0,
+                                    height: 30.0,
+                                    cornerRadius: 30.0 / 2,
                                     imageNamed: "icon-edit-blacklist-circle-red-default")
         
         let mainStackView = UIStackView(arrangedSubviews: [imageView, labelsStackView],
                                         axis: .horizontal,
-                                        spacing: .adaptive(width: 10.0),
+                                        spacing: 10.0,
                                         alignment: .fill,
                                         distribution: .fillProportionally)
         
         addSubview(mainStackView)
-        mainStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 34.0)))
+        mainStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 30.0, vertical: 34.0))
         addTapGesture()
     }
     
@@ -125,7 +118,7 @@ class CMHint: UIView {
         isUserInteractionEnabled = true
     }
 
-    func display(inPosition position: CGPoint, withType type: HintType = .enterText, andButtonHeight buttonHeight: CGFloat = .adaptive(height: 50.0), completion: (() -> Void)?) {
+    func display(inPosition position: CGPoint, withType type: HintType = .enterText, andButtonHeight buttonHeight: CGFloat = 50.0, completion: (() -> Void)? = nil) {
         contentLabel.text = type.introduced()
         
         // Show

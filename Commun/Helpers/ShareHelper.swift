@@ -33,4 +33,10 @@ struct ShareHelper {
         let avc = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         topController.present(avc, animated: true, completion: nil)
     }
+    
+    static func share(_ any: [Any]) {
+        guard let topController = UIApplication.topViewController() else { return }
+        let avc = UIActivityViewController(activityItems: any, applicationActivities: nil)
+        topController.present(avc, animated: true, completion: nil)
+    }
 }
