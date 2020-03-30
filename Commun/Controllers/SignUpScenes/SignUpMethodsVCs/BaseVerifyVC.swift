@@ -1,15 +1,15 @@
 //
-//  VerifyUserVC.swift
+//  BaseVerifyVC.swift
 //  Commun
 //
-//  Created by Chung Tran on 3/24/20.
+//  Created by Chung Tran on 3/30/20.
 //  Copyright © 2020 Commun Limited. All rights reserved.
 //
 
 import Foundation
 import PinCodeInputView
 
-class VerifyUserVC: BaseSignUpVC, SignUpRouter {
+class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Constants
     let numberOfDigits = 4
     
@@ -25,14 +25,14 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
         itemFactory: {
             let itemView = ItemView()
             let autoTestMarker = String(format: "ConfirmUserPinCodeInputView-%i", self.counter)
-
+            
             // For autotest
             itemView.accessibilityLabel = autoTestMarker
             itemView.accessibilityIdentifier = autoTestMarker
             self.counter += 1
-
+            
             return itemView
-        })
+    })
     
     lazy var resendButton = UIButton(labelFont: .systemFont(ofSize: 15, weight: .semibold))
     
@@ -50,8 +50,6 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
     
     override func setUp() {
         super.setUp()
-        AnalyticsManger.shared.registrationOpenScreen(3)
-        
         checkResendSmsCodeTime()
     }
     
@@ -60,7 +58,6 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
         titleLabel.text = "verification".localized().uppercaseFirst
         
         // subtitle
-        subtitleLabel.text = "enter sms-code".localized().uppercaseFirst
         scrollView.contentView.addSubview(subtitleLabel)
         subtitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
         subtitleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -92,7 +89,7 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
         resendButton.autoPinEdge(.top, to: .bottom, of: pinCodeInputView, withOffset: 35)
         resendButton.autoAlignAxis(toSuperviewAxis: .vertical)
         resendButton.autoPinEdge(toSuperviewEdge: .bottom)
-
+        
         resendButton.addTarget(self, action: #selector(resendButtonTapped), for: .touchUpInside)
     }
     
@@ -113,14 +110,14 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
         guard let user = KeychainManager.currentUser(),
             user.registrationStep == .verify,
             let date = user.smsNextRetry
-        else {
-            setResendButtonEnabled()
-            return
+            else {
+                setResendButtonEnabled()
+                return
         }
-
+        
         let dateNextSmsRetry = date.convert(toDateFormat: .nextSmsDateType)
         resendSeconds = Date().seconds(date: dateNextSmsRetry)
-
+        
         // Run timer
         resendTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
     }
@@ -132,79 +129,25 @@ class VerifyUserVC: BaseSignUpVC, SignUpRouter {
             setResendButtonEnabled()
             return
         }
-
+        
         resendSeconds -= 1
         setResendButtonEnabled(false)
     }
     
-    @objc func smsCodeButtonTapped(button: UIBarButtonItem) {
-        pinCodeInputView.insertText(button.title!)
-//        removeAccessoryView()
-    }
-    
-    @objc func resendButtonTapped() {
-        guard KeychainManager.currentUser()?.phoneNumber != nil else {
-            try? KeychainManager.deleteUser()
-            // Go back
-            popToPreviousVC()
-            return
-        }
-        AnalyticsManger.shared.smsCodeResend()
-
-        RestAPIManager.instance.resendSmsCode()
-                .subscribe(onSuccess: { [weak self] (_) in
-                    guard let self = self else { return }
-                    DispatchQueue.main.async {
-                        self.checkResendSmsCodeTime()
-                        self.showAlert(title: "info".localized().uppercaseFirst,
-                                       message: "successfully resend code".localized().uppercaseFirst)
-                    }
-                }) { [weak self] (error) in
-                    self?.showError(error)
-                }
-                .disposed(by: disposeBag)
-    }
+    @objc func resendButtonTapped() {}
     
     func verify() {
-       guard pinCodeInputView.text.count == numberOfDigits,
-           let code = UInt64(pinCodeInputView.text) else {
-               return
-       }
-       AnalyticsManger.shared.smsCodeEntered()
-
-       showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
-
-       RestAPIManager.instance.verify(code: code)
-           .subscribe(onSuccess: { [weak self] (_) in
-               AnalyticsManger.shared.smsCodeRight()
-               self?.hideHud()
-               self?.signUpNextStep()
-           }) { (error) in
-               self.deleteCode()
-               AnalyticsManger.shared.smsCodeError()
-               self.hideHud()
-               self.handleSignUpError(error: error)
-           }
-           .disposed(by: disposeBag)
+        guard pinCodeInputView.text.count == numberOfDigits,
+            let code = UInt64(pinCodeInputView.text) else {
+                return
+        }
+        sendCodeToVerify(code)
     }
+    func sendCodeToVerify(_ code: UInt64) {}
     
     func deleteCode() {
         for _ in 0..<numberOfDigits {
             pinCodeInputView.deleteBackward()
         }
     }
-    
-    // MARK: - accessoryView
-//    func addAccessoryView(withSmsCode smsCode: String) {
-//        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: .adaptive(height: 44.0)))
-//        let smsCodeButton = UIBarButtonItem(title: smsCode, style: .plain, target: self, action: #selector(smsCodeButtonTapped(button:)))
-//        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        toolBar.items = [spacer, smsCodeButton, spacer]
-//        toolBar.tintColor = UIColor(hexString: "#6A80F5")
-//        pinCodeInputView.inputAccessoryView = toolBar
-//    }
-//
-//    func removeAccessoryView() {
-//        pinCodeInputView.inputAccessoryView = nil
-//    }
 }
