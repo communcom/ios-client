@@ -166,20 +166,20 @@ extension UITableView {
     func addEmptyPlaceholderFooterView(emoji: String? = nil, title: String, description: String? = nil, buttonLabel: String? = nil, buttonAction: (() -> Void)? = nil) {
         // Prevent dupplicating
         let emptyPlaceholderViewTag = ViewTag.emptyPlaceholderView.rawValue
+       
         if tableFooterView?.tag == emptyPlaceholderViewTag {
             return
         }
         
-        let height: CGFloat = .adaptive(height: buttonLabel == nil ? 153.0 : 203.0)
+        let height: CGFloat = buttonLabel == nil ? 153.0 : 203.0
         let containerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 0.0, height: height))
         let placeholderView = MyEmptyPlaceHolderView(emoji: emoji, title: title, description: description, buttonLabel: buttonLabel, buttonAction: buttonAction)
+        
         containerView.addSubview(placeholderView)
         containerView.tag = tag
-        containerView.layer.cornerRadius = CGFloat.adaptive(width: 10.0)
+        containerView.layer.cornerRadius = 15.0
         containerView.clipsToBounds = true
-
-        placeholderView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 10.0),
-                                                                        vertical: .adaptive(height: 20.0)))
+        placeholderView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 20.0, vertical: 0.0))
 
         self.tableFooterView = containerView
     }
