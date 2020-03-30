@@ -61,6 +61,7 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
         scrollView.contentView.addSubview(subtitleLabel)
         subtitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
         subtitleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        subtitleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         // pinCodeInputView
         pinCodeInputView.set { _ in
