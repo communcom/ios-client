@@ -54,6 +54,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = splashVC
         
+        #if !APPSTORE
+        if !UserDefaults.standard.bool(forKey: UIApplication.versionBuild) {
+            try? KeychainManager.deleteUser()
+            UserDefaults.standard.set(true, forKey: UIApplication.versionBuild)
+        }
+        #endif
+        
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
             // Analytics
