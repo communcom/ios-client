@@ -355,6 +355,7 @@
 		BC923E112431A05200B28413 /* SignUpWithEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E102431A05200B28413 /* SignUpWithEmailVC.swift */; };
 		BC923E132431A29D00B28413 /* SignUpWithEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E122431A29D00B28413 /* SignUpWithEmailViewModel.swift */; };
 		BC923E152431A76D00B28413 /* BaseVerifyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E142431A76D00B28413 /* BaseVerifyVC.swift */; };
+		BC923E182431AB2600B28413 /* VerifyEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E172431AB2600B28413 /* VerifyEmailVC.swift */; };
 		BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */; };
 		BC99B65A23E17848004AA74E /* UISearchController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */; };
 		BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */ = {isa = PBXBuildFile; fileRef = BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */; };
@@ -860,6 +861,7 @@
 		BC923E102431A05200B28413 /* SignUpWithEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithEmailVC.swift; sourceTree = "<group>"; };
 		BC923E122431A29D00B28413 /* SignUpWithEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithEmailViewModel.swift; sourceTree = "<group>"; };
 		BC923E142431A76D00B28413 /* BaseVerifyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVerifyVC.swift; sourceTree = "<group>"; };
+		BC923E172431AB2600B28413 /* VerifyEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailVC.swift; sourceTree = "<group>"; };
 		BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorChooseCommunityVC.swift; sourceTree = "<group>"; };
 		BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchController+Extensions.swift"; sourceTree = "<group>"; };
 		BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetLeaders.json; sourceTree = "<group>"; };
@@ -2349,10 +2351,19 @@
 		BC923E0F2431A03D00B28413 /* SignUpWithEmailVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC923E162431AB1800B28413 /* VerifyEmailVC */,
 				BC923E102431A05200B28413 /* SignUpWithEmailVC.swift */,
 				BC923E122431A29D00B28413 /* SignUpWithEmailViewModel.swift */,
 			);
 			path = SignUpWithEmailVC;
+			sourceTree = "<group>";
+		};
+		BC923E162431AB1800B28413 /* VerifyEmailVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC923E172431AB2600B28413 /* VerifyEmailVC.swift */,
+			);
+			path = VerifyEmailVC;
 			sourceTree = "<group>";
 		};
 		BC9765B0237D42DE00FC096B /* EditorChooseCommunityVC */ = {
@@ -3382,6 +3393,7 @@
 				BCC2FAEC2418EA0800A3DD87 /* SignUpVC.swift in Sources */,
 				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
 				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,
+				BC923E182431AB2600B28413 /* VerifyEmailVC.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,
 				BCCE0AA82367EB5900A183AA /* MyCollectionViewCell.swift in Sources */,
 				BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */,
