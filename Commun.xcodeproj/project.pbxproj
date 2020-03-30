@@ -351,6 +351,8 @@
 		BC9066F523A9E002000F9A3B /* TransferHistoryListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066F423A9E002000F9A3B /* TransferHistoryListFetcher.swift */; };
 		BC9066F723A9E1AC000F9A3B /* TransferHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066F623A9E1AC000F9A3B /* TransferHistoryViewModel.swift */; };
 		BC9066FA23A9E34C000F9A3B /* TransferHistoryItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066F923A9E34C000F9A3B /* TransferHistoryItemCell.swift */; };
+		BC923E0C24319DB700B28413 /* BaseSignUpMethodVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E0B24319DB700B28413 /* BaseSignUpMethodVC.swift */; };
+		BC923E112431A05200B28413 /* SignUpWithEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E102431A05200B28413 /* SignUpWithEmailVC.swift */; };
 		BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */; };
 		BC99B65A23E17848004AA74E /* UISearchController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */; };
 		BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */ = {isa = PBXBuildFile; fileRef = BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */; };
@@ -852,6 +854,8 @@
 		BC9066F423A9E002000F9A3B /* TransferHistoryListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryListFetcher.swift; sourceTree = "<group>"; };
 		BC9066F623A9E1AC000F9A3B /* TransferHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryViewModel.swift; sourceTree = "<group>"; };
 		BC9066F923A9E34C000F9A3B /* TransferHistoryItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryItemCell.swift; sourceTree = "<group>"; };
+		BC923E0B24319DB700B28413 /* BaseSignUpMethodVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSignUpMethodVC.swift; sourceTree = "<group>"; };
+		BC923E102431A05200B28413 /* SignUpWithEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithEmailVC.swift; sourceTree = "<group>"; };
 		BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorChooseCommunityVC.swift; sourceTree = "<group>"; };
 		BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchController+Extensions.swift"; sourceTree = "<group>"; };
 		BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetLeaders.json; sourceTree = "<group>"; };
@@ -1495,7 +1499,9 @@
 		5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */ = {
 			isa = PBXGroup;
 			children = (
+				BC923E0B24319DB700B28413 /* BaseSignUpMethodVC.swift */,
 				BCCE669D2429B843004F47DC /* SignUpWithPhoneVC */,
+				BC923E0F2431A03D00B28413 /* SignUpWithEmailVC */,
 			);
 			path = SignUpMethodsVCs;
 			sourceTree = "<group>";
@@ -2335,6 +2341,14 @@
 			path = TransferHistoryVC;
 			sourceTree = "<group>";
 		};
+		BC923E0F2431A03D00B28413 /* SignUpWithEmailVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC923E102431A05200B28413 /* SignUpWithEmailVC.swift */,
+			);
+			path = SignUpWithEmailVC;
+			sourceTree = "<group>";
+		};
 		BC9765B0237D42DE00FC096B /* EditorChooseCommunityVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -3075,6 +3089,7 @@
 				BCDEE77723ED642600DD3EB3 /* ReportOtherVC.swift in Sources */,
 				B1D78C0923E335D100772BD9 /* UserDefaults+Extensions.swift in Sources */,
 				BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */,
+				BC923E0C24319DB700B28413 /* BaseSignUpMethodVC.swift in Sources */,
 				BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */,
 				5721E87122650AC0003BE04B /* String+Extensions.swift in Sources */,
 				BC7470B02410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift in Sources */,
@@ -3255,6 +3270,7 @@
 				BC597A70238BD03C00103F4F /* FilterCell.swift in Sources */,
 				BCD812482410A2B80035EE13 /* UINavigationBar+Extensions.swift in Sources */,
 				BC4692BF2390D1E10064A38B /* FeedPageVC.swift in Sources */,
+				BC923E112431A05200B28413 /* SignUpWithEmailVC.swift in Sources */,
 				BC4692DB2394B0540064A38B /* ProfileCellDelegate.swift in Sources */,
 				BC7445DB242B58FA009915EA /* ReferralUsersVC.swift in Sources */,
 				BC4692D22391160E0064A38B /* LeaderCellDelegate.swift in Sources */,
