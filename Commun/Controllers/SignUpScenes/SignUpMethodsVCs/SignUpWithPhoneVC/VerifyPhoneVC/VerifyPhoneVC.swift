@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class VerifyPhoneVC: BaseVerifyVC {
     
@@ -17,6 +18,20 @@ class VerifyPhoneVC: BaseVerifyVC {
         subtitleLabel.text = "enter sms-code".localized().uppercaseFirst
     }
     
+    override func getNextRetry() -> Date? {
+        guard let user = KeychainManager.currentUser(),
+            user.registrationStep == .verify,
+            let date = user.smsNextRetry?.convert(toDateFormat: .nextSmsDateType)
+            else {
+                return nil
+        }
+        return date
+    }
+    
+    override var resendCodeCompletable: Completable {
+        RestAPIManager.instance.resendSmsCode().flatMapToCompletable()
+    }
+    
     override func resendButtonTapped() {
         guard KeychainManager.currentUser()?.phoneNumber != nil else {
             try? KeychainManager.deleteUser()
@@ -24,40 +39,19 @@ class VerifyPhoneVC: BaseVerifyVC {
             popToPreviousVC()
             return
         }
-        
         AnalyticsManger.shared.smsCodeResend()
-        
-        RestAPIManager.instance.resendSmsCode()
-            .subscribe(onSuccess: { [weak self] (_) in
-                guard let self = self else { return }
-                DispatchQueue.main.async {
-                    self.checkResendSmsCodeTime()
-                    self.showAlert(title: "info".localized().uppercaseFirst,
-                                   message: "successfully resend code".localized().uppercaseFirst)
-                }
-            }) { [weak self] (error) in
-                self?.showError(error)
-        }
-        .disposed(by: disposeBag)
+        super.resendButtonTapped()
     }
     
-    override func sendCodeToVerify(_ code: UInt64) {
+    override func createVerificationRequest(code: UInt64) -> Completable {
         AnalyticsManger.shared.smsCodeEntered()
         
-        showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
-        
-        RestAPIManager.instance.verify(code: code)
-            .subscribe(onSuccess: { [weak self] (_) in
-                AnalyticsManger.shared.smsCodeRight()
-                self?.hideHud()
-                self?.signUpNextStep()
-            }) { (error) in
-                self.deleteCode()
+        return RestAPIManager.instance.verify(code: code).flatMapToCompletable()
+            .do(onError: { (error) in
                 AnalyticsManger.shared.smsCodeError()
-                self.hideHud()
-                self.handleSignUpError(error: error)
-        }
-        .disposed(by: disposeBag)
+            }, onCompleted: {
+                AnalyticsManger.shared.smsCodeRight()
+            })
     }
     
     // MARK: - accessoryView

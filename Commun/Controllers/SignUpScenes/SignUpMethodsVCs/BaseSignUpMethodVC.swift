@@ -7,8 +7,24 @@
 //
 
 import Foundation
+import ReCaptcha
 
 class BaseSignUpMethodVC: BaseSignUpVC, SignUpRouter {
+    lazy var recaptcha: ReCaptcha = {
+        let recaptcha = try! ReCaptcha(endpoint: ReCaptcha.Endpoint.default, locale: Locale(identifier: Locale.current.languageCode ?? "en"))
+
+        #if DEBUG
+        recaptcha.forceVisibleChallenge = false
+        #endif
+
+        recaptcha.configureWebView { [weak self] webview in
+            webview.frame = self?.view.bounds ?? CGRect.zero
+            webview.tag = reCaptchaTag
+            self?.hideHud()
+        }
+        return recaptcha
+    }()
+    
     override func setUpScrollView() {
         super.setUpScrollView()
         

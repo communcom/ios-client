@@ -61,6 +61,24 @@ class SignUpWithEmailVC: BaseSignUpMethodVC {
         self.view.endEditing(true)
         self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
         
-        
+        recaptcha.validate(
+            on: view,
+            resetOnError: false) {[weak self] (result) in
+                guard let strongSelf = self,
+                    let captchaCode = try? result.dematerialize(),
+                    let email = strongSelf.textField.text
+                else {return}
+                strongSelf.view.viewWithTag(reCaptchaTag)?.removeFromSuperview()
+                
+                RestAPIManager.instance.firstStepEmail(email, captcha: captchaCode)
+                    .subscribe(onSuccess: { _ in
+                        strongSelf.hideHud()
+                        strongSelf.signUpNextStep()
+                    }) { (error) in
+                        strongSelf.hideHud()
+                        strongSelf.handleSignUpError(error: error, with: email)
+                }
+                .disposed(by: strongSelf.disposeBag)
+            }
     }
 }

@@ -30,6 +30,10 @@ extension SignUpRouter where Self: UIViewController {
             let verifyUserVC = VerifyPhoneVC()
             vc = verifyUserVC
             
+        case .verifyEmail:
+            let verifyVC = VerifyEmailVC()
+            vc = verifyVC
+            
         case .setUserName:
             let setUserVC = SetUserVC()
             vc = setUserVC

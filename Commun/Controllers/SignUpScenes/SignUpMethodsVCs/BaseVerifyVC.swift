@@ -8,6 +8,7 @@
 
 import Foundation
 import PinCodeInputView
+import RxSwift
 
 class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Constants
@@ -50,7 +51,7 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
     
     override func setUp() {
         super.setUp()
-        checkResendSmsCodeTime()
+        checkResendCodeTime()
     }
     
     override func setUpScrollView() {
@@ -107,17 +108,18 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
     }
     
     // MARK: - Actions
-    func checkResendSmsCodeTime() {
-        guard let user = KeychainManager.currentUser(),
-            user.registrationStep == .verify,
-            let date = user.smsNextRetry
-            else {
-                setResendButtonEnabled()
-                return
+    func getNextRetry() -> Date? {
+        fatalError("must override")
+    }
+    
+    func checkResendCodeTime() {
+        guard let date = getNextRetry()
+        else {
+            setResendButtonEnabled()
+            return
         }
         
-        let dateNextSmsRetry = date.convert(toDateFormat: .nextSmsDateType)
-        resendSeconds = Date().seconds(date: dateNextSmsRetry)
+        resendSeconds = Date().seconds(date: date)
         
         // Run timer
         resendTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
@@ -135,16 +137,47 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
         setResendButtonEnabled(false)
     }
     
-    @objc func resendButtonTapped() {}
+    var resendCodeCompletable: Completable {
+        fatalError("Must override")
+    }
+    @objc func resendButtonTapped() {
+        resendCodeCompletable
+            .subscribe(onCompleted: { [weak self] in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.checkResendCodeTime()
+                    self.showAlert(title: "info".localized().uppercaseFirst,
+                                   message: "successfully resend code".localized().uppercaseFirst)
+                }
+            }) { [weak self] (error) in
+                self?.showError(error)
+        }
+        .disposed(by: disposeBag)
+    }
+    
+    func createVerificationRequest(code: UInt64) -> Completable {
+        fatalError("Must override")
+    }
     
     func verify() {
         guard pinCodeInputView.text.count == numberOfDigits,
             let code = UInt64(pinCodeInputView.text) else {
                 return
         }
-        sendCodeToVerify(code)
+        
+        showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
+        
+        createVerificationRequest(code: code)
+            .subscribe(onCompleted: { [weak self] in
+                self?.hideHud()
+                self?.signUpNextStep()
+            }) { (error) in
+                self.deleteCode()
+                self.hideHud()
+                self.handleSignUpError(error: error)
+            }
+            .disposed(by: disposeBag)
     }
-    func sendCodeToVerify(_ code: UInt64) {}
     
     func deleteCode() {
         for _ in 0..<numberOfDigits {
