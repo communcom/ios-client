@@ -23,10 +23,11 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
     
     // MARK: - Constants
     private let phoneServiceName = "phone"
+    private let emailServiceName = "email"
     
     // MARK: - Properties
     lazy var methods: [Method] = {
-        [Method(serviceName: phoneServiceName)] +
+        [Method(serviceName: phoneServiceName), Method(serviceName: emailServiceName)] +
         SocialNetwork.allCases.map { network in
             var backgroundColor: UIColor?
             var textColor: UIColor?
