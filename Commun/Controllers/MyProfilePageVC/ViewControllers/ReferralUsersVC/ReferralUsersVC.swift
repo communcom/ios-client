@@ -22,6 +22,7 @@ class ReferralUsersVC: SubsViewController<ResponseAPIContentGetProfile, Subscrib
     
     override func setUp() {
         super.setUp()
+        headerView.sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
         headerView.shareButton.addTarget(self, action: #selector(shareButtonDidTouch), for: .touchUpInside)
         headerView.copyButton.addTarget(self, action: #selector(copyButtonDidTouch), for: .touchUpInside)
         headerView.learnMoreButton.addTarget(self, action: #selector(infoButtonDidTouch), for: .touchUpInside)
@@ -64,5 +65,20 @@ class ReferralUsersVC: SubsViewController<ResponseAPIContentGetProfile, Subscrib
     
     @objc func infoButtonDidTouch() {
         load(url: "https://commun.com/faq")
+    }
+    
+    @objc func sendButtonDidTouch() {
+        showIndetermineHudWithMessage("adding referralId".localized().uppercaseFirst + "...")
+        RestAPIManager.instance.appendReferralParent(referralId: headerView.textField.text!)
+            .subscribe(onSuccess: { (_) in
+                self.hideHud()
+                self.showDone("referralId added".localized().uppercaseFirst + "!")
+                self.headerView.textField.text = nil
+                self.headerView.textField.sendActions(for: .valueChanged)
+            }) { (error) in
+                self.hideHud()
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }
