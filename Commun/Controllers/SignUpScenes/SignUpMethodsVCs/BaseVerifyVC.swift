@@ -15,7 +15,7 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
     
     // MARK: - Properties
     var resendTimer: Timer?
-    var resendSeconds: Int = 0
+    var resendSeconds: Int?
     var code: String {fatalError("must override")}
     
     // MARK: - Subviews
@@ -47,7 +47,12 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
         } else {
             resendButton.isUserInteractionEnabled = false
             resendButton.setTitleColor(.appGrayColor, for: .normal)
-            resendButton.setTitle("resend verification code".localized().uppercaseFirst + " 0:\(String(describing: resendSeconds).addFirstZero())", for: .normal)
+            
+            var time = ""
+            if let second = resendSeconds {
+                time = " 0:\(String(describing: second).addFirstZero())"
+            }
+            resendButton.setTitle("resend verification code".localized().uppercaseFirst + time, for: .normal)
         }
     }
     
@@ -70,14 +75,14 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
     }
     
     @objc func onTimerFires() {
-        guard self.resendSeconds > 1 else {
+        guard self.resendSeconds ?? 0 > 1 else {
             resendTimer?.invalidate()
             resendTimer = nil
             setResendButtonEnabled()
             return
         }
         
-        resendSeconds -= 1
+        resendSeconds = (resendSeconds ?? 0) - 1
         setResendButtonEnabled(false)
     }
     
@@ -85,15 +90,18 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
         fatalError("Must override")
     }
     @objc func resendButtonTapped() {
+        setResendButtonEnabled(false)
         resendCodeCompletable
             .subscribe(onCompleted: { [weak self] in
                 guard let self = self else { return }
+                self.setResendButtonEnabled()
                 DispatchQueue.main.async {
                     self.checkResendCodeTime()
                     self.showAlert(title: "info".localized().uppercaseFirst,
                                    message: "successfully resend code".localized().uppercaseFirst)
                 }
             }) { [weak self] (error) in
+                self?.setResendButtonEnabled()
                 self?.showError(error)
         }
         .disposed(by: disposeBag)
