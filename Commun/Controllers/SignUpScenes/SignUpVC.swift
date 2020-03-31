@@ -23,10 +23,11 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
     
     // MARK: - Constants
     private let phoneServiceName = "phone"
+    private let emailServiceName = "email"
     
     // MARK: - Properties
     lazy var methods: [Method] = {
-        [Method(serviceName: phoneServiceName)] +
+        [Method(serviceName: phoneServiceName), Method(serviceName: emailServiceName)] +
         SocialNetwork.allCases.map { network in
             var backgroundColor: UIColor?
             var textColor: UIColor?
@@ -129,12 +130,21 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
     }
 
     func signUpWithMethod(_ method: Method) {
+        // Sign up with phone
         if method.serviceName == phoneServiceName {
             let signUpVC = SignUpWithPhoneVC()
             show(signUpVC, sender: nil)
             return
         }
+        
+        // Sign up with email
+        if method.serviceName == emailServiceName {
+            let signUpVC = SignUpWithEmailVC()
+            show(signUpVC, sender: nil)
+            return
+        }
 
+        // Sign up via social network
         var manager: SocialLoginManager
         if method.serviceName == SocialNetwork.facebook.rawValue {
             manager = FacebookLoginManager()

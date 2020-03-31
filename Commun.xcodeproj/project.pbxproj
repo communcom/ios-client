@@ -274,7 +274,7 @@
 		BC5A34882429C066001C5054 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34862429C065001C5054 /* CountryCell.swift */; };
 		BC5A34892429C066001C5054 /* CountryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC5A34872429C066001C5054 /* CountryCell.xib */; };
 		BC5A348C2429C0DA001C5054 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A348B2429C0DA001C5054 /* Country.swift */; };
-		BC5A34932429EF8C001C5054 /* VerifyUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34922429EF8C001C5054 /* VerifyUserVC.swift */; };
+		BC5A34932429EF8C001C5054 /* VerifyPhoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34922429EF8C001C5054 /* VerifyPhoneVC.swift */; };
 		BC5A34A0242B08D6001C5054 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A349F242B08D6001C5054 /* WelcomeVC.swift */; };
 		BC5A34A4242B0DA3001C5054 /* WelcomeItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34A3242B0DA3001C5054 /* WelcomeItemVC.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
@@ -351,6 +351,11 @@
 		BC9066F523A9E002000F9A3B /* TransferHistoryListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066F423A9E002000F9A3B /* TransferHistoryListFetcher.swift */; };
 		BC9066F723A9E1AC000F9A3B /* TransferHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066F623A9E1AC000F9A3B /* TransferHistoryViewModel.swift */; };
 		BC9066FA23A9E34C000F9A3B /* TransferHistoryItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066F923A9E34C000F9A3B /* TransferHistoryItemCell.swift */; };
+		BC923E0C24319DB700B28413 /* BaseSignUpMethodVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E0B24319DB700B28413 /* BaseSignUpMethodVC.swift */; };
+		BC923E112431A05200B28413 /* SignUpWithEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E102431A05200B28413 /* SignUpWithEmailVC.swift */; };
+		BC923E132431A29D00B28413 /* SignUpWithEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E122431A29D00B28413 /* SignUpWithEmailViewModel.swift */; };
+		BC923E152431A76D00B28413 /* BaseVerifyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E142431A76D00B28413 /* BaseVerifyVC.swift */; };
+		BC923E182431AB2600B28413 /* VerifyEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E172431AB2600B28413 /* VerifyEmailVC.swift */; };
 		BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */; };
 		BC99B65A23E17848004AA74E /* UISearchController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */; };
 		BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */ = {isa = PBXBuildFile; fileRef = BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */; };
@@ -775,7 +780,7 @@
 		BC5A34862429C065001C5054 /* CountryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
 		BC5A34872429C066001C5054 /* CountryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryCell.xib; sourceTree = "<group>"; };
 		BC5A348B2429C0DA001C5054 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
-		BC5A34922429EF8C001C5054 /* VerifyUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyUserVC.swift; sourceTree = "<group>"; };
+		BC5A34922429EF8C001C5054 /* VerifyPhoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPhoneVC.swift; sourceTree = "<group>"; };
 		BC5A349F242B08D6001C5054 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		BC5A34A3242B0DA3001C5054 /* WelcomeItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeItemVC.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
@@ -852,6 +857,11 @@
 		BC9066F423A9E002000F9A3B /* TransferHistoryListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryListFetcher.swift; sourceTree = "<group>"; };
 		BC9066F623A9E1AC000F9A3B /* TransferHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryViewModel.swift; sourceTree = "<group>"; };
 		BC9066F923A9E34C000F9A3B /* TransferHistoryItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryItemCell.swift; sourceTree = "<group>"; };
+		BC923E0B24319DB700B28413 /* BaseSignUpMethodVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSignUpMethodVC.swift; sourceTree = "<group>"; };
+		BC923E102431A05200B28413 /* SignUpWithEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithEmailVC.swift; sourceTree = "<group>"; };
+		BC923E122431A29D00B28413 /* SignUpWithEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithEmailViewModel.swift; sourceTree = "<group>"; };
+		BC923E142431A76D00B28413 /* BaseVerifyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVerifyVC.swift; sourceTree = "<group>"; };
+		BC923E172431AB2600B28413 /* VerifyEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailVC.swift; sourceTree = "<group>"; };
 		BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorChooseCommunityVC.swift; sourceTree = "<group>"; };
 		BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchController+Extensions.swift"; sourceTree = "<group>"; };
 		BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetLeaders.json; sourceTree = "<group>"; };
@@ -1495,7 +1505,10 @@
 		5797E0F6225DDA260026C4D5 /* SignUpMethodsVCs */ = {
 			isa = PBXGroup;
 			children = (
+				BC923E0B24319DB700B28413 /* BaseSignUpMethodVC.swift */,
+				BC923E142431A76D00B28413 /* BaseVerifyVC.swift */,
 				BCCE669D2429B843004F47DC /* SignUpWithPhoneVC */,
+				BC923E0F2431A03D00B28413 /* SignUpWithEmailVC */,
 			);
 			path = SignUpMethodsVCs;
 			sourceTree = "<group>";
@@ -2054,12 +2067,12 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
-		BC5A348F2429EF47001C5054 /* VerifyUserVC */ = {
+		BC5A348F2429EF47001C5054 /* VerifyPhoneVC */ = {
 			isa = PBXGroup;
 			children = (
-				BC5A34922429EF8C001C5054 /* VerifyUserVC.swift */,
+				BC5A34922429EF8C001C5054 /* VerifyPhoneVC.swift */,
 			);
-			path = VerifyUserVC;
+			path = VerifyPhoneVC;
 			sourceTree = "<group>";
 		};
 		BC5A349E242B083B001C5054 /* WelcomeVC */ = {
@@ -2335,6 +2348,24 @@
 			path = TransferHistoryVC;
 			sourceTree = "<group>";
 		};
+		BC923E0F2431A03D00B28413 /* SignUpWithEmailVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC923E162431AB1800B28413 /* VerifyEmailVC */,
+				BC923E102431A05200B28413 /* SignUpWithEmailVC.swift */,
+				BC923E122431A29D00B28413 /* SignUpWithEmailViewModel.swift */,
+			);
+			path = SignUpWithEmailVC;
+			sourceTree = "<group>";
+		};
+		BC923E162431AB1800B28413 /* VerifyEmailVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC923E172431AB2600B28413 /* VerifyEmailVC.swift */,
+			);
+			path = VerifyEmailVC;
+			sourceTree = "<group>";
+		};
 		BC9765B0237D42DE00FC096B /* EditorChooseCommunityVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -2549,7 +2580,7 @@
 		BCCE669D2429B843004F47DC /* SignUpWithPhoneVC */ = {
 			isa = PBXGroup;
 			children = (
-				BC5A348F2429EF47001C5054 /* VerifyUserVC */,
+				BC5A348F2429EF47001C5054 /* VerifyPhoneVC */,
 				BCCE668F2428A9B8004F47DC /* SignUpWithPhoneVC.swift */,
 				BCCE66992429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift */,
 				BCCE66972429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift */,
@@ -3075,6 +3106,7 @@
 				BCDEE77723ED642600DD3EB3 /* ReportOtherVC.swift in Sources */,
 				B1D78C0923E335D100772BD9 /* UserDefaults+Extensions.swift in Sources */,
 				BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */,
+				BC923E0C24319DB700B28413 /* BaseSignUpMethodVC.swift in Sources */,
 				BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */,
 				5721E87122650AC0003BE04B /* String+Extensions.swift in Sources */,
 				BC7470B02410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift in Sources */,
@@ -3137,7 +3169,7 @@
 				BCC60E1623A0D02C00D40013 /* FeedPageHeaderView.swift in Sources */,
 				BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */,
 				BC9066FA23A9E34C000F9A3B /* TransferHistoryItemCell.swift in Sources */,
-				BC5A34932429EF8C001C5054 /* VerifyUserVC.swift in Sources */,
+				BC5A34932429EF8C001C5054 /* VerifyPhoneVC.swift in Sources */,
 				BC6B7657236A9D4600A7AF2A /* CommunityRuleCell.swift in Sources */,
 				BCF74A6723618D9000B91089 /* CMSegmentedControl.swift in Sources */,
 				B1D7AD5C23A10664007D1A13 /* QRScannerViewController.swift in Sources */,
@@ -3188,6 +3220,7 @@
 				BC7D608A237BF3F1007D8C1A /* MyProfileBlacklistVC.swift in Sources */,
 				BC5A34852429BDB5001C5054 /* CountriesVC.swift in Sources */,
 				BC8F815723E27ECE0024C04A /* WalletConvertViewModel.swift in Sources */,
+				BC923E132431A29D00B28413 /* SignUpWithEmailViewModel.swift in Sources */,
 				BC40719E23CF0137000027A3 /* NotificationsListFetcher.swift in Sources */,
 				BCCE66922428AA08004F47DC /* UITextField+PureLayout.swift in Sources */,
 				3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */,
@@ -3243,6 +3276,7 @@
 				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
+				BC923E152431A76D00B28413 /* BaseVerifyVC.swift in Sources */,
 				BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift in Sources */,
 				BC3694F923699B8600B2E078 /* ArticleEditorVC+Actions.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
@@ -3255,6 +3289,7 @@
 				BC597A70238BD03C00103F4F /* FilterCell.swift in Sources */,
 				BCD812482410A2B80035EE13 /* UINavigationBar+Extensions.swift in Sources */,
 				BC4692BF2390D1E10064A38B /* FeedPageVC.swift in Sources */,
+				BC923E112431A05200B28413 /* SignUpWithEmailVC.swift in Sources */,
 				BC4692DB2394B0540064A38B /* ProfileCellDelegate.swift in Sources */,
 				BC7445DB242B58FA009915EA /* ReferralUsersVC.swift in Sources */,
 				BC4692D22391160E0064A38B /* LeaderCellDelegate.swift in Sources */,
@@ -3358,6 +3393,7 @@
 				BCC2FAEC2418EA0800A3DD87 /* SignUpVC.swift in Sources */,
 				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
 				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,
+				BC923E182431AB2600B28413 /* VerifyEmailVC.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,
 				BCCE0AA82367EB5900A183AA /* MyCollectionViewCell.swift in Sources */,
 				BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */,

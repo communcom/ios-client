@@ -11,7 +11,7 @@ import Foundation
 extension UITextField {
     static func signUpTextField(
         width: CGFloat? = nil,
-        font: UIFont = .systemFont(ofSize: 17 * Config.heightRatio),
+        font: UIFont = .systemFont(ofSize: 17),
         keyboardType: UIKeyboardType = .alphabet,
         placeholder: String? = nil,
         isSecureTextEntry: Bool = false,
