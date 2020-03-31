@@ -12,6 +12,7 @@ class BaseSignUpVC: BaseViewController {
     // MARK: - Properties
     var termOfUseText: String {"By continuing, you agree to the Commun’s Terms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst}
     var alreadyHasAccountText: String {"already have an account? Sign in".localized().uppercaseFirst}
+    var autoPinNextButtonToBottom: Bool {false}
     
     // MARK: - Subviews
     lazy var backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
@@ -108,9 +109,31 @@ class BaseSignUpVC: BaseViewController {
     }
     
     func viewDidSetUpScrollView() {
-        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        if autoPinNextButtonToBottom {
+            setUpNextButton()
+            nextButton.autoPinEdge(.top, to: .bottom, of: scrollView)
+        } else {
+            let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+            keyboardViewV.observeKeyboardHeight()
+            self.view.addConstraint(keyboardViewV)
+        }
+    }
+    
+    func setUpNextButton() {
+        view.addSubview(nextButton)
+        nextButton.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
+        nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
+        let constant: CGFloat
+        switch UIDevice.current.screenType {
+        case .iPhones_5_5s_5c_SE:
+            constant = 16
+        default:
+            constant = 40
+        }
+        
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: nextButton, attribute: .bottom, multiplier: 1.0, constant: constant)
         keyboardViewV.observeKeyboardHeight()
-        self.view.addConstraint(keyboardViewV)
+        view.addConstraint(keyboardViewV)
     }
     
     override func viewWillAppear(_ animated: Bool) {
