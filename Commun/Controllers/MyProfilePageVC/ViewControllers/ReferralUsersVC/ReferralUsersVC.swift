@@ -27,6 +27,14 @@ class ReferralUsersVC: SubsViewController<ResponseAPIContentGetProfile, Subscrib
         headerView.learnMoreButton.addTarget(self, action: #selector(infoButtonDidTouch), for: .touchUpInside)
     }
     
+    override func bind() {
+        super.bind()
+        headerView.textField.rx.text.orEmpty
+            .map {$0.count == 12}
+            .bind(to: headerView.sendButton.rx.isDisabled)
+            .disposed(by: disposeBag)
+    }
+    
     override func handleListEmpty() {
         let title = "no referral users"
         let description = "no referral users found"
