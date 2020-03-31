@@ -70,7 +70,7 @@ class ReferralUsersVC: SubsViewController<ResponseAPIContentGetProfile, Subscrib
     
     @objc func sendButtonDidTouch() {
         showIndetermineHudWithMessage("adding referralId".localized().uppercaseFirst + "...")
-        RestAPIManager.instance.appendReferralParent(referralId: headerView.textField.text!)
+        RestAPIManager.instance.appendReferralParent(referralId: headerView.textField.text!.lowercased())
             .subscribe(onSuccess: { (_) in
                 self.hideHud()
                 self.showDone("referralId added".localized().uppercaseFirst + "!")
