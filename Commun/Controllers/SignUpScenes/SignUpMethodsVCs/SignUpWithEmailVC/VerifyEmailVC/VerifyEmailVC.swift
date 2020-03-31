@@ -39,7 +39,12 @@ class VerifyEmailVC: BaseVerifyVC {
     
     override func bind() {
         super.bind()
+        textField.delegate = self
         
+        textField.rx.text.orEmpty
+            .map {$0.count == 6}
+            .bind(to: nextButton.rx.isDisabled)
+            .disposed(by: disposeBag)
     }
     
     override func setUpScrollView() {
@@ -132,5 +137,15 @@ class VerifyEmailVC: BaseVerifyVC {
     
     override func deleteCode() {
         textField.text = nil
+    }
+    
+    override func nextButtonDidTouch() {
+        verify()
+    }
+}
+
+extension VerifyEmailVC: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        string.rangeOfCharacter(from: CharacterSet.alphanumerics.inverted) == nil
     }
 }
