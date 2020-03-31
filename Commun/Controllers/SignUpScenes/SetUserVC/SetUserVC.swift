@@ -1,20 +1,19 @@
 //
-//  SetUserVC.swift
+//  NewSetUserVC.swift
 //  Commun
 //
-//  Created by Chung Tran on 12/16/19.
-//  Copyright © 2019 Commun Limited. All rights reserved.
+//  Created by Chung Tran on 3/31/20.
+//  Copyright © 2020 Commun Limited. All rights reserved.
 //
 
 import Foundation
 import RxSwift
 
-class SetUserVC: BaseViewController, SignUpRouter {
+class SetUserVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Properties
     let viewModel = SetUserViewModel()
     
     // MARK: - Subviews
-    lazy var backButton: UIButton = .back()
     lazy var textField: UITextField = {
         let alertButton = UIButton(width: 24, height: 24)
         alertButton.setImage(UIImage(named: "icon-info-button-default"), for: .normal)
@@ -28,53 +27,59 @@ class SetUserVC: BaseViewController, SignUpRouter {
         return tf
     }()
     
-    lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#F53D5B")!, numberOfLines: 0, textAlignment: .center)
-    
-    lazy var nextButton = CommunButton.default(height: 56, label: "next".localized().uppercaseFirst, cornerRadius: 8, isHuggingContent: false, isDisableGrayColor: true)
-    
     // MARK: - Methods
-    
     override func setUp() {
         super.setUp()
         AnalyticsManger.shared.registrationOpenScreen(4)
-        self.title = "sign up".localized().uppercaseFirst
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        // backButton
-        setLeftNavBarButton(with: backButton)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        
-        // label
-        let label = UILabel.with(text: "create your username".localized().uppercaseFirst, textSize: 17)
-        view.addSubview(label)
-        label.autoPinTopAndLeadingToSuperViewSafeArea(inset: 20)
-        
-        // textfield
-        view.addSubview(textField)
-        textField.autoPinEdge(.top, to: .bottom, of: label, withOffset: 52 * Config.heightRatio)
-        textField.autoPinEdge(toSuperviewEdge: .leading, withInset: 42 * Config.widthRatio)
-        textField.autoPinEdge(toSuperviewEdge: .trailing, withInset: 42 * Config.widthRatio)
-        
-        view.addSubview(errorLabel)
-        errorLabel.autoPinEdge(.top, to: .bottom, of: textField, withOffset: 10)
-        errorLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 32)
-        errorLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 32)
-        
-        // button
-        view.addSubview(nextButton)
-        nextButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 42 * Config.widthRatio)
-        nextButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 42 * Config.widthRatio)
-        nextButton.autoPinBottomToSuperViewSafeAreaAvoidKeyboard(inset: 16)
-        nextButton.addTarget(self, action: #selector(buttonNextDidTouch(_:)), for: .touchUpInside)
-        
-        // dismiss keyboard
-        view.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tap)
+        subtitleLabel.text = "create your username".localized().uppercaseFirst
         
         // if username has already been set
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
             signUpNextStep()
         }
+    }
+    
+    override func setUpScrollView() {
+        super.setUpScrollView()
+        
+        // subtitle
+        scrollView.contentView.addSubview(subtitleLabel)
+        subtitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+        subtitleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        subtitleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        
+        scrollView.contentView.addSubview(textField)
+        textField.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: UIScreen.main.isSmall ? 20 : 50)
+        textField.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        scrollView.contentView.addSubview(errorLabel)
+        errorLabel.autoPinEdge(.top, to: .bottom, of: textField, withOffset: 10)
+        errorLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 32)
+        errorLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 32)
+        
+        errorLabel.autoPinEdge(toSuperviewEdge: .bottom)
+    }
+    
+    override func viewDidSetUpScrollView() {
+        setUpNextButton()
+        nextButton.autoPinEdge(.top, to: .bottom, of: scrollView)
+    }
+    
+    private func setUpNextButton() {
+        view.addSubview(nextButton)
+        nextButton.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
+        nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
+        let constant: CGFloat
+        switch UIDevice.current.screenType {
+        case .iPhones_5_5s_5c_SE:
+            constant = 16
+        default:
+            constant = 40
+        }
+        
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: nextButton, attribute: .bottom, multiplier: 1.0, constant: constant)
+        keyboardViewV.observeKeyboardHeight()
+        view.addConstraint(keyboardViewV)
     }
     
     override func bind() {
@@ -98,10 +103,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
             .disposed(by: disposeBag)
     }
     
-    @objc func backButtonTapped() {
-        resetSignUpProcess()
-    }
-    
+    // MARK: - Actions
     @objc func infoButtonTapped() {
         AnalyticsManger.shared.userNameHelp()
         let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 386.0))))
@@ -112,7 +114,11 @@ class SetUserVC: BaseViewController, SignUpRouter {
         }
     }
     
-    @objc func buttonNextDidTouch(_ sender: Any) {
+    override func backButtonDidTouch() {
+        resetSignUpProcess()
+    }
+    
+    override func nextButtonDidTouch() {
         guard let userName = textField.text,
             viewModel.isUserNameValid(userName) else {
                 return
@@ -139,9 +145,5 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 self.handleSignUpError(error: error)
             })
             .disposed(by: disposeBag)
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
     }
 }
