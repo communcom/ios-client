@@ -69,12 +69,12 @@ class VerifyPhoneVC: BaseVerifyVC {
         
         scrollView.contentView.addSubview(pinCodeInputView)
         pinCodeInputView.autoSetDimensions(to: CGSize(width: 228.0, height: 56.0))
-        pinCodeInputView.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: 50)
+        pinCodeInputView.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: UIScreen.main.isSmall ? 20 : 50)
         pinCodeInputView.autoAlignAxis(toSuperviewAxis: .vertical)
         
         // resend button
         scrollView.contentView.addSubview(resendButton)
-        resendButton.autoPinEdge(.top, to: .bottom, of: pinCodeInputView, withOffset: 35)
+        resendButton.autoPinEdge(.top, to: .bottom, of: pinCodeInputView, withOffset: UIScreen.main.isSmall ? 16 : 35)
         resendButton.autoAlignAxis(toSuperviewAxis: .vertical)
         
         // pin bottom

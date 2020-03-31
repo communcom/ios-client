@@ -46,12 +46,12 @@ class VerifyEmailVC: BaseVerifyVC {
         super.setUpScrollView()
         
         scrollView.contentView.addSubview(textField)
-        textField.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: 50)
+        textField.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: UIScreen.main.isSmall ? 20 : 50)
         textField.autoAlignAxis(toSuperviewAxis: .vertical)
         
         // resend button
         scrollView.contentView.addSubview(resendButton)
-        resendButton.autoPinEdge(.top, to: .bottom, of: textField, withOffset: 35)
+        resendButton.autoPinEdge(.top, to: .bottom, of: textField, withOffset: UIScreen.main.isSmall ? 16 : 35)
         resendButton.autoAlignAxis(toSuperviewAxis: .vertical)
         
         // pin bottom
