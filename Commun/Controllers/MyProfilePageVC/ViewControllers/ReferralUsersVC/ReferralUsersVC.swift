@@ -22,6 +22,7 @@ class ReferralUsersVC: SubsViewController<ResponseAPIContentGetProfile, Subscrib
     
     override func setUp() {
         super.setUp()
+        tableView.keyboardDismissMode = .onDrag
         headerView.sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
         headerView.shareButton.addTarget(self, action: #selector(shareButtonDidTouch), for: .touchUpInside)
         headerView.copyButton.addTarget(self, action: #selector(copyButtonDidTouch), for: .touchUpInside)
