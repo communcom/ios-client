@@ -9,8 +9,7 @@
 import Foundation
 
 extension ResponseAPIGetNotificationItem {
-    // FIXME: - Restrict notification types, remove later
-    static var supportedTypes: [String] = ["subscribe", "reply", "mention", "upvote", "reward", "transfer"]
+    static var supportedTypes: [String] = ["subscribe", "reply", "mention", "upvote", "reward", "transfer", "referralRegistrationBonus", "referralPurchaseBonus"]
     
     var attributedContent: NSAttributedString {
         let aStr = NSMutableAttributedString()
@@ -34,7 +33,7 @@ extension ResponseAPIGetNotificationItem {
                 .normal("liked".localized() + " " + "your \(entityType ?? "post")".localized())
                 .normal(": \"")
                 .normal((comment?.shortText ?? post?.shortText ?? "") + "...\"")
-            
+
         case "reply":
             aStr.semibold(author?.username ?? "a user".localized().uppercaseFirst)
                 .normal(" ")
@@ -48,7 +47,26 @@ extension ResponseAPIGetNotificationItem {
                 .normal("\(amount ?? "0") \(community?.name ?? community?.communityId ?? "")")
                 .normal(" ")
                 .normal("points".localized())
-            
+
+        case "referralRegistrationBonus":
+            aStr.normal("you received".localized().uppercaseFirst)
+                .normal(" ")
+                .normal("a referral bonus for the registration of".localized())
+                .normal(" ")
+                .text("\(referral?.username ?? "")", weight: .medium, color: .appMainColor)
+                .normal(" ")
+                .normal("\(amount ?? "0") \(community?.name ?? community?.communityId ?? "Commun")")
+
+        case "referralPurchaseBonus":
+            aStr.normal("you received".localized().uppercaseFirst)
+                .normal(" ")
+                .normal("\(amount ?? "0") \(community?.name ?? community?.communityId ?? "")")
+                .normal(" ")
+                .normal("it's a referral bounty - \(percent ?? 5)% of".localized().uppercaseFirst)
+                .normal(" ")
+                .text("\(referral?.username ?? "")", weight: .medium, color: .appMainColor)
+                .normal("'s purchase")
+
         case "transfer":
             var pointType = self.pointType
             if pointType == "token" {pointType = "Commun"}

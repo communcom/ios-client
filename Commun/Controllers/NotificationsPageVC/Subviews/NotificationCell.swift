@@ -144,7 +144,8 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
                 iconImageView.borderWidth = 2
                 iconImageView.borderColor = .white
             }
-            
+        case "referralRegistrationBonus", "referralPurchaseBonus":
+            avatarUrl = item.from?.avatarUrl
         default:
             iconImageView.isHidden = true
         }
@@ -153,6 +154,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
             avatarImageView.addTapToOpenUserProfile(profileId: userId)
         }
 
+        avatarImageView.isHidden = avatarUrl == nil
         avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: avatarPlaceholder)
     }
 }

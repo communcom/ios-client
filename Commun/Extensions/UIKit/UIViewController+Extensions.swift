@@ -220,11 +220,9 @@ extension UIViewController {
                 }
             }
             
-        case "reward":
-            if let id = item.community?.communityId {
-                showOtherBalanceWalletVC(symbol: id, shouldResetNavigationBarOnPush: true)
-            }
-        
+        case "reward", "referralRegistrationBonus", "referralPurchaseBonus":
+            showOtherBalanceWalletVC(symbol: item.community?.communityId,
+                                     shouldResetNavigationBarOnPush: true)
         default:
             break
         }
@@ -248,10 +246,16 @@ extension UIViewController {
         show(communityVC, sender: nil)
     }
     
-    func showOtherBalanceWalletVC(symbol: String, shouldResetNavigationBarOnPush: Bool = false) {
-        let vc = OtherBalancesWalletVC(symbol: symbol)
+    func showOtherBalanceWalletVC(symbol: String?, shouldResetNavigationBarOnPush: Bool = false) {
+        var vc: UIViewController!
+
+        if let symbol = symbol {
+            vc = OtherBalancesWalletVC(symbol: symbol)
+        } else {
+            vc = CommunWalletVC()
+        }
                 
-        if  shouldResetNavigationBarOnPush {
+        if shouldResetNavigationBarOnPush {
             show(vc, sender: nil)
         } else {
             let nc = navigationController as? BaseNavigationController
