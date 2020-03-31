@@ -16,13 +16,15 @@ class SetUserVC: BaseViewController, SignUpRouter {
     // MARK: - Subviews
     lazy var backButton: UIButton = .back()
     lazy var textField: UITextField = {
-        let tf = UITextField(height: 56 * Config.heightRatio, backgroundColor: .f3f5fa, cornerRadius: 12 * Config.heightRatio)
-        tf.font = .systemFont(ofSize: 17 * Config.heightRatio)
-        tf.keyboardType = .alphabet
-        tf.placeholder = "username".localized().uppercaseFirst
-        tf.autocorrectionType = .no
-        tf.autocapitalizationType = .none
-        tf.spellCheckingType = .no
+        let alertButton = UIButton(width: 24, height: 24)
+        alertButton.setImage(UIImage(named: "icon-info-button-default"), for: .normal)
+        alertButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
+        let rightView = UIView(width: 40, height: 56 * Config.heightRatio)
+        rightView.addSubview(alertButton)
+        alertButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        alertButton.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        let tf = UITextField.signUpTextField(width: 290, placeholder: "username".localized().uppercaseFirst, rightView: rightView)
         return tf
     }()
     
@@ -51,20 +53,6 @@ class SetUserVC: BaseViewController, SignUpRouter {
         textField.autoPinEdge(.top, to: .bottom, of: label, withOffset: 52 * Config.heightRatio)
         textField.autoPinEdge(toSuperviewEdge: .leading, withInset: 42 * Config.widthRatio)
         textField.autoPinEdge(toSuperviewEdge: .trailing, withInset: 42 * Config.widthRatio)
-        
-        let leftView = UIView(width: 16, height: 56 * Config.heightRatio)
-        textField.leftView = leftView
-        textField.leftViewMode = .always
-        
-        let alertButton = UIButton(width: 24, height: 24)
-        alertButton.setImage(UIImage(named: "icon-info-button-default"), for: .normal)
-        alertButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
-        let rightView = UIView(width: 40, height: 56 * Config.heightRatio)
-        rightView.addSubview(alertButton)
-        alertButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        alertButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        textField.rightView = rightView
-        textField.rightViewMode = .always
         
         view.addSubview(errorLabel)
         errorLabel.autoPinEdge(.top, to: .bottom, of: textField, withOffset: 10)
