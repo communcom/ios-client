@@ -8,14 +8,77 @@
 
 import Foundation
 import RxSwift
+import PinCodeInputView
 
 class VerifyPhoneVC: BaseVerifyVC {
+    private var counter = 0
+    override var code: String {pinCodeInputView.text}
+    
+    lazy var pinCodeInputView = PinCodeInputView<ItemView>(
+        digit: numberOfDigits,
+        itemSpacing: 12,
+        itemFactory: {
+            let itemView = ItemView()
+            let autoTestMarker = String(format: "ConfirmUserPinCodeInputView-%i", self.counter)
+            
+            // For autotest
+            itemView.accessibilityLabel = autoTestMarker
+            itemView.accessibilityIdentifier = autoTestMarker
+            self.counter += 1
+            
+            return itemView
+    })
+    
+    // MARK: - Methods
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        pinCodeInputView.becomeFirstResponder()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        deleteCode()
+        pinCodeInputView.resignFirstResponder()
+    }
     
     override func setUp() {
         super.setUp()
         AnalyticsManger.shared.registrationOpenScreen(3)
         
         subtitleLabel.text = "enter sms-code".localized().uppercaseFirst
+        
+        // pinCodeInputView
+        pinCodeInputView.set { _ in
+            self.verify()
+        }
+        
+        pinCodeInputView.set(
+            appearance: ItemAppearance(
+                itemSize: CGSize(width: 48, height: 56),
+                font: .systemFont(ofSize: 26),
+                textColor: .black,
+                backgroundColor: .f3f5fa,
+                cursorColor: UIColor(red: 69 / 255, green: 108 / 255, blue: 1, alpha: 1),
+                cornerRadius: 8)
+        )
+    }
+    
+    override func setUpScrollView() {
+        super.setUpScrollView()
+        pinCodeInputView.configureForAutoLayout()
+        
+        scrollView.contentView.addSubview(pinCodeInputView)
+        pinCodeInputView.autoSetDimensions(to: CGSize(width: 228.0, height: 56.0))
+        pinCodeInputView.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: 50)
+        pinCodeInputView.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        // resend button
+        scrollView.contentView.addSubview(resendButton)
+        resendButton.autoPinEdge(.top, to: .bottom, of: pinCodeInputView, withOffset: 35)
+        resendButton.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        // pin bottom
+        resendButton.autoPinEdge(toSuperviewEdge: .bottom)
     }
     
     override func getNextRetry() -> Date? {
@@ -43,8 +106,12 @@ class VerifyPhoneVC: BaseVerifyVC {
         super.resendButtonTapped()
     }
     
-    override func createVerificationRequest(code: UInt64) -> Completable {
+    override var verificationCompletable: Completable {
         AnalyticsManger.shared.smsCodeEntered()
+        
+        guard let code = UInt64(code) else {
+            return Completable.error(CMError.registration(message: ErrorMessage.wrongVerificationCode.rawValue))
+        }
         
         return RestAPIManager.instance.verify(code: code).flatMapToCompletable()
             .do(onError: { (error) in
@@ -54,6 +121,19 @@ class VerifyPhoneVC: BaseVerifyVC {
             })
     }
     
+    override func verify() {
+        guard pinCodeInputView.text.count == numberOfDigits,
+            let _ = UInt64(code) else {
+                return
+        }
+        super.verify()
+    }
+    
+    override func deleteCode() {
+        for _ in 0..<numberOfDigits {
+            pinCodeInputView.deleteBackward()
+        }
+    }
     // MARK: - accessoryView
     //    func addAccessoryView(withSmsCode smsCode: String) {
     //        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: .adaptive(height: 44.0)))

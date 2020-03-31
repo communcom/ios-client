@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import PinCodeInputView
 import RxSwift
 
 class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
@@ -15,84 +14,29 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
     let numberOfDigits = 4
     
     // MARK: - Properties
-    private var counter = 0
     var resendTimer: Timer?
     var resendSeconds: Int = 0
+    var code: String {fatalError("must override")}
     
     // MARK: - Subviews
-    lazy var pinCodeInputView = PinCodeInputView<ItemView>(
-        digit: numberOfDigits,
-        itemSpacing: 12,
-        itemFactory: {
-            let itemView = ItemView()
-            let autoTestMarker = String(format: "ConfirmUserPinCodeInputView-%i", self.counter)
-            
-            // For autotest
-            itemView.accessibilityLabel = autoTestMarker
-            itemView.accessibilityIdentifier = autoTestMarker
-            self.counter += 1
-            
-            return itemView
-    })
-    
     lazy var resendButton = UIButton(labelFont: .systemFont(ofSize: 15, weight: .semibold))
-    
-    // MARK: - Methods
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        pinCodeInputView.becomeFirstResponder()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        deleteCode()
-        pinCodeInputView.resignFirstResponder()
-    }
     
     override func setUp() {
         super.setUp()
+        titleLabel.text = "verification".localized().uppercaseFirst
         checkResendCodeTime()
+        
+        resendButton.addTarget(self, action: #selector(resendButtonTapped), for: .touchUpInside)
     }
     
     override func setUpScrollView() {
         super.setUpScrollView()
-        titleLabel.text = "verification".localized().uppercaseFirst
         
         // subtitle
         scrollView.contentView.addSubview(subtitleLabel)
         subtitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
         subtitleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         subtitleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        
-        // pinCodeInputView
-        pinCodeInputView.set { _ in
-            self.verify()
-        }
-        
-        pinCodeInputView.set(
-            appearance: ItemAppearance(
-                itemSize: CGSize(width: 48, height: 56),
-                font: .systemFont(ofSize: 26),
-                textColor: .black,
-                backgroundColor: .f3f5fa,
-                cursorColor: UIColor(red: 69 / 255, green: 108 / 255, blue: 1, alpha: 1),
-                cornerRadius: 8)
-        )
-        
-        pinCodeInputView.configureForAutoLayout()
-        
-        scrollView.contentView.addSubview(pinCodeInputView)
-        pinCodeInputView.autoSetDimensions(to: CGSize(width: 228.0, height: 56.0))
-        pinCodeInputView.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: 50)
-        pinCodeInputView.autoAlignAxis(toSuperviewAxis: .vertical)
-        
-        // resend button
-        scrollView.contentView.addSubview(resendButton)
-        resendButton.autoPinEdge(.top, to: .bottom, of: pinCodeInputView, withOffset: 35)
-        resendButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        resendButton.autoPinEdge(toSuperviewEdge: .bottom)
-        
-        resendButton.addTarget(self, action: #selector(resendButtonTapped), for: .touchUpInside)
     }
     
     private func setResendButtonEnabled(_ enabled: Bool = true) {
@@ -155,19 +99,14 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
         .disposed(by: disposeBag)
     }
     
-    func createVerificationRequest(code: UInt64) -> Completable {
+    var verificationCompletable: Completable {
         fatalError("Must override")
     }
     
     func verify() {
-        guard pinCodeInputView.text.count == numberOfDigits,
-            let code = UInt64(pinCodeInputView.text) else {
-                return
-        }
-        
         showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
         
-        createVerificationRequest(code: code)
+        verificationCompletable
             .subscribe(onCompleted: { [weak self] in
                 self?.hideHud()
                 self?.signUpNextStep()
@@ -180,8 +119,6 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
     }
     
     func deleteCode() {
-        for _ in 0..<numberOfDigits {
-            pinCodeInputView.deleteBackward()
-        }
+        fatalError("Must override")
     }
 }
