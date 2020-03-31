@@ -14,25 +14,12 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     var masterPasswordButton: UIButton?
     // MARK: - Subviews
     lazy var textField: UITextField = {
-        let tf = UITextField(width: 290, height: 56, backgroundColor: .f3f5fa, cornerRadius: 12)
-        tf.font = .systemFont(ofSize: 17 * Config.heightRatio)
-        tf.keyboardType = .alphabet
-        tf.placeholder = "password".localized().uppercaseFirst
-        tf.autocorrectionType = .no
-        tf.autocapitalizationType = .none
-        tf.spellCheckingType = .no
-        tf.isSecureTextEntry = true
-        
-        let leftView = UIView(width: 16, height: 56)
-        tf.leftView = leftView
-        tf.leftViewMode = .always
-        
         let rightView = UIView(width: 44, height: 56)
         rightView.addSubview(showPasswordButton)
         showPasswordButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         showPasswordButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        tf.rightView = rightView
-        tf.rightViewMode = .always
+        
+        let tf = UITextField.signUpTextField(width: 290, placeholder: "password".localized().uppercaseFirst, isSecureTextEntry: true, rightView: rightView)
         return tf
     }()
     
@@ -48,6 +35,16 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     lazy var unsupportSymbolError = UILabel.with(textSize: 12, weight: .medium, textColor: .appRedColor, numberOfLines: 2, textAlignment: .center)
 
     // MARK: - Methods
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        textField.becomeFirstResponder()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        textField.resignFirstResponder()
+    }
+    
     override func setUp() {
         super.setUp()
         titleLabel.text = "create Password".localized().uppercaseFirst
