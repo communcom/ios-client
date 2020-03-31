@@ -61,8 +61,10 @@ class WelcomeItemVC: BaseViewController {
                 .text("by users".localized().uppercaseFirst, size: .adaptive(height: 36))
         default:
             titleAString = NSMutableAttributedString()
-                .text("welcome to".localized().uppercaseFirst, size: .adaptive(height: 36))
+                .text("welcome".localized().uppercaseFirst, size: .adaptive(height: 36))
                 .text("\n")
+                .text("to".localized().uppercaseFirst, size: .adaptive(height: 36))
+                .text(" ")
                 .text("Commun /", size: .adaptive(height: 36), weight: .bold, color: .appMainColor)
         }
         titleLabel.attributedText = titleAString
@@ -80,6 +82,22 @@ class WelcomeItemVC: BaseViewController {
         switch index {
         case 1:
             descriptionAS = NSMutableAttributedString()
+                .semibold("choose communities of interest and".localized().uppercaseFirst, color: descriptionColor)
+                .text("\n")
+                .semibold("be".localized().uppercaseFirst, color: descriptionColor)
+                .text(" ")
+                .bold("rewarded".localized(), color: .appMainColor)
+                .text(" ")
+                .semibold("for your actions".localized(), color: descriptionColor)
+                .text("\n")
+                .text(" ")
+                .withParagraphSpacing(26, alignment: .center)
+        case 2:
+            descriptionAS = NSMutableAttributedString()
+                .semibold("communities has no single owner\nand fully belongs to its members".localized().uppercaseFirst, color: descriptionColor)
+                .withParagraphSpacing(26, alignment: .center)
+        default:
+            descriptionAS = NSMutableAttributedString()
                 .semibold("blockchain-based social network".localized().uppercaseFirst, color: descriptionColor)
                 .text("\n")
                 .semibold("where you get".localized(), color: descriptionColor)
@@ -88,18 +106,7 @@ class WelcomeItemVC: BaseViewController {
                 .text("\n")
                 .semibold("for posts, comments and likes".localized(), color: descriptionColor)
                 .withParagraphSpacing(26, alignment: .center)
-        case 2:
-            descriptionAS = NSMutableAttributedString()
-                .semibold("communities has no single owner\nand fully belongs to its members".localized().uppercaseFirst, color: descriptionColor)
-                .withParagraphSpacing(26, alignment: .center)
-        default:
-            descriptionAS = NSMutableAttributedString()
-                .semibold("choose communities of interest and".localized().uppercaseFirst, color: descriptionColor)
-                .text("\n")
-                .bold("be rewarded".localized(), color: .appMainColor)
-                .text(" ")
-                .semibold("for your actions".localized(), color: descriptionColor)
-                .withParagraphSpacing(26, alignment: .center)
+
         }
         descriptionLabel.attributedText = descriptionAS
         

@@ -17,7 +17,7 @@ class WelcomeVC: BaseViewController {
     var currentPage = 0
     
     // MARK: - Subviews
-    lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
+    lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .black)
     lazy var pageControl = CMPageControll(numberOfPages: 3)
     lazy var containerView = UIView(forAutoLayout: ())
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fillEqually)
@@ -97,11 +97,14 @@ class WelcomeVC: BaseViewController {
         
         // container view
         view.addSubview(containerView)
-        containerView.autoPinEdge(.top, to: .bottom, of: pageControl, withOffset: 16)
-        containerView.autoPinEdge(.bottom, to: .top, of: buttonStackView, withOffset: -16)
+        containerView.autoPinEdge(.bottom, to: .top, of: buttonStackView, withOffset: .adaptive(width: -50))
+        containerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         containerView.autoPinEdge(toSuperviewEdge: .leading)
         containerView.autoPinEdge(toSuperviewEdge: .trailing)
-        
+
+        view.bringSubviewToFront(pageControl)
+        view.bringSubviewToFront(topSignInButton)
+
         // add pageVC
         pageVC.dataSource = self
         pageVC.delegate = self

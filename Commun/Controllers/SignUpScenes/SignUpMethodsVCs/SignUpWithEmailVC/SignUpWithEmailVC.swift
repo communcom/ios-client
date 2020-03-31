@@ -13,7 +13,7 @@ class SignUpWithEmailVC: BaseSignUpMethodVC {
     let viewModel = SignUpWithEmailViewModel()
     
     // MARK: - Subviews
-    lazy var textField = UITextField.signUpTextField(width: 290, placeholder: "your email address")
+    lazy var textField = UITextField.signUpTextField(width: 290, placeholder: "your email address".localized().uppercaseFirst)
     
     // MARK: - Methods
     override func setUp() {
