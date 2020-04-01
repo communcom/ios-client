@@ -16,6 +16,7 @@ class BaseViewController: UIViewController {
     enum NavigationBarType {
         case normal(translucent: Bool = false, backgroundColor: UIColor = .white, font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .black)
         case hidden
+        case embeded
     }
     
     // MARK: - Properties
@@ -61,7 +62,11 @@ class BaseViewController: UIViewController {
             navigationController?.navigationBar.shadowImage = img2
         case .hidden:
             navigationController?.setNavigationBarHidden(true, animated: false)
+        case .embeded:
+            break
         }
+        
+        view.superview?.layoutIfNeeded()
     }
     
     // MARK: - Custom Functions

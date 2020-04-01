@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, SubscribersCell>, CommunityCellDelegate, ProfileCellDelegate {
-    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
+    override var navigationBarType: BaseViewController.NavigationBarType {.embeded}
     
     // MARK: - Properties
     var seeAllHandler: ((Int) -> Void)?
