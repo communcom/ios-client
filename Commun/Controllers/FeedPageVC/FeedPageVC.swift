@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 final class FeedPageVC: PostsViewController {
+    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
+    
     // MARK: - Properties
     lazy var floatView = FeedPageFloatView(forAutoLayout: ())
     var floatViewTopConstraint: NSLayoutConstraint!
@@ -116,11 +118,6 @@ final class FeedPageVC: PostsViewController {
         super.filterChanged(filter: filter)
         // feedTypeMode
         floatView.setUp(with: filter)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
