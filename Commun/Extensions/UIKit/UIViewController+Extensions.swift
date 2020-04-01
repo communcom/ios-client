@@ -246,7 +246,7 @@ extension UIViewController {
         show(communityVC, sender: nil)
     }
     
-    func showOtherBalanceWalletVC(symbol: String?, shouldResetNavigationBarOnPush: Bool = false) {
+    func showOtherBalanceWalletVC(symbol: String?) {
         var vc: UIViewController!
 
         if let symbol = symbol {
@@ -255,14 +255,7 @@ extension UIViewController {
             vc = CommunWalletVC()
         }
                 
-        if shouldResetNavigationBarOnPush {
-            show(vc, sender: nil)
-        } else {
-            let nc = navigationController as? BaseNavigationController
-            nc?.shouldResetNavigationBarOnPush = false
-            show(vc, sender: nil)
-            nc?.shouldResetNavigationBarOnPush = true
-        }
+        show(vc, sender: nil)
     }
     
     func handleUrl(url: URL) {

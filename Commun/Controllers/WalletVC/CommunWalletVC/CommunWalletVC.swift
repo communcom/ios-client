@@ -326,10 +326,7 @@ class CommunWalletVC: TransferHistoryVC {
     // MARK: - Actions
     @objc func convertButtonDidTouch() {
         guard let vc = createConvertVC() else {return}
-        let nc = navigationController as? BaseNavigationController
-        nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
-        nc?.shouldResetNavigationBarOnPush = true
     }
     
     func createConvertVC() -> WalletConvertVC? {

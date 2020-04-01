@@ -11,7 +11,6 @@ import UIKit
 final class BaseNavigationController: UINavigationController {
     weak var tabBarVC: TabBarVC?
     var style: UIStatusBarStyle = .default
-    var shouldResetNavigationBarOnPush = true
 
     // MARK: - Status Bar
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -62,15 +61,6 @@ final class BaseNavigationController: UINavigationController {
     }
     
     // MARK: - Methods
-    func resetNavigationBar() {
-        navigationBar.isTranslucent = false
-        
-        removeNavigationBarShadow()
-        
-        setNavigationBarBackground(color: .white)
-        
-        setTitleStyle()
-    }
     
     func removeNavigationBarShadow() {
         let img = UIImage()
@@ -120,10 +110,6 @@ final class BaseNavigationController: UINavigationController {
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         duringPushAnimation = true
-        
-        if shouldResetNavigationBarOnPush {
-            resetNavigationBar()
-        }
         
         avoidTabBar(viewController: viewController)
         

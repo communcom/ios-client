@@ -77,9 +77,6 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        baseNavigationController?.resetNavigationBar()
-        baseNavigationController?.changeStatusBarStyle(.default)
         extendedLayoutIncludesOpaqueBars = true
     }
 

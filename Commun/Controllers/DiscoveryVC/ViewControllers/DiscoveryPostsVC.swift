@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class DiscoveryPostsVC: PostsViewController {
-    override var shouldHideNavigationBar: Bool {true}
+    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {
         let viewModel = self.viewModel as! PostsViewModel

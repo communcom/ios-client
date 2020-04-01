@@ -12,9 +12,15 @@ import SafariServices
 //import SwipeTransition
 
 class BaseViewController: UIViewController {
+    // MARK: - Nested type
+    enum NavigationBarType {
+        case normal(translucent: Bool = false, backgroundColor: UIColor = .white, font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .black)
+        case hidden
+    }
+    
     // MARK: - Properties
     lazy var disposeBag = DisposeBag()
-    var shouldHideNavigationBar: Bool {false}
+    var navigationBarType: NavigationBarType {.normal()}
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -32,16 +38,24 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if shouldHideNavigationBar && navigationController?.navigationBar.isHidden == false {
-            navigationController?.setNavigationBarHidden(true, animated: false)
-        }
+        configureNavigationBarType()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if shouldHideNavigationBar && navigationController?.navigationBar.isHidden == true {
+    func configureNavigationBarType() {
+        switch navigationBarType {
+        case .normal(let translucent, let backgroundColor, let font, let textColor):
+            navigationController?.navigationBar.isTranslucent = translucent
+            let img = UIImage()
+            navigationController?.navigationBar.setBackgroundImage(img, for: .default)
+            navigationController?.navigationBar.barStyle = .default
+            navigationController?.navigationBar.barTintColor = backgroundColor
+            navigationController?.navigationBar.subviews.first?.backgroundColor = backgroundColor
+            
+            navigationController?.navigationBar.tintColor = textColor
+            navigationController?.navigationBar.setTitleFont(font, color: textColor)
             navigationController?.setNavigationBarHidden(false, animated: false)
+        case .hidden:
+            navigationController?.setNavigationBarHidden(true, animated: false)
         }
     }
     
