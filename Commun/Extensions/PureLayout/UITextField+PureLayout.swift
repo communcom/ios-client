@@ -20,6 +20,7 @@ extension UITextField {
         autocorrectionType: UITextAutocorrectionType? = nil,
         autocapitalizationType: UITextAutocapitalizationType? = nil,
         spellCheckingType: UITextSpellCheckingType? = nil,
+        textContentType: UITextContentType? = nil,
         isSecureTextEntry: Bool = false,
         leftView: UIView = UIView(width: 16),
         leftViewMode: UITextField.ViewMode = .always,
@@ -41,6 +42,11 @@ extension UITextField {
         if let spellCheckingType = spellCheckingType {
             self.spellCheckingType = spellCheckingType
         }
+        
+        if let textContentType = textContentType {
+            self.textContentType = textContentType
+        }
+        
         self.isSecureTextEntry = isSecureTextEntry
         
         leftView.autoSetDimension(.height, toSize: height ?? 16)

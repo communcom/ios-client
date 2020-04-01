@@ -13,6 +13,7 @@ class BaseSignUpVC: BaseViewController {
     var termOfUseText: String {"By continuing, you agree to the Commun’s Terms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst}
     var alreadyHasAccountText: String {"already have an account? Sign in".localized().uppercaseFirst}
     var autoPinNextButtonToBottom: Bool {false}
+    override var shouldHideNavigationBar: Bool {true}
     
     // MARK: - Subviews
     lazy var backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
@@ -129,16 +130,6 @@ class BaseSignUpVC: BaseViewController {
         view.addConstraint(keyboardViewV)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-    
     // MARK: - Actions
     @objc func tapTermOfUseLabel(gesture: UITapGestureRecognizer) {
         guard let text = termOfUseLabel.text else {return}
@@ -172,8 +163,4 @@ class BaseSignUpVC: BaseViewController {
     }
     
     @objc func nextButtonDidTouch() {}
-    
-    @objc func hideKeyboard() {
-        view.endEditing(true)
-    }
 }

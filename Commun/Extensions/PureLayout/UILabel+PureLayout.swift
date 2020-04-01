@@ -23,13 +23,6 @@ extension UILabel {
         self.textColor = color
     }
     
-    static func title(_ text: String?) -> UILabel {
-        let label = UILabel(forAutoLayout: ())
-        label.text = text
-        label.font = .systemFont(ofSize: 15, weight: .semibold)
-        return label
-    }
-    
     static func descriptionLabel(_ text: String? = nil, size: CGFloat = 12, numberOfLines: Int? = nil) -> UILabel {
         let label = UILabel(forAutoLayout: ())
         label.text = text

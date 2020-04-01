@@ -429,6 +429,10 @@ extension UIViewController {
     }
 
     // MARK: - Actions
+    @objc func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
     @objc func popToPreviousVC() {
         if let count = navigationController?.viewControllers.count, count > 0 {
             let viewWithTag = self.view.viewWithTag(reCaptchaTag)
