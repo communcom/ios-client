@@ -153,7 +153,6 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                         
                         if let communWalletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {
                             strongSelf.navigationController?.popToViewController(communWalletVC, animated: false)
-                            (strongSelf.navigationController as? BaseNavigationController)?.shouldResetNavigationBarOnPush = false
 
                             switch selectedItem.meta.actionType {
                             case "transfer":

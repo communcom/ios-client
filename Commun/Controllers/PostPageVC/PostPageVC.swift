@@ -12,6 +12,8 @@ import CyberSwift
 import RxDataSources
 
 class PostPageVC: CommentsViewController {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
+    
     // MARK: - Constants
     let navigationBarHeight: CGFloat = 56
     var commentFormMinPaddingTop: CGFloat {
@@ -48,10 +50,6 @@ class PostPageVC: CommentsViewController {
     // MARK: - Life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-        tabBarController?.tabBar.isHidden = true
-        
         setTabBarHidden(true)
     }
     

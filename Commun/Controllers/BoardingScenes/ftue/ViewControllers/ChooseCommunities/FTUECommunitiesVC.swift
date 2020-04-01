@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
+    
     // MARK: - Constants
     let bottomBarHeight: CGFloat = 114
     let nextButtonImageName = "next-arrow"

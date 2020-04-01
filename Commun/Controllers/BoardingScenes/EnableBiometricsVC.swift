@@ -10,7 +10,7 @@ import UIKit
 import LocalAuthentication
 
 class EnableBiometricsVC: BoardingVC {
-    override var shouldHideNavigationBar: Bool {true}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     override var step: CurrentUserSettingStep {.setFaceId}
     override var nextStep: CurrentUserSettingStep? {.ftue}

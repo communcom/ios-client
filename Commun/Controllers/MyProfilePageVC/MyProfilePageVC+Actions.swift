@@ -28,11 +28,7 @@ extension MyProfilePageVC {
       
         case .listEnded, .loading(false):
             let walletVC = CommunWalletVC()
-            let nc = navigationController as? BaseNavigationController
-            nc?.shouldResetNavigationBarOnPush = false
             show(walletVC, sender: nil)
-            nc?.shouldResetNavigationBarOnPush = true
-        
         default:
             break
         }

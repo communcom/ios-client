@@ -9,7 +9,7 @@
 import Foundation
 
 class WelcomeVC: BaseViewController {
-    override var shouldHideNavigationBar: Bool {true}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     let numberOfPages = 3
     
     // MARK: - Properties
@@ -62,10 +62,6 @@ class WelcomeVC: BaseViewController {
         {
             navigateToSignUp()
         }
-        
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
         
         // top sign in button
         view.addSubview(topSignInButton)

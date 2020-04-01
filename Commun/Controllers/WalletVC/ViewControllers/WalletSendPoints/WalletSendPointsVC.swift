@@ -13,6 +13,7 @@ import CyberSwift
 import CircularCarousel
 
 class WalletSendPointsVC: BaseViewController {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true)}
     // MARK: - Properties
     var dataModel: SendPointsModel
     var buttonBottomConstraint: NSLayoutConstraint?
@@ -524,11 +525,8 @@ class WalletSendPointsVC: BaseViewController {
                 .subscribe(onCompleted: { [weak self] in
                     guard let strongSelf = self else { return }
                     
-                    if let baseNC = strongSelf.navigationController as? BaseNavigationController {
-                        baseNC.shouldResetNavigationBarOnPush = false
-                        let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
-                        strongSelf.show(completedVC, sender: nil)
-                    }
+                    let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
+                    strongSelf.show(completedVC, sender: nil)
 
                     strongSelf.hideHud()
                     strongSelf.sendPointsButton.isSelected = true

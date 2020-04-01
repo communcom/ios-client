@@ -12,9 +12,16 @@ import SafariServices
 //import SwipeTransition
 
 class BaseViewController: UIViewController {
+    // MARK: - Nested type
+    enum NavigationBarStyle {
+        case normal(translucent: Bool = false, backgroundColor: UIColor = .white, font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .black)
+        case hidden
+        case embeded
+    }
+    
     // MARK: - Properties
     lazy var disposeBag = DisposeBag()
-    var shouldHideNavigationBar: Bool {false}
+    var prefersNavigationBarStype: NavigationBarStyle {.normal()}
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -32,17 +39,34 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if shouldHideNavigationBar && navigationController?.navigationBar.isHidden == false {
-            navigationController?.setNavigationBarHidden(true, animated: false)
-        }
+        configureNavigationBarType()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if shouldHideNavigationBar && navigationController?.navigationBar.isHidden == true {
+    func configureNavigationBarType() {
+        switch prefersNavigationBarStype {
+        case .normal(let translucent, let backgroundColor, let font, let textColor):
+            navigationController?.navigationBar.isTranslucent = translucent
+            let img = UIImage()
+            navigationController?.navigationBar.setBackgroundImage(img, for: .default)
+            navigationController?.navigationBar.barStyle = .default
+            navigationController?.navigationBar.barTintColor = backgroundColor
+            navigationController?.navigationBar.subviews.first?.backgroundColor = backgroundColor
+            
+            // set title style
+            navigationController?.navigationBar.tintColor = textColor
+            navigationController?.navigationBar.setTitleFont(font, color: textColor)
             navigationController?.setNavigationBarHidden(false, animated: false)
+            
+            // remove navigationBar default shadow
+            let img2 = UIImage()
+            navigationController?.navigationBar.shadowImage = img2
+        case .hidden:
+            navigationController?.setNavigationBarHidden(true, animated: false)
+        case .embeded:
+            break
         }
+        
+        view.superview?.layoutIfNeeded()
     }
     
     // MARK: - Custom Functions
@@ -69,6 +93,7 @@ class BaseViewController: UIViewController {
     }
     
     func setTabBarHidden(_ value: Bool) {
+        tabBarController?.tabBar.isHidden = true
         if let tabBarVC = tabBarController as? TabBarVC {
             tabBarVC.setTabBarHiden(value)
         }
