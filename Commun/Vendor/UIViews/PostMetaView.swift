@@ -21,7 +21,7 @@ class PostMetaView: MyView {
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 40)
     lazy var stackView = UIStackView(axis: .vertical, spacing: 3, alignment: .leading)
-    lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
+    lazy var userNameLabel = UILabel.with(textSize: 15, weight: .semibold)
     lazy var subtitleLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .a5a7bd)
     lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .white)
 
@@ -65,35 +65,35 @@ class PostMetaView: MyView {
         stackView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         stackView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        stackView.addArrangedSubview(comunityNameLabel)
+        stackView.addArrangedSubview(userNameLabel)
         stackView.addArrangedSubview(subtitleLabel)
     }
     
     func setUp(post: ResponseAPIContentGetPost) {
-        avatarImageView.setAvatar(urlString: post.community?.avatarUrl, namePlaceHolder: post.community?.name ?? "C")
-        comunityNameLabel.text = post.community?.name
+        avatarImageView.setAvatar(urlString: post.author?.avatarUrl, namePlaceHolder: post.author?.username ?? "U")
+        userNameLabel.text = post.author?.username
         subtitleLabel.attributedText = NSMutableAttributedString()
             .text(Date.timeAgo(string: post.meta.creationTime) + " • ", size: 12, weight: .semibold, color: .a5a7bd)
-            .text(post.author?.username ?? post.author?.userId ?? "", size: 12, weight: .semibold, color: .appMainColor)
+            .text(post.community?.name ?? "", size: 12, weight: .semibold, color: .appMainColor)
         
         // add gesture
         if isUserNameTappable {
-            let tap = TapGesture(target: self, action: #selector(userNameTapped(_:)))
+            let tap = TapGesture(target: self, action: #selector(communityNameTapped(_:)))
             tap.post = post
             subtitleLabel.isUserInteractionEnabled = true
             subtitleLabel.addGestureRecognizer(tap)
         }
         
         if isCommunityNameTappable {
-            let tapLabel = TapGesture(target: self, action: #selector(communityNameTapped(_:)))
-            let tapAvatar = TapGesture(target: self, action: #selector(communityNameTapped(_:)))
+            let tapLabel = TapGesture(target: self, action: #selector(userNameTapped(_:)))
+            let tapAvatar = TapGesture(target: self, action: #selector(userNameTapped(_:)))
             tapLabel.post = post
             tapAvatar.post = post
 
             avatarImageView.isUserInteractionEnabled = true
             avatarImageView.addGestureRecognizer(tapAvatar)
-            comunityNameLabel.isUserInteractionEnabled = true
-            comunityNameLabel.addGestureRecognizer(tapLabel)
+            userNameLabel.isUserInteractionEnabled = true
+            userNameLabel.addGestureRecognizer(tapLabel)
         }
         
         setMosaic(post.mosaic)
