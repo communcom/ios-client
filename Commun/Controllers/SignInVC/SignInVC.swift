@@ -35,12 +35,16 @@ class SignInVC: BaseViewController {
     lazy var scanQrCodeButton = UIButton.roundedCorner(8, size: 56, backgroundColor: .appMainColor, tintColor: .white, imageName: "scan-qr-code")
     
     // MARK: - Methods
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loginTextField.becomeFirstResponder()
+    }
     
     override func setUp() {
         super.setUp()
         
         // title
-        backButton.addTarget(self, action: #selector(backButtonDidTouch), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         view.addSubview(backButton)
         backButton.autoPinTopAndLeadingToSuperViewSafeArea(inset: 10, xInset: 0)
         
@@ -56,14 +60,16 @@ class SignInVC: BaseViewController {
         
         // scrollView
         view.addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        scrollView.autoPinEdge(.top, to: .bottom, of: titleLabel)
+        scrollView.autoPinEdge(toSuperviewEdge: .leading)
+        scrollView.autoPinEdge(toSuperviewEdge: .trailing)
         let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
         keyboardViewV.observeKeyboardHeight()
         self.view.addConstraint(keyboardViewV)
         
         // textfields
         scrollView.contentView.addSubview(loginTextField)
-        loginTextField.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: UIScreen.main.isSmall ? 20 : 50)
+        loginTextField.autoPinEdge(toSuperviewEdge: .top, withInset: UIScreen.main.isSmall ? 20 : 50)
         loginTextField.autoAlignAxis(toSuperviewAxis: .vertical)
         
         scrollView.contentView.addSubview(passwordTextField)
@@ -191,9 +197,5 @@ class SignInVC: BaseViewController {
             self.signInButtonDidTouch()
         }
         show(vc, sender: nil)
-    }
-    
-    @objc func backButtonDidTouch() {
-        back()
     }
 }

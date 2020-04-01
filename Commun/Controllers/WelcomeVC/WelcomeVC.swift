@@ -142,7 +142,7 @@ class WelcomeVC: BaseViewController {
             AnalyticsManger.shared.signInButtonPressed()
         }
         let signInVC = SignInVC()
-        navigationController?.pushViewController(signInVC)
+        show(signInVC, sender: nil)
     }
     
     @objc func signUpButtonTap(_ sender: Any) {
