@@ -9,7 +9,7 @@
 import Foundation
 
 class WelcomeVC: BaseViewController {
-    override var shouldHideNavigationBar: Bool {true}
+    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
     let numberOfPages = 3
     
     // MARK: - Properties

@@ -345,10 +345,7 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     func routeToConvertScene(walletConvertVC: WalletConvertVC) {
-        let nc = navigationController as? BaseNavigationController
-        nc?.shouldResetNavigationBarOnPush = false
         show(walletConvertVC, sender: nil)
-        nc?.shouldResetNavigationBarOnPush = true
     }
 
     func createConvertVC(withHistoryItem historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) -> WalletConvertVC? {
@@ -368,11 +365,8 @@ class CommunWalletVC: TransferHistoryVC {
     private func routeToSendPointsScene(withUser user: ResponseAPIContentGetProfile? = nil) {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
 
-        if let baseNC = navigationController as? BaseNavigationController {
-            let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
-            baseNC.shouldResetNavigationBarOnPush = false
-            show(walletSendPointsVC, sender: nil)
-        }
+        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
+        show(walletSendPointsVC, sender: nil)
         
         hideHud()
     }
@@ -439,10 +433,7 @@ class CommunWalletVC: TransferHistoryVC {
         }
         
         let vc = OtherBalancesWalletVC(balances: balances, symbol: selectedBalance.symbol, subscriptions: subscriptions, history: viewModel.items.value)
-        let nc = navigationController as? BaseNavigationController
-        nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
-        nc?.shouldResetNavigationBarOnPush = true
     }
 }
 

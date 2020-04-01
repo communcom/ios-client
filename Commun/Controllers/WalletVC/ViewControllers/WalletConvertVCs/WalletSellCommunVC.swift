@@ -219,11 +219,8 @@ class WalletSellCommunVC: WalletConvertVC {
                                               symbol: symbol,
                                               operationDate: Date())
 
-                if let baseNC = self.navigationController as? BaseNavigationController {
-                    let completedVC = TransactionCompletedVC(transaction: transaction)
-                    baseNC.shouldResetNavigationBarOnPush = false
-                    self.show(completedVC, sender: nil)
-                }
+                let completedVC = TransactionCompletedVC(transaction: transaction)
+                self.show(completedVC, sender: nil)
 
                 self.hideHud()
                 

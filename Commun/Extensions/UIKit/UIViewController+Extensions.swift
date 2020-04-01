@@ -221,8 +221,7 @@ extension UIViewController {
             }
             
         case "reward", "referralRegistrationBonus", "referralPurchaseBonus":
-            showOtherBalanceWalletVC(symbol: item.community?.communityId,
-                                     shouldResetNavigationBarOnPush: true)
+            showOtherBalanceWalletVC(symbol: item.community?.communityId)
         default:
             break
         }
