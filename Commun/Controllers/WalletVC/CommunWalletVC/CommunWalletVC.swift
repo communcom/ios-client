@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
-    override var navigationBarType: BaseViewController.NavigationBarType {.normal(translucent: true, backgroundColor: .appMainColor)}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .appMainColor)}
     // MARK: - Properties
     var headerViewOffsetY: CGFloat = 0.0
     

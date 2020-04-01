@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
-    override var navigationBarType: BaseViewController.NavigationBarType {.normal(translucent: true)}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true)}
     
     // MARK: - Constants
     let coverHeight: CGFloat = 200

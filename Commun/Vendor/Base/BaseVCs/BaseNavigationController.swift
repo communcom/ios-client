@@ -62,25 +62,6 @@ final class BaseNavigationController: UINavigationController {
     
     // MARK: - Methods
     
-    func removeNavigationBarShadow() {
-        let img = UIImage()
-        navigationBar.shadowImage = img
-    }
-    
-    func setNavigationBarBackground(color: UIColor = .white) {
-        let img = UIImage()
-        navigationBar.setBackgroundImage(img, for: .default)
-        navigationBar.barStyle = .default
-        navigationBar.barTintColor = color
-        navigationBar.subviews.first?.backgroundColor = color
-    }
-    
-    func setTitleStyle(font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .black) {
-        navigationBar.tintColor = textColor
-        navigationBar.setTitleFont(.boldSystemFont(ofSize: 15), color: textColor)
-        setNavigationBarHidden(false, animated: false)
-    }
-    
     func avoidTabBar(viewController: UIViewController) {
         if let scrollView = viewController.view.subviews.first(where: {$0 is UIScrollView}) as? UIScrollView,
             viewController.view.constraints.first(where: {constraint in

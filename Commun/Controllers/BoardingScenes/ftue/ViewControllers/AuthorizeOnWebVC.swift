@@ -9,7 +9,7 @@
 import Foundation
 
 class AuthorizeOnWebVC: BaseViewController {
-    override var navigationBarType: BaseViewController.NavigationBarType {.embeded}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
     // MARK: - Properties
     var completion: (() -> Void)?
     

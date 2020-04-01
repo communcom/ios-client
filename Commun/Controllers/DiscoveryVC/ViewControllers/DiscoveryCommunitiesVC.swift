@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class DiscoveryCommunitiesVC: CommunitiesVC {
-    override var navigationBarType: BaseViewController.NavigationBarType {.embeded}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {
         let viewModel = self.viewModel as! CommunitiesViewModel

@@ -9,7 +9,7 @@
 import Foundation
 
 class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
-    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     // MARK: - Properties
     var masterPassword: String?

@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, NotificationCell>, PNAlertViewDelegate {
-    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     // MARK: - Constants
     private let headerViewMaxHeight: CGFloat = 82

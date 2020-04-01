@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
-    override var navigationBarType: BaseViewController.NavigationBarType {.embeded}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
     
     // MARK: - Constants
     let bottomBarHeight: CGFloat = 114

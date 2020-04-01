@@ -9,7 +9,7 @@
 import Foundation
 
 class WelcomeItemVC: BaseViewController {
-    override var navigationBarType: BaseViewController.NavigationBarType {.embeded}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
     // MARK: - Constants
     let spacing: CGFloat = 16
     

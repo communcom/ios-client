@@ -14,7 +14,7 @@ typealias LoginCredential = (login: String, key: String)
 
 class SignInVC: BaseViewController {
     // MARK: - Properties
-    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     let viewModel = SignInViewModel()
     
     // MARK: - Subviews

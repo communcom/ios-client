@@ -12,7 +12,7 @@ import CyberSwift
 import RxDataSources
 
 class PostPageVC: CommentsViewController {
-    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     // MARK: - Constants
     let navigationBarHeight: CGFloat = 56

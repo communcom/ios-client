@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 final class FeedPageVC: PostsViewController {
-    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     // MARK: - Properties
     lazy var floatView = FeedPageFloatView(forAutoLayout: ())

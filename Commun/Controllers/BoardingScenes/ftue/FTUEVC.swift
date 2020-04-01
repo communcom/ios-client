@@ -9,7 +9,7 @@
 import Foundation
 
 class FTUEVC: BoardingVC {
-    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     override var step: CurrentUserSettingStep {.ftue}
     override var nextStep: CurrentUserSettingStep? {nil}

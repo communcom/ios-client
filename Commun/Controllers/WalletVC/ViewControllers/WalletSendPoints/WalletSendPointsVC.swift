@@ -13,7 +13,7 @@ import CyberSwift
 import CircularCarousel
 
 class WalletSendPointsVC: BaseViewController {
-    override var navigationBarType: BaseViewController.NavigationBarType {.normal(translucent: true)}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true)}
     // MARK: - Properties
     var dataModel: SendPointsModel
     var buttonBottomConstraint: NSLayoutConstraint?

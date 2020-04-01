@@ -13,7 +13,7 @@ import SafariServices
 
 class BaseViewController: UIViewController {
     // MARK: - Nested type
-    enum NavigationBarType {
+    enum NavigationBarStyle {
         case normal(translucent: Bool = false, backgroundColor: UIColor = .white, font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .black)
         case hidden
         case embeded
@@ -21,7 +21,7 @@ class BaseViewController: UIViewController {
     
     // MARK: - Properties
     lazy var disposeBag = DisposeBag()
-    var navigationBarType: NavigationBarType {.normal()}
+    var prefersNavigationBarStype: NavigationBarStyle {.normal()}
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -43,7 +43,7 @@ class BaseViewController: UIViewController {
     }
     
     func configureNavigationBarType() {
-        switch navigationBarType {
+        switch prefersNavigationBarStype {
         case .normal(let translucent, let backgroundColor, let font, let textColor):
             navigationController?.navigationBar.isTranslucent = translucent
             let img = UIImage()
