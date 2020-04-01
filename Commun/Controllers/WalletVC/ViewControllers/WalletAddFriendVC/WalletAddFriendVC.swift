@@ -30,7 +30,7 @@ class WalletAddFriendVC: SubsViewController<ResponseAPIContentSearchItem, Wallet
         (vm.fetcher as! SearchListFetcher).entitySearchEntity = .profiles
         super.init(viewModel: vm)
         showShadowWhenScrollUp = false
-        title = "add friends".localized().uppercaseFirst
+        title = String(format: "%@ %@", "add".localized().uppercaseFirst, "friends".localized())
     }
     
     required init?(coder: NSCoder) {

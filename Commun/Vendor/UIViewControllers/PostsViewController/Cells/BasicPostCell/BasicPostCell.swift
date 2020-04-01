@@ -79,7 +79,7 @@ final class BasicPostCell: PostCell {
         }
 
         var moreTextAdded = false
-        let moreText = NSAttributedString(string: "... \("See More".localized())", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
+        let moreText = NSAttributedString(string: "... \("see".localized().uppercaseFirst +  "more".localized())", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
 
         if texts.length > 600 && !moreTextAdded {
             moreTextAdded = true

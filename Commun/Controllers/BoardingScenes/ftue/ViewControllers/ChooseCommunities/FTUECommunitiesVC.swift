@@ -24,7 +24,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar(forAutoLayout: ())
         searchBar.searchBarStyle = .minimal
-        searchBar.placeholder = "search".localized().uppercaseFirst
+        searchBar.placeholder = "search placeholder".localized().uppercaseFirst
         return searchBar
     }()
     

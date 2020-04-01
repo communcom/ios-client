@@ -240,7 +240,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             .normal("...")
             .append(
                 NSAttributedString(
-                    string: "see more".localized().uppercaseFirst,
+                    string: String(format: "%@ %@", "see".localized().uppercaseFirst, "more".localized()),
                     attributes: [
                         .link: "seemore://",
                         .foregroundColor: UIColor.appMainColor

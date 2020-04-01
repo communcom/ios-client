@@ -45,7 +45,7 @@ class SendPointCollectionCell: MyCollectionViewCell {
         } else {
             // add friend
             avatarImageView.image = UIImage(named: "add-circle")
-            nameLabel.text = "add friend".localized().uppercaseFirst
+            nameLabel.text = String(format: "%@ %@", "add".localized().uppercaseFirst, "friend".localized())
         }
     }
 }

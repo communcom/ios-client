@@ -55,7 +55,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         return label
     }()
 
-    lazy var seeAllButton: UIButton = UIButton(label: "see all".localized(), labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
+    lazy var seeAllButton: UIButton = UIButton(label: String(format: "%@ %@", "see".localized(), "all".localized()), labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
     
     lazy var communitiesLabel = UILabel.with(text: "communities".localized().uppercaseFirst, textSize: 20, weight: .bold)
     

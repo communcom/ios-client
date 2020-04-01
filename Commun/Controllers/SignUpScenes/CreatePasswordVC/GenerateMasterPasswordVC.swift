@@ -105,8 +105,8 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
     }
     
     @objc func iSavedItButtonDidTouch() {
-        showAttention(subtitle: "we do not keep master passwords and have no opportunity to restore them.".localized().uppercaseFirst,
-                      descriptionText: "Unfortunately, blockchain doesn’t allow us to restore passwords. It means that it is a user’s responsibility to keep the password in a safe place to be able to access it anytime.\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
+        showAttention(subtitle: "master password attention note".localized().uppercaseFirst,
+                      descriptionText: "unfortunately, blockchain doesn’t allow us".localized().uppercaseFirst,
                       backButtonLabel: "save to iCloud".localized().uppercaseFirst,
                       ignoreButtonLabel: "continue".localized().uppercaseFirst, ignoreAction: {
                             self.toBlockchain()

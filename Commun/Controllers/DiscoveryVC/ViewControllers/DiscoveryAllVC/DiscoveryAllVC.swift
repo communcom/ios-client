@@ -203,7 +203,7 @@ extension DiscoveryAllVC: UITableViewDelegate {
         label.autoPinBottomAndLeadingToSuperView(inset: 5, xInset: 16)
         
         if dataSource.sectionModels[section].items.count == 5 {
-            let seeAllLabel = UILabel.with(text: "see all".localized(), textSize: 15, weight: .semibold, textColor: .appMainColor)
+            let seeAllLabel = UILabel.with(text: String(format: "%@ %@", "see".localized(), "all".localized()), textSize: 15, weight: .semibold, textColor: .appMainColor)
             headerView.addSubview(seeAllLabel)
             seeAllLabel.autoPinBottomAndTrailingToSuperView(inset: 5, xInset: 16)
             
