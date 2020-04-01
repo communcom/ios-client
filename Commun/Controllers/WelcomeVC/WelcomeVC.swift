@@ -63,10 +63,6 @@ class WelcomeVC: BaseViewController {
             navigateToSignUp()
         }
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-        
         // top sign in button
         view.addSubview(topSignInButton)
         topSignInButton.autoPinTopAndTrailingToSuperViewSafeArea(inset: 0, xInset: 16)

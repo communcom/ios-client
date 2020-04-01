@@ -9,6 +9,8 @@
 import Foundation
 
 class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
+    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
+    
     // MARK: - Properties
     var masterPassword: String?
     
@@ -23,16 +25,6 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
     }()
     
     // MARK: - Methods
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
     override func setUp() {
         super.setUp()
         AnalyticsManger.shared.registrationOpenScreen(5)
