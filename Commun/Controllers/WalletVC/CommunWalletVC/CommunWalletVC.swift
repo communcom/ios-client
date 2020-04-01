@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
+    override var navigationBarType: BaseViewController.NavigationBarType {.normal(translucent: true, backgroundColor: .appMainColor)}
     // MARK: - Properties
     var headerViewOffsetY: CGFloat = 0.0
     
@@ -82,26 +83,10 @@ class CommunWalletVC: TransferHistoryVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.showNavigationBar(false, animated: true, completion: nil)
         self.changeNavbar(y: headerViewOffsetY)
         self.setNavBarBackButton(tintColor: .white)
         
         self.setTabBarHidden(false)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if #available(iOS 13.0, *) {
-            self.navigationController?.navigationBar.backgroundColor = .clear
-            self.navigationController?.navigationBar.subviews.first?.backgroundColor = .clear
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        self.navigationController?.navigationBar.backgroundColor = .clear
     }
     
     // MARK: - Custom Functions
