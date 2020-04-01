@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, NotificationCell>, PNAlertViewDelegate {
+    override var navigationBarType: BaseViewController.NavigationBarType {.hidden}
+    
     // MARK: - Constants
     private let headerViewMaxHeight: CGFloat = 82
     private let headerViewMinHeight: CGFloat = 44
@@ -34,13 +36,6 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
