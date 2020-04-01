@@ -119,13 +119,12 @@ class BaseSignUpVC: BaseViewController {
         }
     }
     
-    func setUpNextButton() {
+    private func setUpNextButton() {
         view.addSubview(nextButton)
         nextButton.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
         nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        let constant: CGFloat = UIScreen.main.isSmall ? 16 : 40
         
-        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: nextButton, attribute: .bottom, multiplier: 1.0, constant: constant)
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: nextButton, attribute: .bottom, multiplier: 1.0, constant: 16)
         keyboardViewV.observeKeyboardHeight()
         view.addConstraint(keyboardViewV)
     }
