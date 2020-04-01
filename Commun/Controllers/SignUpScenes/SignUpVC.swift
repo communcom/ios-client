@@ -100,8 +100,8 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         
         scrollView.contentView.addSubview(stackView)
         stackView.autoPinEdge(toSuperviewEdge: .top, withInset: 51)
-        stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: UIDevice.current.screenType == .iPhones_5_5s_5c_SE ? 16 : 39)
-        stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: UIDevice.current.screenType == .iPhones_5_5s_5c_SE ? 16 : 39)
+        stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: UIScreen.main.isSmall ? 16 : 39)
+        stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: UIScreen.main.isSmall ? 16 : 39)
         
         // terms of use
         scrollView.contentView.addSubview(termOfUseLabel)

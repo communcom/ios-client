@@ -51,22 +51,14 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
         super.setUp()
         titleLabel.text = "create Password".localized().uppercaseFirst
         
-        switch UIDevice.current.screenType {
-        case .iPhones_5_5s_5c_SE:
+        if UIScreen.main.isSmall {
             titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
-        default:
-            break
         }
         
         AnalyticsManger.shared.openEnterPassword()
         // text field
         scrollView.contentView.addSubview(textField)
-        switch UIDevice.current.screenType {
-        case .iPhones_5_5s_5c_SE:
-            textField.autoPinEdge(toSuperviewEdge: .top, withInset: 36)
-        default:
-            textField.autoPinEdge(toSuperviewEdge: .top, withInset: 50)
-        }
+        textField.autoPinEdge(toSuperviewEdge: .top, withInset: UIScreen.main.isSmall ? 36 : 50)
         textField.autoAlignAxis(toSuperviewAxis: .vertical)
         
         // traits view

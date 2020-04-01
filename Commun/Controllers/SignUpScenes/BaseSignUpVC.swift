@@ -76,11 +76,11 @@ class BaseSignUpVC: BaseViewController {
         backButton.autoPinTopAndLeadingToSuperViewSafeArea(inset: 10, xInset: 0)
         
         view.addSubview(titleLabel)
-        switch UIDevice.current.screenType {
-        case .iPhones_5_5s_5c_SE:
+        
+        if UIScreen.main.isSmall {
             titleLabel.autoPinEdge(.leading, to: .trailing, of: backButton, withOffset: 24)
             titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
-        default:
+        } else {
             titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
             titleLabel.autoPinEdge(.top, to: .bottom, of: backButton, withOffset: 10)
         }
@@ -123,13 +123,7 @@ class BaseSignUpVC: BaseViewController {
         view.addSubview(nextButton)
         nextButton.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
         nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        let constant: CGFloat
-        switch UIDevice.current.screenType {
-        case .iPhones_5_5s_5c_SE:
-            constant = 16
-        default:
-            constant = 40
-        }
+        let constant: CGFloat = UIScreen.main.isSmall ? 16 : 40
         
         let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: nextButton, attribute: .bottom, multiplier: 1.0, constant: constant)
         keyboardViewV.observeKeyboardHeight()

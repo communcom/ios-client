@@ -26,7 +26,7 @@ class ConfirmPasswordVC: CreatePasswordVC {
         super.setUp()
         AnalyticsManger.shared.openReEnterPassword()
         titleLabel.text = "confirm password".localized().uppercaseFirst
-        if UIDevice.current.screenType != .iPhones_5_5s_5c_SE {
+        if !UIScreen.main.isSmall {
             let label = UILabel.with(text: "re-enter your password".localized().uppercaseFirst, textSize: 17)
             scrollView.contentView.addSubview(label)
             label.autoPinEdge(toSuperviewEdge: .top, withInset: 15)
