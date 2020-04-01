@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
+    override var navigationBarType: BaseViewController.NavigationBarType {.normal(translucent: true)}
+    
     // MARK: - Constants
     let coverHeight: CGFloat = 200
     let coverVisibleHeight: CGFloat = 150
@@ -61,6 +63,12 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.showsVerticalScrollIndicator = false
         return tableView
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        showTitle(tableView.contentOffset.y >= -43)
     }
     
     override func setUp() {
@@ -169,16 +177,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
         // for overriding
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.prefersLargeTitles = false
-
-        showTitle(tableView.contentOffset.y >= -43)
-    }
 
     func showTitle(_ show: Bool, animated: Bool = false) {
         navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: CGFloat.adaptive(width: 16.0), offset: CGSize(width: 0.0, height: CGFloat.adaptive(height: 6.0)), opacity: 0.05)
@@ -211,7 +209,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         }
     }
 }
-
 
 // MARK: - CMSegmentedControlDelegate
 extension ProfileVC: CMSegmentedControlDelegate {

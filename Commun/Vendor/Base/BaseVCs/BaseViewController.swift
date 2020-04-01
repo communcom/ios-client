@@ -51,9 +51,14 @@ class BaseViewController: UIViewController {
             navigationController?.navigationBar.barTintColor = backgroundColor
             navigationController?.navigationBar.subviews.first?.backgroundColor = backgroundColor
             
+            // set title style
             navigationController?.navigationBar.tintColor = textColor
             navigationController?.navigationBar.setTitleFont(font, color: textColor)
             navigationController?.setNavigationBarHidden(false, animated: false)
+            
+            // remove navigationBar default shadow
+            let img2 = UIImage()
+            navigationController?.navigationBar.shadowImage = img2
         case .hidden:
             navigationController?.setNavigationBarHidden(true, animated: false)
         }
