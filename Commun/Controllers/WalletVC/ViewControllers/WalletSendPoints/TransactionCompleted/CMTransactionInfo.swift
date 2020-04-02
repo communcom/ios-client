@@ -163,6 +163,7 @@ class CMTransactionInfo: MyView {
         stackView.setCustomSpacing(10 * Config.heightRatio, after: buyerAvatarImageView)
         stackView.setCustomSpacing(8 * Config.heightRatio, after: buyerNameLabel)
         stackView.setCustomSpacing(25 * Config.heightRatio, after: buyerBalanceOrFriendIDLabel)
+        stackView.setCustomSpacing(25 * Config.heightRatio, after: dashLines[1])
         stackView.setCustomSpacing(16 * Config.heightRatio, after: debitedFromLabel)
     }
     
