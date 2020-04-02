@@ -85,7 +85,7 @@ class TransactionCompletedVC: BaseViewController {
         dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.buy)
         dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell)
         
-        let transactionInfoView = CMTransactionInfo(transaction: dataModel.transaction)
+        let transactionInfoView = CMTransactionCompletedView(transaction: dataModel.transaction)
         
         view.addSubview(transactionInfoView)
         transactionInfoView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 40.0), vertical: .adaptive(height: 20.0)), excludingEdge: .top)
