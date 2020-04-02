@@ -159,6 +159,8 @@
 		BC016D54235EA32600F1319F /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D53235EA32600F1319F /* PostsViewModel.swift */; };
 		BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D55235EA33C00F1319F /* ListViewModel.swift */; };
 		BC016D5A235EB88400F1319F /* PostsVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D59235EB88400F1319F /* PostsVC+Actions.swift */; };
+		BC067E292435896E00D770AC /* ResponseAPIContentGetCommunity+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC067E282435896E00D770AC /* ResponseAPIContentGetCommunity+Extensions.swift */; };
+		BC067E2D2435898A00D770AC /* MyFeedCommunity.json in Resources */ = {isa = PBXBuildFile; fileRef = BC067E2C2435898A00D770AC /* MyFeedCommunity.json */; };
 		BC06A99F23E7CAEE000B690E /* SearchListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A99E23E7CAEE000B690E /* SearchListFetcher.swift */; };
 		BC06A9A323E7FC03000B690E /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A9A223E7FC03000B690E /* SearchViewModel.swift */; };
 		BC06A9C123EBFBDB000B690E /* ResponseAPIGetNotificationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A9C023EBFBDB000B690E /* ResponseAPIGetNotificationItem+Extensions.swift */; };
@@ -665,6 +667,8 @@
 		BC016D53235EA32600F1319F /* PostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
 		BC016D55235EA33C00F1319F /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		BC016D59235EB88400F1319F /* PostsVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostsVC+Actions.swift"; sourceTree = "<group>"; };
+		BC067E282435896E00D770AC /* ResponseAPIContentGetCommunity+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResponseAPIContentGetCommunity+Extensions.swift"; sourceTree = "<group>"; };
+		BC067E2C2435898A00D770AC /* MyFeedCommunity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MyFeedCommunity.json; sourceTree = "<group>"; };
 		BC06A99E23E7CAEE000B690E /* SearchListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListFetcher.swift; sourceTree = "<group>"; };
 		BC06A9A223E7FC03000B690E /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		BC06A9C023EBFBDB000B690E /* ResponseAPIGetNotificationItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResponseAPIGetNotificationItem+Extensions.swift"; sourceTree = "<group>"; };
@@ -2541,9 +2545,11 @@
 		BCCE0A982367D12800A183AA /* ResponseAPI */ = {
 			isa = PBXGroup;
 			children = (
+				BC067E2C2435898A00D770AC /* MyFeedCommunity.json */,
 				3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed+Extensions.swift */,
 				BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift */,
 				BC06A9C023EBFBDB000B690E /* ResponseAPIGetNotificationItem+Extensions.swift */,
+				BC067E282435896E00D770AC /* ResponseAPIContentGetCommunity+Extensions.swift */,
 			);
 			path = ResponseAPI;
 			sourceTree = "<group>";
@@ -2831,6 +2837,7 @@
 				AC0B05C223A93A1100474628 /* GoogleService-Info-Prod.plist in Resources */,
 				ACCCF74323A9105E00AF4FDE /* countries.json in Resources */,
 				BCF74A5C23617D3A00B91089 /* ResponseAPIContentGetSubscribers.json in Resources */,
+				BC067E2D2435898A00D770AC /* MyFeedCommunity.json in Resources */,
 				B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info-Dev.plist in Resources */,
 				BC3694ED236979A700B2E078 /* ProfileChooseAvatarVC.storyboard in Resources */,
 				3B8DDF5E234B122500B213F0 /* colorPalette.plist in Resources */,
@@ -3360,6 +3367,7 @@
 				BC69F7DC236FFAC40097F870 /* SubscriptionsUserCell.swift in Sources */,
 				BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */,
 				BCB2A6E823556DFA00B3582B /* PostEditorVC+Draft.swift in Sources */,
+				BC067E292435896E00D770AC /* ResponseAPIContentGetCommunity+Extensions.swift in Sources */,
 				BC8F815823E27ECE0024C04A /* WalletConvertVC.swift in Sources */,
 				BC8F814023E27ECE0024C04A /* WalletHeaderView.swift in Sources */,
 				BC8F814C23E27ECE0024C04A /* CMToolbarView.swift in Sources */,
