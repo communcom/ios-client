@@ -17,7 +17,6 @@ class CMTransactionInfo: MyView {
     lazy var stackView = UIStackView(axis: .vertical, distribution: .fill)
     
     lazy var dashLines = [0, 1].compactMap {_ in UIView(height: 2)}
-    lazy var holes = [0, 1, 2, 3].compactMap {_ in UIView(width: 24, height: 24)}
     
     // MARK: - Initializers
     init(transaction: Transaction, parentColor: UIColor = .clear) {
@@ -52,8 +51,6 @@ class CMTransactionInfo: MyView {
         let transactionCompletedLabel = UILabel.with(text: "transaction completed".localized().uppercaseFirst, textSize: 17, weight: .bold, textAlignment: .center)
         let transactionTimestampLabel = UILabel.with(text: transaction.operationDate.convert(toStringFormat: .transactionCompletedType), textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
         
-        let separator0 = separatorWithIndex(0)
-        
         // second part
         let amount = transaction.amount
         let textColor: UIColor = amount > 0 ? .appGreenColor : .black
@@ -69,8 +66,6 @@ class CMTransactionInfo: MyView {
         let buyerNameLabel = UILabel.with(textSize: 17, weight: .bold, textAlignment: .center)
         
         let buyerBalanceOrFriendIDLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
-        
-        let separator1 = separatorWithIndex(1)
         
         // third part
         let debitedFromLabel = UILabel.with(text: "debited from".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .appGrayColor)
@@ -113,21 +108,21 @@ class CMTransactionInfo: MyView {
             readyCheckMark,
             transactionCompletedLabel,
             transactionTimestampLabel,
-            separator0,
+            dashLines[0],
             // second part
             amountLabel,
             burnedPercentLabel,
             buyerAvatarImageView,
             buyerNameLabel,
             buyerBalanceOrFriendIDLabel,
-            separator1,
+            dashLines[1],
             // third part
             debitedFromLabel,
             blueBottomView
         ])
-        separator0.widthAnchor.constraint(equalTo: stackView.widthAnchor)
+        dashLines[0].widthAnchor.constraint(equalTo: stackView.widthAnchor)
             .isActive = true
-        separator1.widthAnchor.constraint(equalTo: stackView.widthAnchor)
+        dashLines[1].widthAnchor.constraint(equalTo: stackView.widthAnchor)
             .isActive = true
         
         addSubview(stackView)
@@ -162,7 +157,7 @@ class CMTransactionInfo: MyView {
         stackView.setCustomSpacing(16 * Config.heightRatio, after: readyCheckMark)
         stackView.setCustomSpacing(8 * Config.heightRatio, after: transactionCompletedLabel)
         stackView.setCustomSpacing(25 * Config.heightRatio, after: transactionTimestampLabel)
-        stackView.setCustomSpacing(25 * Config.heightRatio, after: separator0)
+        stackView.setCustomSpacing(25 * Config.heightRatio, after: dashLines[0])
         stackView.setCustomSpacing(8 * Config.heightRatio, after: amountLabel)
         stackView.setCustomSpacing(16 * Config.heightRatio, after: burnedPercentLabel)
         stackView.setCustomSpacing(10 * Config.heightRatio, after: buyerAvatarImageView)
@@ -171,42 +166,21 @@ class CMTransactionInfo: MyView {
         stackView.setCustomSpacing(16 * Config.heightRatio, after: debitedFromLabel)
     }
     
-    private func separatorWithIndex(_ index: Int) -> UIView {
-        let view = UIView(height: 24)
-        let hole1 = holes[index*2]
-        view.addSubview(hole1)
-        hole1.autoPinEdge(toSuperviewEdge: .leading, withInset: -12)
-        hole1.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        view.addSubview(dashLines[index])
-        dashLines[index].autoPinEdge(.leading, to: .trailing, of: hole1, withOffset: 10)
-        dashLines[index].autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        let hole2 = holes[index*2+1]
-        view.addSubview(hole2)
-        hole2.autoPinEdge(toSuperviewEdge: .trailing, withInset: -12)
-        hole2.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        hole2.autoPinEdge(.leading, to: .trailing, of: dashLines[index], withOffset: 10)
-        
-        return view
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         for dash in dashLines {
             dash.draw(lineColor: .e2e6e8,
                 lineWidth: 2.0,
-                startPoint: CGPoint(x: 0.0, y: 1.0),
-                endPoint: CGPoint(x: bounds.maxX - 24 - 20, y: 1.0),
+                startPoint: CGPoint(x: 22, y: 1.0),
+                endPoint: CGPoint(x: bounds.maxX - 22, y: 1.0),
                 withDashPattern: [10, 6])
         }
     }
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        let rects = holes.filter {$0.frame != .zero}.compactMap {$0.convert($0.bounds, to: self)}
-        guard rects.count > 0 else {return}
+        let dashLineRects = dashLines.filter {$0.frame != .zero}.compactMap {$0.convert($0.bounds, to: self)}
+        guard dashLineRects.count > 0 else {return}
         // Ensures to use the current background color to set the filling color
         backgroundColor?.setFill()
         UIRectFill(rect)
@@ -214,17 +188,21 @@ class CMTransactionInfo: MyView {
         let layer = CAShapeLayer()
         let path = CGMutablePath()
         
-        path.addLine(to: CGPoint(x: 0, y: rects[0].minY))
-        path.addArc(center: CGPoint(x: 0, y: rects[0].midY), radius: 12, startAngle: CGFloat.pi / 2, endAngle: -CGFloat.pi / 2, clockwise: true)
-        path.addLine(to: CGPoint(x: 0, y: rects[2].minY))
-        path.addArc(center: CGPoint(x: 0, y: rects[2].midY), radius: 12, startAngle: CGFloat.pi / 2, endAngle: -CGFloat.pi / 2, clockwise: true)
+        let radius: CGFloat = 12
+        
+        path.addLine(to: CGPoint(x: 0, y: dashLineRects[0].midY - radius))
+        path.addArc(center: CGPoint(x: 0, y: dashLineRects[0].midY), radius: radius, startAngle: CGFloat.pi / 2, endAngle: -CGFloat.pi / 2, clockwise: true)
+        
+        path.addLine(to: CGPoint(x: 0, y: dashLineRects[1].midY - radius))
+        path.addArc(center: CGPoint(x: 0, y: dashLineRects[1].midY), radius: radius, startAngle: CGFloat.pi / 2, endAngle: -CGFloat.pi / 2, clockwise: true)
         path.addLine(to: CGPoint(x: 0, y: rect.maxY))
         path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
         
-        path.addLine(to: CGPoint(x: rect.maxX, y: rects[3].maxY))
-        path.addArc(center: CGPoint(x: rect.maxX, y: rects[3].midY), radius: 12, startAngle: -CGFloat.pi / 2, endAngle: CGFloat.pi / 2, clockwise: true)
-        path.addLine(to: CGPoint(x: rect.maxX, y: rects[1].maxY))
-        path.addArc(center: CGPoint(x: rect.maxX, y: rects[1].midY), radius: 12, startAngle: -CGFloat.pi / 2, endAngle: CGFloat.pi / 2, clockwise: true)
+        path.addLine(to: CGPoint(x: rect.maxX, y: dashLineRects[1].midY + radius))
+        path.addArc(center: CGPoint(x: rect.maxX, y: dashLineRects[1].midY), radius: radius, startAngle: -CGFloat.pi / 2, endAngle: CGFloat.pi / 2, clockwise: true)
+        
+        path.addLine(to: CGPoint(x: rect.maxX, y: dashLineRects[0].midY + radius))
+        path.addArc(center: CGPoint(x: rect.maxX, y: dashLineRects[0].midY), radius: radius, startAngle: -CGFloat.pi / 2, endAngle: CGFloat.pi / 2, clockwise: true)
         path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
         
         path.addLine(to: .zero)
