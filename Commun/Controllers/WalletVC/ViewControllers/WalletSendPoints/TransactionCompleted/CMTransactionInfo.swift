@@ -41,7 +41,11 @@ class CMTransactionInfo: MyView {
         super.commonInit()
         
         // first part
-        let readyCheckMark = UIImageView.circle(size: 60, backgroundColor: #colorLiteral(red: 0.3125971854, green: 0.8584119678, blue: 0.6879913807, alpha: 1), imageName: "icon-checkmark-white")
+        let readyCheckMark = CommunButton.circle(size: 60,
+            backgroundColor: #colorLiteral(red: 0.3125971854, green: 0.8584119678, blue: 0.6879913807, alpha: 1),
+            tintColor: UIColor.white,
+            imageName: "icon-checkmark-white",
+            imageEdgeInsets: .zero)
         readyCheckMark.addShadow(ofColor: #colorLiteral(red: 0.732, green: 0.954, blue: 0.886, alpha: 1), radius: 24.0, offset: CGSize(width: 0.0, height: 8.0), opacity: 1.0)
         
         let transactionCompletedLabel = UILabel.with(text: "transaction completed".localized().uppercaseFirst, textSize: 17, weight: .bold, textAlignment: .center)
@@ -71,7 +75,7 @@ class CMTransactionInfo: MyView {
         let debitedFromLabel = UILabel.with(text: "debited from".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .appGrayColor)
         
         let blueBottomView: UIView = {
-            let view = UIView(backgroundColor: .appMainColor, cornerRadius: 16)
+            let view = UIView(backgroundColor: .appMainColor, cornerRadius: 16 * Config.heightRatio)
             
             let imageView: UIView
             if let sellBalance = transaction.sellBalance, let avatarURL = sellBalance.avatarURL {
@@ -84,7 +88,7 @@ class CMTransactionInfo: MyView {
             }
             
             view.addSubview(imageView)
-            imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 26, right: 0), excludingEdge: .trailing)
+            imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10 * Config.heightRatio, left: 16 * Config.heightRatio, bottom: 26 * Config.heightRatio, right: 0), excludingEdge: .trailing)
             
             let sellerNameLabel = UILabel.with(text: transaction.sellBalance?.name, textSize: 15, weight: .semibold, textColor: .white)
             view.addSubview(sellerNameLabel)
@@ -95,7 +99,7 @@ class CMTransactionInfo: MyView {
             
             let sellerAmountLabel = UILabel.with(textSize: 15, weight: .bold, textColor: .white, textAlignment: .right)
             view.addSubview(sellerAmountLabel)
-            sellerAmountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+            sellerAmountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16 * Config.heightRatio)
             sellerAmountLabel.autoAlignAxis(.horizontal, toSameAxisOf: imageView)
             sellerAmountLabel.autoPinEdge(.leading, to: .trailing, of: sellerNameLabel)
             sellerAmountLabel.text = transaction.sellBalance?.amount.formattedWithSeparator
@@ -122,10 +126,10 @@ class CMTransactionInfo: MyView {
         ])
         
         addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 0, bottom: -16, right: 0))
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 0, bottom: -16 * Config.heightRatio, right: 0))
         
-        blueBottomView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 29)
-        blueBottomView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -29)
+        blueBottomView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 29 * Config.heightRatio)
+        blueBottomView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -29 * Config.heightRatio)
         
         // set up
         switch transaction.actionType {
@@ -148,6 +152,18 @@ class CMTransactionInfo: MyView {
             buyerBalanceOrFriendIDLabel.text = transaction.friend?.id ?? Config.defaultSymbol
             buyerAvatarImageView.setAvatar(urlString: transaction.friend?.avatarURL, namePlaceHolder: transaction.friend?.name ?? Config.defaultSymbol)
         }
+        
+        // spacing
+        stackView.setCustomSpacing(16 * Config.heightRatio, after: readyCheckMark)
+        stackView.setCustomSpacing(8 * Config.heightRatio, after: transactionCompletedLabel)
+        stackView.setCustomSpacing(25 * Config.heightRatio, after: transactionTimestampLabel)
+        stackView.setCustomSpacing(25 * Config.heightRatio, after: separator0)
+        stackView.setCustomSpacing(8 * Config.heightRatio, after: amountLabel)
+        stackView.setCustomSpacing(16 * Config.heightRatio, after: burnedPercentLabel)
+        stackView.setCustomSpacing(10 * Config.heightRatio, after: buyerAvatarImageView)
+        stackView.setCustomSpacing(8 * Config.heightRatio, after: buyerNameLabel)
+        stackView.setCustomSpacing(25 * Config.heightRatio, after: buyerBalanceOrFriendIDLabel)
+        stackView.setCustomSpacing(16 * Config.heightRatio, after: debitedFromLabel)
     }
     
     private func separatorWithIndex(_ index: Int) -> UIView {

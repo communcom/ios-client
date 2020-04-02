@@ -88,7 +88,7 @@ class TransactionCompletedVC: BaseViewController {
         let transactionInfoView = CMTransactionInfo(transaction: dataModel.transaction)
         
         view.addSubview(transactionInfoView)
-        transactionInfoView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 40.0), vertical: .adaptive(height: 20.0)))
+        transactionInfoView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 40.0), vertical: .adaptive(height: 20.0)), excludingEdge: .top)
 
         // Actions
 //        transactionCompletedView.actions { [weak self] actionType in
