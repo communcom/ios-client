@@ -125,7 +125,7 @@ class CMTransactionInfo: MyView {
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 0, bottom: -16, right: 0))
         
         blueBottomView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 29)
-        blueBottomView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: 29)
+        blueBottomView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -29)
         
         // set up
         switch transaction.actionType {
