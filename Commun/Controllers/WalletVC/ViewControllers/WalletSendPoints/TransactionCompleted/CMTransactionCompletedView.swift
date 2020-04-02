@@ -10,6 +10,9 @@ import Foundation
 
 class CMTransactionCompletedView: MyView {
     let transaction: Transaction
+    var isHistoryMode: Bool {
+        !["buy", "sell", "send"].contains(transaction.actionType.rawValue)
+    }
     
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     
@@ -43,6 +46,6 @@ class CMTransactionCompletedView: MyView {
         transactionInfoView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         transactionInfoView.autoPinEdge(.bottom, to: .top, of: buttonStackView, withOffset: -34 * Config.heightRatio)
         
-        buttonStackView.addArrangedSubviews([homeButton, backToWalletButton])
+        buttonStackView.addArrangedSubviews(isHistoryMode ? [repeatButton] : [homeButton, backToWalletButton])
     }
 }
