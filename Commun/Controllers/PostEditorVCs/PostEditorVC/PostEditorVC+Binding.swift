@@ -109,7 +109,7 @@ extension PostEditorVC {
                     self.communityNameLabel.textColor = .black
                 } else {
                     self.communityAvatarImage.removeAvatar()
-                    self.communityNameLabel.text = "choose a community".localized().uppercaseFirst
+                    self.communityNameLabel.text = "hint type choose community".localized().uppercaseFirst
                     self.communityNameLabel.textColor = .a5a7bd
                 }
             })

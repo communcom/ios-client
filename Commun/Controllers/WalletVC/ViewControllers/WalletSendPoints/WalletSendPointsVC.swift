@@ -59,9 +59,9 @@ class WalletSendPointsVC: BaseViewController {
     var friendAvatarImageView = UIView.createCircleCommunLogo(side: 40)
     
     let friendNameLabel: UILabel = UILabel(text: "select user".localized().uppercaseFirst,
-                                                font: .systemFont(ofSize: 15, weight: .semibold),
-                                                numberOfLines: 1,
-                                                color: .black)
+                                           font: .systemFont(ofSize: 15, weight: .semibold),
+                                           numberOfLines: 1,
+                                           color: .black)
     
     let chooseFriendButton: UIButton = {
         let chooseRecipientButtonInstance = UIButton.circle(size: 24,

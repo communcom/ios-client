@@ -35,7 +35,7 @@ class FeedPageHeaderView: MyTableHeaderView {
         bannerView.addSubview(footerView)
         footerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
-        let label = UILabel.with(text: "just click the button and get Dank Meme points!".localized().uppercaseFirst, textSize: 15, weight: .medium, textColor: .a5a7bd, numberOfLines: 0)
+        let label = UILabel.with(text: "just click".localized().uppercaseFirst, textSize: 15, weight: .medium, textColor: .a5a7bd, numberOfLines: 0)
         footerView.addSubview(label)
         label.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0), excludingEdge: .trailing)
         

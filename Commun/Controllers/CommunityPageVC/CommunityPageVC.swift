@@ -341,8 +341,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                                      tintColor: profile.isInBlacklist == true ? .black: .ed2c5b,
                                      handle: {
                                         self.showAlert(
-                                            title: (profile.isInBlacklist == true ? "unhide community": "hide community").localized().uppercaseFirst,
-                                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of": "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
+                                            title: (profile.isInBlacklist == true ? "unhide community" : "hide community").localized().uppercaseFirst,
+                                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of" : "do you really want to unhide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
                                             buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
                                             highlightedButtonIndex: 1) { (index) in
                                                 if index != 0 {return}

@@ -91,7 +91,7 @@ class ConfirmPasswordVC: CreatePasswordVC {
         SecAddSharedWebCredential(domain as CFString, userName as CFString, currentPassword as CFString) { [weak self] (error) in
             DispatchQueue.main.async {
                 if error != nil {
-                    self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password in iCloud!".localized().uppercaseFirst, message: "You need to enable Keychain, then your password will be safe and sound.\nGo to your phone Settings\nthen to Passwords & Accounts > AutoFill Passwords > Enable Keychain".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                    self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password".localized().uppercaseFirst, message: "You need to enable Keychain, then".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
                         if index == 0 {
                             self?.savePasswordToIcloud()
                         }

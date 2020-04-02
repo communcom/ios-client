@@ -25,7 +25,7 @@ class ReportVC: VerticalActionsVC {
     // MARK: - Initializers
     init() {
         super.init(actions: BlockchainManager.ReportReason.allCases.map({ (reason) -> Action in
-            Action(title: reason.rawValue, icon: nil)
+            Action(title: reason.rawValue.localized(), icon: nil)
         }))
     }
     
@@ -58,7 +58,7 @@ class ReportVC: VerticalActionsVC {
         imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        let descriptionLabel = UILabel.with(text: "if someone is in immediate danger, call local emergency services. Don't wait.".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .a5a7bd, numberOfLines: 2)
+        let descriptionLabel = UILabel.with(text: "if someone is in immediate danger".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .a5a7bd, numberOfLines: 2)
         alertView.addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .horizontal)

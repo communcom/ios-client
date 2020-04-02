@@ -21,7 +21,7 @@ class PhotoLibraryAccessDeniedView: MyView {
         addSubview(titleLabel)
         titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 50, left: 15, bottom: 15, right: 15), excludingEdge: .bottom)
 
-        let subtitleLabel = UILabel(text: "access was previously denied, please grant access from Settings".localized().uppercaseFirst, font: .systemFont(ofSize: 17, weight: .semibold), numberOfLines: 2, color: .appGrayColor)
+        let subtitleLabel = UILabel(text: "access was previously denied, please grant".localized().uppercaseFirst, font: .systemFont(ofSize: 17, weight: .semibold), numberOfLines: 2, color: .appGrayColor)
         subtitleLabel.textAlignment = .center
         addSubview(subtitleLabel)
         subtitleLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 10)

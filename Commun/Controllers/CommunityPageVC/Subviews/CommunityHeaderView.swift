@@ -97,7 +97,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     lazy var walletButton: UIButton = {
         let button = UIButton(width: 99,
                               height: 35,
-                              label: "get points".localized().uppercaseFirst,
+                              label: String(format: "%@ %@", "get".localized().uppercaseFirst, "points".localized()),
                               labelFont: UIFont.systemFont(ofSize: 15, weight: .medium),
                               backgroundColor: .white,
                               textColor: .appMainColor,

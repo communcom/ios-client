@@ -16,7 +16,7 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
     
     // MARK: - Subviews
     lazy var copyButton = UIButton.circle(size: 24, backgroundColor: .a5a7bd, tintColor: .white, imageName: "copy", imageEdgeInsets: UIEdgeInsets(inset: 6))
-    lazy var backUpICloudButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save to  iCloud".localized().uppercaseFirst)
+    lazy var backUpICloudButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save to iCloud".localized().uppercaseFirst)
 
     lazy var iSavedItButton: UIButton = {
         let button = UIButton(label: "i saved it".localized().uppercaseFirst, textColor: .appMainColor, contentInsets: UIEdgeInsets(top: 10, left: 100, bottom: 10, right: 100))
@@ -52,7 +52,7 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
         
         let infoLabel = UILabel.with(numberOfLines: 0, textAlignment: .center)
         infoLabel.attributedText = NSMutableAttributedString()
-            .text("commun doesn't have access to your password, and also in case of loss will not be able to recover it".localized().uppercaseFirst + ". ", size: 17 * Config.heightRatio, weight: .medium, color: .a5a7bd)
+            .text("commun doesn't have access to your password".localized().uppercaseFirst + ". ", size: 17 * Config.heightRatio, weight: .medium, color: .a5a7bd)
             .text("save it securely".localized().uppercaseFirst + "!", size: 17 * Config.heightRatio, weight: .medium)
         view.addSubview(infoLabel)
         infoLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 6)
@@ -128,7 +128,7 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
         SecAddSharedWebCredential(domain as CFString, userName as CFString, password as CFString) { [weak self] (error) in
             DispatchQueue.main.async {
                 if error != nil {
-                    self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password in iCloud!".localized().uppercaseFirst, message: "You need to enable Keychain, then your password will be safe and sound.\nGo to your phone Settings\nthen to Passwords & Accounts > AutoFill Passwords > Enable Keychain".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                    self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password".localized().uppercaseFirst, message: "You need to enable Keychain, then".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
                         if index == 0 {
                             self?.backupIcloudDidTouch()
                         }

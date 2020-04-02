@@ -76,7 +76,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         // descriptionLabel
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10 * Config.heightRatio
-        let attrString = NSAttributedString(string: "subscribe to at least 3 communities and get your first Community Points".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle])
+        let attrString = NSAttributedString(string: "subscribe to at least 3 communities".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle])
         descriptionLabel.attributedText = attrString
         headerView.addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 16 * Config.heightRatio)

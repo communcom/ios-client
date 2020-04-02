@@ -195,7 +195,7 @@ class CommentForm: MyView {
         let parentCommentTitleLabel = UILabel.with(textSize: .adaptive(width: 15.0), weight: .semibold, textColor: .appMainColor)
         
         if mode == .edit {
-            parentCommentTitleLabel.text = "edit comment".localized().uppercaseFirst
+            parentCommentTitleLabel.text = String(format: "%@ %@", "edit".localized().uppercaseFirst, "comment".localized())
         }
         
         if mode == .reply {

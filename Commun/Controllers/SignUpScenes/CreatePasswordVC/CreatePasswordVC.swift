@@ -49,7 +49,7 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     
     override func setUp() {
         super.setUp()
-        titleLabel.text = "create Password".localized().uppercaseFirst
+        titleLabel.text = String(format: "%@ %@", "create".localized().uppercaseFirst, "password".localized().uppercaseFirst)
         
         if UIScreen.main.isSmall {
             titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
@@ -73,7 +73,7 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
         view.addSubview(unsupportSymbolError)
         unsupportSymbolError.autoPinEdge(.bottom, to: .top, of: nextButton, withOffset: -9)
         unsupportSymbolError.autoAlignAxis(toSuperviewAxis: .vertical)
-        unsupportSymbolError.text = "only Latin characters, digits and special symbols\nare allowed".localized().uppercaseFirst
+        unsupportSymbolError.text = "only Latin characters, digits and".localized().uppercaseFirst
         unsupportSymbolError.isHidden = true
     }
     
@@ -142,8 +142,8 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     
     @objc func generateMasterPasswordButtonDidTouch() {
         showAttention(
-            subtitle: "you want to select the advanced mode and continue with the Master Password".localized().uppercaseFirst,
-            descriptionText: "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
+            subtitle: "you want to select the advanced mode".localized().uppercaseFirst,
+            descriptionText: "after confirmation, we'll generate for".localized().uppercaseFirst,
             ignoreButtonLabel: "continue with Master Password".localized().uppercaseFirst,
             ignoreAction: {
                 AnalyticsManger.shared.useMasterPassword()
@@ -155,7 +155,7 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     
     @objc override func nextButtonDidTouch() {
         if (textField.text ?? "").count > AuthManager.maxPasswordLength {
-            hintView?.display(inPosition: nextButton.frame.origin, withType: .error("password must contain no more than 52 characters".localized().uppercaseFirst))
+            hintView?.display(inPosition: nextButton.frame.origin, withType: .error("password must contain no more than".localized().uppercaseFirst))
             return
         }
         
@@ -163,9 +163,9 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
             var message = "something went wrong".localized().uppercaseFirst
             switch failureConstraint.title {
             case CreatePasswordViewModel.lowercaseTitle:
-                message = "password must contain at least one lowercase character".localized().uppercaseFirst
+                message = "password must contain at least one lowercase".localized().uppercaseFirst
             case CreatePasswordViewModel.uppercaseTitle:
-                message = "password must contain at least one uppercase character".localized().uppercaseFirst
+                message = "password must contain at least one uppercase".localized().uppercaseFirst
             case CreatePasswordViewModel.numberTitle:
                 message = "password must contain at least one digit".localized().uppercaseFirst
             case CreatePasswordViewModel.minLengthTitle:

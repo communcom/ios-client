@@ -75,6 +75,7 @@ class LocalAuthVC: THPinViewController {
         } else {
             if !isAuto {
                 showAlert(title: "warning".localized().uppercaseFirst, message: LABiometryType.current.stringValue + " " + "was turned off".localized() + "\n" + "do you want to turn it on?".localized().uppercaseFirst, buttonTitles: ["turn on".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                    
                     if index == 0 {
                         if let url = URL.init(string: UIApplication.openSettingsURLString) {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)

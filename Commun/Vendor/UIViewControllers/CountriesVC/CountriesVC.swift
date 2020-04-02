@@ -22,7 +22,7 @@ class CountriesVC: BaseViewController, UISearchResultsUpdating {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        title = "select country".localized().uppercaseFirst
+        title = "select country placeholder".localized().uppercaseFirst
         AnalyticsManger.shared.registrationOpenScreen(1)
         
         // Set up navigation bar

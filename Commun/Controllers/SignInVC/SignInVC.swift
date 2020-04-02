@@ -26,7 +26,7 @@ class SignInVC: BaseViewController {
     lazy var loginTextField = UITextField(width: 290, height: 56, cornerRadius: 12, placeholder: "login placeholder".localized().uppercaseFirst, autocorrectionType: .no, autocapitalizationType: UITextAutocapitalizationType.none, spellCheckingType: .no, textContentType: .username)
     
     lazy var passwordTextField = UITextField(width: 290, height: 56, cornerRadius: 12, placeholder: "key placeholder".localized().uppercaseFirst, autocorrectionType: .no, autocapitalizationType: UITextAutocapitalizationType.none, spellCheckingType: .no, textContentType: .password, isSecureTextEntry: true)
-    
+
     lazy var pasteFromClipboardButton = UIButton(labelFont: .systemFont(ofSize: 15), textColor: .appMainColor)
     
     lazy var signInButton = CommunButton.default(height: 56, label: "sign in".localized().uppercaseFirst, cornerRadius: 8, isDisableGrayColor: true)

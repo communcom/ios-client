@@ -56,7 +56,7 @@ class ContentReportVC<T: ListItemType>: ReportVC {
 //            .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { (_) in
                 self.hideHud()
-                self.showAlert(title: "thank you for reporting this post".localized().uppercaseFirst, message: "we have flagged this post for investigation. Thank you for being with us".localized().uppercaseFirst) { _ in
+                self.showAlert(title: "thank you for reporting this post".localized().uppercaseFirst, message: "we have flagged this post for investigation".localized().uppercaseFirst) { _ in
                     self.dismiss(animated: true) {
                         self.content.notifyDeleted()
                     }

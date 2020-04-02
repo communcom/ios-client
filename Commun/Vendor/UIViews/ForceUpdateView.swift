@@ -14,7 +14,7 @@ class ForceUpdateView: ErrorView {
         imageRatio: 332/560,
         imageNamed: "update-the-app",
         title: "update the app".localized().uppercaseFirst,
-        subtitle: "this version of the application is out of date.\nPlease update to continue using the app.".localized().uppercaseFirst,
+        subtitle: "this version of the application is out of".localized().uppercaseFirst,
         retryButtonTitle: "update".localized().uppercaseFirst) {
             let url = URL(string: "itms-apps://itunes.apple.com/app/id\(Config.appStoreId)")!
             UIApplication.shared.open(url)

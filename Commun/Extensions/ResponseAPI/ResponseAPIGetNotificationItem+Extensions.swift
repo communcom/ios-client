@@ -25,7 +25,7 @@ extension ResponseAPIGetNotificationItem {
         case "subscribe":
             aStr.semibold(user?.username ?? "a user".localized().uppercaseFirst)
                 .normal(" ")
-                .normal("is following you")
+                .normal("is following you".localized())
         
         case "upvote":
             aStr.semibold(voter?.username ?? "a user".localized().uppercaseFirst)
@@ -72,21 +72,21 @@ extension ResponseAPIGetNotificationItem {
             if pointType == "token" {pointType = "Commun"}
             
             if from?.username == nil {
-                aStr.normal("You received")
+                aStr.normal("you received".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("\(amount ?? "0") \(community?.name ?? community?.communityId ?? "points")")
+                    .normal("\(amount ?? "0") \(community?.name ?? community?.communityId ?? "points".localized())")
             } else if from?.username?.lowercased() != "bounty" {
                 aStr.semibold(from?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
                     .normal("sent you".localized())
                     .normal(" ")
-                    .text("\(amount ?? "0") \(pointType ?? "points")", weight: .medium, color: .appMainColor)
+                    .text("\(amount ?? "0") \(pointType ?? "points".localized())", weight: .medium, color: .appMainColor)
             } else {
                 aStr.normal("you've got a".localized().uppercaseFirst)
                     .normal(" ")
-                    .text("\(amount ?? "0") \(pointType ?? "points")", weight: .medium, color: .appMainColor)
+                    .text("\(amount ?? "0") \(pointType ?? "points".localized())", weight: .medium, color: .appMainColor)
                     .normal(" ")
-                    .normal("bounty")
+                    .normal("bounty".localized())
             }
         default:
             aStr.normal("you've got a new notification".localized().uppercaseFirst)

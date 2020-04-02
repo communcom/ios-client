@@ -55,11 +55,13 @@ class WelcomeItemVC: BaseViewController {
                 .text("all-in-one".localized().uppercaseFirst, size: .adaptive(height: 36), weight: .bold)
                 .text("\n")
                 .text("social network".localized().uppercaseFirst, size: .adaptive(height: 36))
+        
         case 2:
             titleAString = NSMutableAttributedString()
                 .text("owned".localized().uppercaseFirst, size: .adaptive(height: 36), weight: .bold)
                 .text(" ", size: .adaptive(height: 36))
-                .text("by users".localized().uppercaseFirst, size: .adaptive(height: 36))
+                .text(String(format: "%@ %@", "by".localized().uppercaseFirst, "users".localized()), size: .adaptive(height: 36))
+        
         default:
             titleAString = NSMutableAttributedString()
                 .text("welcome".localized().uppercaseFirst, size: .adaptive(height: 36))
@@ -68,6 +70,7 @@ class WelcomeItemVC: BaseViewController {
                 .text(" ")
                 .text("Commun /", size: .adaptive(height: 36), weight: .bold, color: .appMainColor)
         }
+        
         titleLabel.attributedText = titleAString
         
         view.addSubview(descriptionLabel)
@@ -93,10 +96,12 @@ class WelcomeItemVC: BaseViewController {
                 .text("\n")
                 .text(" ")
                 .withParagraphSpacing(26, alignment: .center)
+        
         case 2:
             descriptionAS = NSMutableAttributedString()
-                .semibold("communities has no single owner\nand fully belongs to its members".localized().uppercaseFirst, color: descriptionColor)
+                .semibold("welcome-item-3".localized().uppercaseFirst, color: descriptionColor)
                 .withParagraphSpacing(26, alignment: .center)
+        
         default:
             descriptionAS = NSMutableAttributedString()
                 .semibold("blockchain-based social network".localized().uppercaseFirst, color: descriptionColor)

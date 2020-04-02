@@ -77,7 +77,7 @@ extension ProfileController {
         
         if profile.isInBlacklist == true
         {
-            vc.showAlert(title: "unblock and follow".localized().uppercaseFirst, message: "this user is on your blacklist. Do you really want to unblock and follow him/her anyway?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1, completion:
+            vc.showAlert(title: "unblock and follow".localized().uppercaseFirst, message: "this user is on your blacklist".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1, completion:
             { (index) in
                 if index == 0 {
                     self.sendRequest()

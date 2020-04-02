@@ -45,7 +45,7 @@ extension PostEditorVC {
         
         self.showAlert(
             title: "save post as draft".localized().uppercaseFirst + "?",
-            message: "draft let you save your edits, so you can come back later".localized().uppercaseFirst,
+            message: "draft let you save your edits, so you can".localized().uppercaseFirst,
             buttonTitles: ["save".localized().uppercaseFirst, "delete".localized().uppercaseFirst],
             highlightedButtonIndex: 0) { (index) in
                 if index == 0 {

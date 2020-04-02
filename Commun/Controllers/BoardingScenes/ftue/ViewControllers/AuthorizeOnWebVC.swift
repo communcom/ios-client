@@ -44,7 +44,7 @@ class AuthorizeOnWebVC: BaseViewController {
         label2.autoPinEdge(.top, to: .bottom, of: label1, withOffset: 4)
         label2.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        let label3 = UILabel.with(text: "right after you authorize on the Website\nWe double your welcome points".localized().uppercaseFirst, textSize: 17 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+        let label3 = UILabel.with(text: "right after you authorize on the Website".localized().uppercaseFirst, textSize: 17 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
         view.addSubview(label3)
         label3.autoPinEdge(.top, to: .bottom, of: label2, withOffset: 20)
         label3.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)

@@ -19,7 +19,7 @@ class WalletTableHeaderView: MyTableHeaderView {
     
     // MARK: - Subviews
     lazy var myPointsContainerView = UIView(forAutoLayout: ())
-    lazy var myPointsSeeAllButton = UIButton(label: String(format: "%@ %@","see".localized().uppercaseFirst, "all".localized()), labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
+    lazy var myPointsSeeAllButton = UIButton(label: String(format: "%@ %@", "see".localized().uppercaseFirst, "all".localized()), labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
     
     lazy var myPointsCollectionView: UICollectionView = {
         let collectionView = UICollectionView.horizontalFlow(

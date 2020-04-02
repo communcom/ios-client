@@ -22,14 +22,16 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
     lazy var avatarImageView = MyAvatarImageView(size: 44)
     lazy var iconImageView: UIImageView = UIImageView(width: 22, height: 22, cornerRadius: 11)
     lazy var contentContainerView = UIView(forAutoLayout: ())
-    lazy var contentLabel = UILabel.with(text: "Notification", textSize: 15, numberOfLines: 4)
-    lazy var timestampLabel = UILabel.with(text: "ago", textSize: 13, textColor: .a5a7bd)
+    lazy var contentLabel = UILabel.with(text: "notification".localized().uppercaseFirst, textSize: 15, numberOfLines: 4)
+    lazy var timestampLabel = UILabel.with(text: "ago".localized(), textSize: 13, textColor: .a5a7bd)
+    
     lazy var descriptionImageView: UIImageView = {
         let imageView = UIImageView(width: 44, height: 44, cornerRadius: 10)
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .appGrayColor
         return imageView
     }()
+    
     lazy var actionButton = CommunButton.default(label: "follow")
     
     override func setUpViews() {
