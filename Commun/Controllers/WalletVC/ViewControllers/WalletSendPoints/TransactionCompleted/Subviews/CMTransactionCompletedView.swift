@@ -13,8 +13,9 @@ class CMTransactionCompletedView: MyView {
     var isHistoryMode: Bool {
         !["buy", "sell", "send"].contains(transaction.actionType.rawValue)
     }
+    var completionHome: (() -> Void)?
     var completionRepeat: (() -> Void)?
-    var completionDismiss: (() -> Void)?
+    var completionBackToWallet: (() -> Void)?
     
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     
@@ -56,7 +57,7 @@ class CMTransactionCompletedView: MyView {
     }
     
     @objc func homeButtonDidTouch() {
-        
+        completionHome?()
     }
     
     @objc func repeatsButtonDidTouch() {
@@ -64,6 +65,6 @@ class CMTransactionCompletedView: MyView {
     }
     
     @objc func backToWalletButtonDidTouch() {
-        completionDismiss?()
+        completionBackToWallet?()
     }
 }

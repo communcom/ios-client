@@ -335,7 +335,6 @@
 		BC8F814C23E27ECE0024C04A /* CMToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F812D23E27ECE0024C04A /* CMToolbarView.swift */; };
 		BC8F814D23E27ECE0024C04A /* WalletSendPointsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F812E23E27ECE0024C04A /* WalletSendPointsVC.swift */; };
 		BC8F814E23E27ECE0024C04A /* ConfirmPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F813123E27ECE0024C04A /* ConfirmPasscodeVC.swift */; };
-		BC8F814F23E27ECE0024C04A /* TransactionCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F813223E27ECE0024C04A /* TransactionCompletedView.swift */; };
 		BC8F815023E27ECE0024C04A /* TransactionCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F813323E27ECE0024C04A /* TransactionCompletedVC.swift */; };
 		BC8F815123E27ECE0024C04A /* SendPointListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F813423E27ECE0024C04A /* SendPointListVC.swift */; };
 		BC8F815223E27ECE0024C04A /* BuyCommunSelectCurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F813723E27ECE0024C04A /* BuyCommunSelectCurrencyVC.swift */; };
@@ -844,7 +843,6 @@
 		BC8F812D23E27ECE0024C04A /* CMToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMToolbarView.swift; sourceTree = "<group>"; };
 		BC8F812E23E27ECE0024C04A /* WalletSendPointsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletSendPointsVC.swift; sourceTree = "<group>"; };
 		BC8F813123E27ECE0024C04A /* ConfirmPasscodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeVC.swift; sourceTree = "<group>"; };
-		BC8F813223E27ECE0024C04A /* TransactionCompletedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCompletedView.swift; sourceTree = "<group>"; };
 		BC8F813323E27ECE0024C04A /* TransactionCompletedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCompletedVC.swift; sourceTree = "<group>"; };
 		BC8F813423E27ECE0024C04A /* SendPointListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPointListVC.swift; sourceTree = "<group>"; };
 		BC8F813723E27ECE0024C04A /* BuyCommunSelectCurrencyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyCommunSelectCurrencyVC.swift; sourceTree = "<group>"; };
@@ -2289,10 +2287,9 @@
 		BC8F812F23E27ECE0024C04A /* TransactionCompleted */ = {
 			isa = PBXGroup;
 			children = (
+				BC8F813123E27ECE0024C04A /* ConfirmPasscodeVC.swift */,
 				BC8F813023E27ECE0024C04A /* Subviews */,
 				BC8F813323E27ECE0024C04A /* TransactionCompletedVC.swift */,
-				BC067E2E2435910900D770AC /* CMTransactionInfo.swift */,
-				BC067E342435DCC300D770AC /* CMTransactionCompletedView.swift */,
 			);
 			path = TransactionCompleted;
 			sourceTree = "<group>";
@@ -2300,8 +2297,8 @@
 		BC8F813023E27ECE0024C04A /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				BC8F813123E27ECE0024C04A /* ConfirmPasscodeVC.swift */,
-				BC8F813223E27ECE0024C04A /* TransactionCompletedView.swift */,
+				BC067E2E2435910900D770AC /* CMTransactionInfo.swift */,
+				BC067E342435DCC300D770AC /* CMTransactionCompletedView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -3441,7 +3438,6 @@
 				BC9066E723A9D48A000F9A3B /* TransferHistoryVC.swift in Sources */,
 				BC69F7D8236FF6790097F870 /* SubscriptionsCommunityCell.swift in Sources */,
 				BCCE668B2428A64B004F47DC /* PasswordConstraintView.swift in Sources */,
-				BC8F814F23E27ECE0024C04A /* TransactionCompletedView.swift in Sources */,
 				BC4692BD2390C3B20064A38B /* FeedPageFloatView.swift in Sources */,
 				BCCE66982429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift in Sources */,
 				BCB2A6EC23556E7100B3582B /* ArticleEditorVC+Draft.swift in Sources */,

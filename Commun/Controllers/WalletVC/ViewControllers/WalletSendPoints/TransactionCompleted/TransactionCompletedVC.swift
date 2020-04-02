@@ -91,28 +91,25 @@ class TransactionCompletedVC: BaseViewController {
         transactionInfoView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 40.0), vertical: .adaptive(height: 20.0)), excludingEdge: .top)
 
         // Actions
-//        transactionCompletedView.actions { [weak self] actionType in
-//            guard let strongSelf = self else { return }
-//
-//            switch actionType {
-//            case .repeat:
-//                strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
-//                strongSelf.dismiss()
-//                strongSelf.completionRepeat!()
-//
-//            case .wallet:
-//                strongSelf.backToWallet()
-//
-//            default:
-//                // Return to `Feed` page
-//                if let tabBarVC = strongSelf.tabBarController as? TabBarVC {
-//                    tabBarVC.setTabBarHiden(false)
-//                    tabBarVC.switchTab(index: 0)
-//                    strongSelf.navigationController?.popToRootViewController(animated: false)
-//                    tabBarVC.appLiked()
-//                }
-//            }
-//        }
+        transactionInfoView.completionRepeat = { [weak self] in
+            self?.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+            self?.dismiss()
+            self?.completionRepeat!()
+        }
+        
+        transactionInfoView.completionBackToWallet  = {[weak self] in
+            self?.backToWallet()
+        }
+        
+        transactionInfoView.completionHome = {[weak self] in
+            // Return to `Feed` page
+            if let tabBarVC = self?.tabBarController as? TabBarVC {
+                tabBarVC.setTabBarHiden(false)
+                tabBarVC.switchTab(index: 0)
+                self?.navigationController?.popToRootViewController(animated: false)
+                tabBarVC.appLiked()
+            }
+        }
     }
     
     private func backToWallet() {
