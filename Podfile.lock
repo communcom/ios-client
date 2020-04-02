@@ -180,11 +180,6 @@ PODS:
   - SwiftLint (0.38.0)
   - SwiftyGif (5.2.0)
   - SwiftyJSON (4.3.0)
-  - SwipeTransition (0.4.2)
-  - SwipeTransitionAutoSwipeBack (0.4.2):
-    - SwipeTransition (~> 0.4.2)
-  - SwipeTransitionAutoSwipeToDismiss (0.4.2):
-    - SwipeTransition (~> 0.4.2)
   - THPinViewController (1.2.8)
   - TLPhotoPicker (2.0.7)
   - "UITextView+Placeholder (1.3.3)"
@@ -235,9 +230,6 @@ DEPENDENCIES:
   - SwiftLint
   - SwiftyGif (from `https://github.com/communcom/SwiftyGif.git`)
   - SwiftyJSON (~> 4.0)
-  - SwipeTransition
-  - SwipeTransitionAutoSwipeBack
-  - SwipeTransitionAutoSwipeToDismiss
   - THPinViewController (from `https://github.com/communcom/THPinViewController.git`, branch `commun`)
   - TLPhotoPicker
   - "UITextView+Placeholder"
@@ -299,9 +291,6 @@ SPEC REPOS:
     - Starscream
     - SwiftLint
     - SwiftyJSON
-    - SwipeTransition
-    - SwipeTransitionAutoSwipeBack
-    - SwipeTransitionAutoSwipeToDismiss
     - TLPhotoPicker
     - "UITextView+Placeholder"
 
@@ -407,13 +396,10 @@ SPEC CHECKSUMS:
   SwiftLint: 4105f061f9812b214568b736dab580ab2c73a582
   SwiftyGif: b85c6b33a9411859d9e1db998b6a8214aea942df
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  SwipeTransition: 03f6f995646bdff37946af75c442692b011cb348
-  SwipeTransitionAutoSwipeBack: 64605a9e0d9bef917ba23f26f23bbe3ce8af4158
-  SwipeTransitionAutoSwipeToDismiss: 8a477d96c7cefc133daf30ea60f627d4ab262498
   THPinViewController: 7c8df68f412ca0b3fa42a84848c382bc343372f3
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 84747a9350d6246bd6dfbe1baf1c1a05ba672263
+PODFILE CHECKSUM: 5a4fc1f1135ee23239648a92f655e93b0cf451d6
 
 COCOAPODS: 1.9.1
