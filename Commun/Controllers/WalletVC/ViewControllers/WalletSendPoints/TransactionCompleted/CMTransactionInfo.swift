@@ -124,6 +124,10 @@ class CMTransactionInfo: MyView {
             debitedFromLabel,
             blueBottomView
         ])
+        separator0.widthAnchor.constraint(equalTo: stackView.widthAnchor)
+            .isActive = true
+        separator1.widthAnchor.constraint(equalTo: stackView.widthAnchor)
+            .isActive = true
         
         addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 0, bottom: -16 * Config.heightRatio, right: 0))
@@ -185,5 +189,16 @@ class CMTransactionInfo: MyView {
         hole2.autoPinEdge(.leading, to: .trailing, of: dashLines[index], withOffset: 10)
         
         return view
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        for dash in dashLines {
+            dash.draw(lineColor: .e2e6e8,
+                lineWidth: 2.0,
+                startPoint: CGPoint(x: 0.0, y: 1.0),
+                endPoint: CGPoint(x: bounds.maxX - 24 - 20, y: 1.0),
+                withDashPattern: [10, 6])
+        }
     }
 }
