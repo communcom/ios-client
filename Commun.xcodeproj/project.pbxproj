@@ -161,6 +161,7 @@
 		BC016D5A235EB88400F1319F /* PostsVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D59235EB88400F1319F /* PostsVC+Actions.swift */; };
 		BC067E292435896E00D770AC /* ResponseAPIContentGetCommunity+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC067E282435896E00D770AC /* ResponseAPIContentGetCommunity+Extensions.swift */; };
 		BC067E2D2435898A00D770AC /* MyFeedCommunity.json in Resources */ = {isa = PBXBuildFile; fileRef = BC067E2C2435898A00D770AC /* MyFeedCommunity.json */; };
+		BC067E2F2435910900D770AC /* CMTransactionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC067E2E2435910900D770AC /* CMTransactionInfo.swift */; };
 		BC06A99F23E7CAEE000B690E /* SearchListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A99E23E7CAEE000B690E /* SearchListFetcher.swift */; };
 		BC06A9A323E7FC03000B690E /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A9A223E7FC03000B690E /* SearchViewModel.swift */; };
 		BC06A9C123EBFBDB000B690E /* ResponseAPIGetNotificationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A9C023EBFBDB000B690E /* ResponseAPIGetNotificationItem+Extensions.swift */; };
@@ -669,6 +670,7 @@
 		BC016D59235EB88400F1319F /* PostsVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostsVC+Actions.swift"; sourceTree = "<group>"; };
 		BC067E282435896E00D770AC /* ResponseAPIContentGetCommunity+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResponseAPIContentGetCommunity+Extensions.swift"; sourceTree = "<group>"; };
 		BC067E2C2435898A00D770AC /* MyFeedCommunity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MyFeedCommunity.json; sourceTree = "<group>"; };
+		BC067E2E2435910900D770AC /* CMTransactionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTransactionInfo.swift; sourceTree = "<group>"; };
 		BC06A99E23E7CAEE000B690E /* SearchListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListFetcher.swift; sourceTree = "<group>"; };
 		BC06A9A223E7FC03000B690E /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		BC06A9C023EBFBDB000B690E /* ResponseAPIGetNotificationItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResponseAPIGetNotificationItem+Extensions.swift"; sourceTree = "<group>"; };
@@ -2290,6 +2292,7 @@
 			children = (
 				BC8F813023E27ECE0024C04A /* Subviews */,
 				BC8F813323E27ECE0024C04A /* TransactionCompletedVC.swift */,
+				BC067E2E2435910900D770AC /* CMTransactionInfo.swift */,
 			);
 			path = TransactionCompleted;
 			sourceTree = "<group>";
@@ -3334,6 +3337,7 @@
 				BCD00FB82373D78D004A3952 /* CommunityMembersVC+Binding.swift in Sources */,
 				BCB2A6EE23556EE400B3582B /* BasicEditorVC+Layout.swift in Sources */,
 				3B3C8B84234779FE00D8BADB /* UIImage+Extensions.swift in Sources */,
+				BC067E2F2435910900D770AC /* CMTransactionInfo.swift in Sources */,
 				B10DB961240F8789001BD0E4 /* CMAppLikeView.swift in Sources */,
 				BC619B1D2372C1480005BB94 /* CMTopTabBar.swift in Sources */,
 				BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */,

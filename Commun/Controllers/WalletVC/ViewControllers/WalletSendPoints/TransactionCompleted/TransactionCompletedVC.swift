@@ -11,16 +11,16 @@ import UIKit
 class TransactionCompletedVC: BaseViewController {
     // MARK: - Properties
     var dataModel = SendPointsModel()
-    var transactionCompletedView: TransactionCompletedView!
-    
     var completionRepeat: (() -> Void)?
     var completionDismiss: (() -> Void)?
+    let transaction: Transaction
+    
+    // MARK: - Subviews
 
     // MARK: - Class Initialization
     init(transaction: Transaction) {
         self.dataModel.transaction = transaction
-        self.transactionCompletedView = TransactionCompletedView(withMode: transaction.actionType)
-        
+        self.transaction = transaction
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -84,38 +84,35 @@ class TransactionCompletedVC: BaseViewController {
     private func setupView() {
         dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.buy)
         dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell)
-
-        transactionCompletedView.updateSellerInfo(fromTransaction: dataModel.transaction)
-        transactionCompletedView.updateTransactionInfo(dataModel.transaction)
-        transactionCompletedView.updateBuyerInfo(fromTransaction: dataModel.transaction)
         
-        view.addSubview(transactionCompletedView)
-        transactionCompletedView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 40.0), vertical: .adaptive(height: 20.0)), excludingEdge: .top)
-        transactionCompletedView.heightAnchor.constraint(equalToConstant: 127.0).isActive = true
+        let transactionInfoView = CMTransactionInfo(transaction: dataModel.transaction)
+        
+        view.addSubview(transactionInfoView)
+        transactionInfoView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 40.0), vertical: .adaptive(height: 20.0)))
 
         // Actions
-        transactionCompletedView.actions { [weak self] actionType in
-            guard let strongSelf = self else { return }
-            
-            switch actionType {
-            case .repeat:
-                strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
-                strongSelf.dismiss()
-                strongSelf.completionRepeat!()
-
-            case .wallet:
-                strongSelf.backToWallet()
-                
-            default:
-                // Return to `Feed` page
-                if let tabBarVC = strongSelf.tabBarController as? TabBarVC {
-                    tabBarVC.setTabBarHiden(false)
-                    tabBarVC.switchTab(index: 0)
-                    strongSelf.navigationController?.popToRootViewController(animated: false)
-                    tabBarVC.appLiked()
-                }
-            }
-        }
+//        transactionCompletedView.actions { [weak self] actionType in
+//            guard let strongSelf = self else { return }
+//
+//            switch actionType {
+//            case .repeat:
+//                strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+//                strongSelf.dismiss()
+//                strongSelf.completionRepeat!()
+//
+//            case .wallet:
+//                strongSelf.backToWallet()
+//
+//            default:
+//                // Return to `Feed` page
+//                if let tabBarVC = strongSelf.tabBarController as? TabBarVC {
+//                    tabBarVC.setTabBarHiden(false)
+//                    tabBarVC.switchTab(index: 0)
+//                    strongSelf.navigationController?.popToRootViewController(animated: false)
+//                    tabBarVC.appLiked()
+//                }
+//            }
+//        }
     }
     
     private func backToWallet() {
