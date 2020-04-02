@@ -94,7 +94,10 @@ extension PostEditorVC {
     @objc func bindCommunity() {
         viewModel.community
             .subscribe(onNext: { (community) in
+                self.youWillPostInLabel.isHidden = false
+                
                 if community?.communityId == "FEED" {
+                    self.youWillPostInLabel.isHidden = true
                     self.communityAvatarImage.setToCurrentUserAvatar()
                     self.communityNameLabel.text = "my feed".localized().uppercaseFirst
                     self.communityNameLabel.textColor = .black
