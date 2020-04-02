@@ -17,6 +17,7 @@ class CMTransactionInfo: MyView {
     lazy var stackView = UIStackView(axis: .vertical, distribution: .fill)
     
     lazy var dashLines = [0, 1].compactMap {_ in UIView(height: 2)}
+    lazy var holes = [0, 1, 2, 3].compactMap {_ in UIView(width: 24, height: 24)}
     
     // MARK: - Initializers
     init(transaction: Transaction, parentColor: UIColor = .clear) {
@@ -172,7 +173,7 @@ class CMTransactionInfo: MyView {
     
     private func separatorWithIndex(_ index: Int) -> UIView {
         let view = UIView(height: 24)
-        let hole1 = UIView(width: 24, height: 24, backgroundColor: parentColor, cornerRadius: 12)
+        let hole1 = holes[index*2]
         view.addSubview(hole1)
         hole1.autoPinEdge(toSuperviewEdge: .leading, withInset: -12)
         hole1.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -181,7 +182,7 @@ class CMTransactionInfo: MyView {
         dashLines[index].autoPinEdge(.leading, to: .trailing, of: hole1, withOffset: 10)
         dashLines[index].autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        let hole2 = UIView(width: 24, height: 24, backgroundColor: parentColor, cornerRadius: 12)
+        let hole2 = holes[index*2+1]
         view.addSubview(hole2)
         hole2.autoPinEdge(toSuperviewEdge: .trailing, withInset: -12)
         hole2.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -200,5 +201,35 @@ class CMTransactionInfo: MyView {
                 endPoint: CGPoint(x: bounds.maxX - 24 - 20, y: 1.0),
                 withDashPattern: [10, 6])
         }
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        let rects = holes.filter {$0.frame != .zero}.compactMap {$0.convert($0.bounds, to: self)}
+        guard rects.count > 0 else {return}
+        // Ensures to use the current background color to set the filling color
+        backgroundColor?.setFill()
+        UIRectFill(rect)
+        
+        let layer = CAShapeLayer()
+        let path = CGMutablePath()
+        
+        path.addLine(to: CGPoint(x: 0, y: rects[0].minY))
+        path.addArc(center: CGPoint(x: 0, y: rects[0].midY), radius: 12, startAngle: CGFloat.pi / 2, endAngle: -CGFloat.pi / 2, clockwise: true)
+        path.addLine(to: CGPoint(x: 0, y: rects[2].minY))
+        path.addArc(center: CGPoint(x: 0, y: rects[2].midY), radius: 12, startAngle: CGFloat.pi / 2, endAngle: -CGFloat.pi / 2, clockwise: true)
+        path.addLine(to: CGPoint(x: 0, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        
+        path.addLine(to: CGPoint(x: rect.maxX, y: rects[3].maxY))
+        path.addArc(center: CGPoint(x: rect.maxX, y: rects[3].midY), radius: 12, startAngle: -CGFloat.pi / 2, endAngle: CGFloat.pi / 2, clockwise: true)
+        path.addLine(to: CGPoint(x: rect.maxX, y: rects[1].maxY))
+        path.addArc(center: CGPoint(x: rect.maxX, y: rects[1].midY), radius: 12, startAngle: -CGFloat.pi / 2, endAngle: CGFloat.pi / 2, clockwise: true)
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        
+        path.addLine(to: .zero)
+        layer.path = path
+        layer.fillRule = .evenOdd
+        self.layer.mask = layer
     }
 }
