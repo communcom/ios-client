@@ -22,6 +22,14 @@ class AnalyticsManger {
         #endif
     }
 
+    enum RegType: String {
+        case google
+        case apple
+        case facebook
+        case email
+        case phone
+    }
+
     // MARK: - Rate
     func sendFeedback(message: String) {
         sendEvent(name: "Feedback", props: ["message": message])
@@ -53,67 +61,26 @@ class AnalyticsManger {
     }
 
     // MARK: - Onboarding
-    func onboadringOpenScreen(page: Int, tapSignIn: Bool = false) {
-        var props: Properties? = ["sign_in": tapSignIn]
-        if page == 4 {
-            props = nil
-        }
-        sendEvent(name: "ONB \(page) screen opend", props: props)
-    }
-
-    func onboardingOpenScreen(_ number: Int) {
-        sendEvent(name: "Open screen 0.1.\(number)")
-    }
-
     func signUpButtonPressed() {
-        sendEvent(name: "Click get started 0.3.1")
+        sendEvent(name: "Click Get started(slide 3)")
     }
 
-    func registrationOpenScreen(_ number: Int) {
-        sendEvent(name: "Open screen 1.1.\(number)")
+    // MARK: - Sign Up
+
+    // MARK: Sign Up Method
+    func registrationOpenScreen(_ type: RegType) {
+        sendEvent(name: "Click Sign up \(type.rawValue.uppercaseFirst)")
     }
 
-    func registrationWithGoogle() {
-        sendEvent(name: "Google auth")
-    }
-
-    func registrationWithFacebook() {
-        sendEvent(name: "Facebook auth")
-    }
-
-    func registrationWithAppale() {
-        sendEvent(name: "Apple auth")
-    }
-
-    func signInButtonPressed() {
-        sendEvent(name: "Click log in 0.1")
-    }
-
-    // MARK: - Sign UP
-    func goToSingIn() {
-        sendEvent(name: "Go to sign in")
+    func goToSignIn() {
+        sendEvent(name: "Click Go to Sign in")
     }
 
     func openRegistrationSelection() {
-        sendEvent(name: "Open Sign Up")
+        sendEvent(name: "Open screen Sign up")
     }
 
-    func openGoogleSignUp() {
-        sendEvent(name: "Open screen 1.2.1")
-    }
-
-    func getGoogleSignUpData() {
-        sendEvent(name: "Google auth")
-    }
-
-    func getFacebookSignUpData() {
-        sendEvent(name: "Open screen 1.2.1")
-    }
-
-    func openFacebookSignUp() {
-        sendEvent(name: "Facebook auth")
-    }
-
+    // MARK: Sign Up With Phone
     func countrySelected(phoneCode: String, available: Bool) {
         sendEvent(name: "Country selected", props: [
             "phoneCode": phoneCode,
@@ -121,94 +88,167 @@ class AnalyticsManger {
         ])
     }
 
-    func PhoneNumberEntered() {
+    func phoneNumberEntered() {
         sendEvent(name: "Phone number entered")
     }
 
-    func smsCodeEntered() {
-        sendEvent(name: "Sms code entered")
-    }
-
-    func smsCodeRight() {
-        sendEvent(name: "Sms code right")
-    }
-
-    func smsCodeError() {
-        sendEvent(name: "Sms code error")
-    }
-
-    func smsCodeResend() {
-        sendEvent(name: "Sms code resend")
-    }
-
-    func userNameEntered() {
-        sendEvent(name: "Username entered")
-    }
-
-    func userNameHelp() {
-        sendEvent(name: "Username help")
-    }
-
-    func passwordCopy() {
-        sendEvent(name: "Password copy")
-    }
-
-    func passwordBackuped() {
-        sendEvent(name: "Password backuped")
-    }
-
-    func passwordNotBackuped(back: Bool) {
-        sendEvent(name: "Password not backuped", props: ["answer": !back])
-    }
-
-    func activateFaceID(_ activate: Bool) {
-        sendEvent(name: "FaceID/TouchID activated", props: ["answer": activate])
-    }
-
-    // MARK: - Sign IN
-    func startQRScanner() {
-        sendEvent(name: "ScanQR SI")
-    }
-
-    func scanQRStatus(success: Bool) {
-        sendEvent(name: success ? "ScanQR SI right" : "ScanQR SI error")
-    }
-
-    func signInStatus(success: Bool) {
-        sendEvent(name: success ? "SI success" : "SI error")
-    }
-
-    // MARK: - FTUE
-    func ftueSubscribe(codes: [String]) {
-        sendEvent(name: "Bounty subscribe", props: [
-            "num": codes.count
+    func smsCodeEntered(answer: Bool) {
+        sendEvent(name: "Sms code entered", props: [
+            "answer": answer
         ])
     }
 
-    // MARK: - Password
-    func openEnterPassword() {
-        sendEvent(name: "Сlick use master password (enter password)")
+    func openSmsCodeView() {
+        sendEvent(name: "Open sms code")
     }
 
-    func useMasterPassword() {
+    func resendSmsCode() {
+        sendEvent(name: "Resend sms code")
+    }
+
+    // MARK: Sign Up With Email
+    func emailEntered() {
+        sendEvent(name: "Email entered")
+    }
+
+    func emailCodeEntered(answer: Bool) {
+        sendEvent(name: "Email code entered", props: [
+            "answer": answer
+        ])
+    }
+
+    func openEmailCodeView() {
+        sendEvent(name: "Open email code")
+    }
+
+    func resendEmailCode() {
+        sendEvent(name: "Resend email code")
+    }
+
+    // MARK: Username
+    func userNameEntered(state: String) {
+        sendEvent(name: "Username entered", props: [
+            "available": state
+        ])
+    }
+
+    func openScreenUsername() {
+        sendEvent(name: "Open screen Username")
+    }
+
+    // MARK: Enter password
+    func openEnterPassword() {
         sendEvent(name: "Open screen enter password")
     }
 
+    func passwordEntered(available: Bool) {
+        sendEvent(name: "Password entered", props: [
+            "available": available
+        ])
+    }
+
+    func useMasterPassword() {
+        sendEvent(name: "Сlick use master password (enter password)")
+    }
+
+    // MARK: Confirm password
     func openReEnterPassword() {
         sendEvent(name: "Open screen confirm password")
+    }
+
+    func passwordConfirmed(available: Bool) {
+        sendEvent(name: "Password confirmed", props: [
+            "available": available
+        ])
     }
 
     func passwordCreated() {
         sendEvent(name: "Сlick next (confirm password)")
     }
 
-    func openNotKeepPasswordAttention() {
+    // MARK: - Attention
+    func clickBackupAttention() {
+        sendEvent(name: "Click Backup (Attention)")
+    }
+
+    func openScreenAttention() {
         sendEvent(name: "Open screen Attention")
     }
 
     func saveItMassterPassword() {
         sendEvent(name: "Click continue (Attention)")
     }
+
+    // MARK: Attention Master Password
+    func openScreenAttentionMasterPassword() {
+        sendEvent(name: "Open screen Attention(Master Password)")
+    }
+
+    func clickBackMasterPassword() {
+        sendEvent(name: "Click Back(Master)")
+    }
+
+    func clickContinueMasterPassword() {
+        sendEvent(name: "Click Continue(Master)")
+    }
+
+    // MARK: Master Password
+    func openMasterPasswordGenerated() {
+        sendEvent(name: "Open screen Master password generated")
+    }
+
+    func passwordCopy() {
+        sendEvent(name: "Click Copy(Master)")
+    }
+
+    func clickBackupMasterPassword() {
+        sendEvent(name: "Click Backup(Master)")
+    }
+
+    func clickISaveItMasterPassword() {
+        sendEvent(name: "Click I save it(Master)")
+    }
+
+    // MARK: - Total
+    func successfulRegistration() {
+        sendEvent(name: "Successful registration")
+    }
+
+    // MARK: - Sign In
+    func openSignInScreen() {
+        sendEvent(name: "Open Sign In Screen")
+    }
+
+    // MARK: - Onboarding
+    func ftueSubscribe(codes: [String]) {
+        sendEvent(name: "Bounty subscribe", props: [
+            "num": codes.count
+        ])
+    }
+
+    func clickDoneONB() {
+        sendEvent(name: "Click Done ONB")
+    }
+
+    func scanQRStatus(success: Bool) {
+        sendEvent(name: "ScanQR SI", props: [
+            "available": success
+        ])
+    }
+
+    func signInStatus(success: Bool) {
+        sendEvent(name: success ? "SI success" : "SI error")
+    }
+
+    func activateFaceID(_ activate: Bool) {
+        sendEvent(name: "FaceID/TouchID activated", props: ["answer": activate])
+    }
+
+    // MARK: - Dank
+    func clickGetDankMeme() {
+        sendEvent(name: "Click Get Dank Meme")
+    }
+
 }
 
 extension AnalyticsManger {
@@ -229,5 +269,7 @@ extension AnalyticsManger {
             Analytics.logEvent(name, parameters: props)
             AppsFlyerTracker.shared().trackEvent(name, withValues: props)
         #endif
+
+        print("AnalyticsManger.sendEvent\nname: \(name)\nprops: \(props ?? [:])")
     }
 }

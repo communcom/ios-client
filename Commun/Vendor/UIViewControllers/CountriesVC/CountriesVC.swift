@@ -23,7 +23,6 @@ class CountriesVC: BaseViewController, UISearchResultsUpdating {
     override func setUp() {
         super.setUp()
         title = "select country".localized().uppercaseFirst
-        AnalyticsManger.shared.registrationOpenScreen(1)
         
         // Set up navigation bar
         let closeButton = UIBarButtonItem(title: "close".localized().uppercaseFirst, style: .plain, target: nil, action: nil)

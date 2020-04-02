@@ -64,6 +64,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        AnalyticsManger.shared.successfulRegistration()
         // headerView
         view.addSubview(headerView)
         headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)

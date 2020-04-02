@@ -126,6 +126,7 @@ final class FeedPageVC: PostsViewController {
     
     // MARK: - Actions
     @objc func promoGetButtonDidTouch() {
+        AnalyticsManger.shared.clickGetDankMeme()
         headerView.getButton.showLoading(cover: true, coverColor: .appMainColor, spinnerColor: .white, size: 20)
         RestAPIManager.instance.getAirdrop(communityId: "DANK")
             .subscribe(onSuccess: { (_) in
