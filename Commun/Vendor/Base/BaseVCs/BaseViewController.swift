@@ -45,7 +45,10 @@ class BaseViewController: UIViewController {
     override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent)
         
-        if let vc = parent as? BaseViewController {
+        // reset navigation bar after poping
+        if parent == nil,
+            let vc = baseNavigationController?.previousController as? BaseViewController
+        {
             vc.configureNavigationBar()
         }
     }
