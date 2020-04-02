@@ -13,6 +13,8 @@ class CMTransactionCompletedView: MyView {
     var isHistoryMode: Bool {
         !["buy", "sell", "send"].contains(transaction.actionType.rawValue)
     }
+    var completionRepeat: (() -> Void)?
+    var completionDismiss: (() -> Void)?
     
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     
@@ -47,5 +49,21 @@ class CMTransactionCompletedView: MyView {
         transactionInfoView.autoPinEdge(.bottom, to: .top, of: buttonStackView, withOffset: -34 * Config.heightRatio)
         
         buttonStackView.addArrangedSubviews(isHistoryMode ? [repeatButton] : [homeButton, backToWalletButton])
+        
+        homeButton.addTarget(self, action: #selector(homeButtonDidTouch), for: .touchUpInside)
+        repeatButton.addTarget(self, action: #selector(repeatsButtonDidTouch), for: .touchUpInside)
+        backToWalletButton.addTarget(self, action: #selector(backToWalletButtonDidTouch), for: .touchUpInside)
+    }
+    
+    @objc func homeButtonDidTouch() {
+        
+    }
+    
+    @objc func repeatsButtonDidTouch() {
+        completionRepeat?()
+    }
+    
+    @objc func backToWalletButtonDidTouch() {
+        completionDismiss?()
     }
 }
