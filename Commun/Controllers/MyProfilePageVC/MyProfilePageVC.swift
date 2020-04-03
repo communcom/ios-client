@@ -40,7 +40,8 @@ class MyProfilePageVC: UserProfilePageVC {
         
         // hide back button
         if shouldHideBackButton {
-            navigationItem.leftBarButtonItem = nil
+            backButton.alpha = 0
+            backButton.isUserInteractionEnabled = false
         }
         
         // layout subview

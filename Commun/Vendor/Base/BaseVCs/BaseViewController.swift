@@ -68,22 +68,19 @@ class BaseViewController: UIViewController {
         switch prefersNavigationBarStype {
         case .normal(let translucent, let backgroundColor, let font, let textColor, let prefersLargeTitle):
             navigationController?.navigationBar.isTranslucent = translucent
-            let img = UIImage()
-            navigationController?.navigationBar.setBackgroundImage(img, for: .default)
-            navigationController?.navigationBar.barStyle = .default
-            navigationController?.navigationBar.barTintColor = backgroundColor
-            navigationController?.navigationBar.subviews.first?.backgroundColor = backgroundColor
+            
+            setNavigationBarBackgroundColor(backgroundColor)
             
             // set title style
-            navigationController?.navigationBar.tintColor = textColor
-            navigationController?.navigationBar.setTitleFont(font, color: textColor)
-            navigationController?.setNavigationBarHidden(false, animated: false)
+            setNavigationBarTitleStyle(textColor: textColor, font: font)
             
-            // remove navigationBar default shadow
-            let img2 = UIImage()
-            navigationController?.navigationBar.shadowImage = img2
+            // bar buttons
+            navigationItem.leftBarButtonItem?.tintColor = textColor
+            navigationItem.rightBarButtonItem?.tintColor = textColor
             
             navigationController?.navigationBar.prefersLargeTitles = prefersLargeTitle
+            
+            navigationController?.setNavigationBarHidden(false, animated: false)
         case .hidden:
             navigationController?.setNavigationBarHidden(true, animated: false)
         case .embeded:
