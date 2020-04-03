@@ -10,18 +10,24 @@ import Foundation
 
 class CMTransactionInfoView: MyView {
     // MARK: - Properties
-    let transaction: Transaction
-    let parentColor: UIColor
+    var transaction: Transaction
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, distribution: .fill)
     
     lazy var dashLines = [0, 1].compactMap {_ in UIView(height: 2)}
     
+    lazy var buyerAvatarImageView = MyAvatarImageView(size: 40)
+    
+    lazy var buyerNameLabel = UILabel.with(textSize: 17, weight: .bold, textAlignment: .center)
+    
+    lazy var buyerBalanceOrFriendIDLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
+    
+    lazy var blueBottomView = UIView(height: 30 + 36 * Config.heightRatio, backgroundColor: .appMainColor, cornerRadius: 16 * Config.heightRatio)
+    
     // MARK: - Initializers
-    init(transaction: Transaction, parentColor: UIColor = .clear) {
+    init(transaction: Transaction) {
         self.transaction = transaction
-        self.parentColor = parentColor
         super.init(frame: .zero)
         
         defer {
@@ -61,47 +67,8 @@ class CMTransactionInfoView: MyView {
         
         let burnedPercentLabel = UILabel.with(text: String(format: "%.1f%% %@ 🔥", 0.1, "was burned".localized()), textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
         
-        let buyerAvatarImageView = MyAvatarImageView(size: 40)
-        
-        let buyerNameLabel = UILabel.with(textSize: 17, weight: .bold, textAlignment: .center)
-        
-        let buyerBalanceOrFriendIDLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
-        
         // third part
         let debitedFromLabel = UILabel.with(text: "debited from".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .appGrayColor)
-        
-        let blueBottomView: UIView = {
-            let view = UIView(backgroundColor: .appMainColor, cornerRadius: 16 * Config.heightRatio)
-            
-            let imageView: UIView
-            if let sellBalance = transaction.sellBalance, let avatarURL = sellBalance.avatarURL {
-                let avatarImageView = UIImageView.circle(size: 30.0)
-                avatarImageView.setAvatar(urlString: avatarURL, namePlaceHolder: "icon-select-user-grey-cyrcle-default")
-                imageView = avatarImageView
-            } else {
-                let communLogo = UIView.transparentCommunLogo(size: 30.0, backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2))
-                imageView = communLogo
-            }
-            
-            view.addSubview(imageView)
-            imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10 * Config.heightRatio, left: 16 * Config.heightRatio, bottom: 26 * Config.heightRatio, right: 0), excludingEdge: .trailing)
-            
-            let sellerNameLabel = UILabel.with(text: transaction.sellBalance?.name, textSize: 15, weight: .semibold, textColor: .white)
-            view.addSubview(sellerNameLabel)
-            sellerNameLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
-            sellerNameLabel.autoAlignAxis(.horizontal, toSameAxisOf: imageView)
-            sellerNameLabel.setContentHuggingPriority(249.0, for: .horizontal)
-            sellerNameLabel.text = transaction.sellBalance?.name
-            
-            let sellerAmountLabel = UILabel.with(textSize: 15, weight: .bold, textColor: .white, textAlignment: .right)
-            view.addSubview(sellerAmountLabel)
-            sellerAmountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16 * Config.heightRatio)
-            sellerAmountLabel.autoAlignAxis(.horizontal, toSameAxisOf: imageView)
-            sellerAmountLabel.autoPinEdge(.leading, to: .trailing, of: sellerNameLabel)
-            sellerAmountLabel.text = transaction.sellBalance?.amount.formattedWithSeparator
-            
-            return view
-        }()
         
         stackView.addArrangedSubviews([
             // first part
@@ -130,28 +97,6 @@ class CMTransactionInfoView: MyView {
         
         blueBottomView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 29 * Config.heightRatio)
         blueBottomView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -29 * Config.heightRatio)
-        
-        // set up
-        switch transaction.actionType {
-        case .buy, .sell:
-            buyerNameLabel.text = transaction.buyBalance!.name
-            buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
-            buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
-
-        case .convert:
-            buyerNameLabel.text = transaction.buyBalance!.name
-            buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
-            if transaction.symbol.buy == Config.defaultSymbol {
-                buyerAvatarImageView.image = UIImage(named: "CMN")
-            } else {
-                buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
-            }
-
-        default:
-            buyerNameLabel.text = transaction.friend?.name ?? Config.defaultSymbol
-            buyerBalanceOrFriendIDLabel.text = transaction.friend?.id ?? Config.defaultSymbol
-            buyerAvatarImageView.setAvatar(urlString: transaction.friend?.avatarURL, namePlaceHolder: transaction.friend?.name ?? Config.defaultSymbol)
-        }
         
         // spacing
         stackView.setCustomSpacing(16 * Config.heightRatio, after: readyCheckMark)
@@ -210,5 +155,66 @@ class CMTransactionInfoView: MyView {
         layer.path = path
         layer.fillRule = .evenOdd
         self.layer.mask = layer
+    }
+    
+    // MARK: - Setup
+    func setUp(buyBalance: Balance?, sellBalance: Balance?) {
+        transaction.buyBalance = buyBalance
+        transaction.sellBalance = sellBalance
+        
+        // set up
+        switch transaction.actionType {
+        case .buy, .sell:
+            buyerNameLabel.text = transaction.buyBalance!.name
+            buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
+            buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
+
+        case .convert:
+            buyerNameLabel.text = transaction.buyBalance!.name
+            buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
+            if transaction.symbol.buy == Config.defaultSymbol {
+                buyerAvatarImageView.image = UIImage(named: "CMN")
+            } else {
+                buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
+            }
+
+        default:
+            buyerNameLabel.text = transaction.friend?.name ?? Config.defaultSymbol
+            buyerBalanceOrFriendIDLabel.text = transaction.friend?.id ?? Config.defaultSymbol
+            buyerAvatarImageView.setAvatar(urlString: transaction.friend?.avatarURL, namePlaceHolder: transaction.friend?.name ?? Config.defaultSymbol)
+        }
+        
+        // Blue bottom view
+        blueBottomView.removeSubviews()
+        
+        let imageView: UIView
+        if let sellBalance = transaction.sellBalance, let avatarURL = sellBalance.avatarURL {
+            let avatarImageView = UIImageView.circle(size: 30.0)
+            avatarImageView.setAvatar(urlString: avatarURL, namePlaceHolder: "icon-select-user-grey-cyrcle-default")
+            imageView = avatarImageView
+        } else {
+            let communLogo = UIView.transparentCommunLogo(size: 30.0, backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2))
+            imageView = communLogo
+        }
+        
+        blueBottomView.addSubview(imageView)
+        imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 10 * Config.heightRatio)
+        imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16 * Config.heightRatio)
+        
+        let sellerNameLabel = UILabel.with(text: transaction.sellBalance?.name, textSize: 15, weight: .semibold, textColor: .white)
+        blueBottomView.addSubview(sellerNameLabel)
+        sellerNameLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
+        sellerNameLabel.autoAlignAxis(.horizontal, toSameAxisOf: imageView)
+        sellerNameLabel.setContentHuggingPriority(249.0, for: .horizontal)
+        sellerNameLabel.text = transaction.sellBalance?.name
+        
+        let sellerAmountLabel = UILabel.with(textSize: 15, weight: .bold, textColor: .white, textAlignment: .right)
+        blueBottomView.addSubview(sellerAmountLabel)
+        sellerAmountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16 * Config.heightRatio)
+        sellerAmountLabel.autoAlignAxis(.horizontal, toSameAxisOf: imageView)
+        sellerAmountLabel.autoPinEdge(.leading, to: .trailing, of: sellerNameLabel)
+        sellerAmountLabel.text = transaction.sellBalance?.amount.formattedWithSeparator
+        
+        setNeedsDisplay()
     }
 }
