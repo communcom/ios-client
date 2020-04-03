@@ -32,8 +32,9 @@ extension ProfileVC {
         // scrolling
         offSetY
             .map {$0 < -43}
+            .distinctUntilChanged()
             .subscribe(onNext: { showNavBar in
-                self.showTitle(!showNavBar)
+                self.showNavigationBar = !showNavBar
             })
             .disposed(by: disposeBag)
         
