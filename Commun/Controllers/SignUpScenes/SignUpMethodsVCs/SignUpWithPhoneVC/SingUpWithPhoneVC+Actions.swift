@@ -34,7 +34,7 @@ extension SignUpWithPhoneVC {
             self.showAlert(title: "error".localized().uppercaseFirst, message: "wrong phone number".localized().uppercaseFirst)
             return
         }
-        AnalyticsManger.shared.PhoneNumberEntered()
+        AnalyticsManger.shared.phoneNumberEntered()
 
         self.view.endEditing(true)
 

@@ -14,7 +14,7 @@ import SafariServices
 class BaseViewController: UIViewController {
     // MARK: - Nested type
     enum NavigationBarStyle {
-        case normal(translucent: Bool = false, backgroundColor: UIColor = .white, font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .black)
+        case normal(translucent: Bool = false, backgroundColor: UIColor = .white, font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .black, prefersLargeTitle: Bool = false)
         case hidden
         case embeded
     }
@@ -39,12 +39,23 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        configureNavigationBarType()
+        configureNavigationBar()
     }
     
-    func configureNavigationBarType() {
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        
+        // reset navigation bar after poping
+        if parent == nil,
+            let vc = baseNavigationController?.previousController as? BaseViewController
+        {
+            vc.configureNavigationBar()
+        }
+    }
+    
+    func configureNavigationBar() {
         switch prefersNavigationBarStype {
-        case .normal(let translucent, let backgroundColor, let font, let textColor):
+        case .normal(let translucent, let backgroundColor, let font, let textColor, let prefersLargeTitle):
             navigationController?.navigationBar.isTranslucent = translucent
             let img = UIImage()
             navigationController?.navigationBar.setBackgroundImage(img, for: .default)
@@ -60,6 +71,8 @@ class BaseViewController: UIViewController {
             // remove navigationBar default shadow
             let img2 = UIImage()
             navigationController?.navigationBar.shadowImage = img2
+            
+            navigationController?.navigationBar.prefersLargeTitles = prefersLargeTitle
         case .hidden:
             navigationController?.setNavigationBarHidden(true, animated: false)
         case .embeded:

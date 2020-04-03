@@ -21,6 +21,14 @@ final class BaseNavigationController: UINavigationController {
         self.style = style
         setNeedsStatusBarAppearanceUpdate()
     }
+    
+    var previousController: UIViewController? {
+        if viewControllers.count > 1 {
+            return viewControllers[viewControllers.count-2]
+        }
+        return nil
+    }
+
 
     // MARK: - Init
 

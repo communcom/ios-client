@@ -16,12 +16,6 @@ class SignUpWithEmailVC: BaseSignUpMethodVC {
     lazy var textField = UITextField.signUpTextField(width: 290, placeholder: "your email address".localized().uppercaseFirst)
     
     // MARK: - Methods
-    override func setUp() {
-        super.setUp()
-        
-        // TODO: - Add analystic manager
-    }
-    
     override func setUpInputViews() {
         scrollView.contentView.addSubview(textField)
         textField.autoPinEdge(toSuperviewEdge: .top, withInset: UIScreen.main.isSmall ? 16 : 47)
@@ -55,8 +49,7 @@ class SignUpWithEmailVC: BaseSignUpMethodVC {
     }
     
     override func nextButtonDidTouch() {
-        // TODO: - Analystic manager
-//        AnalyticsManger.shared.PhoneNumberEntered()
+        AnalyticsManger.shared.emailEntered()
 
         self.view.endEditing(true)
         self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
