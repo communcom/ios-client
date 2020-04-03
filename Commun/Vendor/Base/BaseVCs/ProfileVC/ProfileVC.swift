@@ -42,7 +42,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     // MARK: - Subviews
     
-    lazy var customNavigationBar = UIView(height: 44, backgroundColor: .clear)
+    lazy var customNavigationBar = UIView(backgroundColor: .clear)
     lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
     lazy var titleLabel = UILabel.with(textSize: 17, weight: .bold, textColor: .clear, textAlignment: .center)
     lazy var optionsButton = UIButton.option(tintColor: .white)
@@ -95,12 +95,23 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
 
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
         view.addSubview(customNavigationBar)
-        customNavigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        customNavigationBar.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
-        let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-        hStack.addArrangedSubviews([backButton, titleLabel, optionsButton])
-        customNavigationBar.addSubview(hStack)
-        hStack.autoPinEdgesToSuperviewEdges()
+        let barContentView: UIView = {
+            let view = UIView(forAutoLayout: ())
+            view.addSubview(backButton)
+            backButton.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
+            view.addSubview(titleLabel)
+            titleLabel.autoPinEdge(.leading, to: .trailing, of: backButton, withOffset: 10)
+            titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
+            view.addSubview(optionsButton)
+            optionsButton.autoPinEdge(.leading, to: .trailing, of: titleLabel, withOffset: 10)
+            optionsButton.autoPinEdge(toSuperviewEdge: .trailing)
+            optionsButton.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
+            return view
+        }()
+        customNavigationBar.addSubview(barContentView)
+        barContentView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
         
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         optionsButton.addTarget(self, action: #selector(moreActionsButtonDidTouch(_:)), for: .touchUpInside)
@@ -215,7 +226,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         customNavigationBar.backgroundColor = showNavigationBar ? .white : .clear
         customNavigationBar.addShadow(ofColor: .shadow, radius: showNavigationBar ? CGFloat.adaptive(width: 16.0) : 0, offset: CGSize(width: 0.0, height: showNavigationBar ? CGFloat.adaptive(height: 6.0) : 0), opacity: showNavigationBar ? 0.05 : 0)
         backButton.tintColor = showNavigationBar ? .black: .white
-        titleLabel.tintColor = showNavigationBar ? .black: .clear
+        titleLabel.textColor = showNavigationBar ? .black: .clear
         optionsButton.tintColor = showNavigationBar ? .black: .white
         
         if showNavigationBar {
