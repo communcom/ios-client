@@ -93,7 +93,6 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                 guard let strongSelf = self else { return }
                 
                 if let selectedCell = strongSelf.tableView.cellForRow(at: indexPath) as? TransferHistoryItemCell, let selectedItem = selectedCell.item {
-                    strongSelf.setTabBarHidden(true)
                     strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
                     
                     // .history type
@@ -134,16 +133,12 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                                                   symbol: symbol,
                                                   operationDate: selectedItem.timestamp.convert(toDateFormat: .nextSmsDateType))
                     
-                    let completedVC = TransactionCompletedVC(transaction: transaction)
+                    let completedVC = TransactionInfoVC(transaction: transaction)
                     completedVC.modalPresentationStyle = .overCurrentContext
                     completedVC.modalTransitionStyle = .crossDissolve
                     strongSelf.present(completedVC, animated: true, completion: nil)
                     
                     strongSelf.hideHud()
-                    
-                    completedVC.completionDismiss = {
-                        strongSelf.setTabBarHidden(false)
-                    }
                     
                     completedVC.completionRepeat = { [weak self] in
                         guard let strongSelf = self else { return }
@@ -153,7 +148,6 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                         
                         if let communWalletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {
                             strongSelf.navigationController?.popToViewController(communWalletVC, animated: false)
-                            (strongSelf.navigationController as? BaseNavigationController)?.shouldResetNavigationBarOnPush = false
 
                             switch selectedItem.meta.actionType {
                             case "transfer":

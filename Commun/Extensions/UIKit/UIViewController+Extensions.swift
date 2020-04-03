@@ -221,8 +221,7 @@ extension UIViewController {
             }
             
         case "reward", "referralRegistrationBonus", "referralPurchaseBonus":
-            showOtherBalanceWalletVC(symbol: item.community?.communityId,
-                                     shouldResetNavigationBarOnPush: true)
+            showOtherBalanceWalletVC(symbol: item.community?.communityId)
         default:
             break
         }
@@ -246,7 +245,7 @@ extension UIViewController {
         show(communityVC, sender: nil)
     }
     
-    func showOtherBalanceWalletVC(symbol: String?, shouldResetNavigationBarOnPush: Bool = false) {
+    func showOtherBalanceWalletVC(symbol: String?) {
         var vc: UIViewController!
 
         if let symbol = symbol {
@@ -255,14 +254,7 @@ extension UIViewController {
             vc = CommunWalletVC()
         }
                 
-        if shouldResetNavigationBarOnPush {
-            show(vc, sender: nil)
-        } else {
-            let nc = navigationController as? BaseNavigationController
-            nc?.shouldResetNavigationBarOnPush = false
-            show(vc, sender: nil)
-            nc?.shouldResetNavigationBarOnPush = true
-        }
+        show(vc, sender: nil)
     }
     
     func handleUrl(url: URL) {
@@ -414,7 +406,7 @@ extension UIViewController {
         self.present(cardVC, animated: true, completion: nil)
     }
     
-    func showAttention(title: String = "attention".localized().uppercaseFirst, subtitle: String, descriptionText: String, backButtonLabel: String = "back".localized().uppercaseFirst, ignoreButtonLabel: String, ignoreAction: @escaping () -> Void, backAction: (() -> Void)? = nil)
+    func    showAttention(title: String = "attention".localized().uppercaseFirst, subtitle: String, descriptionText: String, backButtonLabel: String = "back".localized().uppercaseFirst, ignoreButtonLabel: String, ignoreAction: @escaping () -> Void, backAction: (() -> Void)? = nil)
     {
         let attentionView = AttentionView(
             title: title,

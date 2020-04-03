@@ -9,17 +9,6 @@
 import Foundation
 
 extension UIImageView {
-    static func circle(size: CGFloat, imageName: String? = nil) -> UIImageView {
-        let imageView = UIImageView(forAutoLayout: ())
-        imageView.autoSetDimensions(to: CGSize(width: size, height: size))
-        imageView.backgroundColor = .orange
-        imageView.cornerRadius = size / 2
-        if let imageName = imageName {
-            imageView.image = UIImage(named: imageName)
-        }
-        return imageView
-    }
-    
     public convenience init(
         width: CGFloat? = nil,
         height: CGFloat? = nil,
@@ -49,5 +38,19 @@ extension UIImageView {
         if let contentMode = contentMode {
             self.contentMode = contentMode
         }
+    }
+    
+    static func circle(size: CGFloat, backgroundColor: UIColor? = nil , imageName: String? = nil) -> UIImageView {
+        let imageView = UIImageView(forAutoLayout: ())
+        imageView.autoSetDimensions(to: CGSize(width: size, height: size))
+        if let backgroundColor = backgroundColor {
+            imageView.backgroundColor = backgroundColor
+        }
+        
+        imageView.cornerRadius = size / 2
+        if let imageName = imageName {
+            imageView.image = UIImage(named: imageName)
+        }
+        return imageView
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 class WelcomeVC: BaseViewController {
-    override var shouldHideNavigationBar: Bool {true}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     let numberOfPages = 3
     
     // MARK: - Properties
@@ -62,10 +62,6 @@ class WelcomeVC: BaseViewController {
         {
             navigateToSignUp()
         }
-        
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
         
         // top sign in button
         view.addSubview(topSignInButton)
@@ -136,11 +132,6 @@ class WelcomeVC: BaseViewController {
     }
     
     @objc func signInButtonTap(_ sender: UIButton) {
-        if sender == topSignInButton {
-            AnalyticsManger.shared.onboadringOpenScreen(page: pageControl.selectedIndex + 1, tapSignIn: true)
-        } else {
-            AnalyticsManger.shared.signInButtonPressed()
-        }
         let signInVC = SignInVC()
         show(signInVC, sender: nil)
     }
@@ -152,7 +143,6 @@ class WelcomeVC: BaseViewController {
     
     @objc func nextButtonTap(_ sender: Any) {
         let nextIndex = currentPage + 1
-        AnalyticsManger.shared.onboadringOpenScreen(page: nextIndex)
         pageVC.setViewControllers([WelcomeItemVC(index: nextIndex)], direction: .forward, animated: true, completion: nil)
         currentPage = nextIndex
         showActionButtons(nextIndex)

@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .appMainColor)}
     // MARK: - Properties
     var headerViewOffsetY: CGFloat = 0.0
     
@@ -82,26 +83,8 @@ class CommunWalletVC: TransferHistoryVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.showNavigationBar(false, animated: true, completion: nil)
         self.changeNavbar(y: headerViewOffsetY)
         self.setNavBarBackButton(tintColor: .white)
-        
-        self.setTabBarHidden(false)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if #available(iOS 13.0, *) {
-            self.navigationController?.navigationBar.backgroundColor = .clear
-            self.navigationController?.navigationBar.subviews.first?.backgroundColor = .clear
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        self.navigationController?.navigationBar.backgroundColor = .clear
     }
     
     // MARK: - Custom Functions
@@ -326,10 +309,7 @@ class CommunWalletVC: TransferHistoryVC {
     // MARK: - Actions
     @objc func convertButtonDidTouch() {
         guard let vc = createConvertVC() else {return}
-        let nc = navigationController as? BaseNavigationController
-        nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
-        nc?.shouldResetNavigationBarOnPush = true
     }
     
     func createConvertVC() -> WalletConvertVC? {
@@ -348,10 +328,7 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     func routeToConvertScene(walletConvertVC: WalletConvertVC) {
-        let nc = navigationController as? BaseNavigationController
-        nc?.shouldResetNavigationBarOnPush = false
         show(walletConvertVC, sender: nil)
-        nc?.shouldResetNavigationBarOnPush = true
     }
 
     func createConvertVC(withHistoryItem historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) -> WalletConvertVC? {
@@ -371,11 +348,8 @@ class CommunWalletVC: TransferHistoryVC {
     private func routeToSendPointsScene(withUser user: ResponseAPIContentGetProfile? = nil) {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
 
-        if let baseNC = navigationController as? BaseNavigationController {
-            let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
-            baseNC.shouldResetNavigationBarOnPush = false
-            show(walletSendPointsVC, sender: nil)
-        }
+        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
+        show(walletSendPointsVC, sender: nil)
         
         hideHud()
     }
@@ -442,10 +416,7 @@ class CommunWalletVC: TransferHistoryVC {
         }
         
         let vc = OtherBalancesWalletVC(balances: balances, symbol: selectedBalance.symbol, subscriptions: subscriptions, history: viewModel.items.value)
-        let nc = navigationController as? BaseNavigationController
-        nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
-        nc?.shouldResetNavigationBarOnPush = true
     }
 }
 

@@ -54,8 +54,7 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
         if UIScreen.main.isSmall {
             titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
         }
-        
-        AnalyticsManger.shared.openEnterPassword()
+
         // text field
         scrollView.contentView.addSubview(textField)
         textField.autoPinEdge(toSuperviewEdge: .top, withInset: UIScreen.main.isSmall ? 36 : 50)
@@ -78,6 +77,7 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     }
     
     func setUpGenerateMasterPasswordButton() {
+        AnalyticsManger.shared.openEnterPassword()
         let button = UIButton(label: "i want to use Master Password".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
         view.addSubview(button)
         button.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -141,16 +141,18 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     }
     
     @objc func generateMasterPasswordButtonDidTouch() {
+        AnalyticsManger.shared.openScreenAttentionMasterPassword()
         showAttention(
             subtitle: "you want to select the advanced mode and continue with the Master Password".localized().uppercaseFirst,
             descriptionText: "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
             ignoreButtonLabel: "continue with Master Password".localized().uppercaseFirst,
             ignoreAction: {
-                AnalyticsManger.shared.useMasterPassword()
+                AnalyticsManger.shared.clickContinueMasterPassword()
                 let vc = GenerateMasterPasswordVC()
                 self.show(vc, sender: nil)
-            }
-        )
+            }, backAction: {
+                AnalyticsManger.shared.clickBackMasterPassword()
+            })
     }
     
     @objc override func nextButtonDidTouch() {
@@ -173,6 +175,7 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
             default:
                 break
             }
+            AnalyticsManger.shared.passwordEntered(available: false)
             hintView?.display(inPosition: nextButton.frame.origin, withType: .error(message))
             return
         }
@@ -184,6 +187,7 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
         guard let currentPassword = textField.text else {return}
         view.endEditing(true)
 
+        AnalyticsManger.shared.passwordEntered(available: true)
         // fix animation
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             let confirmVC = ConfirmPasswordVC(currentPassword: currentPassword)

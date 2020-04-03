@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 final class FeedPageVC: PostsViewController {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
+    
     // MARK: - Properties
     lazy var floatView = FeedPageFloatView(forAutoLayout: ())
     var floatViewTopConstraint: NSLayoutConstraint!
@@ -118,17 +120,13 @@ final class FeedPageVC: PostsViewController {
         floatView.setUp(with: filter)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
     
     // MARK: - Actions
     @objc func promoGetButtonDidTouch() {
+        AnalyticsManger.shared.clickGetDankMeme()
         headerView.getButton.showLoading(cover: true, coverColor: .appMainColor, spinnerColor: .white, size: 20)
         RestAPIManager.instance.getAirdrop(communityId: "DANK")
             .subscribe(onSuccess: { (_) in

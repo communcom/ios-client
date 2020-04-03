@@ -11,7 +11,6 @@ import UIKit
 final class BaseNavigationController: UINavigationController {
     weak var tabBarVC: TabBarVC?
     var style: UIStatusBarStyle = .default
-    var shouldResetNavigationBarOnPush = true
 
     // MARK: - Status Bar
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -22,6 +21,14 @@ final class BaseNavigationController: UINavigationController {
         self.style = style
         setNeedsStatusBarAppearanceUpdate()
     }
+    
+    var previousController: UIViewController? {
+        if viewControllers.count > 1 {
+            return viewControllers[viewControllers.count-2]
+        }
+        return nil
+    }
+
 
     // MARK: - Init
 
@@ -62,34 +69,6 @@ final class BaseNavigationController: UINavigationController {
     }
     
     // MARK: - Methods
-    func resetNavigationBar() {
-        navigationBar.isTranslucent = false
-        
-        removeNavigationBarShadow()
-        
-        setNavigationBarBackground(color: .white)
-        
-        setTitleStyle()
-    }
-    
-    func removeNavigationBarShadow() {
-        let img = UIImage()
-        navigationBar.shadowImage = img
-    }
-    
-    func setNavigationBarBackground(color: UIColor = .white) {
-        let img = UIImage()
-        navigationBar.setBackgroundImage(img, for: .default)
-        navigationBar.barStyle = .default
-        navigationBar.barTintColor = color
-        navigationBar.subviews.first?.backgroundColor = color
-    }
-    
-    func setTitleStyle(font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .black) {
-        navigationBar.tintColor = textColor
-        navigationBar.setTitleFont(.boldSystemFont(ofSize: 15), color: textColor)
-        setNavigationBarHidden(false, animated: false)
-    }
     
     func avoidTabBar(viewController: UIViewController) {
         if let scrollView = viewController.view.subviews.first(where: {$0 is UIScrollView}) as? UIScrollView,
@@ -120,10 +99,6 @@ final class BaseNavigationController: UINavigationController {
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         duringPushAnimation = true
-        
-        if shouldResetNavigationBarOnPush {
-            resetNavigationBar()
-        }
         
         avoidTabBar(viewController: viewController)
         

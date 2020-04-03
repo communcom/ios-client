@@ -10,11 +10,6 @@ import Foundation
 import RxSwift
 
 class DiscoveryVC: BaseViewController, SearchableViewControllerType {
-    // MARK: - Subviews
-    var searchBar: UISearchBar {
-        get {searchController.searchBar}
-        set {}
-    }
     
     // MARK: - Properties
     private weak var currentChildVC: UIViewController?
@@ -73,13 +68,14 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     
     lazy var contentView = UIView(forAutoLayout: ())
     
+    var searchBar: UISearchBar {
+        get {searchController.searchBar}
+        set {}
+    }
+    
     // MARK: - Methods
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        baseNavigationController?.resetNavigationBar()
-        baseNavigationController?.changeStatusBarStyle(.default)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         extendedLayoutIncludesOpaqueBars = true
     }
 
@@ -242,12 +238,15 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         contentView.insertSubview(newVC.view, belowSubview: oldVC.view)
         newVC.view.autoPinEdgesToSuperviewEdges()
         
-        oldVC.view.removeFromSuperview()
-        oldVC.removeFromParent()
-        newVC.didMove(toParent: self)
-        
-        // assign current childVC
-        currentChildVC = newVC
+        // Transtion
+        UIView.transition(from: oldVC.view, to: newVC.view, duration: 0.3, options: [.transitionCrossDissolve]) { (_) in
+            oldVC.view.removeFromSuperview()
+            oldVC.removeFromParent()
+            newVC.didMove(toParent: self)
+            
+            // assign current childVC
+            self.currentChildVC = newVC
+        }
     }
     
     private func addSubview(_ subView: UIView, toView parentView: UIView) {

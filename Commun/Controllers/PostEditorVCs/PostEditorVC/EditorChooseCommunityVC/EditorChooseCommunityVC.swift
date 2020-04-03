@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 class EditorChooseCommunityVC: SubscriptionsVC {
     // MARK: - Properties
@@ -42,6 +43,12 @@ class EditorChooseCommunityVC: SubscriptionsVC {
             explanationView.closeButton.addTarget(self, action: #selector(closeExplanationDidTouch), for: .touchUpInside)
             explanationView.learnMoreButton.addTarget(self, action: #selector(learnMoreExplanationDidTouch), for: .touchUpInside)
         }
+    }
+    
+    override func mapItems(items: [ResponseAPIContentGetSubscriptionsItem]) -> [AnimatableSectionModel<String, ResponseAPIContentGetSubscriptionsItem>] {
+        var items = items
+        let myFeed = items.removeFirst(where: {$0.communityValue?.communityId == "FEED"}) ?? ResponseAPIContentGetSubscriptionsItem.community(ResponseAPIContentGetCommunity.myFeed)
+        return super.mapItems(items: [myFeed] + items)
     }
         
     override func modelSelected(_ item: ResponseAPIContentGetSubscriptionsItem) {

@@ -158,8 +158,10 @@ extension UIImageView {
             .rightNavItemIcon(UIImage(named: "share-white")!, delegate: self)
         ]
         
-        if let stringURL = imageURL {
-            setupImageViewer(url: URL(string: stringURL)!, options: options)
+        if let stringURL = imageURL,
+            let url = URL(string: stringURL)
+        {
+            setupImageViewer(url: url, options: options)
         } else {
             setupImageViewer(options: options)
         }

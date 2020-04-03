@@ -43,7 +43,7 @@ class VerifyPhoneVC: BaseVerifyVC {
     
     override func setUp() {
         super.setUp()
-        AnalyticsManger.shared.registrationOpenScreen(3)
+        AnalyticsManger.shared.openSmsCodeView()
         
         subtitleLabel.text = "enter sms-code".localized().uppercaseFirst
         
@@ -102,22 +102,20 @@ class VerifyPhoneVC: BaseVerifyVC {
             popToPreviousVC()
             return
         }
-        AnalyticsManger.shared.smsCodeResend()
+        AnalyticsManger.shared.resendSmsCode()
         super.resendButtonTapped()
     }
     
     override var verificationCompletable: Completable {
-        AnalyticsManger.shared.smsCodeEntered()
-        
         guard let code = UInt64(code) else {
             return Completable.error(CMError.registration(message: ErrorMessage.wrongVerificationCode.rawValue))
         }
         
         return RestAPIManager.instance.verify(code: code).flatMapToCompletable()
-            .do(onError: { (error) in
-                AnalyticsManger.shared.smsCodeError()
+            .do(onError: { _ in
+                AnalyticsManger.shared.smsCodeEntered(answer: false)
             }, onCompleted: {
-                AnalyticsManger.shared.smsCodeRight()
+                AnalyticsManger.shared.smsCodeEntered(answer: true)
             })
     }
     

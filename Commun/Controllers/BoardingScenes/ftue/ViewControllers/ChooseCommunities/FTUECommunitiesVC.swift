@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
+    
     // MARK: - Constants
     let bottomBarHeight: CGFloat = 114
     let nextButtonImageName = "next-arrow"
@@ -62,6 +64,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        AnalyticsManger.shared.successfulRegistration()
         // headerView
         view.addSubview(headerView)
         headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)

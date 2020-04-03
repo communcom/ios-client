@@ -13,6 +13,9 @@ import CyberSwift
 import CircularCarousel
 
 class WalletSendPointsVC: BaseViewController {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true)}
+    override var shouldHideTabBar: Bool {true}
+    
     // MARK: - Properties
     var dataModel: SendPointsModel
     var buttonBottomConstraint: NSLayoutConstraint?
@@ -319,12 +322,6 @@ class WalletSendPointsVC: BaseViewController {
         setupNavBar()
         setNeedsStatusBarAppearanceUpdate()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        setTabBarHidden(sendPointsButton.isSelected)
-    }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -357,8 +354,6 @@ class WalletSendPointsVC: BaseViewController {
         if self.dataModel.transaction.symbol != Symbol(sell: "CMN", buy: "CMN") {
             setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(pointsListButtonDidTouch))
         }
-        
-        setTabBarHidden(true)
     }
     
     private func setup(borderedView: UIView) {
@@ -524,11 +519,8 @@ class WalletSendPointsVC: BaseViewController {
                 .subscribe(onCompleted: { [weak self] in
                     guard let strongSelf = self else { return }
                     
-                    if let baseNC = strongSelf.navigationController as? BaseNavigationController {
-                        baseNC.shouldResetNavigationBarOnPush = false
-                        let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
-                        strongSelf.show(completedVC, sender: nil)
-                    }
+                    let completedVC = TransactionInfoVC(transaction: strongSelf.dataModel.transaction)
+                    strongSelf.show(completedVC, sender: nil)
 
                     strongSelf.hideHud()
                     strongSelf.sendPointsButton.isSelected = true

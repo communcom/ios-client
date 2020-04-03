@@ -14,7 +14,7 @@ typealias LoginCredential = (login: String, key: String)
 
 class SignInVC: BaseViewController {
     // MARK: - Properties
-    override var shouldHideNavigationBar: Bool {true}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     let viewModel = SignInViewModel()
     
     // MARK: - Subviews
@@ -42,7 +42,7 @@ class SignInVC: BaseViewController {
     
     override func setUp() {
         super.setUp()
-        
+        AnalyticsManger.shared.openSignInScreen()
         // title
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         view.addSubview(backButton)

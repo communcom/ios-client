@@ -9,11 +9,12 @@
 import Foundation
 
 class BaseSignUpVC: BaseViewController {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
+    
     // MARK: - Properties
     var termOfUseText: String {"By continuing, you agree to the Commun’s Terms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst}
     var alreadyHasAccountText: String {"already have an account? Sign in".localized().uppercaseFirst}
     var autoPinNextButtonToBottom: Bool {false}
-    override var shouldHideNavigationBar: Bool {true}
     
     // MARK: - Subviews
     lazy var backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
@@ -146,13 +147,13 @@ class BaseSignUpVC: BaseViewController {
     
     @objc func tapSignInLabel(gesture: UITapGestureRecognizer) {
        guard let text = signInLabel.text else {return}
-       AnalyticsManger.shared.goToSingIn()
        let signInRange = (text as NSString).range(of: "sign in".localized().uppercaseFirst)
 
        let nc = navigationController
        if gesture.didTapAttributedTextInLabel(label: signInLabel, inRange: signInRange) {
            navigationController?.popViewController(animated: true, {
                let signInVC = SignInVC()
+               AnalyticsManger.shared.goToSignIn()
                nc?.pushViewController(signInVC)
            })
        }

@@ -92,7 +92,7 @@ class MyPointsSeeAllBalancesVC: BalancesVC, SearchableViewControllerType {
             searchContainerView.removeFromSuperview()
             tableViewTopConstraint = tableView.autoPinEdge(toSuperviewSafeArea: .top)
             
-            baseNavigationController?.setNavigationBarBackground()
+            resetNavigationBar()
         } else {
             navigationItem.titleView = nil
             setRightNavBarButton(with: self.closeButton)
@@ -101,8 +101,16 @@ class MyPointsSeeAllBalancesVC: BalancesVC, SearchableViewControllerType {
             layoutSearchBar()
             tableViewTopConstraint = tableView.autoPinEdge(.top, to: .bottom, of: searchContainerView)
             
-            baseNavigationController?.setNavigationBarBackground()
+            resetNavigationBar()
         }
+    }
+    
+    private func resetNavigationBar() {
+        let img = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(img, for: .default)
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.subviews.first?.backgroundColor = .white
     }
     
     // MARK: - Search manager
