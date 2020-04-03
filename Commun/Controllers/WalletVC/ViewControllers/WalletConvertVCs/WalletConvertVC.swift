@@ -11,6 +11,8 @@ import RxCocoa
 import RxSwift
 
 class WalletConvertVC: BaseViewController {
+    override var shouldHideTabBar: Bool {true}
+    
     // MARK: - Properties
     let viewModel = WalletConvertViewModel()
     var currentSymbol: String?
@@ -279,14 +281,7 @@ class WalletConvertVC: BaseViewController {
         showNavigationBar(false, animated: true, completion: nil)
         self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .white)
         
-        setTabBarHidden(true)
-        
         navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 0, offset: CGSize(width: 0, height: 0), opacity: 0)
-    }
-        
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        setTabBarHidden(false)
     }
     
     override func viewDidLayoutSubviews() {

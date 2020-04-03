@@ -22,6 +22,7 @@ class BaseViewController: UIViewController {
     // MARK: - Properties
     lazy var disposeBag = DisposeBag()
     var prefersNavigationBarStype: NavigationBarStyle {.normal()}
+    var shouldHideTabBar: Bool {false}
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -40,6 +41,16 @@ class BaseViewController: UIViewController {
         super.viewWillAppear(animated)
         
         configureNavigationBar()
+        
+        if shouldHideTabBar {
+            setTabBarHidden(true)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if shouldHideTabBar {
+            setTabBarHidden(false)
+        }
     }
     
     override func willMove(toParent parent: UIViewController?) {
@@ -105,7 +116,7 @@ class BaseViewController: UIViewController {
 //        }
     }
     
-    func setTabBarHidden(_ value: Bool) {
+    private func setTabBarHidden(_ value: Bool) {
         tabBarController?.tabBar.isHidden = true
         if let tabBarVC = tabBarController as? TabBarVC {
             tabBarVC.setTabBarHiden(value)
