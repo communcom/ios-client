@@ -114,8 +114,9 @@ class BaseViewController: UIViewController {
     }
     
     private func setTabBarHidden(_ value: Bool) {
-        tabBarController?.tabBar.isHidden = true
-        if let tabBarVC = tabBarController as? TabBarVC {
+        let vc: UIViewController? = isModal ? presentingViewController : self
+        vc?.tabBarController?.tabBar.isHidden = true
+        if let tabBarVC = vc?.tabBarController as? TabBarVC {
             tabBarVC.setTabBarHiden(value)
         }
     }
