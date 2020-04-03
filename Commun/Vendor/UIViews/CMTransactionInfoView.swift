@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CMTransactionInfo: MyView {
+class CMTransactionInfoView: MyView {
     // MARK: - Properties
     let transaction: Transaction
     let parentColor: UIColor

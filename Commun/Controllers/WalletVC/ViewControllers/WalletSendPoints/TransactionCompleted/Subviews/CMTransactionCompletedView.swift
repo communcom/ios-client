@@ -24,7 +24,7 @@ class CMTransactionCompletedView: MyView {
     lazy var backToWalletButton = UIButton(height: 56 * Config.heightRatio, label: "back to wallet".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .bold), backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1), textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), cornerRadius: 28 * Config.heightRatio)
     lazy var repeatButton = UIButton(height: 56 * Config.heightRatio, label: "repeat".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .bold), backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1), textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), cornerRadius: 28 * Config.heightRatio)
 
-    lazy var transactionInfoView = CMTransactionInfo(transaction: transaction)
+    lazy var transactionInfoView = CMTransactionInfoView(transaction: transaction)
     
     init(transaction: Transaction) {
         self.transaction = transaction
