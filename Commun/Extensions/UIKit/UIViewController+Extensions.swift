@@ -420,6 +420,23 @@ extension UIViewController {
         showCardWithView(attentionView)
     }
 
+    // MARK: - Navigation controller
+    func setNavigationBarBackgroundColor(_ backgroundColor: UIColor) {
+        let img = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(img, for: .default)
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.barTintColor = backgroundColor
+        navigationController?.navigationBar.subviews.first?.backgroundColor = backgroundColor
+        
+        let img2 = UIImage()
+        navigationController?.navigationBar.shadowImage = img2
+    }
+    
+    func setNavigationBarTitleStyle(textColor: UIColor, font: UIFont) {
+        navigationController?.navigationBar.tintColor = textColor
+        navigationController?.navigationBar.setTitleFont(font, color: textColor)
+    }
+    
     // MARK: - Actions
     @objc func hideKeyboard() {
         view.endEditing(true)
