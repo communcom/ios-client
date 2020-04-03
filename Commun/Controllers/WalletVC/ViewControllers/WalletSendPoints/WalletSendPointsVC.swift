@@ -14,6 +14,8 @@ import CircularCarousel
 
 class WalletSendPointsVC: BaseViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true)}
+    override var shouldHideTabBar: Bool {true}
+    
     // MARK: - Properties
     var dataModel: SendPointsModel
     var buttonBottomConstraint: NSLayoutConstraint?
@@ -320,12 +322,6 @@ class WalletSendPointsVC: BaseViewController {
         setupNavBar()
         setNeedsStatusBarAppearanceUpdate()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        setTabBarHidden(sendPointsButton.isSelected)
-    }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -358,8 +354,6 @@ class WalletSendPointsVC: BaseViewController {
         if self.dataModel.transaction.symbol != Symbol(sell: "CMN", buy: "CMN") {
             setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(pointsListButtonDidTouch))
         }
-        
-        setTabBarHidden(true)
     }
     
     private func setup(borderedView: UIView) {

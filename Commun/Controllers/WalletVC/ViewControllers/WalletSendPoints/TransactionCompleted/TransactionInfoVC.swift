@@ -21,10 +21,11 @@ class TransactionInfoVC: BaseViewController {
         return .lightContent
     }
     
+    override var shouldHideTabBar: Bool {true}
+    
     // MARK: - Propertes
     let viewModel = SendPointsModel()
     var completionRepeat: (() -> Void)?
-    var completionDismiss: (() -> Void)?
     var transaction: Transaction {viewModel.transaction}
     var isHistoryMode: Bool {
         !["buy", "sell", "send"].contains(transaction.actionType.rawValue)
@@ -138,7 +139,6 @@ class TransactionInfoVC: BaseViewController {
     }
     
     @objc func dismissWithCompletion() {
-        completionDismiss?()
         dismiss(animated: true, completion: nil)
     }
     

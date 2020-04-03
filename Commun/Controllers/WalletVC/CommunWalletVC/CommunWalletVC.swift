@@ -85,8 +85,6 @@ class CommunWalletVC: TransferHistoryVC {
         
         self.changeNavbar(y: headerViewOffsetY)
         self.setNavBarBackButton(tintColor: .white)
-        
-        self.setTabBarHidden(false)
     }
     
     // MARK: - Custom Functions

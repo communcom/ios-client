@@ -93,7 +93,6 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                 guard let strongSelf = self else { return }
                 
                 if let selectedCell = strongSelf.tableView.cellForRow(at: indexPath) as? TransferHistoryItemCell, let selectedItem = selectedCell.item {
-                    strongSelf.setTabBarHidden(true)
                     strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
                     
                     // .history type
@@ -140,10 +139,6 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     strongSelf.present(completedVC, animated: true, completion: nil)
                     
                     strongSelf.hideHud()
-                    
-                    completedVC.completionDismiss = {
-                        strongSelf.setTabBarHidden(false)
-                    }
                     
                     completedVC.completionRepeat = { [weak self] in
                         guard let strongSelf = self else { return }
