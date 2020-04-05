@@ -53,17 +53,6 @@ class BaseViewController: UIViewController {
         }
     }
     
-    override func willMove(toParent parent: UIViewController?) {
-        super.willMove(toParent: parent)
-        
-        // reset navigation bar after poping
-        if parent == nil,
-            let vc = baseNavigationController?.previousController as? BaseViewController
-        {
-            vc.configureNavigationBar()
-        }
-    }
-    
     func configureNavigationBar() {
         switch prefersNavigationBarStype {
         case .normal(let translucent, let backgroundColor, let font, let textColor, let prefersLargeTitle):
