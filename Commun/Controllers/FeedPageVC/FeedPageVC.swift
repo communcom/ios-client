@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 
 final class FeedPageVC: PostsViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     // MARK: - Properties
@@ -118,10 +119,6 @@ final class FeedPageVC: PostsViewController {
         super.filterChanged(filter: filter)
         // feedTypeMode
         floatView.setUp(with: filter)
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
     }
     
     // MARK: - Actions

@@ -50,8 +50,4 @@ class SubsViewController<T: ListItemType, CellType: ListItemCellType>: ListViewC
     override func handleLoading() {
         tableView.addNotificationsLoadingFooterView()
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .default
-    }
 }
