@@ -11,6 +11,7 @@ import RxSwift
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     
     // MARK: - Constants
     let coverHeight: CGFloat = 200

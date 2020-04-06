@@ -41,6 +41,7 @@ class BaseViewController: UIViewController {
         super.viewWillAppear(animated)
         
         configureNavigationBar()
+        baseNavigationController?.changeStatusBarStyle(preferredStatusBarStyle)
         
         if shouldHideTabBar {
             setTabBarHidden(true)
@@ -50,17 +51,6 @@ class BaseViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         if shouldHideTabBar {
             setTabBarHidden(false)
-        }
-    }
-    
-    override func willMove(toParent parent: UIViewController?) {
-        super.willMove(toParent: parent)
-        
-        // reset navigation bar after poping
-        if parent == nil,
-            let vc = baseNavigationController?.previousController as? BaseViewController
-        {
-            vc.configureNavigationBar()
         }
     }
     

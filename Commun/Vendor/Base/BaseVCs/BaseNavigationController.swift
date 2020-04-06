@@ -29,7 +29,6 @@ final class BaseNavigationController: UINavigationController {
         return nil
     }
 
-
     // MARK: - Init
 
     init(rootViewController: UIViewController, tabBarVC: TabBarVC? = nil) {
@@ -107,6 +106,11 @@ final class BaseNavigationController: UINavigationController {
     
     override func popViewController(animated: Bool) -> UIViewController? {
 //        resetNavigationBar()
+        if let vc = previousController as? BaseViewController {
+            vc.configureNavigationBar()
+            vc.baseNavigationController?.changeStatusBarStyle(vc.preferredStatusBarStyle)
+        }
+        
         return super.popViewController(animated: animated)
     }
     
