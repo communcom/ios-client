@@ -51,8 +51,6 @@ class PostsFilterVC: BaseViewController {
             backButton.addTarget(self, action: #selector(backButtonDidTouch), for: .touchUpInside)
         }
         
-        setupNavigationBar()
-        
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView()
@@ -149,15 +147,6 @@ class PostsFilterVC: BaseViewController {
         
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-    }
-    
-    // MARK: - Custom Functions
-    private func setupNavigationBar() {
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) // items color
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // bar color
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.shadowImage?.clear()
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
     }
     
     // MARK: - Actions
