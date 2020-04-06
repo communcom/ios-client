@@ -474,18 +474,6 @@ extension UIViewController {
          scrollToTop(view: self.view)
      }
     
-    func showNavigationBar(_ show: Bool, animated: Bool = false, completion: (() -> Void)? = nil) {
-        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
-        baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
-        UIView.animate(withDuration: animated ? 0.3 : 0) {
-            self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear
-            self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
-                show ? .black: .clear)
-            self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
-            completion?()
-        }
-    }
-    
     func appLiked() {
         if !CMAppLike.verify() {
             CMAppLike.updateRate()
