@@ -18,7 +18,14 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     
     // MARK: - Class Initialization
     init(title: String? = nil, userId: String? = nil, type: GetSubscriptionsType, prefetch: Bool = true) {
-        let viewModel = SubscriptionsViewModel(userId: userId, type: type, prefetch: prefetch)
+        let viewModel: SubscriptionsViewModel
+        
+        if userId == nil || userId == Config.currentUser?.id {
+            viewModel = SubscriptionsViewModel.ofCurrentUser(type: type)
+        } else {
+            viewModel = SubscriptionsViewModel(userId: userId, type: type, prefetch: prefetch)
+        }
+        
         super.init(viewModel: viewModel)
         defer {self.title = title}
     }

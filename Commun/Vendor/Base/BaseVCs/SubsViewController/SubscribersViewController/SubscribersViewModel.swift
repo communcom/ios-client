@@ -10,6 +10,10 @@ import Foundation
 import CyberSwift
 
 class SubscribersViewModel: ListViewModel<ResponseAPIContentGetProfile> {
+    // MARK: - Singleton
+    static var ofCurrentUser = SubscribersViewModel(userId: Config.currentUser?.id)
+    
+    // MARK: - Initializers
     convenience init(userId: String? = nil, communityId: String? = nil, prefetch: Bool = true) {
         let fetcher = SubscribersListFetcher()
         fetcher.userId = userId
