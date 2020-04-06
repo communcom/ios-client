@@ -281,7 +281,6 @@ extension UIViewController {
                     // hashtag
                     let vc = SearchablePostsVC(keyword: "#" + hashtag)
                     self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                    self.baseNavigationController?.changeStatusBarStyle(.default)
                     self.show(vc, sender: self)
                     return
                 }

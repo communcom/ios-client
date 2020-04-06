@@ -20,8 +20,11 @@ class BaseViewController: UIViewController {
     }
     
     // MARK: - Properties
-    lazy var disposeBag = DisposeBag()
+    override var preferredStatusBarStyle: UIStatusBarStyle {statusBarStyle}
     var prefersNavigationBarStype: NavigationBarStyle {.normal()}
+    private var statusBarStyle: UIStatusBarStyle = .default
+    
+    lazy var disposeBag = DisposeBag()
     var shouldHideTabBar: Bool {false}
     
     // MARK: - Class Functions
@@ -41,7 +44,7 @@ class BaseViewController: UIViewController {
         super.viewWillAppear(animated)
         
         configureNavigationBar()
-        baseNavigationController?.changeStatusBarStyle(preferredStatusBarStyle)
+        changeStatusBarStyle(preferredStatusBarStyle)
         
         if shouldHideTabBar {
             setTabBarHidden(true)
@@ -51,6 +54,18 @@ class BaseViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         if shouldHideTabBar {
             setTabBarHidden(false)
+        }
+    }
+    
+    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
+        switch prefersNavigationBarStype {
+        case .normal:
+            baseNavigationController?.changeStatusBarStyle(style)
+        case .hidden:
+            self.statusBarStyle = style
+            setNeedsStatusBarAppearanceUpdate()
+        case .embeded:
+            return
         }
     }
     

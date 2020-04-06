@@ -319,9 +319,7 @@ class WalletSendPointsVC: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         setupNavBar()
-        setNeedsStatusBarAppearanceUpdate()
     }
     
     override func viewWillLayoutSubviews() {
