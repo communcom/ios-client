@@ -11,7 +11,6 @@ import RxSwift
 
 class MyProfileSettingsVC: BaseViewController {
     // MARK: - Properties
-    override var preferredStatusBarStyle: UIStatusBarStyle {.default}
 
     // MARK: - Subviews
     lazy var backButton = UIButton.back(tintColor: .black, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))

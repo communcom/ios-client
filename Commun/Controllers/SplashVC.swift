@@ -10,6 +10,8 @@ import UIKit
 import RxSwift
 
 class SplashVC: BaseViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
+    
     lazy var slashImageView = UIImageView(width: 60, height: 130.5, imageNamed: "slash")
     var errorView: UIView!
     
@@ -50,10 +52,6 @@ class SplashVC: BaseViewController {
                 UIApplication.shared.open(URL(string: "commun://createPost")!)
             }
         }
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     func animateSplash(_ completion: @escaping () -> Void) {
