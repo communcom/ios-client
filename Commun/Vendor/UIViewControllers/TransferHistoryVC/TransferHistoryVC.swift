@@ -136,7 +136,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     let completedVC = TransactionInfoVC(transaction: transaction)
                     completedVC.modalPresentationStyle = .overCurrentContext
                     completedVC.modalTransitionStyle = .crossDissolve
-                    strongSelf.present(completedVC, animated: true, completion: nil)
+                    strongSelf.tabBarController?.present(completedVC, animated: true, completion: nil)
                     
                     strongSelf.hideHud()
                     
