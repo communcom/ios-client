@@ -62,7 +62,6 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        baseNavigationController?.changeStatusBarStyle(.default)
         navigationController?.navigationBar.addShadow(ofColor: .clear, opacity: 0)
     }
     

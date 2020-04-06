@@ -41,6 +41,7 @@ class BaseViewController: UIViewController {
         super.viewWillAppear(animated)
         
         configureNavigationBar()
+        baseNavigationController?.changeStatusBarStyle(preferredStatusBarStyle)
         
         if shouldHideTabBar {
             setTabBarHidden(true)

@@ -40,7 +40,6 @@ class WalletAddFriendVC: SubsViewController<ResponseAPIContentSearchItem, Wallet
     // MARK: - Methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        baseNavigationController?.changeStatusBarStyle(.default)
         extendedLayoutIncludesOpaqueBars = true
         
         navigationController?.navigationBar.shadowOpacity = 0

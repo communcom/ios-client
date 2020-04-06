@@ -106,8 +106,9 @@ final class BaseNavigationController: UINavigationController {
     
     override func popViewController(animated: Bool) -> UIViewController? {
 //        resetNavigationBar()
-        if let vc = viewControllers[safe: viewControllers.count - 2] as? BaseViewController {
+        if let vc = previousController as? BaseViewController {
             vc.configureNavigationBar()
+            vc.baseNavigationController?.changeStatusBarStyle(vc.preferredStatusBarStyle)
         }
         
         return super.popViewController(animated: animated)
