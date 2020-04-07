@@ -9,15 +9,6 @@
 import Foundation
 
 extension PostsViewController {
-    @objc func toggleFeedType() {
-        guard let viewModel = viewModel as? PostsViewModel else {return}
-        if viewModel.filter.value.feedTypeMode == .subscriptions {
-            viewModel.changeFilter(feedTypeMode: .hot)
-        } else {
-            viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .time)
-        }
-    }
-    
     func openFilterVC() {
         guard let viewModel = viewModel as? PostsViewModel else {return}
         // Create FiltersVC

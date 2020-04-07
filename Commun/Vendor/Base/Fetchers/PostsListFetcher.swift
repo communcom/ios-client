@@ -27,11 +27,16 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
             UserDefaults.standard.set(try JSONEncoder().encode(self), forKey: Filter.filterKey)
         }
         
+        static var myFeed: Filter {
+            PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time, userId: Config.currentUser?.id)
+        }
+        
         static var feed: Filter {
             guard let data = UserDefaults.standard.data(forKey: Filter.filterKey),
-                let filter = try? JSONDecoder().decode(Filter.self, from: data)
+                let filter = try? JSONDecoder().decode(Filter.self, from: data),
+                (filter.feedTypeMode == .subscriptions || filter.feedTypeMode == .new || filter.feedTypeMode == .hot)
             else {
-                return PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time, userId: Config.currentUser?.id)
+                return myFeed
             }
             return filter
         }

@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import RxDataSources
 
 final class FeedPageVC: PostsViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
@@ -31,6 +32,18 @@ final class FeedPageVC: PostsViewController {
     }
     
     // MARK: - Methods
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let height = floatView.height
+        
+        if floatViewHeight == 0 {
+            tableView.contentInset.top = height
+            tableView.scrollIndicatorInsets = UIEdgeInsets(top: height, left: 0.0, bottom: 0.0, right: 0.0)
+            floatViewHeight = height
+            scrollToTop()
+        }
+    }
+    
     override func setUp() {
         super.setUp()
         view.backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
@@ -54,19 +67,11 @@ final class FeedPageVC: PostsViewController {
         
         headerView = FeedPageHeaderView(tableView: tableView)
         
+        floatView.changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeButtonDidTouch(_:)), for: .touchUpInside)
+        floatView.sortButton.addTarget(self, action: #selector(changeFilterButtonDidTouch(_:)), for: .touchUpInside)
         headerView.getButton.addTarget(self, action: #selector(promoGetButtonDidTouch), for: .touchUpInside)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let height = floatView.height
         
-        if floatViewHeight == 0 {
-            tableView.contentInset.top = height
-            tableView.scrollIndicatorInsets = UIEdgeInsets(top: height, left: 0.0, bottom: 0.0, right: 0.0)
-            floatViewHeight = height
-            scrollToTop()
-        }
+        dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: dataSource.animationConfiguration.insertAnimation, reloadAnimation: dataSource.animationConfiguration.reloadAnimation, deleteAnimation: .bottom)
     }
     
     override func bind() {
@@ -116,6 +121,13 @@ final class FeedPageVC: PostsViewController {
     }
     
     override func filterChanged(filter: PostsListFetcher.Filter) {
+        var filter = filter
+        
+        if filter.feedTypeMode != .subscriptions && filter.feedTypeMode != .new && filter.feedTypeMode != .hot
+        {
+            filter = PostsListFetcher.Filter.myFeed
+        }
+        
         super.filterChanged(filter: filter)
         // feedTypeMode
         floatView.setUp(with: filter)
@@ -146,5 +158,18 @@ final class FeedPageVC: PostsViewController {
                 self.showError(error)
             }
             .disposed(by: disposeBag)
+    }
+    
+    @objc func changeFeedTypeButtonDidTouch(_ sender: Any) {
+        guard let viewModel = viewModel as? PostsViewModel else {return}
+        if viewModel.filter.value.feedTypeMode == .subscriptions {
+            viewModel.changeFilter(feedTypeMode: .hot)
+        } else {
+            viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .time)
+        }
+    }
+    
+    @objc func changeFilterButtonDidTouch(_ sender: Any) {
+        openFilterVC()
     }
 }
