@@ -14,8 +14,8 @@ class DiscoveryAllViewModel: SearchViewModel {
     var communitiesVM: SubscriptionsViewModel
     
     override init() {
-        followingVM = SubscriptionsViewModel.ofCurrentUser(type: .user)
-        communitiesVM = SubscriptionsViewModel.ofCurrentUser(type: .community)
+        followingVM = SubscriptionsViewModel.ofCurrentUserTypeUser
+        communitiesVM = SubscriptionsViewModel.ofCurrentUserTypeCommunity
         
         super.init()
         (fetcher as! SearchListFetcher).searchType = .extendedSearch

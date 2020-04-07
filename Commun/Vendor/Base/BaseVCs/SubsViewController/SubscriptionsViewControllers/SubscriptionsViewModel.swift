@@ -11,13 +11,8 @@ import CyberSwift
 
 class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsItem> {
     // MARK: - Singleton
-    private static var ofCurrentUserTypeUser = SubscriptionsViewModel(type: .user)
-    private static var ofCurrentUserTypeCommunity = SubscriptionsViewModel(type: .community)
-    
-    static func ofCurrentUser(type: GetSubscriptionsType) -> SubscriptionsViewModel {
-        if type == .user {return ofCurrentUserTypeUser}
-        return ofCurrentUserTypeCommunity
-    }
+    static var ofCurrentUserTypeUser = SubscriptionsViewModel(type: .user)
+    static var ofCurrentUserTypeCommunity = SubscriptionsViewModel(type: .community)
     
     let type: GetSubscriptionsType
     

@@ -21,7 +21,11 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
         let viewModel: SubscriptionsViewModel
         
         if userId == nil || userId == Config.currentUser?.id {
-            viewModel = SubscriptionsViewModel.ofCurrentUser(type: type)
+            if type == .user {
+                viewModel = SubscriptionsViewModel.ofCurrentUserTypeUser
+            } else {
+                viewModel = SubscriptionsViewModel.ofCurrentUserTypeCommunity
+            }
         } else {
             viewModel = SubscriptionsViewModel(userId: userId, type: type, prefetch: prefetch)
         }

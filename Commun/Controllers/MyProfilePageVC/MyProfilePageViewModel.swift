@@ -11,7 +11,7 @@ import Foundation
 class MyProfilePageViewModel: UserProfilePageViewModel {
     lazy var subscriptionsVM: SubscriptionsViewModel = {
         if profileId == Config.currentUser?.id {
-            return SubscriptionsViewModel.ofCurrentUser(type: .community)
+            return SubscriptionsViewModel.ofCurrentUserTypeCommunity
         }
         return SubscriptionsViewModel(userId: profileId, type: .community)
     }()
