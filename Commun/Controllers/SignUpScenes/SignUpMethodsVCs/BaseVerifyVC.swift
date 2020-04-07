@@ -112,6 +112,7 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
     }
     
     func verify() {
+        view.endEditing(true)
         showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
         
         verificationCompletable

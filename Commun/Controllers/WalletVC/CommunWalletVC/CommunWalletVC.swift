@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .appMainColor)}
     // MARK: - Properties
     var headerViewOffsetY: CGFloat = 0.0
@@ -48,8 +49,6 @@ class CommunWalletVC: TransferHistoryVC {
     var myPointsCollectionView: UICollectionView {tableHeaderView.myPointsCollectionView}
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
     var headerViewExpandedHeight: CGFloat = 0
-
-    private var barStyle: UIStatusBarStyle = .lightContent
 
     var balanceView: UIView {
         let view = UIView(forAutoLayout: ())
@@ -427,15 +426,6 @@ extension CommunWalletVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: 90, height: SendPointCollectionCell.height)
         }
         return CGSize(width: 140, height: MyPointCollectionCell.height)
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return self.barStyle
-    }
-
-    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
-        self.barStyle = style
-        setNeedsStatusBarAppearanceUpdate()
     }
 }
 

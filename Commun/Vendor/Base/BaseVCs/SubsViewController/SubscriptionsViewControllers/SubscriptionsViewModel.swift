@@ -10,6 +10,10 @@ import Foundation
 import CyberSwift
 
 class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsItem> {
+    // MARK: - Singleton
+    static var ofCurrentUserTypeUser = SubscriptionsViewModel(type: .user)
+    static var ofCurrentUserTypeCommunity = SubscriptionsViewModel(type: .community)
+    
     let type: GetSubscriptionsType
     
     lazy var searchVM: SearchViewModel = {

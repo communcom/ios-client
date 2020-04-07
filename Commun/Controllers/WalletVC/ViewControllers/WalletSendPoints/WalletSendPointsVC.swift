@@ -13,6 +13,7 @@ import CyberSwift
 import CircularCarousel
 
 class WalletSendPointsVC: BaseViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true)}
     override var shouldHideTabBar: Bool {true}
     
@@ -318,13 +319,7 @@ class WalletSendPointsVC: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         setupNavBar()
-        setNeedsStatusBarAppearanceUpdate()
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     override func viewWillLayoutSubviews() {

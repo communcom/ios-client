@@ -9,16 +9,13 @@
 import Foundation
 
 class TransactionInfoVC: BaseViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {
         if transaction.history == nil {
             return .normal(translucent: true, backgroundColor: .appMainColor, textColor: .white)
         } else {
             return .hidden
         }
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     override var shouldHideTabBar: Bool {true}

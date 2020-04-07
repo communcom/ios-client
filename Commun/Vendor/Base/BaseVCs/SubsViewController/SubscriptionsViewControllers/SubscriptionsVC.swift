@@ -18,19 +18,24 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     
     // MARK: - Class Initialization
     init(title: String? = nil, userId: String? = nil, type: GetSubscriptionsType, prefetch: Bool = true) {
-        let viewModel = SubscriptionsViewModel(userId: userId, type: type, prefetch: prefetch)
+        let viewModel: SubscriptionsViewModel
+        
+        if userId == nil || userId == Config.currentUser?.id {
+            if type == .user {
+                viewModel = SubscriptionsViewModel.ofCurrentUserTypeUser
+            } else {
+                viewModel = SubscriptionsViewModel.ofCurrentUserTypeCommunity
+            }
+        } else {
+            viewModel = SubscriptionsViewModel(userId: userId, type: type, prefetch: prefetch)
+        }
+        
         super.init(viewModel: viewModel)
         defer {self.title = title}
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - Class Functions
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        baseNavigationController?.changeStatusBarStyle(.default)
     }
     
     // MARK: - Custom Functions

@@ -20,8 +20,11 @@ class BaseViewController: UIViewController {
     }
     
     // MARK: - Properties
-    lazy var disposeBag = DisposeBag()
+    override var preferredStatusBarStyle: UIStatusBarStyle {statusBarStyle}
     var prefersNavigationBarStype: NavigationBarStyle {.normal()}
+    private var statusBarStyle: UIStatusBarStyle = .default
+    
+    lazy var disposeBag = DisposeBag()
     var shouldHideTabBar: Bool {false}
     
     // MARK: - Class Functions
@@ -41,6 +44,7 @@ class BaseViewController: UIViewController {
         super.viewWillAppear(animated)
         
         configureNavigationBar()
+        changeStatusBarStyle(preferredStatusBarStyle)
         
         if shouldHideTabBar {
             setTabBarHidden(true)
@@ -53,14 +57,15 @@ class BaseViewController: UIViewController {
         }
     }
     
-    override func willMove(toParent parent: UIViewController?) {
-        super.willMove(toParent: parent)
-        
-        // reset navigation bar after poping
-        if parent == nil,
-            let vc = baseNavigationController?.previousController as? BaseViewController
-        {
-            vc.configureNavigationBar()
+    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
+        switch prefersNavigationBarStype {
+        case .normal:
+            baseNavigationController?.changeStatusBarStyle(style)
+        case .hidden:
+            self.statusBarStyle = style
+            setNeedsStatusBarAppearanceUpdate()
+        case .embeded:
+            return
         }
     }
     

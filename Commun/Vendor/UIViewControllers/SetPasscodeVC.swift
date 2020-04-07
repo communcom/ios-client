@@ -42,6 +42,7 @@ class SetPasscodeVC: THPinViewController {
             navigationController?.setNavigationBarHidden(true, animated: animated)
         } else {
             title = "passcode".localized().uppercaseFirst
+            navigationController?.navigationBar.isTranslucent = true
             navigationController?.navigationBar.barTintColor = .white
             navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController?.navigationBar.shadowImage = UIImage()
@@ -54,6 +55,8 @@ class SetPasscodeVC: THPinViewController {
         super.viewWillDisappear(animated)
         if currentPin == nil && onBoarding || needTransactionConfirmation {
             navigationController?.setNavigationBarHidden(false, animated: animated)
+        } else {
+            navigationController?.navigationBar.isTranslucent = false
         }
     }
 

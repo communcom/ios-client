@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 
 final class FeedPageVC: PostsViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     // MARK: - Properties
@@ -21,7 +22,7 @@ final class FeedPageVC: PostsViewController {
     
     // MARK: - Initializers
     init() {
-        let viewModel = FeedPageViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time, userId: Config.currentUser?.id), prefetch: true)
+        let viewModel = FeedPageViewModel(prefetch: true)
         super.init(viewModel: viewModel)
     }
     
@@ -118,10 +119,14 @@ final class FeedPageVC: PostsViewController {
         super.filterChanged(filter: filter)
         // feedTypeMode
         floatView.setUp(with: filter)
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
+        
+        // save filter
+        do {
+            try filter.save()
+        } catch {
+            print(error)
+        }
+        
     }
     
     // MARK: - Actions

@@ -11,6 +11,8 @@ import RxCocoa
 import RxSwift
 
 class WalletConvertVC: BaseViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .white)}
     override var shouldHideTabBar: Bool {true}
     
     // MARK: - Properties
@@ -271,17 +273,6 @@ class WalletConvertVC: BaseViewController {
     
     func bindRate() {
         
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        navigationController?.navigationBar.isTranslucent = true
-        showNavigationBar(false, animated: true, completion: nil)
-        self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .white)
-        
-        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 0, offset: CGSize(width: 0, height: 0), opacity: 0)
     }
     
     override func viewDidLayoutSubviews() {

@@ -128,7 +128,6 @@ class MyProfilePageVC: UserProfilePageVC {
                                         let vc = ReferralUsersVC()
                                         vc.title = "referral".localized().uppercaseFirst
                                         self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                                        self.baseNavigationController?.changeStatusBarStyle(.default)
                                         self.show(vc, sender: self)
             }),
             CommunActionSheet.Action(title: "liked".localized().uppercaseFirst,
@@ -138,7 +137,6 @@ class MyProfilePageVC: UserProfilePageVC {
                                         let vc = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .voted, feedType: .time, userId: Config.currentUser?.id))
                                         vc.title = "liked".localized().uppercaseFirst
                                         self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                                        self.baseNavigationController?.changeStatusBarStyle(.default)
                                         self.show(vc, sender: self)
             }),
             CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst,

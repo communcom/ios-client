@@ -219,7 +219,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     override func configureNavigationBar() {
         super.configureNavigationBar()
         
-        baseNavigationController?.changeStatusBarStyle(showNavigationBar ? .default : .lightContent)
+        changeStatusBarStyle(showNavigationBar ? .default : .lightContent)
         
         coverImageView.isHidden = showNavigationBar
         

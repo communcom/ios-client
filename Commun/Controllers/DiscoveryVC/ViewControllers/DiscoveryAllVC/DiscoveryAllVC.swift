@@ -88,6 +88,8 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
             if indexPath.row == dataSource.sectionModels[indexPath.section].items.count - 1 {
                 cell.roundedCorner.insert([.bottomLeft, .bottomRight])
             }
+            
+            cell.joinButton.isHidden = true
             return cell
         }
         
@@ -101,6 +103,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
             if indexPath.row == dataSource.sectionModels[indexPath.section].items.count - 1 {
                 cell.roundedCorner.insert([.bottomLeft, .bottomRight])
             }
+            cell.followButton.isHidden = true
             return cell
         }
         

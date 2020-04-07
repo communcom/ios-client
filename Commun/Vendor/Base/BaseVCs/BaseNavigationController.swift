@@ -10,15 +10,13 @@ import UIKit
 
 final class BaseNavigationController: UINavigationController {
     weak var tabBarVC: TabBarVC?
-    var style: UIStatusBarStyle = .default
+    private var statusBarStyle: UIStatusBarStyle = .default
 
     // MARK: - Status Bar
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return self.style
-    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {self.statusBarStyle}
 
     func changeStatusBarStyle(_ style: UIStatusBarStyle) {
-        self.style = style
+        self.statusBarStyle = style
         setNeedsStatusBarAppearanceUpdate()
     }
     
@@ -28,7 +26,6 @@ final class BaseNavigationController: UINavigationController {
         }
         return nil
     }
-
 
     // MARK: - Init
 
@@ -107,6 +104,11 @@ final class BaseNavigationController: UINavigationController {
     
     override func popViewController(animated: Bool) -> UIViewController? {
 //        resetNavigationBar()
+        if let vc = previousController as? BaseViewController {
+            vc.configureNavigationBar()
+            vc.changeStatusBarStyle(vc.preferredStatusBarStyle)
+        }
+        
         return super.popViewController(animated: animated)
     }
     
