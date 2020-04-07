@@ -41,7 +41,6 @@ class MyProfileBlacklistVC: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        baseNavigationController?.changeStatusBarStyle(.default)
         navigationController?.navigationBar.addShadow(ofColor: .clear, opacity: 0)
     }
     

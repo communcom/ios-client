@@ -42,7 +42,7 @@ class SignInVC: BaseViewController {
     
     override func setUp() {
         super.setUp()
-        
+        AnalyticsManger.shared.openSignInScreen()
         // title
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         view.addSubview(backButton)

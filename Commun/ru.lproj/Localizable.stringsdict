@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>%d day</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@day@</string>
+		<key>day</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>%d дней</string>
+			<key>one</key>
+			<string>%d день</string>
+			<key>two</key>
+			<string>%d дня</string>
+			<key>few</key>
+			<string>%d дня</string>
+			<key>many</key>
+			<string>%d дней</string>
+			<key>other</key>
+			<string>%d дней</string>
+		</dict>
+	</dict>
+    <key>%d hour</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@hour@</string>
+        <key>hour</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>%d часов</string>
+            <key>one</key>
+            <string>%d час</string>
+            <key>two</key>
+            <string>%d часа</string>
+            <key>few</key>
+            <string>%d часа</string>
+            <key>many</key>
+            <string>%d часов</string>
+            <key>other</key>
+            <string>%d часов</string>
+        </dict>
+    </dict>
+    <key>%d month</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@month@</string>
+        <key>month</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>%d месяцев</string>
+            <key>one</key>
+            <string>%d месяц</string>
+            <key>two</key>
+            <string>%d месяца</string>
+            <key>few</key>
+            <string>%d месяца</string>
+            <key>many</key>
+            <string>%d месяцев</string>
+            <key>other</key>
+            <string>%d месяцев</string>
+        </dict>
+    </dict>
+    <key>%d followers</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@followers@</string>
+        <key>followers</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>%d подписчиков</string>
+            <key>one</key>
+            <string>%d подписчик</string>
+            <key>two</key>
+            <string>%d подписчика</string>
+            <key>few</key>
+            <string>%d подписчика</string>
+            <key>many</key>
+            <string>%d подписчиков</string>
+            <key>other</key>
+            <string>%d подписчиков</string>
+        </dict>
+    </dict>
+    <key>followers-count</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@followers@</string>
+        <key>followers</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>подписчиков</string>
+            <key>one</key>
+            <string>подписчик</string>
+            <key>two</key>
+            <string>подписчика</string>
+            <key>few</key>
+            <string>подписчика</string>
+            <key>many</key>
+            <string>подписчиков</string>
+            <key>other</key>
+            <string>подписчиков</string>
+        </dict>
+    </dict>
+    <key>%d followings</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@followings@</string>
+        <key>followings</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>%d подписок</string>
+            <key>one</key>
+            <string>%d подписка</string>
+            <key>two</key>
+            <string>%d подписки</string>
+            <key>few</key>
+            <string>%d подписки</string>
+            <key>many</key>
+            <string>%d подписок</string>
+            <key>other</key>
+            <string>%d подписок</string>
+        </dict>
+    </dict>
+    <key>followings-count</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@followings@</string>
+        <key>followings</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>подписок</string>
+            <key>one</key>
+            <string>подписка</string>
+            <key>two</key>
+            <string>подписки</string>
+            <key>few</key>
+            <string>подписки</string>
+            <key>many</key>
+            <string>подписок</string>
+            <key>other</key>
+            <string>подписок</string>
+        </dict>
+    </dict>
+    <key>%d posts</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@posts@</string>
+        <key>posts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>%d постов</string>
+            <key>one</key>
+            <string>%d пост</string>
+            <key>two</key>
+            <string>%d поста</string>
+            <key>few</key>
+            <string>%d поста</string>
+            <key>many</key>
+            <string>%d постов</string>
+            <key>other</key>
+            <string>%d постов</string>
+        </dict>
+    </dict>
+    <key>post-count</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@posts@</string>
+        <key>posts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>постов</string>
+            <key>one</key>
+            <string>пост</string>
+            <key>two</key>
+            <string>поста</string>
+            <key>few</key>
+            <string>поста</string>
+            <key>many</key>
+            <string>постов</string>
+            <key>other</key>
+            <string>постов</string>
+        </dict>
+    </dict>
+    <key>%d points</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@points@</string>
+        <key>points</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>%d поинтов</string>
+            <key>one</key>
+            <string>%d поинт</string>
+            <key>two</key>
+            <string>%d поинта</string>
+            <key>few</key>
+            <string>%d поинта</string>
+            <key>many</key>
+            <string>%d поинтов</string>
+            <key>other</key>
+            <string>%d поинтов</string>
+        </dict>
+    </dict>
+    <key>%d members</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@members@</string>
+        <key>members</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>%d участников</string>
+            <key>one</key>
+            <string>%d участник</string>
+            <key>two</key>
+            <string>%d участника</string>
+            <key>few</key>
+            <string>%d участника</string>
+            <key>many</key>
+            <string>%d участников</string>
+            <key>other</key>
+            <string>%d участников</string>
+        </dict>
+    </dict>
+    <key>members-count</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@members@</string>
+        <key>members</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>участников</string>
+            <key>one</key>
+            <string>участник</string>
+            <key>two</key>
+            <string>участника</string>
+            <key>few</key>
+            <string>участника</string>
+            <key>many</key>
+            <string>участников</string>
+            <key>other</key>
+            <string>участников</string>
+        </dict>
+    </dict>
+    <key>leaders-count</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@leaders@</string>
+        <key>leaders</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>лидеров</string>
+            <key>one</key>
+            <string>лидер</string>
+            <key>two</key>
+            <string>лидера</string>
+            <key>few</key>
+            <string>лидера</string>
+            <key>many</key>
+            <string>лидеров</string>
+            <key>other</key>
+            <string>лидеры</string>
+        </dict>
+    </dict>
+</dict>
+</plist>

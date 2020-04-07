@@ -48,11 +48,11 @@ final class FeedPageFloatView: MyView {
         // feedTypeMode
         switch filter.feedTypeMode {
         case .subscriptions:
-            headerLabel.text = String(format: "%@ %@", "my".localized().uppercaseFirst, "feed".localized().uppercaseFirst)
+            headerLabel.text = "my Feed".localized().uppercaseFirst
             changeFeedTypeButton.setTitle("trending".localized().uppercaseFirst, for: .normal)
         case .hot, .new:
             headerLabel.text = "trending".localized().uppercaseFirst
-            changeFeedTypeButton.setTitle(String(format: "%@ %@", "my".localized().uppercaseFirst, "feed".localized().uppercaseFirst), for: .normal)
+            changeFeedTypeButton.setTitle("my Feed".localized().uppercaseFirst, for: .normal)
         default:
             break
         }

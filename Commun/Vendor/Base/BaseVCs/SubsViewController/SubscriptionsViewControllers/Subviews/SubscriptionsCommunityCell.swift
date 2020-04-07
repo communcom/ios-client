@@ -37,11 +37,13 @@ class SubscriptionsCommunityCell: SubsItemCell {
         if isMyFeed {
             statsLabel.isHidden = true
         } else {
+            let subscribersCount: Int64 = community.subscribersCount ?? 0
+            let postsCount: Int64 = community.postsCount ?? 0
             statsLabel.isHidden = false
-            statsLabel.text = "\((community.subscribersCount ?? 0).kmFormatted) " + "followers".localized().uppercaseFirst + " • " + "\((community.postsCount ?? 0).kmFormatted) " + "posts".localized().uppercaseFirst
+            statsLabel.text = "\(subscribersCount.kmFormatted) " +
+                String(format: NSLocalizedString("followers-count", comment: ""), subscribersCount) + " • " + "\(postsCount.kmFormatted) " + String(format: NSLocalizedString("post-count", comment: ""))
         }
         
-
         // joinButton
         if isMyFeed {
             joinButton.isHidden = true

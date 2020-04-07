@@ -147,13 +147,13 @@ class BaseSignUpVC: BaseViewController {
     
     @objc func tapSignInLabel(gesture: UITapGestureRecognizer) {
        guard let text = signInLabel.text else {return}
-       AnalyticsManger.shared.goToSingIn()
        let signInRange = (text as NSString).range(of: "sign in".localized().uppercaseFirst)
 
        let nc = navigationController
        if gesture.didTapAttributedTextInLabel(label: signInLabel, inRange: signInRange) {
            navigationController?.popViewController(animated: true, {
                let signInVC = SignInVC()
+               AnalyticsManger.shared.goToSignIn()
                nc?.pushViewController(signInVC)
            })
        }

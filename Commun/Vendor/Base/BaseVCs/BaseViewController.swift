@@ -20,8 +20,12 @@ class BaseViewController: UIViewController {
     }
     
     // MARK: - Properties
-    lazy var disposeBag = DisposeBag()
+    override var preferredStatusBarStyle: UIStatusBarStyle {statusBarStyle}
     var prefersNavigationBarStype: NavigationBarStyle {.normal()}
+    private var statusBarStyle: UIStatusBarStyle = .default
+    
+    lazy var disposeBag = DisposeBag()
+    var shouldHideTabBar: Bool {false}
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -40,16 +44,28 @@ class BaseViewController: UIViewController {
         super.viewWillAppear(animated)
         
         configureNavigationBar()
+        changeStatusBarStyle(preferredStatusBarStyle)
+        
+        if shouldHideTabBar {
+            setTabBarHidden(true)
+        }
     }
     
-    override func willMove(toParent parent: UIViewController?) {
-        super.willMove(toParent: parent)
-        
-        // reset navigation bar after poping
-        if parent == nil,
-            let vc = baseNavigationController?.previousController as? BaseViewController
-        {
-            vc.configureNavigationBar()
+    override func viewWillDisappear(_ animated: Bool) {
+        if shouldHideTabBar {
+            setTabBarHidden(false)
+        }
+    }
+    
+    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
+        switch prefersNavigationBarStype {
+        case .normal:
+            baseNavigationController?.changeStatusBarStyle(style)
+        case .hidden:
+            self.statusBarStyle = style
+            setNeedsStatusBarAppearanceUpdate()
+        case .embeded:
+            return
         }
     }
     
@@ -57,22 +73,19 @@ class BaseViewController: UIViewController {
         switch prefersNavigationBarStype {
         case .normal(let translucent, let backgroundColor, let font, let textColor, let prefersLargeTitle):
             navigationController?.navigationBar.isTranslucent = translucent
-            let img = UIImage()
-            navigationController?.navigationBar.setBackgroundImage(img, for: .default)
-            navigationController?.navigationBar.barStyle = .default
-            navigationController?.navigationBar.barTintColor = backgroundColor
-            navigationController?.navigationBar.subviews.first?.backgroundColor = backgroundColor
+            
+            setNavigationBarBackgroundColor(backgroundColor)
             
             // set title style
-            navigationController?.navigationBar.tintColor = textColor
-            navigationController?.navigationBar.setTitleFont(font, color: textColor)
-            navigationController?.setNavigationBarHidden(false, animated: false)
+            setNavigationBarTitleStyle(textColor: textColor, font: font)
             
-            // remove navigationBar default shadow
-            let img2 = UIImage()
-            navigationController?.navigationBar.shadowImage = img2
+            // bar buttons
+            navigationItem.leftBarButtonItem?.tintColor = textColor
+            navigationItem.rightBarButtonItem?.tintColor = textColor
             
             navigationController?.navigationBar.prefersLargeTitles = prefersLargeTitle
+            
+            navigationController?.setNavigationBarHidden(false, animated: false)
         case .hidden:
             navigationController?.setNavigationBarHidden(true, animated: false)
         case .embeded:
@@ -105,9 +118,10 @@ class BaseViewController: UIViewController {
 //        }
     }
     
-    func setTabBarHidden(_ value: Bool) {
-        tabBarController?.tabBar.isHidden = true
-        if let tabBarVC = tabBarController as? TabBarVC {
+    private func setTabBarHidden(_ value: Bool) {
+        let vc: UIViewController? = isModal ? presentingViewController : self
+        vc?.tabBarController?.tabBar.isHidden = true
+        if let tabBarVC = vc?.tabBarController as? TabBarVC {
             tabBarVC.setTabBarHiden(value)
         }
     }

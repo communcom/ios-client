@@ -167,7 +167,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
                         case 1:
                             sectionLabel = "yesterday".localized().uppercaseFirst
                         default:
-                            sectionLabel = "\(key) " + "days ago".localized()
+                            sectionLabel = String(format: NSLocalizedString("%d day", comment: ""), key) + " " + "ago".localized()
                         }
                         return ListSection(model: sectionLabel, items: dictionary[key] ?? [])
                     }

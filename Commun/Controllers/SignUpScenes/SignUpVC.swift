@@ -70,7 +70,6 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         super.setUp()
         AnalyticsManger.shared.openRegistrationSelection()
 
-        AnalyticsManger.shared.registrationOpenScreen(0)
         // set up stack view
         for method in methods {
             let methodView = UIView(height: 44, backgroundColor: method.backgroundColor, cornerRadius: 6)
@@ -133,6 +132,7 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         // Sign up with phone
         if method.serviceName == phoneServiceName {
             let signUpVC = SignUpWithPhoneVC()
+            AnalyticsManger.shared.registrationOpenScreen(.phone)
             show(signUpVC, sender: nil)
             return
         }
@@ -140,6 +140,7 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         // Sign up with email
         if method.serviceName == emailServiceName {
             let signUpVC = SignUpWithEmailVC()
+            AnalyticsManger.shared.registrationOpenScreen(.email)
             show(signUpVC, sender: nil)
             return
         }
@@ -148,10 +149,10 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         var manager: SocialLoginManager
         if method.serviceName == SocialNetwork.facebook.rawValue {
             manager = FacebookLoginManager()
-            AnalyticsManger.shared.openFacebookSignUp()
+            AnalyticsManger.shared.registrationOpenScreen(.facebook)
         } else if method.serviceName == SocialNetwork.google.rawValue {
             manager = GoogleLoginManager()
-            AnalyticsManger.shared.openGoogleSignUp()
+            AnalyticsManger.shared.registrationOpenScreen(.google)
         } else {
             return
         }
@@ -164,12 +165,6 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
             }
             .subscribe(onSuccess: { (identity) in
                 self.hideHud()
-
-                if method.serviceName == SocialNetwork.facebook.rawValue {
-                    AnalyticsManger.shared.getFacebookSignUpData()
-                } else {
-                    AnalyticsManger.shared.getGoogleSignUpData()
-                }
 
                 try? KeychainManager.save([
                     Config.registrationStepKey: CurrentUserRegistrationStep.setUserName.rawValue,

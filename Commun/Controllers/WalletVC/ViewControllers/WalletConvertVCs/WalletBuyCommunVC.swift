@@ -216,7 +216,7 @@ class WalletBuyCommunVC: WalletConvertVC {
                                               symbol: symbol,
                                               operationDate: Date())
                 
-                let completedVC = TransactionCompletedVC(transaction: transaction)
+                let completedVC = TransactionInfoVC(transaction: transaction)
                 self.show(completedVC, sender: nil)
 
                 return RestAPIManager.instance.waitForTransactionWith(id: transactionId)

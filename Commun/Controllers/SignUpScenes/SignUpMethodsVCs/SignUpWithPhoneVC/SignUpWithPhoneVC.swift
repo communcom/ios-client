@@ -40,14 +40,6 @@ class SignUpWithPhoneVC: BaseSignUpMethodVC {
     }()
     
     // MARK: - Methods
-    override func setUp() {
-        super.setUp()
-        AnalyticsManger.shared.registrationOpenScreen(2)
-        
-        // get location
-        updateLocation()
-    }
-    
     override func setUpInputViews() {
         // select country view
         scrollView.contentView.addSubview(selectCountryView)

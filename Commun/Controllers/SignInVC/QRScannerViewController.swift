@@ -17,7 +17,6 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
 
     override func setUp() {
         super.setUp()
-        AnalyticsManger.shared.startQRScanner()
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         scan()
     }

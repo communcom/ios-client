@@ -281,7 +281,6 @@ extension UIViewController {
                     // hashtag
                     let vc = SearchablePostsVC(keyword: "#" + hashtag)
                     self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                    self.baseNavigationController?.changeStatusBarStyle(.default)
                     self.show(vc, sender: self)
                     return
                 }
@@ -406,7 +405,7 @@ extension UIViewController {
         self.present(cardVC, animated: true, completion: nil)
     }
     
-    func showAttention(title: String = "attention".localized().uppercaseFirst, subtitle: String, descriptionText: String, backButtonLabel: String = "back".localized().uppercaseFirst, ignoreButtonLabel: String, ignoreAction: @escaping () -> Void, backAction: (() -> Void)? = nil)
+    func    showAttention(title: String = "attention".localized().uppercaseFirst, subtitle: String, descriptionText: String, backButtonLabel: String = "back".localized().uppercaseFirst, ignoreButtonLabel: String, ignoreAction: @escaping () -> Void, backAction: (() -> Void)? = nil)
     {
         let attentionView = AttentionView(
             title: title,
@@ -420,6 +419,23 @@ extension UIViewController {
         showCardWithView(attentionView)
     }
 
+    // MARK: - Navigation controller
+    func setNavigationBarBackgroundColor(_ backgroundColor: UIColor) {
+        let img = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(img, for: .default)
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.barTintColor = backgroundColor
+        navigationController?.navigationBar.subviews.first?.backgroundColor = backgroundColor
+        
+        let img2 = UIImage()
+        navigationController?.navigationBar.shadowImage = img2
+    }
+    
+    func setNavigationBarTitleStyle(textColor: UIColor, font: UIFont) {
+        navigationController?.navigationBar.tintColor = textColor
+        navigationController?.navigationBar.setTitleFont(font, color: textColor)
+    }
+    
     // MARK: - Actions
     @objc func hideKeyboard() {
         view.endEditing(true)
@@ -457,18 +473,6 @@ extension UIViewController {
 
          scrollToTop(view: self.view)
      }
-    
-    func showNavigationBar(_ show: Bool, animated: Bool = false, completion: (() -> Void)? = nil) {
-        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
-        baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
-        UIView.animate(withDuration: animated ? 0.3 : 0) {
-            self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear
-            self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
-                show ? .black: .clear)
-            self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
-            completion?()
-        }
-    }
     
     func appLiked() {
         if !CMAppLike.verify() {

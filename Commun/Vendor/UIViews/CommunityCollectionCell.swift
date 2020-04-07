@@ -76,9 +76,9 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
         self.coverImageView.setImageDetectGif(with: community.coverUrl)
         
         nameLabel.text = community.name
-        
-        descriptionLabel.text = "\((community.subscribersCount ?? 0).kmFormatted) " + "members".localized().uppercaseFirst
-        
+
+        let count: Int64 = community.subscribersCount ?? 0
+        descriptionLabel.text = "\(count.kmFormatted) " + String(format: NSLocalizedString("members-count", comment: ""), count)
         // joinButton
         let joined = community.isSubscribed ?? false
         joinButton.setHightLight(joined, highlightedLabel: "following", unHighlightedLabel: "follow")

@@ -13,6 +13,7 @@ import RxDataSources
 
 class PostPageVC: CommentsViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
+    override var shouldHideTabBar: Bool {true}
     
     // MARK: - Constants
     let navigationBarHeight: CGFloat = 56
@@ -48,17 +49,6 @@ class PostPageVC: CommentsViewController {
     }
     
     // MARK: - Life cycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setTabBarHidden(true)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        setTabBarHidden(false)
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

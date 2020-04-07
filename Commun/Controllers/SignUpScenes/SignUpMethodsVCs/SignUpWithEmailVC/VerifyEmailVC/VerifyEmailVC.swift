@@ -31,13 +31,12 @@ class VerifyEmailVC: BaseVerifyVC {
     
     override func setUp() {
         super.setUp()
-        // TODO: - Analystic manager
-//        AnalyticsManger.shared.registrationOpenScreen(3)
+        AnalyticsManger.shared.openEmailCodeView()
         
         subtitleLabel.text = "an email has been sent with".localized().uppercaseFirst
         subtitleLabel.textColor = .a5a7bd
     }
-    
+
     override func bind() {
         super.bind()
         textField.delegate = self
@@ -85,23 +84,18 @@ class VerifyEmailVC: BaseVerifyVC {
             popToPreviousVC()
             return
         }
-        
-        // TODO: - AnalyticsManger
-//        AnalyticsManger.shared.smsCodeResend()
+
+        AnalyticsManger.shared.resendEmailCode()
         
         super.resendButtonTapped()
     }
     
     override var verificationCompletable: Completable {
-        // TODO: - AnalyticsManger
-//        AnalyticsManger.shared.smsCodeEntered()
         return RestAPIManager.instance.verifyEmail(code: code).flatMapToCompletable()
             .do(onError: { (error) in
-                // TODO: - ANalyticsManager
-//                AnalyticsManger.shared.smsCodeError()
+                AnalyticsManger.shared.emailCodeEntered(answer: false)
             }, onCompleted: {
-                // TODO: - ANalyticsManager
-//                AnalyticsManger.shared.smsCodeRight()
+                AnalyticsManger.shared.emailCodeEntered(answer: true)
             })
     }
     

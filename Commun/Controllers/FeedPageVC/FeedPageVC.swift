@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 
 final class FeedPageVC: PostsViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     // MARK: - Properties
@@ -120,12 +121,9 @@ final class FeedPageVC: PostsViewController {
         floatView.setUp(with: filter)
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
-    
     // MARK: - Actions
     @objc func promoGetButtonDidTouch() {
+        AnalyticsManger.shared.clickGetDankMeme()
         headerView.getButton.showLoading(cover: true, coverColor: .appMainColor, spinnerColor: .white, size: 20)
         RestAPIManager.instance.getAirdrop(communityId: "DANK")
             .subscribe(onSuccess: { (_) in

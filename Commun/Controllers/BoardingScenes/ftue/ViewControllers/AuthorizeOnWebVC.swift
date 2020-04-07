@@ -58,6 +58,7 @@ class AuthorizeOnWebVC: BaseViewController {
     }
     
     @objc func buttonDoneDidTouch() {
+        AnalyticsManger.shared.clickDoneONB()
         completion?()
     }
 }

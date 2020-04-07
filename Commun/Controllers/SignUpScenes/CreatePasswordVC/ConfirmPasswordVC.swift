@@ -45,19 +45,24 @@ class ConfirmPasswordVC: CreatePasswordVC {
     override func validationDidComplete() {
         guard currentPassword == textField.text else {
             showErrorWithLocalizedMessage("passwords do not match")
+            AnalyticsManger.shared.passwordConfirmed(available: false)
             return
         }
-        
+
+        AnalyticsManger.shared.passwordConfirmed(available: true)
         self.view.endEditing(true)
         showAttention()
     }
 
     private func showAttention() {
+        AnalyticsManger.shared.openScreenAttention()
         showAttention(subtitle: "master password attention note".localized().uppercaseFirst,
                       descriptionText: "unfortunately, blockchain doesn’t allow us".localized().uppercaseFirst,
                       ignoreButtonLabel: "continue".localized().uppercaseFirst, ignoreAction: {
+                            AnalyticsManger.shared.saveItMassterPassword()
                             self.sendData()
                         }, backAction: {
+                            AnalyticsManger.shared.clickBackupAttention()
                             self.savePasswordToIcloud()
         })
     }
@@ -99,7 +104,6 @@ class ConfirmPasswordVC: CreatePasswordVC {
                     }
                 } else {
                     self?.sendData()
-                    AnalyticsManger.shared.passwordBackuped()
                 }
             }
         }

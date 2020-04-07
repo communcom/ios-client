@@ -110,7 +110,7 @@ class PostEditorVC: EditorVC {
         
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
-        headerLabel.text = String(format: "$@ %@", (viewModel.postForEdit != nil ? "edit" : "create").localized().uppercaseFirst, "post".localized())
+        headerLabel.text = (viewModel.postForEdit != nil ? "edit" : "create").localized().uppercaseFirst + " " + "post".localized()
         contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 16, bottom: 100, right: 16)
         
         contentTextView.addLinkDidTouch = { [weak self] in

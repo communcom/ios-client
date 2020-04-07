@@ -14,7 +14,7 @@ struct ShareHelper {
         var urlString = Config.appConfig?.domain ?? "https://commun.com"
 
         if let shareLink = post.url {
-            urlString += shareLink
+            urlString += shareLink + "?invite=\(Config.currentUser?.id ?? "")"
         }
 
         share(urlString: urlString)

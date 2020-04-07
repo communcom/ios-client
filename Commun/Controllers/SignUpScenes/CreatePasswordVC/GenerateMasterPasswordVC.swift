@@ -27,7 +27,7 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        AnalyticsManger.shared.registrationOpenScreen(5)
+        AnalyticsManger.shared.openMasterPasswordGenerated()
         view.backgroundColor = .white
         
         let imageView = UIImageView(imageNamed: "masterkey-save")
@@ -109,8 +109,10 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
                       descriptionText: "unfortunately, blockchain doesn’t allow us".localized().uppercaseFirst,
                       backButtonLabel: "save to iCloud".localized().uppercaseFirst,
                       ignoreButtonLabel: "continue".localized().uppercaseFirst, ignoreAction: {
+                            AnalyticsManger.shared.clickISaveItMasterPassword()
                             self.toBlockchain()
                         }, backAction: {
+                            AnalyticsManger.shared.clickBackupMasterPassword()
                             self.backupIcloudDidTouch()
         })
     }
@@ -136,7 +138,6 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
                     }
                 } else {
                     self?.toBlockchain(saveToIcloud: true)
-                    AnalyticsManger.shared.passwordBackuped()
                 }
             }
         }

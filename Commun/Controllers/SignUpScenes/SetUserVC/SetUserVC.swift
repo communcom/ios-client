@@ -31,7 +31,7 @@ class SetUserVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        AnalyticsManger.shared.registrationOpenScreen(4)
+        AnalyticsManger.shared.openScreenUsername()
         subtitleLabel.text = "create your username".localized().uppercaseFirst
         
         // if username has already been set
@@ -84,9 +84,9 @@ class SetUserVC: BaseSignUpVC, SignUpRouter {
     
     // MARK: - Actions
     @objc func infoButtonTapped() {
-        AnalyticsManger.shared.userNameHelp()
         let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 386.0))))
         showCardWithView(userNameRulesView)
+        AnalyticsManger.shared.userNameEntered(state: "help")
         
         userNameRulesView.completionDismissWithAction = { _ in
             self.dismiss(animated: true, completion: nil)
@@ -100,11 +100,10 @@ class SetUserVC: BaseSignUpVC, SignUpRouter {
     override func nextButtonDidTouch() {
         guard let userName = textField.text,
             viewModel.isUserNameValid(userName) else {
+                AnalyticsManger.shared.userNameEntered(state: "error")
                 return
         }
 
-        AnalyticsManger.shared.userNameEntered()
-        
         self.view.endEditing(true)
         
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
@@ -119,6 +118,7 @@ class SetUserVC: BaseSignUpVC, SignUpRouter {
             .subscribe(onCompleted: {
                 self.hideHud()
                 self.signUpNextStep()
+                AnalyticsManger.shared.userNameEntered(state: "success")
             }, onError: {error in
                 self.hideHud()
                 self.handleSignUpError(error: error)

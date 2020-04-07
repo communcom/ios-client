@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     // MARK: - Properties
@@ -36,6 +37,11 @@ class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         return cell
+    }
+    
+    override func mapItems(items: [ResponseAPIWalletGetBalance]) -> [AnimatableSectionModel<String, ResponseAPIWalletGetBalance>] {
+        let items = items.sorted(by: {$0.balanceValue > $1.balanceValue})
+        return super.mapItems(items: items)
     }
     
     override func handleListEmpty() {
