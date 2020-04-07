@@ -17,6 +17,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     let nextButtonImageName = "next-arrow"
     
     // MARK: - Properties
+    var headerView: FTUECommunitiesHeaderView!
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar(forAutoLayout: ())
         searchBar.searchBarStyle = .minimal
@@ -80,6 +81,17 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     lazy var bottomBar = UIView(backgroundColor: .white)
     
     // MARK: - Methods
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        communitiesCollectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        shadowView.layoutIfNeeded()
+        bottomBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
+    }
+    
     override func setUp() {
         super.setUp()
         AnalyticsManger.shared.successfulRegistration()
@@ -119,12 +131,6 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         bindSearchBar()
         
         observeCommunityFollowed()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        shadowView.layoutIfNeeded()
-        bottomBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
     }
     
     @objc func nextButtonDidTouch() {

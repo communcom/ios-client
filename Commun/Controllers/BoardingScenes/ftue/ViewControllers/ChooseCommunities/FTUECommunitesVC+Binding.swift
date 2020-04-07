@@ -19,11 +19,24 @@ extension FTUECommunitiesVC: CommunityCellDelegate {
             .map {$0.y + self.communitiesCollectionView.contentInset.top}
             .share()
         
-//        offsetY
-//            .map { $0 > 30 }
-//            .distinctUntilChanged()
-//            .bind(to: headerView.rx.isHidden)
-//            .disposed(by: disposeBag)
+        offsetY
+            .map { $0 > 30 }
+            .distinctUntilChanged()
+            .subscribe(onNext: { hide in
+                if self.headerView != nil {
+                    if !hide {
+                        self.headerView.addSearchBar(self.searchBar)
+                    } else {
+                        self.headerView.removeSearchBar()
+                    }
+                    self.communitiesCollectionView.collectionViewLayout.invalidateLayout()
+                }
+                
+            })
+            .disposed(by: disposeBag)
+        
+        communitiesCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     func bindCommunities() {
@@ -56,7 +69,7 @@ extension FTUECommunitiesVC: CommunityCellDelegate {
         
         // items
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<Section>(
-            configureCell: { (dataSource, collectionView, indexPath, model) -> UICollectionViewCell in
+            configureCell: { (_, collectionView, indexPath, model) -> UICollectionViewCell in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCollectionCell", for: indexPath) as! FTUECommunityCell
                 cell.setUp(with: model)
                 cell.delegate = self
@@ -69,8 +82,9 @@ extension FTUECommunitiesVC: CommunityCellDelegate {
             },
             configureSupplementaryView: {(_, collectionView, kind, indexPath) -> UICollectionReusableView in
                 if kind == UICollectionView.elementKindSectionHeader {
-                    let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: FTUECommunitiesHeaderView.self, for: indexPath)
-                    return headerView
+                    self.headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: FTUECommunitiesHeaderView.self, for: indexPath)
+                    self.headerView.addSearchBar(self.searchBar)
+                    return self.headerView
                 }
                 fatalError()
             }
@@ -167,5 +181,22 @@ extension FTUECommunitiesVC: CommunityCellDelegate {
                 self?.viewModel.chosenCommunities.accept(chosenCommunities)
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if let headerView = collectionView.visibleSupplementaryViews(ofKind: UICollectionView.elementKindSectionHeader).first as? FTUECommunitiesHeaderView {
+            headerView.layoutIfNeeded()
+            // Automagically get the right height
+            let height = headerView.contentView.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize).height
+
+            // return the correct size
+            return CGSize(width: collectionView.frame.width, height: height + 10)
+        }
+        // You need this because this delegate method will run at least
+        // once before the header is available for sizing.
+        // Returning zero will stop the delegate from trying to get a supplementary view
+        return CGSize(width: 1, height: 1)
     }
 }
