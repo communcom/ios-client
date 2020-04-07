@@ -12,7 +12,9 @@ import RxSwift
 
 class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     // MARK: - Enums
-    struct Filter: FilterType {
+    struct Filter: FilterType, Codable {
+        static let filterKey = "currentUserFeedFilterKey"
+        
         var feedTypeMode: FeedTypeMode
         var feedType: FeedSortMode
         var sortType: FeedTimeFrameMode?
@@ -20,6 +22,19 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         var userId: String?
         var communityId: String?
         var communityAlias: String?
+        
+        func save() throws {
+            UserDefaults.standard.set(try JSONEncoder().encode(self), forKey: Filter.filterKey)
+        }
+        
+        static var feed: Filter {
+            guard let data = UserDefaults.standard.data(forKey: Filter.filterKey),
+                let filter = try? JSONDecoder().decode(Filter.self, from: data)
+            else {
+                return PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time, userId: Config.currentUser?.id)
+            }
+            return filter
+        }
         
         func newFilter(
             withFeedTypeMode feedTypeMode: FeedTypeMode? = nil,

@@ -22,7 +22,7 @@ final class FeedPageVC: PostsViewController {
     
     // MARK: - Initializers
     init() {
-        let viewModel = FeedPageViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time, userId: Config.currentUser?.id), prefetch: true)
+        let viewModel = FeedPageViewModel(prefetch: true)
         super.init(viewModel: viewModel)
     }
     
@@ -119,6 +119,14 @@ final class FeedPageVC: PostsViewController {
         super.filterChanged(filter: filter)
         // feedTypeMode
         floatView.setUp(with: filter)
+        
+        // save filter
+        do {
+            try filter.save()
+        } catch {
+            print(error)
+        }
+        
     }
     
     // MARK: - Actions
