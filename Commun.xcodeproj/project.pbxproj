@@ -378,6 +378,7 @@
 		BCABF13D2366EA14006B05F5 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF13C2366EA14006B05F5 /* ProfileHeaderView.swift */; };
 		BCAF5B20241B433400C157B5 /* ViewTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF5B1F241B433400C157B5 /* ViewTag.swift */; };
 		BCAF5B24241B78DF00C157B5 /* WalletConvertVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF5B23241B78DF00C157B5 /* WalletConvertVC+Binding.swift */; };
+		BCAFEC8C243C2722003A1DC4 /* FTUECommunitiesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAFEC8B243C2722003A1DC4 /* FTUECommunitiesHeaderView.swift */; };
 		BCAFFF2F24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */; };
@@ -885,6 +886,7 @@
 		BCABF13C2366EA14006B05F5 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		BCAF5B1F241B433400C157B5 /* ViewTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTag.swift; sourceTree = "<group>"; };
 		BCAF5B23241B78DF00C157B5 /* WalletConvertVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WalletConvertVC+Binding.swift"; sourceTree = "<group>"; };
+		BCAFEC8B243C2722003A1DC4 /* FTUECommunitiesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunitiesHeaderView.swift; sourceTree = "<group>"; };
 		BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCommunityExplanationView.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
@@ -2045,6 +2047,7 @@
 				BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */,
 				BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */,
 				BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */,
+				BCAFEC8B243C2722003A1DC4 /* FTUECommunitiesHeaderView.swift */,
 			);
 			path = ChooseCommunities;
 			sourceTree = "<group>";
@@ -3133,6 +3136,7 @@
 				BC8F814823E27ECE0024C04A /* WalletCarouselWrapper.swift in Sources */,
 				3B8DDF65234B219D00B213F0 /* ArticleEditorVC+TextViewDelegate.swift in Sources */,
 				BC597A67238B9C2600103F4F /* CustomHeightPresentationController.swift in Sources */,
+				BCAFEC8C243C2722003A1DC4 /* FTUECommunitiesHeaderView.swift in Sources */,
 				BC384F1A23862C580021A2A9 /* CommunityPageVC+Actions.swift in Sources */,
 				BCD3BC8B23AB313E0036C947 /* UIStackView+Extensions.swift in Sources */,
 				BC7D608E237BF4E7007D8C1A /* BlacklistFetcher.swift in Sources */,

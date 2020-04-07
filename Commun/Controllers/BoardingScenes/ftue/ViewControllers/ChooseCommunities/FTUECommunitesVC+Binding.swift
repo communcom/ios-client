@@ -8,8 +8,11 @@
 
 import Foundation
 import RxSwift
+import RxDataSources
 
-extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDelegate {
+extension FTUECommunitiesVC: CommunityCellDelegate {
+    typealias Section = AnimatableSectionModel<String, ResponseAPIContentGetCommunity>
+    
     func bindControl() {
         let offsetY = communitiesCollectionView.rx
             .contentOffset
@@ -17,9 +20,13 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .share()
         
         offsetY
-            .map { $0 > 30 }
             .distinctUntilChanged()
-            .bind(to: headerView.rx.isHidden)
+            .subscribe(onNext: { offsetY in
+                var constant = 112 - offsetY
+                if constant < 0 {constant = 0}
+                self.searchBarTopConstraint?.constant = constant
+                self.view.layoutIfNeeded()
+            })
             .disposed(by: disposeBag)
     }
     
@@ -52,6 +59,27 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .disposed(by: disposeBag)
         
         // items
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<Section>(
+            configureCell: { (_, collectionView, indexPath, model) -> UICollectionViewCell in
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCollectionCell", for: indexPath) as! FTUECommunityCell
+                cell.setUp(with: model)
+                cell.delegate = self
+                cell.shouldShowBonus = (self.viewModel.chosenCommunities.value.count < 3)
+                
+                if indexPath.row >= self.viewModel.items.value.count - 3 {
+                    self.viewModel.fetchNext()
+                }
+                return cell
+            },
+            configureSupplementaryView: {(_, collectionView, kind, indexPath) -> UICollectionReusableView in
+                if kind == UICollectionView.elementKindSectionHeader {
+                    let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: FTUECommunitiesHeaderView.self, for: indexPath)
+                    return headerView
+                }
+                fatalError()
+            }
+        )
+        
         viewModel.mergedItems
             .map { items -> [ResponseAPIContentGetCommunity] in
                 var items = items
@@ -64,18 +92,8 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
                 return items
             }
             .skip(1)
-            .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: FTUECommunityCell.self)) { index, model, cell in
-                cell.setUp(with: model)
-                cell.delegate = self
-                cell.shouldShowBonus = (self.viewModel.chosenCommunities.value.count < 3)
-                
-                if index >= self.viewModel.items.value.count - 3 {
-                    self.viewModel.fetchNext()
-                }
-            }
-            .disposed(by: disposeBag)
-        
-        communitiesCollectionView.rx.setDelegate(self)
+            .map {[Section(model: "", items: $0)]}
+            .bind(to: communitiesCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         // chosenCommunity
@@ -153,12 +171,5 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
                 self?.viewModel.chosenCommunities.accept(chosenCommunities)
             })
             .disposed(by: disposeBag)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.width - collectionView.contentInset.left - collectionView.contentInset.right
-        let horizontalSpacing: CGFloat = 16 * Config.heightRatio
-        let itemWidth = (width - horizontalSpacing) / 2
-        return CGSize(width: itemWidth, height: 190)
     }
 }
