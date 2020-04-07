@@ -33,6 +33,7 @@ final class FeedPageVC: PostsViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+       
         view.backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
         
         // tableView
@@ -59,6 +60,7 @@ final class FeedPageVC: PostsViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         let height = floatView.height
         
         if floatViewHeight == 0 {
