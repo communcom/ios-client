@@ -77,7 +77,8 @@ class TransactionInfoVC: BaseViewController {
         
         buttonStackView.addArrangedSubviews(isHistoryMode ? [repeatButton] : [homeButton, backToWalletButton])
         
-        buttonStackView.autoPinEdge(.bottom, to: .bottom, of: view, withOffset: .adaptive(height: -20.0))
+        buttonStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: .adaptive(height: -20.0))
+            .isActive = true
         
         homeButton.addTarget(self, action: #selector(homeButtonDidTouch), for: .touchUpInside)
         repeatButton.addTarget(self, action: #selector(repeatsButtonDidTouch), for: .touchUpInside)
