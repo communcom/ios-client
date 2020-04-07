@@ -29,6 +29,16 @@ class SetUserVC: BaseSignUpVC, SignUpRouter {
     }()
     
     // MARK: - Methods
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        textField.becomeFirstResponder()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        textField.resignFirstResponder()
+    }
+    
     override func setUp() {
         super.setUp()
         AnalyticsManger.shared.openScreenUsername()

@@ -17,7 +17,10 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     let nextButtonImageName = "next-arrow"
     
     // MARK: - Properties
-    var headerView: FTUECommunitiesHeaderView!
+    var searchBarTopConstraint: NSLayoutConstraint?
+    
+    // MARK: - Subviews
+    lazy var searchContainerView = UIView(backgroundColor: .white)
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar(forAutoLayout: ())
         searchBar.searchBarStyle = .minimal
@@ -37,8 +40,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         let horizontalSpacing: CGFloat = 16 * Config.heightRatio
         let itemWidth = (width - horizontalSpacing) / 2
         layout.itemSize = CGSize(width: itemWidth, height: 190)
-        
-        layout.headerReferenceSize = CGSize(width: width, height: 100)
+        layout.headerReferenceSize = CGSize(width: width, height: 132 + searchBar.height + 10)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
@@ -81,24 +83,22 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     lazy var bottomBar = UIView(backgroundColor: .white)
     
     // MARK: - Methods
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        communitiesCollectionView.collectionViewLayout.invalidateLayout()
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         shadowView.layoutIfNeeded()
         bottomBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
+        searchBar.roundCorner()
     }
     
     override func setUp() {
         super.setUp()
         AnalyticsManger.shared.successfulRegistration()
         
+        layoutSearchBar()
+        
         // collectionView
         view.addSubview(communitiesCollectionView)
-        communitiesCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+        communitiesCollectionView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
         
         // bottomBar
         view.addSubview(shadowView)
@@ -117,6 +117,8 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         chosenCommunitiesCollectionView.autoPinEdge(.trailing, to: .leading, of: nextButton, withOffset: -10)
         chosenCommunitiesCollectionView.register(FTUEChosenCommunityCell.self, forCellWithReuseIdentifier: "FTUEChosenCommunityCell")
         chosenCommunitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        
+        view.bringSubviewToFront(searchContainerView)
     }
 
     @objc func refresh() {
@@ -154,7 +156,17 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     
     // MARK: - Search
     func layoutSearchBar() {
-        // do nothing
+        searchContainerView.addSubview(searchBar)
+        searchBar.autoPinEdge(toSuperviewEdge: .leading, withInset: 8)
+        searchBar.autoPinEdge(toSuperviewEdge: .trailing, withInset: 8)
+        searchBar.autoPinEdge(toSuperviewEdge: .top)
+        searchBar.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        searchBar.sizeToFit()
+        
+        view.addSubview(searchContainerView)
+        searchBarTopConstraint = searchContainerView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 132)
+        searchContainerView.autoPinEdge(toSuperviewEdge: .leading)
+        searchContainerView.autoPinEdge(toSuperviewEdge: .trailing)
     }
     
     func searchBarIsSearchingWithQuery(_ query: String) {

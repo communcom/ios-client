@@ -11,8 +11,6 @@ import Foundation
 class FTUECommunitiesHeaderView: UICollectionReusableView {
     lazy var contentView = UIView(forAutoLayout: ())
     lazy var descriptionLabel = UILabel.with(textSize: 17 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0)
-    var bottomConstraint: NSLayoutConstraint?
-    var searchBar: UISearchBar?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,7 +28,7 @@ class FTUECommunitiesHeaderView: UICollectionReusableView {
         contentView.autoPinEdgesToSuperviewEdges()
         
         // titleLabel
-        let titleLabel = UILabel.with(text: "get you first points".localized().uppercaseFirst, textSize: 33 * Config.heightRatio, weight: .bold, numberOfLines: 0)
+        let titleLabel = UILabel.with(text: "get your first points".localized().uppercaseFirst, textSize: 33 * Config.heightRatio, weight: .bold, numberOfLines: 0)
         contentView.addSubview(titleLabel)
         titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
         
@@ -43,28 +41,6 @@ class FTUECommunitiesHeaderView: UICollectionReusableView {
         descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 16 * Config.heightRatio)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        bottomConstraint = descriptionLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-    }
-    
-    func addSearchBar(_ sb: UISearchBar) {
-        if searchBar == nil {
-            searchBar = sb
-            bottomConstraint?.isActive = false
-            contentView.addSubview(searchBar!)
-            searchBar!.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 25 * Config.heightRatio)
-            searchBar!.autoPinEdge(toSuperviewEdge: .leading, withInset: -8)
-            searchBar!.autoPinEdge(toSuperviewEdge: .trailing, withInset: -8)
-            
-            bottomConstraint = searchBar!.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-        }
-    }
-    
-    func removeSearchBar() {
-        if searchBar != nil {
-            bottomConstraint?.isActive = false
-            searchBar?.removeFromSuperview()
-            bottomConstraint = descriptionLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-            searchBar = nil
-        }
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 25 + 56 + 10)
     }
 }

@@ -20,22 +20,13 @@ extension FTUECommunitiesVC: CommunityCellDelegate {
             .share()
         
         offsetY
-            .map { $0 > 30 }
             .distinctUntilChanged()
-            .subscribe(onNext: { hide in
-                if self.headerView != nil {
-                    if !hide {
-                        self.headerView.addSearchBar(self.searchBar)
-                    } else {
-                        self.headerView.removeSearchBar()
-                    }
-                    self.communitiesCollectionView.collectionViewLayout.invalidateLayout()
-                }
-                
+            .subscribe(onNext: { offsetY in
+                var constant = 112 - offsetY
+                if constant < 0 {constant = 0}
+                self.searchBarTopConstraint?.constant = constant
+                self.view.layoutIfNeeded()
             })
-            .disposed(by: disposeBag)
-        
-        communitiesCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     }
     
@@ -82,9 +73,8 @@ extension FTUECommunitiesVC: CommunityCellDelegate {
             },
             configureSupplementaryView: {(_, collectionView, kind, indexPath) -> UICollectionReusableView in
                 if kind == UICollectionView.elementKindSectionHeader {
-                    self.headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: FTUECommunitiesHeaderView.self, for: indexPath)
-                    self.headerView.addSearchBar(self.searchBar)
-                    return self.headerView
+                    let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: FTUECommunitiesHeaderView.self, for: indexPath)
+                    return headerView
                 }
                 fatalError()
             }
@@ -181,22 +171,5 @@ extension FTUECommunitiesVC: CommunityCellDelegate {
                 self?.viewModel.chosenCommunities.accept(chosenCommunities)
             })
             .disposed(by: disposeBag)
-    }
-}
-
-extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if let headerView = collectionView.visibleSupplementaryViews(ofKind: UICollectionView.elementKindSectionHeader).first as? FTUECommunitiesHeaderView {
-            headerView.layoutIfNeeded()
-            // Automagically get the right height
-            let height = headerView.contentView.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize).height
-
-            // return the correct size
-            return CGSize(width: collectionView.frame.width, height: height + 10)
-        }
-        // You need this because this delegate method will run at least
-        // once before the header is available for sizing.
-        // Returning zero will stop the delegate from trying to get a supplementary view
-        return CGSize(width: 1, height: 1)
     }
 }
