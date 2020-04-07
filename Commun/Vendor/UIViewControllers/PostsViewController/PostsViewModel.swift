@@ -32,6 +32,21 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         }
     }
     
+    override func shouldUpdateHeightForItem(_ item: ResponseAPIContentGetPost?, withUpdatedItem updatedItem: ResponseAPIContentGetPost?) -> Bool {
+        if let item = item, let updatedItem = updatedItem {
+            if item.document != updatedItem.document {
+                return true
+            }
+            if item.topExplanation != updatedItem.topExplanation {
+                return true
+            }
+            if item.bottomExplanation != updatedItem.bottomExplanation {
+                return true
+            }
+        }
+        return false
+    }
+    
     override func fetchNext(forceRetry: Bool = false) {
         if searchVM.isQueryEmpty {
             super.fetchNext(forceRetry: forceRetry)
