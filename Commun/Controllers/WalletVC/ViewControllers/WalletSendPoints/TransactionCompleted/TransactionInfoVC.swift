@@ -72,6 +72,7 @@ class TransactionInfoVC: BaseViewController {
         scrollView.contentView.addSubview(buttonStackView)
         buttonStackView.autoPinEdge(toSuperviewEdge: .leading)
         buttonStackView.autoPinEdge(toSuperviewEdge: .trailing)
+        buttonStackView.autoPinEdge(toSuperviewEdge: .bottom)
         
         buttonStackView.autoPinEdge(.top, to: .bottom, of: transactionInfoView, withOffset: 34 * Config.heightRatio)
         
