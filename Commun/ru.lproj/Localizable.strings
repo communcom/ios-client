@@ -156,7 +156,7 @@
 "follows you" = "подписан на вас";
 "for posts, comments and likes" = "за посты, комментарии и лайки";
 "for your actions" = "за твои действия";
-"friend" = "друг";
+"friend" = "друга";
 "friends" = "друзья";
 "friends not found" = "друзья не найдены";
 "get" = "получить";
@@ -343,7 +343,7 @@
 "sell" = "продать";
 "selling" = "продажа";
 "send" = "отправить";
-"send points" = "отправить пост";
+"send points" = "отправить поинты";
 "send post" = "пост";
 "send report" = "пожаловаться";
 "sending post" = "отправка сообщения";
