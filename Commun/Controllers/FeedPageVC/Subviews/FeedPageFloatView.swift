@@ -46,7 +46,7 @@ final class FeedPageFloatView: MyView {
         case .subscriptions:
             headerLabel.text = "my Feed".localized().uppercaseFirst
             changeFeedTypeButton.setTitle("trending".localized().uppercaseFirst, for: .normal)
-        case .hot, .new:
+        case .hot, .new, .topLikes:
             headerLabel.text = "trending".localized().uppercaseFirst
             changeFeedTypeButton.setTitle("my Feed".localized().uppercaseFirst, for: .normal)
         default:

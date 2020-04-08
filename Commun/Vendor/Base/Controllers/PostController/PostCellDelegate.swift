@@ -36,6 +36,13 @@ extension PostCellDelegate where Self: BaseViewController {
         
         var actions = [CommunActionSheet.Action]()
         
+        actions.append(
+            CommunActionSheet.Action(
+                title: "view in Explorer".localized().uppercaseFirst,
+                handle: { self.load(url: "https://explorer.cyberway.io/trx/\(post.meta.trxId ?? "")") }
+            )
+        )
+        
         if let community = post.community, let isSubscribed = community.isSubscribed {
             let actionProperties = self.setupAction(isSubscribed: isSubscribed)
             
