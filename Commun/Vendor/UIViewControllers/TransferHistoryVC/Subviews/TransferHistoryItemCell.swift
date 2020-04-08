@@ -47,10 +47,6 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         iconImageView.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: 2)
         iconImageView.autoPinEdge(.trailing, to: .trailing, of: avatarImageView, withOffset: 2)
         
-        contentLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        amountStatusLabel.setContentHuggingPriority(.required, for: .horizontal)
-        amountStatusLabel.setContentHuggingPriority(.required, for: .vertical)
-        
         stackView.addArrangedSubviews([avatarContainerView, contentLabel, amountStatusLabel])
     }
     
