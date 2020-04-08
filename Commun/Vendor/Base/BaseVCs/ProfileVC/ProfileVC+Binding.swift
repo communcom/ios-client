@@ -65,13 +65,13 @@ extension ProfileVC {
                     strongSelf._headerView.hideLoader()
                     let backButtonOriginTintColor = strongSelf.navigationItem.leftBarButtonItem?.tintColor
                     strongSelf.navigationItem.leftBarButtonItem?.tintColor = .black
-                    strongSelf.view.showErrorView(title: "Error", subtitle: error.localizedDescription) {
+                    strongSelf.view.showErrorView(title: "Error".localized(), subtitle: error.localizedDescription) {
                         strongSelf.view.hideErrorView()
                         strongSelf.navigationItem.leftBarButtonItem?.tintColor = backButtonOriginTintColor
                         strongSelf.reload()
                     }
                 }
-            })
+            })  
             .disposed(by: disposeBag)
         
         // list loading state

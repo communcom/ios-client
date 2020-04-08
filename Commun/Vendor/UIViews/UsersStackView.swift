@@ -113,8 +113,8 @@ class UsersStackView: MyView {
             }
             
             let label1 = UILabel.with(text: "+\((i - 3).kmFormatted)", textSize: 15, weight: .bold)
-            let label2 = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
-            
+            let label2 = UILabel.with(text: String(format: NSLocalizedString("friend-count", comment: ""), (i - 3)), textSize: 12, weight: .bold, textColor: .gray)
+
             addSubview(label1)
             label1.autoPinEdge(.leading, to: .trailing, of: avatarsStackView, withOffset: 5)
             label1.autoAlignAxis(.horizontal, toSameAxisOf: avatarsStackView)

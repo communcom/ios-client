@@ -97,7 +97,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     lazy var walletButton: UIButton = {
         let button = UIButton(width: 99,
                               height: 35,
-                              label: String(format: "%@ %@", "get".localized().uppercaseFirst, "points".localized()),
+                              label: "get points".localized().uppercaseFirst,
                               labelFont: UIFont.systemFont(ofSize: 15, weight: .medium),
                               backgroundColor: .white,
                               textColor: .appMainColor,
@@ -255,9 +255,11 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             .bold(" ")
             .bold(String(format: NSLocalizedString("leaders-count", comment: ""), leadersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
         leadersCountLabel.attributedText = aStr2
-        
+
         // friends
         if let friends = community.friends, friends.count > 0 {
+            let count = friends.count > 3 ? friends.count - 3 : friends.count
+            friendLabel.text = String(format: NSLocalizedString("friend-count", comment: ""), count)
             usersStackView.setUp(with: friends)
             friendLabel.isHidden = false
         } else {

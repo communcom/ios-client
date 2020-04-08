@@ -8,8 +8,8 @@
   https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/AboutInformationPropertyListFiles.html
 */
 
-NSCameraUsageDescription                =   "Нам нужен доступ к камере вашего устройства для сканирования QR-кода";
-NSFaceIDUsageDescription                =   "Нам нужен доступ к FaceID для идентификации пользователя";
-NSLocationWhenInUseUsageDescription     =   "Нам нужно ваше местоположение для определения содержимого и настроек, которые подходят для вас";
-NSPhotoLibraryUsageDescription          =   "Нам нужен доступ к альбому вашего устройства, чтобы показать фотографии";
-NSPhotoLibraryAddUsageDescription       =   "Нам нужен доступ к альбому вашего устройства, чтобы показать фотографии";
+NSCameraUsageDescription                =   "Разрешите доступ к камере вашего устройства для сканирования QR-кода";
+NSFaceIDUsageDescription                =   "Разрешите доступ к FaceID для идентификации пользователя";
+NSLocationWhenInUseUsageDescription     =   "Разрешите доступ к местоположению для автозаполнения страны";
+NSPhotoLibraryUsageDescription          =   "Разрешите доступ к фотографиям вашего телефона, чтобы добавлять их в приложении";
+NSPhotoLibraryAddUsageDescription       =   "Разрешите доступ к фотографиям вашего телефона, чтобы сохранять изображения";

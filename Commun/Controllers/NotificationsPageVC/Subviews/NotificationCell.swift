@@ -156,7 +156,6 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
             avatarImageView.addTapToOpenUserProfile(profileId: userId)
         }
 
-        avatarImageView.isHidden = avatarUrl == nil
         avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: avatarPlaceholder)
     }
 }

@@ -49,7 +49,7 @@ extension Date {
 
         // Minute
         if let interval = Calendar.current.dateComponents([.minute], from: fromDate, to: toDate).minute, interval > 0 {
-            return String(format: NSLocalizedString("%d month", comment: ""), interval) + " " + "ago".localized()
+            return String(format: NSLocalizedString("%d minute", comment: ""), interval) + " " + "ago".localized()
         }
 
         return "a moment ago".localized()

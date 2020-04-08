@@ -45,7 +45,7 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
         titleLabel.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 13)
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        let descriptionLabel = UILabel.with(text: "of your identity", textSize: 33 * Config.heightRatio)
+        let descriptionLabel = UILabel.with(text: "of your identity".localized(), textSize: 33 * Config.heightRatio)
         view.addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel)
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .vertical)

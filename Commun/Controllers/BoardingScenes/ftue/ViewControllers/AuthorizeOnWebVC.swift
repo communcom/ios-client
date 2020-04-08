@@ -34,9 +34,11 @@ class AuthorizeOnWebVC: BaseViewController {
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor)
             .isActive = true
         
-        let label1 = UILabel.with(text: "authorize on web".localized().uppercaseFirst, textSize: 33 * Config.heightRatio, weight: .bold)
+        let label1 = UILabel.with(text: "authorize on web".localized().uppercaseFirst, textSize: 33 * Config.heightRatio, weight: .bold, numberOfLines: 0, textAlignment: .center)
         view.addSubview(label1)
         label1.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 27 * Config.heightRatio)
+        label1.autoPinEdge(toSuperviewEdge: .left, withInset: 15)
+        label1.autoPinEdge(toSuperviewEdge: .right, withInset: 15)
         label1.autoAlignAxis(toSuperviewAxis: .vertical)
         
         let label2 = UILabel.with(text: "double your points".localized().uppercaseFirst, textSize: 33 * Config.heightRatio)

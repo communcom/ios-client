@@ -1,3 +1,8 @@
+"of your identity" = "of your identity";
+"lowercase" = "lowercase";
+"uppercase" = "uppercase";
+"number" = "number";
+"min length" = "min length";
 "Attempt to abuse" = "Attempt to abuse";
 "False News" = "False News";
 "Harassment" = "Harassment";
@@ -471,3 +476,17 @@
 "a moment ago" = "a moment ago";
 "How do I get rewards for my posts?" = "How do I get rewards for my posts?";
 "After you publish the post, community members will have 48 hours to like or dislike it. If your post reaches the Top 10 posts of the day, you will be rewarded." = "After you publish the post, community members will have 48 hours to like or dislike it. If your post reaches the Top 10 posts of the day, you will be rewarded.";
+"mentioned you in a" = "mentioned you in a";
+"liked your" = "liked your";
+"it's a referral bounty -" = "it's a referral bounty -";
+"'s purchase" = "'s purchase";
+"of" = "of";
+"get points" = "get points";
+"Username may contain only lower case letters, digits, dots or dashes" = "Username may contain only lower case letters, digits, dots or dashes";
+"Username should start with a letter" = "Username should start with a letter";
+"Username should contain at least 3 symbols" = "Username should contain at least 3 symbols";
+"Username is too long. 32 symbols are maximum" = "Username is too long. 32 symbols are maximum";
+"Username may contain only one dash in a row" = "Username may contain only one dash in a row";
+"Username may contain only one dot in a row" = "Username may contain only one dot in a row";
+"Username may contain only one dot or one dash in a row" = "Username may contain only one dot or one dash in a row";
+"Username should end with a letter or a digit" = "Username should end with a letter or a digit";

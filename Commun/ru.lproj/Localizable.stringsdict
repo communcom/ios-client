@@ -2,6 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>friend-count</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@day@</string>
+        <key>day</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>друзуй</string>
+            <key>one</key>
+            <string>друг</string>
+            <key>two</key>
+            <string>друга</string>
+            <key>few</key>
+            <string>друга</string>
+            <key>many</key>
+            <string>друзей</string>
+            <key>other</key>
+            <string>друзей</string>
+        </dict>
+    </dict>
 	<key>%d day</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -72,6 +96,30 @@
             <string>%d месяцев</string>
             <key>other</key>
             <string>%d месяцев</string>
+        </dict>
+    </dict>
+    <key>%d minute</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@month@</string>
+        <key>month</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>%d минут</string>
+            <key>one</key>
+            <string>%d минуту</string>
+            <key>two</key>
+            <string>%d минуты</string>
+            <key>few</key>
+            <string>%d минуты</string>
+            <key>many</key>
+            <string>%d минут</string>
+            <key>other</key>
+            <string>%d минут</string>
         </dict>
     </dict>
     <key>%d followers</key>
