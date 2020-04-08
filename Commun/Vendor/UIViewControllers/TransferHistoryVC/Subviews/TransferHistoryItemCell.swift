@@ -26,7 +26,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         return imageView
     }()
     lazy var contentLabel = UILabel.with(text: "Ivan Bilin\nTransaction", textSize: 15, weight: .semibold, numberOfLines: 0)
-    lazy var amountStatusLabel = UILabel.with(text: "-500 Commun\nOn hold", textSize: 15, weight: .semibold, numberOfLines: 0, textAlignment: .right)
+    lazy var amountStatusLabel = UILabel.with(text: "-500 Commun\nOn hold", textSize: 15, weight: .semibold, numberOfLines: 2, textAlignment: .right)
     
     // MARK: - Methods
     override func setUpViews() {
@@ -136,6 +136,13 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             avatarImageView.image = UIImage(named: "notifications-page-referral")
             iconImageView.isHidden = false
             iconImageView.image = UIImage(named: "tux")
+        case "referralPurchaseBonus":
+            username = item.sender.username ?? item.sender.userId
+            memo = NSMutableAttributedString()
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .plus)
+            avatarImageView.image = UIImage(named: "notifications-page-referral")
+            iconImageView.isHidden = false
+            iconImageView.image = UIImage(named: "tux")
         default:
             username = ""
             memo = NSMutableAttributedString()
@@ -154,6 +161,14 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 .semibold("you received a referral bonus for the registration of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
                 .semibold(" ")
                 .semibold(item.referral?.username ?? item.referral?.userId ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appMainColor)
+        } else if item.meta.actionType == "referralPurchaseBonus" {
+            content
+                .semibold("you received a referral bounty - 5% of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold(" ")
+                .semibold(item.referral?.username ?? item.referral?.userId ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appMainColor)
+                .semibold("'s", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold(" ")
+                .semibold("purchase".localized(), font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
         } else {
             content
                 .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
