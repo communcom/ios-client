@@ -17,6 +17,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
     var item: ResponseAPIWalletGetTransferHistoryItem?
     
     // MARK: - Subviews
+    lazy var stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
     lazy var containerView = UIView(backgroundColor: .white)
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     lazy var iconImageView: UIImageView = {
@@ -35,33 +36,22 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         contentView.addSubview(containerView)
         containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         
-        containerView.addSubview(avatarImageView)
-        avatarImageView.autoPinTopAndLeadingToSuperView(inset: 10, xInset: 16)
-        avatarImageView.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
-            .isActive = true
+        containerView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 16, vertical: 10))
         
-        containerView.addSubview(iconImageView)
+        let avatarContainerView = UIView(forAutoLayout: ())
+        avatarContainerView.addSubview(avatarImageView)
+        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 2, right: 2))
+        
+        avatarContainerView.addSubview(iconImageView)
         iconImageView.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: 2)
         iconImageView.autoPinEdge(.trailing, to: .trailing, of: avatarImageView, withOffset: 2)
         
-        containerView.addSubview(contentLabel)
-        contentLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        contentLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        contentLabel.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 10)
-            .isActive = true
-        contentLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
-            .isActive = true
         contentLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        
-        containerView.addSubview(amountStatusLabel)
-        amountStatusLabel.autoPinEdge(.leading, to: .trailing, of: contentLabel, withOffset: 10)
-        amountStatusLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        amountStatusLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        amountStatusLabel.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 10)
-            .isActive = true
-        amountStatusLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
-            .isActive = true
         amountStatusLabel.setContentHuggingPriority(.required, for: .horizontal)
+        amountStatusLabel.setContentHuggingPriority(.required, for: .vertical)
+        
+        stackView.addArrangedSubviews([avatarContainerView, contentLabel, amountStatusLabel])
     }
     
     func setUp(with item: ResponseAPIWalletGetTransferHistoryItem) {
