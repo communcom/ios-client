@@ -134,11 +134,12 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             memo = NSMutableAttributedString()
                 .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .plus)
             avatarImageView.image = UIImage(named: "notifications-page-referral")
+            iconImageView.isHidden = false
             iconImageView.image = UIImage(named: "tux")
         default:
             username = ""
             memo = NSMutableAttributedString()
-            avatarImageView.isHidden = true
+            avatarImageView.image = UIImage(named: "empty-avatar")
             iconImageView.isHidden = true
         }
         
