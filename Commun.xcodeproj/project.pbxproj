@@ -1292,6 +1292,7 @@
 				3BB32F1423438C1F006572F3 /* CommunActionSheet */,
 				3BC613AB23420FFC00075570 /* SwipeDownToDismissViewController */,
 				B10DB96A240FB99B001BD0E4 /* CMFeedbackViewController.swift */,
+				BC067E592436EAE900D770AC /* TransactionInfoVC.swift */,
 			);
 			path = UIViewControllers;
 			sourceTree = "<group>";
@@ -2289,7 +2290,6 @@
 			isa = PBXGroup;
 			children = (
 				BC8F813123E27ECE0024C04A /* ConfirmPasscodeVC.swift */,
-				BC067E592436EAE900D770AC /* TransactionInfoVC.swift */,
 			);
 			path = TransactionCompleted;
 			sourceTree = "<group>";

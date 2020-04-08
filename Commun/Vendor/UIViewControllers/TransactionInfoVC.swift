@@ -28,6 +28,10 @@ class TransactionInfoVC: BaseViewController {
         !["buy", "sell", "send"].contains(transaction.actionType)
     }
     
+    var isReferral: Bool {
+        transaction.actionType?.starts(with: "referral") == true
+    }
+    
     // MARK: - Subviews
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     lazy var transactionInfoView = CMTransactionInfoView(transaction: transaction)
@@ -76,7 +80,12 @@ class TransactionInfoVC: BaseViewController {
         
         buttonStackView.autoPinEdge(.top, to: .bottom, of: transactionInfoView, withOffset: 34 * Config.heightRatio)
         
-        buttonStackView.addArrangedSubviews(isHistoryMode ? [repeatButton] : [homeButton, backToWalletButton])
+        var arrangedSubviews = [UIView]()
+        if !isReferral {
+            arrangedSubviews = isHistoryMode ? [repeatButton] : [homeButton, backToWalletButton]
+        }
+        
+        buttonStackView.addArrangedSubviews(arrangedSubviews)
         
         buttonStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: .adaptive(height: -20.0))
             .isActive = true
