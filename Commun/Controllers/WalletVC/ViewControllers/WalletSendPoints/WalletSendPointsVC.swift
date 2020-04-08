@@ -14,7 +14,7 @@ import CircularCarousel
 
 class WalletSendPointsVC: BaseViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
-    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true)}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .white)}
     override var shouldHideTabBar: Bool {true}
     
     // MARK: - Properties
@@ -344,7 +344,6 @@ class WalletSendPointsVC: BaseViewController {
     private func setupNavBar() {
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
         if self.dataModel.transaction.symbol != Symbol(sell: "CMN", buy: "CMN") {
             setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(pointsListButtonDidTouch))
