@@ -215,7 +215,7 @@ class WalletSellCommunVC: WalletConvertVC {
                 let symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: balance.symbol)
 
                 let transaction = Transaction(amount: CGFloat(value * self.viewModel.rate.value / 10),
-                                              actionType: .sell,
+                                              actionType: "sell",
                                               symbol: symbol,
                                               operationDate: Date())
 

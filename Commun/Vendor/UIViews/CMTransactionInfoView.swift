@@ -164,12 +164,12 @@ class CMTransactionInfoView: MyView {
         
         // set up
         switch transaction.actionType {
-        case .buy, .sell:
+        case "buy", "sell":
             buyerNameLabel.text = transaction.buyBalance!.name
             buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
             buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
 
-        case .convert:
+        case "convert":
             buyerNameLabel.text = transaction.buyBalance!.name
             buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
             if transaction.symbol.buy == Config.defaultSymbol {

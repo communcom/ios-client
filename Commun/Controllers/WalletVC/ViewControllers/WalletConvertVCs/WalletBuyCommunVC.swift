@@ -212,7 +212,7 @@ class WalletBuyCommunVC: WalletConvertVC {
                                               friend: nil,
                                               amount: CGFloat(expectedValue ?? 0),
                                               history: nil,
-                                              actionType: .buy,
+                                              actionType: "buy",
                                               symbol: symbol,
                                               operationDate: Date())
                 

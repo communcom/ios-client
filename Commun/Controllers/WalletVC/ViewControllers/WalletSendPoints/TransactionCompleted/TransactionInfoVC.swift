@@ -25,7 +25,7 @@ class TransactionInfoVC: BaseViewController {
     var completionRepeat: (() -> Void)?
     var transaction: Transaction {viewModel.transaction}
     var isHistoryMode: Bool {
-        !["buy", "sell", "send"].contains(transaction.actionType.rawValue)
+        !["buy", "sell", "send"].contains(transaction.actionType)
     }
     
     // MARK: - Subviews
