@@ -118,7 +118,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         case "hold":
             username = item.meta.holdType?.localized().uppercaseFirst ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .plus)
             
             avatarImageView.image = UIImage(named: "wallet-like")
             iconImageView.isHidden = true
@@ -129,9 +129,16 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             
             avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
             iconImageView.isHidden = true
+        case "referralRegisterBonus":
+            username = item.sender.username ?? item.sender.userId
+            memo = NSMutableAttributedString()
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .plus)
+            avatarImageView.image = UIImage(named: "notifications-page-referral")
+            iconImageView.image = UIImage(named: "tux")
         default:
             username = ""
             memo = NSMutableAttributedString()
+            avatarImageView.isHidden = true
             iconImageView.isHidden = true
         }
         
@@ -140,7 +147,16 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         
         content
             .normal("\n")
-            .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+            
+        if item.meta.actionType == "referralRegisterBonus" {
+            content
+                .semibold("you received a referral bonus for the registration of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold(" ")
+                .semibold(item.referral?.username ?? item.referral?.userId ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appMainColor)
+        } else {
+            content
+                .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+        }
     
         contentLabel.attributedText = content
         
