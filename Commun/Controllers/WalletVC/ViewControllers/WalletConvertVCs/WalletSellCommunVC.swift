@@ -219,7 +219,7 @@ class WalletSellCommunVC: WalletConvertVC {
                                               symbol: symbol,
                                               operationDate: Date())
 
-                let completedVC = TransactionInfoVC(transaction: transaction)
+                let completedVC = TransactionCompletedVC(transaction: transaction)
                 self.show(completedVC, sender: nil)
 
                 self.hideHud()

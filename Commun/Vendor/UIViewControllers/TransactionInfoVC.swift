@@ -10,26 +10,15 @@ import Foundation
 
 class TransactionInfoVC: BaseViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
-    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {
-        if transaction.history == nil {
-            return .normal(translucent: true, backgroundColor: .appMainColor, textColor: .white)
-        } else {
-            return .hidden
-        }
-    }
-    
-    override var shouldHideTabBar: Bool {true}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     // MARK: - Propertes
+    var backgroundColor: UIColor {#colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)}
     let viewModel = SendPointsModel()
     var completionRepeat: (() -> Void)?
     var transaction: Transaction {viewModel.transaction}
-    var isHistoryMode: Bool {
-        !["buy", "sell", "send"].contains(transaction.actionType)
-    }
-    
-    var isReferral: Bool {
-        transaction.actionType?.starts(with: "referral") == true
+    private var shouldShowRepeatButton: Bool {
+        transaction.actionType?.starts(with: "referral") == false
     }
     
     // MARK: - Subviews
@@ -38,10 +27,7 @@ class TransactionInfoVC: BaseViewController {
     
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     
-    lazy var homeButton = UIButton(height: 56 * Config.heightRatio, label: "home".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .bold), backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1), textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1), cornerRadius: 28 * Config.heightRatio)
-    
-    lazy var backToWalletButton = UIButton(height: 56 * Config.heightRatio, label: "back to wallet".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .bold), backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1), textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), cornerRadius: 28 * Config.heightRatio)
-    lazy var repeatButton = UIButton(height: 56 * Config.heightRatio, label: "repeat".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .bold), backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1), textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), cornerRadius: 28 * Config.heightRatio)
+    private lazy var repeatButton = UIButton(height: 56 * Config.heightRatio, label: "repeat".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .bold), backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1), textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), cornerRadius: 28 * Config.heightRatio)
     
     // MARK: - Initializers
     init(transaction: Transaction) {
@@ -56,12 +42,7 @@ class TransactionInfoVC: BaseViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        if transaction.history == nil {
-            title = "send points".localized().uppercaseFirst
-            view.backgroundColor =  #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
-        } else {
-            view.backgroundColor = #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
-        }
+        view.backgroundColor = backgroundColor
         
         view.addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 40.0), vertical: .adaptive(height: 20.0)))
@@ -80,26 +61,26 @@ class TransactionInfoVC: BaseViewController {
         
         buttonStackView.autoPinEdge(.top, to: .bottom, of: transactionInfoView, withOffset: 34 * Config.heightRatio)
         
-        var arrangedSubviews = [UIView]()
-        if !isReferral {
-            arrangedSubviews = isHistoryMode ? [repeatButton] : [homeButton, backToWalletButton]
-        }
-        
-        buttonStackView.addArrangedSubviews(arrangedSubviews)
-        
         buttonStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: .adaptive(height: -20.0))
             .isActive = true
         
-        homeButton.addTarget(self, action: #selector(homeButtonDidTouch), for: .touchUpInside)
-        repeatButton.addTarget(self, action: #selector(repeatsButtonDidTouch), for: .touchUpInside)
-        backToWalletButton.addTarget(self, action: #selector(backToWalletButtonDidTouch), for: .touchUpInside)
-        
-        // dismiss
-        if transaction.history != nil {
-            view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissWithCompletion)))
-        }
+        setUpButtonStackView()
+        viewDidSetUpButtonStackView()
         
         loadBalances()
+    }
+    
+    func setUpButtonStackView() {
+        if shouldShowRepeatButton {
+            buttonStackView.addArrangedSubview(repeatButton)
+        }
+    }
+    
+    func viewDidSetUpButtonStackView() {
+        if shouldShowRepeatButton {
+            repeatButton.addTarget(self, action: #selector(repeatsButtonDidTouch), for: .touchUpInside)
+        }
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissWithCompletion)))
     }
     
     private func loadBalances() {
@@ -119,27 +100,7 @@ class TransactionInfoVC: BaseViewController {
         }
     }
     
-    override func configureNavigationBar() {
-        super.configureNavigationBar()
-        
-        if transaction.history == nil {
-            setLeftNavBarButtonForGoingBack(tintColor: .white)
-            
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(stopBarButtonTapped))
-        }
-    }
-    
     // MARK: - Actions
-    @objc func homeButtonDidTouch() {
-        // Return to `Feed` page
-        if let tabBarVC = tabBarController as? TabBarVC {
-            tabBarVC.setTabBarHiden(false)
-            tabBarVC.switchTab(index: 0)
-            navigationController?.popToRootViewController(animated: false)
-            tabBarVC.appLiked()
-        }
-    }
-    
     @objc func repeatsButtonDidTouch() {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
         dismissWithCompletion()
@@ -150,15 +111,11 @@ class TransactionInfoVC: BaseViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func backToWalletButtonDidTouch() {
-        backToWallet()
-    }
-    
     @objc func stopBarButtonTapped(_ sender: UIBarButtonItem) {
         backToWallet()
     }
     
-    private func backToWallet() {
+    func backToWallet() {
         if let walletVC = navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {
             navigationController?.popToViewController(walletVC, animated: true)
             walletVC.viewModel.reload()

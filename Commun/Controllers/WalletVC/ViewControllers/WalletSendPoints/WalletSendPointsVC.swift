@@ -513,7 +513,7 @@ class WalletSendPointsVC: BaseViewController {
                 .subscribe(onCompleted: { [weak self] in
                     guard let strongSelf = self else { return }
                     
-                    let completedVC = TransactionInfoVC(transaction: strongSelf.dataModel.transaction)
+                    let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
                     strongSelf.show(completedVC, sender: nil)
 
                     strongSelf.hideHud()
