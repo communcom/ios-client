@@ -67,7 +67,7 @@ class CommunWalletVC: TransferHistoryVC {
     
     // MARK: - Initializers
     convenience init() {
-        self.init(viewModel: WalletViewModel(symbol: "CMN"))
+        self.init(viewModel: WalletViewModel(symbol: "all"))
     }
     
     // MARK: - Class Functions
