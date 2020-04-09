@@ -23,7 +23,7 @@ class CMTransactionInfoView: MyView {
     
     lazy var buyerBalanceOrFriendIDLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
     
-    lazy var blueBottomView = UIView(height: 30 + 36 * Config.heightRatio, backgroundColor: .appMainColor, cornerRadius: 16 * Config.heightRatio)
+    lazy var blueBottomView = UIView(height: 30 + 36 * Config.heightRatio, backgroundColor: UIColor(hexString: "#8EA0FF")!, cornerRadius: 16 * Config.heightRatio)
     
     // MARK: - Initializers
     init(transaction: Transaction) {
