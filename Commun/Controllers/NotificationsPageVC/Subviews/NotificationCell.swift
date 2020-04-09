@@ -22,7 +22,17 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
     lazy var avatarImageView = MyAvatarImageView(size: 44)
     lazy var iconImageView = MyAvatarImageView(size: 22)
     lazy var contentContainerView = UIView(forAutoLayout: ())
-    lazy var contentLabel = UILabel.with(text: "Notification", textSize: 15, numberOfLines: 4)
+    lazy var contentTextView: UITextView = {
+        let textView = LinkResponsiveTextView(forExpandable: ())
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        textView.isSelectable = false
+        textView.showsVerticalScrollIndicator = false
+        textView.showsHorizontalScrollIndicator = false
+        textView.textContainer.lineFragmentPadding = 0
+        textView.textContainerInset = .zero
+        return textView
+    }()
     lazy var timestampLabel = UILabel.with(text: "ago", textSize: 13, textColor: .a5a7bd)
     lazy var descriptionImageView: UIImageView = {
         let imageView = UIImageView(width: 44, height: 44, cornerRadius: 10)
@@ -54,13 +64,13 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         contentView.bottomAnchor.constraint(greaterThanOrEqualTo: contentContainerView.bottomAnchor, constant: 16)
             .isActive = true
         
-        contentContainerView.addSubview(contentLabel)
-        contentLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        contentLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        contentContainerView.addSubview(contentTextView)
+        contentTextView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        contentTextView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
         contentContainerView.addSubview(timestampLabel)
         timestampLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        timestampLabel.autoPinEdge(.top, to: .bottom, of: contentLabel, withOffset: 2)
+        timestampLabel.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 2)
         timestampLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
         // pin trailing of content
@@ -93,7 +103,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         var userId = (item.author ?? item.voter ?? item.user)?.userId
         
         // content
-        contentLabel.attributedText = item.attributedContent
+        contentTextView.attributedText = item.attributedContent
         
         switch item.eventType {
         case "mention":
