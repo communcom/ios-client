@@ -260,6 +260,21 @@ extension UIViewController {
     func handleUrl(url: URL) {
         let path = Array(url.path.components(separatedBy: "/").dropFirst())
         
+        // Wallet link
+        if url.absoluteString.starts(with: "commun://wallet/"),
+            let symbol = path.last,
+            symbol.count > 0
+        {
+            if symbol == "CMN" {
+                let cmnWallet = CommunWalletVC()
+                show(cmnWallet, sender: self)
+            } else {
+                let otherWallet = OtherBalancesWalletVC(symbol: symbol)
+                show(otherWallet, sender: self)
+            }
+            return
+        }
+        
         // Check if link is a commun.com link
         if url.absoluteString.starts(with: URL.appURL) &&
             (path.count == 1 || path.count == 3)
