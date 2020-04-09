@@ -36,8 +36,7 @@ class TransactionCompletedVC: TransactionInfoVC {
     
     override func configureNavigationBar() {
         super.configureNavigationBar()
-        setLeftNavBarButtonForGoingBack(tintColor: .white)
-        
+        navigationItem.setHidesBackButton(true, animated: false)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(stopBarButtonTapped))
     }
     

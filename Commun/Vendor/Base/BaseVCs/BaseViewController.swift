@@ -46,15 +46,11 @@ class BaseViewController: UIViewController {
         configureNavigationBar()
         changeStatusBarStyle(preferredStatusBarStyle)
         
-        if shouldHideTabBar {
-            setTabBarHidden(true)
-        }
+        setTabBarHidden(shouldHideTabBar)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        if shouldHideTabBar {
-            setTabBarHidden(false)
-        }
+        setTabBarHidden(!shouldHideTabBar)
     }
     
     func changeStatusBarStyle(_ style: UIStatusBarStyle) {
