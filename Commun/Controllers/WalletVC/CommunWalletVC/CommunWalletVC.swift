@@ -12,10 +12,8 @@ import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
-    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .appMainColor)}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: false, backgroundColor: .appMainColor)}
     // MARK: - Properties
-    var headerViewOffsetY: CGFloat = 0.0
-    
     var balancesVM: BalancesViewModel {
         (viewModel as! WalletViewModel).balancesVM
     }
@@ -76,7 +74,6 @@ class CommunWalletVC: TransferHistoryVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.changeNavbar(y: headerViewOffsetY)
         self.setNavBarBackButton(tintColor: .white)
     }
     
@@ -163,7 +160,6 @@ class CommunWalletVC: TransferHistoryVC {
                                         
                     let alpha = ((100 / 50) / 100 * diff) - 1
                     self.barBalanceView.alpha = alpha
-                    self.changeNavbar(y: alpha)
                 } else {
                     let alpha = 1 - ((100 / 50) / 100 * diff)
                     
@@ -181,22 +177,6 @@ class CommunWalletVC: TransferHistoryVC {
                     }
                 }
         }.disposed(by: disposeBag)
-    }
-
-    private func changeNavbar(y: CGFloat) {
-        headerViewOffsetY = y
-        
-        if y >= 2 {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.navigationController?.navigationBar.backgroundColor = .appMainColor
-                self.navigationController?.navigationBar.subviews.first?.backgroundColor = .appMainColor
-            })
-        } else {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.navigationController?.navigationBar.backgroundColor = .clear
-                self.navigationController?.navigationBar.subviews.first?.backgroundColor = .clear
-            })
-        }
     }
     
     override func bindItems() {

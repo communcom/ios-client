@@ -211,10 +211,12 @@ class WalletConvertVC: BaseViewController {
                 switch state {
                 case .loading:
                     if !(self?.rightTextField.isFirstResponder ?? false) {
+                        self?.rightTextField.hideLoader()
                         self?.rightTextField.showLoader()
                     }
                     
                     if !(self?.leftTextField.isFirstResponder ?? false) {
+                        self?.leftTextField.hideLoader()
                         self?.leftTextField.showLoader()
                     }
                     

@@ -234,7 +234,6 @@ class WalletBuyCommunVC: WalletConvertVC {
             .disposed(by: disposeBag)
     }
     
-    
     // MARK: - Actions
     @objc func pointsListButtonDidTouch() {
         let vc = BalancesVC { balance in
