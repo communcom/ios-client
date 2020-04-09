@@ -242,6 +242,8 @@ class CommunWalletVC: TransferHistoryVC {
                 case .loading(let isLoading):
                     if isLoading {
                         self?.headerView.startLoading()
+                        self?.myPointsCollectionView.hideLoader()
+                        self?.sendPointsCollectionView.hideLoader()
                         self?.myPointsCollectionView.showLoader()
                         self?.sendPointsCollectionView.showLoader()
                     } else {

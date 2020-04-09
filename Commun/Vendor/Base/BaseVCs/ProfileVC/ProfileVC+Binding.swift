@@ -57,6 +57,7 @@ extension ProfileVC {
             .subscribe(onNext: { [weak self] loadingState in
                 switch loadingState {
                 case .loading:
+                    self?._headerView.hideLoader()
                     self?._headerView.showLoader()
                 case .finished:
                     self?._headerView.hideLoader()

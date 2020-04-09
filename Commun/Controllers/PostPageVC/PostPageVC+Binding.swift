@@ -122,6 +122,7 @@ extension PostPageVC {
             .subscribe(onNext: { [weak self] loadingState in
                 switch loadingState {
                 case .loading:
+                    self?.postHeaderView.hideLoader()
                     self?.postHeaderView.showLoader()
                 case .finished:
                     self?.postHeaderView.hideLoader()

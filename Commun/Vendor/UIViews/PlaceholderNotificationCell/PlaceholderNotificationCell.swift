@@ -25,6 +25,7 @@ class PlaceholderNotificationCell: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        contentView.hideLoader()
         contentView.showLoader()
     }
 }

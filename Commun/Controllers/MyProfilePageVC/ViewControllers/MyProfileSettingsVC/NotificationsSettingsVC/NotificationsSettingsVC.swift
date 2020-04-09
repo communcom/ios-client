@@ -61,6 +61,7 @@ class NotificationsSettingsVC: VerticalActionsVC, PNAlertViewDelegate {
             .subscribe(onNext: {[weak self] (state) in
                 switch state {
                 case .loading:
+                    self?.stackView.hideLoader()
                     self?.stackView.showLoader()
                 case .finished:
                     self?.stackView.hideLoader()
