@@ -121,12 +121,12 @@ class MyProfilePageVC: UserProfilePageVC {
 //                vc.title = "saved posts".localized().uppercaseFirst
 //                self.show(vc, sender: self)
 //            }),
-            CommunActionSheet.Action(title: "referral".localized().uppercaseFirst,
+            CommunActionSheet.Action(title: "saved souls".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_referral"),
                                      style: .profile,
                                      handle: {
                                         let vc = ReferralUsersVC()
-                                        vc.title = "referral".localized().uppercaseFirst
+                                        vc.title = "saved souls".localized().uppercaseFirst
                                         self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
                                         self.show(vc, sender: self)
             }),
