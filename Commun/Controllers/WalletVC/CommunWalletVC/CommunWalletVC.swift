@@ -50,12 +50,6 @@ class CommunWalletVC: TransferHistoryVC {
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
     var headerViewExpandedHeight: CGFloat = 0
 
-    var balanceView: UIView {
-        let view = UIView(forAutoLayout: ())
-
-        return view
-    }
-
     lazy var barTitleLabel = UILabel.with(text: "Equity Value Commun", textSize: 10, weight: .semibold, textColor: .white, textAlignment: .center)
     lazy var barPointLabel = UILabel.with(text: "167 500.23", textSize: 15, weight: .bold, textColor: .white, textAlignment: .center)
 
