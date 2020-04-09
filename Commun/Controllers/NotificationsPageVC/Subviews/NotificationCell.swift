@@ -11,7 +11,7 @@ import CyberSwift
 
 protocol NotificationCellDelegate: class {}
 
-class NotificationCell: MyTableViewCell, ListItemCellType {
+class NotificationCell: MyTableViewCell, ListItemCellType, UITextViewDelegate {
     // MARK: - Properties
     weak var delegate: NotificationCellDelegate?
     var item: ResponseAPIGetNotificationItem?
@@ -26,7 +26,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         let textView = LinkResponsiveTextView(forExpandable: ())
         textView.isUserInteractionEnabled = true
         textView.isEditable = false
-        textView.isSelectable = false
+//        textView.isSelectable = false
         textView.showsVerticalScrollIndicator = false
         textView.showsHorizontalScrollIndicator = false
         textView.textContainer.lineFragmentPadding = 0
@@ -77,6 +77,8 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         contentTrailingConstraint = contentContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         selectionStyle = .none
+        
+        contentTextView.delegate = self
     }
     
     // MARk: - Methods
@@ -162,5 +164,10 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         }
 
         avatarImageView.setAvatar(urlString: avatarUrl)
+    }
+    
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
+        parentViewController?.handleUrl(url: URL)
+        return true
     }
 }
