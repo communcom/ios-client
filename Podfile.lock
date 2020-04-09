@@ -122,7 +122,6 @@ PODS:
   - ImageViewer.swift (3.0):
     - SDWebImage
     - SwiftyGif
-  - InitialsImageView (0.7.0)
   - libwebp (1.0.3):
     - libwebp/demux (= 1.0.3)
     - libwebp/mux (= 1.0.3)
@@ -203,7 +202,6 @@ DEPENDENCIES:
   - "GoloCrypto (from `git@github.com:communcom/GoloGrypto.git`)"
   - GoogleSignIn (= 5.0.2)
   - ImageViewer.swift (from `https://github.com/communcom/ImageViewer.swift.git`)
-  - InitialsImageView
   - ListPlaceholder
   - Localize-Swift (~> 2.0)
   - Locksmith
@@ -265,7 +263,6 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
-    - InitialsImageView
     - libwebp
     - ListPlaceholder
     - Localize-Swift
@@ -367,7 +364,6 @@ SPEC CHECKSUMS:
   GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
   ImageViewer.swift: a669b8c3599a4ec5bafb087e160b7de580eb7e83
-  InitialsImageView: 7a416d36fc6df5434198664db28a3ffb0228426d
   libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
   ListPlaceholder: 08ddaddf67520a20fc52cf37160fb56aa64d071d
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
@@ -400,6 +396,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 5a4fc1f1135ee23239648a92f655e93b0cf451d6
+PODFILE CHECKSUM: 402b9e29eaf13f66b0c855f22b599bb83ff42b2d
 
 COCOAPODS: 1.9.1

@@ -96,14 +96,14 @@ class BlacklistCell: SubsItemCell, ListItemCellType {
         self.item = item
         switch item {
         case .user(let user):
-            avatarImageView.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)
+            avatarImageView.setAvatar(urlString: user.avatarUrl)
             nameLabel.text = user.username
             actionButton.isEnabled = !(user.isBeingUnblocked ?? false)
             actionButton.setTitle((user.isInBlacklist ?? true) ? "unblock".localized().uppercaseFirst : "reblock".localized().uppercaseFirst, for: .normal)
             actionButton.backgroundColor = !(user.isInBlacklist ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
             actionButton.setTitleColor(!(user.isInBlacklist ?? true) ? .appMainColor : .white, for: .normal)
         case .community(let community):
-            avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
+            avatarImageView.setAvatar(urlString: community.avatarUrl)
             nameLabel.text = community.name
             actionButton.isEnabled = !(community.isBeingUnblocked ?? false)
             actionButton.setTitle((community.isInBlacklist ?? true) ? "unhide".localized().uppercaseFirst : "hide".localized().uppercaseFirst, for: .normal)

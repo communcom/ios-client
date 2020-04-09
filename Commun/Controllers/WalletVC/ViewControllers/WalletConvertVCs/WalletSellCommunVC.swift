@@ -36,7 +36,7 @@ class WalletSellCommunVC: WalletConvertVC {
         
         guard let balance = currentBalance else {return}
         
-        buyLogoImageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
+        buyLogoImageView.setAvatar(urlString: balance.logo)
         buyNameLabel.text = balance.name ?? balance.symbol
         buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
         convertBuyLabel.text = "buy".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"

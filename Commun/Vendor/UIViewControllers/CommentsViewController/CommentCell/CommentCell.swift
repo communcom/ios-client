@@ -107,7 +107,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
 //        leftPaddingConstraint.constant = CGFloat((comment.nestedLevel - 1 > 2 ? 2 : comment.nestedLevel - 1) * 72 + 16)
         
         // avatar
-        avatarImageView.setAvatar(urlString: comment.author?.avatarUrl, namePlaceHolder: comment.author?.username ?? comment.author?.userId ?? "U")
+        avatarImageView.setAvatar(urlString: comment.author?.avatarUrl)
         
         // setContent
         setText()

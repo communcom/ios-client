@@ -319,7 +319,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         let headerView = UIView(height: 40)
         
         let avatarImageView = MyAvatarImageView(size: 40)
-        avatarImageView.setAvatar(urlString: profile.avatarUrl, namePlaceHolder: profile.name)
+        avatarImageView.setAvatar(urlString: profile.avatarUrl)
         headerView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
                 

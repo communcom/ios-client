@@ -46,7 +46,7 @@ class BalanceCell: MyTableViewCell, ListItemCellType {
         if item.symbol == Config.defaultSymbol {
             avatarImageView.image = UIImage(named: "tux")
         } else {
-            avatarImageView.setAvatar(urlString: item.logo, namePlaceHolder: item.name ?? "B")
+            avatarImageView.setAvatar(urlString: item.logo)
         }
         
         var firstText = NSMutableAttributedString()

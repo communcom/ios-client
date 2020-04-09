@@ -167,7 +167,7 @@ class CMTransactionInfoView: MyView {
         case "buy", "sell":
             buyerNameLabel.text = transaction.buyBalance!.name
             buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
-            buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
+            buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL)
 
         case "convert":
             buyerNameLabel.text = transaction.buyBalance!.name
@@ -175,13 +175,13 @@ class CMTransactionInfoView: MyView {
             if transaction.symbol.buy == Config.defaultSymbol {
                 buyerAvatarImageView.image = UIImage(named: "CMN")
             } else {
-                buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
+                buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL)
             }
 
         default:
             buyerNameLabel.text = transaction.friend?.name ?? Config.defaultSymbol
             buyerBalanceOrFriendIDLabel.text = transaction.friend?.id ?? Config.defaultSymbol
-            buyerAvatarImageView.setAvatar(urlString: transaction.friend?.avatarURL, namePlaceHolder: transaction.friend?.name ?? Config.defaultSymbol)
+            buyerAvatarImageView.setAvatar(urlString: transaction.friend?.avatarURL)
         }
         
         // Blue bottom view
@@ -189,8 +189,8 @@ class CMTransactionInfoView: MyView {
         
         let imageView: UIView
         if let sellBalance = transaction.sellBalance, let avatarURL = sellBalance.avatarURL {
-            let avatarImageView = UIImageView.circle(size: 30.0)
-            avatarImageView.setAvatar(urlString: avatarURL, namePlaceHolder: "icon-select-user-grey-cyrcle-default")
+            let avatarImageView = MyAvatarImageView(size: 30.0)
+            avatarImageView.setAvatar(urlString: avatarURL)
             imageView = avatarImageView
         } else {
             let communLogo = UIView.transparentCommunLogo(size: 30.0, backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2))

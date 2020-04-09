@@ -289,7 +289,7 @@ class BuyCommunVC: BaseViewController {
     
     private func setUpWithCurrentCurrency(_ currency: ResponseAPIGetCurrency) {
         // avatar
-        currencyAvatarImageView.setAvatar(urlString: currency.image, namePlaceHolder: currency.name)
+        currencyAvatarImageView.setAvatar(urlString: currency.image)
         
         // name
         currencyNameLabel.text = currency.name.uppercased()

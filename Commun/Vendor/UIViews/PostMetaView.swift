@@ -72,7 +72,7 @@ class PostMetaView: MyView {
     func setUp(post: ResponseAPIContentGetPost) {
         let isMyFeed = post.community?.communityId == "FEED"
         
-        avatarImageView.setAvatar(urlString: isMyFeed ? post.author?.avatarUrl : post.community?.avatarUrl, namePlaceHolder: isMyFeed ? (post.author?.username ?? "U") : (post.community?.name ?? "C"))
+        avatarImageView.setAvatar(urlString: isMyFeed ? post.author?.avatarUrl : post.community?.avatarUrl)
         comunityNameLabel.text = isMyFeed ? post.author?.username : post.community?.name
         subtitleLabel.attributedText = NSMutableAttributedString()
             .text(Date.timeAgo(string: post.meta.creationTime) + " • ", size: 12, weight: .semibold, color: .a5a7bd)

@@ -33,7 +33,7 @@ class CurrencyCell: MyTableViewCell, ListItemCellType {
     
     func setUp(with item: ResponseAPIGetCurrency) {
         self.item = item
-        avatarImageView.setAvatar(urlString: item.image, namePlaceHolder: item.name)
+        avatarImageView.setAvatar(urlString: item.image)
         
         contentLabel.attributedText = NSMutableAttributedString()
             .text(item.name.uppercased(), size: 15, weight: .medium)

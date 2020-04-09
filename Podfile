@@ -35,8 +35,6 @@ def common_pods_commun
   pod 'Action'
   pod 'SwiftyGif', :git => "https://github.com/communcom/SwiftyGif.git"
   
-  pod "InitialsImageView"
-  
   pod 'SwifterSwift/SwiftStdlib', :git => "https://github.com/communcom/SwifterSwift.git"   # Standard Library Extensions
   pod 'SwifterSwift/Foundation', :git => "https://github.com/communcom/SwifterSwift.git"    # Foundation Extensions
   pod 'SwifterSwift/UIKit', :git => "https://github.com/communcom/SwifterSwift.git"         # UIKit Extensions

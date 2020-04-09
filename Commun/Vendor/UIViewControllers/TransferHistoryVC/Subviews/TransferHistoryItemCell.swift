@@ -74,7 +74,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                     .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             }
             
-            avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: username)
+            avatarImageView.setAvatar(urlString: avatarUrl)
             
             iconImageView.isHidden = false
             iconImageView.image = UIImage(named: "tux")
@@ -85,7 +85,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 memo = NSMutableAttributedString()
                     .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
                 iconImageView.isHidden = false
-                avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: item.point.name ?? "C")
+                avatarImageView.setAvatar(urlString: item.point.logo)
                 iconImageView.image = UIImage(named: "tux")
             } else {
                 memo = NSMutableAttributedString()
@@ -99,7 +99,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             memo = NSMutableAttributedString()
                 .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
-            avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
+            avatarImageView.setAvatar(urlString: item.point.logo)
             iconImageView.isHidden = true
         case "hold":
             username = item.meta.holdType?.localized().uppercaseFirst ?? ""
@@ -113,7 +113,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             memo = NSMutableAttributedString()
                 .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
-            avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
+            avatarImageView.setAvatar(urlString: item.point.logo)
             iconImageView.isHidden = true
         case "referralRegisterBonus":
             username = item.sender.username ?? item.sender.userId

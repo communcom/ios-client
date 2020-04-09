@@ -29,7 +29,7 @@ class SubscriptionsCommunityCell: SubsItemCell {
         if isMyFeed {
             avatarImageView.setToCurrentUserAvatar()
         } else {
-            avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
+            avatarImageView.setAvatar(urlString: community.avatarUrl)
         }
         
         nameLabel.text = isMyFeed ? "my feed".localized().uppercaseFirst : community.name

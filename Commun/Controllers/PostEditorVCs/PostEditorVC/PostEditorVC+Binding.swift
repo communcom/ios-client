@@ -104,7 +104,7 @@ extension PostEditorVC {
                     return
                 }
                 if let community = community {
-                    self.communityAvatarImage.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
+                    self.communityAvatarImage.setAvatar(urlString: community.avatarUrl)
                     self.communityNameLabel.text = community.name
                     self.communityNameLabel.textColor = .black
                 } else {

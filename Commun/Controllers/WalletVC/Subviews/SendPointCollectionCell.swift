@@ -40,7 +40,7 @@ class SendPointCollectionCell: MyCollectionViewCell {
     func setUp(with user: ResponseAPIContentGetProfile?) {
         self.user = user
         if let user = user {
-            avatarImageView.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)
+            avatarImageView.setAvatar(urlString: user.avatarUrl)
             nameLabel.text = user.username
         } else {
             // add friend

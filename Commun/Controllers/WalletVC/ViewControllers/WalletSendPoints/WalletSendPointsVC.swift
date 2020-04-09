@@ -410,7 +410,7 @@ class WalletSendPointsVC: BaseViewController {
 
         if let friendName = dataModel.transaction.friend?.name {
             friendNameLabel.text = friendName
-            friendAvatarImageView.addCircleImage(byURL: dataModel.transaction.friend?.avatarURL, withPlaceholderName: friendName, andSide: 40)
+            friendAvatarImageView.addCircleImage(imageURL: dataModel.transaction.friend?.avatarURL, side: 40)
         } else {
             friendNameLabel.text = "select user".localized().uppercaseFirst
         }
@@ -607,7 +607,7 @@ extension WalletSendPointsVC: CircularCarouselDataSource {
         if balance.symbol == Config.defaultSymbol {
             imageView.image = UIImage(named: "tux")
         } else {
-            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
+            imageView.setAvatar(urlString: balance.logo)
         }
 
         updateSellerInfo()

@@ -20,7 +20,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
     // MARK: - Subviews
     lazy var isNewMark = UIView(width: 6, height: 6, backgroundColor: .appMainColor, cornerRadius: 3)
     lazy var avatarImageView = MyAvatarImageView(size: 44)
-    lazy var iconImageView: UIImageView = UIImageView(width: 22, height: 22, cornerRadius: 11)
+    lazy var iconImageView = MyAvatarImageView(size: 22)
     lazy var contentContainerView = UIView(forAutoLayout: ())
     lazy var contentLabel = UILabel.with(text: "Notification", textSize: 15, numberOfLines: 4)
     lazy var timestampLabel = UILabel.with(text: "ago", textSize: 13, textColor: .a5a7bd)
@@ -91,7 +91,6 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         
         var avatarUrl = (item.author ?? item.voter ?? item.user)?.avatarUrl
         var userId = (item.author ?? item.voter ?? item.user)?.userId
-        var avatarPlaceholder = (item.author ?? item.voter ?? item.user)?.username ?? "User"
         
         // content
         contentLabel.attributedText = item.attributedContent
@@ -129,10 +128,8 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
             iconImageView.image = UIImage(named: "notifications-page-reply")
         case "reward":
             avatarUrl = item.community?.avatarUrl
-            avatarPlaceholder = item.community?.name ?? "Community"
         case "transfer":
             avatarUrl = item.from?.avatarUrl
-            avatarPlaceholder = item.from?.username ?? "User"
             if item.from?.username == nil {
                 iconImageView.isHidden = true
                 avatarUrl = "https://commun.com/apple-touch-icon.png"
@@ -140,7 +137,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
             } else if item.from?.username?.lowercased() != "bounty" {
                 iconImageView.isHidden = true
             } else {
-                iconImageView.setAvatar(urlString: item.community?.avatarUrl, namePlaceHolder: item.community?.name ?? "C")
+                iconImageView.setAvatar(urlString: item.community?.avatarUrl)
                 iconImageView.borderWidth = 2
                 iconImageView.borderColor = .white
             }
@@ -155,6 +152,6 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         }
 
         avatarImageView.isHidden = avatarUrl == nil
-        avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: avatarPlaceholder)
+        avatarImageView.setAvatar(urlString: avatarUrl)
     }
 }

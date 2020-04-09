@@ -22,7 +22,7 @@ class SubscribersCell: SubsItemCell, ListItemCellType {
     
     func setUp(with profile: ResponseAPIContentGetProfile) {
         self.profile = profile
-        avatarImageView.setAvatar(urlString: profile.avatarUrl, namePlaceHolder: profile.username)
+        avatarImageView.setAvatar(urlString: profile.avatarUrl)
         nameLabel.text = profile.username
 
         // followButton

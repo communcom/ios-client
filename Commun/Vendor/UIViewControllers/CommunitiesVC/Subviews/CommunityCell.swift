@@ -24,7 +24,7 @@ class CommunityCell: SubsItemCell, ListItemCellType {
     
     func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
-        avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
+        avatarImageView.setAvatar(urlString: community.avatarUrl)
         nameLabel.text = community.name
         
         statsLabel.text = "\((community.subscribersCount ?? 0).kmFormatted) " + "followers".localized().uppercaseFirst + " • " + "\((community.postsCount ?? 0).kmFormatted) " + "posts".localized().uppercaseFirst

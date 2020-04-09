@@ -211,7 +211,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         // avatar
         if let avatarURL = userProfile.avatarUrl {
-            avatarImageView.setAvatar(urlString: avatarURL, namePlaceHolder: userProfile.username)
+            avatarImageView.setAvatar(urlString: avatarURL)
             avatarImageView.addTapToViewer(with: avatarURL)
         }
         
