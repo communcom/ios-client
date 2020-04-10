@@ -9,12 +9,7 @@
 import Foundation
 
 class MyProfilePageViewModel: UserProfilePageViewModel {
-    lazy var subscriptionsVM: SubscriptionsViewModel = {
-        if profileId == Config.currentUser?.id {
-            return SubscriptionsViewModel.ofCurrentUserTypeCommunity
-        }
-        return SubscriptionsViewModel(userId: profileId, type: .community)
-    }()
+    lazy var subscriptionsVM = SubscriptionsViewModel.ofCurrentUserTypeCommunity
     lazy var balancesVM = BalancesViewModel()
     
     override func reload() {

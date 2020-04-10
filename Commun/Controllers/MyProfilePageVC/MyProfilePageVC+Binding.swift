@@ -37,7 +37,6 @@ extension MyProfilePageVC {
         
         // communities
         (viewModel as! MyProfilePageViewModel).subscriptionsVM.items
-            .skip(1)
             .map {$0.compactMap {$0.communityValue}}
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: CommunityCollectionCell.self)) { index, model, cell in
                 cell.setUp(with: model)
