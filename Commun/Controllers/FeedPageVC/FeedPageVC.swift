@@ -120,6 +120,28 @@ final class FeedPageVC: PostsViewController {
             .disposed(by: disposeBag)
     }
     
+    override func modifyFilter(filter: PostsListFetcher.Filter) -> PostsListFetcher.Filter {
+        var filter = filter
+        switch filter.type {
+        case .new, .subscriptions:
+            filter.timeframe = nil
+            if filter.sortBy == nil {
+                filter.sortBy = .time
+            }
+        case .hot, .subscriptionsHot:
+            filter.timeframe = nil
+            filter.sortBy = nil
+        case .topLikes, .subscriptionsPopular:
+            filter.sortBy = nil
+            if filter.timeframe == nil {
+                filter.timeframe = .day
+            }
+        default:
+            break
+        }
+        return filter
+    }
+    
     override func filterChanged(filter: PostsListFetcher.Filter) {
         super.filterChanged(filter: filter)
         floatView.setUp(with: filter)
