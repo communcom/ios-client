@@ -231,6 +231,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         // description
         descriptionLabel.text = nil
         
+        // ticket #909
+        /*
         if let description = community.description {
             if description.count <= 180 {
                 descriptionLabel.text = description
@@ -238,6 +240,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
                 descriptionLabel.text = String(description.prefix(177)) + "..."
             }
         }
+        */
         
         // membersCount
         let aStr = NSMutableAttributedString()
