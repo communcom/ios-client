@@ -86,7 +86,9 @@ extension PostCellDelegate where Self: BaseViewController {
     }
     
     func observeCommunity() {
-        guard let communActionSheet = UIApplication.topViewController() as? CommunActionSheet, let post = communActionSheet.actions?[0].post else { return }
+        guard   let communActionSheet = UIApplication.topViewController() as? CommunActionSheet,
+                let index = communActionSheet.actions?.firstIndex(where: { $0.style == .follow }),
+                let post = communActionSheet.actions?[index].post else { return }
 
         ResponseAPIContentGetCommunity.observeItemChanged()
             .filter { $0.identity == post.community?.identity }
@@ -177,7 +179,9 @@ extension PostCellDelegate where Self: BaseViewController {
     }
     
     func followButtonDidTouch() {
-        guard let communActionSheet = UIApplication.topViewController() as? CommunActionSheet, let community = communActionSheet.actions?[0].post?.community else { return }
+        guard   let communActionSheet = UIApplication.topViewController() as? CommunActionSheet,
+                let index = communActionSheet.actions?.firstIndex(where: { $0.style == .follow }),
+                let community = communActionSheet.actions?[index].post?.community else { return }
        
         communActionSheet.loaderDidStart(withTitle: (community.isSubscribed ?? false ? "follow" : "following").localized().uppercaseFirst)
         
