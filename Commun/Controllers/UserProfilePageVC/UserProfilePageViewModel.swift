@@ -21,7 +21,7 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     // MARK: - Objects
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
-    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .byUser, feedType: .timeDesc, sortType: .all, userId: profileId), prefetch: profileId != nil)
+    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(type: .byUser, sortBy: .timeDesc, timeframe: .all, userId: profileId), prefetch: profileId != nil)
     lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(type: .user, userId: profileId), prefetch: profileId != nil)
     lazy var highlightCommunities = BehaviorRelay<[ResponseAPIContentGetCommunity]>(value: [])
     

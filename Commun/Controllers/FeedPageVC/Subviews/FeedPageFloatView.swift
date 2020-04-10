@@ -41,9 +41,9 @@ final class FeedPageFloatView: MyView {
     }
     
     func setUp(with filter: PostsListFetcher.Filter) {
-        // feedTypeMode
-        switch filter.feedTypeMode {
-        case .subscriptions:
+        // type
+        switch filter.type {
+        case .subscriptions, .subscriptionsHot, .subscriptionsPopular:
             headerLabel.text = "my Feed".localized().uppercaseFirst
             changeFeedTypeButton.setTitle("trending".localized().uppercaseFirst, for: .normal)
         case .hot, .new, .topLikes:

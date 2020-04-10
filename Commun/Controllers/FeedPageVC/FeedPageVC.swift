@@ -121,15 +121,7 @@ final class FeedPageVC: PostsViewController {
     }
     
     override func filterChanged(filter: PostsListFetcher.Filter) {
-        var filter = filter
-        
-        if filter.feedTypeMode != .subscriptions && filter.feedTypeMode != .new && filter.feedTypeMode != .hot && filter.feedTypeMode != .topLikes
-        {
-            filter = PostsListFetcher.Filter.myFeed
-        }
-        
         super.filterChanged(filter: filter)
-        // feedTypeMode
         floatView.setUp(with: filter)
         
         // save filter
@@ -162,10 +154,11 @@ final class FeedPageVC: PostsViewController {
     
     @objc func changeFeedTypeButtonDidTouch(_ sender: Any) {
         guard let viewModel = viewModel as? PostsViewModel else {return}
-        if viewModel.filter.value.feedTypeMode == .subscriptions {
-            viewModel.changeFilter(feedTypeMode: .topLikes, sortType: .day)
-        } else {
-            viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .time)
+        switch viewModel.filter.value.type {
+        case .subscriptions, .subscriptionsPopular, .subscriptionsHot:
+            viewModel.filter.accept(PostsListFetcher.Filter(type: .topLikes, timeframe: .day, userId: Config.currentUser?.id))
+        default:
+            viewModel.filter.accept(PostsListFetcher.Filter(type: .subscriptions, sortBy: .time))
         }
     }
     

@@ -21,7 +21,7 @@ class DiscoveryPostsVC: PostsViewController {
     }
     
     init(prefetch: Bool = true) {
-        super.init(filter: PostsListFetcher.Filter(feedTypeMode: .topLikes, feedType: .time, sortType: .day, userId: Config.currentUser?.id), prefetch: prefetch)
+        super.init(filter: PostsListFetcher.Filter(type: .topLikes, sortBy: .time, timeframe: .day, userId: Config.currentUser?.id), prefetch: prefetch)
     }
     
     required init?(coder: NSCoder) {

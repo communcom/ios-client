@@ -27,7 +27,7 @@ class PostsFilterVC: BaseViewController {
     // MARK: - Initializers
     init(filter: PostsListFetcher.Filter, isTimeFrameMode: Bool = false) {
         self.isTimeFrameMode = isTimeFrameMode
-        self.isTrending = (filter.feedTypeMode == .hot || filter.feedTypeMode == .topLikes || filter.feedTypeMode == .new || filter.feedTypeMode == .community)
+        self.isTrending = (filter.type == .hot || filter.type == .topLikes || filter.type == .new || filter.type == .community)
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
         super.init(nibName: nil, bundle: nil)
     }
@@ -80,17 +80,17 @@ class PostsFilterVC: BaseViewController {
             .map { (filter) -> [(label: String, isSelected: Bool)] in
                 if !self.isTimeFrameMode {
                     return [
-                        (label: FeedTypeMode.hot.localizedLabel!.uppercaseFirst, isSelected: (filter.feedTypeMode == .hot || filter.feedTypeMode == .subscriptionsHot)),
-                        (label: FeedTypeMode.new.localizedLabel!.uppercaseFirst, isSelected: (filter.feedTypeMode == .new || filter.feedTypeMode == .subscriptions)),
-                        (label: FeedTypeMode.topLikes.localizedLabel!.uppercaseFirst, isSelected: (filter.feedTypeMode == .topLikes || filter.feedTypeMode == .subscriptionsPopular))
+                        (label: FeedTypeMode.hot.localizedLabel!.uppercaseFirst, isSelected: (filter.type == .hot || filter.type == .subscriptionsHot)),
+                        (label: FeedTypeMode.new.localizedLabel!.uppercaseFirst, isSelected: (filter.type == .new || filter.type == .subscriptions)),
+                        (label: FeedTypeMode.topLikes.localizedLabel!.uppercaseFirst, isSelected: (filter.type == .topLikes || filter.type == .subscriptionsPopular))
                     ]
                 }
                 
                 return [
-                    (label: FeedTimeFrameMode.day.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .day),
-                    (label: FeedTimeFrameMode.week.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .week),
-                    (label: FeedTimeFrameMode.month.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .month),
-                    (label: FeedTimeFrameMode.all.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .all)
+                    (label: FeedTimeFrameMode.day.localizedLabel.uppercaseFirst, isSelected: filter.timeframe == .day),
+                    (label: FeedTimeFrameMode.week.localizedLabel.uppercaseFirst, isSelected: filter.timeframe == .week),
+                    (label: FeedTimeFrameMode.month.localizedLabel.uppercaseFirst, isSelected: filter.timeframe == .month),
+                    (label: FeedTimeFrameMode.all.localizedLabel.uppercaseFirst, isSelected: filter.timeframe == .all)
                 ]
             }
             .bind(to: self.tableView.rx.items(cellIdentifier: "FilterCell", cellType: FilterCell.self)) { (index, model, cell) in
@@ -117,29 +117,29 @@ class PostsFilterVC: BaseViewController {
                     let newType: FeedTypeMode = self.isTrending ? .new: .subscriptions
                     let popularType: FeedTypeMode = self.isTrending ? .topLikes: .subscriptionsPopular
                     if indexPath.row == 0 {
-                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: hotType, feedType: .time))
+                        self.filter.accept(self.filter.value.newFilter(type: hotType, sortBy: .time))
                     }
                     if indexPath.row == 1 {
-                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: newType, feedType: .time))
+                        self.filter.accept(self.filter.value.newFilter(type: newType, sortBy: .time))
                     }
                     if indexPath.row == 2 {
-                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: popularType))
-                        let vc = PostsFilterVC(filter: self.filter.value.newFilter(sortType: self.filter.value.sortType ?? .all), isTimeFrameMode: true)
+                        self.filter.accept(self.filter.value.newFilter(type: popularType))
+                        let vc = PostsFilterVC(filter: self.filter.value.newFilter(timeframe: self.filter.value.timeframe ?? .all), isTimeFrameMode: true)
                         vc.completion = self.completion
                         self.show(vc, sender: nil)
                     }
                 } else {
                     if indexPath.row == 0 {
-                        self.filter.accept(self.filter.value.newFilter(sortType: .day))
+                        self.filter.accept(self.filter.value.newFilter(timeframe: .day))
                     }
                     if indexPath.row == 1 {
-                        self.filter.accept(self.filter.value.newFilter(sortType: .week))
+                        self.filter.accept(self.filter.value.newFilter(timeframe: .week))
                     }
                     if indexPath.row == 2 {
-                        self.filter.accept(self.filter.value.newFilter(sortType: .month))
+                        self.filter.accept(self.filter.value.newFilter(timeframe: .month))
                     }
                     if indexPath.row == 3 {
-                        self.filter.accept(self.filter.value.newFilter(sortType: .all))
+                        self.filter.accept(self.filter.value.newFilter(timeframe: .all))
                     }
                 }
             })

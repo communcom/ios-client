@@ -134,7 +134,7 @@ class MyProfilePageVC: UserProfilePageVC {
                                      icon: UIImage(named: "profile_options_liked"),
                                      style: .profile,
                                      handle: {
-                                        let vc = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .voted, feedType: .time, userId: Config.currentUser?.id))
+                                        let vc = PostsViewController(filter: PostsListFetcher.Filter(type: .voted, sortBy: .time, userId: Config.currentUser?.id))
                                         vc.title = "liked".localized().uppercaseFirst
                                         self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
                                         self.show(vc, sender: self)

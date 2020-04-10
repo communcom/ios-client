@@ -37,7 +37,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     }
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
-    lazy var postsVM: PostsViewModel = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .community, feedType: .time, sortType: .all, communityId: communityId, communityAlias: communityAlias))
+    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(type: .community, sortBy: .time, timeframe: .all, communityId: communityId, communityAlias: communityAlias))
     lazy var leadsVM = LeadersViewModel(communityId: communityId, communityAlias: communityAlias)
     
     lazy var aboutSubject = PublishSubject<String?>()
