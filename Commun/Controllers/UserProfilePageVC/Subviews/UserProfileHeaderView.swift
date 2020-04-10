@@ -235,8 +235,8 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
                 descriptionLabel.text = String(description.prefix(177)) + "..."
             }
         }
-       
-        // TODO: fix these number later
+        
+        // TODO: - Fix these number later
         // stats
         followersCountLabel.text = "\(userProfile.subscribers?.usersCount ?? 0)"
         followingsCountLabel.text = "\(userProfile.subscriptions?.usersCount ?? 0)"
