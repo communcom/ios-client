@@ -258,22 +258,22 @@ extension UIViewController {
     }
     
     func handleUrl(url: URL) {
-        let path = Array(url.path.components(separatedBy: "/").dropFirst())
-        
         // Wallet link
-        if url.absoluteString.starts(with: "commun://wallet/"),
-            let symbol = path.last,
-            symbol.count > 0
+        let symbol = Array(url.path.components(separatedBy: "/"))
+        if url.absoluteString.starts(with: "communwallet://"),
+            symbol.count == 1
         {
-            if symbol == "CMN" {
+            if symbol.first! == "CMN" {
                 let cmnWallet = CommunWalletVC()
                 show(cmnWallet, sender: self)
             } else {
-                let otherWallet = OtherBalancesWalletVC(symbol: symbol)
+                let otherWallet = OtherBalancesWalletVC(symbol: symbol.first!)
                 show(otherWallet, sender: self)
             }
             return
         }
+        
+        let path = Array(url.path.components(separatedBy: "/").dropFirst())
         
         // Check if link is a commun.com link
         if url.absoluteString.starts(with: URL.appURL) &&

@@ -80,7 +80,7 @@ extension ResponseAPIGetNotificationItem {
                     .normal(" ")
                     .normal("sent you".localized())
                     .normal(" ")
-                    .link("commun://wallet/\(community?.communityId ?? "CMN")", placeholder: "\(amount ?? "0") \(pointType ?? "points")", font: .systemFont(ofSize: 15, weight: .medium))
+                    .link("communwallet://\(community?.communityId ?? "CMN")", placeholder: "\(amount ?? "0") \(pointType ?? "points")", font: .systemFont(ofSize: 15, weight: .medium))
             } else {
                 aStr.normal("you've got a".localized().uppercaseFirst)
                     .normal(" ")
