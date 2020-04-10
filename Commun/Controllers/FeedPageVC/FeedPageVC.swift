@@ -46,6 +46,7 @@ final class FeedPageVC: PostsViewController {
     
     override func setUp() {
         super.setUp()
+       
         view.backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
         
         // tableView
@@ -67,7 +68,7 @@ final class FeedPageVC: PostsViewController {
         
         headerView = FeedPageHeaderView(tableView: tableView)
         
-        floatView.changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeButtonDidTouch(_:)), for: .touchUpInside)
+floatView.changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeButtonDidTouch(_:)), for: .touchUpInside)
         floatView.sortButton.addTarget(self, action: #selector(changeFilterButtonDidTouch(_:)), for: .touchUpInside)
         headerView.getButton.addTarget(self, action: #selector(promoGetButtonDidTouch), for: .touchUpInside)
         
@@ -81,7 +82,7 @@ final class FeedPageVC: PostsViewController {
             self.lastContentOffset = self.tableView.contentOffset.y
         }.disposed(by: disposeBag)
 
-        tableView.rx.contentOffset.observeOn(MainScheduler.asyncInstance)
+           tableView.rx.contentOffset.observeOn(MainScheduler.asyncInstance)
             .subscribe {
             guard let offset = $0.element else { return }
 
