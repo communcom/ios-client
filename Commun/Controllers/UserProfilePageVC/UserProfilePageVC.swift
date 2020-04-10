@@ -35,7 +35,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     var username: String?
 
     lazy var expandedComments = [ResponseAPIContentGetComment]()
-    override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
+    
+        override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
         UserProfilePageViewModel(userId: userId, username: username)
     }
     
@@ -102,7 +103,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         username = profile.username
 
         // cover
-        if let coverURL = profile.coverUrl {
+        if let coverURL = profile.coverUrl, !coverURL.isEmpty {
             coverImageView.setImageDetectGif(with: coverURL)
             
             let imageViewTemp = UIImageView(frame: CGRect(origin: CGPoint(x: 0.0, y: -70.0), size: CGSize(width: UIScreen.main.bounds.width, height: 70.0)))
