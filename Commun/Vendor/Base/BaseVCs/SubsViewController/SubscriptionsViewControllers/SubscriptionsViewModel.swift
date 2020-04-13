@@ -23,7 +23,7 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
         return SearchViewModel(fetcher: fetcher)
     }()
     
-    init(userId: String? = nil, type: GetSubscriptionsType, initialItems: [ResponseAPIContentGetSubscriptionsItem]? = nil, prefetch: Bool = true) {
+    init(userId: String? = nil, type: GetSubscriptionsType, prefetch: Bool = true) {
         var userId = userId
         if userId == nil {
             userId = Config.currentUser?.id ?? ""
@@ -40,12 +40,8 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
                 (searchVM.fetcher as! SearchListFetcher).entitySearchEntity = .communities
             }
             
-            if let initItems = initialItems {
-                items.accept(initItems)
-            } else {
-                if prefetch {
-                    fetchNext()
-                }
+            if prefetch {
+                fetchNext()
             }
             
             observeProfileBlocked()

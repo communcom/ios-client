@@ -36,7 +36,7 @@ class OtherBalancesWalletVC: CommunWalletVC {
         history: [ResponseAPIWalletGetTransferHistoryItem]? = nil
     ) {
         initialSymbol = symbol
-        let vm = WalletViewModel(balances: balances, subscriptions: subscriptions, symbol: symbol)
+        let vm = WalletViewModel(symbol: symbol)
         super.init(viewModel: vm)
     }
     

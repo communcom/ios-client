@@ -18,7 +18,15 @@ class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     init(userId: String? = nil, canChooseCommun: Bool = true, completion: ((ResponseAPIWalletGetBalance) -> Void)? = nil) {
         self.canChooseCommun = canChooseCommun
         self.completion = completion
-        super.init(viewModel: BalancesViewModel(userId: userId))
+        
+        let vm: BalancesViewModel
+        if userId == nil || userId == Config.currentUser?.id {
+            vm = BalancesViewModel.ofCurrentUser
+        } else {
+            vm = BalancesViewModel(userId: userId)
+        }
+        
+        super.init(viewModel: vm)
     }
     
     required init?(coder: NSCoder) {
