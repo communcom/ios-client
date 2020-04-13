@@ -117,12 +117,16 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
         
         verificationCompletable
             .subscribe(onCompleted: { [weak self] in
+                self?.view.endEditing(true)
                 self?.hideHud()
                 self?.signUpNextStep()
             }) { (error) in
-                self.deleteCode()
-                self.hideHud()
-                self.handleSignUpError(error: error)
+                self.view.endEditing(true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.deleteCode()
+                    self.hideHud()
+                    self.handleSignUpError(error: error)
+                }
             }
             .disposed(by: disposeBag)
     }
