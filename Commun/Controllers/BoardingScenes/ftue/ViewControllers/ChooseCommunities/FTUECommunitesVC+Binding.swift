@@ -64,7 +64,6 @@ extension FTUECommunitiesVC: CommunityCellDelegate {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCollectionCell", for: indexPath) as! FTUECommunityCell
                 cell.setUp(with: model)
                 cell.delegate = self
-                cell.shouldShowBonus = (self.viewModel.chosenCommunities.value.count < 3)
                 
                 if indexPath.row >= self.viewModel.items.value.count - 3 {
                     self.viewModel.fetchNext()
