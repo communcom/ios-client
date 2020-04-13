@@ -94,7 +94,7 @@ class MyAvatarImageView: MyView {
         return UserDefaults.standard.rx
             .observe(String.self, Config.currentUserAvatarUrlKey)
             .distinctUntilChanged()
-            .subscribe(onNext: {urlString in
+            .subscribe(onNext: { urlString in
                 self.setAvatar(urlString: urlString)
             })
     }
