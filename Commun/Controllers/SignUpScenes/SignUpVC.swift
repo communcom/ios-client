@@ -28,7 +28,10 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Properties
     lazy var methods: [Method] = {
         [Method(serviceName: phoneServiceName), Method(serviceName: emailServiceName)] +
-        SocialNetwork.allCases.map { network in
+            SocialNetwork.allCases.filter({
+                // temp hide sigh up with google
+                $0 == .facebook
+            }).map { network in
             var backgroundColor: UIColor?
             var textColor: UIColor?
             switch network {
