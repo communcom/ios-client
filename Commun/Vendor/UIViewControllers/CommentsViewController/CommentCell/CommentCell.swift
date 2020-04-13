@@ -14,7 +14,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     let voteActionsContainerViewHeight: CGFloat = 35
     private let maxCharactersForReduction = 150
     let defaultContentFontSize: CGFloat = 15
-    let embedSize = CGSize(width: 270, height: 180)
+    let embedSize = CGSize(width: 270, height: 315)
     let contentTextViewBackgroundColor = UIColor.f3f5fa
     
     // MARK: - Properties
@@ -26,13 +26,15 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 35)
+
     lazy var contentTextView: UITextView = {
         let textView = UITextView(forExpandable: ())
         textView.isEditable = false
         textView.isSelectable = false
         textView.backgroundColor = contentTextViewBackgroundColor
-        textView.textContainerInset = UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 10)
         textView.cornerRadius = 12
+        textView.textContainerInset = UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 10)
+
         return textView
     }()
     lazy var gridView = GridView(width: embedSize.width, height: embedSize.height, cornerRadius: 12)
@@ -214,7 +216,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         }
         
         if content.string.trimmed == "" {
-            contentTextView.backgroundColor = .clear
+            contentTextView.backgroundColor = .f3f5fa
         } else {
             contentTextView.backgroundColor = .f3f5fa
         }
