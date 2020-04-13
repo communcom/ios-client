@@ -211,7 +211,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         // avatar
         if let avatarURL = userProfile.avatarUrl {
-            avatarImageView.setAvatar(urlString: avatarURL, namePlaceHolder: userProfile.username)
+            avatarImageView.setAvatar(urlString: avatarURL)
             avatarImageView.addTapToViewer(with: avatarURL)
         }
         
@@ -235,8 +235,8 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
                 descriptionLabel.text = String(description.prefix(177)) + "..."
             }
         }
-       
-        // TODO: fix these number later
+        
+        // TODO: - Fix these number later
         // stats
         followersCountLabel.text = "\(userProfile.subscribers?.usersCount ?? 0)"
         followingsCountLabel.text = "\(userProfile.subscriptions?.usersCount ?? 0)"

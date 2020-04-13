@@ -12,7 +12,8 @@ import RxCocoa
 class FeedPageViewModel: PostsViewModel {
     let claimedPromos = BehaviorRelay<[String]?>(value: nil)
     
-    override init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time), prefetch: Bool = true) {
+    init(prefetch: Bool = true) {
+        let filter = PostsListFetcher.Filter.feed
         super.init(filter: filter, prefetch: prefetch)
         defer {
             getUserSettings()

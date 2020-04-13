@@ -190,7 +190,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))
     func setUp(walletPrice: ResponseAPIWalletGetPrice) {
-        walletCurrencyValue.text = walletPrice.price.components(separatedBy: " ").first ?? "0.0" // 1000
+        walletCurrencyValue.text = walletPrice.priceValue.string
         walletCurrencyLabel.text = (walletPrice.symbol ?? "Commun").lowercased().uppercaseFirst // "Binance"
         walletCurrencyValue.isHidden = false
         walletCurrencyLabel.isHidden = false
@@ -205,7 +205,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         // avatar
         if let avatarURL = community.avatarUrl {
-            avatarImageView.setAvatar(urlString: avatarURL, namePlaceHolder: community.name)
+            avatarImageView.setAvatar(urlString: avatarURL)
             avatarImageView.addTapToViewer(with: avatarURL)
         }
         
@@ -231,6 +231,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         // description
         descriptionLabel.text = nil
         
+        // ticket #909
+        /*
         if let description = community.description {
             if description.count <= 180 {
                 descriptionLabel.text = description
@@ -238,6 +240,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
                 descriptionLabel.text = String(description.prefix(177)) + "..."
             }
         }
+        */
         
         // membersCount
         let aStr = NSMutableAttributedString()

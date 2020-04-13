@@ -23,11 +23,15 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
     
     // MARK: - Constants
     private let phoneServiceName = "phone"
+    private let emailServiceName = "email"
     
     // MARK: - Properties
     lazy var methods: [Method] = {
-        [Method(serviceName: phoneServiceName)] +
-        SocialNetwork.allCases.map { network in
+        [Method(serviceName: phoneServiceName), Method(serviceName: emailServiceName)] +
+            SocialNetwork.allCases.filter({
+                // temp hide sigh up with google
+                $0 == .facebook
+            }).map { network in
             var backgroundColor: UIColor?
             var textColor: UIColor?
             switch network {
@@ -69,7 +73,6 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         super.setUp()
         AnalyticsManger.shared.openRegistrationSelection()
 
-        AnalyticsManger.shared.registrationOpenScreen(0)
         // set up stack view
         for method in methods {
             let methodView = UIView(height: 44, backgroundColor: method.backgroundColor, cornerRadius: 6)
@@ -99,8 +102,8 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         
         scrollView.contentView.addSubview(stackView)
         stackView.autoPinEdge(toSuperviewEdge: .top, withInset: 51)
-        stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: UIDevice.current.screenType == .iPhones_5_5s_5c_SE ? 16 : 39)
-        stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: UIDevice.current.screenType == .iPhones_5_5s_5c_SE ? 16 : 39)
+        stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: UIScreen.main.isSmall ? 16 : 39)
+        stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: UIScreen.main.isSmall ? 16 : 39)
         
         // terms of use
         scrollView.contentView.addSubview(termOfUseLabel)
@@ -129,19 +132,30 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
     }
 
     func signUpWithMethod(_ method: Method) {
+        // Sign up with phone
         if method.serviceName == phoneServiceName {
             let signUpVC = SignUpWithPhoneVC()
+            AnalyticsManger.shared.registrationOpenScreen(.phone)
+            show(signUpVC, sender: nil)
+            return
+        }
+        
+        // Sign up with email
+        if method.serviceName == emailServiceName {
+            let signUpVC = SignUpWithEmailVC()
+            AnalyticsManger.shared.registrationOpenScreen(.email)
             show(signUpVC, sender: nil)
             return
         }
 
+        // Sign up via social network
         var manager: SocialLoginManager
         if method.serviceName == SocialNetwork.facebook.rawValue {
             manager = FacebookLoginManager()
-            AnalyticsManger.shared.openFacebookSignUp()
+            AnalyticsManger.shared.registrationOpenScreen(.facebook)
         } else if method.serviceName == SocialNetwork.google.rawValue {
             manager = GoogleLoginManager()
-            AnalyticsManger.shared.openGoogleSignUp()
+            AnalyticsManger.shared.registrationOpenScreen(.google)
         } else {
             return
         }
@@ -154,12 +168,6 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
             }
             .subscribe(onSuccess: { (identity) in
                 self.hideHud()
-
-                if method.serviceName == SocialNetwork.facebook.rawValue {
-                    AnalyticsManger.shared.getFacebookSignUpData()
-                } else {
-                    AnalyticsManger.shared.getGoogleSignUpData()
-                }
 
                 try? KeychainManager.save([
                     Config.registrationStepKey: CurrentUserRegistrationStep.setUserName.rawValue,

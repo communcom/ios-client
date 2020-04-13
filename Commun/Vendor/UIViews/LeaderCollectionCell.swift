@@ -48,7 +48,7 @@ class LeaderCollectionCell: MyCollectionViewCell, ListItemCellType {
     
     func setUp(with leader: ResponseAPIContentGetLeader) {
         self.leader = leader
-        avatarImageView.setAvatar(urlString: leader.avatarUrl, namePlaceHolder: leader.username)
+        avatarImageView.setAvatar(urlString: leader.avatarUrl)
         avatarImageView.percent = leader.ratingPercent
         
         nameLabel.text = leader.username

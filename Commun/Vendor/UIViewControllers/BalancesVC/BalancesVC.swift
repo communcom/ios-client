@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     // MARK: - Properties
@@ -17,7 +18,15 @@ class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     init(userId: String? = nil, canChooseCommun: Bool = true, completion: ((ResponseAPIWalletGetBalance) -> Void)? = nil) {
         self.canChooseCommun = canChooseCommun
         self.completion = completion
-        super.init(viewModel: BalancesViewModel(userId: userId))
+        
+        let vm: BalancesViewModel
+        if userId == nil || userId == Config.currentUser?.id {
+            vm = BalancesViewModel.ofCurrentUser
+        } else {
+            vm = BalancesViewModel(userId: userId)
+        }
+        
+        super.init(viewModel: vm)
     }
     
     required init?(coder: NSCoder) {
@@ -36,6 +45,11 @@ class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         return cell
+    }
+    
+    override func mapItems(items: [ResponseAPIWalletGetBalance]) -> [AnimatableSectionModel<String, ResponseAPIWalletGetBalance>] {
+        let items = items.sorted(by: {$0.balanceValue > $1.balanceValue})
+        return super.mapItems(items: items)
     }
     
     override func handleListEmpty() {

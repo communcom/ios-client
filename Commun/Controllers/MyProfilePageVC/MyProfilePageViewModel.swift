@@ -9,12 +9,20 @@
 import Foundation
 
 class MyProfilePageViewModel: UserProfilePageViewModel {
-    lazy var subscriptionsVM = SubscriptionsViewModel(userId: profileId, type: .community)
-    lazy var balancesVM = BalancesViewModel()
+    lazy var subscriptionsVM = SubscriptionsViewModel.ofCurrentUserTypeCommunity
+    lazy var balancesVM = BalancesViewModel.ofCurrentUser
+    
+    override init(userId: String? = nil, username: String? = nil) {
+        super.init(userId: userId, username: username)
+        
+        defer {
+            balancesVM.update()
+        }
+    }
     
     override func reload() {
         subscriptionsVM.reload()
-        balancesVM.reload()
+        balancesVM.update()
         super.reload()
     }
     

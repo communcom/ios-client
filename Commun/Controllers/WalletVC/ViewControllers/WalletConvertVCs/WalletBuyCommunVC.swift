@@ -212,15 +212,12 @@ class WalletBuyCommunVC: WalletConvertVC {
                                               friend: nil,
                                               amount: CGFloat(expectedValue ?? 0),
                                               history: nil,
-                                              actionType: .buy,
+                                              actionType: "buy",
                                               symbol: symbol,
                                               operationDate: Date())
                 
-                if let baseNC = self.navigationController as? BaseNavigationController {
-                    let completedVC = TransactionCompletedVC(transaction: transaction)
-                    baseNC.shouldResetNavigationBarOnPush = false
-                    self.show(completedVC, sender: nil)
-                }
+                let completedVC = TransactionCompletedVC(transaction: transaction)
+                self.show(completedVC, sender: nil)
 
                 return RestAPIManager.instance.waitForTransactionWith(id: transactionId)
             })
@@ -236,7 +233,6 @@ class WalletBuyCommunVC: WalletConvertVC {
             }
             .disposed(by: disposeBag)
     }
-    
     
     // MARK: - Actions
     @objc func pointsListButtonDidTouch() {

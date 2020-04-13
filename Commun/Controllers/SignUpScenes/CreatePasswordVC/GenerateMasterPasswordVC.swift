@@ -9,6 +9,8 @@
 import Foundation
 
 class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
+    
     // MARK: - Properties
     var masterPassword: String?
     
@@ -23,19 +25,9 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
     }()
     
     // MARK: - Methods
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
     override func setUp() {
         super.setUp()
-        AnalyticsManger.shared.registrationOpenScreen(5)
+        AnalyticsManger.shared.openMasterPasswordGenerated()
         view.backgroundColor = .white
         
         let imageView = UIImageView(imageNamed: "masterkey-save")
@@ -117,8 +109,10 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
                       descriptionText: "Unfortunately, blockchain doesn’t allow us to restore passwords. It means that it is a user’s responsibility to keep the password in a safe place to be able to access it anytime.\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
                       backButtonLabel: "save to iCloud".localized().uppercaseFirst,
                       ignoreButtonLabel: "continue".localized().uppercaseFirst, ignoreAction: {
+                            AnalyticsManger.shared.clickISaveItMasterPassword()
                             self.toBlockchain()
                         }, backAction: {
+                            AnalyticsManger.shared.clickBackupMasterPassword()
                             self.backupIcloudDidTouch()
         })
     }
@@ -144,7 +138,6 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
                     }
                 } else {
                     self?.toBlockchain(saveToIcloud: true)
-                    AnalyticsManger.shared.passwordBackuped()
                 }
             }
         }

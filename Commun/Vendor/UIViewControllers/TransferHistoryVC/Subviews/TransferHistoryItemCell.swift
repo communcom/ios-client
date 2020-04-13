@@ -17,6 +17,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
     var item: ResponseAPIWalletGetTransferHistoryItem?
     
     // MARK: - Subviews
+    lazy var stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
     lazy var containerView = UIView(backgroundColor: .white)
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     lazy var iconImageView: UIImageView = {
@@ -26,7 +27,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         return imageView
     }()
     lazy var contentLabel = UILabel.with(text: "Ivan Bilin\nTransaction", textSize: 15, weight: .semibold, numberOfLines: 0)
-    lazy var amountStatusLabel = UILabel.with(text: "-500 Commun\nOn hold", textSize: 15, weight: .semibold, numberOfLines: 0, textAlignment: .right)
+    lazy var amountStatusLabel = UILabel.with(text: "-500 Commun\nOn hold", textSize: 15, weight: .semibold, numberOfLines: 2, textAlignment: .right)
     
     // MARK: - Methods
     override func setUpViews() {
@@ -35,33 +36,18 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         contentView.addSubview(containerView)
         containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         
-        containerView.addSubview(avatarImageView)
-        avatarImageView.autoPinTopAndLeadingToSuperView(inset: 10, xInset: 16)
-        avatarImageView.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
-            .isActive = true
+        containerView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 16, vertical: 10))
         
-        containerView.addSubview(iconImageView)
+        let avatarContainerView = UIView(forAutoLayout: ())
+        avatarContainerView.addSubview(avatarImageView)
+        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 2, right: 2))
+        
+        avatarContainerView.addSubview(iconImageView)
         iconImageView.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: 2)
         iconImageView.autoPinEdge(.trailing, to: .trailing, of: avatarImageView, withOffset: 2)
         
-        containerView.addSubview(contentLabel)
-        contentLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        contentLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        contentLabel.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 10)
-            .isActive = true
-        contentLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
-            .isActive = true
-        contentLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        
-        containerView.addSubview(amountStatusLabel)
-        amountStatusLabel.autoPinEdge(.leading, to: .trailing, of: contentLabel, withOffset: 10)
-        amountStatusLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        amountStatusLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        amountStatusLabel.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 10)
-            .isActive = true
-        amountStatusLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
-            .isActive = true
-        amountStatusLabel.setContentHuggingPriority(.required, for: .horizontal)
+        stackView.addArrangedSubviews([avatarContainerView, contentLabel, amountStatusLabel])
     }
     
     func setUp(with item: ResponseAPIWalletGetTransferHistoryItem) {
@@ -88,7 +74,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                     .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             }
             
-            avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: username)
+            avatarImageView.setAvatar(urlString: avatarUrl)
             
             iconImageView.isHidden = false
             iconImageView.image = UIImage(named: "tux")
@@ -99,7 +85,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 memo = NSMutableAttributedString()
                     .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
                 iconImageView.isHidden = false
-                avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: item.point.name ?? "C")
+                avatarImageView.setAvatar(urlString: item.point.logo)
                 iconImageView.image = UIImage(named: "tux")
             } else {
                 memo = NSMutableAttributedString()
@@ -113,12 +99,12 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             memo = NSMutableAttributedString()
                 .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
-            avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
+            avatarImageView.setAvatar(urlString: item.point.logo)
             iconImageView.isHidden = true
         case "hold":
             username = item.meta.holdType?.localized().uppercaseFirst ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .plus)
             
             avatarImageView.image = UIImage(named: "wallet-like")
             iconImageView.isHidden = true
@@ -127,11 +113,26 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             memo = NSMutableAttributedString()
                 .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
-            avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
+            avatarImageView.setAvatar(urlString: item.point.logo)
             iconImageView.isHidden = true
+        case "referralRegisterBonus":
+            username = item.sender.username ?? item.sender.userId
+            memo = NSMutableAttributedString()
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .plus)
+            avatarImageView.image = UIImage(named: "notifications-page-referral")
+            iconImageView.isHidden = false
+            iconImageView.image = UIImage(named: "tux")
+        case "referralPurchaseBonus":
+            username = item.sender.username ?? item.sender.userId
+            memo = NSMutableAttributedString()
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .plus)
+            avatarImageView.image = UIImage(named: "notifications-page-referral")
+            iconImageView.isHidden = false
+            iconImageView.image = UIImage(named: "tux")
         default:
             username = ""
             memo = NSMutableAttributedString()
+            avatarImageView.image = UIImage(named: "empty-avatar")
             iconImageView.isHidden = true
         }
         
@@ -140,7 +141,24 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         
         content
             .normal("\n")
-            .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+            
+        if item.meta.actionType == "referralRegisterBonus" {
+            content
+                .semibold("you received a referral bonus for the registration of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold(" ")
+                .semibold(item.referral?.username ?? item.referral?.userId ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appMainColor)
+        } else if item.meta.actionType == "referralPurchaseBonus" {
+            content
+                .semibold("you received a referral bounty - 5% of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold(" ")
+                .semibold(item.referral?.username ?? item.referral?.userId ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appMainColor)
+                .semibold("'s", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold(" ")
+                .semibold("purchase".localized(), font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+        } else {
+            content
+                .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+        }
     
         contentLabel.attributedText = content
         

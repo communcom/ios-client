@@ -26,7 +26,7 @@ class ConfirmPasswordVC: CreatePasswordVC {
         super.setUp()
         AnalyticsManger.shared.openReEnterPassword()
         titleLabel.text = "confirm password".localized().uppercaseFirst
-        if UIDevice.current.screenType != .iPhones_5_5s_5c_SE {
+        if !UIScreen.main.isSmall {
             let label = UILabel.with(text: "re-enter your password".localized().uppercaseFirst, textSize: 17)
             scrollView.contentView.addSubview(label)
             label.autoPinEdge(toSuperviewEdge: .top, withInset: 15)
@@ -45,20 +45,25 @@ class ConfirmPasswordVC: CreatePasswordVC {
     override func validationDidComplete() {
         guard currentPassword == textField.text else {
             showErrorWithLocalizedMessage("passwords do not match")
+            AnalyticsManger.shared.passwordConfirmed(available: false)
             return
         }
-        
+
+        AnalyticsManger.shared.passwordConfirmed(available: true)
         self.view.endEditing(true)
         showAttention()
     }
 
     private func showAttention() {
+        AnalyticsManger.shared.openScreenAttention()
         showAttention(subtitle: "we do not keep master passwords and have no opportunity to restore them.".localized().uppercaseFirst,
                       descriptionText: "Unfortunately, blockchain doesn’t allow us to restore passwords. It means that it is a user’s responsibility to keep the password in a safe place to be able to access it anytime.\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
                       backButtonLabel: "save to iCloud".localized().uppercaseFirst,
                       ignoreButtonLabel: "continue".localized().uppercaseFirst, ignoreAction: {
+                            AnalyticsManger.shared.saveItMassterPassword()
                             self.sendData()
                         }, backAction: {
+                            AnalyticsManger.shared.clickBackupAttention()
                             self.savePasswordToIcloud()
         })
     }
@@ -100,7 +105,6 @@ class ConfirmPasswordVC: CreatePasswordVC {
                     }
                 } else {
                     self?.sendData()
-                    AnalyticsManger.shared.passwordBackuped()
                 }
             }
         }

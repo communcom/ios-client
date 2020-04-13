@@ -14,7 +14,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     let voteActionsContainerViewHeight: CGFloat = 35
     private let maxCharactersForReduction = 150
     let defaultContentFontSize: CGFloat = 15
-    let embedSize = CGSize(width: 270, height: 180)
+    let embedSize = CGSize(width: 270, height: 315)
     let contentTextViewBackgroundColor = UIColor.f3f5fa
     
     // MARK: - Properties
@@ -22,16 +22,19 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     var expanded = false
     weak var delegate: CommentCellDelegate?
     var textViewToEmbedConstraint: NSLayoutConstraint?
+    var showIndentForChildComment = true
     
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 35)
+
     lazy var contentTextView: UITextView = {
         let textView = UITextView(forExpandable: ())
         textView.isEditable = false
         textView.isSelectable = false
         textView.backgroundColor = contentTextViewBackgroundColor
-        textView.textContainerInset = UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 10)
         textView.cornerRadius = 12
+        textView.textContainerInset = UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 10)
+
         return textView
     }()
     lazy var gridView = GridView(width: embedSize.width, height: embedSize.height, cornerRadius: 12)
@@ -99,7 +102,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         self.comment = comment
         
         // if comment is a reply
-        if comment.parents.comment != nil {
+        if comment.parents.comment != nil && showIndentForChildComment {
             avatarImageView.leftConstraint?.constant = 72
         } else {
             avatarImageView.leftConstraint?.constant = 16
@@ -107,7 +110,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
 //        leftPaddingConstraint.constant = CGFloat((comment.nestedLevel - 1 > 2 ? 2 : comment.nestedLevel - 1) * 72 + 16)
         
         // avatar
-        avatarImageView.setAvatar(urlString: comment.author?.avatarUrl, namePlaceHolder: comment.author?.username ?? comment.author?.userId ?? "U")
+        avatarImageView.setAvatar(urlString: comment.author?.avatarUrl)
         
         // setContent
         setText()
@@ -213,7 +216,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         }
         
         if content.string.trimmed == "" {
-            contentTextView.backgroundColor = .clear
+            contentTextView.backgroundColor = .f3f5fa
         } else {
             contentTextView.backgroundColor = .f3f5fa
         }

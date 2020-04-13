@@ -20,7 +20,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         return SearchViewModel(fetcher: fetcher)
     }()
     
-    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time), prefetch: Bool = true) {
+    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(type: .subscriptions, sortBy: .time), prefetch: Bool = true) {
         let fetcher = PostsListFetcher(filter: filter)
         super.init(fetcher: fetcher, prefetch: prefetch)
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
@@ -30,6 +30,21 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
             observeCommunityEvents()
             observeExplanationViewStopShowing()
         }
+    }
+    
+    override func shouldUpdateHeightForItem(_ item: ResponseAPIContentGetPost?, withUpdatedItem updatedItem: ResponseAPIContentGetPost?) -> Bool {
+        if let item = item, let updatedItem = updatedItem {
+            if item.document != updatedItem.document {
+                return true
+            }
+            if item.topExplanation != updatedItem.topExplanation {
+                return true
+            }
+            if item.bottomExplanation != updatedItem.bottomExplanation {
+                return true
+            }
+        }
+        return false
     }
     
     override func fetchNext(forceRetry: Bool = false) {
@@ -55,9 +70,10 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
                 
                 var filter = filter
                 
-                if filter.feedTypeMode == .subscriptions ||
-                    filter.feedTypeMode == .subscriptionsHot ||
-                    filter.feedTypeMode == .subscriptionsPopular {
+                if filter.type == .subscriptions ||
+                    filter.type == .subscriptionsHot ||
+                    filter.type == .subscriptionsPopular
+                {
                     filter.userId = Config.currentUser?.id
                 }
                 
@@ -73,7 +89,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
             
             // if user is on UserProfilePage, do nothing
             if let fetcher = strongSelf.fetcher as? PostsListFetcher,
-                fetcher.filter.feedTypeMode == .byUser,
+                fetcher.filter.type == .byUser,
                 fetcher.filter.userId == user.userId
             {
                 return
@@ -88,7 +104,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
             
             // if user is on UserProfilePage, do nothing
             if let fetcher = strongSelf.fetcher as? PostsListFetcher,
-                fetcher.filter.feedTypeMode == .byUser,
+                fetcher.filter.type == .byUser,
                 fetcher.filter.userId == user.userId
             {
                 return
@@ -122,7 +138,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
             
             // if user is on CommunityPage, do nothing
             if let fetcher = strongSelf.fetcher as? PostsListFetcher,
-                fetcher.filter.feedTypeMode == .community,
+                fetcher.filter.type == .community,
                 (fetcher.filter.communityId == community.communityId || fetcher.filter.communityAlias == fetcher.filter.communityAlias)
             {
                 return
@@ -137,7 +153,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
             
             // if user is on CommunityPage, do nothing
             if let fetcher = strongSelf.fetcher as? PostsListFetcher,
-                fetcher.filter.feedTypeMode == .community,
+                fetcher.filter.type == .community,
                 (fetcher.filter.communityId == community.communityId || fetcher.filter.communityAlias == fetcher.filter.communityAlias)
             {
                 return
@@ -232,12 +248,12 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     }
 
     func changeFilter(
-        feedTypeMode: FeedTypeMode? = nil,
-        feedType: FeedSortMode? = nil,
-        sortType: FeedTimeFrameMode? = nil,
+        type: FeedTypeMode? = nil,
+        sortBy: FeedSortMode? = nil,
+        timeframe: FeedTimeFrameMode? = nil,
         searchKey: String? = nil
     ) {
-        let newFilter = filter.value.newFilter(withFeedTypeMode: feedTypeMode, feedType: feedType, sortType: sortType, searchKey: searchKey)
+        let newFilter = filter.value.newFilter(type: type, sortBy: sortBy, timeframe: timeframe, searchKey: searchKey)
         if newFilter != filter.value {
             filter.accept(newFilter)
         }

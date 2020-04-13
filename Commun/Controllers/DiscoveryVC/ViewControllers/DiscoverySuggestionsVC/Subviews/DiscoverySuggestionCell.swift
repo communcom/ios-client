@@ -35,10 +35,10 @@ class DiscoverySuggestionCell: MyTableViewCell, ListItemCellType {
         self.item = item
         
         if let community = item.communityValue {
-            avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
+            avatarImageView.setAvatar(urlString: community.avatarUrl)
             nameLabel.text = community.name
         } else if let user = item.profileValue {
-            avatarImageView.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)
+            avatarImageView.setAvatar(urlString: user.avatarUrl)
             nameLabel.text = user.username
         }
     }

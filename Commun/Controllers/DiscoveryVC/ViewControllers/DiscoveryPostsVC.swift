@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class DiscoveryPostsVC: PostsViewController {
-    override var shouldHideNavigationBar: Bool {true}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {
         let viewModel = self.viewModel as! PostsViewModel
@@ -21,7 +21,7 @@ class DiscoveryPostsVC: PostsViewController {
     }
     
     init(prefetch: Bool = true) {
-        super.init(filter: PostsListFetcher.Filter(feedTypeMode: .subscriptionsPopular, feedType: .time, sortType: .day, userId: Config.currentUser?.id), prefetch: prefetch)
+        super.init(filter: PostsListFetcher.Filter(type: .topLikes, sortBy: .time, timeframe: .day, userId: Config.currentUser?.id), prefetch: prefetch)
     }
     
     required init?(coder: NSCoder) {

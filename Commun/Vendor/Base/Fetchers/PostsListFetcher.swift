@@ -12,49 +12,74 @@ import RxSwift
 
 class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     // MARK: - Enums
-    struct Filter: FilterType {
-        var feedTypeMode: FeedTypeMode
-        var feedType: FeedSortMode
-        var sortType: FeedTimeFrameMode?
+    struct Filter: FilterType, Codable {
+        static let filterKey = "currentUserFeedFilterKey"
+        
+        var type: FeedTypeMode
+        var sortBy: FeedSortMode?
+        var timeframe: FeedTimeFrameMode?
         var searchKey: String?
         var userId: String?
         var communityId: String?
         var communityAlias: String?
         
+        func save() throws {
+            UserDefaults.standard.set(try JSONEncoder().encode(self), forKey: Filter.filterKey)
+        }
+        
+        static var myFeed: Filter {
+            PostsListFetcher.Filter(type: .subscriptions, sortBy: .time, userId: Config.currentUser?.id)
+        }
+        
+        static var feed: Filter {
+            guard let data = UserDefaults.standard.data(forKey: Filter.filterKey),
+                let filter = try? JSONDecoder().decode(Filter.self, from: data),
+                (filter.type == .subscriptions || filter.type == .new || filter.type == .hot || filter.type == .subscriptionsHot || filter.type == .subscriptionsPopular)
+            else {
+                return myFeed
+            }
+            return filter
+        }
+        
         func newFilter(
-            withFeedTypeMode feedTypeMode: FeedTypeMode? = nil,
-            feedType: FeedSortMode? = nil,
-            sortType: FeedTimeFrameMode? = nil,
+            type: FeedTypeMode? = nil,
+            sortBy: FeedSortMode? = nil,
+            timeframe: FeedTimeFrameMode? = nil,
             searchKey: String? = nil,
             userId: String? = nil,
             communityId: String? = nil,
             communityAlias: String? = nil
         ) -> Filter {
             var newFilter = self
-            if let feedTypeMode = feedTypeMode,
-                feedTypeMode != newFilter.feedTypeMode {
-                newFilter.feedTypeMode = feedTypeMode
+            if let type = type,
+                type != newFilter.type
+            {
+                newFilter.type = type
             }
             
-            if let feedType = feedType,
-                feedType != newFilter.feedType {
-                newFilter.feedType = feedType
+            if let sortBy = sortBy,
+                sortBy != newFilter.sortBy
+            {
+                newFilter.sortBy = sortBy
             }
             
-            if let sortType = sortType,
-                sortType != newFilter.sortType {
-                newFilter.sortType = sortType
+            if let timeframe = timeframe,
+                timeframe != newFilter.timeframe
+            {
+                newFilter.timeframe = timeframe
             }
             
             newFilter.searchKey = searchKey
             
             if let userId = userId,
-                userId != newFilter.userId {
+                userId != newFilter.userId
+            {
                 newFilter.userId = userId
             }
             
             if let communityId = communityId,
-                communityId != newFilter.communityId {
+                communityId != newFilter.communityId
+            {
                 newFilter.communityId = communityId
             }
             
@@ -78,7 +103,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     }
         
     override var request: Single<[ResponseAPIContentGetPost]> {
-        RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, sortType: filter.sortType, limit: limit, offset: offset
+        RestAPIManager.instance.getPosts(userId: filter.userId ?? Config.currentUser?.id, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.type, sortBy: filter.sortBy, timeframe: filter.timeframe, limit: limit, offset: offset
         )
             .map { $0.items ?? [] }
             .do(onSuccess: { (posts) in

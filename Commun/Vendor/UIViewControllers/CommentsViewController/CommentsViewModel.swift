@@ -14,9 +14,10 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     
     init(
         filter: CommentsListFetcher.Filter = CommentsListFetcher.Filter(type: .user),
-        prefetch: Bool = false
+        prefetch: Bool = false,
+        shouldGroupComments: Bool = true
     ) {
-        let fetcher = CommentsListFetcher(filter: filter)
+        let fetcher = CommentsListFetcher(filter: filter, shouldGroupComments: shouldGroupComments)
         super.init(fetcher: fetcher, prefetch: prefetch)
         self.filter = BehaviorRelay<CommentsListFetcher.Filter>(value: filter)
         defer {
@@ -93,6 +94,11 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         }
     }
     
+    override func shouldUpdateHeightForItem(_ cmt1: ResponseAPIContentGetComment?, withUpdatedItem cmt2: ResponseAPIContentGetComment?) -> Bool {
+        !(cmt1?.attachments.count == cmt2?.attachments.count &&
+        (try? cmt1?.document?.jsonString()) == (try? cmt2?.document?.jsonString()))
+    }
+    
     override func updateItem(_ updatedItem: ResponseAPIContentGetComment) {
         var items = fetcher.items.value
         
@@ -105,7 +111,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             })
             updatedItem.children = ((oldItem.children ?? []) + (newChildren ?? []))
             guard let newUpdatedItem = items[index].newUpdatedItem(from: updatedItem) else {return}
-            if !isEqualRowHeight(cmt1: items[index], cmt2: newUpdatedItem) {
+            if shouldUpdateHeightForItem(items[index], withUpdatedItem: newUpdatedItem) {
                 rowHeights.removeValue(forKey: updatedItem.identity)
             }
             items[index] = newUpdatedItem
@@ -118,7 +124,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         }) {
             if let replyIndex = items[commentIndex].children?.firstIndex(where: {$0.identity == updatedItem.identity}) {
                 guard let newUpdatedItem = items[commentIndex].children?[replyIndex].newUpdatedItem(from: updatedItem) else {return}
-                if !isEqualRowHeight(cmt1: items[commentIndex].children?[replyIndex], cmt2: newUpdatedItem) {
+                if shouldUpdateHeightForItem(items[commentIndex].children?[replyIndex], withUpdatedItem: newUpdatedItem) {
                     rowHeights.removeValue(forKey: updatedItem.identity)
                 }
                 
@@ -127,11 +133,6 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             }
             return
         }
-    }
-    
-    func isEqualRowHeight(cmt1: ResponseAPIContentGetComment?, cmt2: ResponseAPIContentGetComment?) -> Bool {
-        return cmt1?.attachments.count == cmt2?.attachments.count &&
-            (try? cmt1?.document?.jsonString()) == (try? cmt2?.document?.jsonString())
     }
     
     override func deleteItem(_ deletedItem: ResponseAPIContentGetComment) {

@@ -345,9 +345,16 @@ extension PostEditorVC {
                         return
                     }
                     
-                    if let items = (UIApplication.topViewController() as? FeedPageVC)?.viewModel.items {
+                    if let items = (UIApplication.topViewController() as? FeedPageVC)?.viewModel.items,
+                        post.community?.communityId != "FEED"
+                    {
                         items.accept([post] + items.value)
                         (UIApplication.topViewController() as! FeedPageVC).appLiked()
+                        return
+                    }
+                    
+                    if post.community?.communityId == "FEED" {
+                        UIApplication.topViewController()?.showProfileWithUserId(Config.currentUser?.id)
                         return
                     }
                     

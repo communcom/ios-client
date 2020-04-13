@@ -10,7 +10,7 @@ import UIKit
 import CyberSwift
 
 class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCell>, PostCellDelegate {
-    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .subscriptions, feedType: .time, userId: Config.currentUser?.id), prefetch: Bool = true) {
+    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(type: .subscriptions, sortBy: .time, userId: Config.currentUser?.id), prefetch: Bool = true) {
         let viewModel = PostsViewModel(filter: filter, prefetch: prefetch)
         super.init(viewModel: viewModel)
     }
@@ -74,13 +74,37 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     override func handleListEmpty() {
         let title = "no post"
         let description = "posts not found"
+        
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "reload".localized().uppercaseFirst + "?") {
             self.viewModel.reload()
         }
     }
     
+    func openFilterVC() {
+        guard let viewModel = viewModel as? PostsViewModel else {return}
+        // Create FiltersVC
+        let vc = PostsFilterVC(filter: viewModel.filter.value)
+        
+        vc.completion = { filter in
+            viewModel.filter.accept(self.modifyFilter(filter: filter))
+        }
+        
+        let nc = BaseNavigationController(rootViewController: vc)
+        nc.transitioningDelegate = vc
+        nc.modalPresentationStyle = .custom
+//        nc.makeTransparent()
+        
+        present(nc, animated: true, completion: {
+//            nc.isNavigationBarHidden = true
+        })
+    }
+    
+    func modifyFilter(filter: PostsListFetcher.Filter) -> PostsListFetcher.Filter {
+        return filter
+    }
+    
     func filterChanged(filter: PostsListFetcher.Filter) {
-
+        
     }
 }
 

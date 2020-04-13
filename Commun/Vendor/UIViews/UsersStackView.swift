@@ -53,7 +53,7 @@ class UsersStackView: MyView {
                 imageView.layer.borderColor = UIColor.white.cgColor
                 imageView.addTapToOpenUserProfile(profileId: friend.userId)
                 avatarsStackView.addArrangedSubview(imageView)
-                imageView.setAvatar(urlString: friend.avatarUrl, namePlaceHolder: friend.username)
+                imageView.setAvatar(urlString: friend.avatarUrl)
             }
             text = "\(friends.count)"
         } else {
@@ -63,7 +63,7 @@ class UsersStackView: MyView {
                 imageView.layer.borderColor = UIColor.white.cgColor
                 imageView.addTapToOpenUserProfile(profileId: friends[i].userId)
                 avatarsStackView.addArrangedSubview(imageView)
-                imageView.setAvatar(urlString: friends[i].avatarUrl, namePlaceHolder: friends[i].username)
+                imageView.setAvatar(urlString: friends[i].avatarUrl)
             }
             text = "+\((friends.count - 3).kmFormatted)"
         }

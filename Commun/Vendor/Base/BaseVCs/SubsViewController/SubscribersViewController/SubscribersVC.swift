@@ -13,7 +13,13 @@ class SubscribersVC: SubsViewController<ResponseAPIContentGetProfile, Subscriber
     var dismissModalWhenPushing = false
     
     init(title: String? = nil, userId: String? = nil, communityId: String? = nil, prefetch: Bool = true) {
-        let viewModel = SubscribersViewModel(userId: userId, communityId: communityId, prefetch: prefetch)
+        let viewModel: SubscribersViewModel
+        if userId == Config.currentUser?.id {
+            viewModel = SubscribersViewModel.ofCurrentUser
+        } else {
+            viewModel = SubscribersViewModel(userId: userId, communityId: communityId, prefetch: prefetch)
+        }
+        
         super.init(viewModel: viewModel)
         defer {
             self.title = title

@@ -193,6 +193,7 @@ class BuyCommunVC: BaseViewController {
             .subscribe(onNext: { (state) in
                 switch state {
                 case .loading:
+                    self.scrollView.contentView.hideLoader()
                     self.scrollView.contentView.showLoader()
                 case .finished:
                     self.scrollView.contentView.hideLoader()
@@ -262,6 +263,7 @@ class BuyCommunVC: BaseViewController {
                         #endif
                         self?.youGetTextField.text = text
                     }, onSubscribe: { [weak self] in
+                        self?.youGetTextField.hideLoader()
                         self?.youGetTextField.showLoader()
                     })
             }
@@ -289,7 +291,7 @@ class BuyCommunVC: BaseViewController {
     
     private func setUpWithCurrentCurrency(_ currency: ResponseAPIGetCurrency) {
         // avatar
-        currencyAvatarImageView.setAvatar(urlString: currency.image, namePlaceHolder: currency.name)
+        currencyAvatarImageView.setAvatar(urlString: currency.image)
         
         // name
         currencyNameLabel.text = currency.name.uppercased()

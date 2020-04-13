@@ -319,7 +319,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         let headerView = UIView(height: 40)
         
         let avatarImageView = MyAvatarImageView(size: 40)
-        avatarImageView.setAvatar(urlString: profile.avatarUrl, namePlaceHolder: profile.name)
+        avatarImageView.setAvatar(urlString: profile.avatarUrl)
         headerView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
                 
@@ -407,20 +407,20 @@ extension CommunityPageVC: UITableViewDelegate {
         
         let filter = viewModel.postsVM.filter.value
         
-        var feedTypeMode = filter.feedTypeMode
+        var type = filter.type
         
-        if feedTypeMode == .community || feedTypeMode.localizedLabel == nil {
-            feedTypeMode = .new
+        if type == .community || type.localizedLabel == nil {
+            type = .new
         }
         
         let aStr = NSMutableAttributedString()
             .semibold("sort".localized().uppercaseFirst + ":", color: .a5a7bd)
             .semibold(" ")
-            .semibold(feedTypeMode.localizedLabel!.uppercaseFirst)
+            .semibold(type.localizedLabel!.uppercaseFirst)
         
-        if filter.feedTypeMode == .topLikes {
+        if filter.type == .topLikes {
             aStr
-                .semibold(", \(filter.sortType?.localizedLabel.uppercaseFirst ?? "")")
+                .semibold(", \(filter.timeframe?.localizedLabel.uppercaseFirst ?? "")")
         }
         
         (postSortingView.viewWithTag(1) as! UILabel).attributedText = aStr
@@ -430,13 +430,13 @@ extension CommunityPageVC: UITableViewDelegate {
         let viewModel = (self.viewModel as! CommunityPageViewModel).postsVM
         // Create FiltersVC
         var filter = viewModel.filter.value
-        if filter.feedTypeMode == .community {filter.feedTypeMode = .new}
+        if filter.type == .community {filter.type = .new}
         let vc = PostsFilterVC(filter: filter)
         
         vc.completion = { filter in
             var filter = filter
-            if filter.feedTypeMode == .new {
-                filter.feedTypeMode = .community
+            if filter.type == .new {
+                filter.type = .community
             }
             viewModel.filter.accept(filter)
             self.updatePostSortingView()

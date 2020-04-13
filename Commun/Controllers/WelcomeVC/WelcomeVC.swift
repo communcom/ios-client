@@ -9,7 +9,7 @@
 import Foundation
 
 class WelcomeVC: BaseViewController {
-    override var shouldHideNavigationBar: Bool {true}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     let numberOfPages = 3
     
     // MARK: - Properties
@@ -17,7 +17,7 @@ class WelcomeVC: BaseViewController {
     var currentPage = 0
     
     // MARK: - Subviews
-    lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
+    lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .black)
     lazy var pageControl = CMPageControll(numberOfPages: 3)
     lazy var containerView = UIView(forAutoLayout: ())
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fillEqually)
@@ -63,10 +63,6 @@ class WelcomeVC: BaseViewController {
             navigateToSignUp()
         }
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-        
         // top sign in button
         view.addSubview(topSignInButton)
         topSignInButton.autoPinTopAndTrailingToSuperViewSafeArea(inset: 0, xInset: 16)
@@ -97,11 +93,14 @@ class WelcomeVC: BaseViewController {
         
         // container view
         view.addSubview(containerView)
-        containerView.autoPinEdge(.top, to: .bottom, of: pageControl, withOffset: 16)
-        containerView.autoPinEdge(.bottom, to: .top, of: buttonStackView, withOffset: -16)
+        containerView.autoPinEdge(.bottom, to: .top, of: buttonStackView, withOffset: .adaptive(width: -50))
+        containerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         containerView.autoPinEdge(toSuperviewEdge: .leading)
         containerView.autoPinEdge(toSuperviewEdge: .trailing)
-        
+
+        view.bringSubviewToFront(pageControl)
+        view.bringSubviewToFront(topSignInButton)
+
         // add pageVC
         pageVC.dataSource = self
         pageVC.delegate = self
@@ -133,13 +132,8 @@ class WelcomeVC: BaseViewController {
     }
     
     @objc func signInButtonTap(_ sender: UIButton) {
-        if sender == topSignInButton {
-            AnalyticsManger.shared.onboadringOpenScreen(page: pageControl.selectedIndex + 1, tapSignIn: true)
-        } else {
-            AnalyticsManger.shared.signInButtonPressed()
-        }
         let signInVC = SignInVC()
-        navigationController?.pushViewController(signInVC)
+        show(signInVC, sender: nil)
     }
     
     @objc func signUpButtonTap(_ sender: Any) {
@@ -149,7 +143,6 @@ class WelcomeVC: BaseViewController {
     
     @objc func nextButtonTap(_ sender: Any) {
         let nextIndex = currentPage + 1
-        AnalyticsManger.shared.onboadringOpenScreen(page: nextIndex)
         pageVC.setViewControllers([WelcomeItemVC(index: nextIndex)], direction: .forward, animated: true, completion: nil)
         currentPage = nextIndex
         showActionButtons(nextIndex)

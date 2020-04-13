@@ -10,7 +10,7 @@ import UIKit
 import LocalAuthentication
 
 class EnableBiometricsVC: BoardingVC {
-    override var shouldHideNavigationBar: Bool {true}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     override var step: CurrentUserSettingStep {.setFaceId}
     override var nextStep: CurrentUserSettingStep? {.ftue}
@@ -21,7 +21,6 @@ class EnableBiometricsVC: BoardingVC {
     
     override func setUp() {
         super.setUp()
-        AnalyticsManger.shared.registrationOpenScreen(6)
         // retrieve policy
         let biometryType = LABiometryType.current
         

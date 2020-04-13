@@ -105,12 +105,6 @@ class MyProfileSettingsVC: BaseViewController {
         versionBuildLabel.autoPinEdge(.bottom, to: .bottom, of: view, withOffset: -offset)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        baseNavigationController?.changeStatusBarStyle(.default)
-    }
-
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

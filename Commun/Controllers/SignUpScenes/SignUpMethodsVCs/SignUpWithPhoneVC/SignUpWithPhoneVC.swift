@@ -9,27 +9,12 @@
 import Foundation
 import PhoneNumberKit
 import CoreLocation
-import ReCaptcha
 
-class SignUpWithPhoneVC: BaseSignUpVC, SignUpRouter {
+class SignUpWithPhoneVC: BaseSignUpMethodVC {
     // MARK: - Properties
     let viewModel = SignUpWithPhoneViewModel()
     var shouldDefineLocation = true
     let locationManager = CLLocationManager()
-    lazy var recaptcha: ReCaptcha = {
-        let recaptcha = try! ReCaptcha(endpoint: ReCaptcha.Endpoint.default, locale: Locale(identifier: Locale.current.languageCode ?? "en"))
-
-        #if DEBUG
-        recaptcha.forceVisibleChallenge = false
-        #endif
-
-        recaptcha.configureWebView { [weak self] webview in
-            webview.frame = self?.view.bounds ?? CGRect.zero
-            webview.tag = reCaptchaTag
-            self?.hideHud()
-        }
-        return recaptcha
-    }()
     
     // MARK: - Subviews
     lazy var selectCountryView: UIView = {
@@ -55,16 +40,7 @@ class SignUpWithPhoneVC: BaseSignUpVC, SignUpRouter {
     }()
     
     // MARK: - Methods
-    override func setUp() {
-        super.setUp()
-        AnalyticsManger.shared.registrationOpenScreen(2)
-        
-        // get location
-        updateLocation()
-    }
-    
-    override func setUpScrollView() {
-        super.setUpScrollView()
+    override func setUpInputViews() {
         // select country view
         scrollView.contentView.addSubview(selectCountryView)
         selectCountryView.autoPinEdge(toSuperviewEdge: .top, withInset: UIScreen.main.isSmall ? 16 : 47)
@@ -74,26 +50,10 @@ class SignUpWithPhoneVC: BaseSignUpVC, SignUpRouter {
         scrollView.contentView.addSubview(phoneTextField)
         phoneTextField.autoPinEdge(.top, to: .bottom, of: selectCountryView, withOffset: 16)
         phoneTextField.autoAlignAxis(toSuperviewAxis: .vertical)
-        
-        // term of use
-        scrollView.contentView.addSubview(termOfUseLabel)
-        termOfUseLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        termOfUseLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+    }
+    
+    override func pinBottomOfInputViews() {
         termOfUseLabel.autoPinEdge(.top, to: .bottom, of: phoneTextField, withOffset: 30)
-        
-        // next button
-        scrollView.contentView.addSubview(nextButton)
-        nextButton.autoPinEdge(.top, to: .bottom, of: termOfUseLabel, withOffset: 16)
-        nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        
-        // sign in label
-        scrollView.contentView.addSubview(signInLabel)
-        signInLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        signInLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        signInLabel.autoPinEdge(.top, to: .bottom, of: nextButton, withOffset: 31)
-        
-        // pin bottom
-        signInLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 31)
     }
     
     override func bind() {

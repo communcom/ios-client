@@ -49,12 +49,16 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
         fetchNext()
     }
     
+    func shouldUpdateHeightForItem(_ item: T?, withUpdatedItem updatedItem: T?) -> Bool {false}
+    
     func updateItem(_ updatedItem: T) {
         var newItems = fetcher.items.value
         guard let index = newItems.firstIndex(where: {$0.identity == updatedItem.identity}) else {return}
         guard let newUpdatedItem = newItems[index].newUpdatedItem(from: updatedItem) else {return}
+        if shouldUpdateHeightForItem(newItems[index], withUpdatedItem: newUpdatedItem) {
+            rowHeights.removeValue(forKey: updatedItem.identity as! String)
+        }
         newItems[index] = newUpdatedItem
-        rowHeights.removeValue(forKey: updatedItem.identity as! String)
         fetcher.items.accept(newItems)
     }
     

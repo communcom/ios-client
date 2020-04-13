@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, SubscribersCell>, CommunityCellDelegate, ProfileCellDelegate {
-    override var shouldHideNavigationBar: Bool {true}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
     
     // MARK: - Properties
     var seeAllHandler: ((Int) -> Void)?
@@ -88,6 +88,8 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
             if indexPath.row == dataSource.sectionModels[indexPath.section].items.count - 1 {
                 cell.roundedCorner.insert([.bottomLeft, .bottomRight])
             }
+            
+            cell.joinButton.isHidden = true
             return cell
         }
         
@@ -101,6 +103,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
             if indexPath.row == dataSource.sectionModels[indexPath.section].items.count - 1 {
                 cell.roundedCorner.insert([.bottomLeft, .bottomRight])
             }
+            cell.followButton.isHidden = true
             return cell
         }
         

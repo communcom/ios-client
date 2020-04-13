@@ -33,7 +33,7 @@ class FTUEChosenCommunityCell: MyCollectionViewCell {
     
     func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
-        avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
+        avatarImageView.setAvatar(urlString: community.avatarUrl)
         avatarImageView.percent = 1
         
         if community.isBeingJoined == true {

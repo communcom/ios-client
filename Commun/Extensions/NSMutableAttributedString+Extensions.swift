@@ -47,6 +47,16 @@ extension NSMutableAttributedString {
         append(normal)
         return self
     }
+    
+    @discardableResult func link(_ url: String, placeholder: String? = nil, font: UIFont = .systemFont(ofSize: 15)) -> NSMutableAttributedString {
+        let attrs: [NSAttributedString.Key: Any] = [
+            .link: url,
+            .font: font
+        ]
+        let attrString = NSAttributedString(string: placeholder ?? url, attributes: attrs)
+        append(attrString)
+        return self
+    }
 
     @discardableResult func withParagraphSpacing(_ spacing: CGFloat, alignment: NSTextAlignment = .left) -> NSMutableAttributedString {
 

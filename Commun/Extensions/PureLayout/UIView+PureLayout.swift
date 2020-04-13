@@ -49,11 +49,11 @@ extension UIView {
          return view
     }
 
-     func addCircleImage(byURL imageURL: String?, withPlaceholderName placeholderName: String, andSide side: CGFloat) {
+     func addCircleImage(imageURL: String?, side: CGFloat) {
         self.removeSubviews()
 
-         let imageView = UIImageView.circle(size: side)
-        imageView.setAvatar(urlString: imageURL, namePlaceHolder: placeholderName)
+         let imageView = MyAvatarImageView(size: side)
+        imageView.setAvatar(urlString: imageURL)
 
          addSubview(imageView)
     }

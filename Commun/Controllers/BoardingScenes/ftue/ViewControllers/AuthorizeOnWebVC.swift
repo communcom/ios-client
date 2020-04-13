@@ -9,6 +9,7 @@
 import Foundation
 
 class AuthorizeOnWebVC: BaseViewController {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
     // MARK: - Properties
     var completion: (() -> Void)?
     
@@ -57,6 +58,7 @@ class AuthorizeOnWebVC: BaseViewController {
     }
     
     @objc func buttonDoneDidTouch() {
+        AnalyticsManger.shared.clickDoneONB()
         completion?()
     }
 }

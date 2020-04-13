@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import InitialsImageView
 import RxSwift
 //import AppImageViewer
 import CyberSwift
@@ -19,34 +18,6 @@ import ASSpinnerView
 var nonAvatarColors = [String: UIColor]()
 
 extension UIImageView {
-    func setNonAvatarImageWithId(_ id: String) {
-        frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        var color = nonAvatarColors[id]
-        if color == nil {
-            repeat {
-                color = UIColor.random
-            } while nonAvatarColors.contains {$1==color}
-            nonAvatarColors[id] = color
-        }
-        
-        setImageForName(id, backgroundColor: color, circular: true, textAttributes: nil, gradient: false)
-    }
-    
-    func setAvatar(urlString: String?, namePlaceHolder: String) {
-        // profile image
-        if let avatarUrl = urlString {
-            sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "ProfilePageUserAvatar")) { [weak self] (_, error, _, _) in
-                if error != nil {
-                    // Placeholder image
-                    self?.image = UIImage(named: "empty-avatar")
-                }
-            }
-        } else {
-            // Placeholder image
-            image = UIImage(named: "empty-avatar")
-        }
-    }
-    
     func setCover(urlString: String?, namePlaceHolder: String = "ProfilePageCover") {
          // Cover image
          if let coverUrlValue = urlString {
@@ -158,21 +129,13 @@ extension UIImageView {
             .rightNavItemIcon(UIImage(named: "share-white")!, delegate: self)
         ]
         
-        if let stringURL = imageURL {
-            setupImageViewer(url: URL(string: stringURL)!, options: options)
+        if let stringURL = imageURL,
+            let url = URL(string: stringURL)
+        {
+            setupImageViewer(url: url, options: options)
         } else {
             setupImageViewer(options: options)
         }
-    }
-    
-    func observeCurrentUserAvatar() -> Disposable {
-        // avatarImage
-        return UserDefaults.standard.rx
-            .observe(String.self, Config.currentUserAvatarUrlKey)
-            .distinctUntilChanged()
-            .subscribe(onNext: {urlString in
-                self.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser?.name ?? "U")
-            })
     }
     
     func sd_setImageCachedError(with url: URL?, completion: ((Error?, UIImage?) -> Void)?) {

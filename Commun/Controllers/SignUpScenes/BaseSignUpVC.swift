@@ -9,15 +9,20 @@
 import Foundation
 
 class BaseSignUpVC: BaseViewController {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
+    
     // MARK: - Properties
     var termOfUseText: String {"By continuing, you agree to the Commun’s Terms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst}
     var alreadyHasAccountText: String {"already have an account? Sign in".localized().uppercaseFirst}
+    var autoPinNextButtonToBottom: Bool {false}
     
     // MARK: - Subviews
     lazy var backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
     lazy var titleLabel = UILabel.with(text: "sign up".localized().uppercaseFirst, textSize: 34, weight: .bold)
     lazy var subtitleLabel = UILabel.with(textSize: 17, numberOfLines: 0)
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
+    
+    lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#F53D5B")!, numberOfLines: 0, textAlignment: .center)
     
     lazy var termOfUseLabel: UILabel = {
         let label = UILabel.with(textSize: 10, numberOfLines: 0, textAlignment: .center)
@@ -73,11 +78,11 @@ class BaseSignUpVC: BaseViewController {
         backButton.autoPinTopAndLeadingToSuperViewSafeArea(inset: 10, xInset: 0)
         
         view.addSubview(titleLabel)
-        switch UIDevice.current.screenType {
-        case .iPhones_5_5s_5c_SE:
+        
+        if UIScreen.main.isSmall {
             titleLabel.autoPinEdge(.leading, to: .trailing, of: backButton, withOffset: 24)
             titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
-        default:
+        } else {
             titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
             titleLabel.autoPinEdge(.top, to: .bottom, of: backButton, withOffset: 10)
         }
@@ -106,19 +111,24 @@ class BaseSignUpVC: BaseViewController {
     }
     
     func viewDidSetUpScrollView() {
-        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        if autoPinNextButtonToBottom {
+            setUpNextButton()
+            nextButton.autoPinEdge(.top, to: .bottom, of: scrollView)
+        } else {
+            let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+            keyboardViewV.observeKeyboardHeight()
+            self.view.addConstraint(keyboardViewV)
+        }
+    }
+    
+    private func setUpNextButton() {
+        view.addSubview(nextButton)
+        nextButton.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
+        nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: nextButton, attribute: .bottom, multiplier: 1.0, constant: 16)
         keyboardViewV.observeKeyboardHeight()
-        self.view.addConstraint(keyboardViewV)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        view.addConstraint(keyboardViewV)
     }
     
     // MARK: - Actions
@@ -137,13 +147,13 @@ class BaseSignUpVC: BaseViewController {
     
     @objc func tapSignInLabel(gesture: UITapGestureRecognizer) {
        guard let text = signInLabel.text else {return}
-       AnalyticsManger.shared.goToSingIn()
        let signInRange = (text as NSString).range(of: "sign in".localized().uppercaseFirst)
 
        let nc = navigationController
        if gesture.didTapAttributedTextInLabel(label: signInLabel, inRange: signInRange) {
            navigationController?.popViewController(animated: true, {
                let signInVC = SignInVC()
+               AnalyticsManger.shared.goToSignIn()
                nc?.pushViewController(signInVC)
            })
        }
@@ -154,8 +164,4 @@ class BaseSignUpVC: BaseViewController {
     }
     
     @objc func nextButtonDidTouch() {}
-    
-    @objc func hideKeyboard() {
-        view.endEditing(true)
-    }
 }

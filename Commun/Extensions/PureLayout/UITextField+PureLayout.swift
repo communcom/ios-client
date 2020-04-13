@@ -9,32 +9,77 @@
 import Foundation
 
 extension UITextField {
+    convenience init(
+        width: CGFloat? = nil,
+        height: CGFloat? = nil,
+        backgroundColor: UIColor = .f3f5fa,
+        cornerRadius: CGFloat? = nil,
+        font: UIFont? = nil,
+        keyboardType: UIKeyboardType = .alphabet,
+        placeholder: String?,
+        autocorrectionType: UITextAutocorrectionType? = nil,
+        autocapitalizationType: UITextAutocapitalizationType? = nil,
+        spellCheckingType: UITextSpellCheckingType? = nil,
+        textContentType: UITextContentType? = nil,
+        isSecureTextEntry: Bool = false,
+        leftView: UIView = UIView(width: 16),
+        leftViewMode: UITextField.ViewMode = .always,
+        rightView: UIView = UIView(width: 16),
+        rightViewMode: UITextField.ViewMode = .always
+    ) {
+        self.init(width: width, height: height, backgroundColor: backgroundColor, cornerRadius: cornerRadius)
+        if let font = font {
+            self.font = font
+        }
+        self.keyboardType = keyboardType
+        self.placeholder = placeholder
+        if let autocorrectionType = autocorrectionType {
+            self.autocorrectionType = autocorrectionType
+        }
+        if let autocapitalizationType = autocapitalizationType {
+            self.autocapitalizationType = autocapitalizationType
+        }
+        if let spellCheckingType = spellCheckingType {
+            self.spellCheckingType = spellCheckingType
+        }
+        
+        if let textContentType = textContentType {
+            self.textContentType = textContentType
+        }
+        
+        self.isSecureTextEntry = isSecureTextEntry
+        
+        leftView.autoSetDimension(.height, toSize: height ?? 16)
+        self.leftView = leftView
+        self.leftViewMode = leftViewMode
+        
+        rightView.autoSetDimension(.height, toSize: height ?? 16)
+        self.rightView = rightView
+        self.rightViewMode = rightViewMode
+    }
+    
     static func signUpTextField(
         width: CGFloat? = nil,
-        font: UIFont = .systemFont(ofSize: 17 * Config.heightRatio),
+        font: UIFont = .systemFont(ofSize: 17),
         keyboardType: UIKeyboardType = .alphabet,
         placeholder: String? = nil,
         isSecureTextEntry: Bool = false,
         leftView: UIView = UIView(width: 16, height: 56),
         rightView: UIView = UIView(width: 16, height: 56)
     ) -> UITextField {
-        let tf = UITextField(width: width, height: 56, backgroundColor: .f3f5fa, cornerRadius: 12)
-        tf.font = font
-        tf.keyboardType = keyboardType
-        if let placeholder = placeholder {
-            tf.placeholder = placeholder.localized().uppercaseFirst
-        }
-        
-        tf.autocorrectionType = .no
-        tf.autocapitalizationType = .none
-        tf.spellCheckingType = .no
-        tf.isSecureTextEntry = isSecureTextEntry
-        
-        tf.leftView = leftView
-        tf.leftViewMode = .always
-        
-        tf.rightView = rightView
-        tf.rightViewMode = .always
+        let tf = UITextField(
+            width: width,
+            height: 56,
+            cornerRadius: 12,
+            font: font,
+            keyboardType: keyboardType,
+            placeholder: placeholder,
+            autocorrectionType: .no,
+            autocapitalizationType: UITextAutocapitalizationType.none,
+            spellCheckingType: .no,
+            isSecureTextEntry: isSecureTextEntry,
+            leftView: leftView,
+            rightView: rightView)
         return tf
     }
 }

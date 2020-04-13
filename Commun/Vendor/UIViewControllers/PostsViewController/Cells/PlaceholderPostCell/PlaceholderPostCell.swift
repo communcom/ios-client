@@ -27,6 +27,7 @@ class PlaceholderPostCell: UIView {
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        backgroundView.hideLoader()
         backgroundView.showLoader()
     }
 }

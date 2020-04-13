@@ -40,7 +40,8 @@ class MyProfilePageVC: UserProfilePageVC {
         
         // hide back button
         if shouldHideBackButton {
-            navigationItem.leftBarButtonItem = nil
+            backButton.alpha = 0
+            backButton.isUserInteractionEnabled = false
         }
         
         // layout subview
@@ -120,24 +121,22 @@ class MyProfilePageVC: UserProfilePageVC {
 //                vc.title = "saved posts".localized().uppercaseFirst
 //                self.show(vc, sender: self)
 //            }),
-            CommunActionSheet.Action(title: "referral".localized().uppercaseFirst,
+            CommunActionSheet.Action(title: "saved souls".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_referral"),
                                      style: .profile,
                                      handle: {
                                         let vc = ReferralUsersVC()
-                                        vc.title = "referral".localized().uppercaseFirst
+                                        vc.title = "saved souls".localized().uppercaseFirst
                                         self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                                        self.baseNavigationController?.changeStatusBarStyle(.default)
                                         self.show(vc, sender: self)
             }),
             CommunActionSheet.Action(title: "liked".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_liked"),
                                      style: .profile,
                                      handle: {
-                                        let vc = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .voted, feedType: .time, userId: Config.currentUser?.id))
+                                        let vc = PostsViewController(filter: PostsListFetcher.Filter(type: .voted, sortBy: .time, userId: Config.currentUser?.id))
                                         vc.title = "liked".localized().uppercaseFirst
                                         self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                                        self.baseNavigationController?.changeStatusBarStyle(.default)
                                         self.show(vc, sender: self)
             }),
             CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst,

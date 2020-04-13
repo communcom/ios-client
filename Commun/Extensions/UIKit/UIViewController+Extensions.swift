@@ -220,11 +220,8 @@ extension UIViewController {
                 }
             }
             
-        case "reward":
-            if let id = item.community?.communityId {
-                showOtherBalanceWalletVC(symbol: id, shouldResetNavigationBarOnPush: true)
-            }
-        
+        case "reward", "referralRegistrationBonus", "referralPurchaseBonus":
+            showOtherBalanceWalletVC(symbol: item.community?.communityId)
         default:
             break
         }
@@ -248,20 +245,34 @@ extension UIViewController {
         show(communityVC, sender: nil)
     }
     
-    func showOtherBalanceWalletVC(symbol: String, shouldResetNavigationBarOnPush: Bool = false) {
-        let vc = OtherBalancesWalletVC(symbol: symbol)
-                
-        if  shouldResetNavigationBarOnPush {
-            show(vc, sender: nil)
+    func showOtherBalanceWalletVC(symbol: String?) {
+        var vc: UIViewController!
+
+        if let symbol = symbol {
+            vc = OtherBalancesWalletVC(symbol: symbol)
         } else {
-            let nc = navigationController as? BaseNavigationController
-            nc?.shouldResetNavigationBarOnPush = false
-            show(vc, sender: nil)
-            nc?.shouldResetNavigationBarOnPush = true
+            vc = CommunWalletVC()
         }
+                
+        show(vc, sender: nil)
     }
     
     func handleUrl(url: URL) {
+        // Wallet link
+        let symbol = Array(url.path.components(separatedBy: "/"))
+        if url.absoluteString.starts(with: "communwallet://"),
+            symbol.count == 1
+        {
+            if symbol.first! == "CMN" {
+                let cmnWallet = CommunWalletVC()
+                show(cmnWallet, sender: self)
+            } else {
+                let otherWallet = OtherBalancesWalletVC(symbol: symbol.first!)
+                show(otherWallet, sender: self)
+            }
+            return
+        }
+        
         let path = Array(url.path.components(separatedBy: "/").dropFirst())
         
         // Check if link is a commun.com link
@@ -285,7 +296,6 @@ extension UIViewController {
                     // hashtag
                     let vc = SearchablePostsVC(keyword: "#" + hashtag)
                     self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                    self.baseNavigationController?.changeStatusBarStyle(.default)
                     self.show(vc, sender: self)
                     return
                 }
@@ -410,7 +420,7 @@ extension UIViewController {
         self.present(cardVC, animated: true, completion: nil)
     }
     
-    func showAttention(title: String = "attention".localized().uppercaseFirst, subtitle: String, descriptionText: String, backButtonLabel: String = "back".localized().uppercaseFirst, ignoreButtonLabel: String, ignoreAction: @escaping () -> Void, backAction: (() -> Void)? = nil)
+    func    showAttention(title: String = "attention".localized().uppercaseFirst, subtitle: String, descriptionText: String, backButtonLabel: String = "back".localized().uppercaseFirst, ignoreButtonLabel: String, ignoreAction: @escaping () -> Void, backAction: (() -> Void)? = nil)
     {
         let attentionView = AttentionView(
             title: title,
@@ -424,7 +434,28 @@ extension UIViewController {
         showCardWithView(attentionView)
     }
 
+    // MARK: - Navigation controller
+    func setNavigationBarBackgroundColor(_ backgroundColor: UIColor) {
+        let img = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(img, for: .default)
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.barTintColor = backgroundColor
+        navigationController?.navigationBar.subviews.first?.backgroundColor = backgroundColor
+        
+        let img2 = UIImage()
+        navigationController?.navigationBar.shadowImage = img2
+    }
+    
+    func setNavigationBarTitleStyle(textColor: UIColor, font: UIFont) {
+        navigationController?.navigationBar.tintColor = textColor
+        navigationController?.navigationBar.setTitleFont(font, color: textColor)
+    }
+    
     // MARK: - Actions
+    @objc func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
     @objc func popToPreviousVC() {
         if let count = navigationController?.viewControllers.count, count > 0 {
             let viewWithTag = self.view.viewWithTag(reCaptchaTag)
@@ -457,18 +488,6 @@ extension UIViewController {
 
          scrollToTop(view: self.view)
      }
-    
-    func showNavigationBar(_ show: Bool, animated: Bool = false, completion: (() -> Void)? = nil) {
-        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
-        baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
-        UIView.animate(withDuration: animated ? 0.3 : 0) {
-            self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear
-            self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
-                show ? .black: .clear)
-            self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
-            completion?()
-        }
-    }
     
     func appLiked() {
         if !CMAppLike.verify() {

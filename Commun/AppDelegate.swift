@@ -53,6 +53,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = splashVC
+        window!.makeKeyAndVisible()
+        
+        #if !APPSTORE
+        if !UserDefaults.standard.bool(forKey: UIApplication.versionBuild) {
+            try? KeychainManager.deleteUser()
+            UserDefaults.standard.set(true, forKey: UIApplication.versionBuild)
+        }
+        #endif
         
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
@@ -109,7 +117,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
             .disposed(by: disposeBag)
         
-        window!.makeKeyAndVisible()
         return true
     }
     
