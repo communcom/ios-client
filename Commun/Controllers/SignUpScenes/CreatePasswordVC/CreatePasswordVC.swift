@@ -15,13 +15,13 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     override var autoPinNextButtonToBottom: Bool {true}
     
     // MARK: - Subviews
-    lazy var textField: UITextField = {
+    lazy var textField: CreatePasswordTextField = {
         let rightView = UIView(width: 44, height: 56)
         rightView.addSubview(showPasswordButton)
         showPasswordButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         showPasswordButton.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        let tf = UITextField.signUpTextField(width: 290, placeholder: "password".localized().uppercaseFirst, isSecureTextEntry: true, rightView: rightView)
+        let tf = CreatePasswordTextField(width: 290, placeholder: "password".localized().uppercaseFirst, isSecureTextEntry: true, rightView: rightView)
         return tf
     }()
     

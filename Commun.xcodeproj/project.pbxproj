@@ -166,6 +166,7 @@
 		BC06A9C123EBFBDB000B690E /* ResponseAPIGetNotificationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A9C023EBFBDB000B690E /* ResponseAPIGetNotificationItem+Extensions.swift */; };
 		BC08E8C0240388EF00436A5C /* PNAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC08E8BF240388EF00436A5C /* PNAlertView.swift */; };
 		BC08E8C52403C72E00436A5C /* PNAlertViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC08E8C42403C72E00436A5C /* PNAlertViewDelegate.swift */; };
+		BC0AE72C24440EE1005EFF02 /* CreatePasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0AE72B24440EE1005EFF02 /* CreatePasswordTextField.swift */; };
 		BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */; };
 		BC18FA2123D54E26005DC7E3 /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */; };
 		BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */; };
@@ -675,6 +676,7 @@
 		BC06A9C023EBFBDB000B690E /* ResponseAPIGetNotificationItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResponseAPIGetNotificationItem+Extensions.swift"; sourceTree = "<group>"; };
 		BC08E8BF240388EF00436A5C /* PNAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNAlertView.swift; sourceTree = "<group>"; };
 		BC08E8C42403C72E00436A5C /* PNAlertViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNAlertViewDelegate.swift; sourceTree = "<group>"; };
+		BC0AE72B24440EE1005EFF02 /* CreatePasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordTextField.swift; sourceTree = "<group>"; };
 		BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesListFetcher.swift; sourceTree = "<group>"; };
 		BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
 		BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesVC.swift; sourceTree = "<group>"; };
@@ -2574,6 +2576,7 @@
 			isa = PBXGroup;
 			children = (
 				BCCE668A2428A64B004F47DC /* PasswordConstraintView.swift */,
+				BC0AE72B24440EE1005EFF02 /* CreatePasswordTextField.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -3152,6 +3155,7 @@
 				BC6B7653236A74F000A7AF2A /* MyProfileEditBioVC.swift in Sources */,
 				BCAFEC95243EC237003A1DC4 /* TransactionCompletedVC.swift in Sources */,
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
+				BC0AE72C24440EE1005EFF02 /* CreatePasswordTextField.swift in Sources */,
 				BC52914023793D330022EC7F /* CommentForm.swift in Sources */,
 				3BAE5CD4233899F30055F23E /* ContentTextView.swift in Sources */,
 				BC597A7C238CBFE700103F4F /* CMPageControll.swift in Sources */,
