@@ -61,9 +61,10 @@ class FeedPageHeaderView: MyTableHeaderView {
         
         postingView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 0), excludingEdge: .trailing)
-        avatarImageView.setToCurrentUserAvatar()
         
-        avatarImageView.observeCurrentUserAvatar().disposed(by: disposeBag)
+        avatarImageView
+            .observeCurrentUserAvatar()
+            .disposed(by: disposeBag)
         
         let whatsNewLabel = UILabel.with(text: "what's new".localized().uppercaseFirst + "?", textSize: 17, weight: .medium, textColor: .a5a7bd)
         postingView.addSubview(whatsNewLabel)
