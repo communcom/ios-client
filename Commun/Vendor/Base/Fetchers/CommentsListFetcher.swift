@@ -14,6 +14,7 @@ public var maxNestedLevel = 6
 //    var maxNestedLevel = 6
 class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     // MARK: - Properties
+    let shouldGroupComments: Bool
 
     // MARK: - type
     struct GroupedComment {
@@ -73,8 +74,9 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     
     var filter: Filter
     
-    init(filter: Filter) {
+    init(filter: Filter, shouldGroupComments: Bool) {
         self.filter = filter
+        self.shouldGroupComments = shouldGroupComments
     }
         
     override var request: Single<[ResponseAPIContentGetComment]> {
@@ -123,8 +125,23 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     override func join(newItems items: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
         var newList = super.join(newItems: items)
         // sort
-        newList = sortComments(newList)
+        if shouldGroupComments {
+            newList = groupComments(newList)
+        }
         return newList
+    }
+    
+    // MARK: - for grouping comments
+    private func groupComments(_ comments: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
+        guard comments.count > 0 else {return []}
+
+        // result array
+        let result = comments.filter {$0.parents.comment == nil}
+            .reduce([GroupedComment]()) { (result, comment) -> [GroupedComment] in
+            return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: comments))]
+        }
+
+        return flat(result)
     }
     
     func flat(_ array: [GroupedComment]) -> [ResponseAPIContentGetComment] {
@@ -137,18 +154,6 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
             }
         }
         return myArray
-    }
-    
-    func sortComments(_ comments: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
-        guard comments.count > 0 else {return []}
-
-        // result array
-        let result = comments.filter {$0.parents.comment == nil}
-            .reduce([GroupedComment]()) { (result, comment) -> [GroupedComment] in
-            return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: comments))]
-        }
-
-        return flat(result)
     }
 
     func getChildForComment(_ comment: ResponseAPIContentGetComment, in source: [ResponseAPIContentGetComment]) -> [GroupedComment] {

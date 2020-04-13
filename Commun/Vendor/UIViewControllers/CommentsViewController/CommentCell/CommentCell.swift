@@ -22,6 +22,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     var expanded = false
     weak var delegate: CommentCellDelegate?
     var textViewToEmbedConstraint: NSLayoutConstraint?
+    var showIndentForChildComment = true
     
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 35)
@@ -99,7 +100,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         self.comment = comment
         
         // if comment is a reply
-        if comment.parents.comment != nil {
+        if comment.parents.comment != nil && showIndentForChildComment {
             avatarImageView.leftConstraint?.constant = 72
         } else {
             avatarImageView.leftConstraint?.constant = 16

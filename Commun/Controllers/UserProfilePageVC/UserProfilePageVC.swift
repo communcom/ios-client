@@ -177,6 +177,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                 case .comment(let comment):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
                     cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
+                    cell.showIndentForChildComment = false
                     cell.setUp(with: comment)
                     cell.delegate = self
                     return cell
