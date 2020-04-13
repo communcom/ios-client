@@ -13,16 +13,17 @@ import RxCocoa
 class BalancesViewModel: ListViewModel<ResponseAPIWalletGetBalance> {
     let searchResult = BehaviorRelay<[ResponseAPIWalletGetBalance]?>(value: nil)
     
-    convenience init(userId: String? = nil, balances: [ResponseAPIWalletGetBalance]? = nil) {
+    static let ofCurrentUser = BalancesViewModel()
+    
+    convenience init(userId: String? = nil) {
         let fetcher = BalancesListFetcher(userId: userId)
         self.init(fetcher: fetcher)
         defer {
-            if let balances = balances {
-                items.accept(balances)
-            } else {
-                fetchNext()
-            }
-            
+            fetchNext()
         }
+    }
+    
+    func update() {
+        reload(clearResult: false)
     }
 }
