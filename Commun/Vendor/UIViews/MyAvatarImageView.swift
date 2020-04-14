@@ -69,12 +69,12 @@ class MyAvatarImageView: MyView {
         imageView.setGifImage(gifImage)
     }
     
-    func setAvatarDetectGif(with urlString: String?, placeholderName: String, completed: SDExternalCompletionBlock? = nil) {
+    func setAvatarDetectGif(with urlString: String?, completed: SDExternalCompletionBlock? = nil) {
         image = UIImage(named: "empty-avatar")
         imageView.setImageDetectGif(with: urlString, completed: completed)
     }
     
-    func setAvatar(urlString: String?, namePlaceHolder: String) {
+    func setAvatar(urlString: String?) {
         // profile image
         if let avatarUrl = urlString {
             imageView.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "empty-avatar")) { [weak self] (_, error, _, _) in
@@ -94,33 +94,17 @@ class MyAvatarImageView: MyView {
         return UserDefaults.standard.rx
             .observe(String.self, Config.currentUserAvatarUrlKey)
             .distinctUntilChanged()
-            .subscribe(onNext: {urlString in
-                self.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser?.name ?? Config.currentUser?.id ?? "U")
+            .subscribe(onNext: { urlString in
+                self.setAvatar(urlString: urlString)
             })
     }
     
     func setToCurrentUserAvatar() {
-        setAvatar(urlString: UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey), namePlaceHolder: Config.currentUser?.name ?? Config.currentUser?.id ?? "U")
+        setAvatar(urlString: UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey))
     }
     
-    func setNonAvatarImageWithId(_ id: String) {
-        if imageView.bounds.width == 0 {
-            imageView.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
-        }
-        
-        var color = nonAvatarColors[id]
-        if color == nil {
-            repeat {
-                color = UIColor.random
-            } while nonAvatarColors.contains {$1==color}
-            nonAvatarColors[id] = color
-        }
-        
-        imageView.setImageForName(id, backgroundColor: color, circular: true, textAttributes: nil, gradient: false)
-    }
-    
-    func addTapToViewer() {
-        imageView.addTapToViewer()
+    func addTapToViewer(with imageURL: String? = nil) {
+        imageView.addTapToViewer(with: imageURL)
     }
     
     func addTapToOpenUserProfile(profileId: String?) {

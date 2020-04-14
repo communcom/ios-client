@@ -111,7 +111,7 @@ extension CommentCellDelegate where Self: BaseViewController {
             headerView: headerView,
             actions: actions,
             completion: {
-                avatarImageView.setAvatar(urlString: comment.author?.avatarUrl, namePlaceHolder: comment.author?.username ?? "U")
+                avatarImageView.setAvatar(urlString: comment.author?.avatarUrl)
                 nameLabel.text = comment.author?.username
             })
     }

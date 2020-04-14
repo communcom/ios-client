@@ -9,6 +9,8 @@
 import Foundation
 
 class FTUEVC: BoardingVC {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
+    
     override var step: CurrentUserSettingStep {.ftue}
     override var nextStep: CurrentUserSettingStep? {nil}
     
@@ -28,16 +30,6 @@ class FTUEVC: BoardingVC {
     }()
     
     // MARK: - Methods
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-    
     override func setUp() {
         super.setUp()
         view.backgroundColor = .white

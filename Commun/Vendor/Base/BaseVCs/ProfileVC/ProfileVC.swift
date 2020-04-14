@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
+    
     // MARK: - Constants
     let coverHeight: CGFloat = 200
     let coverVisibleHeight: CGFloat = 150
@@ -18,6 +20,12 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // MARK: - Properties
+    override var title: String? {
+        didSet {
+            titleLabel.text = title
+        }
+    }
+    
     lazy var viewModel: ProfileViewModel<ProfileType> = self.createViewModel()
     var originInsetBottom: CGFloat?
     var frozenContentOffsetForRowAnimation: CGPoint?
@@ -26,7 +34,19 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         fatalError("must override")
     }
     
+    var showNavigationBar = false {
+        didSet {
+            configureNavigationBar()
+        }
+    }
+    
     // MARK: - Subviews
+    
+    lazy var customNavigationBar = UIView(backgroundColor: .clear)
+    lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
+    lazy var titleLabel = UILabel.with(textSize: 17, weight: .bold, textColor: .clear, textAlignment: .center)
+    lazy var optionsButton = UIButton.option(tintColor: .white)
+    
     lazy var shadowView: UIView = {
         let view = UIView(forAutoLayout: ())
         view.backgroundColor = .clear
@@ -37,8 +57,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         view.layer.insertSublayer(gradient, at: 0)
         return view
     }()
-    
-    lazy var optionsButton = UIButton.option(tintColor: .white)
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
@@ -63,13 +81,39 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         return tableView
     }
     
+    // MARK: - Methods
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+       
+        if originInsetBottom == nil && tableView.contentInset.bottom > 0 {
+            originInsetBottom = tableView.contentInset.bottom
+        }
+    }
+
     override func setUp() {
         super.setUp()
 
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
-        setLeftNavBarButtonForGoingBack(tintColor: .white)
+        view.addSubview(customNavigationBar)
+        customNavigationBar.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
-        setRightNavBarButton(with: optionsButton)
+        let barContentView: UIView = {
+            let view = UIView(forAutoLayout: ())
+            view.addSubview(backButton)
+            backButton.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
+            view.addSubview(titleLabel)
+            titleLabel.autoPinEdge(.leading, to: .trailing, of: backButton, withOffset: 10)
+            titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
+            view.addSubview(optionsButton)
+            optionsButton.autoPinEdge(.leading, to: .trailing, of: titleLabel, withOffset: 10)
+            optionsButton.autoPinEdge(toSuperviewEdge: .trailing)
+            optionsButton.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
+            return view
+        }()
+        customNavigationBar.addSubview(barContentView)
+        barContentView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+        
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         optionsButton.addTarget(self, action: #selector(moreActionsButtonDidTouch(_:)), for: .touchUpInside)
 
         let screenWidth = UIScreen.main.bounds.size.width
@@ -104,6 +148,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         refreshControl.subviews.first?.bounds.origin.y = 112
         
         _headerView.segmentedControl.delegate = self
+        
+        view.bringSubviewToFront(customNavigationBar)
     }
 
     @objc func refresh() {
@@ -170,47 +216,36 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         // for overriding
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func configureNavigationBar() {
+        super.configureNavigationBar()
         
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.prefersLargeTitles = false
-
-        showTitle(tableView.contentOffset.y >= -43)
-    }
-
-    func showTitle(_ show: Bool, animated: Bool = false) {
-        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: CGFloat.adaptive(width: 16.0), offset: CGSize(width: 0.0, height: CGFloat.adaptive(height: 6.0)), opacity: 0.05)
-        baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
-        coverImageView.isHidden = show
-        showNavigationBar(show, animated: animated) {
-            self.optionsButton.tintColor = show ? .black: .white
-            self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
-            if !show {
-                self.optionsButton.layer.shadowRadius = 2
-                self.optionsButton.layer.shadowColor = UIColor.black.cgColor
-                self.optionsButton.layer.shadowOffset = CGSize(width: 0, height: 1)
-                self.optionsButton.layer.shadowOpacity = 0.25
-                self.optionsButton.layer.masksToBounds = false
-            } else {
-                self.optionsButton.layer.shadowOpacity = 0
-            }
+        changeStatusBarStyle(showNavigationBar ? .default : .lightContent)
+        
+        coverImageView.isHidden = showNavigationBar
+        
+        customNavigationBar.backgroundColor = showNavigationBar ? .white : .clear
+        customNavigationBar.addShadow(ofColor: .shadow, radius: showNavigationBar ? CGFloat.adaptive(width: 16.0) : 0, offset: CGSize(width: 0.0, height: showNavigationBar ? CGFloat.adaptive(height: 6.0) : 0), opacity: showNavigationBar ? 0.05 : 0)
+        backButton.tintColor = showNavigationBar ? .black: .white
+        titleLabel.textColor = showNavigationBar ? .black: .clear
+        optionsButton.tintColor = showNavigationBar ? .black: .white
+        
+        if showNavigationBar {
+            optionsButton.layer.shadowOpacity = 0
+        } else {
+            optionsButton.layer.shadowRadius = 2
+            optionsButton.layer.shadowColor = UIColor.black.cgColor
+            optionsButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+            optionsButton.layer.shadowOpacity = 0.25
+            optionsButton.layer.masksToBounds = false
         }
     }
-    
+
     @objc func reload() {
         viewModel.reload()
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if originInsetBottom == nil && tableView.contentInset.bottom > 0 {
-            originInsetBottom = tableView.contentInset.bottom
-        }
-    }
 }
 
+// MARK: - CMSegmentedControlDelegate
 extension ProfileVC: CMSegmentedControlDelegate {
     func segmentedControl(_ segmentedControl: CMSegmentedControl, didTapOptionAtIndex: Int) {
         // Add additional space to bottom of tableView to prevent jumping lag when swich tab

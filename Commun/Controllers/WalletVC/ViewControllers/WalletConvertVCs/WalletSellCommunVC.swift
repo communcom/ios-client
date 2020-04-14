@@ -36,7 +36,7 @@ class WalletSellCommunVC: WalletConvertVC {
         
         guard let balance = currentBalance else {return}
         
-        buyLogoImageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
+        buyLogoImageView.setAvatar(urlString: balance.logo)
         buyNameLabel.text = balance.name ?? balance.symbol
         buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
         convertBuyLabel.text = "buy".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
@@ -215,15 +215,12 @@ class WalletSellCommunVC: WalletConvertVC {
                 let symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: balance.symbol)
 
                 let transaction = Transaction(amount: CGFloat(value * self.viewModel.rate.value / 10),
-                                              actionType: .sell,
+                                              actionType: "sell",
                                               symbol: symbol,
                                               operationDate: Date())
 
-                if let baseNC = self.navigationController as? BaseNavigationController {
-                    let completedVC = TransactionCompletedVC(transaction: transaction)
-                    baseNC.shouldResetNavigationBarOnPush = false
-                    self.show(completedVC, sender: nil)
-                }
+                let completedVC = TransactionCompletedVC(transaction: transaction)
+                self.show(completedVC, sender: nil)
 
                 self.hideHud()
                 

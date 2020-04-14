@@ -13,8 +13,8 @@ class BoardingVC: BaseViewController {
     var nextStep: CurrentUserSettingStep? {fatalError("must override")}
     
     // MARK: - Methods
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func setUp() {
+        super.setUp()
         if let step = KeychainManager.currentUser()?.settingStep,
             step != self.step {
             boardingNextStep()
@@ -58,7 +58,7 @@ class BoardingVC: BaseViewController {
         case .setPasscode:
             vc = BoardingSetPasscodeVC()
         case .setFaceId:
-            vc = controllerContainer.resolve(EnableBiometricsVC.self)!
+            vc = EnableBiometricsVC()
         case .ftue:
             vc = FTUEVC()
         default:

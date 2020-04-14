@@ -27,8 +27,12 @@ extension SignUpRouter where Self: UIViewController {
         
         switch step {
         case .verify:
-            let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self)!
-            vc = confirmUserVC
+            let verifyUserVC = VerifyPhoneVC()
+            vc = verifyUserVC
+            
+        case .verifyEmail:
+            let verifyVC = VerifyEmailVC()
+            vc = verifyVC
             
         case .setUserName:
             let setUserVC = SetUserVC()
@@ -48,17 +52,17 @@ extension SignUpRouter where Self: UIViewController {
     func resetSignUpProcess() {
         try? KeychainManager.deleteUser()
         // Dismiss all screen
-        navigationController?.popToVC(type: SignUpMethodsVC.self)
+        navigationController?.popToVC(type: SignUpVC.self)
     }
 }
 
 extension SignUpRouter where Self: UIViewController {
     // MARK: - Handler
-    func handleSignUpError(error: Error, with phone: String? = Config.currentUser?.phoneNumber) {
+    func handleSignUpError(error: Error, phone: String? = Config.currentUser?.phoneNumber, email: String? = Config.currentUser?.email) {
         // get phone
         let identity: String? = Config.currentUser?.identity
 
-        if phone == nil && identity == nil {
+        if phone == nil && identity == nil && email == nil {
             // reset if phone not found
             self.showError(error, showPleaseTryAgain: true) {
                 self.resetSignUpProcess()
@@ -74,6 +78,7 @@ extension SignUpRouter where Self: UIViewController {
                     var dataToSave = [String: Any]()
                     dataToSave[Config.registrationUserPhoneKey] = phone
                     dataToSave[Config.registrationStepKey] = currentStep
+                    dataToSave[Config.currentUserEmailKey] = email
                     try! KeychainManager.save(dataToSave)
                     getState()
                     return

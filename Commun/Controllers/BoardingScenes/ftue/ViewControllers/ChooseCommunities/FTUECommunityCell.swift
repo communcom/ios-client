@@ -9,7 +9,14 @@
 import Foundation
 
 class FTUECommunityCell: CommunityCollectionCell {
-    var shouldShowBonus = true
+    var shouldShowBonus: Bool {
+        guard let vc = parentViewController as? FTUECommunitiesVC,
+            vc.viewModel.chosenCommunities.value.count <= 2
+        else {
+            return false
+        }
+        return true
+    }
     
     override func setUpViews() {
         super.setUpViews()

@@ -36,12 +36,9 @@ extension PostEditorVC {
     }
     
     // MARK: - Immutable actions
-    @objc func shouldSaveDraft() -> Bool {
-        viewModel.postForEdit == nil && !contentTextView.text.isEmpty
-    }
     @objc override func close() {
-        
         guard shouldSaveDraft() else {
+            removeDraft()
             back()
             return
         }
@@ -73,7 +70,7 @@ extension PostEditorVC {
     
     func showExplanationViewIfNeeded() {
         if !explanationViewShowed {
-            view.addExplanationView(id: "how-do-i-get-rewards", title: "How do I get rewards for my posts?", description: "After you publish the post, community members will have 48 hours to evaluate it with their votes.\nIf your post reaches the Top 10 of the day, you are guaranteed to receive the reward.", from: actionButton, marginLeft: 54, marginRight: 10, learnMoreLink: "https://commun.com/faq#How%20can%20you%20get%20the%20points?")
+            view.addExplanationView(id: "how-do-i-get-rewards", title: "How do I get rewards for my posts?", description: "After you publish the post, community members will have 48    hours to like or dislike it. If your post reaches the Top 10 posts of the day, you will be rewarded.", from: actionButton, marginLeft: 54, marginRight: 10, learnMoreLink: "https://commun.com/faq#How%20can%20you%20get%20the%20points?")
             ExplanationView.markAsShown("how-do-i-get-rewards")
             explanationViewShowed = true
         }
@@ -348,14 +345,21 @@ extension PostEditorVC {
                         return
                     }
                     
-                    if let items = (UIApplication.topViewController() as? FeedPageVC)?.viewModel.items {
+                    if let items = (UIApplication.topViewController() as? FeedPageVC)?.viewModel.items,
+                        post.community?.communityId != "FEED"
+                    {
                         items.accept([post] + items.value)
+                        (UIApplication.topViewController() as! FeedPageVC).appLiked()
+                        return
+                    }
+                    
+                    if post.community?.communityId == "FEED" {
+                        UIApplication.topViewController()?.showProfileWithUserId(Config.currentUser?.id)
                         return
                     }
                     
                     let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
                     UIApplication.topViewController()?.show(postPageVC, sender: nil)
-                    postPageVC.appLiked()
                 }
             }) { (_) in
                 // show post page

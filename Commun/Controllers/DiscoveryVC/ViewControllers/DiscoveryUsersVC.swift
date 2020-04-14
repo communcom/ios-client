@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 class DiscoveryUsersVC: SubscriptionsVC {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
+    
     override var listLoadingStateObservable: Observable<ListFetcherState> {
         let viewModel = self.viewModel as! SubscriptionsViewModel
         return Observable.merge(

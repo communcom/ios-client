@@ -54,6 +54,13 @@ extension PostController {
         else {return}
         
         var actions = [CommunActionSheet.Action]()
+        
+        actions.append(
+            CommunActionSheet.Action(
+                title: "view in Explorer".localized().uppercaseFirst,
+                handle: { (topController as? BaseViewController)?.load(url: "https://explorer.cyberway.io/trx/\(post.meta.trxId ?? "")") }
+            )
+        )
 
         actions.append(
             CommunActionSheet.Action(title: "share".localized().uppercaseFirst, icon: UIImage(named: "share"), handle: {

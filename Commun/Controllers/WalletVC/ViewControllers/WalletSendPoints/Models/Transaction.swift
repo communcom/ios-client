@@ -12,18 +12,6 @@ typealias Symbol = (sell: String, buy: String)
 typealias Friend = (id: String, name: String, avatarURL: String?)
 typealias Balance = (name: String, avatarURL: String?, amount: CGFloat, symbol: String)
 
-public enum TransActionType: String {
-    case buy = "buy"
-    case sell = "sell"
-    case send = "send"
-
-    case hold = "hold"
-    case reward = "reward"
-    case unhold = "unhold"
-    case convert = "convert"
-    case transfer = "transfer"
-}
-
 struct Transaction {
     // MARK: - Properties
     var buyBalance: Balance?
@@ -31,7 +19,7 @@ struct Transaction {
     var friend: Friend?
     var amount: CGFloat = 0.0
     var history: ResponseAPIWalletGetTransferHistoryItem?
-    var actionType: TransActionType = .send
+    var actionType: String?
     var symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
 
     var operationDate: Date = Date() {

@@ -60,7 +60,7 @@ class CommunityLeaderCell: CommunityPageCell {
         self.leader = leader
         
         // avatar
-        avatarImageView.setAvatar(urlString: leader.avatarUrl, namePlaceHolder: leader.username)
+        avatarImageView.setAvatar(urlString: leader.avatarUrl)
         avatarImageView.percent = leader.ratingPercent
         
         // username label

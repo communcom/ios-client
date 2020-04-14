@@ -23,6 +23,7 @@ class BoardingSetPasscodeVC: BoardingVC {
     
     // MARK: - Methods
     override func setUp() {
+        super.setUp()
         addChildViewController(setPassCodeVC, toContainerView: view)
         setPassCodeVC.view.frame = view.bounds
         setPassCodeVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]

@@ -25,25 +25,24 @@ extension PostEditorVC {
         let tap = UITapGestureRecognizer(target: self, action: #selector(chooseCommunityDidTouch))
         communityView.addGestureRecognizer(tap)
         
-        communityView.addSubview(communityAvatarImage)
-        communityAvatarImage.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)
-
-        let youWillPostIn = UILabel.descriptionLabel("you will post in".localized().uppercaseFirst)
-        communityView.addSubview(youWillPostIn)
-        youWillPostIn.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
-        youWillPostIn.autoPinEdge(.leading, to: .trailing, of: communityAvatarImage, withOffset: 10)
+        let hStack: UIStackView = {
+            let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+            
+            stackView.addArrangedSubview(communityAvatarImage)
+            
+            let vStack: UIStackView = {
+                let stackView = UIStackView(axis: .vertical, alignment: .leading, distribution: .fill)
+                stackView.addArrangedSubviews([youWillPostInLabel, communityNameLabel])
+                return stackView
+            }()
+            stackView.addArrangedSubview(vStack)
+            let dropdownButton = UIButton.circleGray(imageName: "drop-down")
+            stackView.addArrangedSubview(dropdownButton)
+            return stackView
+        }()
         
-        communityView.addSubview(communityNameLabel)
-        communityNameLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 18)
-        communityNameLabel.autoPinEdge(.leading, to: .trailing, of: communityAvatarImage, withOffset: 10)
-        
-        let dropdownButton = UIButton.circleGray(imageName: "drop-down")
-        communityView.addSubview(dropdownButton)
-        dropdownButton.isUserInteractionEnabled = false
-        dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        dropdownButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        dropdownButton.leadingAnchor.constraint(greaterThanOrEqualTo: communityNameLabel.trailingAnchor, constant: 8)
-            .isActive = true
+        communityView.addSubview(hStack)
+        hStack.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
         
         // textView
         contentView.addSubview(contentTextView)

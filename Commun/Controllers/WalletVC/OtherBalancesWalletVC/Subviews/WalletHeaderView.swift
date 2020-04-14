@@ -164,7 +164,7 @@ extension WalletHeaderView: CircularCarouselDataSource, CircularCarouselDelegate
         if balance.symbol == Config.defaultSymbol {
             imageView.image = UIImage(named: "tux")
         } else {
-            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
+            imageView.setAvatar(urlString: balance.logo)
         }
         
         return view!

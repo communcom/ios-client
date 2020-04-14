@@ -1,61 +1,21 @@
 //
-//  SetUserVC.swift
+//  NewSetUserVC.swift
 //  Commun
 //
-//  Created by Chung Tran on 12/16/19.
-//  Copyright © 2019 Commun Limited. All rights reserved.
+//  Created by Chung Tran on 3/31/20.
+//  Copyright © 2020 Commun Limited. All rights reserved.
 //
 
 import Foundation
 import RxSwift
 
-class SetUserVC: BaseViewController, SignUpRouter {
+class SetUserVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Properties
     let viewModel = SetUserViewModel()
+    override var autoPinNextButtonToBottom: Bool {true}
     
     // MARK: - Subviews
-    lazy var backButton: UIButton = .back()
     lazy var textField: UITextField = {
-        let tf = UITextField(height: 56 * Config.heightRatio, backgroundColor: .f3f5fa, cornerRadius: 12 * Config.heightRatio)
-        tf.font = .systemFont(ofSize: 17 * Config.heightRatio)
-        tf.keyboardType = .alphabet
-        tf.placeholder = "username".localized().uppercaseFirst
-        tf.autocorrectionType = .no
-        tf.autocapitalizationType = .none
-        tf.spellCheckingType = .no
-        return tf
-    }()
-    
-    lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#F53D5B")!, numberOfLines: 0, textAlignment: .center)
-    
-    lazy var nextButton = StepButton(height: 56, label: "next".localized().uppercaseFirst, labelFont: UIFont.boldSystemFont(ofSize: 17 * Config.heightRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 8)
-    
-    // MARK: - Methods
-    
-    override func setUp() {
-        super.setUp()
-        AnalyticsManger.shared.registrationOpenScreen(4)
-        self.title = "sign up".localized().uppercaseFirst
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        // backButton
-        setLeftNavBarButton(with: backButton)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        
-        // label
-        let label = UILabel.with(text: "create your username".localized().uppercaseFirst, textSize: 17)
-        view.addSubview(label)
-        label.autoPinTopAndLeadingToSuperViewSafeArea(inset: 20)
-        
-        // textfield
-        view.addSubview(textField)
-        textField.autoPinEdge(.top, to: .bottom, of: label, withOffset: 52 * Config.heightRatio)
-        textField.autoPinEdge(toSuperviewEdge: .leading, withInset: 42 * Config.widthRatio)
-        textField.autoPinEdge(toSuperviewEdge: .trailing, withInset: 42 * Config.widthRatio)
-        
-        let leftView = UIView(width: 16, height: 56 * Config.heightRatio)
-        textField.leftView = leftView
-        textField.leftViewMode = .always
-        
         let alertButton = UIButton(width: 24, height: 24)
         alertButton.setImage(UIImage(named: "icon-info-button-default"), for: .normal)
         alertButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
@@ -63,30 +23,52 @@ class SetUserVC: BaseViewController, SignUpRouter {
         rightView.addSubview(alertButton)
         alertButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         alertButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        textField.rightView = rightView
-        textField.rightViewMode = .always
         
-        view.addSubview(errorLabel)
-        errorLabel.autoPinEdge(.top, to: .bottom, of: textField, withOffset: 10)
-        errorLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 32)
-        errorLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 32)
-        
-        // button
-        view.addSubview(nextButton)
-        nextButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 42 * Config.widthRatio)
-        nextButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 42 * Config.widthRatio)
-        nextButton.autoPinBottomToSuperViewSafeAreaAvoidKeyboard(inset: 16)
-        nextButton.addTarget(self, action: #selector(buttonNextDidTouch(_:)), for: .touchUpInside)
-        
-        // dismiss keyboard
-        view.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tap)
+        let tf = UITextField.signUpTextField(width: 290, placeholder: "username".localized().uppercaseFirst, rightView: rightView)
+        return tf
+    }()
+    
+    // MARK: - Methods
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        textField.becomeFirstResponder()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        textField.resignFirstResponder()
+    }
+    
+    override func setUp() {
+        super.setUp()
+        AnalyticsManger.shared.openScreenUsername()
+        subtitleLabel.text = "create your username".localized().uppercaseFirst
         
         // if username has already been set
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
             signUpNextStep()
         }
+    }
+    
+    override func setUpScrollView() {
+        super.setUpScrollView()
+        
+        // subtitle
+        scrollView.contentView.addSubview(subtitleLabel)
+        subtitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+        subtitleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        subtitleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        
+        scrollView.contentView.addSubview(textField)
+        textField.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: UIScreen.main.isSmall ? 20 : 50)
+        textField.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        scrollView.contentView.addSubview(errorLabel)
+        errorLabel.autoPinEdge(.top, to: .bottom, of: textField, withOffset: 10)
+        errorLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 32)
+        errorLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 32)
+        
+        errorLabel.autoPinEdge(toSuperviewEdge: .bottom)
     }
     
     override func bind() {
@@ -102,7 +84,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
                 return false
             }
             .map {self.viewModel.isUserNameValid($0)}
-            .bind(to: nextButton.rx.isEnabled)
+            .bind(to: nextButton.rx.isDisabled)
             .disposed(by: disposeBag)
         
         viewModel.errorMessage
@@ -110,28 +92,28 @@ class SetUserVC: BaseViewController, SignUpRouter {
             .disposed(by: disposeBag)
     }
     
-    @objc func backButtonTapped() {
-        resetSignUpProcess()
-    }
-    
+    // MARK: - Actions
     @objc func infoButtonTapped() {
-        AnalyticsManger.shared.userNameHelp()
         let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 386.0))))
         showCardWithView(userNameRulesView)
+        AnalyticsManger.shared.userNameEntered(state: "help")
         
         userNameRulesView.completionDismissWithAction = { _ in
             self.dismiss(animated: true, completion: nil)
         }
     }
     
-    @objc func buttonNextDidTouch(_ sender: Any) {
+    override func backButtonDidTouch() {
+        resetSignUpProcess()
+    }
+    
+    override func nextButtonDidTouch() {
         guard let userName = textField.text,
             viewModel.isUserNameValid(userName) else {
+                AnalyticsManger.shared.userNameEntered(state: "error")
                 return
         }
 
-        AnalyticsManger.shared.userNameEntered()
-        
         self.view.endEditing(true)
         
         if KeychainManager.currentUser()?.registrationStep == .toBlockChain {
@@ -146,14 +128,11 @@ class SetUserVC: BaseViewController, SignUpRouter {
             .subscribe(onCompleted: {
                 self.hideHud()
                 self.signUpNextStep()
+                AnalyticsManger.shared.userNameEntered(state: "success")
             }, onError: {error in
                 self.hideHud()
                 self.handleSignUpError(error: error)
             })
             .disposed(by: disposeBag)
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
     }
 }

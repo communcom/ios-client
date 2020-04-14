@@ -16,8 +16,9 @@ class FeedPageHeaderView: MyTableHeaderView {
     
     // MARK: - Subviews
     lazy var postingView = UIView(backgroundColor: .white)
-    lazy var avatarImageView = MyAvatarImageView(size: 35)
-    lazy var openEditorWithPhotoImageView: UIImageView = {
+        lazy var avatarImageView = MyAvatarImageView(size: 40.0)
+   
+        lazy var openEditorWithPhotoImageView: UIImageView = {
         let iv = UIImageView(width: 24, height: 24, imageNamed: "editor-open-photo")
         iv.tintColor = .a5a7bd
         return iv
@@ -51,6 +52,7 @@ class FeedPageHeaderView: MyTableHeaderView {
     // MARK: - Methods
     override func commonInit() {
         super.commonInit()
+        
         backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
         
         addSubview(postingView)
@@ -58,11 +60,13 @@ class FeedPageHeaderView: MyTableHeaderView {
         postingViewBottomConstraint = postingView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         
         postingView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 0), excludingEdge: .trailing)
-
-        avatarImageView.observeCurrentUserAvatar().disposed(by: disposeBag)
+        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 0), excludingEdge: .trailing)
         
-        let whatsNewLabel = UILabel.with(text: "what's new".localized().uppercaseFirst + "?", textSize: 15, textColor: .a5a7bd)
+        avatarImageView
+            .observeCurrentUserAvatar()
+            .disposed(by: disposeBag)
+        
+        let whatsNewLabel = UILabel.with(text: "what's new".localized().uppercaseFirst + "?", textSize: 17, weight: .medium, textColor: .a5a7bd)
         postingView.addSubview(whatsNewLabel)
         whatsNewLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         whatsNewLabel.autoPinEdge(toSuperviewEdge: .top)

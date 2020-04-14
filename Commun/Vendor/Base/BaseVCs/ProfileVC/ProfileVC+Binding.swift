@@ -32,8 +32,9 @@ extension ProfileVC {
         // scrolling
         offSetY
             .map {$0 < -43}
+            .distinctUntilChanged()
             .subscribe(onNext: { showNavBar in
-                self.showTitle(!showNavBar)
+                self.showNavigationBar = !showNavBar
             })
             .disposed(by: disposeBag)
         
@@ -56,6 +57,7 @@ extension ProfileVC {
             .subscribe(onNext: { [weak self] loadingState in
                 switch loadingState {
                 case .loading:
+                    self?._headerView.hideLoader()
                     self?._headerView.showLoader()
                 case .finished:
                     self?._headerView.hideLoader()

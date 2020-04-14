@@ -8,62 +8,20 @@
 
 import Foundation
 
-class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
-    // MARK: - Nested type
-    class ConstraintView: MyView {
-        var constraint: CreatePasswordViewModel.Constraint?
-        let activeColor = UIColor.appMainColor
-        let inactiveColor = UIColor.a5a7bd
-        lazy var symbol = UILabel.with(textSize: 22, weight: .medium, textColor: inactiveColor, textAlignment: .center)
-        lazy var title = UILabel.with(textSize: 12, textColor: inactiveColor, textAlignment: .center)
-        
-        override func commonInit() {
-            super.commonInit()
-            addSubview(symbol)
-            symbol.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-            addSubview(title)
-            title.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-            title.autoPinEdge(.top, to: .bottom, of: symbol, withOffset: 0)
-        }
-        
-        var isActive = false {
-            didSet {
-                symbol.textColor = isActive ? activeColor : inactiveColor
-                title.textColor = isActive ? activeColor : inactiveColor
-            }
-        }
-        
-        func setUp(with constraint: CreatePasswordViewModel.Constraint) {
-            self.constraint = constraint
-            symbol.text = constraint.symbol
-            title.text = constraint.title.localized().uppercaseFirst
-            isActive = constraint.isSastified
-        }
-    }
+class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Properties
     let viewModel = CreatePasswordViewModel()
     var masterPasswordButton: UIButton?
+    override var autoPinNextButtonToBottom: Bool {true}
+    
     // MARK: - Subviews
-    lazy var textField: UITextField = {
-        let tf = UITextField(width: 290, height: 56, backgroundColor: .f3f5fa, cornerRadius: 12)
-        tf.font = .systemFont(ofSize: 17 * Config.heightRatio)
-        tf.keyboardType = .alphabet
-        tf.placeholder = "password".localized().uppercaseFirst
-        tf.autocorrectionType = .no
-        tf.autocapitalizationType = .none
-        tf.spellCheckingType = .no
-        tf.isSecureTextEntry = true
-        
-        let leftView = UIView(width: 16, height: 56)
-        tf.leftView = leftView
-        tf.leftViewMode = .always
-        
+    lazy var textField: CreatePasswordTextField = {
         let rightView = UIView(width: 44, height: 56)
         rightView.addSubview(showPasswordButton)
         showPasswordButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         showPasswordButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        tf.rightView = rightView
-        tf.rightViewMode = .always
+        
+        let tf = CreatePasswordTextField(width: 290, placeholder: "password".localized().uppercaseFirst, isSecureTextEntry: true, rightView: rightView)
         return tf
     }()
     
@@ -75,28 +33,31 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     }()
     
     lazy var constraintsStackView = UIStackView(axis: .horizontal, spacing: 16)
-    
-    lazy var nextButton: CommunButton = {
-        let button = CommunButton.default(height: 56, label: "next".localized().uppercaseFirst, cornerRadius: 8, isHuggingContent: false, isDisableGrayColor: true)
-        button.autoSetDimension(.width, toSize: 290)
-        return button
-    }()
 
     lazy var unsupportSymbolError = UILabel.with(textSize: 12, weight: .medium, textColor: .appRedColor, numberOfLines: 2, textAlignment: .center)
 
     // MARK: - Methods
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        textField.becomeFirstResponder()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        textField.resignFirstResponder()
+    }
+    
     override func setUp() {
         super.setUp()
         titleLabel.text = "create Password".localized().uppercaseFirst
-        AnalyticsManger.shared.openEnterPassword()
+        
+        if UIScreen.main.isSmall {
+            titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
+        }
+
         // text field
         scrollView.contentView.addSubview(textField)
-        switch UIDevice.current.screenType {
-        case .iPhones_5_5s_5c_SE:
-            textField.autoPinEdge(toSuperviewEdge: .top, withInset: 36)
-        default:
-            textField.autoPinEdge(toSuperviewEdge: .top, withInset: 50)
-        }
+        textField.autoPinEdge(toSuperviewEdge: .top, withInset: UIScreen.main.isSmall ? 36 : 50)
         textField.autoAlignAxis(toSuperviewAxis: .vertical)
         
         // traits view
@@ -105,28 +66,8 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         constraintsStackView.autoAlignAxis(toSuperviewAxis: .vertical)
         constraintsStackView.autoPinEdge(toSuperviewEdge: .bottom)
         
-        // button
-        view.addSubview(nextButton)
-        nextButton.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
-        nextButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        let constant: CGFloat
-        switch UIDevice.current.screenType {
-        case .iPhones_5_5s_5c_SE:
-            constant = 16
-        default:
-            constant = 40
-        }
-        
-        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: nextButton, attribute: .bottom, multiplier: 1.0, constant: constant)
-        keyboardViewV.observeKeyboardHeight()
-        view.addConstraint(keyboardViewV)
-        
         // generateMasterPasswordButton
         setUpGenerateMasterPasswordButton()
-        
-        // hide keyboard
-        view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
 
         view.addSubview(unsupportSymbolError)
         unsupportSymbolError.autoPinEdge(.bottom, to: .top, of: nextButton, withOffset: -9)
@@ -136,6 +77,7 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     }
     
     func setUpGenerateMasterPasswordButton() {
+        AnalyticsManger.shared.openEnterPassword()
         let button = UIButton(label: "i want to use Master Password".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
         view.addSubview(button)
         button.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -172,14 +114,14 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         viewModel.constraints
             .subscribe(onNext: { constraints in
                 if self.constraintsStackView.arrangedSubviews.count == 0 {
-                    let constraintViews = constraints.map { constraint -> ConstraintView in
-                        let view = ConstraintView()
+                    let constraintViews = constraints.map { constraint -> PasswordConstraintView in
+                        let view = PasswordConstraintView()
                         view.setUp(with: constraint)
                         return view
                     }
                     self.constraintsStackView.addArrangedSubviews(constraintViews)
                 } else {
-                    let constraintViews = self.constraintsStackView.arrangedSubviews as! [ConstraintView]
+                    let constraintViews = self.constraintsStackView.arrangedSubviews as! [PasswordConstraintView]
                     for view in constraintViews {
                         guard let changedConstraint = constraints.first(where: {$0.title == view.constraint?.title}) else {return}
                         view.setUp(with: changedConstraint)
@@ -199,23 +141,21 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
     }
     
     @objc func generateMasterPasswordButtonDidTouch() {
+        AnalyticsManger.shared.openScreenAttentionMasterPassword()
         showAttention(
             subtitle: "you want to select the advanced mode and continue with the Master Password".localized().uppercaseFirst,
             descriptionText: "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
             ignoreButtonLabel: "continue with Master Password".localized().uppercaseFirst,
             ignoreAction: {
-                AnalyticsManger.shared.useMasterPassword()
+                AnalyticsManger.shared.clickContinueMasterPassword()
                 let vc = GenerateMasterPasswordVC()
                 self.show(vc, sender: nil)
-            }
-        )
+            }, backAction: {
+                AnalyticsManger.shared.clickBackMasterPassword()
+            })
     }
     
-    @objc func hideKeyboard() {
-        view.endEditing(true)
-    }
-    
-    @objc func nextButtonDidTouch() {
+    @objc override func nextButtonDidTouch() {
         if (textField.text ?? "").count > AuthManager.maxPasswordLength {
             hintView?.display(inPosition: nextButton.frame.origin, withType: .error("password must contain no more than 52 characters".localized().uppercaseFirst))
             return
@@ -235,6 +175,7 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
             default:
                 break
             }
+            AnalyticsManger.shared.passwordEntered(available: false)
             hintView?.display(inPosition: nextButton.frame.origin, withType: .error(message))
             return
         }
@@ -246,6 +187,7 @@ class CreatePasswordVC: SignUpBaseVC, SignUpRouter {
         guard let currentPassword = textField.text else {return}
         view.endEditing(true)
 
+        AnalyticsManger.shared.passwordEntered(available: true)
         // fix animation
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             let confirmVC = ConfirmPasswordVC(currentPassword: currentPassword)

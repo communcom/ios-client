@@ -13,6 +13,10 @@ import CyberSwift
 import CircularCarousel
 
 class WalletSendPointsVC: BaseViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .white)}
+    override var shouldHideTabBar: Bool {true}
+    
     // MARK: - Properties
     var dataModel: SendPointsModel
     var buttonBottomConstraint: NSLayoutConstraint?
@@ -50,27 +54,9 @@ class WalletSendPointsVC: BaseViewController {
     lazy var communLogoImageView = UIView.transparentCommunLogo(size: carouselHeight)
 
     // Balance
-    var sellerNameLabel: UILabel = {
-        let balanceNameLabelInstance = UILabel()
-        balanceNameLabelInstance.tune(withText: "",
-                                      textColor: .white,
-                                      font: UIFont.systemFont(ofSize: .adaptive(width: 17.0), weight: .semibold),
-                                      alignment: .center,
-                                      isMultiLines: false)
-        
-        return balanceNameLabelInstance
-    }()
+    var sellerNameLabel = UILabel.with(textSize: .adaptive(width: 17.0), weight: .semibold, textColor: .white, textAlignment: .center)
 
-    var sellerAmountLabel: UILabel = {
-        let balanceCurrencyLabelInstance = UILabel()
-        balanceCurrencyLabelInstance.tune(withText: "",
-                                          textColor: .white,
-                                          font: UIFont.systemFont(ofSize: .adaptive(width: 30.0), weight: .bold),
-                                          alignment: .center,
-                                          isMultiLines: false)
-        
-        return balanceCurrencyLabelInstance
-    }()
+    var sellerAmountLabel = UILabel.with(textSize: .adaptive(width: 30.0), weight: .bold, textColor: .white, textAlignment: .center)
 
     // Friend
     var friendAvatarImageView = UIView.createCircleCommunLogo(side: 40)
@@ -333,19 +319,7 @@ class WalletSendPointsVC: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         setupNavBar()
-        setNeedsStatusBarAppearanceUpdate()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        setTabBarHidden(sendPointsButton.isSelected)
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     override func viewWillLayoutSubviews() {
@@ -370,13 +344,10 @@ class WalletSendPointsVC: BaseViewController {
     private func setupNavBar() {
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
         if self.dataModel.transaction.symbol != Symbol(sell: "CMN", buy: "CMN") {
             setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(pointsListButtonDidTouch))
         }
-        
-        setTabBarHidden(true)
     }
     
     private func setup(borderedView: UIView) {
@@ -439,7 +410,7 @@ class WalletSendPointsVC: BaseViewController {
 
         if let friendName = dataModel.transaction.friend?.name {
             friendNameLabel.text = friendName
-            friendAvatarImageView.addCircleImage(byURL: dataModel.transaction.friend?.avatarURL, withPlaceholderName: friendName, andSide: 40)
+            friendAvatarImageView.addCircleImage(imageURL: dataModel.transaction.friend?.avatarURL, side: 40)
         } else {
             friendNameLabel.text = "select user".localized().uppercaseFirst
         }
@@ -542,11 +513,8 @@ class WalletSendPointsVC: BaseViewController {
                 .subscribe(onCompleted: { [weak self] in
                     guard let strongSelf = self else { return }
                     
-                    if let baseNC = strongSelf.navigationController as? BaseNavigationController {
-                        baseNC.shouldResetNavigationBarOnPush = false
-                        let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
-                        strongSelf.show(completedVC, sender: nil)
-                    }
+                    let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
+                    strongSelf.show(completedVC, sender: nil)
 
                     strongSelf.hideHud()
                     strongSelf.sendPointsButton.isSelected = true
@@ -639,7 +607,7 @@ extension WalletSendPointsVC: CircularCarouselDataSource {
         if balance.symbol == Config.defaultSymbol {
             imageView.image = UIImage(named: "tux")
         } else {
-            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
+            imageView.setAvatar(urlString: balance.logo)
         }
 
         updateSellerInfo()

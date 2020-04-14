@@ -22,6 +22,7 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+    
     lazy var avatarImageView: MyAvatarImageView = {
         let avatar = MyAvatarImageView(size: 50)
         avatar.backgroundColor = .white
@@ -71,7 +72,7 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
     // MARK: - Methods
     func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
-        self.avatarImageView.setAvatarDetectGif(with: community.avatarUrl, placeholderName: community.name)
+        self.avatarImageView.setAvatarDetectGif(with: community.avatarUrl)
         self.coverImageView.setImageDetectGif(with: community.coverUrl)
         
         nameLabel.text = community.name

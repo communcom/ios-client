@@ -11,9 +11,9 @@ import RxSwift
 import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: false, backgroundColor: .appMainColor)}
     // MARK: - Properties
-    var headerViewOffsetY: CGFloat = 0.0
-    
     var balancesVM: BalancesViewModel {
         (viewModel as! WalletViewModel).balancesVM
     }
@@ -48,14 +48,6 @@ class CommunWalletVC: TransferHistoryVC {
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
     var headerViewExpandedHeight: CGFloat = 0
 
-    private var barStyle: UIStatusBarStyle = .lightContent
-
-    var balanceView: UIView {
-        let view = UIView(forAutoLayout: ())
-
-        return view
-    }
-
     lazy var barTitleLabel = UILabel.with(text: "Equity Value Commun", textSize: 10, weight: .semibold, textColor: .white, textAlignment: .center)
     lazy var barPointLabel = UILabel.with(text: "167 500.23", textSize: 15, weight: .bold, textColor: .white, textAlignment: .center)
 
@@ -75,29 +67,14 @@ class CommunWalletVC: TransferHistoryVC {
     
     // MARK: - Initializers
     convenience init() {
-        self.init(viewModel: WalletViewModel(symbol: "CMN"))
+        self.init(viewModel: WalletViewModel(symbol: "all"))
     }
     
     // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.showNavigationBar(false, animated: true, completion: nil)
-        self.changeNavbar(y: headerViewOffsetY)
         self.setNavBarBackButton(tintColor: .white)
-        
-        self.setTabBarHidden(false)
-        
-        if #available(iOS 13.0, *) {
-            self.navigationController?.navigationBar.backgroundColor = .clear
-            self.navigationController?.navigationBar.subviews.first?.backgroundColor = .clear
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        self.navigationController?.navigationBar.backgroundColor = .clear
     }
     
     // MARK: - Custom Functions
@@ -183,7 +160,6 @@ class CommunWalletVC: TransferHistoryVC {
                                         
                     let alpha = ((100 / 50) / 100 * diff) - 1
                     self.barBalanceView.alpha = alpha
-                    self.changeNavbar(y: alpha)
                 } else {
                     let alpha = 1 - ((100 / 50) / 100 * diff)
                     
@@ -201,22 +177,6 @@ class CommunWalletVC: TransferHistoryVC {
                     }
                 }
         }.disposed(by: disposeBag)
-    }
-
-    private func changeNavbar(y: CGFloat) {
-        headerViewOffsetY = y
-        
-        if y >= 2 {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.navigationController?.navigationBar.backgroundColor = .appMainColor
-                self.navigationController?.navigationBar.subviews.first?.backgroundColor = .appMainColor
-            })
-        } else {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.navigationController?.navigationBar.backgroundColor = .clear
-                self.navigationController?.navigationBar.subviews.first?.backgroundColor = .clear
-            })
-        }
     }
     
     override func bindItems() {
@@ -282,6 +242,8 @@ class CommunWalletVC: TransferHistoryVC {
                 case .loading(let isLoading):
                     if isLoading {
                         self?.headerView.startLoading()
+                        self?.myPointsCollectionView.hideLoader()
+                        self?.sendPointsCollectionView.hideLoader()
                         self?.myPointsCollectionView.showLoader()
                         self?.sendPointsCollectionView.showLoader()
                     } else {
@@ -322,10 +284,7 @@ class CommunWalletVC: TransferHistoryVC {
     // MARK: - Actions
     @objc func convertButtonDidTouch() {
         guard let vc = createConvertVC() else {return}
-        let nc = navigationController as? BaseNavigationController
-        nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
-        nc?.shouldResetNavigationBarOnPush = true
     }
     
     func createConvertVC() -> WalletConvertVC? {
@@ -344,10 +303,7 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     func routeToConvertScene(walletConvertVC: WalletConvertVC) {
-        let nc = navigationController as? BaseNavigationController
-        nc?.shouldResetNavigationBarOnPush = false
         show(walletConvertVC, sender: nil)
-        nc?.shouldResetNavigationBarOnPush = true
     }
 
     func createConvertVC(withHistoryItem historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) -> WalletConvertVC? {
@@ -367,11 +323,8 @@ class CommunWalletVC: TransferHistoryVC {
     private func routeToSendPointsScene(withUser user: ResponseAPIContentGetProfile? = nil) {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
 
-        if let baseNC = navigationController as? BaseNavigationController {
-            let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
-            baseNC.shouldResetNavigationBarOnPush = false
-            show(walletSendPointsVC, sender: nil)
-        }
+        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
+        show(walletSendPointsVC, sender: nil)
         
         hideHud()
     }
@@ -438,10 +391,7 @@ class CommunWalletVC: TransferHistoryVC {
         }
         
         let vc = OtherBalancesWalletVC(balances: balances, symbol: selectedBalance.symbol, subscriptions: subscriptions, history: viewModel.items.value)
-        let nc = navigationController as? BaseNavigationController
-        nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
-        nc?.shouldResetNavigationBarOnPush = true
     }
 }
 
@@ -452,15 +402,6 @@ extension CommunWalletVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: 90, height: SendPointCollectionCell.height)
         }
         return CGSize(width: 140, height: MyPointCollectionCell.height)
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return self.barStyle
-    }
-
-    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
-        self.barStyle = style
-        setNeedsStatusBarAppearanceUpdate()
     }
 }
 

@@ -35,36 +35,22 @@ final class FeedPageFloatView: MyView {
         changeFeedTypeButton.autoPinEdge(.leading, to: .trailing, of: headerLabel, withOffset: 16 * Config.heightRatio)
         changeFeedTypeButton.autoAlignAxis(.horizontal, toSameAxisOf: headerLabel, withOffset: 3 * Config.heightRatio)
         
-        changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeButtonDidTouch(_:)), for: .touchUpInside)
-        
         addSubview(sortButton)
         sortButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         sortButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        sortButton.addTarget(self, action: #selector(changeFilterButtonDidTouch(_:)), for: .touchUpInside)
     }
     
     func setUp(with filter: PostsListFetcher.Filter) {
-        // feedTypeMode
-        switch filter.feedTypeMode {
-        case .subscriptions:
+        // type
+        switch filter.type {
+        case .subscriptions, .subscriptionsHot, .subscriptionsPopular:
             headerLabel.text = "my Feed".localized().uppercaseFirst
             changeFeedTypeButton.setTitle("trending".localized().uppercaseFirst, for: .normal)
-        case .hot, .new:
+        case .hot, .new, .topLikes:
             headerLabel.text = "trending".localized().uppercaseFirst
             changeFeedTypeButton.setTitle("my Feed".localized().uppercaseFirst, for: .normal)
         default:
             break
         }
-    }
-    
-    @objc func changeFeedTypeButtonDidTouch(_ sender: Any) {
-        guard let vc = parentViewController as? PostsViewController else {return}
-        vc.toggleFeedType()
-    }
-    
-    @objc func changeFilterButtonDidTouch(_ sender: Any) {
-        guard let vc = parentViewController as? PostsViewController else {return}
-        vc.openFilterVC()
     }
 }

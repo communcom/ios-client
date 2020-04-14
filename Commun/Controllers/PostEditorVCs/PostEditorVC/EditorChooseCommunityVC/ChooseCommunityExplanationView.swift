@@ -24,7 +24,7 @@ class ChooseCommunityExplanationView: MyTableHeaderView {
         containerView.addSubview(closeButton)
         closeButton.autoPinTopAndTrailingToSuperView(inset: 6)
         
-        let headerLabel = UILabel.with(text: "communiries".localized().uppercaseFirst, textSize: 15, weight: .bold)
+        let headerLabel = UILabel.with(text: "communities".localized().uppercaseFirst, textSize: 15, weight: .bold)
         containerView.addSubview(headerLabel)
         headerLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
         headerLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 12)

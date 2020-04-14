@@ -10,15 +10,17 @@ import Foundation
 import RxSwift
 
 class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
+    
     // MARK: - Constants
     let bottomBarHeight: CGFloat = 114
     let nextButtonImageName = "next-arrow"
     
     // MARK: - Properties
-    lazy var headerView = UIView(forAutoLayout: ())
+    var searchBarTopConstraint: NSLayoutConstraint?
     
-    lazy var descriptionLabel = UILabel.with(textSize: 17 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0)
-    
+    // MARK: - Subviews
+    lazy var searchContainerView = UIView(backgroundColor: .white)
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar(forAutoLayout: ())
         searchBar.searchBarStyle = .minimal
@@ -33,10 +35,31 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         layout.minimumLineSpacing = 0
         layout.sectionInset = .zero
         layout.scrollDirection = .vertical
+        
+        let width = view.width - 32
+        let horizontalSpacing: CGFloat = 16 * Config.heightRatio
+        let itemWidth = (width - horizontalSpacing) / 2
+        layout.itemSize = CGSize(width: itemWidth, height: 190)
+        layout.headerReferenceSize = CGSize(width: width, height: 132 + searchBar.height + 10)
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.configureForAutoLayout()
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomBarHeight, right: 0)
+        collectionView.keyboardDismissMode = .onDrag
+        
+        collectionView.isUserInteractionEnabled = true
+        collectionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        collectionView.register(FTUECommunityCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
+        collectionView.register(supplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: FTUECommunitiesHeaderView.self)
+        
+        // collection view
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        collectionView.addSubview(refreshControl)
+        refreshControl.tintColor = .appGrayColor
+        refreshControl.subviews.first?.bounds.origin.y = 15
+
         return collectionView
     }()
     
@@ -60,47 +83,22 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     lazy var bottomBar = UIView(backgroundColor: .white)
     
     // MARK: - Methods
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        shadowView.layoutIfNeeded()
+        bottomBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
+        searchBar.roundCorner()
+    }
+    
     override func setUp() {
         super.setUp()
-        // headerView
-        view.addSubview(headerView)
-        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-
-        // titleLabel
-        let titleLabel = UILabel.with(text: "get you first points".localized().uppercaseFirst, textSize: 33 * Config.heightRatio, weight: .bold, numberOfLines: 0)
-        headerView.addSubview(titleLabel)
-        titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
+        AnalyticsManger.shared.successfulRegistration()
         
-        // descriptionLabel
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 10 * Config.heightRatio
-        let attrString = NSAttributedString(string: "subscribe to at least 3 communities and get your first Community Points".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle])
-        descriptionLabel.attributedText = attrString
-        headerView.addSubview(descriptionLabel)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 16 * Config.heightRatio)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        
-        // searchBar
         layoutSearchBar()
         
-        // collection view
-        communitiesCollectionView.keyboardDismissMode = .onDrag
-        communitiesCollectionView.isUserInteractionEnabled = true
-        communitiesCollectionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
-        communitiesCollectionView.register(FTUECommunityCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
-        communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomBarHeight, right: 0)
-
-        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
-        communitiesCollectionView.addSubview(refreshControl)
-        refreshControl.tintColor = .appGrayColor
-        refreshControl.subviews.first?.bounds.origin.y = 15
-
+        // collectionView
         view.addSubview(communitiesCollectionView)
-        communitiesCollectionView.autoPinEdge(.top, to: .top, of: headerView)
-        communitiesCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), excludingEdge: .top)
-        
-        view.bringSubviewToFront(headerView)
+        communitiesCollectionView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
         
         // bottomBar
         view.addSubview(shadowView)
@@ -119,6 +117,8 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         chosenCommunitiesCollectionView.autoPinEdge(.trailing, to: .leading, of: nextButton, withOffset: -10)
         chosenCommunitiesCollectionView.register(FTUEChosenCommunityCell.self, forCellWithReuseIdentifier: "FTUEChosenCommunityCell")
         chosenCommunitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        
+        view.bringSubviewToFront(searchContainerView)
     }
 
     @objc func refresh() {
@@ -133,14 +133,6 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         bindSearchBar()
         
         observeCommunityFollowed()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        communitiesCollectionView.contentInset.top = headerView.height + 20
-        
-        shadowView.layoutIfNeeded()
-        bottomBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
     }
     
     @objc func nextButtonDidTouch() {
@@ -164,9 +156,17 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     
     // MARK: - Search
     func layoutSearchBar() {
-        headerView.addSubview(searchBar)
-        searchBar.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 25 * Config.heightRatio)
-        searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
+        searchContainerView.addSubview(searchBar)
+        searchBar.autoPinEdge(toSuperviewEdge: .leading, withInset: 8)
+        searchBar.autoPinEdge(toSuperviewEdge: .trailing, withInset: 8)
+        searchBar.autoPinEdge(toSuperviewEdge: .top)
+        searchBar.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        searchBar.sizeToFit()
+        
+        view.addSubview(searchContainerView)
+        searchBarTopConstraint = searchContainerView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 132)
+        searchContainerView.autoPinEdge(toSuperviewEdge: .leading)
+        searchContainerView.autoPinEdge(toSuperviewEdge: .trailing)
     }
     
     func searchBarIsSearchingWithQuery(_ query: String) {

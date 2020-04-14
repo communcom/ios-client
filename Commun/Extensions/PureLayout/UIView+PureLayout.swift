@@ -49,11 +49,11 @@ extension UIView {
          return view
     }
 
-     func addCircleImage(byURL imageURL: String?, withPlaceholderName placeholderName: String, andSide side: CGFloat) {
+     func addCircleImage(imageURL: String?, side: CGFloat) {
         self.removeSubviews()
 
-         let imageView = UIImageView.circle(size: side)
-        imageView.setAvatar(urlString: imageURL, namePlaceHolder: placeholderName)
+         let imageView = MyAvatarImageView(size: side)
+        imageView.setAvatar(urlString: imageURL)
 
          addSubview(imageView)
     }
@@ -80,6 +80,11 @@ extension UIView {
     
     func autoPinTopAndLeadingToSuperViewSafeArea(inset: CGFloat = 0, xInset: CGFloat? = nil) {
         autoPinEdge(toSuperviewSafeArea: .leading, withInset: xInset ?? inset)
+        autoPinEdge(toSuperviewSafeArea: .top, withInset: inset)
+    }
+    
+    func autoPinTopAndTrailingToSuperViewSafeArea(inset: CGFloat = 0, xInset: CGFloat? = nil) {
+        autoPinEdge(toSuperviewSafeArea: .trailing, withInset: xInset ?? inset)
         autoPinEdge(toSuperviewSafeArea: .top, withInset: inset)
     }
     

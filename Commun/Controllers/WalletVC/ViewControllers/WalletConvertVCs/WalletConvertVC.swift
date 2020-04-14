@@ -11,6 +11,10 @@ import RxCocoa
 import RxSwift
 
 class WalletConvertVC: BaseViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .white)}
+    override var shouldHideTabBar: Bool {true}
+    
     // MARK: - Properties
     let viewModel = WalletConvertViewModel()
     var currentSymbol: String?
@@ -207,10 +211,12 @@ class WalletConvertVC: BaseViewController {
                 switch state {
                 case .loading:
                     if !(self?.rightTextField.isFirstResponder ?? false) {
+                        self?.rightTextField.hideLoader()
                         self?.rightTextField.showLoader()
                     }
                     
                     if !(self?.leftTextField.isFirstResponder ?? false) {
+                        self?.leftTextField.hideLoader()
                         self?.leftTextField.showLoader()
                     }
                     
@@ -269,24 +275,6 @@ class WalletConvertVC: BaseViewController {
     
     func bindRate() {
         
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        navigationController?.navigationBar.isTranslucent = true
-        showNavigationBar(false, animated: true, completion: nil)
-        self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .white)
-        
-        setTabBarHidden(true)
-        
-        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 0, offset: CGSize(width: 0, height: 0), opacity: 0)
-    }
-        
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        setTabBarHidden(false)
     }
     
     override func viewDidLayoutSubviews() {

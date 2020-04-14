@@ -40,10 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var disposeBag = DisposeBag()
 
     // MARK: - RootVCs
-    var splashVC: SplashViewController { controllerContainer.resolve(SplashViewController.self)! }
+    var splashVC: SplashVC { SplashVC() }
     var welcomeNC: UINavigationController {
-        let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
-        let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+        let welcomeVC = WelcomeVC()
+        let welcomeNav = UINavigationController(rootViewController: welcomeVC)
         return welcomeNav
     }
     var boardingSetPasscodeVC: BoardingSetPasscodeVC { BoardingSetPasscodeVC() }
@@ -51,6 +51,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = splashVC
+        window!.makeKeyAndVisible()
+        
+        #if !APPSTORE
+        if !UserDefaults.standard.bool(forKey: UIApplication.versionBuild) {
+            try? KeychainManager.deleteUser()
+            UserDefaults.standard.set(true, forKey: UIApplication.versionBuild)
+        }
+        #endif
+        
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
             // Analytics
@@ -146,7 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
 
-        if let currentVC = window?.rootViewController as? SplashViewController {
+        if let currentVC = window?.rootViewController as? SplashVC {
             currentVC.animateSplash {
                 self.window?.rootViewController = rootVC
             }

@@ -14,7 +14,7 @@ struct ShareHelper {
         var urlString = Config.appConfig?.domain ?? "https://commun.com"
 
         if let shareLink = post.url {
-            urlString += shareLink
+            urlString += shareLink + "?invite=\(Config.currentUser?.id ?? "")"
         }
 
         share(urlString: urlString)
@@ -31,6 +31,12 @@ struct ShareHelper {
     static func share(image: UIImage) {
         guard let topController = UIApplication.topViewController() else { return }
         let avc = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        topController.present(avc, animated: true, completion: nil)
+    }
+    
+    static func share(_ any: [Any]) {
+        guard let topController = UIApplication.topViewController() else { return }
+        let avc = UIActivityViewController(activityItems: any, applicationActivities: nil)
         topController.present(avc, animated: true, completion: nil)
     }
 }

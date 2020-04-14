@@ -14,96 +14,86 @@ typealias LoginCredential = (login: String, key: String)
 
 class SignInVC: BaseViewController {
     // MARK: - Properties
-    let paddingX: CGFloat = 43 * Config.heightRatio
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     let viewModel = SignInViewModel()
     
     // MARK: - Subviews
+    lazy var backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
+    lazy var titleLabel = UILabel.with(text: "welcome".localized().uppercaseFirst, textSize: 34, weight: .bold)
+    
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     
-    lazy var loginTextField: UITextField = {
-        let textField = createTextField()
-        textField.textContentType = .username
-        textField.attributedPlaceholder = NSAttributedString(string: "login".localized().uppercaseFirst, attributes: [
-            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.3)
-        ])
-        textField.rx.controlEvent(.editingChanged)
-            .subscribe(onNext: { _ in
-                textField.text = textField.text?.lowercased()
-            })
-            .disposed(by: disposeBag)
-        return textField
-    }()
+    lazy var loginTextField = UITextField(width: 290, height: 56, cornerRadius: 12, placeholder: "login".localized().uppercaseFirst, autocorrectionType: .no, autocapitalizationType: UITextAutocapitalizationType.none, spellCheckingType: .no, textContentType: .username)
     
-    lazy var passwordTextField: UITextField = {
-        let textField = createTextField()
-        textField.textContentType = .password
-        textField.attributedPlaceholder = NSAttributedString(string: "key".localized().uppercaseFirst, attributes: [
-            NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.3)
-        ])
-        textField.textContentType = .password
-        textField.isSecureTextEntry = true
-        return textField
-    }()
+    lazy var passwordTextField = UITextField(width: 290, height: 56, cornerRadius: 12, placeholder: "key".localized().uppercaseFirst, autocorrectionType: .no, autocapitalizationType: UITextAutocapitalizationType.none, spellCheckingType: .no, textContentType: .password, isSecureTextEntry: true)
     
     lazy var pasteFromClipboardButton = UIButton(labelFont: .systemFont(ofSize: 15), textColor: .appMainColor)
     
-    lazy var signInButton = CommunButton.default(height: 56 * Config.heightRatio, label: "sign in".localized().uppercaseFirst, cornerRadius: 8, isDisableGrayColor: true)
-    lazy var signUpButton = UIButton(label: "don't have an account?".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15 * Config.heightRatio), textColor: .appMainColor)
+    lazy var signInButton = CommunButton.default(height: 56, label: "sign in".localized().uppercaseFirst, cornerRadius: 8, isDisableGrayColor: true)
+    lazy var signUpButton = UIButton(label: "don't have an account?".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), textColor: .appMainColor)
     
-    lazy var scanQrCodeButton = UIButton.roundedCorner(8, size: 56 * Config.heightRatio, backgroundColor: .appMainColor, tintColor: .white, imageName: "scan-qr-code")
+    lazy var scanQrCodeButton = UIButton.roundedCorner(8, size: 56, backgroundColor: .appMainColor, tintColor: .white, imageName: "scan-qr-code")
     
     // MARK: - Methods
-    private func createTextField() -> UITextField {
-        let textField = UITextField(height: 56, backgroundColor: .f3f5fa, cornerRadius: 12)
-        textField.font = .systemFont(ofSize: 17)
-        let paddingView: UIView = UIView(width: 16, height: 20)
-        textField.leftView = paddingView
-        textField.leftViewMode = .always
-        return textField
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loginTextField.becomeFirstResponder()
     }
     
     override func setUp() {
         super.setUp()
+        AnalyticsManger.shared.openSignInScreen()
         // title
-        title = "welcome".localized().uppercaseFirst
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .always
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        view.addSubview(backButton)
+        backButton.autoPinTopAndLeadingToSuperViewSafeArea(inset: 10, xInset: 0)
         
-        setNavBarBackButton()
+        view.addSubview(titleLabel)
+        
+        if UIScreen.main.isSmall {
+            titleLabel.autoPinEdge(.leading, to: .trailing, of: backButton, withOffset: 24)
+            titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
+        } else {
+            titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+            titleLabel.autoPinEdge(.top, to: .bottom, of: backButton, withOffset: 10)
+        }
         
         // scrollView
         view.addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        scrollView.autoPinEdge(.top, to: .bottom, of: titleLabel)
+        scrollView.autoPinEdge(toSuperviewEdge: .leading)
+        scrollView.autoPinEdge(toSuperviewEdge: .trailing)
         let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
         keyboardViewV.observeKeyboardHeight()
         self.view.addConstraint(keyboardViewV)
         
         // textfields
         scrollView.contentView.addSubview(loginTextField)
-        loginTextField.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 54 * Config.heightRatio, left: paddingX, bottom: 0, right: paddingX), excludingEdge: .bottom)
+        loginTextField.autoPinEdge(toSuperviewEdge: .top, withInset: UIScreen.main.isSmall ? 20 : 50)
+        loginTextField.autoAlignAxis(toSuperviewAxis: .vertical)
         
         scrollView.contentView.addSubview(passwordTextField)
         passwordTextField.autoPinEdge(.top, to: .bottom, of: loginTextField, withOffset: 12)
-        passwordTextField.autoPinEdge(toSuperviewEdge: .leading, withInset: paddingX)
-        passwordTextField.autoPinEdge(toSuperviewEdge: .trailing, withInset: paddingX)
+        passwordTextField.autoAlignAxis(toSuperviewAxis: .vertical)
         
         // paste
+        pasteFromClipboardButton.titleLabel?.numberOfLines = 0
         scrollView.contentView.addSubview(pasteFromClipboardButton)
         pasteFromClipboardButton.autoPinEdge(.top, to: .bottom, of: passwordTextField, withOffset: 10)
-        pasteFromClipboardButton.autoPinEdge(toSuperviewEdge: .leading, withInset: paddingX)
-        pasteFromClipboardButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: paddingX)
+        pasteFromClipboardButton.autoPinEdge(.leading, to: .leading, of: loginTextField)
+        pasteFromClipboardButton.autoPinEdge(.trailing, to: .trailing, of: loginTextField)
         
         // sing in button
         scrollView.contentView.addSubview(signInButton)
         signInButton.autoPinEdge(.top, to: .bottom, of: passwordTextField, withOffset: 40 * Config.heightRatio)
-        signInButton.autoPinEdge(toSuperviewEdge: .leading, withInset: paddingX)
+        signInButton.autoPinEdge(.leading, to: .leading, of: loginTextField)
         signInButton.addTarget(self, action: #selector(signInButtonDidTouch), for: .touchUpInside)
         
         // qr code
         scrollView.contentView.addSubview(scanQrCodeButton)
         scanQrCodeButton.autoAlignAxis(.horizontal, toSameAxisOf: signInButton)
         scanQrCodeButton.autoPinEdge(.leading, to: .trailing, of: signInButton, withOffset: 5)
-        scanQrCodeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: paddingX)
+        scanQrCodeButton.autoPinEdge(.trailing, to: .trailing, of: loginTextField)
         scanQrCodeButton.addTarget(self, action: #selector(scanQrButtonDidTouch), for: .touchUpInside)
         
         // sign up button
@@ -121,6 +111,10 @@ class SignInVC: BaseViewController {
                 setTextfieldWithLogin(login, key: key)
             }
         #endif
+        
+        // dismiss keyboard
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
     }
     
     override func bind() {
@@ -134,6 +128,12 @@ class SignInVC: BaseViewController {
             .map {LoginCredential(login: $0!, key: $1!)}
             .subscribe(onNext: { cred in
                 self.signInButton.isEnabled = self.validate(cred: cred)
+            })
+            .disposed(by: disposeBag)
+        
+        loginTextField.rx.controlEvent(.editingChanged)
+            .subscribe(onNext: { _ in
+                self.loginTextField.text = self.loginTextField.text?.lowercased()
             })
             .disposed(by: disposeBag)
     }
@@ -164,7 +164,7 @@ class SignInVC: BaseViewController {
     @objc func signUpButtonDidTouch() {
         let nc = self.navigationController
         navigationController?.popViewController(animated: true, {
-            let signUpVC = controllerContainer.resolve(SignUpWithPhoneVC.self)!
+            let signUpVC = SignUpVC()
             nc?.pushViewController(signUpVC)
         })
     }

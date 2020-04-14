@@ -10,17 +10,21 @@ import UIKit
 
 final class BaseNavigationController: UINavigationController {
     weak var tabBarVC: TabBarVC?
-    var style: UIStatusBarStyle = .default
-    var shouldResetNavigationBarOnPush = true
+    private var statusBarStyle: UIStatusBarStyle = .default
 
     // MARK: - Status Bar
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return self.style
-    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {self.statusBarStyle}
 
     func changeStatusBarStyle(_ style: UIStatusBarStyle) {
-        self.style = style
+        self.statusBarStyle = style
         setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    var previousController: UIViewController? {
+        if viewControllers.count > 1 {
+            return viewControllers[viewControllers.count-2]
+        }
+        return nil
     }
 
     // MARK: - Init
@@ -28,26 +32,26 @@ final class BaseNavigationController: UINavigationController {
     init(rootViewController: UIViewController, tabBarVC: TabBarVC? = nil) {
         self.tabBarVC = tabBarVC
         super.init(rootViewController: rootViewController)
-        delegate = self
+//        delegate = self
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
-        delegate = self
+//        delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        delegate = self
+//        delegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // This needs to be in here, not in init
-        interactivePopGestureRecognizer?.delegate = self
+//        interactivePopGestureRecognizer?.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,38 +62,10 @@ final class BaseNavigationController: UINavigationController {
           
     deinit {
         delegate = nil
-        interactivePopGestureRecognizer?.delegate = nil
+//        interactivePopGestureRecognizer?.delegate = nil
     }
     
     // MARK: - Methods
-    func resetNavigationBar() {
-        navigationBar.isTranslucent = false
-        
-        removeNavigationBarShadow()
-        
-        setNavigationBarBackground(color: .white)
-        
-        setTitleStyle()
-    }
-    
-    func removeNavigationBarShadow() {
-        let img = UIImage()
-        navigationBar.shadowImage = img
-    }
-    
-    func setNavigationBarBackground(color: UIColor = .white) {
-        let img = UIImage()
-        navigationBar.setBackgroundImage(img, for: .default)
-        navigationBar.barStyle = .default
-        navigationBar.barTintColor = color
-        navigationBar.subviews.first?.backgroundColor = color
-    }
-    
-    func setTitleStyle(font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .black) {
-        navigationBar.tintColor = textColor
-        navigationBar.setTitleFont(.boldSystemFont(ofSize: 15), color: textColor)
-        setNavigationBarHidden(false, animated: false)
-    }
     
     func avoidTabBar(viewController: UIViewController) {
         if let scrollView = viewController.view.subviews.first(where: {$0 is UIScrollView}) as? UIScrollView,
@@ -121,10 +97,6 @@ final class BaseNavigationController: UINavigationController {
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         duringPushAnimation = true
         
-        if shouldResetNavigationBarOnPush {
-            resetNavigationBar()
-        }
-        
         avoidTabBar(viewController: viewController)
         
         super.pushViewController(viewController, animated: animated)
@@ -132,6 +104,11 @@ final class BaseNavigationController: UINavigationController {
     
     override func popViewController(animated: Bool) -> UIViewController? {
 //        resetNavigationBar()
+        if let vc = previousController as? BaseViewController {
+            vc.configureNavigationBar()
+            vc.changeStatusBarStyle(vc.preferredStatusBarStyle)
+        }
+        
         return super.popViewController(animated: animated)
     }
     
@@ -143,28 +120,28 @@ final class BaseNavigationController: UINavigationController {
 
 // MARK: - UINavigationControllerDelegate
 
-extension BaseNavigationController: UINavigationControllerDelegate {
-    
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        guard let swipeNavigationController = navigationController as? BaseNavigationController else { return }
-        
-        swipeNavigationController.duringPushAnimation = false
-    }
-    
-}
-
-// MARK: - UIGestureRecognizerDelegate
-
-extension BaseNavigationController: UIGestureRecognizerDelegate {
-    
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard gestureRecognizer == interactivePopGestureRecognizer else {
-            return true // default value
-        }
-        
-        // Disable pop gesture in two situations:
-        // 1) when the pop animation is in progress
-        // 2) when user swipes quickly a couple of times and animations don't have time to be performed
-        return viewControllers.count > 1 && duringPushAnimation == false
-    }
-}
+//extension BaseNavigationController: UINavigationControllerDelegate {
+//    
+//    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+//        guard let swipeNavigationController = navigationController as? BaseNavigationController else { return }
+//        
+//        swipeNavigationController.duringPushAnimation = false
+//    }
+//    
+//}
+//
+//// MARK: - UIGestureRecognizerDelegate
+//
+//extension BaseNavigationController: UIGestureRecognizerDelegate {
+//    
+//    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//        guard gestureRecognizer == interactivePopGestureRecognizer else {
+//            return true // default value
+//        }
+//        
+//        // Disable pop gesture in two situations:
+//        // 1) when the pop animation is in progress
+//        // 2) when user swipes quickly a couple of times and animations don't have time to be performed
+//        return viewControllers.count > 1 && duringPushAnimation == false
+//    }
+//}

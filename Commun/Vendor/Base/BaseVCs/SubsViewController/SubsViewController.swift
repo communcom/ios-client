@@ -46,17 +46,8 @@ class SubsViewController<T: ListItemType, CellType: ListItemCellType>: ListViewC
                 .disposed(by: disposeBag)
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        baseNavigationController?.resetNavigationBar()
-    }
-    
+
     override func handleLoading() {
         tableView.addNotificationsLoadingFooterView()
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .default
     }
 }
