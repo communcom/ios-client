@@ -95,11 +95,8 @@ class BaseVerifyVC: BaseSignUpVC, SignUpRouter {
             .subscribe(onCompleted: { [weak self] in
                 guard let self = self else { return }
                 self.setResendButtonEnabled()
-                DispatchQueue.main.async {
-                    self.checkResendCodeTime()
-                    self.showAlert(title: "info".localized().uppercaseFirst,
-                                   message: "successfully resend code".localized().uppercaseFirst)
-                }
+                self.checkResendCodeTime()
+                self.showDone("successfully resent code".localized().uppercaseFirst)
             }) { [weak self] (error) in
                 self?.setResendButtonEnabled()
                 self?.showError(error)
