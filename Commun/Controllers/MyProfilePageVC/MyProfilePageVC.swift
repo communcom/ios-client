@@ -93,8 +93,9 @@ class MyProfilePageVC: UserProfilePageVC {
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
+        guard let profile = viewModel.profile.value else { return }
+
         let headerView = UIView(height: 40)
-                
         let avatarImageView = MyAvatarImageView(size: 40)
         
         avatarImageView
@@ -104,13 +105,13 @@ class MyProfilePageVC: UserProfilePageVC {
         headerView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
         
-        let userNameLabel = UILabel.with(text: viewModel.profile.value?.username, textSize: 15, weight: .semibold)
+        let userNameLabel = UILabel.with(text: profile.username, textSize: 15, weight: .semibold)
         headerView.addSubview(userNameLabel)
         userNameLabel.autoPinEdge(toSuperviewEdge: .top)
         userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
 
-        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.userId ?? "")", textSize: 12, weight: .semibold, textColor: .appMainColor)
+        let userIdLabel = UILabel.with(text: "@\(profile.userId)", textSize: 12, weight: .semibold, textColor: .appMainColor)
         headerView.addSubview(userIdLabel)
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
@@ -122,8 +123,7 @@ class MyProfilePageVC: UserProfilePageVC {
                                      style: .share,
                                      marginTop: 0,
                                      handle: {
-                                        let vc = MyProfileSettingsVC()
-                                        self.show(vc, sender: self)
+                                        ShareHelper.share(urlString: self.shareWith(username: profile.username, userID: profile.userId))
             }),
             CommunActionSheet.Action(title: "referral".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_referral"),

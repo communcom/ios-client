@@ -518,4 +518,16 @@ extension UIViewController {
             }
         }
     }
+    
+    func shareWith(username: String, userID: String) -> String {
+        var components = URLComponents()
+        let queryItemInvite = URLQueryItem(name: "invite", value: userID)
+
+        components.scheme = "https"
+        components.host = "commun.com"
+        components.path = "/@" + username
+        components.queryItems = [queryItemInvite]
+        
+        return components.url?.absoluteString ?? ""
+    }
 }

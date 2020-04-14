@@ -232,7 +232,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
-        guard let profile = viewModel.profile.value else {return}
+        guard let profile = viewModel.profile.value else { return }
         
         let headerView = UIView(height: 40)
         
@@ -263,8 +263,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                                      style: .share,
                                      marginTop: 0,
                                      handle: {
-                                        let vc = MyProfileSettingsVC()
-                                        self.show(vc, sender: self)
+                                        ShareHelper.share(urlString: self.shareWith(username: profile.username, userID: profile.userId))
             }),
             CommunActionSheet.Action(title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_blacklist"),
