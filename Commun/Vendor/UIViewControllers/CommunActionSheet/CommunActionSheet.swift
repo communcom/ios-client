@@ -12,14 +12,15 @@ class CommunActionSheet: SwipeDownDismissViewController {
     // MARK: - Nested types
     enum Style {
         case `default`
-        case profile
+        case share
         case follow
+        case profile
         
         var defaultMargin: CGFloat {
             switch self {
             case .default, .follow:
                 return 16
-            case .profile:
+            case .profile, .share:
                 return 10
             }
         }
@@ -28,7 +29,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
             switch self {
             case .default, .follow:
                 return 50
-            case .profile:
+            case .profile, .share:
                 return 65
             }
         }
@@ -37,7 +38,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
             switch self {
             case .default, .follow:
                 return 8
-            case .profile:
+            case .profile, .share:
                 return 2
             }
         }
@@ -130,6 +131,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Swipe down
         interactor = SwipeDownInteractor()
         
@@ -206,7 +208,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
                 iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
                 iconImageView.autoSetDimensions(to: CGSize(width: 24, height: 24))
             
-            case .profile:
+            case .profile, .share:
                 iconImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
                 iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
                 iconImageView.autoSetDimensions(to: CGSize(width: 35, height: 35))
@@ -228,7 +230,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
                     iconImageView.tag = 778
                 }
             
-            case .profile:
+            case .profile, .share:
                 titleLabel.font = .systemFont(ofSize: 17, weight: .medium)
                 titleLabel.autoPinEdge(.leading, to: .trailing, of: iconImageView, withOffset: 10)
                 titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)

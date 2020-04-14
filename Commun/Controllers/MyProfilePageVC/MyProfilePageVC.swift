@@ -117,16 +117,18 @@ class MyProfilePageVC: UserProfilePageVC {
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
         showCommunActionSheet(headerView: headerView, actions: [
-            // remove from MVP
-//            CommunActionSheet.Action(title: "saved".localized().uppercaseFirst, icon: UIImage(named: "profile_options_saved"), handle: {
-//                #warning("change filter")
-//                let vc = PostsViewController()
-//                vc.title = "saved posts".localized().uppercaseFirst
-//                self.show(vc, sender: self)
-//            }),
-            CommunActionSheet.Action(title: "saved souls".localized().uppercaseFirst,
+            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
+                                     icon: UIImage(named: "icon-share-circle-white"),
+                                     style: .share,
+                                     marginTop: 0,
+                                     handle: {
+                                        let vc = MyProfileSettingsVC()
+                                        self.show(vc, sender: self)
+            }),
+            CommunActionSheet.Action(title: "referral".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_referral"),
                                      style: .profile,
+                                     marginTop: 15,
                                      handle: {
                                         let vc = ReferralUsersVC()
                                         vc.title = "saved souls".localized().uppercaseFirst
@@ -136,6 +138,7 @@ class MyProfilePageVC: UserProfilePageVC {
             CommunActionSheet.Action(title: "liked".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_liked"),
                                      style: .profile,
+                                     marginTop: 17,
                                      handle: {
                                         let vc = PostsViewController(filter: PostsListFetcher.Filter(type: .voted, sortBy: .time, userId: Config.currentUser?.id))
                                         vc.title = "liked".localized().uppercaseFirst
@@ -145,13 +148,14 @@ class MyProfilePageVC: UserProfilePageVC {
             CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_blacklist"),
                                      style: .profile,
+                                     marginTop: 19,
                                      handle: {
                                         self.show(MyProfileBlacklistVC(), sender: self)
             }),
             CommunActionSheet.Action(title: "settings".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_settings"),
                                      style: .profile,
-                                     marginTop: 14,
+                                     marginTop: 34,
                                      handle: {
                                         let vc = MyProfileSettingsVC()
                                         self.show(vc, sender: self)

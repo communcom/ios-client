@@ -203,6 +203,7 @@
 "reward for votes"                              =   "reward for votes";
 "remove from favourite"                         =   "remove from favourite";
 "reply to comment"                              =   "reply to comment";
+"referral"                                      =   "referral";
 
 
 // S
@@ -229,6 +230,7 @@
 "social network"                                =   "social network";
 "send points"                                   =   "send points";
 "send"                                          =   "send";
+"share"                                         =   "share";
 
 
 // T
