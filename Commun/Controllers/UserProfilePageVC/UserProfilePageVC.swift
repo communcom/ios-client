@@ -263,7 +263,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                                      style: .share,
                                      marginTop: 0,
                                      handle: {
-                                        ShareHelper.share(urlString: self.shareWith(username: profile.username, userID: profile.userId))
+                                        ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
             }),
             CommunActionSheet.Action(title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_blacklist"),

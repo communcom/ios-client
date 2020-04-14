@@ -336,9 +336,17 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
         showCommunActionSheet(headerView: headerView, actions: [
+            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
+                                     icon: UIImage(named: "share"),
+                                     style: .default,
+                                     marginTop: 0,
+                                     handle: {
+//                                        ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
+            }),
             CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_blacklist"),
                                      tintColor: profile.isInBlacklist == true ? .black: .ed2c5b,
+                                     marginTop: 10,
                                      handle: {
                                         self.showAlert(
                                             title: (profile.isInBlacklist == true ? "unhide community": "hide community").localized().uppercaseFirst,

@@ -123,7 +123,7 @@ class MyProfilePageVC: UserProfilePageVC {
                                      style: .share,
                                      marginTop: 0,
                                      handle: {
-                                        ShareHelper.share(urlString: self.shareWith(username: profile.username, userID: profile.userId))
+                                        ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
             }),
             CommunActionSheet.Action(title: "referral".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_referral"),
