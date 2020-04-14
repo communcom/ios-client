@@ -315,7 +315,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
-        guard let profile = viewModel.profile.value else {return}
+        guard let profile = viewModel.profile.value, let currentUserID = Config.currentUser?.id else {return}
+        
         let headerView = UIView(height: 40)
         
         let avatarImageView = MyAvatarImageView(size: 40)
@@ -341,7 +342,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                                      style: .default,
                                      marginTop: 0,
                                      handle: {
-//                                        ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
+                                        ShareHelper.share(urlString: self.shareWith(name: profile.name, userID: currentUserID, isCommunity: true))
             }),
             CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_blacklist"),
