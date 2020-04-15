@@ -23,7 +23,7 @@ extension LeaderCellDelegate where Self: BaseViewController {
     }
     
     func buttonFollowDidTouch(leader: ResponseAPIContentGetLeader) {
-        NetworkService.shared.triggerFollow(user: leader)
+        BlockchainManager.instance.triggerFollow(user: leader)
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
             }

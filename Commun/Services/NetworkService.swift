@@ -35,49 +35,6 @@ class NetworkService: NSObject {
         }
     }
     
-    func triggerFollow<T: ProfileType>(user: T) -> Completable {
-        let originIsFollowing = user.isSubscribed ?? false
-        let originIsInBlacklist = user.isInBlacklist ?? false
-        
-        // set value
-        var user = user
-        user.setIsSubscribed(!originIsFollowing)
-        user.isInBlacklist = false
-        user.isBeingToggledFollow = true
-        
-        // notify changes
-        user.notifyChanged()
-        
-        // send request
-        var request = BlockchainManager.instance.follow(user.userId, isUnfollow: originIsFollowing)
-        
-        if originIsInBlacklist
-        {
-            request = BlockchainManager.instance.unblock(user.userId)
-                .flatMap {_ in BlockchainManager.instance.follow(user.userId)}
-        }
-        
-        return request
-            .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
-            .do(onError: { (_) in
-                // reverse change
-                user.setIsSubscribed(originIsFollowing)
-                user.isBeingToggledFollow = false
-                user.isInBlacklist = originIsInBlacklist
-                user.notifyChanged()
-            }, onCompleted: {
-                // re-enable state
-                user.isBeingToggledFollow = false
-                user.notifyChanged()
-                
-                if user.isSubscribed == false {
-                    user.notifyEvent(eventName: ResponseAPIContentGetProfile.unfollowedEventName)
-                } else {
-                    user.notifyEvent(eventName: ResponseAPIContentGetProfile.followedEventName)
-                }
-            })
-    }
-    
     func triggerFollow(community: ResponseAPIContentGetCommunity) -> Completable {
         // for reverse
         let originIsFollowing = community.isSubscribed ?? false
