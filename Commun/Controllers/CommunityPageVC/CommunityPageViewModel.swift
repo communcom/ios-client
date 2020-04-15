@@ -30,6 +30,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     }
     
     var communityAlias: String?
+    lazy var ruleRowHeights = [String: CGFloat]()
     
     // MARK: - Objects
     var community: BehaviorRelay<ResponseAPIContentGetCommunity?> {
@@ -124,6 +125,22 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
             .skip(1)
             .asDriver(onErrorJustReturn: [])
             .drive(items)
+            .disposed(by: disposeBag)
+        
+        // Rule changed (ex: isExpanded)
+        ResponseAPIContentGetCommunityRule
+            .observeItemChanged()
+            .subscribe(onNext: { rule in
+                if var rules = self.community.value?.rules,
+                    let index = rules.firstIndex(where: {$0.identity == rule.identity})
+                {
+                    if rule.isExpanded != rules[index].isExpanded {
+                        self.ruleRowHeights.removeValue(forKey: rule.identity)
+                    }
+                    rules[index] = rule
+                    self.rulesSubject.onNext(rules)
+                }
+            })
             .disposed(by: disposeBag)
     }
     
