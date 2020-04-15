@@ -95,7 +95,7 @@ extension MyProfilePageVC {
                 self.coverImageView.showLoading(cover: false, spinnerColor: .white)
                 
                 guard let image = image else {return}
-                NetworkService.shared.uploadImage(image)
+                RestAPIManager.instance.uploadImage(image)
                     .flatMap { url -> Single<String> in
                         BlockchainManager.instance.updateProfile(params: ["cover_url": url]).andThen(Single<String>.just(url))
                     }
@@ -150,7 +150,7 @@ extension MyProfilePageVC {
             .flatMap { image -> Single<String> in
                 self.headerView.avatarImageView.showLoading(cover: false, spinnerColor: .white)
                 self.headerView.avatarImageView.image = image
-                return NetworkService.shared.uploadImage(image)
+                return RestAPIManager.instance.uploadImage(image)
             }
             // Save to db
             .flatMap {BlockchainManager.instance.updateProfile(params: ["avatar_url": $0]).andThen(Single<String>.just($0))}

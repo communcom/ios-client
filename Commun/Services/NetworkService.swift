@@ -89,65 +89,7 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.waitForTransactionWith(id: id)
     }
     
-//    func resendSmsCode(phone: String) -> Observable<String> {
-//        return Observable<String>.create({ observer -> Disposable in
-//            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
-//            
-//            RestAPIManager.instance.resendSmsCode(phone:        phone,
-//                                                  isDebugMode:  isDebugMode,
-//                                                  completion:   { (result, errorAPI) in
-//                                                    guard errorAPI == nil else {
-//                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-//                                                        return
-//                                                    }
-//                                                    
-//                                                    if let result = result {
-//                                                        Logger.log(message: "Response: \n\t\(result.code)", event: .debug)
-//                                                        observer.onNext("\(result.code )")
-//                                                    }
-//                                                    observer.onCompleted()
-//            })
-//            return Disposables.create()
-//        }).map({ code -> String in
-//            return code.md5() ?? ""
-//        })
-//    }
-
-    func userVerify(phone: String, code: String) -> Observable<Bool> {
-        
-        return Observable<String>.create({ _ -> Disposable in
-            
-//            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
-//            
-//            RestAPIManager.instance.verify(phone:           phone,
-//                                           code:            code,
-//                                           isDebugMode:     isDebugMode,
-//                                           completion:      { (result, errorAPI) in
-//                                            guard errorAPI == nil else {
-//                                                Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-//                                                return
-//                                            }
-//                                            
-//                                            if let result = result {
-//                                                Logger.log(message: "Response: \n\t\(result.status)", event: .debug)
-//                                                observer.onNext(result.status)
-//                                            }
-//                                            
-//                                            observer.onCompleted()
-//            })
-            
-            return Disposables.create()
-        }).map({ result -> Bool in
-            return result == "OK"
-        })
-        
-    }
-    
     // MARK: - Contract `gls.social`
-    func uploadImage(_ image: UIImage) -> Single<String> {
-        RestAPIManager.instance.uploadImage(image)
-    }
-    
     func downloadImage(_ url: URL) -> Single<UIImage> {
         Logger.log(message: "Downloading image for \(url.absoluteString)", event: .debug)
         return Single<UIImage>.create {single in
