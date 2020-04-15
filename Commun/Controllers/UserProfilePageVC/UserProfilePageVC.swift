@@ -141,7 +141,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
             title = String(format: "%@ %@", "no".localized().uppercaseFirst, "posts".localized().uppercaseFirst)
             description = String(format: "%@ %@ %@", "you haven’t created any".localized().uppercaseFirst, "posts".localized(), "yet".localized())
 
-            tableView.addEmptyPlaceholderFooterView(title: title, description: description, buttonLabel: "create post".localized().uppercaseFirst) {
+            tableView.addEmptyPlaceholderFooterView(title: title, description: description, buttonLabel: String(format: "%@ %@", "create".localized().uppercaseFirst, "post".localized())) {
                 if let tabBarVC = self.tabBarController as? TabBarVC {
                     tabBarVC.buttonAddTapped()
                 }

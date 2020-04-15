@@ -56,9 +56,8 @@ class ConfirmPasswordVC: CreatePasswordVC {
 
     private func showAttention() {
         AnalyticsManger.shared.openScreenAttention()
-        showAttention(subtitle: "we do not keep master passwords and have no opportunity to restore them.".localized().uppercaseFirst,
-                      descriptionText: "Unfortunately, blockchain doesn’t allow us to restore passwords. It means that it is a user’s responsibility to keep the password in a safe place to be able to access it anytime.\nWe strongly recommend you to save your password and make its copy.".localized().uppercaseFirst,
-                      backButtonLabel: "save to iCloud".localized().uppercaseFirst,
+        showAttention(subtitle: "master password attention note".localized().uppercaseFirst,
+                      descriptionText: "unfortunately, blockchain doesn’t allow us".localized().uppercaseFirst,
                       ignoreButtonLabel: "continue".localized().uppercaseFirst, ignoreAction: {
                             AnalyticsManger.shared.saveItMassterPassword()
                             self.sendData()
@@ -97,7 +96,7 @@ class ConfirmPasswordVC: CreatePasswordVC {
         SecAddSharedWebCredential(domain as CFString, userName as CFString, currentPassword as CFString) { [weak self] (error) in
             DispatchQueue.main.async {
                 if error != nil {
-                    self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password in iCloud!".localized().uppercaseFirst, message: "You need to enable Keychain, then your password will be safe and sound.\nGo to your phone Settings\nthen to Passwords & Accounts > AutoFill Passwords > Enable Keychain".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                    self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password".localized().uppercaseFirst, message: "You need to enable Keychain, then".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
                         if index == 0 {
                             self?.savePasswordToIcloud()
                         }

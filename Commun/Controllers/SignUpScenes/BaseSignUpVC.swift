@@ -12,7 +12,7 @@ class BaseSignUpVC: BaseViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     // MARK: - Properties
-    var termOfUseText: String {"By continuing, you agree to the Commun’s Terms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst}
+    var termOfUseText: String {"by continuing, you agree to the".localized().uppercaseFirst}
     var alreadyHasAccountText: String {"already have an account? Sign in".localized().uppercaseFirst}
     var autoPinNextButtonToBottom: Bool {false}
     

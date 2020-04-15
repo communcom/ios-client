@@ -34,7 +34,7 @@ class MyProfileEditBioVC: EditorVC {
         super.setUp()
         
         // header
-        headerLabel.text = (bio == nil ? "add bio" : "edit bio").localized().uppercaseFirst
+        headerLabel.text = String(format: "%@ %@", (bio == nil ? "add" : "edit").localized().uppercaseFirst, "bio".localized())
         textView.rx.text.onNext(bio)
         
         // actionButton

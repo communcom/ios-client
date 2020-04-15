@@ -44,31 +44,10 @@ class WelcomeItemVC: BaseViewController {
         titleLabel.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: spacing)
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 60, relation: .greaterThanOrEqual)
-        titleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 60, relation: .greaterThanOrEqual)
+        titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16, relation: .greaterThanOrEqual)
+        titleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16, relation: .greaterThanOrEqual)
         titleLabel.setContentHuggingPriority(.required, for: .vertical)
-        
-        let titleAString: NSAttributedString
-        switch index {
-        case 1:
-            titleAString = NSMutableAttributedString()
-                .text("all-in-one".localized().uppercaseFirst, size: .adaptive(height: 36), weight: .bold)
-                .text("\n")
-                .text("social network".localized().uppercaseFirst, size: .adaptive(height: 36))
-        case 2:
-            titleAString = NSMutableAttributedString()
-                .text("owned".localized().uppercaseFirst, size: .adaptive(height: 36), weight: .bold)
-                .text(" ", size: .adaptive(height: 36))
-                .text("by users".localized().uppercaseFirst, size: .adaptive(height: 36))
-        default:
-            titleAString = NSMutableAttributedString()
-                .text("welcome".localized().uppercaseFirst, size: .adaptive(height: 36))
-                .text("\n")
-                .text("to".localized().uppercaseFirst, size: .adaptive(height: 36))
-                .text(" ")
-                .text("Commun /", size: .adaptive(height: 36), weight: .bold, color: .appMainColor)
-        }
-        titleLabel.attributedText = titleAString
+        titleLabel.attributedText = getTitle(index: index)
         
         view.addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: spacing)
@@ -77,39 +56,8 @@ class WelcomeItemVC: BaseViewController {
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16, relation: .greaterThanOrEqual)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16, relation: .greaterThanOrEqual)
         descriptionLabel.setContentHuggingPriority(.required, for: .vertical)
-        
-        let descriptionColor = UIColor.init(hexString: "#626371")!
-        let descriptionAS: NSAttributedString
-        switch index {
-        case 1:
-            descriptionAS = NSMutableAttributedString()
-                .semibold("choose communities of interest and".localized().uppercaseFirst, color: descriptionColor)
-                .text("\n")
-                .semibold("be".localized().uppercaseFirst, color: descriptionColor)
-                .text(" ")
-                .bold("rewarded".localized(), color: .appMainColor)
-                .text(" ")
-                .semibold("for your actions".localized(), color: descriptionColor)
-                .text("\n")
-                .text(" ")
-                .withParagraphSpacing(26, alignment: .center)
-        case 2:
-            descriptionAS = NSMutableAttributedString()
-                .semibold("communities has no single owner\nand fully belongs to its members".localized().uppercaseFirst, color: descriptionColor)
-                .withParagraphSpacing(26, alignment: .center)
-        default:
-            descriptionAS = NSMutableAttributedString()
-                .semibold("blockchain-based social network".localized().uppercaseFirst, color: descriptionColor)
-                .text("\n")
-                .semibold("where you get".localized(), color: descriptionColor)
-                .text(" ")
-                .bold("rewards".localized(), color: .appMainColor)
-                .text("\n")
-                .semibold("for posts, comments and likes".localized(), color: descriptionColor)
-                .withParagraphSpacing(26, alignment: .center)
 
-        }
-        descriptionLabel.attributedText = descriptionAS
+        descriptionLabel.attributedText = getDescription(index: index)
         
         descriptionLabel.autoPinEdge(toSuperviewEdge: .bottom)
     }
@@ -126,5 +74,115 @@ class WelcomeItemVC: BaseViewController {
         } else {
             imageViewHeightConstraint = imageView.autoSetDimension(.height, toSize: height)
         }
+    }
+
+    // MARK: - Texts
+    private func getTitle(index: Int) -> NSAttributedString {
+        let title: NSAttributedString
+
+        switch Locale.preferredLanguages.first {
+        case "ru-US", "ru-RU":
+            switch index {
+            case 1:
+                title = NSMutableAttributedString()
+                    .text("Весь контент", size: .adaptive(height: 36))
+                    .text("\n")
+                    .text("в ", size: .adaptive(height: 36))
+                    .text("одном месте!", size: .adaptive(height: 36), weight: .bold)
+            case 2:
+                title = NSMutableAttributedString()
+                    .text("Принадлежит пользователям", size: .adaptive(height: 36), weight: .bold)
+            default:
+                title = NSMutableAttributedString()
+                    .text("Добро пожаловать", size: .adaptive(height: 36))
+                    .text("\n")
+                    .text("на", size: .adaptive(height: 36))
+                    .text(" ")
+                    .text("Commun /", size: .adaptive(height: 36), weight: .bold, color: .appMainColor)
+            }
+        default:
+            switch index {
+            case 1:
+                title = NSMutableAttributedString()
+                    .text("all-in-one".localized().uppercaseFirst, size: .adaptive(height: 36), weight: .bold)
+                    .text("\n")
+                    .text("social network".localized().uppercaseFirst, size: .adaptive(height: 36))
+            case 2:
+                title = NSMutableAttributedString()
+                    .text("owned".localized().uppercaseFirst, size: .adaptive(height: 36), weight: .bold)
+                    .text(" ", size: .adaptive(height: 36))
+                    .text(String(format: "%@ %@", "by".localized().uppercaseFirst, "users".localized()), size: .adaptive(height: 36))
+
+            default:
+                title = NSMutableAttributedString()
+                    .text("welcome".localized().uppercaseFirst, size: .adaptive(height: 36))
+                    .text("\n")
+                    .text("to".localized().uppercaseFirst, size: .adaptive(height: 36))
+                    .text(" ")
+                    .text("Commun /", size: .adaptive(height: 36), weight: .bold, color: .appMainColor)
+            }
+        }
+        return title
+    }
+
+    private func getDescription(index: Int) -> NSAttributedString {
+        let descriptionColor = UIColor.init(hexString: "#626371")!
+        let description: NSAttributedString
+        switch Locale.preferredLanguages.first {
+        case "ru-US", "ru-RU":
+            switch index {
+            case 1:
+                description = NSMutableAttributedString()
+                    .semibold("Подписывайся на лучшие сообщества и зарабатывай награды", color: descriptionColor)
+                    .text("\n")
+                    .text(" ")
+                    .withParagraphSpacing(26, alignment: .center)
+            case 2:
+                description = NSMutableAttributedString()
+                    .semibold("Благодоря блокчейну Commun полностью принадлежит и управляется пользователями", color: descriptionColor)
+                    .withParagraphSpacing(26, alignment: .center)
+            default:
+                description = NSMutableAttributedString()
+                    .semibold("Социальную сеть на технологиях Блокчейн", color: descriptionColor)
+                    .text("\n")
+                    .semibold("Здесь вы", color: descriptionColor)
+                    .text(" ")
+                    .bold("зарабатываете награды", color: descriptionColor)
+                    .semibold("за посты лайки и комментарии", color: descriptionColor)
+                    .withParagraphSpacing(26, alignment: .center)
+            }
+        default:
+            switch index {
+            case 1:
+                description = NSMutableAttributedString()
+                    .semibold("choose communities of interest and".localized().uppercaseFirst, color: descriptionColor)
+                    .text("\n")
+                    .semibold("be".localized().uppercaseFirst, color: descriptionColor)
+                    .text(" ")
+                    .bold("rewarded".localized(), color: .appMainColor)
+                    .text(" ")
+                    .semibold("for your actions".localized(), color: descriptionColor)
+                    .text("\n")
+                    .text(" ")
+                    .withParagraphSpacing(26, alignment: .center)
+            case 2:
+                description = NSMutableAttributedString()
+                    .semibold("welcome-item-3".localized().uppercaseFirst, color: descriptionColor)
+                    .withParagraphSpacing(26, alignment: .center)
+
+            default:
+                description = NSMutableAttributedString()
+                    .semibold("blockchain-based social network".localized().uppercaseFirst, color: descriptionColor)
+                    .text("\n")
+                    .semibold("where you get".localized(), color: descriptionColor)
+                    .text(" ")
+                    .bold("rewards".localized(), color: .appMainColor)
+                    .text("\n")
+                    .semibold("for posts, comments and likes".localized(), color: descriptionColor)
+                    .withParagraphSpacing(26, alignment: .center)
+            }
+        }
+
+        return description
     }
 }

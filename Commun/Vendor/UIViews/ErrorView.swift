@@ -33,7 +33,7 @@ class ErrorView: MyView {
         super.init(frame: .zero)
         self.imageView.image = UIImage(named: imageNamed ?? "no-connection-image")
         self.title.text = title ?? "no connection".localized().uppercaseFirst
-        self.subtitle.text = subtitle ?? "check your Internet connection\n and try again".localized().uppercaseFirst
+        self.subtitle.text = subtitle ?? "check your Internet connection".localized().uppercaseFirst
         self.retryButton.setTitle(retryButtonTitle ?? "try again".localized().uppercaseFirst, for: .normal)
         self.retryAction = retryAction
     }

@@ -32,7 +32,8 @@ class SubscribersCell: SubsItemCell, ListItemCellType {
         followButton.setTitleColor(isFollowing ? .appMainColor: .white, for: .normal)
         followButton.setTitle(isFollowing ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
         followButton.isEnabled = !(profile.isBeingToggledFollow ?? false)
-        statsLabel.text = "\(profile.subscribersCount ?? 0) " + "followers".localized().uppercaseFirst + " • " + "\(profile.postsCount ?? 0) " + "posts".localized().uppercaseFirst
+
+        statsLabel.text = String(format: NSLocalizedString("%d followers", comment: ""), (profile.subscribersCount ?? 0)) + " • " + String(format: NSLocalizedString("%d posts", comment: ""), (profile.postsCount ?? 0))
         followButton.isHidden = Config.currentUser?.id == profile.userId
     }
     

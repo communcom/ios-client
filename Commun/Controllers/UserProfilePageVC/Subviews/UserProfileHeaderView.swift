@@ -21,6 +21,8 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
 
     // MARK: - Subviews
     lazy var followButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
+    lazy var followingsLabel = UILabel.with(text: "followings".localized().uppercaseFirst, textSize: .adaptive(width: 12.0), weight: .bold, textColor: .appGrayColor)
+    lazy var followersLabel = UILabel.with(text: "followers".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .appGrayColor)
 
     lazy var communitiesView: UIView = {
         let view = UIView(forAutoLayout: ())
@@ -55,7 +57,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         return label
     }()
 
-    lazy var seeAllButton: UIButton = UIButton(label: "see all".localized(), labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
+    lazy var seeAllButton: UIButton = UIButton(label: String(format: "%@ %@", "see".localized(), "all".localized()), labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
     
     lazy var communitiesLabel = UILabel.with(text: "communities".localized().uppercaseFirst, textSize: 20, weight: .bold)
     
@@ -82,7 +84,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         layoutTopOfFollowerCountLabel()
 
-        let followersLabel = UILabel.with(text: "followers".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .appGrayColor)
         addSubview(followersLabel)
         followersLabel.autoPinEdge(.leading, to: .trailing, of: followersCountLabel, withOffset: 4)
         followersLabel.autoPinEdge(.bottom, to: .bottom, of: followersCountLabel)
@@ -108,8 +109,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(followingsCountLabel)
         followingsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel1, withOffset: 2)
         followingsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
-        
-        let followingsLabel = UILabel.with(text: "followings".localized().uppercaseFirst, textSize: .adaptive(width: 12.0), weight: .bold, textColor: .appGrayColor)
+
         addSubview(followingsLabel)
         followingsLabel.autoPinEdge(.leading, to: .trailing, of: followingsCountLabel, withOffset: .adaptive(width: 4.0))
         followingsLabel.autoPinEdge(.bottom, to: .bottom, of: followingsCountLabel)
@@ -238,8 +238,14 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         // TODO: - Fix these number later
         // stats
-        followersCountLabel.text = "\(userProfile.subscribers?.usersCount ?? 0)"
-        followingsCountLabel.text = "\(userProfile.subscriptions?.usersCount ?? 0)"
+        let followingsCount: Int = Int((userProfile.subscriptions?.usersCount ?? 0))
+        let followersCount: Int = Int((userProfile.subscribers?.usersCount ?? 0))
+
+        followersCountLabel.text = "\(followersCount)"
+        followingsCountLabel.text = "\(followingsCount)"
+        followingsLabel.text = String(format: NSLocalizedString("followings-count", comment: ""), followingsCount)
+        followersLabel.text = String(format: NSLocalizedString("followers-count", comment: ""), followersCount)
+
         communitiesCountLabel.text = "\(userProfile.subscriptions?.communitiesCount ?? 0) (\(userProfile.highlightCommunitiesCount ?? 0) " + "mutual".localized().uppercaseFirst + ")"
 
         if userProfile.userId != Config.currentUser?.id {

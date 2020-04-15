@@ -25,12 +25,16 @@ class BuyCommunVC: BaseViewController {
     lazy var minimunChargeLabel = UILabel.with(text: "minimum charge is".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd)
     lazy var youGetTextField = UITextField.decimalPad()
     lazy var rateLabel = UILabel.with(text: "Rate:", textSize: 12, weight: .medium, textColor: .a5a7bd, textAlignment: .center)
-    lazy var buyCommunButton = CommunButton.default(height: 50, label: "buy Commun".localized().uppercaseFirst, cornerRadius: 25, isHuggingContent: false, isDisableGrayColor: true)
+    lazy var buyCommunButton = CommunButton.default(height: 50,
+                                                    label: String(format: "%@ %@", "buy".localized().uppercaseFirst, "commun".localized().uppercaseFirst),
+                                                    cornerRadius: 25,
+                                                    isHuggingContent: false,
+                                                    isDisableGrayColor: true)
     
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        title = "buy Commun".localized().uppercaseFirst
+        title = String(format: "%@ %@", "buy".localized().uppercaseFirst, "commun".localized().uppercaseFirst)
         view.backgroundColor = .f3f5fa
         
         view.addSubview(scrollView)
@@ -44,7 +48,7 @@ class BuyCommunVC: BaseViewController {
         scrollView.isUserInteractionEnabled = true
         scrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         
-        let youSendLabel = UILabel.with(text: "you send".localized().uppercaseFirst, textSize: 15, weight: .medium)
+        let youSendLabel = UILabel.with(text: String(format: "%@ %@", "you".localized().uppercaseFirst, "send".localized()), textSize: 15, weight: .medium)
         scrollView.contentView.addSubview(youSendLabel)
         youSendLabel.autoPinTopAndLeadingToSuperView(inset: 20, xInset: 26)
         
@@ -168,7 +172,7 @@ class BuyCommunVC: BaseViewController {
         
         let termsOfUseLabel = UILabel.with(textSize: 15, numberOfLines: 2, textAlignment: .center)
         let aStr = NSMutableAttributedString()
-            .text("by clicking convert, you agree to ChangeHero's terms of service.".localized().uppercaseFirst, size: 12, weight: .medium, color: .a5a7bd)
+            .text("by clicking convert, you agree to".localized().uppercaseFirst, size: 12, weight: .medium, color: .a5a7bd)
         termsOfUseLabel.attributedText = aStr.applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "terms of service.".localized())
         termsOfUseLabel.isUserInteractionEnabled = true
         termsOfUseLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(changeHeroViewDidTouch)))

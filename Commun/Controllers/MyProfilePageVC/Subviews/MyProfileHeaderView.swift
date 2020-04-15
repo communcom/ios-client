@@ -19,7 +19,12 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         return button
     }()
 
-    lazy var addBioButton = UIButton(height: 35, label: "add bio".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .f3f5fa, textColor: .appMainColor, cornerRadius: 35/2)
+    lazy var addBioButton = UIButton(height: 35,
+                                     label: String(format: "%@ %@", "add".localized().uppercaseFirst, "bio".localized()),
+                                     labelFont: .boldSystemFont(ofSize: 15),
+                                     backgroundColor: .f3f5fa,
+                                     textColor: .appMainColor,
+                                     cornerRadius: 35/2)
     
     lazy var walletShadowView = UIView(forAutoLayout: ())
     lazy var walletView = UIView(cornerRadius: 16)

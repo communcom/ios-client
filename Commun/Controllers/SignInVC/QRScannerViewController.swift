@@ -10,7 +10,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
     // MARK: - Subviews
     lazy var errorView = ErrorView(
         title: "cannot use Back Camera".localized().uppercaseFirst,
-        subtitle: "this app is not authorized to use Back Camera.\nPlease enable it in Settings".localized().uppercaseFirst,
+        subtitle: "this app is not authorized to use Back Camera".localized().uppercaseFirst,
         retryButtonTitle: "open Settings".localized().uppercaseFirst) {
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
     }

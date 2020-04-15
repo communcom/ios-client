@@ -10,7 +10,7 @@ import Foundation
 
 extension UISearchController {
     static func `default`(
-        placeholder: String = "search".localized().uppercaseFirst
+        placeholder: String = "search placeholder".localized().uppercaseFirst
     ) -> UISearchController {
         let sc = UISearchController(searchResultsController: nil)
         sc.searchBar.searchBarStyle = .minimal
@@ -19,7 +19,7 @@ extension UISearchController {
         return sc
     }
     
-    func setStyle(placeholder: String = "search".localized().uppercaseFirst) {
+    func setStyle(placeholder: String = "search placeholder".localized().uppercaseFirst) {
         hidesNavigationBarDuringPresentation = false
         obscuresBackgroundDuringPresentation = false
         

@@ -55,7 +55,7 @@ class ReferralHeaderView: MyTableHeaderView {
         learnMoreButton.autoPinEdge(.leading, to: .trailing, of: userIdLabel, withOffset: 10)
         learnMoreButton.autoAlignAxis(.horizontal, toSameAxisOf: userIdLabel)
         
-        let descriptionLabel = UILabel.with(text: "invite a friend and get 1 Commun when he signs up".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd, numberOfLines: 0)
+        let descriptionLabel = UILabel.with(text: "invite a friend and get 1 Commun".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd, numberOfLines: 0)
         containerView.addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
         descriptionLabel.autoPinEdge(.top, to: .bottom, of: userIdLabel, withOffset: 6)

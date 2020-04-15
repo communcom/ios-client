@@ -243,22 +243,26 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         */
         
         // membersCount
+        let membersCount: Int64 = community.subscribersCount ?? 0
         let aStr = NSMutableAttributedString()
-            .bold((community.subscribersCount ?? 0).kmFormatted, font: .boldSystemFont(ofSize: 15))
+            .bold(membersCount.kmFormatted, font: .boldSystemFont(ofSize: 15))
             .bold(" ")
-            .bold("members".localized().uppercaseFirst, font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
+            .bold(String(format: NSLocalizedString("members-count", comment: ""), membersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
         
         membersCountLabel.attributedText = aStr
         
         // leadsCount
+        let leadersCount: Int64 = community.leadersCount ?? 0
         let aStr2 = NSMutableAttributedString()
-            .bold("\((community.leadersCount ?? 0).kmFormatted)", font: .boldSystemFont(ofSize: 15))
+            .bold("\(leadersCount.kmFormatted)", font: .boldSystemFont(ofSize: 15))
             .bold(" ")
-            .bold("leaders".localized().uppercaseFirst, font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
+            .bold(String(format: NSLocalizedString("leaders-count", comment: ""), leadersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
         leadersCountLabel.attributedText = aStr2
-        
+
         // friends
         if let friends = community.friends, friends.count > 0 {
+            let count = friends.count > 3 ? friends.count - 3 : friends.count
+            friendLabel.text = String(format: NSLocalizedString("friend-count", comment: ""), count)
             usersStackView.setUp(with: friends)
             friendLabel.isHidden = false
         } else {

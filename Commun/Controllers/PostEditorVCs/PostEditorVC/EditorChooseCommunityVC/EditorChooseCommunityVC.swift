@@ -23,7 +23,7 @@ class EditorChooseCommunityVC: SubscriptionsVC {
     // MARK: - Initializers
     init(completion: ((ResponseAPIContentGetCommunity) -> Void)?) {
         self.completion = completion
-        super.init(title: "choose a community".localized().uppercaseFirst, type: .community)
+        super.init(title: "hint type choose community".localized().uppercaseFirst, type: .community)
     }
     
     required init?(coder: NSCoder) {

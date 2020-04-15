@@ -30,7 +30,7 @@ class SubscriptionsUserCell: SubsItemCell, ListItemCellType {
         setUpFollowButton(with: profile)
         
         // statsLabel
-        statsLabel.text = "\(profile.subscribersCount ?? 0) " + "followers".localized().uppercaseFirst + " • " + "\(profile.postsCount ?? 0) " + "posts".localized().uppercaseFirst
+        statsLabel.text = String(format: NSLocalizedString("%d followers", comment: ""), (profile.subscribersCount ?? 0)) + " • " + String(format: NSLocalizedString("%d posts", comment: ""), (profile.postsCount ?? 0))
     }
     
     func setUpFollowButton(with profile: ResponseAPIContentGetProfile) {

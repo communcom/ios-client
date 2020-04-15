@@ -33,7 +33,7 @@ class VerifyEmailVC: BaseVerifyVC {
         super.setUp()
         AnalyticsManger.shared.openEmailCodeView()
         
-        subtitleLabel.text = "an email has been sent with the verification code. Please enter it here".localized().uppercaseFirst
+        subtitleLabel.text = "an email has been sent with".localized().uppercaseFirst
         subtitleLabel.textColor = .a5a7bd
     }
 

@@ -27,7 +27,7 @@ class CommunityCell: SubsItemCell, ListItemCellType {
         avatarImageView.setAvatar(urlString: community.avatarUrl)
         nameLabel.text = community.name
         
-        statsLabel.text = "\((community.subscribersCount ?? 0).kmFormatted) " + "followers".localized().uppercaseFirst + " • " + "\((community.postsCount ?? 0).kmFormatted) " + "posts".localized().uppercaseFirst
+        statsLabel.text = String(format: NSLocalizedString("%d followers", comment: ""), (community.subscribersCount ?? 0)) + " • " + String(format: NSLocalizedString("%d posts", comment: ""), (community.postsCount ?? 0))
         
         // joinButton
         let joined = community.isSubscribed ?? false

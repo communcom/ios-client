@@ -167,7 +167,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
                         case 1:
                             sectionLabel = "yesterday".localized().uppercaseFirst
                         default:
-                            sectionLabel = "\(key) " + "days ago".localized()
+                            sectionLabel = String(format: NSLocalizedString("%d day", comment: ""), key) + " " + "ago".localized()
                         }
                         return ListSection(model: sectionLabel, items: dictionary[key] ?? [])
                     }
@@ -182,7 +182,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
                 if newCount > 0 {
                     text.text("•", size: 20, color: .appMainColor)
                         .normal(" ")
-                        .text("\(newCount) new notifications".localized().uppercaseFirst, size: 12, color: .a5a7bd)
+                        .text(String(format: "%i %@ %@", newCount, "new".localized().uppercaseFirst, "notifications".localized()), size: 12, color: .a5a7bd)
                 }
                 self.newNotificationsCountLabel.attributedText = text
             })

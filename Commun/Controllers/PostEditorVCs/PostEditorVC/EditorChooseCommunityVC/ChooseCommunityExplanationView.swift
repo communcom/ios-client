@@ -34,7 +34,7 @@ class ChooseCommunityExplanationView: MyTableHeaderView {
         learnMoreButton.autoPinEdge(.leading, to: .trailing, of: headerLabel, withOffset: 10)
         learnMoreButton.autoAlignAxis(.horizontal, toSameAxisOf: headerLabel)
         
-        let descriptionLabel = UILabel.with(text: "choose community in which you want to create a post".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd, numberOfLines: 0)
+        let descriptionLabel = UILabel.with(text: "choose community in which you want".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd, numberOfLines: 0)
         containerView.addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 15)

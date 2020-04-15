@@ -63,7 +63,10 @@ class BasicEditorVC: PostEditorVC {
         
         // content inside limit
         let textInsideLimit = (content.count <= contentLettersLimit)
-        if !textInsideLimit {hintType = .error("content must less than \(contentLettersLimit) characters".localized().uppercaseFirst)}
+        
+        if !textInsideLimit {
+            hintType = .error(String(format: "%@ %i %@", "content must less than".localized().uppercaseFirst, contentLettersLimit, "characters".localized()))
+        }
         
         // compare content
         let textChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)

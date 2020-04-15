@@ -22,7 +22,7 @@ class CountriesVC: BaseViewController, UISearchResultsUpdating {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        title = "select country".localized().uppercaseFirst
+        title = "select country placeholder".localized().uppercaseFirst
         
         // Set up navigation bar
         let closeButton = UIBarButtonItem(title: "close".localized().uppercaseFirst, style: .plain, target: nil, action: nil)

@@ -168,7 +168,7 @@ class PostPageVC: CommentsViewController {
             let post = (self.viewModel as! PostPageViewModel).post.value
         else {return}
         
-        showAlert(title: "an error has occured".localized().uppercaseFirst, message: "Do you want to retry".localized().uppercaseFirst + "?", buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0, completion: { (index) in
+        showAlert(title: "an error has occured".localized().uppercaseFirst, message: "do you want to retry".localized().uppercaseFirst + "?", buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0, completion: { (index) in
             // retry
             if index == 0 {
                 // retry

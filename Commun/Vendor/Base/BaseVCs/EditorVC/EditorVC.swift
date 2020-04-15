@@ -19,7 +19,7 @@ class EditorVC: BaseViewController {
     // MARK: - Subviews
     // header
     lazy var closeButton = UIButton.close()
-    lazy var headerLabel = UILabel.with(text: "create post".localized().uppercaseFirst, textSize: 15, weight: .semibold)
+    lazy var headerLabel = UILabel.with(text: String(format: "%@ %@", "create".localized().uppercaseFirst, "post".localized()), textSize: 15, weight: .semibold)
     
     // Content
     lazy var contentView = UIView(forAutoLayout: ())
