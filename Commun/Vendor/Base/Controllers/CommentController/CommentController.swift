@@ -49,7 +49,7 @@ extension CommentController {
         }
         // animate
         voteContainerView.animateUpVote {
-            NetworkService.shared.upvoteMessage(message: comment)
+            BlockchainManager.instance.upvoteMessage(comment)
                 .subscribe { (error) in
                     UIApplication.topViewController()?.showError(error)
                 }
@@ -65,7 +65,7 @@ extension CommentController {
         }
         // animate
         voteContainerView.animateDownVote {
-            NetworkService.shared.downvoteMessage(message: comment)
+            BlockchainManager.instance.downvoteMessage(comment)
                 .subscribe { (error) in
                     UIApplication.topViewController()?.showError(error)
                 }

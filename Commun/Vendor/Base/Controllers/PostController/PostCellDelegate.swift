@@ -16,7 +16,7 @@ protocol PostCellDelegate: class {
 
 extension PostCellDelegate where Self: BaseViewController {
     func upvoteButtonDidTouch(post: ResponseAPIContentGetPost) {
-        NetworkService.shared.upvoteMessage(message: post)
+        BlockchainManager.instance.upvoteMessage(post)
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
             }
@@ -24,7 +24,7 @@ extension PostCellDelegate where Self: BaseViewController {
     }
     
     func downvoteButtonDidTouch(post: ResponseAPIContentGetPost) {
-        NetworkService.shared.downvoteMessage(message: post)
+        BlockchainManager.instance.downvoteMessage(post)
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
             }
