@@ -232,7 +232,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
-        guard let profile = viewModel.profile.value else {return}
+        guard let profile = viewModel.profile.value else { return }
         
         let headerView = UIView(height: 40)
         
@@ -258,20 +258,31 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
         showCommunActionSheet(headerView: headerView, actions: [
-            CommunActionSheet.Action(title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), style: .profile, handle: {
-                
-                self.showAlert(
-                    title: profile.isInBlacklist == true ? "unblock user".localized().uppercaseFirst: "block user".localized().uppercaseFirst,
-                    message: "do you really want to".localized().uppercaseFirst + " " + (profile.isInBlacklist == true ? "unblock".localized(): "block".localized()) + " \(self.viewModel.profile.value?.username ?? "this user")" + "?",
-                    buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
-                    highlightedButtonIndex: 1) { (index) in
-                        if index != 0 {return}
-                        if profile.isInBlacklist == true {
-                            self.unblockUser()
-                        } else {
-                            self.blockUser()
-                        }
-                    }
+            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
+                                     icon: UIImage(named: "icon-share-circle-white"),
+                                     style: .share,
+                                     marginTop: 0,
+                                     handle: {
+                                        ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
+            }),
+            CommunActionSheet.Action(title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst,
+                                     icon: UIImage(named: "profile_options_blacklist"),
+                                     style: .profile,
+                                     marginTop: 15,
+                                     handle: {
+                                        self.showAlert(
+                                            title: profile.isInBlacklist == true ? "unblock user".localized().uppercaseFirst: "block user".localized().uppercaseFirst,
+                                            message: "do you really want to".localized().uppercaseFirst + " " + (profile.isInBlacklist == true ? "unblock".localized(): "block".localized()) + " \(self.viewModel.profile.value?.username ?? "this user")" + "?",
+                                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
+                                            highlightedButtonIndex: 1) { (index) in
+                                                if index != 0 { return }
+                                                
+                                                if profile.isInBlacklist == true {
+                                                    self.unblockUser()
+                                                } else {
+                                                    self.blockUser()
+                                                }
+                                        }
             })
         ]) {
             

@@ -93,8 +93,9 @@ class MyProfilePageVC: UserProfilePageVC {
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
+        guard let profile = viewModel.profile.value else { return }
+
         let headerView = UIView(height: 40)
-                
         let avatarImageView = MyAvatarImageView(size: 40)
         
         avatarImageView
@@ -104,29 +105,30 @@ class MyProfilePageVC: UserProfilePageVC {
         headerView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
         
-        let userNameLabel = UILabel.with(text: viewModel.profile.value?.username, textSize: 15, weight: .semibold)
+        let userNameLabel = UILabel.with(text: profile.username, textSize: 15, weight: .semibold)
         headerView.addSubview(userNameLabel)
         userNameLabel.autoPinEdge(toSuperviewEdge: .top)
         userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
 
-        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.userId ?? "")", textSize: 12, weight: .semibold, textColor: .appMainColor)
+        let userIdLabel = UILabel.with(text: "@\(profile.userId)", textSize: 12, weight: .semibold, textColor: .appMainColor)
         headerView.addSubview(userIdLabel)
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
         showCommunActionSheet(headerView: headerView, actions: [
-            // remove from MVP
-//            CommunActionSheet.Action(title: "saved".localized().uppercaseFirst, icon: UIImage(named: "profile_options_saved"), handle: {
-//                #warning("change filter")
-//                let vc = PostsViewController()
-//                vc.title = "saved posts".localized().uppercaseFirst
-//                self.show(vc, sender: self)
-//            }),
-            CommunActionSheet.Action(title: "saved souls".localized().uppercaseFirst,
+            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
+                                     icon: UIImage(named: "icon-share-circle-white"),
+                                     style: .share,
+                                     marginTop: 0,
+                                     handle: {
+                                        ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
+            }),
+            CommunActionSheet.Action(title: "referral".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_referral"),
                                      style: .profile,
+                                     marginTop: 15,
                                      handle: {
                                         let vc = ReferralUsersVC()
                                         vc.title = "saved souls".localized().uppercaseFirst
@@ -136,6 +138,7 @@ class MyProfilePageVC: UserProfilePageVC {
             CommunActionSheet.Action(title: "liked".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_liked"),
                                      style: .profile,
+                                     marginTop: 17,
                                      handle: {
                                         let vc = PostsViewController(filter: PostsListFetcher.Filter(type: .voted, sortBy: .time, userId: Config.currentUser?.id))
                                         vc.title = "liked".localized().uppercaseFirst
@@ -145,13 +148,14 @@ class MyProfilePageVC: UserProfilePageVC {
             CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_blacklist"),
                                      style: .profile,
+                                     marginTop: 19,
                                      handle: {
                                         self.show(MyProfileBlacklistVC(), sender: self)
             }),
             CommunActionSheet.Action(title: "settings".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_settings"),
                                      style: .profile,
-                                     marginTop: 14,
+                                     marginTop: 34,
                                      handle: {
                                         let vc = MyProfileSettingsVC()
                                         self.show(vc, sender: self)
