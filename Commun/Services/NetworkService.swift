@@ -16,11 +16,6 @@ class NetworkService: NSObject {
     // MARK: - Properties
     static let shared = NetworkService()
     
-    // MARK: - Methods API
-    func waitForTransactionWith(id: String) -> Completable {
-        return RestAPIManager.instance.waitForTransactionWith(id: id)
-    }
-    
     // MARK: - Contract `gls.social`
     func downloadImage(_ url: URL) -> Single<UIImage> {
         Logger.log(message: "Downloading image for \(url.absoluteString)", event: .debug)
@@ -63,7 +58,7 @@ class NetworkService: NSObject {
         }
         
         return request
-            .flatMapCompletable { self.waitForTransactionWith(id: $0) }
+            .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
             .do(onError: { (_) in
                 // reverse change
                 user.setIsSubscribed(originIsFollowing)
@@ -109,7 +104,7 @@ class NetworkService: NSObject {
         }
         
         return request
-            .flatMapCompletable {self.waitForTransactionWith(id: $0)}
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
             .do(onError: { (_) in
                 // reverse change
                 community.setIsSubscribed(originIsFollowing)
@@ -152,7 +147,7 @@ class NetworkService: NSObject {
         }
         
         return request
-            .flatMapCompletable { self.waitForTransactionWith(id: $0) }
+            .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
             .do(onError: { (_) in
                 // reverse change
                 // re-enable state
