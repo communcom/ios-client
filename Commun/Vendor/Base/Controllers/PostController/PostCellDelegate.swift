@@ -16,7 +16,7 @@ protocol PostCellDelegate: class {
 
 extension PostCellDelegate where Self: BaseViewController {
     func upvoteButtonDidTouch(post: ResponseAPIContentGetPost) {
-        NetworkService.shared.upvoteMessage(message: post)
+        BlockchainManager.instance.upvoteMessage(post)
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
             }
@@ -24,7 +24,7 @@ extension PostCellDelegate where Self: BaseViewController {
     }
     
     func downvoteButtonDidTouch(post: ResponseAPIContentGetPost) {
-        NetworkService.shared.downvoteMessage(message: post)
+        BlockchainManager.instance.downvoteMessage(post)
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
             }
@@ -127,7 +127,7 @@ extension PostCellDelegate where Self: BaseViewController {
             highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting post".localized().uppercaseFirst)
-                    NetworkService.shared.deleteMessage(message: post)
+                    BlockchainManager.instance.deleteMessage(post)
                         .subscribe(onCompleted: {
                             topController.hideHud()
                         }, onError: { error in
@@ -185,7 +185,7 @@ extension PostCellDelegate where Self: BaseViewController {
        
         communActionSheet.loaderDidStart(withTitle: (community.isSubscribed ?? false ? "follow" : "following").localized().uppercaseFirst)
         
-        NetworkService.shared.triggerFollow(community: community)
+        BlockchainManager.instance.triggerFollow(community: community)
             .subscribe { [weak self] (error) in
                 self?.showError(error)
         }

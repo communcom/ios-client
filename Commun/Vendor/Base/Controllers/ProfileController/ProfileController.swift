@@ -10,47 +10,6 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-protocol ProfileType: ListItemType {
-    var userId: String {get}
-    var username: String {get}
-    var isSubscribed: Bool? {get set}
-    var subscribersCount: Int64? {get set}
-    var identity: String {get}
-    var isBeingToggledFollow: Bool? {get set}
-    var isInBlacklist: Bool? {get set}
-}
-
-extension ProfileType {
-    static var followedEventName: String {"Followed"}
-    static var unfollowedEventName: String {"Unfollowed"}
-    
-    mutating func setIsSubscribed(_ value: Bool) {
-        guard value != isSubscribed
-        else {return}
-        isSubscribed = value
-        var subscribersCount: Int64 = (self.subscribersCount ?? 0)
-        if value == false && subscribersCount == 0 {subscribersCount = 0} else {
-            if value == true {
-                subscribersCount += 1
-            } else {
-                subscribersCount -= 1
-            }
-        }
-        self.subscribersCount = subscribersCount
-    }
-    
-    static func observeProfileFollowed() -> Observable<Self> {
-        observeEvent(eventName: followedEventName)
-    }
-    
-    static func observeProfileUnfollowed() -> Observable<Self> {
-        observeEvent(eventName: unfollowedEventName)
-    }
-}
-
-extension ResponseAPIContentGetProfile: ProfileType {}
-extension ResponseAPIContentGetLeader: ProfileType {}
-
 protocol ProfileController: class {
     associatedtype Profile: ProfileType
     var disposeBag: DisposeBag {get}
@@ -91,7 +50,7 @@ extension ProfileController {
     private func sendRequest() {
         guard let profile = profile else {return}
         followButton.animate {
-            NetworkService.shared.triggerFollow(user: profile)
+            BlockchainManager.instance.triggerFollow(user: profile)
                 .subscribe(onError: { (error) in
                     UIApplication.topViewController()?.showError(error)
                 })

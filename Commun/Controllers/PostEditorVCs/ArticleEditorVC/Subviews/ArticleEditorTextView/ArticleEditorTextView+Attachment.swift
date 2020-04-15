@@ -60,7 +60,7 @@ extension ArticleEditorTextView {
             // if link is a separated block
         else {
             // detect link type
-            NetworkService.shared.getEmbed(url: urlString)
+            RestAPIManager.instance.getEmbed(url: urlString)
                 .do(onSubscribe: {
                     self.parentViewController?
                         .showIndetermineHudWithMessage(

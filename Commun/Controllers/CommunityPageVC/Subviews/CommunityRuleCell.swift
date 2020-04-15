@@ -11,7 +11,6 @@ import Foundation
 class CommunityRuleCell: CommunityPageCell {
     // MARK: - Properties
     var rowIndex: Int?
-    var expanded = false
     var rule: ResponseAPIContentGetCommunityRule?
     var bottomConstraint: NSLayoutConstraint?
     
@@ -51,7 +50,7 @@ class CommunityRuleCell: CommunityPageCell {
         bottomConstraint?.isActive = false
         contentLabel.removeFromSuperview()
         
-        if expanded {
+        if rule.isExpanded == true {
             contentLabel.text = rule.text
             expandButton.setImage(UIImage(named: "rule_collapse"), for: .normal)
             
@@ -71,9 +70,8 @@ class CommunityRuleCell: CommunityPageCell {
     }
     
     @objc func expandButtonDidTouch(_ sender: UIButton) {
-        expanded = !expanded
-        setExpanded()
-        tableView?.beginUpdates()
-        tableView?.endUpdates()
+        let isExpanded = rule?.isExpanded ?? false
+        rule?.isExpanded = !isExpanded
+        rule?.notifyChanged()
     }
 }

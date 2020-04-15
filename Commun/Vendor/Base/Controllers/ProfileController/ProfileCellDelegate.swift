@@ -14,7 +14,7 @@ protocol ProfileCellDelegate: class {
 
 extension ProfileCellDelegate where Self: BaseViewController {
     func buttonFollowDidTouch<T: ProfileType>(profile: T) {
-        NetworkService.shared.triggerFollow(user: profile)
+        BlockchainManager.instance.triggerFollow(user: profile)
             .subscribe(onError: { (error) in
                 UIApplication.topViewController()?.showError(error)
             })

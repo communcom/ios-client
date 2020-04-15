@@ -17,13 +17,6 @@ protocol LeaderController: class {
     func setUp(with leader: ResponseAPIContentGetLeader)
 }
 
-extension ResponseAPIContentGetLeader {
-    mutating func setIsVoted(_ value: Bool) {
-        guard value != isVoted else {return}
-        isVoted = value
-    }
-}
-
 extension LeaderController {
     func observeLeaderChange() {
         ResponseAPIContentGetLeader.observeItemChanged()
@@ -38,7 +31,7 @@ extension LeaderController {
     func toggleVote() {
         guard let leader = leader else {return}
         voteButton.animate {
-            NetworkService.shared.toggleVoteLeader(leader: leader)
+            BlockchainManager.instance.toggleVoteLeader(leader: leader)
                 .subscribe { (error) in
                     UIApplication.topViewController()?.showError(error)
                 }

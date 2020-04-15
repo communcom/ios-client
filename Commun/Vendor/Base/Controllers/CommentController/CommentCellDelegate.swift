@@ -117,7 +117,7 @@ extension CommentCellDelegate where Self: BaseViewController {
     }
     
     func cell(_ cell: CommentCell, didTapUpVoteForComment comment: ResponseAPIContentGetComment) {
-        NetworkService.shared.upvoteMessage(message: comment)
+        BlockchainManager.instance.upvoteMessage(comment)
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
             }
@@ -125,7 +125,7 @@ extension CommentCellDelegate where Self: BaseViewController {
     }
     
     func cell(_ cell: CommentCell, didTapDownVoteForComment comment: ResponseAPIContentGetComment) {
-        NetworkService.shared.downvoteMessage(message: comment)
+        BlockchainManager.instance.downvoteMessage(comment)
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
             }
@@ -160,7 +160,7 @@ extension CommentCellDelegate where Self: BaseViewController {
             highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting comment".localized().uppercaseFirst)
-                    NetworkService.shared.deleteMessage(message: comment)
+                    BlockchainManager.instance.deleteMessage(comment)
                         .subscribe(onCompleted: {
                             topController.hideHud()
                         }, onError: { error in

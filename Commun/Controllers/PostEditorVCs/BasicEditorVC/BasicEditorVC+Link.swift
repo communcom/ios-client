@@ -49,7 +49,7 @@ extension BasicEditorVC {
         loadingView.autoPinEdgesToSuperviewEdges()
         
         // detect link type
-        NetworkService.shared.getEmbed(url: link)
+        RestAPIManager.instance.getEmbed(url: link)
             .flatMap {
                 $0.toTextAttachmentSingle(withSize: CGSize(width: self.contentTextView.size.width, height: self.attachmentHeight), forTextView: self._contentTextView) ?? .error(CMError.unknown)
             }

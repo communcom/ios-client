@@ -49,7 +49,7 @@ extension CommentController {
         }
         // animate
         voteContainerView.animateUpVote {
-            NetworkService.shared.upvoteMessage(message: comment)
+            BlockchainManager.instance.upvoteMessage(comment)
                 .subscribe { (error) in
                     UIApplication.topViewController()?.showError(error)
                 }
@@ -65,7 +65,7 @@ extension CommentController {
         }
         // animate
         voteContainerView.animateDownVote {
-            NetworkService.shared.downvoteMessage(message: comment)
+            BlockchainManager.instance.downvoteMessage(comment)
                 .subscribe { (error) in
                     UIApplication.topViewController()?.showError(error)
                 }
@@ -75,7 +75,6 @@ extension CommentController {
     
     func deleteComment() {
         guard let comment = comment,
-            let communCode = comment.community?.communityId,
             let topController = UIApplication.topViewController() else {return}
         
         topController.showAlert(
@@ -87,10 +86,9 @@ extension CommentController {
             highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting".localized().uppercaseFirst)
-                    NetworkService.shared.deletePost(communCode: communCode, permlink: comment.contentId.permlink)
+                    BlockchainManager.instance.deleteMessage(comment)
                         .subscribe(onCompleted: {
                             topController.hideHud()
-                            self.comment?.notifyDeleted()
                         }, onError: { error in
                             topController.hideHud()
                             topController.showError(error)

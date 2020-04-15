@@ -86,7 +86,7 @@ final class TextAttachment: SubviewTextAttachment, TextAttachmentType {
             if type == "image", let image = localImage {
                 id += 1
                 let newId = id
-                return NetworkService.shared.uploadImage(image)
+                return RestAPIManager.instance.uploadImage(image)
                     .map { url in
                         attributes.url = url
                         return ResponseAPIContentBlock(
