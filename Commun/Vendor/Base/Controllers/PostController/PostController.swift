@@ -169,7 +169,7 @@ extension PostController {
             highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting post".localized().uppercaseFirst)
-                    NetworkService.shared.deleteMessage(message: post)
+                    BlockchainManager.instance.deleteMessage(post)
                         .subscribe(onCompleted: {
                             topController.hideHud()
                         }, onError: { error in

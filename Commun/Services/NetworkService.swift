@@ -17,25 +17,6 @@ class NetworkService: NSObject {
     static let shared = NetworkService()
     
     // MARK: - Methods API
-    
-    func deletePost(communCode: String, permlink: String) -> Completable {
-        return BlockchainManager.instance.deleteMessage(communCode: communCode, permlink: permlink)
-            .observeOn(MainScheduler.instance)
-    }
-    
-    func deleteMessage<T: ResponseAPIContentMessageType>(
-        message: T
-    ) -> Completable {
-        return BlockchainManager.instance.deleteMessage(
-            communCode: message.community?.communityId ?? "",
-            permlink: message.contentId.permlink
-        )
-            .observeOn(MainScheduler.instance)
-            .do(onCompleted: {
-                message.notifyDeleted()
-            })
-    }
-    
     func upvoteMessage<T: ResponseAPIContentMessageType>(
         message: T
     ) -> Completable {

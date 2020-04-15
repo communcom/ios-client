@@ -160,7 +160,7 @@ extension CommentCellDelegate where Self: BaseViewController {
             highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting comment".localized().uppercaseFirst)
-                    NetworkService.shared.deleteMessage(message: comment)
+                    BlockchainManager.instance.deleteMessage(comment)
                         .subscribe(onCompleted: {
                             topController.hideHud()
                         }, onError: { error in
