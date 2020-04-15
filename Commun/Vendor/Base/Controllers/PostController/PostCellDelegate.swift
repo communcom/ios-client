@@ -185,7 +185,7 @@ extension PostCellDelegate where Self: BaseViewController {
        
         communActionSheet.loaderDidStart(withTitle: (community.isSubscribed ?? false ? "follow" : "following").localized().uppercaseFirst)
         
-        NetworkService.shared.triggerFollow(community: community)
+        BlockchainManager.instance.triggerFollow(community: community)
             .subscribe { [weak self] (error) in
                 self?.showError(error)
         }

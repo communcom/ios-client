@@ -16,7 +16,7 @@ protocol CommunityCellDelegate: class {
 
 extension CommunityCellDelegate where Self: BaseViewController {
     func buttonFollowDidTouch(community: ResponseAPIContentGetCommunity) {
-        NetworkService.shared.triggerFollow(community: community)
+        BlockchainManager.instance.triggerFollow(community: community)
             .subscribe { [weak self] (error) in
                 self?.showError(error)
             }
