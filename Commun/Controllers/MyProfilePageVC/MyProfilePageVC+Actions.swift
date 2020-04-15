@@ -65,7 +65,7 @@ extension MyProfilePageVC {
         // If deleting
         if delete {
             coverImageView.image = .placeholder
-            NetworkService.shared.updateMeta(params: ["cover_url": ""])
+            BlockchainManager.instance.updateProfile(params: ["cover_url": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {
                         self?.coverImageView.setGifImage(gif)
@@ -97,7 +97,7 @@ extension MyProfilePageVC {
                 guard let image = image else {return}
                 NetworkService.shared.uploadImage(image)
                     .flatMap { url -> Single<String> in
-                        return NetworkService.shared.updateMeta(params: ["cover_url": url]).andThen(Single<String>.just(url))
+                        BlockchainManager.instance.updateProfile(params: ["cover_url": url]).andThen(Single<String>.just(url))
                     }
                     .subscribe(onSuccess: { [weak self] (_) in
                         self?.coverImageView.hideLoading()
@@ -125,7 +125,7 @@ extension MyProfilePageVC {
         // On deleting
         if delete {
             headerView.avatarImageView.image = UIImage(named: "empty-avatar")
-            NetworkService.shared.updateMeta(params: ["avatar_url": ""])
+            BlockchainManager.instance.updateProfile(params: ["avatar_url": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {
                         self?.headerView.avatarImageView.setGifImage(gif)
@@ -153,7 +153,7 @@ extension MyProfilePageVC {
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["avatar_url": $0]).andThen(Single<String>.just($0))}
+            .flatMap {BlockchainManager.instance.updateProfile(params: ["avatar_url": $0]).andThen(Single<String>.just($0))}
             // Catch error and reverse image
             .subscribe(onNext: { [weak self] (_) in
                 self?.headerView.avatarImageView.hideLoading()
@@ -196,7 +196,7 @@ extension MyProfilePageVC {
         // On deleting
         if delete {
             headerView.descriptionLabel.text = nil
-            NetworkService.shared.updateMeta(params: ["biography": ""])
+            BlockchainManager.instance.updateProfile(params: ["biography": ""])
                 .subscribe(onError: {[weak self] error in
                     self?.showError(error)
                     self?.headerView.descriptionLabel.text = originalBio
@@ -216,7 +216,7 @@ extension MyProfilePageVC {
         editBioVC.didConfirm
             .flatMap {bio -> Completable in
                 self.headerView.descriptionLabel.text = bio
-                return NetworkService.shared.updateMeta(params: ["biography": bio])
+                return BlockchainManager.instance.updateProfile(params: ["biography": bio])
             }
             .subscribe(onError: {[weak self] error in
                 self?.headerView.descriptionLabel.text = originalBio
