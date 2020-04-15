@@ -233,9 +233,4 @@ class NetworkService: NSObject {
                 leader.notifyChanged()
             })
     }
-    
-    // MARK: - Other
-    func getEmbed(url: String) -> Single<ResponseAPIFrameGetEmbed> {
-        return RestAPIManager.instance.getEmbed(url: url)
-    }
 }
