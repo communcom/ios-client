@@ -16,43 +16,6 @@ class NetworkService: NSObject {
     // MARK: - Properties
     static let shared = NetworkService()
     
-    // MARK: - Helpers
-    private func saveUser(avatarUrl: String) {
-        if UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey) == avatarUrl {
-            return
-        }
-        
-        UserDefaults.standard.set(avatarUrl, forKey: Config.currentUserAvatarUrlKey)
-    }
-
-    private func saveUser(coverUrl: String) {
-        if UserDefaults.standard.string(forKey: Config.currentUserCoverUrlKey) == coverUrl {
-            return
-        }
-        
-        UserDefaults.standard.set(coverUrl, forKey: Config.currentUserCoverUrlKey)
-    }
-
-    private func saveUser(biography: String) {
-        if UserDefaults.standard.string(forKey: Config.currentUserBiographyKey) == biography {
-            return
-        }
-        
-        UserDefaults.standard.set(biography, forKey: Config.currentUserBiographyKey)
-    }
-
-    private func removeUserAvatar() {
-        UserDefaults.standard.removeObject(forKey: Config.currentUserAvatarUrlKey)
-    }
-
-    private func removeUserCover() {
-        UserDefaults.standard.removeObject(forKey: Config.currentUserCoverUrlKey)
-    }
-
-    private func removeUserBiography() {
-        UserDefaults.standard.removeObject(forKey: Config.currentUserBiographyKey)
-    }
-    
     // MARK: - Methods API
     
     func deletePost(communCode: String, permlink: String) -> Completable {
@@ -220,22 +183,6 @@ class NetworkService: NSObject {
             }
             return Disposables.create()
         }
-    }
-    
-    //  Update updatemeta
-    func updateMeta(params: [String: String], waitForTransaction: Bool = true) -> Completable {
-        return BlockchainManager.instance.update(userProfile: params)
-            .flatMapCompletable({ (transaction) -> Completable in
-                // update profile
-                if let url = params["avatar_url"] {
-                    self.saveUser(avatarUrl: url)
-                }
-                
-                if !waitForTransaction {return .empty()}
-                
-                return self.waitForTransactionWith(id: transaction)
-            })
-            .observeOn(MainScheduler.instance)
     }
     
     func triggerFollow<T: ProfileType>(user: T) -> Completable {
