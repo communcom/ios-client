@@ -12,11 +12,12 @@ import CyberSwift
 import SwifterSwift
 import SDWebImage
 
-class NetworkService: NSObject {
-    // MARK: - Properties
+class NetworkService {
+    // MARK: - Singleton
     static let shared = NetworkService()
+    private init() {}
     
-    // MARK: - Contract `gls.social`
+    // MARK: - Methods
     func downloadImage(_ url: URL) -> Single<UIImage> {
         Logger.log(message: "Downloading image for \(url.absoluteString)", event: .debug)
         return Single<UIImage>.create {single in
