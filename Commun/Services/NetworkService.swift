@@ -53,7 +53,7 @@ class NetworkService: NSObject {
         
         if originIsInBlacklist {
             request = BlockchainManager.instance.unhideCommunity(community.communityId)
-                .flatMap {_ in BlockchainManager.instance.follow(community.communityId)}
+                .flatMap {_ in BlockchainManager.instance.followCommunity(community.communityId)}
         } else if originIsFollowing {
             request = BlockchainManager.instance.unfollowCommunity(community.communityId)
         } else {
