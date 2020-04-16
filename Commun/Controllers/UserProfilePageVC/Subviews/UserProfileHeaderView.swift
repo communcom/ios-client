@@ -20,7 +20,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     }
 
     // MARK: - Subviews
-    lazy var followButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
     lazy var followingsLabel = UILabel.with(text: "followings".localized().uppercaseFirst, textSize: .adaptive(width: 12.0), weight: .bold, textColor: .appGrayColor)
     lazy var followersLabel = UILabel.with(text: "followers".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .appGrayColor)
 

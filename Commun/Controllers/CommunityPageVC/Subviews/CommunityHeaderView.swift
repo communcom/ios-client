@@ -15,14 +15,6 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     var community: ResponseAPIContentGetCommunity?
     
     // MARK: - Subviews
-    lazy var joinButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
-
-    lazy var friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
-
-    lazy var membersCountLabel = UILabel.with(text: 10000000.kmFormatted, textSize: 15, weight: .bold)
-    
-    lazy var leadersCountLabel = UILabel.with(text: "7", textSize: 15, weight: .bold)
-    
     lazy var pointsContainerView: UIView = {
         let view = UIView(height: 70, backgroundColor: .appMainColor)
         view.cornerRadius = 10
@@ -60,6 +52,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         view.addSubview(walletButton)
         walletButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 15)
         walletButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        view.addShadow(ofColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 0.3), radius: 24, offset: CGSize(width: 0.0, height: 14), opacity: 1.0)
         
         return view
     }()
@@ -108,84 +102,27 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     // MARK: - Methods
     override func commonInit() {
         super.commonInit()
+        let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
+        statsStackView.addArrangedSubview(friendLabel)
         
-        addSubview(joinButton)
-        joinButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        joinButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
-        joinButton.addTarget(self, action: #selector(joinButtonDidTouch(_:)), for: .touchUpInside)
-        
-        joinedDateLabel.trailingAnchor.constraint(lessThanOrEqualTo: joinButton.leadingAnchor, constant: -8)
-            .isActive = true
-        
-        addSubview(membersCountLabel)
-        membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        membersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 24)
-        membersCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
-
-        let membersButton = UIButton()
-        addSubview(membersButton)
-        membersButton.autoPinEdge(.left, to: .left, of: membersCountLabel)
-        membersButton.autoPinEdge(.top, to: .top, of: membersCountLabel, withOffset: -10)
-        membersButton.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel, withOffset: 10)
-        membersButton.autoPinEdge(.right, to: .right, of: membersCountLabel)
-        membersButton.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
-        membersButton.addTarget(self, action: #selector(membersLabelDidTouch), for: .touchUpInside)
-
-        let dotLabel = UILabel.with(text: "•", textSize: 15.0, weight: .semibold, textColor: .a5a7bd)
-        addSubview(dotLabel)
-        dotLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 2)
-        dotLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel, withOffset: 2)
-
-        addSubview(leadersCountLabel)
-        leadersCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
-        leadersCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
-
-        let leadersButton = UIButton()
-        addSubview(leadersButton)
-        leadersButton.autoPinEdge(.left, to: .left, of: leadersCountLabel)
-        leadersButton.autoPinEdge(.top, to: .top, of: leadersCountLabel, withOffset: -10)
-        leadersButton.autoPinEdge(.bottom, to: .bottom, of: leadersCountLabel, withOffset: 10)
-        leadersButton.autoPinEdge(.right, to: .right, of: leadersCountLabel)
-        leadersButton.autoAlignAxis(.horizontal, toSameAxisOf: leadersCountLabel)
-        leadersButton.addTarget(self, action: #selector(leadsLabelDidTouch), for: .touchUpInside)
-
-        addSubview(friendLabel)
-        friendLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
-        friendLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        friendLabel.autoPinEdge(.leading, to: .trailing, of: usersStackView, withOffset: 5)
-        friendLabel.isUserInteractionEnabled = true
-        let tap3 = UITapGestureRecognizer(target: self, action: #selector(friendsLabelDidTouch))
-        friendLabel.addGestureRecognizer(tap3)
-        
-        addSubview(pointsContainerView)
-        pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
-        
-        pointsContainerView.addShadow(ofColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 0.3),
-                                      radius: 24,
-                                      offset: CGSize(width: 0.0, height: 14),
-                                      opacity: 1.0)
-
-        addSubview(segmentedControl)
-        segmentedControl.autoPinEdge(.top, to: .bottom, of: pointsContainerView)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        let separator = UIView(height: 10, backgroundColor: .appLightGrayColor)
-        addSubview(separator)
-        
-        separator.autoPinEdge(.top, to: .bottom, of: segmentedControl)
-        
-        // pin bottom
-        separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-            
         segmentedControl.items = [
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "leaders".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "about".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst)
         ]
+    }
+    
+    override func willLayoutSegmentedControl() {
+        addSubview(pointsContainerView)
+        pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        pointsContainerView.autoPinEdge(.top, to: .bottom, of: statsStackView, withOffset: 16)
+    }
+    
+    override func layoutSegmentedControl() {
+        super.layoutSegmentedControl()
+        segmentedControl.autoPinEdge(.top, to: .bottom, of: pointsContainerView)
     }
     
     // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))
