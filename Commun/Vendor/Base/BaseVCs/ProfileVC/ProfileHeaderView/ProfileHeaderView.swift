@@ -15,6 +15,9 @@ class ProfileHeaderView: MyTableHeaderView {
     let disposeBag = DisposeBag()
     
     // MARK: - Subviews
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .leading, distribution: .fill)
+    
+    lazy var headerStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     lazy var headerLabel = UILabel.with(numberOfLines: 0)
     lazy var followButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
@@ -31,6 +34,8 @@ class ProfileHeaderView: MyTableHeaderView {
         return segmentedControl
     }()
     
+    lazy var separator = UIView(height: 10, backgroundColor: .appLightGrayColor)
+    
     // MARK: - Properties
     var selectedIndex: BehaviorRelay<Int> {
         return segmentedControl.selectedIndex
@@ -41,46 +46,13 @@ class ProfileHeaderView: MyTableHeaderView {
         
         backgroundColor = .white
         
-        let headerStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-        addSubview(headerStackView)
-        headerStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .bottom)
+        addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16))
+        
         headerStackView.addArrangedSubviews([avatarImageView, headerLabel, followButton])
-        
-        addSubview(descriptionLabel)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: headerStackView, withOffset: 8)
-        
-        
-        addSubview(statsStackView)
-        statsStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        statsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        statsStackView.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 14)
-        
         statsStackView.addArrangedSubviews([statsLabel, usersStackView])
         
-        willLayoutSegmentedControl()
-        layoutSegmentedControl()
-        
-        let separator = UIView(height: 10, backgroundColor: .appLightGrayColor)
-        addSubview(separator)
-        
-        separator.autoPinEdge(.top, to: .bottom, of: segmentedControl)
-        
-        // pin bottom
-        separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        
         followButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
-    }
-    
-    func willLayoutSegmentedControl() {
-        
-    }
-    
-    func layoutSegmentedControl() {
-        addSubview(segmentedControl)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
     }
     
     override func reassignTableHeaderView() {

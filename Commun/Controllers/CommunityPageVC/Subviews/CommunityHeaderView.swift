@@ -105,24 +105,20 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
         statsStackView.addArrangedSubview(friendLabel)
         
+        stackView.addArrangedSubviews([
+            headerStackView,
+            descriptionLabel,
+            pointsContainerView,
+            segmentedControl,
+            separator
+        ])
+        
         segmentedControl.items = [
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "leaders".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "about".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst)
         ]
-    }
-    
-    override func willLayoutSegmentedControl() {
-        addSubview(pointsContainerView)
-        pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        pointsContainerView.autoPinEdge(.top, to: .bottom, of: statsStackView, withOffset: 16)
-    }
-    
-    override func layoutSegmentedControl() {
-        super.layoutSegmentedControl()
-        segmentedControl.autoPinEdge(.top, to: .bottom, of: pointsContainerView)
     }
     
     // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))
