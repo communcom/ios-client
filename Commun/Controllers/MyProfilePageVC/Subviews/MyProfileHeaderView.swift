@@ -38,9 +38,6 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         changeAvatarButton.autoPinEdge(.bottom, to: .bottom, of: avatarImageView)
         changeAvatarButton.autoPinEdge(.trailing, to: .trailing, of: avatarImageView)
         
-        // add bio
-        addSubview(addBioButton)
-        
         // bind
         bind()
     }
@@ -50,18 +47,15 @@ final class MyProfileHeaderView: UserProfileHeaderView {
             .map {$0?.isEmpty == false}
             .subscribe(onNext: { (shouldHide) in
                 if shouldHide {
-                    self.stackView.removeArrangedSubview(self.addBioButton)
+                    self.addBioButton.removeFromSuperview()
                 } else {
-                    if !self.stackView.contains(self.addBioButton) {
-                        self.stackView.insertArrangedSubview(self.addBioButton, at: 1)
-                    }
+                    self.stackView.insertArrangedSubview(self.addBioButton, at: 1)
                 }
             })
             .disposed(by: disposeBag)
     }
     
     override func setUpStackView() {
-        headerStackView.removeArrangedSubview(followButton)
         followButton.removeFromSuperview()
         super.setUpStackView()
         

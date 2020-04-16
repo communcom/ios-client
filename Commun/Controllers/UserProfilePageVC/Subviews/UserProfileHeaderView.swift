@@ -88,11 +88,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
 
     private func showCommunities() {
         if isCommunitiesHidden {
-            stackView.removeArrangedSubview(communitiesView)
+            communitiesView.removeFromSuperview()
         } else {
-            if !stackView.contains(communitiesView) {
-                stackView.insertArrangedSubview(communitiesView, at: 4)
-            }
+            stackView.insertArrangedSubview(communitiesView, at: 4)
         }
     }
     
