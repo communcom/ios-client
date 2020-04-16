@@ -33,7 +33,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         let collectionView = UICollectionView.horizontalFlow(
             cellType: CommunityCollectionCell.self,
             height: 187,
-            contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16),
+            contentInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
             backgroundColor: .clear
         )
         collectionView.layer.masksToBounds = false
@@ -46,10 +46,10 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
 
         // set
         communitiesView.addSubview(communitiesLabel)
-        communitiesLabel.autoPinTopAndLeadingToSuperView(inset: 16)
+        communitiesLabel.autoPinTopAndLeadingToSuperView()
         
         communitiesView.addSubview(seeAllButton)
-        seeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        seeAllButton.autoPinEdge(toSuperviewEdge: .trailing)
         seeAllButton.autoAlignAxis(.horizontal, toSameAxisOf: communitiesLabel)
         seeAllButton.addTarget(self, action: #selector(seeAllButtonDidTouch), for: .touchUpInside)
 
@@ -64,6 +64,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             CMSegmentedControl.Item(name: "comments".localized().uppercaseFirst)
         ]
         
+        followButton.removeFromSuperview()
     }
     
     func setUpStackView() {
