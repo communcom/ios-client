@@ -50,7 +50,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         communitiesView.addSubview(seeAllButton)
         seeAllButton.autoPinEdge(toSuperviewEdge: .trailing)
-        seeAllButton.autoAlignAxis(.horizontal, toSameAxisOf: communitiesLabel)
+        seeAllButton.autoPinEdge(toSuperviewEdge: .top)
         seeAllButton.addTarget(self, action: #selector(seeAllButtonDidTouch), for: .touchUpInside)
 
         communitiesView.addSubview(communitiesCollectionView)
@@ -63,21 +63,27 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "comments".localized().uppercaseFirst)
         ]
-        
-        followButton.removeFromSuperview()
     }
     
     func setUpStackView() {
-        var separator: UIView {UIView(height: 2, backgroundColor: .appLightGrayColor)}
+        var createSeparator: UIView {UIView(height: 2, backgroundColor: .appLightGrayColor)}
+        let separator1 = createSeparator
+        let separator2 = createSeparator
         
         stackView.addArrangedSubviews([
             headerStackView,
             descriptionLabel,
             statsLabel,
-            separator,
+            separator1,
             communitiesView,
-            separator
+            separator2
         ])
+        
+        stackView.setCustomSpacing(10, after: headerStackView)
+        stackView.setCustomSpacing(16, after: descriptionLabel)
+        stackView.setCustomSpacing(25, after: statsLabel)
+        stackView.setCustomSpacing(16, after: separator1)
+        stackView.setCustomSpacing(0, after: communitiesView)
     }
 
     private func showCommunities() {
@@ -144,6 +150,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
 
         communitiesLabel.attributedText = NSMutableAttributedString()
             .text("communities".localized().uppercaseFirst, size: 20, weight: .bold)
+            .text("\n")
             .text("\(userProfile.subscriptions?.communitiesCount ?? 0) (\(userProfile.highlightCommunitiesCount ?? 0) " + "mutual".localized().uppercaseFirst + ")", size: 15, weight: .semibold, color: .a5a7bd)
 
         if userProfile.userId != Config.currentUser?.id {
@@ -153,7 +160,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         }
     }
     
-    @objc func followButtonDidTouch(_ sender: UIButton) {
+    override func joinButtonDidTouch() {
         toggleFollow()
     }
     

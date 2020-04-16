@@ -62,6 +62,7 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     
     override func setUpStackView() {
         headerStackView.removeArrangedSubview(followButton)
+        followButton.removeFromSuperview()
         super.setUpStackView()
         
         walletShadowView.addSubview(walletView)
