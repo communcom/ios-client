@@ -123,6 +123,10 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             CMSegmentedControl.Item(name: "about".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst)
         ]
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(friendsLabelDidTouch))
+        friendLabel.isUserInteractionEnabled = true
+        friendLabel.addGestureRecognizer(tap)
     }
     
     // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))
@@ -179,7 +183,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             .bold(membersCount.kmFormatted, font: .boldSystemFont(ofSize: 15))
             .bold(" ")
             .bold(String(format: NSLocalizedString("members-count", comment: ""), membersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
-            .bold(" • ")
+            .bold(statsSeparator)
             .bold("\(leadersCount.kmFormatted)", font: .boldSystemFont(ofSize: 15))
             .bold(" ")
             .bold(String(format: NSLocalizedString("leaders-count", comment: ""), leadersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
@@ -204,19 +208,33 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         toggleJoin()
     }
     
-    @objc func membersLabelDidTouch() {
-        guard let community = community else {return}
-        let vc = CommunityMembersVC(community: community, selectedSegmentedItem: .all)
-        parentViewController?.show(vc, sender: nil)
-    }
-    
     @objc func friendsLabelDidTouch() {
         guard let community = community else {return}
         let vc = CommunityMembersVC(community: community, selectedSegmentedItem: .friends)
         parentViewController?.show(vc, sender: nil)
     }
     
-    @objc func leadsLabelDidTouch() {
+    override func statsLabelDidTouch(_ gesture: UITapGestureRecognizer) {
+        guard let text = statsLabel.text,
+            let dotIndex = text.index(of: statsSeparator)?.utf16Offset(in: text)
+        else { return }
+        
+        let tappedCharacterIndex = gesture.tappedCharacterIndexInLabel(statsLabel)
+        
+        if tappedCharacterIndex < dotIndex {
+            membersLabelDidTouch()
+        } else {
+            leadsLabelDidTouch()
+        }
+    }
+    
+    func membersLabelDidTouch() {
+        guard let community = community else {return}
+        let vc = CommunityMembersVC(community: community, selectedSegmentedItem: .all)
+        parentViewController?.show(vc, sender: nil)
+    }
+    
+    func leadsLabelDidTouch() {
         if segmentedControl.selectedIndex.value == 1 {
             parentViewController?.view.shake()
         } else {

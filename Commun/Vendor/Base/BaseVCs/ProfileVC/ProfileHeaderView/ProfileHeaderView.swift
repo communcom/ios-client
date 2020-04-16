@@ -13,6 +13,7 @@ import RxCocoa
 class ProfileHeaderView: MyTableHeaderView {
     // MARK: - Properties
     let disposeBag = DisposeBag()
+    let statsSeparator = " • "
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .leading, distribution: .fill)
@@ -53,6 +54,10 @@ class ProfileHeaderView: MyTableHeaderView {
         statsStackView.addArrangedSubviews([statsLabel, usersStackView])
         
         followButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(statsLabelDidTouch(_:)))
+        statsLabel.isUserInteractionEnabled = true
+        statsLabel.addGestureRecognizer(tap)
     }
     
     override func reassignTableHeaderView() {
@@ -62,6 +67,10 @@ class ProfileHeaderView: MyTableHeaderView {
     }
     
     @objc func joinButtonDidTouch() {
+        
+    }
+    
+    @objc func statsLabelDidTouch(_ gesture: UITapGestureRecognizer) {
         
     }
 }
