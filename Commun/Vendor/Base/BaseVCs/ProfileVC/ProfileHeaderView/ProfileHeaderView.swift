@@ -16,7 +16,7 @@ class ProfileHeaderView: MyTableHeaderView {
     let statsSeparator = " • "
     
     // MARK: - Subviews
-    lazy var stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .leading, distribution: .fill)
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
     
     lazy var headerStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
     lazy var avatarImageView = MyAvatarImageView(size: 50)
