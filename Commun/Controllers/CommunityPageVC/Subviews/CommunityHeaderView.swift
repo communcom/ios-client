@@ -13,8 +13,14 @@ import RxCocoa
 class CommunityHeaderView: ProfileHeaderView, CommunityController {
     // MARK: - CommunityController
     var community: ResponseAPIContentGetCommunity?
+    var joinButton: CommunButton {
+        get {followButton}
+        set {followButton = newValue}
+    }
     
     // MARK: - Subviews
+    lazy var friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
+    
     lazy var pointsContainerView: UIView = {
         let view = UIView(height: 70, backgroundColor: .appMainColor)
         view.cornerRadius = 10
@@ -102,8 +108,6 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     // MARK: - Methods
     override func commonInit() {
         super.commonInit()
-        let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
-        statsStackView.addArrangedSubview(friendLabel)
         
         stackView.addArrangedSubviews([
             headerStackView,
@@ -143,23 +147,16 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         }
         
         // name
-        nameLabel.text = community.name
-        
-        // joined date
-        joinedDateLabel.text = Formatter.joinedText(with: community.registrationTime)
+        let attributedText = NSMutableAttributedString()
+            .text(community.name, size: 20, weight: .bold)
+            .text("\n")
+            .text(Formatter.joinedText(with: community.registrationTime), size: 12, weight: .semibold, color: .a5a7bd)
+        headerLabel.attributedText = attributedText
 
         // joinButton
         let joined = community.isSubscribed ?? false
         joinButton.setHightLight(joined, highlightedLabel: "following", unHighlightedLabel: "follow")
         joinButton.isEnabled = !(community.isBeingJoined ?? false)
-        
-        // notification button
-        if let trailingConstraint = nameLabel.constraints.first(where: {$0.firstAttribute == .trailing}) {
-            nameLabel.removeConstraint(trailingConstraint)
-        }
-        
-        nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: joinButton.leadingAnchor, constant: -8)
-            .isActive = true
         
         // description
         descriptionLabel.text = nil
@@ -177,34 +174,33 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         // membersCount
         let membersCount: Int64 = community.subscribersCount ?? 0
+        let leadersCount: Int64 = community.leadersCount ?? 0
         let aStr = NSMutableAttributedString()
             .bold(membersCount.kmFormatted, font: .boldSystemFont(ofSize: 15))
             .bold(" ")
             .bold(String(format: NSLocalizedString("members-count", comment: ""), membersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
-        
-        membersCountLabel.attributedText = aStr
-        
-        // leadsCount
-        let leadersCount: Int64 = community.leadersCount ?? 0
-        let aStr2 = NSMutableAttributedString()
+            .bold(" • ")
             .bold("\(leadersCount.kmFormatted)", font: .boldSystemFont(ofSize: 15))
             .bold(" ")
             .bold(String(format: NSLocalizedString("leaders-count", comment: ""), leadersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
-        leadersCountLabel.attributedText = aStr2
+        
+        statsLabel.attributedText = aStr
 
         // friends
         if let friends = community.friends, friends.count > 0 {
             let count = friends.count > 3 ? friends.count - 3 : friends.count
             friendLabel.text = String(format: NSLocalizedString("friend-count", comment: ""), count)
             usersStackView.setUp(with: friends)
-            friendLabel.isHidden = false
+            if !headerStackView.contains(friendLabel) {
+                headerStackView.addArrangedSubview(friendLabel)
+            }
         } else {
-            friendLabel.isHidden = true
+            headerStackView.removeArrangedSubview(friendLabel)
         }
     }
     
     // MARK: - Actions
-    @objc func joinButtonDidTouch(_ button: UIButton) {
+    override func joinButtonDidTouch() {
         toggleJoin()
     }
     
