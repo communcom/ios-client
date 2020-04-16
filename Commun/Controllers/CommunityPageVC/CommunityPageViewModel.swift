@@ -42,7 +42,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     lazy var leadsVM = LeadersViewModel(communityId: communityId, communityAlias: communityAlias)
     
     lazy var aboutSubject = PublishSubject<String?>()
-    lazy var rulesSubject = PublishSubject<[ResponseAPIContentGetCommunityRule]>()
+    lazy var rules = BehaviorRelay<[ResponseAPIContentGetCommunityRule]>(value: [])
     
     // MARK: - Initializers
     init(communityId: String?) {
@@ -91,9 +91,8 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                     self.aboutSubject.onNext(nil)
                     self.listLoadingState.accept(.listEmpty)
                 case .rules:
-                    let rules = self.community.value?.rules ?? [ResponseAPIContentGetCommunityRule]()
-                    self.rulesSubject.onNext(rules)
-                    if rules.isEmpty {
+                    self.rules.accept(self.rules.value)
+                    if self.rules.value.isEmpty {
                         self.listLoadingState.accept(.listEmpty)
                     } else {
                         self.listLoadingState.accept(.listEnded)
@@ -102,11 +101,12 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
             })
             .disposed(by: disposeBag)
         
-        let posts         = postsVM.items.map {$0 as [Any]}.skip(1)
-        let leads         = leadsVM.items.map {$0 as [Any]}.skip(1)
-        let about         = aboutSubject.map {$0 != nil ? [$0!] as [Any]: [Any]()}
-        let rules         = rulesSubject.map {$0 as [Any]}
-        Observable.merge(posts, leads, about, rules)
+        Observable.merge(
+            postsVM.items.map {$0 as [Any]}.skip(1),
+            leadsVM.items.map {$0 as [Any]}.skip(1),
+            aboutSubject.map {$0 != nil ? [$0!] as [Any]: [Any]()},
+            rules.map {$0 as [Any]}
+        )
             .filter({ items -> Bool in
                 if items is [ResponseAPIContentGetPost] && self.segmentedItem.value == .posts {
                     return true
@@ -127,18 +127,23 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
             .drive(items)
             .disposed(by: disposeBag)
         
+        profile
+            .map {$0?.rules ?? []}
+            .bind(to: rules)
+            .disposed(by: disposeBag)
+        
         // Rule changed (ex: isExpanded)
         ResponseAPIContentGetCommunityRule
             .observeItemChanged()
             .subscribe(onNext: { rule in
-                if var rules = self.community.value?.rules,
-                    let index = rules.firstIndex(where: {$0.identity == rule.identity})
+                var rules = self.rules.value
+                if let index = rules.firstIndex(where: {$0.identity == rule.identity})
                 {
                     if rule.isExpanded != rules[index].isExpanded {
                         self.ruleRowHeights.removeValue(forKey: rule.identity)
                     }
                     rules[index] = rule
-                    self.rulesSubject.onNext(rules)
+                    self.rules.accept(rules)
                 }
             })
             .disposed(by: disposeBag)
