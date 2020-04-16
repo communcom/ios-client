@@ -114,7 +114,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             descriptionLabel,
             pointsContainerView,
             segmentedControl,
-            separator
+            bottomSeparator
         ])
         
         segmentedControl.items = [
@@ -183,7 +183,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             .bold(membersCount.kmFormatted, font: .boldSystemFont(ofSize: 15))
             .bold(" ")
             .bold(String(format: NSLocalizedString("members-count", comment: ""), membersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
-            .bold(statsSeparator)
+            .bold(statsSeparator, font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
             .bold("\(leadersCount.kmFormatted)", font: .boldSystemFont(ofSize: 15))
             .bold(" ")
             .bold(String(format: NSLocalizedString("leaders-count", comment: ""), leadersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)

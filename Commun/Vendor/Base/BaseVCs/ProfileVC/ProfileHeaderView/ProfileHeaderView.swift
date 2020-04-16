@@ -35,7 +35,7 @@ class ProfileHeaderView: MyTableHeaderView {
         return segmentedControl
     }()
     
-    lazy var separator = UIView(height: 10, backgroundColor: .appLightGrayColor)
+    lazy var bottomSeparator = UIView(height: 10, backgroundColor: .appLightGrayColor)
     
     // MARK: - Properties
     var selectedIndex: BehaviorRelay<Int> {

@@ -45,30 +45,37 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         bind()
     }
     
-    override func setUp(with profile: ResponseAPIContentGetProfile) {
-        super.setUp(with: profile)
-        communitiesCountLabel.text = nil
-        communitiesLabel.text = "communities".localized().uppercaseFirst + " " + "(\(profile.subscriptions?.communitiesCount ?? 0))"
+    func bind() {
+        descriptionLabel.rx.observe(String.self, "text")
+            .map {$0?.isEmpty == false}
+            .subscribe(onNext: { (shouldHide) in
+                if shouldHide {
+                    self.stackView.removeArrangedSubview(self.addBioButton)
+                } else {
+                    if !self.stackView.contains(self.addBioButton) {
+                        self.stackView.insertArrangedSubview(self.addBioButton, at: 1)
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
-    override func layoutFollowButton() {
-        // remove followButton and set nameLabel as max width
-        nameLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-    }
-    
-    override func layoutTopOfFollowerCountLabel() {
-        // enquity value commun
-        addSubview(walletShadowView)
-        walletShadowView.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 16)
-        walletShadowView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        walletShadowView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+    override func setUpStackView() {
+        headerStackView.removeArrangedSubview(followButton)
+        super.setUpStackView()
         
         walletShadowView.addSubview(walletView)
         walletView.autoPinEdgesToSuperviewEdges()
         
         setUpWalletView()
         
-        followersCountLabel.autoPinEdge(.top, to: .bottom, of: walletView, withOffset: 25)
+        stackView.insertArrangedSubview(walletShadowView, at: 2)
+    }
+    
+    override func setUp(with profile: ResponseAPIContentGetProfile) {
+        super.setUp(with: profile)
+        communitiesLabel.attributedText = NSMutableAttributedString()
+            .text("communities".localized().uppercaseFirst  + " " + "(\(profile.subscriptions?.communitiesCount ?? 0))", size: 20, weight: .bold)
     }
     
     func setUpWalletView(withError: Bool = false) {
@@ -153,34 +160,6 @@ final class MyProfileHeaderView: UserProfileHeaderView {
             
             nextView.autoPinEdge(.leading, to: .trailing, of: communValueContainerView, withOffset: 4)
         }
-    }
-    
-    override func setUpFollowButton(isFollowing: Bool) {
-        // do nothing
-    }
-
-    private func configureAddBioButtonConstraints() {
-        addBioButton.autoPinEdge(.top, to: .top, of: descriptionLabel)
-        addBioButton.autoPinEdge(.leading, to: .leading, of: descriptionLabel)
-        addBioButton.autoPinEdge(.trailing, to: .trailing, of: descriptionLabel)
-        addBioButton.bottomAnchor.constraint(lessThanOrEqualTo: walletView.topAnchor, constant: -23)
-            .isActive = true
-    }
-    
-    func bind() {
-        descriptionLabel.rx.observe(String.self, "text")
-            .map {$0?.isEmpty == false}
-            .subscribe(onNext: { (shouldHide) in
-                if shouldHide {
-                    self.addBioButton.isHidden = true
-                    self.addBioButton.removeAllConstraints()
-                } else {
-                    self.addBioButton.isHidden = false
-                    self.addBioButton.autoSetDimension(.height, toSize: 35)
-                    self.configureAddBioButtonConstraints()
-                }
-            })
-            .disposed(by: disposeBag)
     }
     
     override func layoutSubviews() {
