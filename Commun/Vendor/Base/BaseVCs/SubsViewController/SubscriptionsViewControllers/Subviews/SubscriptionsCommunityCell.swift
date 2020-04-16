@@ -32,17 +32,19 @@ class SubscriptionsCommunityCell: SubsItemCell {
             avatarImageView.setAvatar(urlString: community.avatarUrl)
         }
         
-        nameLabel.text = isMyFeed ? "my feed".localized().uppercaseFirst : community.name
+        let attributedText = NSMutableAttributedString()
+            .text(isMyFeed ? "my feed".localized().uppercaseFirst : community.name, size: 15, weight: .semibold)
         
-        if isMyFeed {
-            statsLabel.isHidden = true
-        } else {
+        if !isMyFeed {
             let subscribersCount: Int64 = community.subscribersCount ?? 0
             let postsCount: Int64 = community.postsCount ?? 0
-            statsLabel.isHidden = false
-            statsLabel.text = "\(subscribersCount.kmFormatted) " +
-                String(format: NSLocalizedString("followers-count", comment: ""), subscribersCount) + " • " + "\(postsCount.kmFormatted) " + String(format: NSLocalizedString("post-count", comment: ""))
+            attributedText
+                .text("\n")
+                .text("\(subscribersCount.kmFormatted) " +
+                String(format: NSLocalizedString("followers-count", comment: ""), subscribersCount) + " • " + "\(postsCount.kmFormatted) " + String(format: NSLocalizedString("post-count", comment: "")), size: 12, weight: .semibold, color: .a5a7bd)
         }
+        
+        contentLabel.attributedText = attributedText
         
         // joinButton
         if isMyFeed {

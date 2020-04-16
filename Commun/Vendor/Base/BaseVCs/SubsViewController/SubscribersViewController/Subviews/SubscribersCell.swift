@@ -23,7 +23,13 @@ class SubscribersCell: SubsItemCell, ListItemCellType {
     func setUp(with profile: ResponseAPIContentGetProfile) {
         self.profile = profile
         avatarImageView.setAvatar(urlString: profile.avatarUrl)
-        nameLabel.text = profile.username
+        
+        let attributedText = NSMutableAttributedString()
+            .text(profile.username, size: 15, weight: .semibold)
+            .text("\n")
+            .text(String(format: NSLocalizedString("%d followers", comment: ""), (profile.subscribersCount ?? 0)) + " • " + String(format: NSLocalizedString("%d posts", comment: ""), (profile.postsCount ?? 0)), size: 12, weight: .semibold, color: .a5a7bd)
+        
+        contentLabel.attributedText = attributedText
 
         // followButton
         let isFollowing = profile.isSubscribed ?? false
@@ -33,7 +39,6 @@ class SubscribersCell: SubsItemCell, ListItemCellType {
         followButton.setTitle(isFollowing ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
         followButton.isEnabled = !(profile.isBeingToggledFollow ?? false)
 
-        statsLabel.text = String(format: NSLocalizedString("%d followers", comment: ""), (profile.subscribersCount ?? 0)) + " • " + String(format: NSLocalizedString("%d posts", comment: ""), (profile.postsCount ?? 0))
         followButton.isHidden = Config.currentUser?.id == profile.userId
     }
     
