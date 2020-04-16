@@ -114,6 +114,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             pointsContainerView
         ])
         
+        stackView.setCustomSpacing(10, after: headerStackView)
+        stackView.setCustomSpacing(16, after: statsStackView)
+        
         segmentedControl.items = [
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "leaders".localized().uppercaseFirst),
