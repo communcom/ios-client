@@ -48,10 +48,19 @@ class ProfileHeaderView: MyTableHeaderView {
         backgroundColor = .white
         
         addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16))
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
         
         headerStackView.addArrangedSubviews([avatarImageView, headerLabel, followButton])
         statsStackView.addArrangedSubviews([statsLabel, usersStackView])
+        
+        addSubview(segmentedControl)
+        segmentedControl.autoPinEdge(.top, to: .bottom, of: stackView)
+        segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
+        segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
+        
+        addSubview(bottomSeparator)
+        bottomSeparator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        bottomSeparator.autoPinEdge(.top, to: .bottom, of: segmentedControl)
         
         followButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
         

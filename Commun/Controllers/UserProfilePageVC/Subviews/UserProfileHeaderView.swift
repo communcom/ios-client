@@ -76,9 +76,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             statsLabel,
             separator,
             communitiesView,
-            separator,
-            segmentedControl,
-            bottomSeparator
+            separator
         ])
     }
 

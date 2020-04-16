@@ -111,9 +111,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             headerStackView,
             descriptionLabel,
             statsStackView,
-            pointsContainerView,
-            segmentedControl,
-            bottomSeparator
+            pointsContainerView
         ])
         
         segmentedControl.items = [
