@@ -37,6 +37,14 @@ extension UIColor {
         return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), darkColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     }
 
+    static var disableShadowDark: UIColor {
+        return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), darkColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+    }
+
+    static func onlyLightModeShadowColor(_ color: UIColor) -> UIColor {
+        return colorSupportDarkMode(defaultColor: color, darkColor: .clear)
+    }
+
     static func colorSupportDarkMode(defaultColor: UIColor, darkColor: UIColor) -> UIColor {
         if #available(iOS 13, *) {
             return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
@@ -55,7 +63,7 @@ extension UIColor {
     }
     
     static var shadow: UIColor {
-        return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.2196078431, green: 0.2352941176, blue: 0.2784313725, alpha: 1), darkColor: #colorLiteral(red: 0.2196078431, green: 0.2352941176, blue: 0.2784313725, alpha: 1))
+        return .black
     }
 
     convenience init(hexString: String) {

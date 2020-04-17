@@ -160,7 +160,7 @@ class EmbedView: UIView {
             return
         }
 
-        backgroundColor = UIColor(hexString: "#F3F5FA")
+        backgroundColor = .appLightGrayColor
         let insetX: CGFloat = 16
         let insetY: CGFloat = 10.0
 

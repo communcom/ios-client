@@ -97,7 +97,9 @@ class NotificationCell: MyTableViewCell, ListItemCellType, UITextViewDelegate {
         
         // common setup
         isNewMark.isHidden = !item.isNew
-        
+        iconImageView.layer.cornerRadius = 11
+        iconImageView.borderWidth = 2
+        iconImageView.borderColor = .appWhiteColor
         iconImageView.isHidden = false
         iconImageView.borderColor = .clear
         iconImageView.borderWidth = 0
@@ -154,8 +156,6 @@ class NotificationCell: MyTableViewCell, ListItemCellType, UITextViewDelegate {
                 iconImageView.isHidden = true
             } else {
                 iconImageView.setAvatar(urlString: item.community?.avatarUrl)
-                iconImageView.borderWidth = 2
-                iconImageView.borderColor = .appWhiteColor
             }
         case "referralRegistrationBonus", "referralPurchaseBonus":
             avatarUrl = item.from?.avatarUrl

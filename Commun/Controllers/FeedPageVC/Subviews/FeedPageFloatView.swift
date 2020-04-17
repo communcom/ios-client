@@ -26,7 +26,7 @@ final class FeedPageFloatView: MyView {
     // MARK: - Methods
     override func commonInit() {
         super.commonInit()
-        backgroundColor = UIColor.colorSupportDarkMode(defaultColor: .appMainColor, darkColor: #colorLiteral(red: 0.1764705882, green: 0.1764705882, blue: 0.1764705882, alpha: 1))
+        backgroundColor = .appMainColor
 
         addSubview(headerLabel)
         headerLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 0), excludingEdge: .trailing)

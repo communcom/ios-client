@@ -172,7 +172,7 @@ class TabBarVC: UITabBarController {
         
         let imageView = UIImageView(image: UIImage(named: "add"))
         imageView.configureForAutoLayout()
-        imageView.tintColor = .appWhiteColor
+        imageView.tintColor = UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appBlackColor)
         
         view.addSubview(imageView)
         imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: itemPadding, left: itemPadding, bottom: itemPadding, right: itemPadding))
@@ -181,7 +181,7 @@ class TabBarVC: UITabBarController {
         view.autoAlignAxis(toSuperviewAxis: .vertical)
         view.autoAlignAxis(toSuperviewAxis: .horizontal)
         view.isUserInteractionEnabled = false
-        view.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 10, offset: CGSize(width: 0, height: 6), opacity: 0.35)
+        view.addShadow(ofColor: UIColor.onlyLightModeShadowColor(UIColor(red: 106, green: 128, blue: 245)!), radius: 10, offset: CGSize(width: 0, height: 6), opacity: 0.35)
 
         button.tag = viewControllers!.count + 1
         button.addTarget(self, action: #selector(buttonAddTapped), for: .touchUpInside)

@@ -13,7 +13,7 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         let button = UIButton(width: 20, height: 20, backgroundColor: .appLightGrayColor, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
         button.tintColor = .appGrayColor
         button.setImage(UIImage(named: "photo_solid")!, for: .normal)
-        button.borderColor = .appWhiteColor
+        button.borderColor = UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .black)
         button.borderWidth = 2
         button.touchAreaEdgeInsets = UIEdgeInsets(top: -24, left: -24, bottom: 0, right: 0)
         return button
@@ -28,7 +28,7 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     
     lazy var walletShadowView = UIView(forAutoLayout: ())
     lazy var walletView = UIView(cornerRadius: 16)
-    lazy var communValueLabel = UILabel.with(text: "0", textSize: 20, weight: .semibold, textColor: .appWhiteColor)
+    lazy var communValueLabel = UILabel.with(text: "0.0000", textSize: 20, weight: .semibold, textColor: UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appBlackColor))
     
     override func commonInit() {
         super.commonInit()
@@ -74,16 +74,16 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     func setUpWalletView(withError: Bool = false) {
         // clean
         walletView.removeSubviews()
-        
+        let whiteColor = UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appBlackColor)
         // layout
         if withError {
-            let label = UILabel.with(text: "loading failed".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .appWhiteColor)
+            let label = UILabel.with(text: "loading failed".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: whiteColor)
             walletView.addSubview(label)
             label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
             label.autoAlignAxis(toSuperviewAxis: .horizontal)
             
             let retryButton = CommunButton.default(height: 35, label: "retry".localized().uppercaseFirst, cornerRadius: 35 / 2, isHuggingContent: true)
-            retryButton.backgroundColor = UIColor.appWhiteColor.withAlphaComponent(0.1)
+            retryButton.backgroundColor = whiteColor.withAlphaComponent(0.1)
             walletView.addSubview(retryButton)
             retryButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 22, left: 0, bottom: 22, right: 16), excludingEdge: .leading)
         } else {
@@ -91,7 +91,7 @@ final class MyProfileHeaderView: UserProfileHeaderView {
                 let imageView = UIImageView(width: 19.69 * Config.widthRatio, height: 18.05 * Config.widthRatio)
                 imageView.image = UIImage(named: "wallet-icon")
                 
-                let imageContainerView = UIView(width: 50 * Config.widthRatio, height: 50 * Config.widthRatio, backgroundColor: UIColor.appWhiteColor.withAlphaComponent(0.2), cornerRadius: 25 * Config.widthRatio)
+                let imageContainerView = UIView(width: 50 * Config.widthRatio, height: 50 * Config.widthRatio, backgroundColor: whiteColor.withAlphaComponent(0.2), cornerRadius: 25 * Config.widthRatio)
                 imageContainerView.addSubview(imageView)
                 imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
                 imageView.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -109,7 +109,7 @@ final class MyProfileHeaderView: UserProfileHeaderView {
             // commun value
             let communValueContainerView: UIView = {
                 let containerView = UIView(forAutoLayout: ())
-                let equityCommunValueLabel = UILabel.with(text: "equity Commun Value".localized().uppercaseFirst, textSize: 12 * Config.widthRatio, weight: .semibold, textColor: .appWhiteColor, numberOfLines: 0)
+                let equityCommunValueLabel = UILabel.with(text: "equity Commun Value".localized().uppercaseFirst, textSize: 12 * Config.widthRatio, weight: .semibold, textColor: whiteColor, numberOfLines: 0)
                 containerView.addSubview(equityCommunValueLabel)
                 equityCommunValueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
                 
@@ -129,16 +129,16 @@ final class MyProfileHeaderView: UserProfileHeaderView {
                 .isActive = true
             
             let nextView: UIView = {
-                let view = UIView(height: 35, backgroundColor: UIColor.appWhiteColor.withAlphaComponent(0.1), cornerRadius: 35 / 2)
+                let view = UIView(height: 35, backgroundColor: whiteColor.withAlphaComponent(0.1), cornerRadius: 35 / 2)
                 
-                let label = UILabel.with(text: "wallet".localized().uppercaseFirst, textSize: 15 * Config.widthRatio, weight: .medium, textColor: .appWhiteColor)
+                let label = UILabel.with(text: "wallet".localized().uppercaseFirst, textSize: 15 * Config.widthRatio, weight: .medium, textColor: whiteColor)
                 label.setContentHuggingPriority(.required, for: .horizontal)
                 view.addSubview(label)
                 label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16 * Config.widthRatio)
                 label.autoAlignAxis(toSuperviewAxis: .horizontal)
                 
                 let nextArrow = UIImageView(width: 7.5, height: 15, imageNamed: "next-arrow")
-                nextArrow.tintColor = .appWhiteColor
+                nextArrow.tintColor = whiteColor
                 view.addSubview(nextArrow)
                 nextArrow.autoAlignAxis(toSuperviewAxis: .horizontal)
                 nextArrow.autoPinEdge(.leading, to: .trailing, of: label, withOffset: 10 * Config.widthRatio)
@@ -191,14 +191,14 @@ final class MyProfileHeaderView: UserProfileHeaderView {
             gradient.frame = walletView.bounds
             gradient.startPoint = CGPoint(x: 1.0, y: 0.5)
             gradient.endPoint = CGPoint(x: 0, y: 0.5)
-            gradient.colors = [UIColor(hexString: "#6A80F5")!.cgColor, UIColor(hexString: "#A4B1F9")!.cgColor]
+            gradient.colors = [UIColor.appMainColor.cgColor, UIColor.colorSupportDarkMode(defaultColor: UIColor(hexString: "#99A8F8")!, darkColor: .appMainColor).cgColor]
             walletView.layer.insertSublayer(gradient, at: 0)
-            
+
             // corner radius
-            walletView.cornerRadius = 16
+            walletView.cornerRadius = 15
             
             // shadow
-            walletShadowView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 24, offset: CGSize(width: 0, height: 14), opacity: 0.4)
+            walletShadowView.addShadow(ofColor: UIColor.onlyLightModeShadowColor(UIColor(red: 106, green: 128, blue: 245)!), radius: 24, offset: CGSize(width: 0, height: 14), opacity: 0.4)
         }
     }
 }

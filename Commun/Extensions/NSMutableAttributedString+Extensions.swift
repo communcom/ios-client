@@ -19,24 +19,17 @@ extension NSMutableAttributedString {
     }
 
     @discardableResult func semibold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .semibold), color: UIColor = .appBlackColor) -> NSMutableAttributedString {
-        let attrs: [NSAttributedString.Key: Any] = [.font: font,
-                                                    .backgroundColor: UIColor.clear]
+        let attrs: [NSAttributedString.Key: Any] = [.font: font]
         let boldString = NSAttributedString(string: text, attributes: attrs).colored(with: color)
         append(boldString)
         return self
     }
 
-    @discardableResult func normal(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15), color: UIColor? = nil) -> NSMutableAttributedString {
+    @discardableResult func normal(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15), color: UIColor = .appBlackColor) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: font,
                                                     .backgroundColor: UIColor.clear]
-        var normal = NSAttributedString(string: text, attributes: attrs)
-
-        if let colorValue = color {
-            normal = normal.colored(with: colorValue)
-        }
-
+        let normal = NSAttributedString(string: text, attributes: attrs).colored(with: color)
         append(normal)
-
         return self
     }
 

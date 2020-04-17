@@ -36,11 +36,10 @@ extension UISearchController {
 
         // Not work in ios 12
 //        // change bg color
-//        searchTextField.backgroundColor = .appLightGrayColor
-//
+        searchTextField.backgroundColor = .appLightGrayColor
 //        // remove top tinted black view
-//        let backgroundView = searchTextField.subviews.first
-//        backgroundView?.subviews.forEach({ $0.removeFromSuperview() })
+        let backgroundView = searchTextField.subviews.first
+        backgroundView?.subviews.forEach({ $0.removeFromSuperview() })
         
         // support ios 12
         for subView in searchBar.subviews
