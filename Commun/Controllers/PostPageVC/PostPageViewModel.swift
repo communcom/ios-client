@@ -55,7 +55,9 @@ class PostPageViewModel: CommentsViewModel {
                 self.loadingState.accept(.loading)
             })
             .subscribe(onSuccess: { post in
-                self.post.accept(post)
+                if self.post.value == nil {
+                    self.post.accept(post)
+                }
                 self.loadingState.accept(.finished)
             }, onError: { (error) in
                 self.loadingState.accept(.error(error: error))
