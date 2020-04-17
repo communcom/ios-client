@@ -35,6 +35,7 @@ class BasicEditorVC: PostEditorVC {
     var ignoredLinks = [String]()
     var forcedDeleteEmbed = false
     var shareExtensionData: ShareExtensionData?
+    var originalAttachment: TextAttachment?
     
     // MARK: - Subviews
     var _contentTextView = BasicEditorTextView(forExpandable: ())
@@ -69,7 +70,7 @@ class BasicEditorVC: PostEditorVC {
         }
         
         // compare content
-        let textChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+        let textChanged = (contentTextView.attributedText != contentTextView.originalAttributedString) || (originalAttachment != _viewModel.attachment.value)
         if !textChanged {hintType = .error("content wasn't changed".localized().uppercaseFirst)}
         
         // content valid
@@ -163,6 +164,7 @@ class BasicEditorVC: PostEditorVC {
                 Single.zip(singles)
                     .do(onSuccess: {[weak self] (attachments) in
                         if let attachment = attachments.first {
+                            self?.originalAttachment = attachment
                             self?._viewModel.attachment.accept(attachment)
                         }
                     })
