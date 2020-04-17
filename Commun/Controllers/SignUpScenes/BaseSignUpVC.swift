@@ -33,7 +33,7 @@ class BaseSignUpVC: BaseViewController {
         let aStr = NSAttributedString(
             string: termOfUseText,
             attributes: [
-                .foregroundColor: UIColor.a5a7bd,
+                .foregroundColor: UIColor.appGrayColor,
                 .font: UIFont.systemFont(ofSize: 10),
                 .paragraphStyle: style
             ]
@@ -51,7 +51,7 @@ class BaseSignUpVC: BaseViewController {
         let label = UILabel.with(textSize: 15, textAlignment: .center)
         let aStr2 = NSAttributedString(
             string: alreadyHasAccountText,
-            attributes: [.foregroundColor: UIColor.a5a7bd, .font: UIFont.systemFont(ofSize: 15)]
+            attributes: [.foregroundColor: UIColor.appGrayColor, .font: UIFont.systemFont(ofSize: 15)]
         )
             .applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "sign in".localized().uppercaseFirst)
         label.attributedString = aStr2

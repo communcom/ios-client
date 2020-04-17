@@ -17,7 +17,7 @@ class CardViewController: BaseViewController {
         
         transitioningDelegate = self
         modalPresentationStyle = .custom
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhiteColor
     }
     
     required init?(coder: NSCoder) {

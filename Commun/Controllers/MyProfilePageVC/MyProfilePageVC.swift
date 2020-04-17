@@ -14,8 +14,8 @@ class MyProfilePageVC: UserProfilePageVC {
     
     // MARK: - Subviews
     lazy var changeCoverButton: UIButton = {
-        let button = UIButton(width: 24, height: 24, backgroundColor: UIColor.black.withAlphaComponent(0.3), cornerRadius: 12, contentInsets: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6))
-        button.tintColor = .white
+        let button = UIButton(width: 24, height: 24, backgroundColor: UIColor.appBlackColor.withAlphaComponent(0.3), cornerRadius: 12, contentInsets: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6))
+        button.tintColor = .appWhiteColor
         button.setImage(UIImage(named: "photo_solid")!, for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(inset: -10)
         return button
@@ -75,7 +75,7 @@ class MyProfilePageVC: UserProfilePageVC {
         offSetY
             .map { $0 < -43 }
             .subscribe(onNext: { showNavBar in
-                self.optionsButton.tintColor = !showNavBar ? .black : .white
+                self.optionsButton.tintColor = !showNavBar ? .appBlackColor : .appWhiteColor
                 self.title = !showNavBar ? self.username : nil
             })
             .disposed(by: disposeBag)

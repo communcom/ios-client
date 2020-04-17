@@ -23,7 +23,7 @@ class SendPointCollectionCell: MyCollectionViewCell {
     // MARK: - Methods
     override func setUpViews() {
         super.setUpViews()
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .appWhiteColor
         contentView.cornerRadius = 10
         
         contentView.addSubview(avatarImageView)

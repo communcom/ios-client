@@ -102,7 +102,7 @@ extension UIButton {
         return button
     }
 
-    static func close(size: CGFloat = 24, imageName: String = "close-x", backgroundColor: UIColor = .f3f5fa, tintColor: UIColor = .appGrayColor) -> UIButton {
+    static func close(size: CGFloat = 24, imageName: String = "close-x", backgroundColor: UIColor = .appLightGrayColor, tintColor: UIColor = .appGrayColor) -> UIButton {
         let button = UIButton(width: size, height: size, backgroundColor: backgroundColor, cornerRadius: size / 2)
         button.setImage(UIImage(named: imageName), for: .normal)
         button.tintColor = tintColor
@@ -116,14 +116,14 @@ extension UIButton {
         let button = UIButton(width: size, height: size, backgroundColor: UIColor(hexString: "#000000"), cornerRadius: size / 2)
         button.setImage(UIImage(named: imageName), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
-        button.tintColor = .white
+        button.tintColor = .appWhiteColor
         if size < 44 {
             button.touchAreaEdgeInsets = UIEdgeInsets(inset: (size - 44) / 2)
         }
         return button
     }
     
-    static func back(width: CGFloat = 43, height: CGFloat = 44, tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 31)) -> UIButton {
+    static func back(width: CGFloat = 43, height: CGFloat = 44, tintColor: UIColor = .appBlackColor, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 31)) -> UIButton {
         let button = UIButton(width: width, height: height)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "left-arrow"), for: .normal)
@@ -132,7 +132,7 @@ extension UIButton {
         return button
     }
     
-    static func option(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6)) -> UIButton {
+    static func option(tintColor: UIColor = .appBlackColor, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6)) -> UIButton {
         let button = UIButton(width: 36, height: 40, contentInsets: contentInsets)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "icon-post-cell-more-center-default"), for: .normal)

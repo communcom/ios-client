@@ -10,7 +10,7 @@ import Foundation
 
 class FTUECommunitiesHeaderView: UICollectionReusableView {
     lazy var contentView = UIView(forAutoLayout: ())
-    lazy var descriptionLabel = UILabel.with(textSize: 17 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0)
+    lazy var descriptionLabel = UILabel.with(textSize: 17 * Config.heightRatio, textColor: .appGrayColor, numberOfLines: 0)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

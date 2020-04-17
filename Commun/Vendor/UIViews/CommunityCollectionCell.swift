@@ -25,14 +25,14 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
     
     lazy var avatarImageView: MyAvatarImageView = {
         let avatar = MyAvatarImageView(size: 50)
-        avatar.backgroundColor = .white
+        avatar.backgroundColor = .appWhiteColor
         avatar.borderWidth = 2
-        avatar.borderColor = .white
+        avatar.borderColor = .appWhiteColor
         return avatar
     }()
     
     lazy var nameLabel = UILabel.with(text: "Behance", textSize: 15, weight: .semibold, textAlignment: .center)
-    lazy var descriptionLabel = UILabel.with(text: "12,2k members", textSize: 12, weight: .semibold, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+    lazy var descriptionLabel = UILabel.with(text: "12,2k members", textSize: 12, weight: .semibold, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
     lazy var joinButton = CommunButton.default(height: 30, label: "follow".localized().uppercaseFirst)
     
     // MARK: - Methods
@@ -42,7 +42,7 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
         contentView.addSubview(coverImageView)
         coverImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
         
-        let containerView = UIView(backgroundColor: .white, cornerRadius: 10)
+        let containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
 
         contentView.addSubview(containerView)
         containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 46, left: 5, bottom: 16, right: 5))

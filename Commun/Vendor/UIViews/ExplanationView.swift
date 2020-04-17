@@ -39,14 +39,14 @@ class ExplanationView: MyView {
     
     // MARK: - Subviews
     lazy var containerView = UIView(backgroundColor: .appMainColor)
-    lazy var titleLabel = UILabel.with(text: title, textSize: 14, weight: .semibold, textColor: .white, numberOfLines: 0)
-    lazy var closeButton = UIButton.close(backgroundColor: .clear, tintColor: .white)
+    lazy var titleLabel = UILabel.with(text: title, textSize: 14, weight: .semibold, textColor: .appWhiteColor, numberOfLines: 0)
+    lazy var closeButton = UIButton.close(backgroundColor: .clear, tintColor: .appWhiteColor)
     
-    lazy var descriptionLabel = UILabel.with(text: descriptionText, textSize: 12, textColor: .white, numberOfLines: 0)
+    lazy var descriptionLabel = UILabel.with(text: descriptionText, textSize: 12, textColor: .appWhiteColor, numberOfLines: 0)
     
     lazy var imageView = UIImageView(width: .adaptive(width: 100), height: .adaptive(width: 100), imageNamed: imageName, contentMode: .scaleAspectFit)
-    lazy var dontShowAgainButton = UIButton(label: "don't show this again".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), textColor: .white)
-    lazy var learnMoreButton = UIButton(label: "learn more".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), textColor: .white)
+    lazy var dontShowAgainButton = UIButton(label: "don't show this again".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), textColor: .appWhiteColor)
+    lazy var learnMoreButton = UIButton(label: "learn more".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), textColor: .appWhiteColor)
     lazy var arrowView = UIView(width: 10, height: 10, backgroundColor: .appMainColor, cornerRadius: 2)
     
     // MARK: - Initializers
@@ -121,7 +121,7 @@ class ExplanationView: MyView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        containerView.addShadow(ofColor: .black, radius: 10, offset: .zero, opacity: 0.25)
+        containerView.addShadow(ofColor: .appBlackColor, radius: 10, offset: .zero, opacity: 0.25)
     }
     
     func fixArrowView() {

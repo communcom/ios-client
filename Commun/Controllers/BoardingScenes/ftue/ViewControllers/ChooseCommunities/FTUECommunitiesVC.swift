@@ -20,7 +20,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     var searchBarTopConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
-    lazy var searchContainerView = UIView(backgroundColor: .white)
+    lazy var searchContainerView = UIView(backgroundColor: .appWhiteColor)
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar(forAutoLayout: ())
         searchBar.searchBarStyle = .minimal
@@ -28,7 +28,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         return searchBar
     }()
     
-    lazy var nextButton = CommunButton.circle(size: 50, backgroundColor: .appMainColor, tintColor: .white, imageName: nextButtonImageName, imageEdgeInsets: UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 7))
+    lazy var nextButton = CommunButton.circle(size: 50, backgroundColor: .appMainColor, tintColor: .appWhiteColor, imageName: nextButtonImageName, imageEdgeInsets: UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 7))
     
     lazy var communitiesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -80,7 +80,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
 
     // bottomBar
     private lazy var shadowView = UIView(height: bottomBarHeight)
-    lazy var bottomBar = UIView(backgroundColor: .white)
+    lazy var bottomBar = UIView(backgroundColor: .appWhiteColor)
     
     // MARK: - Methods
     override func viewDidLayoutSubviews() {

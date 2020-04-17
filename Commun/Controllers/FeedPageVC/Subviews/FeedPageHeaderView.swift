@@ -15,28 +15,28 @@ class FeedPageHeaderView: MyTableHeaderView {
     var postingViewBottomConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
-    lazy var postingView = UIView(backgroundColor: .white)
+    lazy var postingView = UIView(backgroundColor: .appWhiteColor)
         lazy var avatarImageView = MyAvatarImageView(size: 40.0)
    
         lazy var openEditorWithPhotoImageView: UIImageView = {
         let iv = UIImageView(width: 24, height: 24, imageNamed: "editor-open-photo")
-        iv.tintColor = .a5a7bd
+        iv.tintColor = .appGrayColor
         return iv
     }()
     
     lazy var promoBannerView: UIView = {
-        let bannerView = UIView(backgroundColor: .white, cornerRadius: 10)
+        let bannerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
         let imageView = UIImageView(imageNamed: "dankmeme_facebook")
         bannerView.addSubview(imageView)
         imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 355 / 244.84)
             .isActive = true
         
-        let footerView = UIView(height: 64, backgroundColor: .white)
+        let footerView = UIView(height: 64, backgroundColor: .appWhiteColor)
         bannerView.addSubview(footerView)
         footerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
-        let label = UILabel.with(text: "just click".localized().uppercaseFirst, textSize: 15, weight: .medium, textColor: .a5a7bd, numberOfLines: 0)
+        let label = UILabel.with(text: "just click".localized().uppercaseFirst, textSize: 15, weight: .medium, textColor: .appGrayColor, numberOfLines: 0)
         footerView.addSubview(label)
         label.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0), excludingEdge: .trailing)
         
@@ -47,13 +47,13 @@ class FeedPageHeaderView: MyTableHeaderView {
         return bannerView
     }()
     
-    lazy var getButton = UIButton(width: .adaptive(width: 90), height: 34, label: "get".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 17)
+    lazy var getButton = UIButton(width: .adaptive(width: 90), height: 34, label: "get".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), backgroundColor: .appMainColor, textColor: .appWhiteColor, cornerRadius: 17)
 
     // MARK: - Methods
     override func commonInit() {
         super.commonInit()
         
-        backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
+        backgroundColor = .appLightGrayColor
         
         addSubview(postingView)
         postingView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
@@ -66,7 +66,7 @@ class FeedPageHeaderView: MyTableHeaderView {
             .observeCurrentUserAvatar()
             .disposed(by: disposeBag)
         
-        let whatsNewLabel = UILabel.with(text: "what's new".localized().uppercaseFirst + "?", textSize: 17, weight: .medium, textColor: .a5a7bd)
+        let whatsNewLabel = UILabel.with(text: "what's new".localized().uppercaseFirst + "?", textSize: 17, weight: .medium, textColor: .appGrayColor)
         postingView.addSubview(whatsNewLabel)
         whatsNewLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         whatsNewLabel.autoPinEdge(toSuperviewEdge: .top)

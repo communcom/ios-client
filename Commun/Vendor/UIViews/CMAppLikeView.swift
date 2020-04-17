@@ -16,16 +16,16 @@ class CMAppLikeView: MyCardView {
                                             height: 50.0,
                                             label: "no".localized().uppercaseFirst,
                                             labelFont: UIFont.systemFont(ofSize: 15.0, weight: .bold),
-                                            backgroundColor: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1),
-                                            textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
+                                            backgroundColor: .appGrayColor,
+                                            textColor: .appLightGrayColor,
                                             cornerRadius: 25.0)
     
     lazy var actionButtonYes = UIButton.init(width: 210.0,
                                              height: 50.0,
                                              label: "yes".localized().uppercaseFirst,
                                              labelFont: UIFont.systemFont(ofSize: 15.0, weight: .bold),
-                                             backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
-                                             textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
+                                             backgroundColor: .appMainColor,
+                                             textColor: .appLightGrayColor,
                                              cornerRadius: 25.0)
     
     // MARK: - Custom Functions

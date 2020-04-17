@@ -53,7 +53,7 @@ class EditorToolbarItemCell: UICollectionViewCell {
        
         if item.isHighlighted {
             contentView.backgroundColor = .appMainColor
-            textColor = .white
+            textColor = .appWhiteColor
         } else {
             contentView.backgroundColor = UIColor(hexString: "#F3F5FA")
         }

@@ -14,7 +14,7 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
     struct Method {
         var serviceName: String
         var backgroundColor: UIColor = .clear
-        var textColor: UIColor = .black
+        var textColor: UIColor = .appBlackColor
     }
     
     class MethodTapGesture: UITapGestureRecognizer {
@@ -37,17 +37,17 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
             switch network {
             case .facebook:
                 backgroundColor = UIColor(hexString: "#415A94")!
-                textColor = .white
+                textColor = .appWhiteColor
 //            case .twitter:
 //                backgroundColor = UIColor(hexString: "#4AA1EC")!
-//                textColor = .white
+//                textColor = .appWhiteColor
 //            case .apple:
-//                backgroundColor = .black
-//                textColor: .white
+//                backgroundColor = .appBlackColor
+//                textColor: .appWhiteColor
             case .google:
                 break
             }
-            return Method(serviceName: network.rawValue, backgroundColor: backgroundColor ?? .clear, textColor: textColor ?? .black)
+            return Method(serviceName: network.rawValue, backgroundColor: backgroundColor ?? .clear, textColor: textColor ?? .appBlackColor)
         }
     }()
     private var isStepChecked = false
@@ -76,7 +76,7 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         // set up stack view
         for method in methods {
             let methodView = UIView(height: 44, backgroundColor: method.backgroundColor, cornerRadius: 6)
-            methodView.borderColor = .a5a7bd
+            methodView.borderColor = .appGrayColor
             methodView.borderWidth = 1
             
             let imageView = UIImageView(width: 30, height: 30, imageNamed: "sign-up-with-\(method.serviceName)")

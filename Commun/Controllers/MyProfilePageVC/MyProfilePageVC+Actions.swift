@@ -92,7 +92,7 @@ extension MyProfilePageVC {
                     pickerVC.dismiss(animated: true, completion: nil)
                 })
                 self.coverImageView.image = image
-                self.coverImageView.showLoading(cover: false, spinnerColor: .white)
+                self.coverImageView.showLoading(cover: false, spinnerColor: .appWhiteColor)
                 
                 guard let image = image else {return}
                 RestAPIManager.instance.uploadImage(image)
@@ -148,7 +148,7 @@ extension MyProfilePageVC {
             .map {$0!}
             // Upload image
             .flatMap { image -> Single<String> in
-                self.headerView.avatarImageView.showLoading(cover: false, spinnerColor: .white)
+                self.headerView.avatarImageView.showLoading(cover: false, spinnerColor: .appWhiteColor)
                 self.headerView.avatarImageView.image = image
                 return RestAPIManager.instance.uploadImage(image)
             }

@@ -35,7 +35,7 @@ class InstagramView: UIView {
         self.isPostDetail = isPostDetail
         self.content = content
         self.configureXib()
-        self.backgroundColor = .white
+        self.backgroundColor = .appWhiteColor
         self.configure(content: content)
     }
 

@@ -12,7 +12,7 @@ extension UITextField {
     convenience init(
         width: CGFloat? = nil,
         height: CGFloat? = nil,
-        backgroundColor: UIColor = .f3f5fa,
+        backgroundColor: UIColor = .appLightGrayColor,
         cornerRadius: CGFloat? = nil,
         font: UIFont? = nil,
         keyboardType: UIKeyboardType = .alphabet,

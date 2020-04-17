@@ -17,9 +17,9 @@ class CommunityAboutCell: CommunityPageCell {
     override func setUpViews() {
         super.setUpViews()
         // background color
-        contentView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
+        contentView.backgroundColor = .appLightGrayColor
         
-        let containerView = UIView(backgroundColor: .white, cornerRadius: 10)
+        let containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
         contentView.addSubview(containerView)
         containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10))
         

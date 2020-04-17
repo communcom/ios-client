@@ -32,7 +32,7 @@ class SignInVC: BaseViewController {
     lazy var signInButton = CommunButton.default(height: 56, label: "sign in".localized().uppercaseFirst, cornerRadius: 8, isDisableGrayColor: true)
     lazy var signUpButton = UIButton(label: "don't have an account?".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), textColor: .appMainColor)
     
-    lazy var scanQrCodeButton = UIButton.roundedCorner(8, size: 56, backgroundColor: .appMainColor, tintColor: .white, imageName: "scan-qr-code")
+    lazy var scanQrCodeButton = UIButton.roundedCorner(8, size: 56, backgroundColor: .appMainColor, tintColor: .appWhiteColor, imageName: "scan-qr-code")
     
     // MARK: - Methods
     override func viewDidAppear(_ animated: Bool) {

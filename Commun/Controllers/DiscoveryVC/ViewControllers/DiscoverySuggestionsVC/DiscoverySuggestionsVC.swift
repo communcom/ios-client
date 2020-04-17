@@ -31,7 +31,7 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
     // MARK: - Methods
     override func setUpTableView() {
         super.setUpTableView()
-        tableView.backgroundColor = .f3f5fa
+        tableView.backgroundColor = .appLightGrayColor
         tableView.separatorStyle = .none
         
         tableView.keyboardDismissMode = .onDrag
@@ -109,9 +109,9 @@ extension DiscoverySuggestionsVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: .zero)
-        view.backgroundColor = .f3f5fa
+        view.backgroundColor = .appLightGrayColor
         
-        let headerView = UIView(backgroundColor: .white)
+        let headerView = UIView(backgroundColor: .appWhiteColor)
         view.addSubview(headerView)
         headerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0))
         

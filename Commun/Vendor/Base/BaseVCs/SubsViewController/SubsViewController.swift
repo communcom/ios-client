@@ -22,7 +22,7 @@ class SubsViewController<T: ListItemType, CellType: ListItemCellType>: ListViewC
         navigationItem.hidesBackButton = true
         setRightNavBarButton(with: closeButton)
         closeButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
-        view.backgroundColor = .f3f5fa
+        view.backgroundColor = .appLightGrayColor
     }
     
     override func setUpTableView() {

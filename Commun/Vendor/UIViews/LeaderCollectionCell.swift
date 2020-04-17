@@ -23,7 +23,7 @@ class LeaderCollectionCell: MyCollectionViewCell, ListItemCellType {
     // MARK: - Methods
     override func setUpViews() {
         super.setUpViews()
-        let containerView = UIView(backgroundColor: .white, cornerRadius: 10)
+        let containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
         contentView.addSubview(containerView)
         containerView.autoPinEdgesToSuperviewEdges()
         
@@ -56,7 +56,7 @@ class LeaderCollectionCell: MyCollectionViewCell, ListItemCellType {
         let pointsText = NSMutableAttributedString(
             string: "\(leader.rating.kmFormatted()) " + "points".localized().uppercaseFirst + " • ",
             attributes: [
-                .foregroundColor: UIColor.a5a7bd,
+                .foregroundColor: UIColor.appGrayColor,
                 .font: UIFont.boldSystemFont(ofSize: 12)
             ])
         

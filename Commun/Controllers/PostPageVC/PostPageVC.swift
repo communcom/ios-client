@@ -26,7 +26,7 @@ class PostPageVC: CommentsViewController {
     lazy var postHeaderView = PostHeaderView(tableView: tableView)
 
     lazy var shadowView = UIView(forAutoLayout: ())
-    lazy var commentForm = CommentForm(backgroundColor: .white)
+    lazy var commentForm = CommentForm(backgroundColor: .appWhiteColor)
     
     // MARK: - Properties
     var startContentOffsetY: CGFloat = 0.0
@@ -69,7 +69,7 @@ class PostPageVC: CommentsViewController {
         navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
         
         // top white view
-        let topView = UIView(backgroundColor: .white)
+        let topView = UIView(backgroundColor: .appWhiteColor)
         view.addSubview(topView)
         topView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         topView.autoPinEdge(.bottom, to: .top, of: navigationBar)

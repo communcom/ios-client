@@ -22,8 +22,8 @@ class PostMetaView: MyView {
     lazy var avatarImageView = MyAvatarImageView(size: 40)
     lazy var stackView = UIStackView(axis: .vertical, spacing: 3, alignment: .leading)
     lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var subtitleLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .a5a7bd)
-    lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .white)
+    lazy var subtitleLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor)
+    lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appWhiteColor)
 
     lazy var stateButton: UIView = {
         let view = UIView(height: 30, backgroundColor: .appMainColor, cornerRadius: 30 / 2)
@@ -75,7 +75,7 @@ class PostMetaView: MyView {
         avatarImageView.setAvatar(urlString: isMyFeed ? post.author?.avatarUrl : post.community?.avatarUrl)
         comunityNameLabel.text = isMyFeed ? post.author?.username : post.community?.name
         subtitleLabel.attributedText = NSMutableAttributedString()
-            .text(Date.timeAgo(string: post.meta.creationTime) + " • ", size: 12, weight: .semibold, color: .a5a7bd)
+            .text(Date.timeAgo(string: post.meta.creationTime) + " • ", size: 12, weight: .semibold, color: .appGrayColor)
             .text(isMyFeed ? (post.community?.name ?? post.community?.communityId ?? "") : (post.author?.username ?? post.author?.userId ?? ""), size: 12, weight: .semibold, color: .appMainColor)
         
         // add gesture

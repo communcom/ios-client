@@ -11,9 +11,9 @@ import Foundation
 final class FeedPageFloatView: MyView {
 
     // MARK: - Subviews
-    lazy var headerLabel = UILabel.with(textSize: 30 * Config.heightRatio, weight: .bold, textColor: .white)
+    lazy var headerLabel = UILabel.with(textSize: 30 * Config.heightRatio, weight: .bold, textColor: UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appBlackColor))
     lazy var changeFeedTypeButton: UIButton = {
-        let button = UIButton(labelFont: .boldSystemFont(ofSize: 21 * Config.heightRatio), textColor: .white)
+        let button = UIButton(labelFont: .boldSystemFont(ofSize: 21 * Config.heightRatio), textColor: UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appBlackColor))
         button.alpha = 0.5
         return button
     }()
@@ -26,8 +26,8 @@ final class FeedPageFloatView: MyView {
     // MARK: - Methods
     override func commonInit() {
         super.commonInit()
-        backgroundColor = .appMainColor
-        
+        backgroundColor = UIColor.colorSupportDarkMode(defaultColor: .appMainColor, darkColor: #colorLiteral(red: 0.1764705882, green: 0.1764705882, blue: 0.1764705882, alpha: 1))
+
         addSubview(headerLabel)
         headerLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 0), excludingEdge: .trailing)
         

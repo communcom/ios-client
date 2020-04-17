@@ -197,7 +197,7 @@ extension DiscoveryAllVC: UITableViewDelegate {
         let view = UIView(frame: .zero)
         view.backgroundColor = .clear
         
-        let headerView = UIView(backgroundColor: .white)
+        let headerView = UIView(backgroundColor: .appWhiteColor)
         view.addSubview(headerView)
         headerView.autoPinEdgesToSuperviewEdges()
         

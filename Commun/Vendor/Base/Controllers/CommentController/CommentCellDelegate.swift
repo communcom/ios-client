@@ -73,7 +73,7 @@ extension CommentCellDelegate where Self: BaseViewController {
         if texts.count > 0 {
             actions.append(CommunActionSheet.Action(title: "copy".localized().uppercaseFirst,
                                                     icon: UIImage(named: "copy"),
-                                                    tintColor: .black,
+                                                    tintColor: .appBlackColor,
                                                     handle: {
                                                         UIPasteboard.general.string = texts.joined(separator: "\n")
                                                         self.showDone("copied to clipboard".localized().uppercaseFirst)
@@ -84,7 +84,7 @@ extension CommentCellDelegate where Self: BaseViewController {
         if comment.author?.userId == Config.currentUser?.id {
             actions.append(CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
                                                     icon: UIImage(named: "edit"),
-                                                    tintColor: .black,
+                                                    tintColor: .appBlackColor,
                                                     handle: {
                                                         self.cell(cell, didTapEditForComment: comment)
                                                     })

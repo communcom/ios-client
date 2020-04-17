@@ -17,18 +17,18 @@ class WelcomeVC: BaseViewController {
     var currentPage = 0
     
     // MARK: - Subviews
-    lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .black)
+    lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appBlackColor)
     lazy var pageControl = CMPageControll(numberOfPages: 3)
     lazy var containerView = UIView(forAutoLayout: ())
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fillEqually)
     
     lazy var nextButton = CommunButton.default(height: 50, label: "next".localized().uppercaseFirst, isHuggingContent: false)
-    lazy var bottomSignInButton = UIButton(height: 50, label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), backgroundColor: .f3f5fa, textColor: .appMainColor, cornerRadius: 25)
+    lazy var bottomSignInButton = UIButton(height: 50, label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 25)
     lazy var signUpButton: UIView = {
         let view = UIView(height: 50, backgroundColor: .appMainColor, cornerRadius: 25)
         let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         hStack.addArrangedSubviews([
-            UILabel.with(text: "start and get 30 points".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .white),
+            UILabel.with(text: "start and get 30 points".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appWhiteColor),
             UIImageView(width: 35, height: 33, imageNamed: "coin-reward")
         ])
         view.addSubview(hStack)
@@ -51,9 +51,9 @@ class WelcomeVC: BaseViewController {
         super.setUp()
         // navigation bar
         let navigationBarAppearace = UINavigationBar.appearance()
-        navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+        navigationBarAppearace.tintColor = .appMainColor
         navigationBarAppearace.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.black,
+            .foregroundColor: UIColor.appBlackColor,
             .font: UIFont.systemFont(ofSize: .adaptive(width: 30), weight: .bold)
         ]
         

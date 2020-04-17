@@ -15,7 +15,7 @@ class MyPointsSeeAllBalancesVC: BalancesVC, SearchableViewControllerType {
     
     // MARK: - Subviews
     let searchController = UISearchController.default()
-    lazy var searchContainerView = UIView(backgroundColor: .white)
+    lazy var searchContainerView = UIView(backgroundColor: .appWhiteColor)
     var searchBar: UISearchBar {
         get {searchController.searchBar}
         set {}
@@ -109,8 +109,8 @@ class MyPointsSeeAllBalancesVC: BalancesVC, SearchableViewControllerType {
         let img = UIImage()
         navigationController?.navigationBar.setBackgroundImage(img, for: .default)
         navigationController?.navigationBar.barStyle = .default
-        navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.subviews.first?.backgroundColor = .white
+        navigationController?.navigationBar.barTintColor = .appWhiteColor
+        navigationController?.navigationBar.subviews.first?.backgroundColor = .appWhiteColor
     }
     
     // MARK: - Search manager

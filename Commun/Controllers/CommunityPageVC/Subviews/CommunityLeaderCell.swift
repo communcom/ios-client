@@ -16,7 +16,7 @@ class CommunityLeaderCell: CommunityPageCell {
     // MARK: - Subviews
     lazy var avatarImageView = LeaderAvatarImageView(size: 56)
     lazy var userNameLabel = UILabel.with(text: "Sergey Marchenko", textSize: 15, weight: .semibold, numberOfLines: 0)
-    lazy var pointsCountLabel = UILabel.with(text: "12,2k", textSize: 12, weight: .semibold, textColor: .a5a7bd)
+    lazy var pointsCountLabel = UILabel.with(text: "12,2k", textSize: 12, weight: .semibold, textColor: .appGrayColor)
     lazy var percentsCountLabel = UILabel.with(text: "50", textSize: 12, weight: .semibold, textColor: .appMainColor)
     lazy var voteButton = CommunButton.default(label: "voted".localized().uppercaseFirst)
     lazy var descriptionLabel = UILabel.with(textSize: 14, numberOfLines: 0)
@@ -26,10 +26,10 @@ class CommunityLeaderCell: CommunityPageCell {
         super.setUpViews()
         
         // background color
-        contentView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
+        contentView.backgroundColor = .appLightGrayColor
         
         // card
-        let cardView = UIView(backgroundColor: .white, cornerRadius: .adaptive(width: 10.0))
+        let cardView = UIView(backgroundColor: .appWhiteColor, cornerRadius: .adaptive(width: 10.0))
         contentView.addSubview(cardView)
         cardView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0,
                                                                  left: .adaptive(width: 10.0),
@@ -77,8 +77,8 @@ class CommunityLeaderCell: CommunityPageCell {
 
         // voteButton
         let voted = leader.isVoted ?? false
-        voteButton.backgroundColor = voted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
-        voteButton.setTitleColor(voted ? .appMainColor: .white, for: .normal)
+        voteButton.backgroundColor = voted ? .appLightGrayColor : .appMainColor
+        voteButton.setTitleColor(voted ? .appMainColor: .appWhiteColor, for: .normal)
         voteButton.setTitle(voted ? "voted".localized().uppercaseFirst : "vote".localized().uppercaseFirst, for: .normal)
         voteButton.isEnabled = !(leader.isBeingVoted ?? false)
         voteButton.addTarget(self, action: #selector(voteButtonDidTouch), for: .touchUpInside)

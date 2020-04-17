@@ -17,7 +17,7 @@ class EnableBiometricsVC: BoardingVC {
     
     lazy var imageView = UIImageView(width: 100, height: 100)
     lazy var headerLabel = UILabel.with(textSize: 17, weight: .bold, textAlignment: .center)
-    lazy var descriptionLabel = UILabel.with(textSize: 17, textColor: .a5a7bd, numberOfLines: 2, textAlignment: .center)
+    lazy var descriptionLabel = UILabel.with(textSize: 17, textColor: .appGrayColor, numberOfLines: 2, textAlignment: .center)
     
     override func setUp() {
         super.setUp()

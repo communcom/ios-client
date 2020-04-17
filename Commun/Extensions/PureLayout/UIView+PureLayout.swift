@@ -32,14 +32,14 @@ extension UIView {
     }
     
     static func transparentCommunLogo(size: CGFloat, backgroundColor: UIColor? = nil) -> UIView {
-        let view = UIView(width: size, height: size, backgroundColor: backgroundColor ?? UIColor.white.withAlphaComponent(0.2), cornerRadius: size / 2)
+        let view = UIView(width: size, height: size, backgroundColor: backgroundColor ?? UIColor.appWhiteColor.withAlphaComponent(0.2), cornerRadius: size / 2)
         let slash = UIImageView(width: 6.43 / 40 * size, height: 15.71 / 40 * size, imageNamed: "slash")
         view.addSubview(slash)
         slash.autoCenterInSuperview()
         return view
     }
     
-    static func createCircleCommunLogo(side: CGFloat, backgroundColor: UIColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)) -> UIView {
+    static func createCircleCommunLogo(side: CGFloat, backgroundColor: UIColor = .appMainColor) -> UIView {
         let view = UIView(width: side, height: side, backgroundColor: backgroundColor, cornerRadius: side / 2)
         let slash = UIImageView(width: 6.43 / 40 * side, height: 15.71 / 40 * side, imageNamed: "slash")
 

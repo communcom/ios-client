@@ -13,7 +13,7 @@ class FTUEChosenCommunityCell: MyCollectionViewCell {
     lazy var deleteButton: UIButton = {
         let button = UIButton.close()
         button.borderWidth = 2
-        button.borderColor = .white
+        button.borderColor = .appWhiteColor
         return button
     }()
     

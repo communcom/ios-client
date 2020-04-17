@@ -14,7 +14,7 @@ import CircularCarousel
 
 class WalletSendPointsVC: BaseViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
-    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .white)}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .appWhiteColor)}
     override var shouldHideTabBar: Bool {true}
     
     // MARK: - Properties
@@ -41,12 +41,12 @@ class WalletSendPointsVC: BaseViewController {
     }()
 
     let topView: UIView = {
-        return UIView(height: 225, backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1))
+        return UIView(height: 225, backgroundColor: .appMainColor)
     }()
 
     let whiteView = UIView(width: UIScreen.main.bounds.width,
                            height: UIScreen.main.bounds.height - 269,
-                           backgroundColor: .white,
+                           backgroundColor: .appWhiteColor,
                            cornerRadius: 25)
 
     let pointsToolbar: CMToolbarView = CMToolbarView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 375.0), height: .adaptive(height: 50.0))))
@@ -54,9 +54,9 @@ class WalletSendPointsVC: BaseViewController {
     lazy var communLogoImageView = UIView.transparentCommunLogo(size: carouselHeight)
 
     // Balance
-    var sellerNameLabel = UILabel.with(textSize: .adaptive(width: 17.0), weight: .semibold, textColor: .white, textAlignment: .center)
+    var sellerNameLabel = UILabel.with(textSize: .adaptive(width: 17.0), weight: .semibold, textColor: .appWhiteColor, textAlignment: .center)
 
-    var sellerAmountLabel = UILabel.with(textSize: .adaptive(width: 30.0), weight: .bold, textColor: .white, textAlignment: .center)
+    var sellerAmountLabel = UILabel.with(textSize: .adaptive(width: 30.0), weight: .bold, textColor: .appWhiteColor, textAlignment: .center)
 
     // Friend
     var friendAvatarImageView = UIView.createCircleCommunLogo(side: 40)
@@ -64,12 +64,12 @@ class WalletSendPointsVC: BaseViewController {
     let friendNameLabel: UILabel = UILabel(text: "select user".localized().uppercaseFirst,
                                            font: .systemFont(ofSize: 15, weight: .semibold),
                                            numberOfLines: 1,
-                                           color: .black)
+                                           color: .appBlackColor)
     
     let chooseFriendButton: UIButton = {
         let chooseRecipientButtonInstance = UIButton.circle(size: 24,
                                                             backgroundColor: .clear,
-                                                            tintColor: .white,
+                                                            tintColor: .appWhiteColor,
                                                             imageName: "icon-select-user-grey-cyrcle-default",
                                                             imageEdgeInsets: .zero)
         
@@ -88,7 +88,7 @@ class WalletSendPointsVC: BaseViewController {
     let pointsTextField: UITextField = {
         let pointsTextFieldInstance = UITextField()
         pointsTextFieldInstance.tune(withPlaceholder: String(format: "0 %@", "points".localized().uppercaseFirst),
-                                     textColor: .black,
+                                     textColor: .appBlackColor,
                                      font: .systemFont(ofSize: 17, weight: .semibold),
                                      alignment: .left)
         
@@ -102,7 +102,7 @@ class WalletSendPointsVC: BaseViewController {
     let clearPointsButton: UIButton = {
         let clearPointsButtonInstance = UIButton.circle(size: 24,
                                                         backgroundColor: .clear,
-                                                        tintColor: .white,
+                                                        tintColor: .appWhiteColor,
                                                         imageName: "icon-cancel-grey-cyrcle-default",
                                                         imageEdgeInsets: .zero)
         
@@ -112,8 +112,8 @@ class WalletSendPointsVC: BaseViewController {
         return clearPointsButtonInstance
     }()
 
-    var sellerNameLabelForNavBar: UILabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 12, weight: .bold), numberOfLines: 1, color: .white)
-    var sellerAmountLabelForNavBar: UILabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 20, weight: .bold), numberOfLines: 1, color: .white)
+    var sellerNameLabelForNavBar: UILabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 12, weight: .bold), numberOfLines: 1, color: .appWhiteColor)
+    var sellerAmountLabelForNavBar: UILabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 20, weight: .bold), numberOfLines: 1, color: .appWhiteColor)
     var navigationBarTitleView = UIView(forAutoLayout: ())
 
     var amountBorderView = UIView(forAutoLayout: ())
@@ -262,7 +262,7 @@ class WalletSendPointsVC: BaseViewController {
         let userView = UIView(height: 70)
         userView.layer.cornerRadius = 10
         userView.layer.borderWidth = 1
-        userView.layer.borderColor = UIColor.e2e6e8.cgColor
+        userView.layer.borderColor = UIColor.appLightGrayColor.cgColor
 
         whiteView.addSubview(userView)
         userView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 15, bottom: 0, right: 15), excludingEdge: .bottom)
@@ -285,7 +285,7 @@ class WalletSendPointsVC: BaseViewController {
         let amountView = UIView(height: 70)
         amountView.layer.cornerRadius = 10
         amountView.layer.borderWidth = 1
-        amountView.layer.borderColor = UIColor.e2e6e8.cgColor
+        amountView.layer.borderColor = UIColor.appLightGrayColor.cgColor
         amountBorderView = amountView
 
         whiteView.addSubview(amountView)
@@ -342,17 +342,17 @@ class WalletSendPointsVC: BaseViewController {
     }
 
     private func setupNavBar() {
-        setLeftNavBarButtonForGoingBack(tintColor: .white)
-        view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+        setLeftNavBarButtonForGoingBack(tintColor: .appWhiteColor)
+        view.backgroundColor = .appMainColor
         
         if self.dataModel.transaction.symbol != Symbol(sell: "CMN", buy: "CMN") {
-            setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(pointsListButtonDidTouch))
+            setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .appWhiteColor, action: #selector(pointsListButtonDidTouch))
         }
     }
     
     private func setup(borderedView: UIView) {
         borderedView.translatesAutoresizingMaskIntoConstraints = false
-        borderedView.layer.borderColor = UIColor.e2e6e8.cgColor
+        borderedView.layer.borderColor = UIColor.appLightGrayColor.cgColor
         borderedView.layer.borderWidth = 1.0
         borderedView.clipsToBounds = true
     }
@@ -375,12 +375,12 @@ class WalletSendPointsVC: BaseViewController {
         style.paragraphSpacing = 1.0
         
         title.addAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: .bold),
-                             NSAttributedString.Key.foregroundColor: UIColor.white,
+                             NSAttributedString.Key.foregroundColor: UIColor.appWhiteColor,
                              NSAttributedString.Key.paragraphStyle: style
                             ], range: NSRange(location: 0, length: subtitle1.count))
 
         title.addAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.0, weight: .semibold),
-                             NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(1),
+                             NSAttributedString.Key.foregroundColor: UIColor.appWhiteColor.withAlphaComponent(1),
                              NSAttributedString.Key.paragraphStyle: style
                             ], range: NSRange(location: subtitle1.count + 1, length: subtitle2.count))
 
@@ -562,7 +562,7 @@ extension WalletSendPointsVC: UITextFieldDelegate {
         guard !updatedText.hasSuffix(".") || !updatedText.hasSuffix(",") else { return false }
 
         if CGFloat(updatedText.float() ?? 0.0) <= dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount {
-            amountBorderView.layer.borderColor = UIColor.e2e6e8.cgColor
+            amountBorderView.layer.borderColor = UIColor.appLightGrayColor.cgColor
             alertLabel.text = nil
         } else {
             amountBorderView.layer.borderColor = UIColor.appRedColor.cgColor
@@ -593,7 +593,7 @@ extension WalletSendPointsVC: CircularCarouselDataSource {
             view = UIView(frame: CGRect(x: 0, y: 0, width: carouselHeight, height: carouselHeight))
             
             let imageView = MyAvatarImageView(size: carouselHeight)
-            imageView.borderColor = .white
+            imageView.borderColor = .appWhiteColor
             imageView.borderWidth = 2
             imageView.tag = 1
             

@@ -92,7 +92,7 @@ class NotificationsSettingsVC: VerticalActionsVC, PNAlertViewDelegate {
     }
     
     override func viewForAction(_ action: Action) -> UIView {
-        let actionView = NotificationSettingsView(height: 65, backgroundColor: .white)
+        let actionView = NotificationSettingsView(height: 65, backgroundColor: .appWhiteColor)
         var notificationType = ""
         switch action.title {
         case "upvote".localized().uppercaseFirst:

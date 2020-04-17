@@ -87,7 +87,7 @@ final class BaseNavigationController: UINavigationController {
 //            navigationBar.scrollEdgeAppearance = navBarAppearance
 //        }
 //        else if let statusBar = UIApplication.shared.value(forKey: "statusBar") as? UIView {
-////            statusBar.backgroundColor = style == .lightContent ? UIColor.black : .white
+////            statusBar.backgroundColor = style == .lightContent ? UIColor.appBlackColor : .appWhiteColor
 //            statusBar.setValue(color, forKey: "foregroundColor")
 //        }
 //    }

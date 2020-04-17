@@ -11,22 +11,24 @@ import RxSwift
 import CyberSwift
 
 extension NSMutableAttributedString {
-    @discardableResult func bold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .bold), color: UIColor = .black) -> NSMutableAttributedString {
+    @discardableResult func bold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .bold), color: UIColor = .appBlackColor) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: font]
         let boldString = NSAttributedString(string: text, attributes: attrs).colored(with: color)
         append(boldString)
         return self
     }
 
-    @discardableResult func semibold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .semibold), color: UIColor = .black) -> NSMutableAttributedString {
-        let attrs: [NSAttributedString.Key: Any] = [.font: font]
+    @discardableResult func semibold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .semibold), color: UIColor = .appBlackColor) -> NSMutableAttributedString {
+        let attrs: [NSAttributedString.Key: Any] = [.font: font,
+                                                    .backgroundColor: UIColor.clear]
         let boldString = NSAttributedString(string: text, attributes: attrs).colored(with: color)
         append(boldString)
         return self
     }
 
     @discardableResult func normal(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15), color: UIColor? = nil) -> NSMutableAttributedString {
-        let attrs: [NSAttributedString.Key: Any] = [.font: font]
+        let attrs: [NSAttributedString.Key: Any] = [.font: font,
+                                                    .backgroundColor: UIColor.clear]
         var normal = NSAttributedString(string: text, attributes: attrs)
 
         if let colorValue = color {
@@ -38,7 +40,7 @@ extension NSMutableAttributedString {
         return self
     }
 
-    @discardableResult func text(_ text: String, size: CGFloat = 15, weight: UIFont.Weight = .regular, color: UIColor = .black) -> NSMutableAttributedString {
+    @discardableResult func text(_ text: String, size: CGFloat = 15, weight: UIFont.Weight = .regular, color: UIColor = .appBlackColor) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: size, weight: weight),
             .foregroundColor: color

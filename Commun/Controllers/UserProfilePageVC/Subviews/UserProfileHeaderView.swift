@@ -61,7 +61,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     
     lazy var communitiesLabel = UILabel.with(text: "communities".localized().uppercaseFirst, textSize: 20, weight: .bold)
     
-    lazy var communitiesCountLabel = UILabel.with(text: "1,2 k", textSize: 15, weight: .semibold, textColor: .a5a7bd)
+    lazy var communitiesCountLabel = UILabel.with(text: "1,2 k", textSize: 15, weight: .semibold, textColor: .appGrayColor)
     
     lazy var communitiesCollectionView: UICollectionView = {
         let collectionView = UICollectionView.horizontalFlow(

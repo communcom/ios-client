@@ -15,7 +15,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     private let maxCharactersForReduction = 150
     let defaultContentFontSize: CGFloat = 15
     let embedSize = CGSize(width: 270, height: 315)
-    let contentTextViewBackgroundColor = UIColor.f3f5fa
+    let contentTextViewBackgroundColor = UIColor.appLightGrayColor
     
     // MARK: - Properties
     var comment: ResponseAPIContentGetComment?
@@ -34,13 +34,13 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         textView.backgroundColor = contentTextViewBackgroundColor
         textView.cornerRadius = 12
         textView.textContainerInset = UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 10)
-
+        textView.backgroundColor = .clear
         return textView
     }()
     lazy var gridView = GridView(width: embedSize.width, height: embedSize.height, cornerRadius: 12)
     lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     lazy var replyButton = UIButton(label: "reply".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
-    lazy var timeLabel = UILabel.with(text: " • 3h", textSize: 13, weight: .bold, textColor: .a5a7bd)
+    lazy var timeLabel = UILabel.with(text: " • 3h", textSize: 13, weight: .bold, textColor: .appGrayColor)
     lazy var statusImageView = UIImageView(width: 16, height: 16, cornerRadius: 8)
     
     // MARK: - Methods
@@ -196,7 +196,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
         let mutableAS = NSMutableAttributedString(string: userId, attributes: [
             .font: UIFont.boldSystemFont(ofSize: defaultContentFontSize),
-            .foregroundColor: UIColor.black
+            .foregroundColor: UIColor.appBlackColor
         ])
         
         guard var content = comment?.document?.toAttributedString(
@@ -216,9 +216,9 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         }
         
         if content.string.trimmed == "" {
-            contentTextView.backgroundColor = .f3f5fa
+            contentTextView.backgroundColor = .appLightGrayColor
         } else {
-            contentTextView.backgroundColor = .f3f5fa
+            contentTextView.backgroundColor = .appLightGrayColor
         }
         
         mutableAS.append(NSAttributedString(string: " "))

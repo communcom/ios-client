@@ -18,14 +18,14 @@ class EmbedView: UIView {
     private lazy var providerNameLabel: UILabel = {
         let label = UILabel(forAutoLayout: ())
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textColor = .white
+        label.textColor = .appWhiteColor
         return label
     }()
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel(forAutoLayout: ())
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        label.textColor = .black
+        label.textColor = .appBlackColor
         return label
     }()
 
@@ -39,13 +39,13 @@ class EmbedView: UIView {
     private lazy var providerLabelView: UIView = {
         let view = UIView(forAutoLayout: ())
         view.layer.cornerRadius = 12
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        view.backgroundColor = UIColor.appBlackColor.withAlphaComponent(0.7)
         return view
     }()
 
     private lazy var loadingView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = .appBlackColor
         return view
     }()
 
@@ -54,7 +54,7 @@ class EmbedView: UIView {
         webView.configuration.preferences.javaScriptEnabled = true
         webView.configuration.allowsInlineMediaPlayback = true
         webView.configuration.mediaTypesRequiringUserActionForPlayback = []
-        webView.backgroundColor = .black
+        webView.backgroundColor = .appBlackColor
         webView.navigationDelegate = self
         return webView
     }()
@@ -175,7 +175,7 @@ class EmbedView: UIView {
                 let videoURL = URL(string: videoUrl) {
                 titlesView.isHidden = true
 
-                backgroundColor = .black
+                backgroundColor = .appBlackColor
                 NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
 
                 player = AVPlayer(url: videoURL)

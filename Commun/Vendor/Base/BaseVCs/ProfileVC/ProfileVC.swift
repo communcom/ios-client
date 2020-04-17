@@ -43,16 +43,16 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     // MARK: - Subviews
     
     lazy var customNavigationBar = UIView(backgroundColor: .clear)
-    lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
+    lazy var backButton = UIButton.back(tintColor: .appWhiteColor, contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
     lazy var titleLabel = UILabel.with(textSize: 17, weight: .bold, textColor: .clear, textAlignment: .center)
-    lazy var optionsButton = UIButton.option(tintColor: .white)
+    lazy var optionsButton = UIButton.option(tintColor: .appWhiteColor)
     
     lazy var shadowView: UIView = {
         let view = UIView(forAutoLayout: ())
         view.backgroundColor = .clear
         let gradient = CAGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: coverHeight)
-        gradient.colors = [UIColor.black.withAlphaComponent(0.2).cgColor, UIColor.clear.cgColor]
+        gradient.colors = [UIColor.appBlackColor.withAlphaComponent(0.2).cgColor, UIColor.clear.cgColor]
         gradient.locations = [0.0, 0.5]
         view.layer.insertSublayer(gradient, at: 0)
         return view
@@ -144,7 +144,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
 
         refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         tableView.addSubview(refreshControl)
-        refreshControl.tintColor = .white
+        refreshControl.tintColor = .appWhiteColor
         refreshControl.subviews.first?.bounds.origin.y = 112
         
         _headerView.segmentedControl.delegate = self
@@ -223,17 +223,17 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         
         coverImageView.isHidden = showNavigationBar
         
-        customNavigationBar.backgroundColor = showNavigationBar ? .white : .clear
+        customNavigationBar.backgroundColor = showNavigationBar ? .appWhiteColor : .clear
         customNavigationBar.addShadow(ofColor: .shadow, radius: showNavigationBar ? CGFloat.adaptive(width: 16.0) : 0, offset: CGSize(width: 0.0, height: showNavigationBar ? CGFloat.adaptive(height: 6.0) : 0), opacity: showNavigationBar ? 0.05 : 0)
-        backButton.tintColor = showNavigationBar ? .black: .white
-        titleLabel.textColor = showNavigationBar ? .black: .clear
-        optionsButton.tintColor = showNavigationBar ? .black: .white
+        backButton.tintColor = showNavigationBar ? .appBlackColor: .appWhiteColor
+        titleLabel.textColor = showNavigationBar ? .appBlackColor: .clear
+        optionsButton.tintColor = showNavigationBar ? .appBlackColor: .appWhiteColor
         
         if showNavigationBar {
             optionsButton.layer.shadowOpacity = 0
         } else {
             optionsButton.layer.shadowRadius = 2
-            optionsButton.layer.shadowColor = UIColor.black.cgColor
+            optionsButton.layer.shadowColor = UIColor.appBlackColor.cgColor
             optionsButton.layer.shadowOffset = CGSize(width: 0, height: 1)
             optionsButton.layer.shadowOpacity = 0.25
             optionsButton.layer.masksToBounds = false

@@ -18,12 +18,13 @@ class CMFeedbackViewController: UIViewController {
     let titleLabel = UILabel.init(text: "feedback".localized().uppercaseFirst,
                                   font: .systemFont(ofSize: 15.0, weight: .bold),
                                   numberOfLines: 1,
-                                  color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
+                                  color: .appBlackColor)
 
     lazy var textView: UITextView = {
         let textViewInstance = UITextView()
+        textViewInstance.backgroundColor = .clear
         textViewInstance.placeholder = "text view feedback placeholder".localized().uppercaseFirst
-        textViewInstance.tune(with: .black, font: .systemFont(ofSize: 17.0, weight: .regular), alignment: .left)
+        textViewInstance.tune(with: .appBlackColor, font: .systemFont(ofSize: 17.0, weight: .regular), alignment: .left)
         
         return textViewInstance
     }()
@@ -67,7 +68,7 @@ class CMFeedbackViewController: UIViewController {
     }
     
     private func setUp() {
-        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        view.backgroundColor = .appLightGrayColor
 
         view.addSubview(closeButton)
         closeButton.autoPinEdge(toSuperviewSafeArea: .top, withInset: 15.0)

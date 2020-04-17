@@ -30,13 +30,13 @@ class DiscoveryPostsVC: PostsViewController {
     
     override func setUp() {
         super.setUp()
-        view.backgroundColor = .f3f5fa
+        view.backgroundColor = .appLightGrayColor
         refreshControl.subviews.first?.bounds.origin.y = 15
     }
     
     override func setUpTableView() {
         super.setUpTableView()
-        tableView.backgroundColor = .f3f5fa
+        tableView.backgroundColor = .appLightGrayColor
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     }
     

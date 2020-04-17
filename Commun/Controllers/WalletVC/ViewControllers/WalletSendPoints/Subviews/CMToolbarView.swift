@@ -39,7 +39,7 @@ class CMToolbarView: UIView {
                 label: "+\(title.formattedWithSeparator)",
                 labelFont: .systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold),
                 backgroundColor: UIColor(hexString: "#ffffff", transparency: 0.1),
-                textColor: .white,
+                textColor: .appWhiteColor,
                 cornerRadius: .adaptive(width: 10.0)
             )
             
@@ -72,7 +72,7 @@ class CMToolbarView: UIView {
             text: "add".localized().uppercaseFirst + ":",
             textSize: .adaptive(width: 12.0),
             weight: .bold,
-            textColor: .white
+            textColor: .appWhiteColor
         )
 
         addSubview(addLabel)

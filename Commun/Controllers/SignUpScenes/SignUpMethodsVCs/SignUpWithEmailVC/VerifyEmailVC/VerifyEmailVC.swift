@@ -34,7 +34,7 @@ class VerifyEmailVC: BaseVerifyVC {
         AnalyticsManger.shared.openEmailCodeView()
         
         subtitleLabel.text = "an email has been sent with".localized().uppercaseFirst
-        subtitleLabel.textColor = .a5a7bd
+        subtitleLabel.textColor = .appGrayColor
     }
 
     override func bind() {

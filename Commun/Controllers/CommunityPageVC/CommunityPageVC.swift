@@ -76,7 +76,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         view.addGestureRecognizer(tap)
         
         let containerView = UIView(frame: .zero)
-        containerView.backgroundColor = .white
+        containerView.backgroundColor = .appWhiteColor
         containerView.addSubview(view)
         view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 2, right: 0), excludingEdge: .trailing)
         
@@ -346,7 +346,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             }),
             CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_blacklist"),
-                                     tintColor: profile.isInBlacklist == true ? .black: .ed2c5b,
+                                     tintColor: profile.isInBlacklist == true ? .appBlackColor: .appRedColor,
                                      marginTop: 10,
                                      handle: {
                                         self.showAlert(
@@ -423,7 +423,7 @@ extension CommunityPageVC: UITableViewDelegate {
         }
         
         let aStr = NSMutableAttributedString()
-            .semibold("sort".localized().uppercaseFirst + ":", color: .a5a7bd)
+            .semibold("sort".localized().uppercaseFirst + ":", color: .appGrayColor)
             .semibold(" ")
             .semibold(type.localizedLabel!.uppercaseFirst)
         

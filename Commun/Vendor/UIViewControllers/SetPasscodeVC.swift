@@ -43,7 +43,7 @@ class SetPasscodeVC: THPinViewController {
         } else {
             title = "passcode".localized().uppercaseFirst
             navigationController?.navigationBar.isTranslucent = true
-            navigationController?.navigationBar.barTintColor = .white
+            navigationController?.navigationBar.barTintColor = .appWhiteColor
             navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController?.navigationBar.shadowImage = UIImage()
             navigationController?.navigationBar.layoutIfNeeded()
@@ -63,7 +63,7 @@ class SetPasscodeVC: THPinViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Setup views
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
         // cancel here means deleteButton
         disableCancel = false
         // Text
@@ -71,14 +71,14 @@ class SetPasscodeVC: THPinViewController {
             addActionButton()
             currentPin = Config.currentUser?.passcode
         }
-        view.tintColor = .black
+        view.tintColor = .appBlackColor
         modifyPromtTitle(asError: false)
     }
 
     // MARK: - Custom Functions
     private func addActionButton() {
         // Add Close button
-        let closeButton = UIButton.circle(size: .adaptive(width: 24.0), backgroundColor: #colorLiteral(red: 0.953, green: 0.961, blue: 0.98, alpha: 1), imageName: "icon-round-close-grey-default")
+        let closeButton = UIButton.circle(size: .adaptive(width: 24.0), backgroundColor: .appLightGrayColor, imageName: "icon-round-close-grey-default")
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         view.addSubview(closeButton)
         closeButton.autoPinTopAndTrailingToSuperView(inset: .adaptive(height: 55.0), xInset: .adaptive(width: 15.0))
@@ -105,14 +105,13 @@ class SetPasscodeVC: THPinViewController {
         case true:
             if isError {
                 promptTitle = "wrong code".localized().uppercaseFirst
-                promptColor = #colorLiteral(red: 0.929, green: 0.173, blue: 0.357, alpha: 1)
+                promptColor = .appRedColor
             } else {
                 promptTitle = "enter passcode".localized().uppercaseFirst
-                promptColor = #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+                promptColor = .appBlackColor
             }
         default:
             if isError {
-                // TODO: - ADD ERROR TEXT
             } else if isVerifyVC {
                 promptTitle = "enter your current passcode".localized().uppercaseFirst
             } else {
@@ -121,7 +120,7 @@ class SetPasscodeVC: THPinViewController {
                     self.setNavBarBackButton()
                 }
             }
-            promptColor = #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+            promptColor = .appBlackColor
         }
     }
 

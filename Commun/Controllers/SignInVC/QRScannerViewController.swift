@@ -17,7 +17,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
 
     override func setUp() {
         super.setUp()
-        setLeftNavBarButtonForGoingBack(tintColor: .white)
+        setLeftNavBarButtonForGoingBack(tintColor: .appWhiteColor)
         scan()
     }
 
@@ -27,12 +27,12 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         scanQrArea.autoAlignAxis(toSuperviewAxis: .vertical)
         scanQrArea.autoAlignAxis(.horizontal, toSameAxisOf: view, withOffset: -50)
 
-        let scanQrTitle = UILabel.with(text: "scan QR".localized().uppercaseFirst, textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
+        let scanQrTitle = UILabel.with(text: "scan QR".localized().uppercaseFirst, textSize: 30, weight: .bold, textColor: .appWhiteColor, textAlignment: .center)
         view.addSubview(scanQrTitle)
         scanQrTitle.autoAlignAxis(toSuperviewAxis: .vertical)
         scanQrTitle.autoPinEdge(.top, to: .bottom, of: scanQrArea, withOffset: 65 * Config.heightRatio)
 
-        let gotoCommunTitle = UILabel.with(text: "go to commun.com and scan QR".localized().uppercaseFirst, textSize: 17, weight: .semibold, textColor: .white, textAlignment: .center)
+        let gotoCommunTitle = UILabel.with(text: "go to commun.com and scan QR".localized().uppercaseFirst, textSize: 17, weight: .semibold, textColor: .appWhiteColor, textAlignment: .center)
         view.addSubview(gotoCommunTitle)
         gotoCommunTitle.autoAlignAxis(toSuperviewAxis: .vertical)
         gotoCommunTitle.autoPinEdge(.top, to: .bottom, of: scanQrTitle, withOffset: 16)
@@ -84,9 +84,9 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
             return
         }
 
-        self.navigationItem.leftBarButtonItem?.tintColor = .white
+        self.navigationItem.leftBarButtonItem?.tintColor = .appWhiteColor
         view.removeSubviews()
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = UIColor.appBlackColor
         captureSession = AVCaptureSession()
 
         if captureSession.canAddInput(videoInput) {
@@ -118,15 +118,15 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
     }
 
     func retryGrantingPermission() {
-        self.navigationItem.leftBarButtonItem?.tintColor = .black
+        self.navigationItem.leftBarButtonItem?.tintColor = .appBlackColor
         view.addSubview(errorView)
         errorView.autoPinEdgesToSuperviewEdges()
         captureSession = nil
     }
 
     func failed() {
-        self.navigationItem.leftBarButtonItem?.tintColor = .black
-        view.backgroundColor = .white
+        self.navigationItem.leftBarButtonItem?.tintColor = .appBlackColor
+        view.backgroundColor = .appWhiteColor
         let ac = UIAlertController(title: "Scanning not supported", message: "Your device does not support scanning a code from an item. Please use a device with a camera.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)

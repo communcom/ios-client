@@ -10,63 +10,52 @@ import Foundation
 
 extension UIColor {
     static var appGrayColor: UIColor {
-        return UIColor(hexString: "#A5A7BD")!
+        return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.6470588235, green: 0.6549019608, blue: 0.7411764706, alpha: 1), darkColor: #colorLiteral(red: 0.6470588235, green: 0.6549019608, blue: 0.7411764706, alpha: 1))
     }
 
     static var appLightGrayColor: UIColor {
-        return UIColor(hexString: "#F3F5FA")!
+        return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1), darkColor: #colorLiteral(red: 0.1764705882, green: 0.1764705882, blue: 0.1764705882, alpha: 1))
     }
 
     static var appMainColor: UIColor {
-        return UIColor(hexString: "#6A80F5")!
+        return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1), darkColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1))
     }
 
     static var appRedColor: UIColor {
-        return UIColor(hexString: "#F53D5B")!
+        return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.9607843137, green: 0.2392156863, blue: 0.3568627451, alpha: 1), darkColor: #colorLiteral(red: 0.9607843137, green: 0.2392156863, blue: 0.3568627451, alpha: 1))
     }
 
     static var appGreenColor: UIColor {
-        return UIColor(hexString: "#4EDBB0")!
+        return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.3058823529, green: 0.8588235294, blue: 0.6901960784, alpha: 1), darkColor: #colorLiteral(red: 0.3058823529, green: 0.8588235294, blue: 0.6901960784, alpha: 1))
+    }
+
+    static var appWhiteColor: UIColor {
+        return colorSupportDarkMode(defaultColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), darkColor: #colorLiteral(red: 0.2235294118, green: 0.2235294118, blue: 0.2235294118, alpha: 1))
+    }
+
+    static var appBlackColor: UIColor {
+        return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), darkColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+    }
+
+    static func colorSupportDarkMode(defaultColor: UIColor, darkColor: UIColor) -> UIColor {
+        if #available(iOS 13, *) {
+            return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
+                if UITraitCollection.userInterfaceStyle == .dark {
+                    return darkColor
+                } else {
+                    return defaultColor
+                }
+            }
+        }
+        return defaultColor
     }
     
     static var link: UIColor {
         return .init(red: 50/255, green: 146/255, blue: 252/255, alpha: 1)
     }
     
-    static var a5a7bd: UIColor {
-        return UIColor(hexString: "#A5A7BD")!
-    }
-    
-    static var e5e5e5: UIColor {
-        return UIColor(hexString: "#E5E5E5")!
-    }
-    
-    static var plus: UIColor {
-        return UIColor(hexString: "#4EDBB0")!
-    }
-    
-    static var a7a9bf: UIColor {
-        return UIColor(hexString: "#A7A9BF")!
-    }
-    
-    static var f3f5fa: UIColor {
-        return UIColor(hexString: "#F3F5FA")!
-    }
-    
-    static var f7f7f9: UIColor {
-        return UIColor(hexString: "#F7F7F9")!
-    }
-    
-    static var e2e6e8: UIColor {
-        return UIColor(hexString: "#E2E6E8")!
-    }
-    
-    static var ed2c5b: UIColor {
-        return UIColor(hexString: "#ED2C5B")!
-    }
-    
     static var shadow: UIColor {
-        return UIColor(hexString: "#383C47")!
+        return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.2196078431, green: 0.2352941176, blue: 0.2784313725, alpha: 1), darkColor: #colorLiteral(red: 0.2196078431, green: 0.2352941176, blue: 0.2784313725, alpha: 1))
     }
 
     convenience init(hexString: String) {

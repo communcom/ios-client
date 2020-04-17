@@ -96,8 +96,8 @@ class CMTopTabBar: MyView {
         if selectedIndex.value >= labels.count {return}
         
         for i in 0..<buttons.count {
-            buttons[i].backgroundColor = (selectedIndex.value == i) ? .appMainColor : .f3f5fa
-            buttons[i].setTitleColor((selectedIndex.value == i) ? .white: .black, for: .normal)
+            buttons[i].backgroundColor = (selectedIndex.value == i) ? .appMainColor : .appLightGrayColor
+            buttons[i].setTitleColor((selectedIndex.value == i) ? .appWhiteColor: .appBlackColor, for: .normal)
         }
         
         UIView.animate(withDuration: 0.2) {

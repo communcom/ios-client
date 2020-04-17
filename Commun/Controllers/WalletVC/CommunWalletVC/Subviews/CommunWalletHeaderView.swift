@@ -29,13 +29,13 @@ class CommunWalletHeaderView: MyView {
     lazy var shadowView = UIView(forAutoLayout: ())
     lazy var contentView = UIView(backgroundColor: .appMainColor)
 
-    lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
-    lazy var pointLabel = UILabel.with(text: "167 500.23", textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
+    lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .appWhiteColor)
+    lazy var pointLabel = UILabel.with(text: "167 500.23", textSize: 30, weight: .bold, textColor: .appWhiteColor, textAlignment: .center)
     
     // MARK: - Buttons
     lazy var buttonsStackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal)
-        stackView.addBackground(color: UIColor.white.withAlphaComponent(0.1), cornerRadius: 16)
+        stackView.addBackground(color: UIColor.appWhiteColor.withAlphaComponent(0.1), cornerRadius: 16)
         stackView.cornerRadius = 16
         
         // stackView
@@ -45,9 +45,9 @@ class CommunWalletHeaderView: MyView {
         return stackView
     }()
     
-    lazy var sendButton = UIButton.circle(size: 30, backgroundColor: UIColor.white.withAlphaComponent(0.2), tintColor: .white, imageName: "upVote", imageEdgeInsets: UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8))
+    lazy var sendButton = UIButton.circle(size: 30, backgroundColor: UIColor.appWhiteColor.withAlphaComponent(0.2), tintColor: .appWhiteColor, imageName: "upVote", imageEdgeInsets: UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8))
     
-    lazy var convertButton = UIButton.circle(size: 30, backgroundColor: UIColor.white.withAlphaComponent(0.2), tintColor: .white, imageName: "convert", imageEdgeInsets: UIEdgeInsets(inset: 6))
+    lazy var convertButton = UIButton.circle(size: 30, backgroundColor: UIColor.appWhiteColor.withAlphaComponent(0.2), tintColor: .appWhiteColor, imageName: "convert", imageEdgeInsets: UIEdgeInsets(inset: 6))
 
     override func hitTest(_ point: CGPoint,
                           with event: UIEvent?) -> UIView? {
@@ -126,8 +126,8 @@ class CommunWalletHeaderView: MyView {
         self.titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         self.pointLabel.font = .systemFont(ofSize: 30, weight: .bold)
 
-        self.titleLabel.textColor = .white
-        self.pointLabel.textColor = .white
+        self.titleLabel.textColor = .appWhiteColor
+        self.pointLabel.textColor = .appWhiteColor
     }
     
     func layoutBalanceExpanded() {
@@ -172,7 +172,7 @@ class CommunWalletHeaderView: MyView {
         button.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         button.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        let label = UILabel.with(text: label, textSize: 12, textColor: .white)
+        let label = UILabel.with(text: label, textSize: 12, textColor: .appWhiteColor)
         container.addSubview(label)
         label.autoPinEdge(.top, to: .bottom, of: button, withOffset: 7)
         label.autoAlignAxis(toSuperviewAxis: .vertical)

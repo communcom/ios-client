@@ -29,7 +29,7 @@ class GridView: UIView {
     }
     
     func commonInit() {
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
     }
     
     func setUp(embeds: [ResponseAPIContentBlock]?) {

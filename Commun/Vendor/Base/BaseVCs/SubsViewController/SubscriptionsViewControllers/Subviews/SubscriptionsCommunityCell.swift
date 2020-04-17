@@ -41,7 +41,7 @@ class SubscriptionsCommunityCell: SubsItemCell {
             attributedText
                 .text("\n")
                 .text("\(subscribersCount.kmFormatted) " +
-                String(format: NSLocalizedString("followers-count", comment: ""), subscribersCount) + " • " + "\(postsCount.kmFormatted) " + String(format: NSLocalizedString("post-count", comment: "")), size: 12, weight: .semibold, color: .a5a7bd)
+                String(format: NSLocalizedString("followers-count", comment: ""), subscribersCount) + " • " + "\(postsCount.kmFormatted) " + String(format: NSLocalizedString("post-count", comment: "")), size: 12, weight: .semibold, color: .appGrayColor)
         }
         
         contentLabel.attributedText = attributedText
@@ -52,8 +52,8 @@ class SubscriptionsCommunityCell: SubsItemCell {
         } else {
             joinButton.isHidden = false
             let joined = community.isSubscribed ?? false
-            joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
-            joinButton.setTitleColor(joined ? .appMainColor: .white, for: .normal)
+            joinButton.backgroundColor = joined ? .appLightGrayColor : .appMainColor
+            joinButton.setTitleColor(joined ? .appMainColor: .appWhiteColor, for: .normal)
             joinButton.setTitle((joined ? "following" : "follow").localized().uppercaseFirst, for: .normal)
             joinButton.isEnabled = !(community.isBeingJoined ?? false)
         }

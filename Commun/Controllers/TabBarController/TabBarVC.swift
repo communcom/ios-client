@@ -20,7 +20,7 @@ class TabBarVC: UITabBarController {
     let discoveryTabIndex = 1
     let notificationTabIndex = 2
     let profileTabIndex = 3
-    let selectedColor = UIColor.black
+    let selectedColor = UIColor.appBlackColor
     let unselectedColor = UIColor(hexString: "#A5A7BD")
     
     // MARK: - Properties
@@ -28,15 +28,15 @@ class TabBarVC: UITabBarController {
     let disposeBag = DisposeBag()
     
     // MARK: - Subviews
-    private lazy var tabBarContainerView = UIView(backgroundColor: .white)
+    private lazy var tabBarContainerView = UIView(backgroundColor: .appWhiteColor)
     private lazy var shadowView = UIView(height: tabBarHeight)
     lazy var tabBarStackView = UIStackView(forAutoLayout: ())
     
     // Notification
     private lazy var notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
     private lazy var notificationRedMark: UIView = {
-        let notificationRedMark = UIView(width: 10, height: 10, backgroundColor: .ed2c5b, cornerRadius: 5)
-        notificationRedMark.borderColor = .white
+        let notificationRedMark = UIView(width: 10, height: 10, backgroundColor: .appRedColor, cornerRadius: 5)
+        notificationRedMark.borderColor = .appWhiteColor
         notificationRedMark.borderWidth = 1
         return notificationRedMark
     }()
@@ -79,7 +79,7 @@ class TabBarVC: UITabBarController {
     }
     
     private func configStyles() {
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhiteColor
         
         // hide default tabBar
         tabBar.isHidden = true
@@ -172,7 +172,7 @@ class TabBarVC: UITabBarController {
         
         let imageView = UIImageView(image: UIImage(named: "add"))
         imageView.configureForAutoLayout()
-        imageView.tintColor = .white
+        imageView.tintColor = .appWhiteColor
         
         view.addSubview(imageView)
         imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: itemPadding, left: itemPadding, bottom: itemPadding, right: itemPadding))

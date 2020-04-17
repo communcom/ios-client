@@ -16,7 +16,7 @@ class PhotoLibraryAccessDeniedView: MyView {
     override func commonInit() {
         super.commonInit()
 
-        let titleLabel = UILabel(text: "allow access to your photos".localized().uppercaseFirst, font: .systemFont(ofSize: 24, weight: .bold), numberOfLines: 2, color: .black)
+        let titleLabel = UILabel(text: "allow access to your photos".localized().uppercaseFirst, font: .systemFont(ofSize: 24, weight: .bold), numberOfLines: 2, color: .appBlackColor)
         titleLabel.textAlignment = .center
         addSubview(titleLabel)
         titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 50, left: 15, bottom: 15, right: 15), excludingEdge: .bottom)

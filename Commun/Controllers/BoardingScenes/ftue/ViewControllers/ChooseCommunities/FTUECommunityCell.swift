@@ -26,7 +26,7 @@ class FTUECommunityCell: CommunityCollectionCell {
     override func joinButtonDidTouch() {
         // points
         if (community?.isSubscribed ?? false) == false && shouldShowBonus {
-            let pointsView = UIView(height: 30, backgroundColor: .white, cornerRadius: 15)
+            let pointsView = UIView(height: 30, backgroundColor: .appWhiteColor, cornerRadius: 15)
             contentView.addSubview(pointsView)
             pointsView.autoAlignAxis(toSuperviewAxis: .vertical)
             pointsView.autoPinEdge(.bottom, to: .top, of: joinButton, withOffset: 16)
