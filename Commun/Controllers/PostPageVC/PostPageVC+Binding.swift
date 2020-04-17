@@ -139,8 +139,7 @@ extension PostPageVC {
             .disposed(by: disposeBag)
 
         // bind post
-        let post = viewModel.post
-        post
+        viewModel.post.skip(1)
             .subscribe(onNext: { post in
                 guard let post = post else {return}
                 self.navigationBar.setUp(with: post)
@@ -153,7 +152,8 @@ extension PostPageVC {
             .disposed(by: disposeBag)
         
         // Mark post as read
-        post.filter {$0 != nil}.map {$0!}
+        viewModel.post.skip(1)
+            .filter {$0 != nil}.map {$0!}
             .take(1).asSingle()
             .subscribe(onSuccess: { (post) in
 //                if !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity) {

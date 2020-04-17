@@ -19,7 +19,7 @@ class PostPageViewModel: CommentsViewModel {
     
     // MARK: - Objects
     let loadingState = BehaviorRelay<LoadingState>(value: .loading)
-    let post = BehaviorRelay<ResponseAPIContentGetPost?>(value: nil)
+    lazy var post = BehaviorRelay<ResponseAPIContentGetPost?>(value: postForRequest)
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
@@ -51,14 +51,7 @@ class PostPageViewModel: CommentsViewModel {
     
     func loadPost() {
         RestAPIManager.instance.loadPost(userId: filter.value.userId, username: username, permlink: filter.value.permlink!, communityId: filter.value.communityId, communityAlias: communityAlias)
-            .do(onSuccess: { (post) in
-                self.loadingState.accept(.finished)
-                if self.filter.value.userId == nil || self.filter.value.communityId == nil {
-                    self.changeFilter(userId: post.contentId.userId, communityId: post.contentId.communityId)
-                }
-            }, onError: { (error) in
-                self.loadingState.accept(.error(error: error))
-            }, onSubscribe: {
+            .do(onSubscribe: {
                 self.loadingState.accept(.loading)
             })
             .catchError({ (error) -> Single<ResponseAPIContentGetPost> in
@@ -67,12 +60,10 @@ class PostPageViewModel: CommentsViewModel {
                 }
                 throw error
             })
-            .subscribe(onSuccess: { (post) in
-                let originalPost = self.post.value ?? self.postForRequest
-                let postTemp = originalPost?.newUpdatedItem(from: post)
-                var newPost = postTemp ?? post
-                newPost.viewsCount = max((post.viewsCount ?? 0), (postTemp?.viewsCount ?? 0))
-                self.post.accept(newPost)
+            .subscribe(onSuccess: { _ in
+                self.loadingState.accept(.finished)
+            }, onError: { (error) in
+                self.loadingState.accept(.error(error: error))
             })
             .disposed(by: disposeBag)
     }
@@ -83,6 +74,16 @@ class PostPageViewModel: CommentsViewModel {
             .subscribe(onNext: { post in
                 guard let newPost = self.post.value?.newUpdatedItem(from: post) else {return}
                 self.post.accept(newPost)
+            })
+            .disposed(by: disposeBag)
+        
+        post.filter {$0 != nil}
+            .map {$0!}
+            .take(1)
+            .subscribe(onNext: { post in
+                if self.filter.value.userId == nil || self.filter.value.communityId == nil {
+                    self.changeFilter(userId: post.contentId.userId, communityId: post.contentId.communityId)
+                }
             })
             .disposed(by: disposeBag)
     }
