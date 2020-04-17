@@ -16,24 +16,32 @@ protocol PostCellDelegate: class {
 
 extension PostCellDelegate where Self: BaseViewController {
     func upvoteButtonDidTouch(post: ResponseAPIContentGetPost) {
+        if post.contentId.userId == Config.currentUser?.id {
+            showAlert(title: "error".localized().uppercaseFirst, message: "can't cancel vote on own publication".localized().uppercaseFirst)
+            return
+        }
+        
         BlockchainManager.instance.upvoteMessage(post)
             .subscribe { (error) in
-                UIApplication.topViewController()?.showError(error)
+                self.showError(error)
             }
             .disposed(by: self.disposeBag)
     }
     
     func downvoteButtonDidTouch(post: ResponseAPIContentGetPost) {
+        if post.contentId.userId == Config.currentUser?.id {
+            showAlert(title: "error".localized().uppercaseFirst, message: "can't cancel vote on own publication".localized().uppercaseFirst)
+            return
+        }
+        
         BlockchainManager.instance.downvoteMessage(post)
             .subscribe { (error) in
-                UIApplication.topViewController()?.showError(error)
+                self.showError(error)
             }
             .disposed(by: self.disposeBag)
     }
     
     func menuButtonDidTouch(post: ResponseAPIContentGetPost) {
-        guard let topController = UIApplication.topViewController() else { return }
-        
         var actions = [CommunActionSheet.Action]()
         
         actions.append(
@@ -80,7 +88,7 @@ extension PostCellDelegate where Self: BaseViewController {
         let headerView = PostMetaView(frame: .zero)
         headerView.isUserNameTappable = false
         
-        topController.showCommunActionSheet(headerView: headerView, actions: actions) {
+        showCommunActionSheet(headerView: headerView, actions: actions) {
             headerView.setUp(post: post)
         }
     }

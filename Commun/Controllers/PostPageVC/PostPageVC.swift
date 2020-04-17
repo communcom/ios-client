@@ -32,6 +32,7 @@ class PostPageVC: CommentsViewController {
     var startContentOffsetY: CGFloat = 0.0
     var scrollToTopAfterLoadingComment = false
     var selectedComment: ResponseAPIContentGetComment?
+    var post: ResponseAPIContentGetPost? { (viewModel as? PostPageViewModel)?.post.value }
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
@@ -78,7 +79,7 @@ class PostPageVC: CommentsViewController {
         tableView.keyboardDismissMode = .onDrag
         
         // postView
-        postHeaderView.postStatsView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
+        postHeaderView.delegate = self
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
@@ -259,39 +260,5 @@ class PostPageVC: CommentsViewController {
             let commentIndex = self.viewModel.items.value.firstIndex(of: selectedComment) ?? 0
             self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: commentIndex), at: .top, animated: true)
         }
-    }
-    
-    // MARK: - Actions
-    @objc func openMorePostActions() {
-        postHeaderView.openMorePostActions()
-    }
-    
-    @objc func sortButtonDidTouch() {
-        showCommunActionSheet(
-            title: "sort by".localized().uppercaseFirst,
-            actions: [
-                CommunActionSheet.Action(
-                    title: "interesting first".localized().uppercaseFirst,
-                    handle: {
-                        let vm = self.viewModel as! CommentsViewModel
-                        vm.changeFilter(sortBy: .popularity)
-                    }),
-                CommunActionSheet.Action(
-                    title: "newest first".localized().uppercaseFirst,
-                    handle: {
-                        let vm = self.viewModel as! CommentsViewModel
-                        vm.changeFilter(sortBy: .timeDesc)
-                    }),
-                CommunActionSheet.Action(
-                    title: "oldest first".localized().uppercaseFirst,
-                    handle: {
-                        let vm = self.viewModel as! CommentsViewModel
-                        vm.changeFilter(sortBy: .time)
-                    })
-            ])
-    }
-    
-    @objc func commentsCountButtonDidTouch() {
-        tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
 }

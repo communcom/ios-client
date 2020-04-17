@@ -23,9 +23,7 @@ class CommentForm: MyView {
     private let disposeBag = DisposeBag()
     lazy var viewModel = CommentFormViewModel()
     var post: ResponseAPIContentGetPost? {
-        didSet {
-            viewModel.post = post
-        }
+        (parentViewController as? PostPageVC)?.post
     }
     
     private var parentComment: ResponseAPIContentGetComment?
@@ -313,11 +311,11 @@ extension CommentForm {
                 let request: Single<SendPostCompletion>
                 switch self.mode {
                 case .new:
-                    request = self.viewModel.sendNewComment(block: block, uploadingImage: self.localImage.value)
+                    request = self.viewModel.sendNewComment(post: self.post, block: block, uploadingImage: self.localImage.value)
                 case .edit:
-                    request = self.viewModel.updateComment(self.parentComment!, block: block, uploadingImage: self.localImage.value)
+                    request = self.viewModel.updateComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
                 case .reply:
-                    request = self.viewModel.replyToComment(self.parentComment!, block: block, uploadingImage: self.localImage.value)
+                    request = self.viewModel.replyToComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
                 }
                 
                 self.textView.text = ""

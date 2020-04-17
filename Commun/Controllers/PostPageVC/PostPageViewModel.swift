@@ -78,7 +78,13 @@ class PostPageViewModel: CommentsViewModel {
     }
     
     func bind() {
-        
+        ResponseAPIContentGetPost.observeItemChanged()
+            .filter {$0.identity == self.post.value?.identity}
+            .subscribe(onNext: { post in
+                guard let newPost = self.post.value?.newUpdatedItem(from: post) else {return}
+                self.post.accept(newPost)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func reload(clearResult: Bool = true) {

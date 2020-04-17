@@ -103,7 +103,6 @@
 		57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1A2240DB9400338FD5 /* NetworkService.swift */; };
 		5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787C0C522650FA500568CEC /* SetUserViewModel.swift */; };
 		57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1CA622270FC4700E2A1E3 /* LanguageVC.swift */; };
-		57A95197224178010020F55D /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A95196224178010020F55D /* PostController.swift */; };
 		7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */; };
 		87C4B0C6D06A0E1B2FA41E66 /* Pods_CommunShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F0892DD7329C7D488394BAD /* Pods_CommunShare.framework */; };
 		AC0B05C223A93A1100474628 /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC0B05C123A93A1100474628 /* GoogleService-Info-Prod.plist */; };
@@ -257,6 +256,7 @@
 		BC52913823766F080022EC7F /* CommentCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913723766F080022EC7F /* CommentCell+Actions.swift */; };
 		BC52914023793D330022EC7F /* CommentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913F23793D330022EC7F /* CommentForm.swift */; };
 		BC529142237941920022EC7F /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC529141237941920022EC7F /* CommentTextView.swift */; };
+		BC5395E7244950F200B5176D /* PostPageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5395E6244950F200B5176D /* PostPageVC+Actions.swift */; };
 		BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E7A238B76A8004C53EB /* ReportVC.swift */; };
 		BC561E80238B836D004C53EB /* ReportOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E7F238B836D004C53EB /* ReportOptionView.swift */; };
 		BC561E82238B8BCE004C53EB /* ContentReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E81238B8BCE004C53EB /* ContentReportVC.swift */; };
@@ -611,7 +611,6 @@
 		57840A1A2240DB9400338FD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		5787C0C522650FA500568CEC /* SetUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUserViewModel.swift; sourceTree = "<group>"; };
 		57A1CA622270FC4700E2A1E3 /* LanguageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageVC.swift; sourceTree = "<group>"; };
-		57A95196224178010020F55D /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
 		57BB5CA922550B4300F0B88B /* Commun-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Commun-Bridging-Header.h"; sourceTree = "<group>"; };
 		712487F06417A978EA152FA1 /* Pods_CommunTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CommunTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F0892DD7329C7D488394BAD /* Pods_CommunShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CommunShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -771,6 +770,7 @@
 		BC52913723766F080022EC7F /* CommentCell+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentCell+Actions.swift"; sourceTree = "<group>"; };
 		BC52913F23793D330022EC7F /* CommentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentForm.swift; sourceTree = "<group>"; };
 		BC529141237941920022EC7F /* CommentTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
+		BC5395E6244950F200B5176D /* PostPageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Actions.swift"; sourceTree = "<group>"; };
 		BC561E7A238B76A8004C53EB /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 		BC561E7F238B836D004C53EB /* ReportOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOptionView.swift; sourceTree = "<group>"; };
 		BC561E81238B8BCE004C53EB /* ContentReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentReportVC.swift; sourceTree = "<group>"; };
@@ -1433,6 +1433,7 @@
 				BCD00FBB2375082C004A3952 /* Subviews */,
 				BCD00FC023750B15004A3952 /* PostPageViewModel.swift */,
 				BCD00FBE2375087C004A3952 /* PostPageVC.swift */,
+				BC5395E6244950F200B5176D /* PostPageVC+Actions.swift */,
 				BCCB99302375503A005252CF /* PostPageVC+Binding.swift */,
 				BCD01A9623FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift */,
 			);
@@ -1917,7 +1918,6 @@
 		BC4692D32391308E0064A38B /* PostController */ = {
 			isa = PBXGroup;
 			children = (
-				57A95196224178010020F55D /* PostController.swift */,
 				BC4692D4239130A50064A38B /* PostCellDelegate.swift */,
 			);
 			path = PostController;
@@ -3126,6 +3126,7 @@
 				3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
 				BCAF5B24241B78DF00C157B5 /* WalletConvertVC+Binding.swift in Sources */,
 				BC22BBD4236C215900F40658 /* BaseTableViewController.swift in Sources */,
+				BC5395E7244950F200B5176D /* PostPageVC+Actions.swift in Sources */,
 				BC22BBD6236C26EF00F40658 /* NotificationsSettingsVC.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
 				BC4071AA23CF09B2000027A3 /* NotificationsPageViewModel.swift in Sources */,
@@ -3243,7 +3244,6 @@
 				BC4F0A3224091460002C4F06 /* SearchableVCType.swift in Sources */,
 				BCABF1392366DF2B006B05F5 /* UserProfilePageVC.swift in Sources */,
 				3B8DDF56234AD5D500B213F0 /* ContentTextView+Parsing.swift in Sources */,
-				57A95197224178010020F55D /* PostController.swift in Sources */,
 				B1D7AD5A23A1065A007D1A13 /* SignInViewModel.swift in Sources */,
 				BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */,
 				3B3C8B9E234796D900D8BADB /* PostEditorVC+Binding.swift in Sources */,

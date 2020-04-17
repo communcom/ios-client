@@ -144,7 +144,6 @@ extension PostPageVC {
             .subscribe(onNext: { post in
                 guard let post = post else {return}
                 self.navigationBar.setUp(with: post)
-                self.commentForm.post = post
                 self.postHeaderView.setUp(with: post)
                 
 //                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
