@@ -12,34 +12,34 @@ import RxCocoa
 import CyberSwift
 
 class PostPageViewModel: CommentsViewModel {
-    // MARK: - Input
-    var postForRequest: ResponseAPIContentGetPost?
+    // MARK: - Properties
     var username: String?
     var communityAlias: String?
     
     // MARK: - Objects
     let loadingState = BehaviorRelay<LoadingState>(value: .loading)
-    lazy var post = BehaviorRelay<ResponseAPIContentGetPost?>(value: postForRequest)
+    let post: BehaviorRelay<ResponseAPIContentGetPost?>
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
-        self.postForRequest = post
+        self.post = BehaviorRelay<ResponseAPIContentGetPost?>(value: post)
         super.init(filter: CommentsListFetcher.Filter(sortBy: .popularity, type: .post, userId: post.contentId.userId, permlink: post.contentId.permlink, communityId: post.community?.communityId))
-        defer { setUp() }
+        defer {
+            loadPost()
+            bind()
+        }
     }
     
     init(userId: String?, username: String?, permlink: String, communityId: String?, communityAlias: String?) {
         self.username = username
         self.communityAlias = communityAlias
         
-        super.init(filter: CommentsListFetcher.Filter(type: .post, userId: userId, permlink: permlink, communityId: communityId))
-        defer { setUp() }
-    }
-    
-    func setUp() {
-        loadPost()
-        fetchNext()
-        bind()
+        self.post = BehaviorRelay<ResponseAPIContentGetPost?>(value: nil)
+        super.init(filter: CommentsListFetcher.Filter(type: .post, userId: userId, permlink: permlink, communityId: communityId), prefetch: false)
+        defer {
+            loadPost()
+            bind()
+        }
     }
     
     override func fetchNext(forceRetry: Bool = false) {
@@ -54,13 +54,10 @@ class PostPageViewModel: CommentsViewModel {
             .do(onSubscribe: {
                 self.loadingState.accept(.loading)
             })
-            .catchError({ (error) -> Single<ResponseAPIContentGetPost> in
-                if let post = self.postForRequest {
-                    return .just(post)
+            .subscribe(onSuccess: { post in
+                if self.post.value == nil {
+                    self.post.accept(post)
                 }
-                throw error
-            })
-            .subscribe(onSuccess: { _ in
                 self.loadingState.accept(.finished)
             }, onError: { (error) in
                 self.loadingState.accept(.error(error: error))
@@ -74,16 +71,6 @@ class PostPageViewModel: CommentsViewModel {
             .subscribe(onNext: { post in
                 guard let newPost = self.post.value?.newUpdatedItem(from: post) else {return}
                 self.post.accept(newPost)
-            })
-            .disposed(by: disposeBag)
-        
-        post.filter {$0 != nil}
-            .map {$0!}
-            .take(1)
-            .subscribe(onNext: { post in
-                if self.filter.value.userId == nil || self.filter.value.communityId == nil {
-                    self.changeFilter(userId: post.contentId.userId, communityId: post.contentId.communityId)
-                }
             })
             .disposed(by: disposeBag)
     }
