@@ -47,7 +47,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     override func setUpViews() {
         super.setUpViews()
         selectionStyle = .none
-        
+        backgroundColor = .appWhiteColor
         contentView.addSubview(avatarImageView)
         avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
         avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -200,11 +200,13 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         ])
         
         guard var content = comment?.document?.toAttributedString(
-            currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)],
+            currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize),
+                                .foregroundColor: UIColor.appBlackColor],
             attachmentType: TextAttachment.self)
         else {
-            mutableAS.append(NSAttributedString(string: " " + "this comment was deleted".localized().uppercaseFirst, attributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize), .foregroundColor: UIColor.lightGray]))
+            mutableAS.append(NSAttributedString(string: " " + "this comment was deleted".localized().uppercaseFirst, attributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize), .foregroundColor: UIColor.appGrayColor]))
             contentTextView.attributedText = mutableAS
+            contentTextView.backgroundColor = .appLightGrayColor
             return
         }
         
@@ -234,7 +236,8 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         let contentAS = NSAttributedString(
             string: String(content.string.prefix(maxCharactersForReduction - 3)),
             attributes: [
-                .font: UIFont.systemFont(ofSize: defaultContentFontSize)
+                .font: UIFont.systemFont(ofSize: defaultContentFontSize),
+                .foregroundColor: UIColor.appBlackColor
             ])
         mutableAS.append(contentAS)
         

@@ -111,8 +111,6 @@ extension UIViewController {
         hud.mode = MBProgressHUDMode.indeterminate
         hud.isUserInteractionEnabled = true
         hud.label.text = message
-        hud.backgroundColor = UIColor(white: 0, alpha: 0.2)
-
     }
     
     func showDone(_ message: String, completion: (() -> Void)? = nil) {

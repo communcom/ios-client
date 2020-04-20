@@ -22,7 +22,7 @@ class BaseSignUpVC: BaseViewController {
     lazy var subtitleLabel = UILabel.with(textSize: 17, numberOfLines: 0)
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     
-    lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#F53D5B")!, numberOfLines: 0, textAlignment: .center)
+    lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appRedColor, numberOfLines: 0, textAlignment: .center)
     
     lazy var termOfUseLabel: UILabel = {
         let label = UILabel.with(textSize: 10, numberOfLines: 0, textAlignment: .center)

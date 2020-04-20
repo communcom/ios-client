@@ -134,7 +134,7 @@ PODS:
   - ListPlaceholder (1.4)
   - Localize-Swift (2.0.0)
   - Locksmith (4.0.0)
-  - MBProgressHUD (1.1.0)
+  - MBProgressHUD (1.2.0)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
@@ -205,7 +205,7 @@ DEPENDENCIES:
   - ListPlaceholder
   - Localize-Swift (~> 2.0)
   - Locksmith
-  - MBProgressHUD (~> 1.1.0)
+  - MBProgressHUD (~> 1.2.0)
   - NotificationView
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
@@ -368,7 +368,7 @@ SPEC CHECKSUMS:
   ListPlaceholder: 08ddaddf67520a20fc52cf37160fb56aa64d071d
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
-  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   NotificationView: 1fe16a62d2b1866dc9b0e83782b4b97b385021b2
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
@@ -396,6 +396,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 402b9e29eaf13f66b0c855f22b599bb83ff42b2d
+PODFILE CHECKSUM: 76cd682e7653b118e7c88daa8752bdc982ff7f77
 
 COCOAPODS: 1.9.1

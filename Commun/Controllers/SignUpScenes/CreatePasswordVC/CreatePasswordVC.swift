@@ -27,8 +27,9 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
     
     lazy var showPasswordButton: UIButton = {
         let button = UIButton(width: 44, height: 56, contentInsets: UIEdgeInsets(top: 21, left: 12, bottom: 21, right: 12))
-        button.setImage(UIImage(named: "show-password"), for: .normal)
+        button.setImage(UIImage(named: "show-password")!.withRenderingMode(.alwaysTemplate), for: .normal)
         button.addTarget(self, action: #selector(showPasswordDidTouch), for: .touchUpInside)
+        button.tintColor = .appGrayColor
         return button
     }()
     
@@ -107,7 +108,7 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
         viewModel.isShowingPassword
             .subscribe(onNext: { (isShowingPassword) in
                 self.textField.isSecureTextEntry = !isShowingPassword
-                self.showPasswordButton.setImage(UIImage(named: (isShowingPassword ? "hide" : "show") + "-password"), for: .normal)
+                self.showPasswordButton.setImage(UIImage(named: (isShowingPassword ? "hide" : "show") + "-password")!.withRenderingMode(.alwaysTemplate), for: .normal)
             })
             .disposed(by: disposeBag)
         

@@ -48,8 +48,8 @@ class CommunWalletVC: TransferHistoryVC {
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
     var headerViewExpandedHeight: CGFloat = 0
 
-    lazy var barTitleLabel = UILabel.with(text: "Equity Value Commun", textSize: 10, weight: .semibold, textColor: .appWhiteColor, textAlignment: .center)
-    lazy var barPointLabel = UILabel.with(text: "167 500.23", textSize: 15, weight: .bold, textColor: .appWhiteColor, textAlignment: .center)
+    lazy var barTitleLabel = UILabel.with(text: "Equity Value Commun", textSize: 10, weight: .semibold, textColor: .white, textAlignment: .center)
+    lazy var barPointLabel = UILabel.with(text: "167 500.23", textSize: 15, weight: .bold, textColor: .white, textAlignment: .center)
 
     lazy var barBalanceView = createBalanceView()
     lazy var logoView = UIView.transparentCommunLogo(size: 40)

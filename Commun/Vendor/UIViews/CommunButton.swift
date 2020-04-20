@@ -42,7 +42,7 @@ class CommunButton: UIButton {
                                   label: label,
                                   labelFont: .boldSystemFont(ofSize: 15.0),
                                   backgroundColor: .appMainColor,
-                                  textColor: .appWhiteColor,
+                                  textColor: .white,
                                   cornerRadius: cornerRadius ?? height / 2,
                                   contentInsets: UIEdgeInsets(top: 10.0,
                                                                  left: 15.0,
@@ -61,7 +61,7 @@ class CommunButton: UIButton {
     
     func setHightLight(_ isHighlighted: Bool, highlightedLabel: String, unHighlightedLabel: String) {
         backgroundColor = isHighlighted ? .appLightGrayColor : .appMainColor
-        setTitleColor(isHighlighted ? .appMainColor: .appWhiteColor, for: .normal)
+        setTitleColor(isHighlighted ? .appMainColor: .white, for: .normal)
         setTitle((isHighlighted ? highlightedLabel : unHighlightedLabel).localized().uppercaseFirst, for: .normal)
     }
     

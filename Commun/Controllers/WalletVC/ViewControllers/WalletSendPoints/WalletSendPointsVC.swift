@@ -14,7 +14,7 @@ import CircularCarousel
 
 class WalletSendPointsVC: BaseViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
-    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .appWhiteColor)}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .white)}
     override var shouldHideTabBar: Bool {true}
     
     // MARK: - Properties
@@ -54,9 +54,9 @@ class WalletSendPointsVC: BaseViewController {
     lazy var communLogoImageView = UIView.transparentCommunLogo(size: carouselHeight)
 
     // Balance
-    var sellerNameLabel = UILabel.with(textSize: .adaptive(width: 17.0), weight: .semibold, textColor: .appWhiteColor, textAlignment: .center)
+    var sellerNameLabel = UILabel.with(textSize: .adaptive(width: 17.0), weight: .semibold, textColor: .white, textAlignment: .center)
 
-    var sellerAmountLabel = UILabel.with(textSize: .adaptive(width: 30.0), weight: .bold, textColor: .appWhiteColor, textAlignment: .center)
+    var sellerAmountLabel = UILabel.with(textSize: .adaptive(width: 30.0), weight: .bold, textColor: .white, textAlignment: .center)
 
     // Friend
     var friendAvatarImageView = UIView.createCircleCommunLogo(side: 40)
@@ -112,8 +112,8 @@ class WalletSendPointsVC: BaseViewController {
         return clearPointsButtonInstance
     }()
 
-    var sellerNameLabelForNavBar: UILabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 12, weight: .bold), numberOfLines: 1, color: .appWhiteColor)
-    var sellerAmountLabelForNavBar: UILabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 20, weight: .bold), numberOfLines: 1, color: .appWhiteColor)
+    var sellerNameLabelForNavBar: UILabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 12, weight: .bold), numberOfLines: 1, color: .white)
+    var sellerAmountLabelForNavBar: UILabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 20, weight: .bold), numberOfLines: 1, color: .white)
     var navigationBarTitleView = UIView(forAutoLayout: ())
 
     var amountBorderView = UIView(forAutoLayout: ())
@@ -342,7 +342,7 @@ class WalletSendPointsVC: BaseViewController {
     }
 
     private func setupNavBar() {
-        setLeftNavBarButtonForGoingBack(tintColor: .appWhiteColor)
+        setLeftNavBarButtonForGoingBack(tintColor: .white)
         view.backgroundColor = .appMainColor
         
         if self.dataModel.transaction.symbol != Symbol(sell: "CMN", buy: "CMN") {
@@ -375,12 +375,12 @@ class WalletSendPointsVC: BaseViewController {
         style.paragraphSpacing = 1.0
         
         title.addAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: .bold),
-                             NSAttributedString.Key.foregroundColor: UIColor.appWhiteColor,
+                             NSAttributedString.Key.foregroundColor: UIColor.white,
                              NSAttributedString.Key.paragraphStyle: style
                             ], range: NSRange(location: 0, length: subtitle1.count))
 
         title.addAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.0, weight: .semibold),
-                             NSAttributedString.Key.foregroundColor: UIColor.appWhiteColor.withAlphaComponent(1),
+                             NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(1),
                              NSAttributedString.Key.paragraphStyle: style
                             ], range: NSRange(location: subtitle1.count + 1, length: subtitle2.count))
 

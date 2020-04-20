@@ -16,7 +16,7 @@ class VoteContainerView: MyView {
     // MARK: - Subviews
     lazy var upVoteButton = UIButton.vote(type: .upvote)
     lazy var downVoteButton = UIButton.vote(type: .downvote)
-    lazy var likeCountLabel = UILabel.with(textSize: 12, weight: .bold, textColor: UIColor(hexString: "#A5A7BD")!, textAlignment: .center)
+    lazy var likeCountLabel = UILabel.with(textSize: 12, weight: .bold, textColor: .appGrayColor, textAlignment: .center)
     
     // MARK: - Methods
     override func commonInit() {

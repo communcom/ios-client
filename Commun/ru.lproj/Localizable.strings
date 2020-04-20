@@ -1,3 +1,5 @@
+"get your first points" = "получи свои первые поинты";
+"view in Explorer" = "посмотреть в Explorer";
 "all time" = "за все время";
 "hot" = "горячее";
 "popular" = "популярное";
@@ -340,7 +342,7 @@
 "save post as draft" = "сохранить пост в черновике";
 "save to iCloud" = "сохранить в iCloud";
 "scan QR" = "сканировать QR";
-"search placeholder" = "поиск";
+"search" = "поиск";
 "see" = "показать";
 "select a link to add to text" = "выберите ссылку для добавления в текст";
 "select country placeholder" = "выберите страну";
@@ -371,7 +373,7 @@
 "sort by" = "сортировать по";
 "start and get 30 points" = "начать и получить 30 поинтов";
 "subscribe" = "подписаться";
-"subscribe to at least 3 communities" = "подпишись как минимум на 3 сообщества и получи свои первые поинты сообщества";
+"subscribe to at least 3 communities and get your first Community Points" = "подпишись как минимум на 3 сообщества и получи свои первые поинты сообщества";
 "successfully resent code" = "код успешно введен";
 "terms of service." = "условия использования";
 "terms of use, Privacy Policy" = "Пользовательским соглашением, Политикой приватности";

@@ -36,17 +36,17 @@ class ExplanationView: MyView {
     }
     
     var closeDidTouch: (() -> Void)?
-    
+    private static let textColor = UIColor.white
     // MARK: - Subviews
     lazy var containerView = UIView(backgroundColor: .appMainColor)
-    lazy var titleLabel = UILabel.with(text: title, textSize: 14, weight: .semibold, textColor: .appWhiteColor, numberOfLines: 0)
-    lazy var closeButton = UIButton.close(backgroundColor: .clear, tintColor: .appWhiteColor)
+    lazy var titleLabel = UILabel.with(text: title, textSize: 14, weight: .semibold, textColor: ExplanationView.textColor, numberOfLines: 0)
+    lazy var closeButton = UIButton.close(backgroundColor: .clear, tintColor: ExplanationView.textColor)
     
-    lazy var descriptionLabel = UILabel.with(text: descriptionText, textSize: 12, textColor: .appWhiteColor, numberOfLines: 0)
+    lazy var descriptionLabel = UILabel.with(text: descriptionText, textSize: 12, textColor: ExplanationView.textColor, numberOfLines: 0)
     
     lazy var imageView = UIImageView(width: .adaptive(width: 100), height: .adaptive(width: 100), imageNamed: imageName, contentMode: .scaleAspectFit)
-    lazy var dontShowAgainButton = UIButton(label: "don't show this again".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), textColor: .appWhiteColor)
-    lazy var learnMoreButton = UIButton(label: "learn more".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), textColor: .appWhiteColor)
+    lazy var dontShowAgainButton = UIButton(label: "don't show this again".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), textColor: ExplanationView.textColor)
+    lazy var learnMoreButton = UIButton(label: "learn more".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), textColor: ExplanationView.textColor)
     lazy var arrowView = UIView(width: 10, height: 10, backgroundColor: .appMainColor, cornerRadius: 2)
     
     // MARK: - Initializers

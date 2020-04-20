@@ -45,12 +45,12 @@ class CommentForm: MyView {
 
     lazy var imageButton = CommunButton.circle(size: .adaptive(width: 35.0),
                                                backgroundColor: .appWhiteColor,
-                                               tintColor: UIColor(hexString: "#A5A7BD"),
+                                               tintColor: .appGrayColor,
                                                imageName: "icon-send-comment-gray-default",
                                                imageEdgeInsets: .zero)
 
     lazy var sendButton = CommunButton.circle(size: .adaptive(width: 35.0),
-                                              backgroundColor: UIColor(hexString: "#6A80F5")!,
+                                              backgroundColor: .appMainColor,
                                               tintColor: .appWhiteColor,
                                               imageName: "send",
                                               imageEdgeInsets: .zero)

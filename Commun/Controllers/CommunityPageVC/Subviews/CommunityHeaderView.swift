@@ -39,7 +39,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         walletCurrencyLabel.autoPinEdge(.leading, to: .trailing, of: walletCurrencyValue, withOffset: 4.0)
         walletCurrencyLabel.autoPinEdge(.bottom, to: .bottom, of: walletCurrencyValue, withOffset: -1.0)
         
-        let equalLabel = UILabel.with(text: "=", textSize: 12, weight: .semibold, textColor: .appWhiteColor)
+        let equalLabel = UILabel.with(text: "=", textSize: 12, weight: .semibold, textColor: .white)
         equalLabel.alpha = 0.7
         
         view.addSubview(equalLabel)
@@ -50,7 +50,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         communValueLabel.autoPinEdge(.leading, to: .trailing, of: equalLabel, withOffset: 2)
         communValueLabel.autoAlignAxis(.horizontal, toSameAxisOf: equalLabel)
         
-        let communLabel = UILabel.with(text: "Commun", textSize: 12, weight: .semibold, textColor: .appWhiteColor)
+        let communLabel = UILabel.with(text: "Commun", textSize: 12, weight: .semibold, textColor: .white)
         communLabel.alpha = 0.7
         
         view.addSubview(communLabel)
@@ -73,14 +73,14 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }()
     
     lazy var walletCurrencyValue: UILabel = {
-        let label = UILabel.with(text: "1000", textSize: 15, weight: .semibold, textColor: .appWhiteColor)
+        let label = UILabel.with(text: "1000", textSize: 15, weight: .semibold, textColor: .white)
         label.isHidden = true
 
         return label
     }()
     
     lazy var walletCurrencyLabel: UILabel = {
-        let label = UILabel.with(text: "Binance", textSize: 12, weight: .semibold, textColor: .appWhiteColor)
+        let label = UILabel.with(text: "Binance", textSize: 12, weight: .semibold, textColor: .white)
         label.isHidden = true
         label.alpha = 0.7
 
@@ -88,7 +88,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }()
     
     lazy var communValueLabel: UILabel = {
-        let label = UILabel.with(text: "10", textSize: 12, weight: .bold, textColor: .appWhiteColor)
+        let label = UILabel.with(text: "10", textSize: 12, weight: .bold, textColor: .white)
         label.alpha = 0.7
         
         return label
@@ -161,8 +161,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
-        
-        pointsContainerView.addShadow(ofColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 0.3),
+
+        pointsContainerView.addShadow(ofColor: UIColor.onlyLightModeShadowColor(#colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 0.3)),
                                       radius: 24,
                                       offset: CGSize(width: 0.0, height: 14),
                                       opacity: 1.0)

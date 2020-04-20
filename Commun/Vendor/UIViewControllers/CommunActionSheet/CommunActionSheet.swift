@@ -74,7 +74,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
     }()
 
     // MARK: - Properties
-    var backgroundColor = UIColor(hexString: "#F7F7F9")
+    var backgroundColor: UIColor = .appLightGrayColor
     var actions: [Action]?
 
     var titleFont: UIFont = .boldSystemFont(ofSize: 20)

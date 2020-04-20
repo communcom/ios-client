@@ -28,7 +28,7 @@ class WelcomeVC: BaseViewController {
         let view = UIView(height: 50, backgroundColor: .appMainColor, cornerRadius: 25)
         let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         hStack.addArrangedSubviews([
-            UILabel.with(text: "start and get 30 points".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appWhiteColor),
+            UILabel.with(text: "start and get 30 points".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .white),
             UIImageView(width: 35, height: 33, imageNamed: "coin-reward")
         ])
         view.addSubview(hStack)

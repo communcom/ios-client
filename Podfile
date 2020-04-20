@@ -39,7 +39,7 @@ def common_pods_commun
   pod 'SwifterSwift/Foundation', :git => "https://github.com/communcom/SwifterSwift.git"    # Foundation Extensions
   pod 'SwifterSwift/UIKit', :git => "https://github.com/communcom/SwifterSwift.git"         # UIKit Extensions
   
-  pod 'MBProgressHUD', '~> 1.1.0'
+  pod 'MBProgressHUD', '~> 1.2.0'
   pod 'TLPhotoPicker'
   
   pod 'PinCodeInputView'

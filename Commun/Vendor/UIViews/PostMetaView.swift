@@ -23,7 +23,7 @@ class PostMetaView: MyView {
     lazy var stackView = UIStackView(axis: .vertical, spacing: 3, alignment: .leading)
     lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
     lazy var subtitleLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor)
-    lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appWhiteColor)
+    lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .white)
 
     lazy var stateButton: UIView = {
         let view = UIView(height: 30, backgroundColor: .appMainColor, cornerRadius: 30 / 2)

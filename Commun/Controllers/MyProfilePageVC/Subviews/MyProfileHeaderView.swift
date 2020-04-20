@@ -28,7 +28,7 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     
     lazy var walletShadowView = UIView(forAutoLayout: ())
     lazy var walletView = UIView(cornerRadius: 16)
-    lazy var communValueLabel = UILabel.with(text: "0.0000", textSize: 20, weight: .semibold, textColor: UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appBlackColor))
+    lazy var communValueLabel = UILabel.with(text: "0.0000", textSize: 20, weight: .semibold, textColor: .white)
     
     override func commonInit() {
         super.commonInit()
@@ -74,7 +74,7 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     func setUpWalletView(withError: Bool = false) {
         // clean
         walletView.removeSubviews()
-        let whiteColor = UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appBlackColor)
+        let whiteColor = UIColor.white
         // layout
         if withError {
             let label = UILabel.with(text: "loading failed".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: whiteColor)

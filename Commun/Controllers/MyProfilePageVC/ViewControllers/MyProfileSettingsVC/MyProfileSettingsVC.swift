@@ -88,7 +88,7 @@ class MyProfileSettingsVC: BaseViewController {
         stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         stackView.autoPinEdge(.top, to: .bottom, of: userView, withOffset: 20)
 
-        let logoutButton = UIButton(height: 50, label: "logout".localized().uppercaseFirst, backgroundColor: .appWhiteColor, textColor: UIColor(hexString: "#ED2C5B")!, cornerRadius: 10)
+        let logoutButton = UIButton(height: 50, label: "logout".localized().uppercaseFirst, backgroundColor: .appWhiteColor, textColor: .appRedColor, cornerRadius: 10)
         logoutButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
 

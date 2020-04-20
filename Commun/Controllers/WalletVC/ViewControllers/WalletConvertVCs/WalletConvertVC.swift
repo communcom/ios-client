@@ -39,8 +39,8 @@ class WalletConvertVC: BaseViewController {
     
     // MARK: - Subviews
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
-    lazy var balanceNameLabel = UILabel.with(textSize: 17, weight: .semibold, textColor: .appWhiteColor)
-    lazy var valueLabel = UILabel.with(textSize: 30, weight: .semibold, textColor: .appWhiteColor)
+    lazy var balanceNameLabel = UILabel.with(textSize: 17, weight: .semibold, textColor: .white)
+    lazy var valueLabel = UILabel.with(textSize: 30, weight: .semibold, textColor: .white)
     lazy var whiteView = UIView(backgroundColor: .appWhiteColor)
     lazy var buyContainer: UIView = {
         let view = UIView(cornerRadius: 10)
@@ -100,7 +100,7 @@ class WalletConvertVC: BaseViewController {
     override func setUp() {
         super.setUp()
         
-        setLeftNavBarButtonForGoingBack(tintColor: .appWhiteColor)
+        setLeftNavBarButtonForGoingBack(tintColor: .white)
         
         // backgroundColor
         let topView = UIView(backgroundColor: topColor)

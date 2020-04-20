@@ -49,13 +49,13 @@ class EditorToolbarItemCell: UICollectionViewCell {
         }
         
         // enabled state
-        var textColor = UIColor(hexString: "#A5A7BD")!
+        var textColor: UIColor = .appGrayColor
        
         if item.isHighlighted {
             contentView.backgroundColor = .appMainColor
             textColor = .appWhiteColor
         } else {
-            contentView.backgroundColor = UIColor(hexString: "#F3F5FA")
+            contentView.backgroundColor = .appLightGrayColor
         }
         
         itemImageView.tintColor = textColor

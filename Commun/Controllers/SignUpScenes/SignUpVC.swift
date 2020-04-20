@@ -37,7 +37,7 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
             switch network {
             case .facebook:
                 backgroundColor = UIColor(hexString: "#415A94")!
-                textColor = .appWhiteColor
+                textColor = .white
 //            case .twitter:
 //                backgroundColor = UIColor(hexString: "#4AA1EC")!
 //                textColor = .appWhiteColor
@@ -78,8 +78,16 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
             let methodView = UIView(height: 44, backgroundColor: method.backgroundColor, cornerRadius: 6)
             methodView.borderColor = .appGrayColor
             methodView.borderWidth = 1
-            
-            let imageView = UIImageView(width: 30, height: 30, imageNamed: "sign-up-with-\(method.serviceName)")
+            let imageView = UIImageView(width: 30, height: 30)
+            imageView.image = UIImage(named: "sign-up-with-\(method.serviceName)")!.withRenderingMode(.alwaysTemplate)
+            if method.serviceName == emailServiceName || method.serviceName == phoneServiceName {
+                imageView.tintColor = .appBlackColor
+            }
+
+            if method.serviceName == SocialNetwork.facebook.rawValue {
+                imageView.tintColor = .white
+            }
+
             methodView.addSubview(imageView)
             imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 7), excludingEdge: .trailing)
             

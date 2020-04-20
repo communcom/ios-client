@@ -17,7 +17,7 @@ class ErrorView: MyView {
 
     lazy var subtitle = UILabel.with(textSize: .adaptive(height: 17), weight: .medium, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
     
-    lazy var retryButton = UIButton(height: .adaptive(height: 50), labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: .appMainColor, textColor: .appWhiteColor, cornerRadius: .adaptive(height: 25))
+    lazy var retryButton = UIButton(height: .adaptive(height: 50), labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: .appMainColor, textColor: .white, cornerRadius: .adaptive(height: 25))
 
     var retryAction: (() -> Void)?
     

@@ -47,7 +47,7 @@ class FeedPageHeaderView: MyTableHeaderView {
         return bannerView
     }()
     
-    lazy var getButton = UIButton(width: .adaptive(width: 90), height: 34, label: "get".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), backgroundColor: .appMainColor, textColor: .appWhiteColor, cornerRadius: 17)
+    lazy var getButton = UIButton(width: .adaptive(width: 90), height: 34, label: "get".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12, weight: .semibold), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 17)
 
     // MARK: - Methods
     override func commonInit() {

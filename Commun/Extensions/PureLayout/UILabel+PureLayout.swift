@@ -27,7 +27,7 @@ extension UILabel {
         let label = UILabel(forAutoLayout: ())
         label.text = text
         label.font = .systemFont(ofSize: size, weight: .semibold)
-        label.textColor = UIColor(hexString: "#A5A7BD")
+        label.textColor = .appGrayColor
         if let numberOfLines = numberOfLines {
             label.numberOfLines = numberOfLines
         }

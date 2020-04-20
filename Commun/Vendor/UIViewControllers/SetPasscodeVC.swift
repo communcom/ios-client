@@ -64,6 +64,8 @@ class SetPasscodeVC: THPinViewController {
         super.viewDidLoad()
         // Setup views
         backgroundColor = .appWhiteColor
+        promptColor = .appLightGrayColor
+        
         // cancel here means deleteButton
         disableCancel = false
         // Text

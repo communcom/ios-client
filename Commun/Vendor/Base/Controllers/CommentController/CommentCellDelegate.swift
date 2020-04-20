@@ -92,7 +92,7 @@ extension CommentCellDelegate where Self: BaseViewController {
             
             actions.append(CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
                                                     icon: UIImage(named: "delete"),
-                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    tintColor: .appRedColor,
                                                     handle: {
                                                         self.deleteComment(comment)
                                                     })
@@ -100,7 +100,7 @@ extension CommentCellDelegate where Self: BaseViewController {
         } else {
             actions.append(CommunActionSheet.Action(title: "report".localized().uppercaseFirst,
                                                     icon: UIImage(named: "report"),
-                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    tintColor: .appRedColor,
                                                     handle: {
                                                         self.reportComment(comment)
                                                     })

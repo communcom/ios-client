@@ -24,7 +24,7 @@ class SignUpWithPhoneVC: BaseSignUpMethodVC {
         return view
     }()
     
-    lazy var selectCountryPlaceholderLabel = UILabel.with(text: "select country placeholder".localized().uppercaseFirst, textSize: 17, textColor: UIColor(hexString: "#9B9FA2")!)
+    lazy var selectCountryPlaceholderLabel = UILabel.with(text: "select country placeholder".localized().uppercaseFirst, textSize: 17, textColor: .appGrayColor)
     
     lazy var flagView = UILabel.with(textSize: 28)
     lazy var countryNameLabel = UILabel.with(textSize: 17)
@@ -35,7 +35,7 @@ class SignUpWithPhoneVC: BaseSignUpMethodVC {
         tf.leftView = paddingView
         tf.leftViewMode = .always
         tf.placeholder = "phone number placeholder".localized().uppercaseFirst
-        tf.setPlaceHolderTextColor(UIColor(hexString: "#9B9FA2")!)
+        tf.setPlaceHolderTextColor(.appGrayColor)
         return tf
     }()
     

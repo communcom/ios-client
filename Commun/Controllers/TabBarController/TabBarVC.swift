@@ -20,8 +20,8 @@ class TabBarVC: UITabBarController {
     let discoveryTabIndex = 1
     let notificationTabIndex = 2
     let profileTabIndex = 3
-    let selectedColor = UIColor.appBlackColor
-    let unselectedColor = UIColor(hexString: "#A5A7BD")
+    let selectedColor: UIColor = .appBlackColor
+    let unselectedColor: UIColor = .appGrayColor
     
     // MARK: - Properties
     let viewModel = TabBarViewModel()
@@ -172,7 +172,7 @@ class TabBarVC: UITabBarController {
         
         let imageView = UIImageView(image: UIImage(named: "add"))
         imageView.configureForAutoLayout()
-        imageView.tintColor = UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appBlackColor)
+        imageView.tintColor = .white
         
         view.addSubview(imageView)
         imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: itemPadding, left: itemPadding, bottom: itemPadding, right: itemPadding))

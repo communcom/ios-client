@@ -134,14 +134,14 @@ extension WalletConvertVC {
                     self.convertLogoTopView.heightConstraint?.constant = 0
                 }
                     
-                let titleLabel = UILabel.with(text: "convert".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appWhiteColor, numberOfLines: 2, textAlignment: .center)
+                let titleLabel = UILabel.with(text: "convert".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .white, numberOfLines: 2, textAlignment: .center)
                 
                 if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 6) {
                     if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 33) {
                         titleLabel.attributedText = NSMutableAttributedString()
-                            .text(self.balanceNameLabel.text ?? "", size: 14, weight: .semibold, color: .appWhiteColor)
+                            .text(self.balanceNameLabel.text ?? "", size: 14, weight: .semibold, color: .white)
                             .text("\n")
-                            .text(self.valueLabel.text ?? "", size: 16, weight: .semibold, color: .appWhiteColor)
+                            .text(self.valueLabel.text ?? "", size: 16, weight: .semibold, color: .white)
                         self.balanceNameLabel.isHidden = true
                         self.valueLabel.isHidden = true
                     } else {

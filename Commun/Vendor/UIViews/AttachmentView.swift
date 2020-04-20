@@ -32,7 +32,7 @@ class AttachmentView: UIView {
     lazy var contentView: UIView = UIView(forAutoLayout: ())
     lazy var descriptionView: UIView = {
         let bottomView = UIView(forAutoLayout: ())
-        bottomView.backgroundColor = UIColor(hexString: "#F3F5FA")
+        bottomView.backgroundColor = .appGrayColor
         return bottomView
     }()
     lazy var titleLabel = UILabel.with(textSize: 15, weight: .bold, numberOfLines: 1)

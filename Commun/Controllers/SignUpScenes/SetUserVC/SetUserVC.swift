@@ -17,7 +17,7 @@ class SetUserVC: BaseSignUpVC, SignUpRouter {
     // MARK: - Subviews
     lazy var textField: UITextField = {
         let alertButton = UIButton(width: 24, height: 24)
-        alertButton.setImage(UIImage(named: "icon-info-button-default"), for: .normal)
+        alertButton.setImage(UIImage(named: "question"), for: .normal)
         alertButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
         let rightView = UIView(width: 40, height: 56 * Config.heightRatio)
         rightView.addSubview(alertButton)

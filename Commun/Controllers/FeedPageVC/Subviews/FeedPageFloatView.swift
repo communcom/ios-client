@@ -11,9 +11,9 @@ import Foundation
 final class FeedPageFloatView: MyView {
 
     // MARK: - Subviews
-    lazy var headerLabel = UILabel.with(textSize: 30 * Config.heightRatio, weight: .bold, textColor: UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appBlackColor))
+    lazy var headerLabel = UILabel.with(textSize: 30 * Config.heightRatio, weight: .bold, textColor: .white)
     lazy var changeFeedTypeButton: UIButton = {
-        let button = UIButton(labelFont: .boldSystemFont(ofSize: 21 * Config.heightRatio), textColor: UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appBlackColor))
+        let button = UIButton(labelFont: .boldSystemFont(ofSize: 21 * Config.heightRatio), textColor: .white)
         button.alpha = 0.5
         return button
     }()
