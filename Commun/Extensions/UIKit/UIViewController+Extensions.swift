@@ -345,14 +345,6 @@ extension UIViewController {
         popOrDismissVC()
     }
 
-    @objc func leftButtonTapped() {
-        popOrDismissVC()
-    }
-
-    @objc func rightButtonTapped() {
-        popOrDismissVC()
-    }
-
     func backCompletion(_ completion: @escaping (() -> Void)) {
         popOrDismissVC(completion)
     }

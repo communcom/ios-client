@@ -18,7 +18,7 @@ class SelectLanguageVC: BaseViewController {
         view.backgroundColor = .f3f5fa
         title = "language".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
-        closeButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         
     }
     
