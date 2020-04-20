@@ -30,6 +30,7 @@ class CommunityCell: SubsItemCell, ListItemCellType {
             .text(community.name, size: 15, weight: .semibold)
             .text("\n")
             .text(String(format: NSLocalizedString("%d followers", comment: ""), (community.subscribersCount ?? 0)) + " • " + String(format: NSLocalizedString("%d posts", comment: ""), (community.postsCount ?? 0)), size: 12, weight: .semibold, color: .a5a7bd)
+            .withParagraphStyle(lineSpacing: 3)
         contentLabel.attributedText = attributedText
         
         // joinButton

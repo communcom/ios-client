@@ -28,6 +28,7 @@ class SubscriptionsUserCell: SubsItemCell, ListItemCellType {
             .text(profile.username, size: 15, weight: .semibold)
             .text("\n")
             .text(String(format: NSLocalizedString("%d followers", comment: ""), (profile.subscribersCount ?? 0)) + " • " + String(format: NSLocalizedString("%d posts", comment: ""), (profile.postsCount ?? 0)), size: 12, weight: .semibold, color: .a5a7bd)
+            .withParagraphStyle(lineSpacing: 3)
         contentLabel.attributedText = attributedText
 
         // followButton

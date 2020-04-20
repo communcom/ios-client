@@ -42,6 +42,7 @@ class SubscriptionsCommunityCell: SubsItemCell {
                 .text("\n")
                 .text("\(subscribersCount.kmFormatted) " +
                 String(format: NSLocalizedString("followers-count", comment: ""), subscribersCount) + " • " + "\(postsCount.kmFormatted) " + String(format: NSLocalizedString("post-count", comment: "")), size: 12, weight: .semibold, color: .a5a7bd)
+                .withParagraphStyle(lineSpacing: 3)
         }
         
         contentLabel.attributedText = attributedText
