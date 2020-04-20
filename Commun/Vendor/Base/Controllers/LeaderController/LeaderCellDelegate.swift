@@ -34,7 +34,12 @@ extension LeaderCellDelegate where Self: BaseViewController & HasLeadersVM {
                     }
                     
                     BlockchainManager.instance.toggleVoteLeader(leader: votedLeader!)
-                        .do(onSubscribe: {
+                        .do(onError: { (error) in
+                            var leader = leader
+                            leader.isVoted = false
+                            leader.isBeingVoted = false
+                            leader.notifyChanged()
+                        }, onSubscribe: {
                             var leader = leader
                             leader.isVoted = true
                             leader.isBeingVoted = true
