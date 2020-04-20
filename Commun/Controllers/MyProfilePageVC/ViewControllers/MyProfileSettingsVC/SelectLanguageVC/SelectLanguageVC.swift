@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SelectLanguageVC: BaseTableViewController {
+class SelectLanguageVC: BaseViewController {
     // MARK: - Subviews
     let closeButton = UIButton.close()
     
