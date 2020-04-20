@@ -68,6 +68,7 @@
 "cancel" = "cancel";
 "cannot use Back Camera" = "cannot use Back Camera";
 "change" = "change";
+"change to" = "change to";
 "change position" = "change position";
 "characters" = "characters";
 "check your Internet connection" = "check your Internet connection\n and try again";
@@ -139,6 +140,8 @@
 "enable" = "enable";
 "enable push notifications" = "enable push notifications";
 "end editing" = "end editing";
+"english language" = "english";
+"russian language" = "russian";
 "enter code" = "enter code";
 "enter passcode" = "enter passcode";
 "enter sms-code" = "enter SMS-code";
@@ -183,6 +186,7 @@
 "if someone is in immediate danger" = "if someone is in immediate danger, call local emergency services. Don't wait.";
 "income" = "income";
 "info" = "info";
+"interface language" = "interface language";
 "interesting first" = "interesting first";
 "invalid email address" = "invalid email address";
 "invite a friend and get 1 Commun" = "invite a friend and get 1 Commun when he signs up";
@@ -449,6 +453,7 @@
 "what does it mean?" = "what does it mean?";
 "what's new" = "what's new";
 "where you get" = "where you get";
+"would you like to change the application's language to" = "would you like to change the application's language to";
 "would you like to replace this content" = "would you like to replace this content";
 "wow, this post will be rewarded!" = "wow, this post will be rewarded!\nDo you want to get rewards too? Create a post - it’s the best way to get them!";
 "write a comment" = "write a comment";

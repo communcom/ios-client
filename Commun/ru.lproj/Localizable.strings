@@ -68,6 +68,7 @@
 "cancel" = "отмена";
 "cannot use Back Camera" = "не может использовать камеру";
 "change" = "изменить";
+"change to" = "сменить на";
 "change position" = "изменить положение";
 "characters" = "символы";
 "check your Internet connection" = "проверь свое интернет соединение \nи попробуй еще раз";
@@ -139,6 +140,8 @@
 "enable" = "включить";
 "enable push notifications" = "включить push-уведомления";
 "end editing" = "конец редактирования";
+"english language" = "английский язык";
+"russian language" = "русский язык";
 "enter code" = "введите код";
 "enter passcode" = "введите пин-код";
 "enter sms-code" = "введите код из SMS";
@@ -183,6 +186,7 @@
 "if someone is in immediate danger" = "если кто-то находится в непосредственной опасности, позвоните в местную аварийную службу. Не ждите.";
 "income" = "доход";
 "info" = "информация";
+"interface language" = "язык интерфейса";
 "interesting first" = "сначала интересные";
 "invalid email address" = "неправильный адрес электронной почты";
 "invite a friend and get 1 Commun" = "пригласите друга и получите 1 Commun, когда он зарегистрируется";
@@ -435,6 +439,7 @@
 "what does it mean?" = "что бы это значило?";
 "what's new" = "что нового";
 "where you get" = "ты получишь";
+"would you like to change the application's language to" = "хотите сменить язык интерфейса приложения на";
 "would you like to replace this content" = "хочешь заменить этот контент";
 "wow, this post will be rewarded!" = "Ух ты! Этот пост был награжден!\nХочешь тоже получать награды? Создать пост - это самый простой путь к успеху!";
 "write a comment" = "написать комментарий";
