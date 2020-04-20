@@ -52,6 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Prepare for localization
+        Bundle.swizzleLocalization()
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = splashVC
         window!.makeKeyAndVisible()

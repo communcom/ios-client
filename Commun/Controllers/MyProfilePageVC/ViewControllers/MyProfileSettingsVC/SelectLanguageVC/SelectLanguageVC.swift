@@ -87,6 +87,7 @@ class SelectLanguageVC: BaseViewController {
         
         tableView.rx.modelSelected(Language.self)
             .subscribe(onNext: { (language) in
+                if language.isSelected {return}
                 self.showActionSheet(
                     title: "would you like to change the application's language to".localized().uppercaseFirst + " " + (language.name + " language").localized().uppercaseFirst + "?",
                     actions: [
