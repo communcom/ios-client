@@ -59,9 +59,13 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
+        let gradient = UIImageView()
+        gradient.image = UIImage(named: "profile-gradient")
+        imageView.addSubview(gradient)
         imageView.image = .placeholder
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
+        gradient.autoPinEdgesToSuperviewEdges()
         return imageView
     }()
     
