@@ -48,7 +48,7 @@ class NotificationsSettingsVC: VerticalActionsVC, PNAlertViewDelegate {
         
         title = "notifications".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
-        closeButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         
         checkPNAuthorizationStatus()
     }

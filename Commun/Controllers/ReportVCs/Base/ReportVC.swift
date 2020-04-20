@@ -44,7 +44,7 @@ class ReportVC: VerticalActionsVC {
         
         title = "please select a reason".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
-        closeButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         
         let alertView = UIView(height: 62, backgroundColor: .white, cornerRadius: 10)
         scrollView.contentView.addSubview(alertView)
