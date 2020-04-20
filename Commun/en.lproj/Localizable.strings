@@ -139,6 +139,8 @@
 "enable" = "enable";
 "enable push notifications" = "enable push notifications";
 "end editing" = "end editing";
+"english language" = "english";
+"russian language" = "russian";
 "enter code" = "enter code";
 "enter passcode" = "enter passcode";
 "enter sms-code" = "enter SMS-code";

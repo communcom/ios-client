@@ -393,6 +393,7 @@
 		BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C423701441005EDAAD /* SubscribersVC.swift */; };
 		BCB4A4C72370188B005EDAAD /* SubscribersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */; };
 		BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */; };
+		BCB64760244D5A8800C94B84 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB6475F244D5A8800C94B84 /* LanguageCell.swift */; };
 		BCC2FAEA2418E72000A3DD87 /* BaseSignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAE92418E72000A3DD87 /* BaseSignUpVC.swift */; };
 		BCC2FAEC2418EA0800A3DD87 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */; };
 		BCC60E1623A0D02C00D40013 /* FeedPageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */; };
@@ -906,6 +907,7 @@
 		BCB4A4C423701441005EDAAD /* SubscribersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersVC.swift; sourceTree = "<group>"; };
 		BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersCell.swift; sourceTree = "<group>"; };
 		BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsViewController.swift; sourceTree = "<group>"; };
+		BCB6475F244D5A8800C94B84 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
 		BCC2FAE92418E72000A3DD87 /* BaseSignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSignUpVC.swift; sourceTree = "<group>"; };
 		BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageHeaderView.swift; sourceTree = "<group>"; };
@@ -1729,6 +1731,7 @@
 			isa = PBXGroup;
 			children = (
 				BC22BBD1236C213D00F40658 /* SelectLanguageVC.swift */,
+				BCB6475F244D5A8800C94B84 /* LanguageCell.swift */,
 			);
 			path = SelectLanguageVC;
 			sourceTree = "<group>";
@@ -3277,6 +3280,7 @@
 				57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */,
 				ACE812D624238215001D9AE2 /* FacebookLoginManager.swift in Sources */,
 				BCABF13D2366EA14006B05F5 /* ProfileHeaderView.swift in Sources */,
+				BCB64760244D5A8800C94B84 /* LanguageCell.swift in Sources */,
 				BCCC33EE23752C22004E46EF /* CommentsViewController.swift in Sources */,
 				BCCE0AA22367E60A00A183AA /* SubscriptionsViewModel.swift in Sources */,
 				BC7C8CBD23FF7AC70038DF5E /* WalletAddFriendCell.swift in Sources */,
