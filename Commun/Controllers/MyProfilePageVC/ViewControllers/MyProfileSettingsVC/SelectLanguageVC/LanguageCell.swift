@@ -20,6 +20,8 @@ class LanguageCell: MyTableViewCell {
     // MARK: - Methods
     override func setUpViews() {
         super.setUpViews()
+        selectionStyle = .none
+        
         let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         contentView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)

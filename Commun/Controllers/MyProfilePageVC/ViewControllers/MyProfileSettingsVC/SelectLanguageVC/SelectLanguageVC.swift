@@ -9,6 +9,7 @@
 import Foundation
 import RxDataSources
 import RxCocoa
+import Localize_Swift
 
 class SelectLanguageVC: BaseViewController {
     // MARK: - Nested type
@@ -22,8 +23,8 @@ class SelectLanguageVC: BaseViewController {
     
     // MARK: - Properties
     let supportedLanguages: [Language] = [
-        Language(code: "en-EN", name: "english", imageName: "american-flag"),
-        Language(code: "ru-RU", name: "russian", imageName: "russian-flag")
+        Language(code: "en", name: "english", imageName: "american-flag"),
+        Language(code: "ru", name: "russian", imageName: "russian-flag")
     ]
     
     // MARK: - Subviews
@@ -45,6 +46,14 @@ class SelectLanguageVC: BaseViewController {
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = .clear
+        
+        // get current language
+        let langs: [Language] = languages.value.map { lang in
+            var lang = lang
+            if lang.code == Localize.currentLanguage() {lang.isSelected = true}
+            return lang
+        }
+        languages.accept(langs)
     }
     
     override func bind() {
