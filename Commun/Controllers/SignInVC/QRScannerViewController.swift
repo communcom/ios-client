@@ -27,14 +27,16 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         scanQrArea.autoAlignAxis(toSuperviewAxis: .vertical)
         scanQrArea.autoAlignAxis(.horizontal, toSameAxisOf: view, withOffset: -50)
 
-        let scanQrTitle = UILabel.with(text: "scan QR".localized().uppercaseFirst, textSize: 30, weight: .bold, textColor: .appWhiteColor, textAlignment: .center)
+        let scanQrTitle = UILabel.with(text: "scan QR".localized().uppercaseFirst, textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
         view.addSubview(scanQrTitle)
         scanQrTitle.autoAlignAxis(toSuperviewAxis: .vertical)
         scanQrTitle.autoPinEdge(.top, to: .bottom, of: scanQrArea, withOffset: 65 * Config.heightRatio)
 
-        let gotoCommunTitle = UILabel.with(text: "go to commun.com and scan QR".localized().uppercaseFirst, textSize: 17, weight: .semibold, textColor: .appWhiteColor, textAlignment: .center)
+        let gotoCommunTitle = UILabel.with(text: "go to commun.com and scan QR".localized().uppercaseFirst, textSize: 17, weight: .semibold, textColor: .white, numberOfLines: 0, textAlignment: .center)
         view.addSubview(gotoCommunTitle)
         gotoCommunTitle.autoAlignAxis(toSuperviewAxis: .vertical)
+        gotoCommunTitle.autoPinEdge(toSuperviewEdge: .left, withInset: 15)
+        gotoCommunTitle.autoPinEdge(toSuperviewEdge: .right, withInset: 15)
         gotoCommunTitle.autoPinEdge(.top, to: .bottom, of: scanQrTitle, withOffset: 16)
     }
 

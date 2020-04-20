@@ -14,7 +14,7 @@ class WalletConvertVC: BaseViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .appWhiteColor)}
     override var shouldHideTabBar: Bool {true}
-    
+
     // MARK: - Properties
     let viewModel = WalletConvertViewModel()
     var currentSymbol: String?
@@ -96,11 +96,15 @@ class WalletConvertVC: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.setNavBarBackButton(tintColor: .white)
+    }
+
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        
-        setLeftNavBarButtonForGoingBack(tintColor: .white)
         
         // backgroundColor
         let topView = UIView(backgroundColor: topColor)

@@ -118,30 +118,18 @@ final class BaseNavigationController: UINavigationController {
     
 }
 
-// MARK: - UINavigationControllerDelegate
+// MARK: - UIGestureRecognizerDelegate
 
-//extension BaseNavigationController: UINavigationControllerDelegate {
-//    
-//    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-//        guard let swipeNavigationController = navigationController as? BaseNavigationController else { return }
-//        
-//        swipeNavigationController.duringPushAnimation = false
-//    }
-//    
-//}
-//
-//// MARK: - UIGestureRecognizerDelegate
-//
-//extension BaseNavigationController: UIGestureRecognizerDelegate {
-//    
-//    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        guard gestureRecognizer == interactivePopGestureRecognizer else {
-//            return true // default value
-//        }
-//        
-//        // Disable pop gesture in two situations:
-//        // 1) when the pop animation is in progress
-//        // 2) when user swipes quickly a couple of times and animations don't have time to be performed
-//        return viewControllers.count > 1 && duringPushAnimation == false
-//    }
-//}
+extension BaseNavigationController: UIGestureRecognizerDelegate {
+
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard gestureRecognizer == interactivePopGestureRecognizer else {
+            return true // default value
+        }
+
+        // Disable pop gesture in two situations:
+        // 1) when the pop animation is in progress
+        // 2) when user swipes quickly a couple of times and animations don't have time to be performed
+        return viewControllers.count > 1 && duringPushAnimation == false
+    }
+}

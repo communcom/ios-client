@@ -74,6 +74,7 @@ class SetPasscodeVC: THPinViewController {
             currentPin = Config.currentUser?.passcode
         }
         view.tintColor = .appBlackColor
+
         modifyPromtTitle(asError: false)
     }
 

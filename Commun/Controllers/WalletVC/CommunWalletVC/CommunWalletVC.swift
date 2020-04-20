@@ -74,7 +74,7 @@ class CommunWalletVC: TransferHistoryVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.setNavBarBackButton(tintColor: .appWhiteColor)
+        self.setNavBarBackButton(tintColor: .white)
     }
     
     // MARK: - Custom Functions

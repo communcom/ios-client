@@ -47,7 +47,7 @@ def common_pods_commun
   
   pod 'ASSpinnerView'
   
-  pod 'ListPlaceholder'
+  pod 'ListPlaceholder', :git => "https://github.com/communcom/ListPlaceholder.git"
   
   pod 'QRCodeReaderViewController', '~> 4.0.2'
   

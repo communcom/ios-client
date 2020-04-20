@@ -182,7 +182,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
                 if newCount > 0 {
                     text.text("•", size: 20, color: .appMainColor)
                         .normal(" ")
-                        .text(String(format: "%i %@ %@", newCount, "new".localized().uppercaseFirst, "notifications".localized()), size: 12, color: .appGrayColor)
+                        .text(String(format: "%@ %@", String(format: NSLocalizedString("%d new", comment: ""), newCount), "notifications".localized()), size: 12, color: .appGrayColor)
                 }
                 self.newNotificationsCountLabel.attributedText = text
             })
