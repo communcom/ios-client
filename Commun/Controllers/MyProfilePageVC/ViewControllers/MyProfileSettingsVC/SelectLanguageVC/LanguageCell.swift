@@ -38,7 +38,7 @@ class LanguageCell: MyTableViewCell {
             .text(language.name.uppercaseFirst, size: 15, weight: .semibold)
             .text("\n")
             .text(localizedName, size: 12, weight: .medium, color: .a5a7bd)
-            .withParagraphSpacing(3)
+            .withParagraphStyle(lineSpacing: 3)
         checkMark.isHidden = !language.isSelected
     }
 }
