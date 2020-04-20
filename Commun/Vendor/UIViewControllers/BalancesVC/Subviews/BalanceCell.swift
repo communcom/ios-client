@@ -54,7 +54,7 @@ class BalanceCell: MyTableViewCell, ListItemCellType {
             .text("\n")
         if item.frozen != nil {
             firstText = firstText.text("\(item.frozenValue.currencyValueFormatted) " + String(format: "%@ %@", "on".localized().uppercaseFirst, "hold".localized()), size: 12, weight: .semibold, color: .a5a7bd)
-                .withParagraphSpacing(20)
+                .withParagraphStyle(minimumLineHeight: 20)
             firstLabel.numberOfLines = 2
         } else {
             firstLabel.numberOfLines = 1
