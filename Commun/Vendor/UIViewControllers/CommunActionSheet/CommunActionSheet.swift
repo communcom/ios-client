@@ -79,20 +79,6 @@ class CommunActionSheet: SwipeDownDismissViewController {
 
     var titleFont: UIFont = .boldSystemFont(ofSize: 20)
     var textAlignment: NSTextAlignment = .center
-
-    var height: CGFloat {
-        guard let actions = actions, actions.count > 0 else {return 0}
-        
-        let buttonsHeight = actions.reduce(0) { (result, action) -> CGFloat in
-            result + action.style.actionViewSeparatorSpace + action.style.actionViewHeight
-        }
-        
-        return actions.first!.style.defaultMargin
-            + headerHeight
-            + headerToButtonsSpace
-            + buttonsHeight
-            + (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
-    }
     
     // MARK: - Subviews
     var headerView: UIView?
@@ -123,6 +109,8 @@ class CommunActionSheet: SwipeDownDismissViewController {
     // MARK: - Initializer
     init() {
         super.init(nibName: nil, bundle: nil)
+        transitioningDelegate = self
+        modalPresentationStyle = .custom
     }
     
     required init?(coder: NSCoder) {
@@ -137,7 +125,6 @@ class CommunActionSheet: SwipeDownDismissViewController {
         
         // Setup view
         view.backgroundColor = backgroundColor
-        view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         
         // header view
         configHeaderView()
@@ -191,6 +178,9 @@ class CommunActionSheet: SwipeDownDismissViewController {
             actionView.autoSetDimension(.height, toSize: action.style.actionViewHeight)
             actionView.autoPinEdge(toSuperviewEdge: .leading, withInset: action.style.defaultMargin)
             actionView.autoPinEdge(toSuperviewEdge: .trailing, withInset: action.style.defaultMargin)
+            if index == actions.count - 1 {
+                actionView.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16)
+            }
             
             // icon
             let iconImageView = UIImageView(forAutoLayout: ())

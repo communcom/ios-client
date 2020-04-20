@@ -68,8 +68,6 @@ extension UIViewController {
         actionSheet.titleFont = titleFont
         actionSheet.textAlignment = titleAlignment
         
-        actionSheet.modalPresentationStyle = .custom
-        actionSheet.transitioningDelegate = actionSheet
         present(actionSheet, animated: true, completion: completion)
     }
     

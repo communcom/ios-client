@@ -8,10 +8,10 @@
 
 import UIKit
 
-let inset: CGFloat = .adaptive(width: 20.0)
-let titles: [CGFloat] = [1000, 10000, 100000, 1000000]
-
 class CMToolbarView: UIView {
+    static let inset: CGFloat = .adaptive(width: 20.0)
+    static let titles: [CGFloat] = [1000, 10000, 100000, 1000000]
+    
     // MARK: - Properties
     var addCompletion: ((CGFloat) -> Void)?
     
@@ -80,7 +80,7 @@ class CMToolbarView: UIView {
         
         scrollView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
-        stackView.widthAnchor.constraint(greaterThanOrEqualTo: scrollView.widthAnchor, constant: -inset * 2).isActive = true
+        stackView.widthAnchor.constraint(greaterThanOrEqualTo: scrollView.widthAnchor, constant: -CMToolbarView.inset * 2).isActive = true
 
         addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: .adaptive(height: 10.0),
@@ -105,6 +105,6 @@ class CMToolbarView: UIView {
     
     // MARK: - Actions
     @objc func selectPointTapped(_ sender: UIButton) {
-        addCompletion!(titles[sender.tag])
+        addCompletion!(CMToolbarView.titles[sender.tag])
     }
 }
