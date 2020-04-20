@@ -21,7 +21,7 @@ class CommunityLeaderFollowCell: MyTableViewCell {
     // MARK: - Methods
     override func setUpViews() {
         super.setUpViews()
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .appWhiteColor
         
         let stackView: UIStackView = {
             let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
@@ -50,7 +50,7 @@ class CommunityLeaderFollowCell: MyTableViewCell {
         let attributedText = NSMutableAttributedString()
             .text(leader.username, size: 15, weight: .semibold)
             .text("\n")
-            .text(leader.rating.kmFormatted() + " " + "points".localized().uppercaseFirst + " • ", size: 12, weight: .medium, color: .a5a7bd)
+            .text(leader.rating.kmFormatted() + " " + "points".localized().uppercaseFirst + " • ", size: 12, weight: .medium, color: .appGrayColor)
             .text("\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)%", size: 12, weight: .medium, color: .appMainColor)
         
         // point
@@ -58,8 +58,8 @@ class CommunityLeaderFollowCell: MyTableViewCell {
         
         // voteButton
         let followed = leader.isSubscribed ?? false
-        followButton.backgroundColor = followed ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
-        followButton.setTitleColor(followed ? .appMainColor: .white, for: .normal)
+        followButton.backgroundColor = followed ? .appLightGrayColor: .appMainColor
+        followButton.setTitleColor(followed ? .appMainColor: .appWhiteColor, for: .normal)
         followButton.setTitle(followed ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
         followButton.isEnabled = !(leader.isBeingToggledFollow ?? false)
     }

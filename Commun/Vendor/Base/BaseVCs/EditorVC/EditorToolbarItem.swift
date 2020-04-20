@@ -61,7 +61,7 @@ struct EditorToolbarItem: Equatable {
             name: "setColor",
             icon: "--missing--",
             iconSize: .zero,
-            other: UIColor.black)
+            other: UIColor.appBlackColor)
     }
     
     static var addLink: EditorToolbarItem {

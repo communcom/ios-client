@@ -101,7 +101,7 @@ extension ResponseAPIGetNotificationItem {
             case "upvote":
                 aStr.semibold(voter?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("liked".localized() + " " + "your \(entityType ?? "post")".localized())
+                    .normal("liked".localized() + " " + "your".localized() + (entityType ?? "post").localized())
                     .normal(": \"")
                     .normal((comment?.shortText ?? post?.shortText ?? "") + "...\"")
 

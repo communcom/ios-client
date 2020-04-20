@@ -41,13 +41,13 @@ class MyProfileEditCoverVC: BaseViewController {
             .isActive = true
         
         let dragToMoveTipView: UIView = {
-            let view = UIView(backgroundColor: UIColor.black.withAlphaComponent(0.2), cornerRadius: 4)
+            let view = UIView(backgroundColor: UIColor.appBlackColor.withAlphaComponent(0.2), cornerRadius: 4)
             let imageView = UIImageView(width: 16, height: 16, imageNamed: "ProfilePageCoverDragIcon")
             view.addSubview(imageView)
             imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 12)
             imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
             
-            let label = UILabel.with(text: "drag to move cover photo".localized().uppercaseFirst, textSize: 15, textColor: .white)
+            let label = UILabel.with(text: "drag to move cover photo".localized().uppercaseFirst, textSize: 15, textColor: .appWhiteColor)
             view.addSubview(label)
             label.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 12), excludingEdge: .leading)
             label.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 6)
@@ -69,7 +69,7 @@ class MyProfileEditCoverVC: BaseViewController {
         userNameLabel.autoPinEdge(.top, to: .top, of: avatarImageView)
         userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         
-        let joinDateLabel = UILabel.with(text: Formatter.joinedText(with: joinedDateString), textSize: 12, weight: .semibold, textColor: .a5a7bd)
+        let joinDateLabel = UILabel.with(text: Formatter.joinedText(with: joinedDateString), textSize: 12, weight: .semibold, textColor: .appGrayColor)
         view.addSubview(joinDateLabel)
         joinDateLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 4)
         joinDateLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)

@@ -109,8 +109,6 @@ extension UIViewController {
         hud.mode = MBProgressHUDMode.indeterminate
         hud.isUserInteractionEnabled = true
         hud.label.text = message
-        hud.backgroundColor = UIColor(white: 0, alpha: 0.2)
-
     }
     
     func showDone(_ message: String, completion: (() -> Void)? = nil) {
@@ -124,7 +122,7 @@ extension UIViewController {
         hud.mode = .customView
         let image = UIImage(named: "checkmark-large")
         let imageView = UIImageView(image: image)
-        imageView.tintColor = .black
+        imageView.tintColor = .appBlackColor
         hud.customView = imageView
         hud.label.text = message.localized()
         hud.hide(animated: true, afterDelay: 1)
@@ -355,17 +353,17 @@ extension UIViewController {
         }
     }
     
-    func setLeftNavBarButtonForGoingBack(tintColor: UIColor = .black) {
+    func setLeftNavBarButtonForGoingBack(tintColor: UIColor = .appBlackColor) {
         setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: tintColor, action: #selector(back))
     }
     
-    func setLeftBarButton(imageName: String, tintColor: UIColor = .black, action: Selector?) {
+    func setLeftBarButton(imageName: String, tintColor: UIColor = .appBlackColor, action: Selector?) {
         let backButton = UIBarButtonItem(image: UIImage(named: imageName), style: .plain, target: self, action: action)
         backButton.tintColor = tintColor
         navigationItem.leftBarButtonItem = backButton
     }
 
-    func setRightBarButton(imageName: String, tintColor: UIColor = .black, action: Selector?) {
+    func setRightBarButton(imageName: String, tintColor: UIColor = .appBlackColor, action: Selector?) {
         let backButton = UIBarButtonItem(image: UIImage(named: imageName), style: .plain, target: self, action: action)
         backButton.tintColor = tintColor
         navigationItem.rightBarButtonItem = backButton
@@ -393,7 +391,7 @@ extension UIViewController {
         navigationItem.rightBarButtonItem = rightBarButton
     }
     
-    func setNavBarBackButton(title: String? = nil, tintColor: UIColor = .black) {
+    func setNavBarBackButton(title: String? = nil, tintColor: UIColor = .appBlackColor) {
         let newBackButton = title == nil ?  UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(popToPreviousVC)) :
                                             UIBarButtonItem(title: title!.localized().uppercaseFirst, style: .plain, target: self, action: #selector(popToPreviousVC))
         

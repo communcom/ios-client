@@ -11,7 +11,6 @@ import RxSwift
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
-    
     // MARK: - Constants
     let coverHeight: CGFloat = 200
     let coverVisibleHeight: CGFloat = 150
@@ -52,7 +51,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         view.backgroundColor = .clear
         let gradient = CAGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: coverHeight)
-        gradient.colors = [UIColor.black.withAlphaComponent(0.2).cgColor, UIColor.clear.cgColor]
+        gradient.colors = [UIColor.appBlackColor.withAlphaComponent(0.2).cgColor, UIColor.clear.cgColor]
         gradient.locations = [0.0, 0.5]
         view.layer.insertSublayer(gradient, at: 0)
         return view
@@ -93,7 +92,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     override func setUp() {
         super.setUp()
 
-        view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
+        view.backgroundColor = .appLightGrayColor
         view.addSubview(customNavigationBar)
         customNavigationBar.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
@@ -223,11 +222,11 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         
         coverImageView.isHidden = showNavigationBar
         
-        customNavigationBar.backgroundColor = showNavigationBar ? .white : .clear
+        customNavigationBar.backgroundColor = showNavigationBar ? .appWhiteColor : .clear
         customNavigationBar.addShadow(ofColor: .shadow, radius: showNavigationBar ? CGFloat.adaptive(width: 16.0) : 0, offset: CGSize(width: 0.0, height: showNavigationBar ? CGFloat.adaptive(height: 6.0) : 0), opacity: showNavigationBar ? 0.05 : 0)
-        backButton.tintColor = showNavigationBar ? .black: .white
-        titleLabel.textColor = showNavigationBar ? .black: .clear
-        optionsButton.tintColor = showNavigationBar ? .black: .white
+        backButton.tintColor = showNavigationBar ? .appBlackColor: .white
+        titleLabel.textColor = showNavigationBar ? .appBlackColor: .clear
+        optionsButton.tintColor = showNavigationBar ? .appBlackColor: .white
         
         if showNavigationBar {
             optionsButton.layer.shadowOpacity = 0

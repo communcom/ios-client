@@ -19,7 +19,7 @@ class PostsFilterVC: BaseViewController {
     
     // MARK: - Subview
     lazy var closeButton = UIButton.close(size: 30.0)
-    lazy var backButton = UIButton.circle(size: 30.0, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
+    lazy var backButton = UIButton.circle(size: 30.0, backgroundColor: .appLightGrayColor, tintColor: .appGrayColor, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
     
     lazy var tableView = UITableView(forAutoLayout: ())
     lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst)
@@ -40,7 +40,7 @@ class PostsFilterVC: BaseViewController {
     override func setUp() {
         super.setUp()
         
-        view.backgroundColor = .f7f7f9
+        view.backgroundColor = .appLightGrayColor
         title = "sort by".localized().uppercaseFirst
 
         setRightNavBarButton(with: closeButton)

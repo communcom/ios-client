@@ -27,14 +27,14 @@ class ForceUpdateView: ErrorView {
     
     override func commonInit() {
         super.commonInit()
-        backgroundColor = #colorLiteral(red: 0.4485301971, green: 0.529779315, blue: 0.9566615224, alpha: 1)
-        title.textColor = .white
+        backgroundColor = .appMainColor
+        title.textColor = .appWhiteColor
         
-        subtitle.textColor = .white
+        subtitle.textColor = .appWhiteColor
         subtitle.font = .systemFont(ofSize: 15 * Config.heightRatio)
         
         retryButton.setTitleColor(.appMainColor, for: .normal)
-        retryButton.backgroundColor = .white
+        retryButton.backgroundColor = .appWhiteColor
     }
     
     override func layoutTitle() {

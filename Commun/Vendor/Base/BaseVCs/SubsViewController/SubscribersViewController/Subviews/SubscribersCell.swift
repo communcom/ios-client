@@ -27,7 +27,7 @@ class SubscribersCell: SubsItemCell, ListItemCellType {
         let attributedText = NSMutableAttributedString()
             .text(profile.username, size: 15, weight: .semibold)
             .text("\n")
-            .text(String(format: NSLocalizedString("%d followers", comment: ""), (profile.subscribersCount ?? 0)) + " • " + String(format: NSLocalizedString("%d posts", comment: ""), (profile.postsCount ?? 0)), size: 12, weight: .semibold, color: .a5a7bd)
+            .text(String(format: NSLocalizedString("%d followers", comment: ""), (profile.subscribersCount ?? 0)) + " • " + String(format: NSLocalizedString("%d posts", comment: ""), (profile.postsCount ?? 0)), size: 12, weight: .semibold, color: .appGrayColor)
             .withParagraphStyle(lineSpacing: 3)
         
         contentLabel.attributedText = attributedText
@@ -35,8 +35,8 @@ class SubscribersCell: SubsItemCell, ListItemCellType {
         // followButton
         let isFollowing = profile.isSubscribed ?? false
 
-        followButton.backgroundColor = isFollowing ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
-        followButton.setTitleColor(isFollowing ? .appMainColor: .white, for: .normal)
+        followButton.backgroundColor = isFollowing ? .appLightGrayColor : .appMainColor
+        followButton.setTitleColor(isFollowing ? .appMainColor: .appWhiteColor, for: .normal)
         followButton.setTitle(isFollowing ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
         followButton.isEnabled = !(profile.isBeingToggledFollow ?? false)
 

@@ -14,7 +14,7 @@ class SubsItemCell: MyTableViewCell {
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     lazy var contentLabel = UILabel.with(numberOfLines: 0)
     lazy var actionButton = CommunButton.default()
-    lazy var separator = UIView(height: 2, backgroundColor: .f3f5fa)
+    lazy var separator = UIView(height: 2, backgroundColor: .appLightGrayColor)
     
     override var roundedCorner: UIRectCorner {
         didSet {
@@ -29,7 +29,7 @@ class SubsItemCell: MyTableViewCell {
     
     override func setUpViews() {
         super.setUpViews()
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
         selectionStyle = .none
         
         contentView.addSubview(stackView)

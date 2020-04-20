@@ -27,7 +27,7 @@ extension ContentTextView {
 
 //        textStyle = textStyle.setting(textColor: text.isEmpty ? #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1) : #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
         
-        if let color = attrs[.foregroundColor] as? UIColor, color != .black {
+        if let color = attrs[.foregroundColor] as? UIColor, color != .appBlackColor {
             textStyle = textStyle.setting(textColor: color)
         }
         

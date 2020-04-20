@@ -15,7 +15,7 @@ class LanguageCell: MyTableViewCell {
     lazy var flagImageView = UIImageView(width: 35, height: 35, cornerRadius: 17.5)
     lazy var nameLabel = UILabel.with(numberOfLines: 0)
     lazy var checkMark = UIImageView(width: 20, height: 20, cornerRadius: 10, imageNamed: "round-checkmark")
-    lazy var separator = UIView(height: 1, backgroundColor: .f3f5fa)
+    lazy var separator = UIView(height: 1, backgroundColor: .appLightGrayColor)
     
     // MARK: - Methods
     override func setUpViews() {
@@ -39,7 +39,7 @@ class LanguageCell: MyTableViewCell {
         nameLabel.attributedText = NSMutableAttributedString()
             .text(language.name.uppercaseFirst, size: 15, weight: .semibold)
             .text("\n")
-            .text(localizedName, size: 12, weight: .medium, color: .a5a7bd)
+            .text(localizedName, size: 12, weight: .medium, color: .appGrayColor)
             .withParagraphStyle(lineSpacing: 3)
         checkMark.isHidden = !language.isSelected
     }

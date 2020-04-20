@@ -65,7 +65,7 @@ extension UIView {
     
     func showLoading(
         cover: Bool = true,
-        coverColor: UIColor = .white,
+        coverColor: UIColor = .appWhiteColor,
         spinnerColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1),
         size: CGFloat? = nil,
         spinerLineWidth: CGFloat? = nil,

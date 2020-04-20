@@ -58,7 +58,7 @@ extension MyProfilePageVC {
                 case .loading(let isLoading):
                     if isLoading {
                         (self?.headerView as? MyProfileHeaderView)?.setUpWalletView()
-                        walletView.showLoading(cover: false, spinnerColor: .white, size: 20, centerYOffset: 10)
+                        walletView.showLoading(cover: false, spinnerColor: .appWhiteColor, size: 20, centerYOffset: 10)
                     } else {
                         walletView.hideLoading()
                     }

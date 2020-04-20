@@ -12,7 +12,7 @@ class FilterCell: MyTableViewCell {
     // MARK: - Properties
     lazy var titleLabel = UILabel.with(textSize: 15.0, weight: .semibold)
     lazy var checkBox = CMCheckbox(width: 24.0, height: 24.0, cornerRadius: 6.0)
-    lazy var separator = UIView(height: 2.0, backgroundColor: .f7f7f9)
+    lazy var separator = UIView(height: 2.0, backgroundColor: .appLightGrayColor)
     
     // MARK: - Custom Functions
     override var roundedCorner: UIRectCorner {

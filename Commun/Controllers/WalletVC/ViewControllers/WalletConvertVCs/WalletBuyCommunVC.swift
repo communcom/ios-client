@@ -19,7 +19,7 @@ class WalletBuyCommunVC: WalletConvertVC {
         buyLogoImageView.image = UIImage(named: "tux")
         convertBuyLabel.text = "buy".localized().uppercaseFirst + " Commun"
         
-        setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(pointsListButtonDidTouch))
+        setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .appWhiteColor, action: #selector(pointsListButtonDidTouch))
 
         walletCarouselWrapper.scrollingHandler = { index in
             self.currentBalance = self.viewModel.items.value[safe: index + 1]

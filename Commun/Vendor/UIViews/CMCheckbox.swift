@@ -40,9 +40,9 @@ class CMCheckbox: UIButton {
                 tintColor = .clear
                 imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 7, right: 5)
             } else {
-                backgroundColor = .white
+                backgroundColor = .appWhiteColor
                 borderWidth = 1
-                borderColor = notShowOffCheckbox ? .clear : .e2e6e8
+                borderColor = notShowOffCheckbox ? .clear : .appLightGrayColor
                 setImage(nil, for: .normal)
                 imageEdgeInsets = UIEdgeInsets.zero
             }

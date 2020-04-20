@@ -65,7 +65,7 @@ extension PostCellDelegate where Self: BaseViewController {
         if post.author?.userId != Config.currentUser?.id {
             actions.append(CommunActionSheet.Action(title: "send report".localized().uppercaseFirst,
                                                     icon: UIImage(named: "report"),
-                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    tintColor: .appRedColor,
                                                     handle: { self.reportPost(post) }))
         } else {
             actions.append(CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
@@ -80,7 +80,7 @@ extension PostCellDelegate where Self: BaseViewController {
         if post.author?.userId == Config.currentUser?.id {
             actions.append(CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
                                                     icon: UIImage(named: "delete"),
-                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    tintColor: .appRedColor,
                                                     handle: { self.deletePost(post) }))
         }
 

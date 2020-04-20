@@ -10,7 +10,7 @@ import Foundation
 
 extension UISearchController {
     static func `default`(
-        placeholder: String = "search placeholder".localized().uppercaseFirst
+        placeholder: String = "search".localized().uppercaseFirst
     ) -> UISearchController {
         let sc = UISearchController(searchResultsController: nil)
         sc.searchBar.searchBarStyle = .minimal
@@ -19,7 +19,7 @@ extension UISearchController {
         return sc
     }
     
-    func setStyle(placeholder: String = "search placeholder".localized().uppercaseFirst) {
+    func setStyle(placeholder: String = "search".localized().uppercaseFirst) {
         hidesNavigationBarDuringPresentation = false
         obscuresBackgroundDuringPresentation = false
         
@@ -36,11 +36,10 @@ extension UISearchController {
 
         // Not work in ios 12
 //        // change bg color
-//        searchTextField.backgroundColor = .appLightGrayColor
-//
+        searchTextField.backgroundColor = .appLightGrayColor
 //        // remove top tinted black view
-//        let backgroundView = searchTextField.subviews.first
-//        backgroundView?.subviews.forEach({ $0.removeFromSuperview() })
+        let backgroundView = searchTextField.subviews.first
+        backgroundView?.subviews.forEach({ $0.removeFromSuperview() })
         
         // support ios 12
         for subView in searchBar.subviews

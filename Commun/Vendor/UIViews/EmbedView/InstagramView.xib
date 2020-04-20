@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -59,7 +59,7 @@
                                     </constraints>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="hUc-oE-Vt1" firstAttribute="centerY" secondItem="yDu-pQ-Inx" secondAttribute="centerY" id="66V-HH-TIG"/>
                                 <constraint firstItem="hUc-oE-Vt1" firstAttribute="leading" secondItem="yDu-pQ-Inx" secondAttribute="trailing" constant="10" id="Yag-8F-mv6"/>
@@ -75,7 +75,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="qQU-AR-KgX" firstAttribute="top" secondItem="fKE-29-nNq" secondAttribute="top" id="58X-ck-EOa"/>
                         <constraint firstItem="M2L-BF-gIS" firstAttribute="top" secondItem="qQU-AR-KgX" secondAttribute="bottom" constant="15" placeholder="YES" id="HGM-6M-MFg"/>
@@ -96,7 +96,7 @@
                     </variation>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="fKE-29-nNq" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="I2T-LB-dAj"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="fKE-29-nNq" secondAttribute="trailing" constant="15" id="hZ8-Ur-CSf"/>

@@ -23,11 +23,12 @@ class MyProfileEditBioVC: EditorVC {
         textView.textContainer.lineFragmentPadding = 0
         textView.placeholder = "enter text".localized().uppercaseFirst + "..."
         textView.keyboardDismissMode = .onDrag
+        textView.backgroundColor = .clear
         
         return textView
     }()
     
-    lazy var textViewCharactersCountLabel = UILabel.with(text: "0", textSize: 15, weight: .semibold, textColor: .white)
+    lazy var textViewCharactersCountLabel = UILabel.with(text: "0", textSize: 15, weight: .semibold, textColor: .appWhiteColor)
     
     // MARK: - Methods
     override func setUp() {
@@ -42,7 +43,7 @@ class MyProfileEditBioVC: EditorVC {
         actionButton.isDisabled = true
         
         // charactersCountLabel
-        let charactersCountContainerView = UIView(height: 35, backgroundColor: .black, cornerRadius: 35/2)
+        let charactersCountContainerView = UIView(height: 35, backgroundColor: .appBlackColor, cornerRadius: 35/2)
         toolbar.addSubview(charactersCountContainerView)
         charactersCountContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         charactersCountContainerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
@@ -51,7 +52,7 @@ class MyProfileEditBioVC: EditorVC {
         textViewCharactersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
         textViewCharactersCountLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        let limitLabel = UILabel.with(text: "/\(bioLimit)", textSize: 15, weight: .semibold, textColor: #colorLiteral(red: 0.6874092221, green: 0.693797946, blue: 0.7710194588, alpha: 1))
+        let limitLabel = UILabel.with(text: "/\(bioLimit)", textSize: 15, weight: .semibold, textColor: .appGrayColor)
         charactersCountContainerView.addSubview(limitLabel)
         limitLabel.autoPinEdge(.leading, to: .trailing, of: textViewCharactersCountLabel)
         limitLabel.autoAlignAxis(toSuperviewAxis: .horizontal)

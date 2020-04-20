@@ -60,7 +60,7 @@ class CommunButton: UIButton {
     }
     
     func setHightLight(_ isHighlighted: Bool, highlightedLabel: String, unHighlightedLabel: String) {
-        backgroundColor = isHighlighted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
+        backgroundColor = isHighlighted ? .appLightGrayColor : .appMainColor
         setTitleColor(isHighlighted ? .appMainColor: .white, for: .normal)
         setTitle((isHighlighted ? highlightedLabel : unHighlightedLabel).localized().uppercaseFirst, for: .normal)
     }

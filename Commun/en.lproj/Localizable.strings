@@ -1,3 +1,10 @@
+"get your first points" = "get your first points";
+"view in Explorer" = "view in Explorer";
+"all time" = "all time";
+"hot" = "hot";
+"popular" = "popular";
+"your" = "your";
+"comment" = "comment";
 "of your identity" = "of your identity";
 "lowercase" = "lowercase";
 "uppercase" = "uppercase";
@@ -226,7 +233,7 @@
 "modal view top state button title" = "learn more about reward";
 "modal view top state note" = "after a given time, it will get the reward";
 "modal view top state title" = "this post is featured in Top";
-"modal view user button title" = "understood";
+"modal view user button title" = "Understand";
 "modal view user note" = "";
 "modal view user title" = "username must be";
 "more" = "more";
@@ -348,7 +355,7 @@
 "save post as draft" = "save post as draft";
 "save to iCloud" = "save to iCloud";
 "scan QR" = "scan QR";
-"search placeholder" = "search";
+"search" = "search";
 "see" = "see";
 "select a link to add to text" = "select a link to add to text";
 "select country placeholder" = "select country";
@@ -379,7 +386,7 @@
 "sort by" = "sort by";
 "start and get 30 points" = "start and get 30 points";
 "subscribe" = "subscribe";
-"subscribe to at least 3 communities" = "subscribe to at least 3 communities and get your first Community Points";
+"subscribe to at least 3 communities and get your first Community Points" = "subscribe to at least 3 communities and get your first Community Points";
 "successfully resent code" = "successfully resent code";
 "subscribe to your"                             =   "subscribe to your";
 "subscribed you"                                =   "subscribed you";

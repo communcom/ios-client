@@ -18,11 +18,11 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-    lazy var containerView = UIView(backgroundColor: .white)
+    lazy var containerView = UIView(backgroundColor: .appWhiteColor)
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     lazy var iconImageView: UIImageView = {
         let imageView = UIImageView(width: 22, height: 22, cornerRadius: 11)
-        imageView.borderColor = .white
+        imageView.borderColor = .appWhiteColor
         imageView.borderWidth = 2
         return imageView
     }()
@@ -71,7 +71,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 avatarUrl = item.sender.avatarUrl
                 username = item.sender.username ?? item.sender.userId
                 memo = NSMutableAttributedString()
-                    .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                    .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .appGreenColor)
             }
             
             avatarImageView.setAvatar(urlString: avatarUrl)
@@ -83,13 +83,13 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             username = "refill".localized().uppercaseFirst
             if item.meta.transferType == "token" {
                 memo = NSMutableAttributedString()
-                    .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                    .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .appGreenColor)
                 iconImageView.isHidden = false
                 avatarImageView.setAvatar(urlString: item.point.logo)
                 iconImageView.image = UIImage(named: "tux")
             } else {
                 memo = NSMutableAttributedString()
-                    .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) Commun", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                    .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) Commun", font: .systemFont(ofSize: 15, weight: .semibold), color: .appGreenColor)
                 iconImageView.isHidden = false
                 iconImageView.sd_setImage(with: URL(string: item.point.logo ?? ""), placeholderImage: UIImage(color: .appMainColor))
                 avatarImageView.image = UIImage(named: "tux")
@@ -97,35 +97,35 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         case "reward":
             username = item.point.name ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .appGreenColor)
             
             avatarImageView.setAvatar(urlString: item.point.logo)
             iconImageView.isHidden = true
         case "hold":
             username = item.meta.holdType?.localized().uppercaseFirst ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
             
             avatarImageView.image = UIImage(named: "wallet-like")
             iconImageView.isHidden = true
         case "unhold":
             username = item.point.name ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .appGreenColor)
             
             avatarImageView.setAvatar(urlString: item.point.logo)
             iconImageView.isHidden = true
         case "referralRegisterBonus":
             username = item.sender.username ?? item.sender.userId
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
             avatarImageView.image = UIImage(named: "notifications-page-referral")
             iconImageView.isHidden = false
             iconImageView.image = UIImage(named: "tux")
         case "referralPurchaseBonus":
             username = item.sender.username ?? item.sender.userId
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
             avatarImageView.image = UIImage(named: "notifications-page-referral")
             iconImageView.isHidden = false
             iconImageView.image = UIImage(named: "tux")
@@ -144,20 +144,20 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             
         if item.meta.actionType == "referralRegisterBonus" {
             content
-                .semibold("you received a referral bonus for the registration of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold("you received a referral bonus for the registration of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
                 .semibold(" ")
                 .semibold(item.referral?.username ?? item.referral?.userId ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appMainColor)
         } else if item.meta.actionType == "referralPurchaseBonus" {
             content
-                .semibold("you received a referral bounty - 5% of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold("you received a referral bounty - 5% of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
                 .semibold(" ")
                 .semibold(item.referral?.username ?? item.referral?.userId ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appMainColor)
-                .semibold("'s", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold("'s", font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
                 .semibold(" ")
-                .semibold("purchase".localized(), font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold("purchase".localized(), font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
         } else {
             content
-                .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
         }
     
         contentLabel.attributedText = content
@@ -167,7 +167,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         amountStatusLabel.attributedText =
             NSMutableAttributedString(attributedString: memo)
                 .normal("\n")
-                .semibold(dateString, font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+                .semibold(dateString, font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
     }
     
     override func roundCorners() {

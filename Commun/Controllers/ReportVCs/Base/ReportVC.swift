@@ -46,7 +46,7 @@ class ReportVC: VerticalActionsVC {
         setRightNavBarButton(with: closeButton)
         closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         
-        let alertView = UIView(height: 62, backgroundColor: .white, cornerRadius: 10)
+        let alertView = UIView(height: 62, backgroundColor: .appWhiteColor, cornerRadius: 10)
         scrollView.contentView.addSubview(alertView)
         alertView.autoPinEdge(.top, to: .bottom, of: stackView, withOffset: 20)
         alertView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -58,7 +58,7 @@ class ReportVC: VerticalActionsVC {
         imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        let descriptionLabel = UILabel.with(text: "if someone is in immediate danger".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .a5a7bd, numberOfLines: 2)
+        let descriptionLabel = UILabel.with(text: "if someone is in immediate danger".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .appGrayColor, numberOfLines: 2)
         alertView.addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -79,7 +79,7 @@ class ReportVC: VerticalActionsVC {
     }
     
     override func viewForAction(_ action: VerticalActionsVC.Action) -> UIView {
-        let actionView = ReportOptionView(height: 58, backgroundColor: .white)
+        let actionView = ReportOptionView(height: 58, backgroundColor: .appWhiteColor)
         actionView.checkBox.isUserInteractionEnabled = false
         actionView.titleLabel.text = action.title
         actionView.checkBox.isSelected = action.isSelected

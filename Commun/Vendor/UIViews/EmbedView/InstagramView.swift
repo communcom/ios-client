@@ -35,7 +35,7 @@ class InstagramView: UIView {
         self.isPostDetail = isPostDetail
         self.content = content
         self.configureXib()
-        self.backgroundColor = .white
+        self.backgroundColor = .appWhiteColor
         self.configure(content: content)
     }
 
@@ -44,11 +44,11 @@ class InstagramView: UIView {
     }
 
     private func configure(content: ResponseAPIContentBlock) {
-        imageView.backgroundColor = UIColor(hexString: "F3F5FA")
+        imageView.backgroundColor = .appLightGrayColor
         backgroundView.layer.cornerRadius = 10
         backgroundView.layer.masksToBounds = true
         backgroundView.layer.borderWidth = 1
-        backgroundView.layer.borderColor = UIColor(hexString: "E9ECF1")?.cgColor
+        backgroundView.layer.borderColor = UIColor.colorSupportDarkMode(defaultColor: UIColor(hexString: "#E9ECF1")!, darkColor: .appLightGrayColor).cgColor
         let providerName = content.attributes?.providerName
 
         let multiplier = (CGFloat(content.attributes?.thumbnailWidth ?? 640) / CGFloat(content.attributes?.thumbnailHeight ?? 640))

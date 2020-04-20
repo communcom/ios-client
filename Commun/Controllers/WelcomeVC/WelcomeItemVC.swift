@@ -20,7 +20,7 @@ class WelcomeItemVC: BaseViewController {
     // MARK: - Subviews
     lazy var imageView = UIImageView(imageNamed: "image-welcome-item-\(index)", contentMode: .scaleAspectFit)
     lazy var titleLabel = UILabel.with(textSize: 36, numberOfLines: 0, textAlignment: .center)
-    lazy var descriptionLabel = UILabel.with(textSize: 17, weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+    lazy var descriptionLabel = UILabel.with(textSize: 17, weight: .medium, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
     
     // MARK: - Initializers
     init(index: Int) {

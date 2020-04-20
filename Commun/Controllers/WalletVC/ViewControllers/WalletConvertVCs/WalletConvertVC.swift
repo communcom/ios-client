@@ -12,9 +12,9 @@ import RxSwift
 
 class WalletConvertVC: BaseViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
-    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .white)}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .appWhiteColor)}
     override var shouldHideTabBar: Bool {true}
-    
+
     // MARK: - Properties
     let viewModel = WalletConvertViewModel()
     var currentSymbol: String?
@@ -41,10 +41,10 @@ class WalletConvertVC: BaseViewController {
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     lazy var balanceNameLabel = UILabel.with(textSize: 17, weight: .semibold, textColor: .white)
     lazy var valueLabel = UILabel.with(textSize: 30, weight: .semibold, textColor: .white)
-    lazy var whiteView = UIView(backgroundColor: .white)
+    lazy var whiteView = UIView(backgroundColor: .appWhiteColor)
     lazy var buyContainer: UIView = {
         let view = UIView(cornerRadius: 10)
-        view.borderColor = .e2e6e8
+        view.borderColor = .appLightGrayColor
         view.borderWidth = 1
         return view
     }()
@@ -53,9 +53,9 @@ class WalletConvertVC: BaseViewController {
     lazy var buyBalanceLabel = UILabel.with(textSize: 15, weight: .medium)
     
     lazy var convertContainer = UIStackView(axis: .horizontal, spacing: 10)
-    lazy var convertSellLabel = UILabel.with(text: "Sell", textSize: 12, weight: .medium, textColor: .a5a7bd)
+    lazy var convertSellLabel = UILabel.with(text: "Sell", textSize: 12, weight: .medium, textColor: .appGrayColor)
     lazy var leftTextField = createTextField()
-    lazy var convertBuyLabel = UILabel.with(text: "Buy", textSize: 12, weight: .medium, textColor: .a5a7bd)
+    lazy var convertBuyLabel = UILabel.with(text: "Buy", textSize: 12, weight: .medium, textColor: .appGrayColor)
     lazy var rightTextField: UITextField = {
         let textField = createTextField()
         textField.isEnabled = false
@@ -69,7 +69,7 @@ class WalletConvertVC: BaseViewController {
         textField.placeholder = "0"
         textField.borderStyle = .none
         textField.font = .systemFont(ofSize: 17, weight: .semibold)
-        textField.setPlaceHolderTextColor(.a5a7bd)
+        textField.setPlaceHolderTextColor(.appGrayColor)
         textField.keyboardType = .decimalPad
         textField.delegate = self
         return textField
@@ -96,11 +96,15 @@ class WalletConvertVC: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.setNavBarBackButton(tintColor: .white)
+    }
+
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        
-        setLeftNavBarButtonForGoingBack(tintColor: .white)
         
         // backgroundColor
         let topView = UIView(backgroundColor: topColor)
@@ -160,7 +164,7 @@ class WalletConvertVC: BaseViewController {
         let convertLogoView: UIView = {
             let view = UIView(width: 40, height: 40, backgroundColor: .appMainColor, cornerRadius: 20)
             view.borderWidth = 2
-            view.borderColor = .white
+            view.borderColor = .appWhiteColor
             let imageView = UIImageView(width: 23, height: 19, imageNamed: "wallet-convert")
             view.addSubview(imageView)
             imageView.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -294,7 +298,7 @@ class WalletConvertVC: BaseViewController {
         buyContainer.addSubview(buyLogoImageView)
         buyLogoImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)
         
-        let buyLabel = UILabel.with(text: "buy".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd)
+        let buyLabel = UILabel.with(text: "buy".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
         buyContainer.addSubview(buyLabel)
         buyLabel.autoPinEdge(.top, to: .top, of: buyLogoImageView)
         buyLabel.autoPinEdge(.leading, to: .trailing, of: buyLogoImageView, withOffset: 10)
@@ -303,7 +307,7 @@ class WalletConvertVC: BaseViewController {
         buyNameLabel.autoPinEdge(.top, to: .bottom, of: buyLabel, withOffset: 2)
         buyNameLabel.autoPinEdge(.leading, to: .leading, of: buyLabel)
         
-        let balanceLabel = UILabel.with(text: "balance".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd)
+        let balanceLabel = UILabel.with(text: "balance".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
         buyContainer.addSubview(balanceLabel)
         balanceLabel.autoPinEdge(.top, to: .top, of: buyLogoImageView)
         
@@ -328,7 +332,7 @@ class WalletConvertVC: BaseViewController {
         
         let firstView: UIView = {
             let view = UIView(cornerRadius: 10)
-            view.borderColor = .e2e6e8
+            view.borderColor = .appLightGrayColor
             view.borderWidth = 1
             return view
         }()
@@ -343,7 +347,7 @@ class WalletConvertVC: BaseViewController {
         
         let secondView: UIView = {
             let view = UIView(cornerRadius: 10)
-            view.borderColor = .e2e6e8
+            view.borderColor = .appLightGrayColor
             view.borderWidth = 1
             return view
         }()
@@ -351,7 +355,7 @@ class WalletConvertVC: BaseViewController {
         secondView.addSubview(convertBuyLabel)
         convertBuyLabel.autoPinTopAndLeadingToSuperView(inset: 10, xInset: 16)
         
-        let equalLabel = UILabel.with(text: "= ", textSize: 17, weight: .semibold, textColor: .a5a7bd)
+        let equalLabel = UILabel.with(text: "= ", textSize: 17, weight: .semibold, textColor: .appGrayColor)
         equalLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         secondView.addSubview(equalLabel)
         equalLabel.autoPinEdge(.top, to: .bottom, of: convertBuyLabel, withOffset: 8)

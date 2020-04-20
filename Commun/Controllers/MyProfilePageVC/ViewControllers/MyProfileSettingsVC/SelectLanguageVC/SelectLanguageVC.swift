@@ -35,7 +35,7 @@ class SelectLanguageVC: BaseViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        view.backgroundColor = .f3f5fa
+        view.backgroundColor = .appLightGrayColor
         title = "language".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
         closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)

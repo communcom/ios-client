@@ -14,7 +14,7 @@ class MyProfileEditVC: BaseViewController {
     lazy var avatarImageView: MyAvatarImageView = {
         let imageView = MyAvatarImageView(size: 120)
         imageView.borderWidth = 5
-        imageView.borderColor = .white
+        imageView.borderColor = .appWhiteColor
         imageView.setToCurrentUserAvatar()
         return imageView
     }()
@@ -22,7 +22,7 @@ class MyProfileEditVC: BaseViewController {
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(height: 150, cornerRadius: 7, contentMode: .scaleAspectFit)
         imageView.borderWidth = 7
-        imageView.borderColor = .white
+        imageView.borderColor = .appWhiteColor
         imageView.setCover(urlString: UserDefaults.standard.string(forKey: Config.currentUserCoverUrlKey))
         return imageView
     }()
@@ -41,6 +41,7 @@ class MyProfileEditVC: BaseViewController {
     
     lazy var bioTextView: UITextView = {
         let tv = UITextView(forExpandable: ())
+        tv.backgroundColor = .clear
         return tv
     }()
     
@@ -49,7 +50,7 @@ class MyProfileEditVC: BaseViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        view.backgroundColor = .f3f5fa
+        view.backgroundColor = .appLightGrayColor
         
         view.addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
@@ -64,10 +65,10 @@ class MyProfileEditVC: BaseViewController {
         coverImageView.autoPinEdge(toSuperviewEdge: .trailing)
         
         let nameContainerView: UIView = {
-            let containerView = UIView(backgroundColor: .white, cornerRadius: 10)
+            let containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
             containerView.borderWidth = 1
-            containerView.borderColor = .e2e6e8
-            let label = UILabel.with(text: "name".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd)
+            containerView.borderColor = .appLightGrayColor
+            let label = UILabel.with(text: "name".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
             containerView.addSubview(label)
             label.autoPinTopAndLeadingToSuperView(inset: 11, xInset: 15)
             
@@ -83,10 +84,10 @@ class MyProfileEditVC: BaseViewController {
         nameContainerView.autoPinEdge(toSuperviewEdge: .trailing)
     
         let usernameContainerView: UIView = {
-            let containerView = UIView(backgroundColor: .white, cornerRadius: 10)
+            let containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
             containerView.borderWidth = 1
-            containerView.borderColor = .e2e6e8
-            let label = UILabel.with(text: "username".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd)
+            containerView.borderColor = .appLightGrayColor
+            let label = UILabel.with(text: "username".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
             containerView.addSubview(label)
             label.autoPinTopAndLeadingToSuperView(inset: 11, xInset: 15)
             
@@ -102,10 +103,10 @@ class MyProfileEditVC: BaseViewController {
         usernameContainerView.autoPinEdge(toSuperviewEdge: .trailing)
         
         let bioContainerView: UIView = {
-            let containerView = UIView(backgroundColor: .white, cornerRadius: 10)
+            let containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
             containerView.borderWidth = 1
-            containerView.borderColor = .e2e6e8
-            let label = UILabel.with(text: "bio".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd)
+            containerView.borderColor = .appLightGrayColor
+            let label = UILabel.with(text: "bio".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
             containerView.addSubview(label)
             label.autoPinTopAndLeadingToSuperView(inset: 11, xInset: 15)
             

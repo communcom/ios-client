@@ -14,7 +14,7 @@ import SafariServices
 class BaseViewController: UIViewController {
     // MARK: - Nested type
     enum NavigationBarStyle {
-        case normal(translucent: Bool = false, backgroundColor: UIColor = .white, font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .black, prefersLargeTitle: Bool = false)
+        case normal(translucent: Bool = false, backgroundColor: UIColor = .appWhiteColor, font: UIFont = .boldSystemFont(ofSize: 15), textColor: UIColor = .appBlackColor, prefersLargeTitle: Bool = false)
         case hidden
         case embeded
     }
@@ -31,7 +31,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhiteColor
         
         setUp()
         

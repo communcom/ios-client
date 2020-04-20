@@ -24,7 +24,7 @@ class CommunityMembersHeaderView: MyView {
     
     override func commonInit() {
         super.commonInit()
-        backgroundColor = .f3f5fa
+        backgroundColor = .appLightGrayColor
         let label = UILabel.with(text: "leaders".localized().uppercaseFirst, textSize: 20, weight: .bold)
         addSubview(label)
         label.autoPinEdge(toSuperviewEdge: .top, withInset: 10)

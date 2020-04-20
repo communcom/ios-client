@@ -46,11 +46,11 @@ class WalletTableHeaderView: MyTableHeaderView {
     }()
     
     // MARK: - Filter
-    lazy var filterContainerView = UIView(backgroundColor: .white)
+    lazy var filterContainerView = UIView(backgroundColor: .appWhiteColor)
     lazy var filterButton: LeftAlignedIconButton = {
-        let button = LeftAlignedIconButton(height: 35, label: "filter".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), backgroundColor: .f3f5fa, textColor: .a5a7bd, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 16))
+        let button = LeftAlignedIconButton(height: 35, label: "filter".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), backgroundColor: .appLightGrayColor, textColor: .appGrayColor, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 16))
         button.setImage(UIImage(named: "Filter"), for: .normal)
-        button.tintColor = .a5a7bd
+        button.tintColor = .appGrayColor
         return button
     }()
     

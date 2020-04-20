@@ -44,7 +44,7 @@ class LeaderAvatarImageView: MyAvatarImageView {
             let endAngle: CGFloat = startAngle + arcAngle
             
             if angle <= startAngle {
-                let percentLayer = arcLayer(withColor: #colorLiteral(red: 0.9137254902, green: 0.9176470588, blue: 0.937254902, alpha: 1), startAngle: startAngle, endAngle: endAngle)
+                let percentLayer = arcLayer(withColor: .appLightGrayColor, startAngle: startAngle, endAngle: endAngle)
                 percentLayers.append(percentLayer)
             } else if angle >= endAngle {
                 let percentLayer = arcLayer(withColor: .appMainColor, startAngle: startAngle, endAngle: endAngle)
