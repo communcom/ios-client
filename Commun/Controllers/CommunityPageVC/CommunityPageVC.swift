@@ -295,6 +295,11 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                 }
                 return [AnimatableSectionModel<String, CustomElementType>(model: "", items: items)]
             }
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

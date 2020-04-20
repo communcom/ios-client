@@ -149,6 +149,11 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
                 }
                 return sections
             }
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

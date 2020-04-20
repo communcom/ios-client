@@ -78,6 +78,11 @@ class MyPointsSeeAllBalancesVC: BalancesVC, SearchableViewControllerType {
         
         Observable.merge(viewModel.items.asObservable(), viewModel.searchResult.filter {$0 != nil}.map {$0!}.asObservable())
             .map {self.mapItems(items: $0)}
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

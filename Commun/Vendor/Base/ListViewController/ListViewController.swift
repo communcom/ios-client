@@ -112,6 +112,11 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     func bindItems() {
         viewModel.items
             .map {self.mapItems(items: $0)}
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

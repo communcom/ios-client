@@ -172,6 +172,11 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
                         return ListSection(model: sectionLabel, items: dictionary[key] ?? [])
                     }
             }
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
