@@ -48,9 +48,13 @@ class SelectLanguageVC: BaseViewController {
         tableView.backgroundColor = .clear
         
         // get current language
+        chooseCurrentLanguage()
+    }
+    
+    private func chooseCurrentLanguage() {
         let langs: [Language] = languages.value.map { lang in
             var lang = lang
-            if lang.code == Localize.currentLanguage() {lang.isSelected = true}
+            lang.isSelected = lang.code == Localize.currentLanguage()
             return lang
         }
         languages.accept(langs)
@@ -79,6 +83,32 @@ class SelectLanguageVC: BaseViewController {
         
         languages.map {[AnimatableSectionModel<String, Language>](arrayLiteral: AnimatableSectionModel<String, Language>(model: "", items: $0))}
             .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(Language.self)
+            .subscribe(onNext: { (language) in
+                self.showActionSheet(
+                    title: "would you like to change the application's language to".localized().uppercaseFirst + " " + (language.name + " language").localized().uppercaseFirst + "?",
+                    actions: [
+                        UIAlertAction(
+                            title: "change to".localized().uppercaseFirst + " " + (language.name + " language").localized().uppercaseFirst,
+                            style: .default,
+                            handler: { _ in
+                                Localize.setCurrentLanguage(language.code)
+                                self.chooseCurrentLanguage()
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.window?.rootViewController = SplashVC()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    appDelegate.tabBarVC = TabBarVC()
+                                    appDelegate.changeRootVC(appDelegate.tabBarVC)
+                                }
+                            }
+                        )
+                    ])
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    
+                }
+            })
             .disposed(by: disposeBag)
     }
 }

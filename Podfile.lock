@@ -322,7 +322,7 @@ CHECKOUT OPTIONS:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
     :git: https://github.com/communcom/SubviewAttachingTextView.git
   SwifterSwift:
-    :commit: 39f4854c6219c6cfb54c105393260bdf64372f51
+    :commit: f157c1e8044c2e7e44854c7fe5325f31bc212abb
     :git: https://github.com/communcom/SwifterSwift.git
   SwiftyGif:
     :commit: dad6a37be372a3f61068d516348157794d58d857
