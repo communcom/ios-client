@@ -37,6 +37,7 @@
 "an email has been sent with" = "было отправлено письмо с проверочным кодом. Пожалуйста, введите код здесь";
 "an error has occured" = "произошла ошибка";
 "archiving" = "архивирование";
+"are you sure you want to take the vote back?" = "вы уверены, что хотите вернуть голос?";
 "attachments" = "вложения";
 "attention" = "внимание";
 "authorize on web" = "авторизуйтесь на сайте";
@@ -290,6 +291,7 @@
 "past year" = "в прошлом году";
 "phone number placeholder" = "введите номер телефона";
 "placeholder" = "placeholder";
+"please consider that you have only 1 vote. By giving it to another nominee, you'll reduce your currently chosen nominee's influence equal to the current number of your Points." = "пожалуйста, учтите, что у вас есть только 1 голос. Передавая его другому кандидату, вы уменьшите влияние выбранного в настоящее время кандидата на текущее количество ваших поинтов.";
 "please enter a reason" = "пожалуйста, введите причину";
 "please select a reason" = "пожалуйста, выберите причину";
 "please try again later" = "попробуйте снова";

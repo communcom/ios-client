@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxDataSources
 
-class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDelegate {
+class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDelegate, HasLeadersVM {
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
         case subscriber(ResponseAPIContentGetProfile)
@@ -29,6 +29,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     // MARK: - Properties
     var selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem
     var viewModel: CommunityMembersViewModel
+    var leadersVM: LeadersViewModel { viewModel.leadersVM }
     let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // MARK: - Subviews

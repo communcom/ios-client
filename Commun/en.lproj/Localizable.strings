@@ -37,6 +37,7 @@
 "an email has been sent with" = "an email has been sent with the verification code. Please enter it here";
 "an error has occured" = "an error has occured";
 "archiving" = "archiving";
+"are you sure you want to take the vote back?" = "are you sure you want to take the vote back?";
 "attachments" = "attachments";
 "attention" = "attention";
 "authorize on web" = "authorize on web";
@@ -291,6 +292,7 @@
 "past year" = "past year";
 "phone number placeholder" = "enter phone number";
 "placeholder" = "placeholder";
+"please consider that you have only 1 vote. By giving it to another nominee, you'll reduce your currently chosen nominee's influence equal to the current number of your Points." = "please consider that you have only 1 vote. By giving it to another nominee, you'll reduce your currently chosen nominee's influence equal to the current number of your Points.";
 "please enter a reason" = "please enter a reason";
 "please select a reason" = "please select a reason";
 "please try again later" = "please try again later";

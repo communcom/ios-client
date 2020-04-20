@@ -11,7 +11,7 @@ import RxSwift
 import RxDataSources
 import CyberSwift
 
-class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate, CommunityPageVCType {
+class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate, CommunityPageVCType, HasLeadersVM {
     
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
@@ -49,6 +49,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         }
         return CommunityPageViewModel(communityId: communityId)
     }
+    var leadersVM: LeadersViewModel {(viewModel as! CommunityPageViewModel).leadsVM}
     
     // MARK: - Subviews
     lazy var headerView = CommunityHeaderView(tableView: tableView)
