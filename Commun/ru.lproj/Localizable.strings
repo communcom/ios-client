@@ -295,6 +295,8 @@
 "please enter a reason" = "пожалуйста, введите причину";
 "please select a reason" = "пожалуйста, выберите причину";
 "please try again later" = "попробуйте снова";
+"please wait" = "подождите";
+"please wait for last operations to finish" = "пожалуйста, подождите завершения предыдущих операций";
 "points" = "поинты";
 "post" = "пост";
 "post not found" = "сообщение не найдено";

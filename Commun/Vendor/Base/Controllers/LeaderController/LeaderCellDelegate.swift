@@ -19,6 +19,10 @@ protocol HasLeadersVM: class {
 
 extension LeaderCellDelegate where Self: BaseViewController & HasLeadersVM {
     func buttonVoteDidTouch(leader: ResponseAPIContentGetLeader) {
+        if leadersVM.items.value.first(where: {$0.isBeingVoted == true}) != nil {
+            showAlert(title: "please wait".localized().uppercaseFirst, message: "please wait for last operations to finish".localized().uppercaseFirst)
+            return
+        }
         let votedLeader = leadersVM.items.value.first(where: {$0.isVoted == true})
         if votedLeader != nil {
             self.showAlert(title: "are you sure you want to take the vote back?".localized().uppercaseFirst, message: "please consider that you have only 1 vote. By giving it to another nominee, you'll reduce your currently chosen nominee's influence equal to the current number of your Points.".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1)
@@ -34,7 +38,7 @@ extension LeaderCellDelegate where Self: BaseViewController & HasLeadersVM {
                     }
                     
                     BlockchainManager.instance.toggleVoteLeader(leader: votedLeader!)
-                        .do(onError: { (error) in
+                        .do(onError: { (_) in
                             var leader = leader
                             leader.isVoted = false
                             leader.isBeingVoted = false
