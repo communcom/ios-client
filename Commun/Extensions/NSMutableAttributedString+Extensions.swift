@@ -58,14 +58,18 @@ extension NSMutableAttributedString {
         return self
     }
 
-    @discardableResult func withParagraphStyle(minimumLineHeight: CGFloat? = nil, alignment: NSTextAlignment = .left) -> NSMutableAttributedString {
+    @discardableResult func withParagraphStyle(minimumLineHeight: CGFloat? = nil, alignment: NSTextAlignment? = nil, lineSpacing: CGFloat? = nil) -> NSMutableAttributedString {
 
         let paragraphStyle = NSMutableParagraphStyle()
         if let minimumLineHeight = minimumLineHeight {
             paragraphStyle.minimumLineHeight = minimumLineHeight
         }
-        
-        paragraphStyle.alignment = alignment
+        if let alignment = alignment {
+            paragraphStyle.alignment = alignment
+        }
+        if let lineSpacing = lineSpacing {
+            paragraphStyle.lineSpacing = lineSpacing
+        }
         let attrs: [NSAttributedString.Key: Any] = [.paragraphStyle: paragraphStyle]
         addAttributes(attrs, range: NSRange(location: 0, length: self.length))
         return self
