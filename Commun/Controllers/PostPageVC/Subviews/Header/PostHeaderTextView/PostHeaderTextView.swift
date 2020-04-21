@@ -19,9 +19,8 @@ class PostHeaderTextView: MySubviewAttachingTextView {
     let defaultFont = UIFont.systemFont(ofSize: 17)
     
     var defaultAttributes: [NSAttributedString.Key: Any] {
-        let paragraph = NSMutableParagraphStyle()
-        paragraph.minimumLineHeight = 24
-        paragraph.maximumLineHeight = 24
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 8
         return [
             .font: defaultFont,
             .paragraphStyle: paragraph,

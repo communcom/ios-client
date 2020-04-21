@@ -43,6 +43,9 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
             if item.bottomExplanation != updatedItem.bottomExplanation {
                 return true
             }
+            if item.attachments != updatedItem.attachments {
+                return true
+            }
         }
         return false
     }
