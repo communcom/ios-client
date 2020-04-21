@@ -56,7 +56,7 @@ extension Bundle {
         }
     }
 
-    @objc private func myLocaLizedString(forKey key: String,value: String?, table: String?) -> String {
+    @objc private func myLocaLizedString(forKey key: String, value: String?, table: String?) -> String {
         guard let bundlePath = Bundle.main.path(forResource: Localize.currentLanguage(), ofType: "lproj"),
             let bundle = Bundle(path: bundlePath) else {
                 return Bundle.main.myLocaLizedString(forKey: key, value: value, table: table)

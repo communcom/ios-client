@@ -236,7 +236,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             }
         }
         
-        // TODO: - Fix these number later
         // stats
         let followingsCount: Int = Int((userProfile.subscriptions?.usersCount ?? 0))
         let followersCount: Int = Int((userProfile.subscribers?.usersCount ?? 0))
