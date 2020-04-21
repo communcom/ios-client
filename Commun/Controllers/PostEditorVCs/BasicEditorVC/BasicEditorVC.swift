@@ -56,7 +56,7 @@ class BasicEditorVC: PostEditorVC {
     override var isContentValid: Bool {
         hintType = nil
         
-        let content = contentTextView.text.trimmed 
+        let content = contentTextView.text.trimmed
         
         // content are not empty
         let textIsNotEmpty = !content.isEmpty
@@ -90,8 +90,9 @@ class BasicEditorVC: PostEditorVC {
     }
     
     // MARK: - Intializers
-    convenience init(shareExtensionData: ShareExtensionData) {
-        self.init(post: nil, community: nil, chooseCommunityAfterLoading: false, parseDraftAfterLoading: false)
+    convenience init(shareExtensionData: ShareExtensionData, chooseCommunityAfterLoading: Bool = false) {
+        self.init(post: nil, community: nil, chooseCommunityAfterLoading: chooseCommunityAfterLoading, parseDraftAfterLoading: false)
+       
         self.shareExtensionData = shareExtensionData
     }
     
@@ -107,6 +108,7 @@ class BasicEditorVC: PostEditorVC {
 
     override func setUp() {
         super.setUp()
+        
         //TODO: add Article later
 //        if viewModel.postForEdit == nil {
 //            appendTool(EditorToolbarItem.addArticle)

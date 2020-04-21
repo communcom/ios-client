@@ -289,21 +289,21 @@ class TabBarVC: UITabBarController {
                     }
                 } else if let presentedVC = self.presentedViewController {
                     if let activityVC = presentedVC as? UIActivityViewController {
-                        activityVC.dismiss(animated: false, completion: {
-                            let basicEditorScene = BasicEditorVC(shareExtensionData: data)
+                        activityVC.dismiss(animated: true, completion: {
+                            let basicEditorScene = BasicEditorVC(shareExtensionData: data, chooseCommunityAfterLoading: true)
                             self.present(basicEditorScene, animated: true, completion: nil)
                         })
                     }
                     
                     else {
-                    presentedVC.showAlert(title: "open editor".localized().uppercaseFirst, message: "close this screen and open editor".localized().uppercaseFirst + "?", buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 0) { (index) in
-                        if index == 0 {
-                            presentedVC.dismiss(animated: true) {
-                                let basicEditorScene = BasicEditorVC(shareExtensionData: data)
-                                self.present(basicEditorScene, animated: true, completion: nil)
+                        presentedVC.showAlert(title: "open editor".localized().uppercaseFirst, message: "close this screen and open editor".localized().uppercaseFirst + "?", buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 0) { (index) in
+                            if index == 0 {
+                                presentedVC.dismiss(animated: true) {
+                                    let basicEditorScene = BasicEditorVC(shareExtensionData: data)
+                                    self.present(basicEditorScene, animated: true, completion: nil)
+                                }
                             }
                         }
-                    }
                     }
                 } else {
                     let basicEditorScene = BasicEditorVC(shareExtensionData: data)
