@@ -475,8 +475,8 @@ extension CommunityPageVC: UITableViewDelegate {
             return (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] ?? UITableView.automaticDimension
         case let leader as ResponseAPIContentGetLeader:
             return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? UITableView.automaticDimension
-        case _ as ResponseAPIContentGetCommunityRule:
-            return UITableView.automaticDimension
+        case let rule as ResponseAPIContentGetCommunityRule:
+            return (viewModel as! CommunityPageViewModel).ruleRowHeights[rule.identity] ?? UITableView.automaticDimension
         default:
             return UITableView.automaticDimension
         }
