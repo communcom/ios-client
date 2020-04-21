@@ -524,7 +524,12 @@ extension UIViewController {
         let queryItemInvite = URLQueryItem(name: "invite", value: userID)
 
         components.scheme = "https"
-        components.host = "commun.com"
+        
+        components.host = "dev.commun.com"
+        #if APPSTORE
+            components.host = "commun.com"
+        #endif
+
         components.path = (isCommunity ? "/" : "/@") + name.lowercased()
         components.queryItems = [queryItemInvite]
         

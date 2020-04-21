@@ -20,7 +20,6 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     override func didSelectPost() {
-
         // https://inneka.com/programming/swift/ios-share-extension-grabbing-url-in-swift/
         if let item = extensionContext?.inputItems.first as? NSExtensionItem, let attachments = item.attachments {
             shareExtensionData.text = self.contentText
@@ -78,7 +77,7 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     // MARK: - Custom Functions
-    private func saveData() {
+    private func saveData() {       
         // Save share data
         guard UserDefaults.appGroups.save(shareExtensionData: shareExtensionData) == true else { return }
                 
