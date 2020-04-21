@@ -38,9 +38,10 @@ class CommunityLeaderCell: CommunityPageCell {
         let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         hStack.addArrangedSubviews([avatarImageView, label, voteButton])
         label.setContentHuggingPriority(.required, for: .vertical)
-        hStack.setContentHuggingPriority(.required, for: .vertical)
+//        hStack.setContentHuggingPriority(.required, for: .vertical)
         
         vStack.addArrangedSubviews([hStack, descriptionLabel])
+        descriptionLabel.setContentHuggingPriority(.required, for: .vertical)
    }
     
     func setUp(with leader: ResponseAPIContentGetLeader) {

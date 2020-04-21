@@ -473,8 +473,8 @@ extension CommunityPageVC: UITableViewDelegate {
         switch item {
         case let post as ResponseAPIContentGetPost:
             return (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] ?? UITableView.automaticDimension
-        case let leader as ResponseAPIContentGetLeader:
-            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? UITableView.automaticDimension
+//        case let leader as ResponseAPIContentGetLeader:
+//            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? UITableView.automaticDimension
         case let rule as ResponseAPIContentGetCommunityRule:
             return (viewModel as! CommunityPageViewModel).ruleRowHeights[rule.identity] ?? UITableView.automaticDimension
         default:
@@ -490,8 +490,8 @@ extension CommunityPageVC: UITableViewDelegate {
         switch item {
         case let post as ResponseAPIContentGetPost:
             return (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] ?? 200
-        case let leader as ResponseAPIContentGetLeader:
-            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? 121
+//        case let leader as ResponseAPIContentGetLeader:
+//            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? 121
         case let rule as ResponseAPIContentGetCommunityRule:
             return (viewModel as! CommunityPageViewModel).ruleRowHeights[rule.identity] ?? 68
         default:
