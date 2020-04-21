@@ -16,7 +16,7 @@ class PostPageNavigationBar: MyView, CommunityController {
     var community: ResponseAPIContentGetCommunity?
     
     // MARK: - Subviews
-    lazy var backButton: UIButton = .back(tintColor: .a5a7bd, contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
+    lazy var backButton: UIButton = .back(tintColor: .appGrayColor, contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
     
     lazy var postMetaView = PostMetaView(height: 40)
     
@@ -29,7 +29,7 @@ class PostPageNavigationBar: MyView, CommunityController {
     
     override func commonInit() {
         super.commonInit()
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
         
         addSubview(backButton)
         backButton.autoPinEdge(toSuperviewEdge: .leading)

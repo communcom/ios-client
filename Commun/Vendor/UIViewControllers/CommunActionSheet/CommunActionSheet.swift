@@ -48,7 +48,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
         var title: String
         var icon: UIImage?
         var style: Style = .default
-        var tintColor: UIColor = .black
+        var tintColor: UIColor = .appBlackColor
         var marginTop: CGFloat = 0
         var post: ResponseAPIContentGetPost?
         var handle: (() -> Void)?
@@ -67,32 +67,18 @@ class CommunActionSheet: SwipeDownDismissViewController {
         let activity = UIActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 24.0), height: .adaptive(height: 24.0))))
         activity.hidesWhenStopped = false
         activity.style = .white
-        activity.color = .black
+        activity.color = .appBlackColor
         activity.translatesAutoresizingMaskIntoConstraints = false
         
         return activity
     }()
 
     // MARK: - Properties
-    var backgroundColor = UIColor(hexString: "#F7F7F9")
+    var backgroundColor: UIColor = .appLightGrayColor
     var actions: [Action]?
 
     var titleFont: UIFont = .boldSystemFont(ofSize: 20)
     var textAlignment: NSTextAlignment = .center
-
-    var height: CGFloat {
-        guard let actions = actions, actions.count > 0 else {return 0}
-        
-        let buttonsHeight = actions.reduce(0) { (result, action) -> CGFloat in
-            result + action.style.actionViewSeparatorSpace + action.style.actionViewHeight
-        }
-        
-        return actions.first!.style.defaultMargin
-            + headerHeight
-            + headerToButtonsSpace
-            + buttonsHeight
-            + (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
-    }
     
     // MARK: - Subviews
     var headerView: UIView?
@@ -101,8 +87,8 @@ class CommunActionSheet: SwipeDownDismissViewController {
         var button = UIButton(frame: .zero)
         button.setImage(UIImage(named: "close-x"), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(inset: 3)
-        button.backgroundColor = .white
-        button.tintColor = .a5a7bd
+        button.backgroundColor = .appWhiteColor
+        button.tintColor = .appGrayColor
         button.cornerRadius = buttonSize / 2
         button.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(button)
@@ -123,6 +109,8 @@ class CommunActionSheet: SwipeDownDismissViewController {
     // MARK: - Initializer
     init() {
         super.init(nibName: nil, bundle: nil)
+        transitioningDelegate = self
+        modalPresentationStyle = .custom
     }
     
     required init?(coder: NSCoder) {
@@ -137,7 +125,6 @@ class CommunActionSheet: SwipeDownDismissViewController {
         
         // Setup view
         view.backgroundColor = backgroundColor
-        view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         
         // header view
         configHeaderView()
@@ -181,7 +168,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
         
         for (index, action) in actions.enumerated() {
             // action views
-            let actionView = UIView(backgroundColor: .white, cornerRadius: 10)
+            let actionView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
             
             view.addSubview(actionView)
             
@@ -191,6 +178,9 @@ class CommunActionSheet: SwipeDownDismissViewController {
             actionView.autoSetDimension(.height, toSize: action.style.actionViewHeight)
             actionView.autoPinEdge(toSuperviewEdge: .leading, withInset: action.style.defaultMargin)
             actionView.autoPinEdge(toSuperviewEdge: .trailing, withInset: action.style.defaultMargin)
+            if index == actions.count - 1 {
+                actionView.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16)
+            }
             
             // icon
             let iconImageView = UIImageView(forAutoLayout: ())

@@ -17,7 +17,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     // MARK: - Subviews
     lazy var joinButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
 
-    lazy var friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
+    lazy var friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .appGrayColor)
 
     lazy var membersCountLabel = UILabel.with(text: 10000000.kmFormatted, textSize: 15, weight: .bold)
     
@@ -39,7 +39,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         walletCurrencyLabel.autoPinEdge(.leading, to: .trailing, of: walletCurrencyValue, withOffset: 4.0)
         walletCurrencyLabel.autoPinEdge(.bottom, to: .bottom, of: walletCurrencyValue, withOffset: -1.0)
         
-        let equalLabel = UILabel.with(text: "=", textSize: 12, weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        let equalLabel = UILabel.with(text: "=", textSize: 12, weight: .semibold, textColor: .white)
         equalLabel.alpha = 0.7
         
         view.addSubview(equalLabel)
@@ -50,7 +50,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         communValueLabel.autoPinEdge(.leading, to: .trailing, of: equalLabel, withOffset: 2)
         communValueLabel.autoAlignAxis(.horizontal, toSameAxisOf: equalLabel)
         
-        let communLabel = UILabel.with(text: "Commun", textSize: 12, weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        let communLabel = UILabel.with(text: "Commun", textSize: 12, weight: .semibold, textColor: .white)
         communLabel.alpha = 0.7
         
         view.addSubview(communLabel)
@@ -73,14 +73,14 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }()
     
     lazy var walletCurrencyValue: UILabel = {
-        let label = UILabel.with(text: "1000", textSize: 15, weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        let label = UILabel.with(text: "1000", textSize: 15, weight: .semibold, textColor: .white)
         label.isHidden = true
 
         return label
     }()
     
     lazy var walletCurrencyLabel: UILabel = {
-        let label = UILabel.with(text: "Binance", textSize: 12, weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        let label = UILabel.with(text: "Binance", textSize: 12, weight: .semibold, textColor: .white)
         label.isHidden = true
         label.alpha = 0.7
 
@@ -88,7 +88,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }()
     
     lazy var communValueLabel: UILabel = {
-        let label = UILabel.with(text: "10", textSize: 12, weight: .bold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        let label = UILabel.with(text: "10", textSize: 12, weight: .bold, textColor: .white)
         label.alpha = 0.7
         
         return label
@@ -99,7 +99,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
                               height: 35,
                               label: "get points".localized().uppercaseFirst,
                               labelFont: UIFont.systemFont(ofSize: 15, weight: .medium),
-                              backgroundColor: .white,
+                              backgroundColor: .appWhiteColor,
                               textColor: .appMainColor,
                               cornerRadius: 12.5)
         return button
@@ -131,7 +131,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         membersButton.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
         membersButton.addTarget(self, action: #selector(membersLabelDidTouch), for: .touchUpInside)
 
-        let dotLabel = UILabel.with(text: "•", textSize: 15.0, weight: .semibold, textColor: .a5a7bd)
+        let dotLabel = UILabel.with(text: "•", textSize: 15.0, weight: .semibold, textColor: .appGrayColor)
         addSubview(dotLabel)
         dotLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 2)
         dotLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel, withOffset: 2)
@@ -161,8 +161,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
-        
-        pointsContainerView.addShadow(ofColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 0.3),
+
+        pointsContainerView.addShadow(ofColor: UIColor.onlyLightModeShadowColor(#colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 0.3)),
                                       radius: 24,
                                       offset: CGSize(width: 0.0, height: 14),
                                       opacity: 1.0)
@@ -247,7 +247,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let aStr = NSMutableAttributedString()
             .bold(membersCount.kmFormatted, font: .boldSystemFont(ofSize: 15))
             .bold(" ")
-            .bold(String(format: NSLocalizedString("members-count", comment: ""), membersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
+            .bold(String(format: NSLocalizedString("members-count", comment: ""), membersCount), font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
         
         membersCountLabel.attributedText = aStr
         
@@ -256,7 +256,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let aStr2 = NSMutableAttributedString()
             .bold("\(leadersCount.kmFormatted)", font: .boldSystemFont(ofSize: 15))
             .bold(" ")
-            .bold(String(format: NSLocalizedString("leaders-count", comment: ""), leadersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
+            .bold(String(format: NSLocalizedString("leaders-count", comment: ""), leadersCount), font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
         leadersCountLabel.attributedText = aStr2
 
         // friends

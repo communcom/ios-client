@@ -40,7 +40,7 @@ class MyEmptyPlaceHolderView: MyView {
     // MARK: - Subviews
     lazy var emojiLabel = UILabel.with(text: "😿", textSize: 32.0)
     lazy var titleLabel = UILabel.with(text: "Nothing", textSize: 15.0, weight: .semibold)
-    lazy var descriptionLabel = UILabel.with(text: "Nothing's here", textSize: 15.0, weight: .medium, textColor: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1))
+    lazy var descriptionLabel = UILabel.with(text: "Nothing's here", textSize: 15.0, weight: .medium, textColor: .appGrayColor)
     lazy var button = CommunButton.default(label: "retry")
     
     
@@ -66,7 +66,7 @@ class MyEmptyPlaceHolderView: MyView {
     override func commonInit() {
         super.commonInit()
         
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
         cornerRadius = 15.0
         
         let containerView = UIView(forAutoLayout: ())

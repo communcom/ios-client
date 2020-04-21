@@ -39,7 +39,7 @@ class UserNameRulesView: MyCardView {
         paragraphStyle.lineSpacing = .adaptive(height: .adaptive(height: 8.0))
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         
-        let rulesLabel = UILabel.with(textSize: .adaptive(width: 15.0), textColor: .a5a7bd, numberOfLines: 0)
+        let rulesLabel = UILabel.with(textSize: .adaptive(width: 15.0), textColor: .appGrayColor, numberOfLines: 0)
         rulesLabel.attributedText = attributedString
         
         addSubview(rulesLabel)

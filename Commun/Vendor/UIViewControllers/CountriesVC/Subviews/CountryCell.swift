@@ -33,6 +33,6 @@ class CountryCell: UITableViewCell {
     func setupCountry(_ country: Country) {
         countryLabel.text = "\(country.name) (+\(country.code))"
         flagLabel.text = country.emoji
-        countryLabel.textColor = country.available ? .black : .appGrayColor
+        countryLabel.textColor = country.available ? .appBlackColor : .appGrayColor
     }
 }

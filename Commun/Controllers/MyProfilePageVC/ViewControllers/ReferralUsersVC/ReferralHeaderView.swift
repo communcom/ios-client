@@ -22,7 +22,7 @@ class ReferralHeaderView: MyTableHeaderView {
         super.commonInit()
         
         // Enter referall code
-        let enterReferalContainerView = UIView(backgroundColor: .white, cornerRadius: 16)
+        let enterReferalContainerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 16)
         addSubview(enterReferalContainerView)
         enterReferalContainerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
@@ -35,7 +35,7 @@ class ReferralHeaderView: MyTableHeaderView {
         textField.autoPinEdge(.top, to: .bottom, of: haveAReferralCodeLabel, withOffset: 16)
         
         // Share & copy
-        let containerView = UIView(backgroundColor: .white, cornerRadius: 16)
+        let containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 16)
         addSubview(containerView)
         containerView.autoPinEdge(toSuperviewEdge: .leading)
         containerView.autoPinEdge(toSuperviewEdge: .trailing)
@@ -55,7 +55,7 @@ class ReferralHeaderView: MyTableHeaderView {
         learnMoreButton.autoPinEdge(.leading, to: .trailing, of: userIdLabel, withOffset: 10)
         learnMoreButton.autoAlignAxis(.horizontal, toSameAxisOf: userIdLabel)
         
-        let descriptionLabel = UILabel.with(text: "invite a friend and get 1 Commun".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd, numberOfLines: 0)
+        let descriptionLabel = UILabel.with(text: "invite a friend and get 1 Commun".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor, numberOfLines: 0)
         containerView.addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
         descriptionLabel.autoPinEdge(.top, to: .bottom, of: userIdLabel, withOffset: 6)

@@ -47,10 +47,10 @@ final class FeedPageVC: PostsViewController {
     override func setUp() {
         super.setUp()
        
-        view.backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
+        view.backgroundColor = .appLightGrayColor
         
         // tableView
-        tableView.backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
+        tableView.backgroundColor = .appLightGrayColor
         tableView.keyboardDismissMode = .onDrag
         
         let statusBarView = UIView(backgroundColor: .appMainColor)
@@ -159,7 +159,7 @@ floatView.changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeB
     // MARK: - Actions
     @objc func promoGetButtonDidTouch() {
         AnalyticsManger.shared.clickGetDankMeme()
-        headerView.getButton.showLoading(cover: true, coverColor: .appMainColor, spinnerColor: .white, size: 20)
+        headerView.getButton.showLoading(cover: true, coverColor: .appMainColor, spinnerColor: .appWhiteColor, size: 20)
         RestAPIManager.instance.getAirdrop(communityId: "DANK")
             .subscribe(onSuccess: { (_) in
                 self.headerView.getButton.hideLoading()

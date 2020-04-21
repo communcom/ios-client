@@ -51,7 +51,7 @@ class ProfileHeaderView: MyTableHeaderView {
     override func commonInit() {
         super.commonInit()
         
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
         
         addSubview(avatarImageView)
         avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 16)

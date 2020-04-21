@@ -11,9 +11,8 @@ import RxSwift
 import CyberSwift
 
 class CommentFormViewModel {
-    var post: ResponseAPIContentGetPost?
-    
     func sendNewComment(
+        post: ResponseAPIContentGetPost?,
         block: ResponseAPIContentBlock,
         uploadingImage: UIImage? = nil
     ) -> Single<SendPostCompletion> {
@@ -35,6 +34,7 @@ class CommentFormViewModel {
     
     func updateComment(
         _ comment: ResponseAPIContentGetComment,
+        post: ResponseAPIContentGetPost?,
         block: ResponseAPIContentBlock,
         uploadingImage: UIImage? = nil
     ) -> Single<SendPostCompletion> {
@@ -53,6 +53,7 @@ class CommentFormViewModel {
     
     func replyToComment(
         _ comment: ResponseAPIContentGetComment,
+        post: ResponseAPIContentGetPost?,
         block: ResponseAPIContentBlock,
         uploadingImage: UIImage? = nil
     ) -> Single<SendPostCompletion> {

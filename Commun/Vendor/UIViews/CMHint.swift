@@ -57,13 +57,13 @@ class CMHint: UIView {
     var topicLabel = UILabel(text: "warning".localized().uppercaseFirst,
                              font: .systemFont(ofSize: 15.0, weight: .bold),
                              numberOfLines: 0,
-                             color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+                             color: .appLightGrayColor)
 
     lazy var contentLabel: UILabel = {
         let contentLabelInstance = UILabel(text: "",
                                            font: .systemFont(ofSize: 12.0, weight: .medium),
                                            numberOfLines: 0,
-                                           color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+                                           color: .appLightGrayColor)
         contentLabelInstance.alpha = 0.6
         
         return contentLabelInstance
@@ -86,7 +86,7 @@ class CMHint: UIView {
     // MARK: - Custom Functions
     func commonInit() {
         alpha = 0.0
-        backgroundColor = #colorLiteral(red: 0.141, green: 0.141, blue: 0.173, alpha: 1)
+        backgroundColor = .appBlackColor
         layer.cornerRadius = 10.0
         
         let labelsStackView = UIStackView(arrangedSubviews: [topicLabel, contentLabel],

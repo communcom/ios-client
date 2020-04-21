@@ -20,7 +20,7 @@ extension UITextField {
     static func decimalPad(
         backgroundColor: UIColor = .clear,
         placeholder: String = "0",
-        placeholderTextColor: UIColor = .a5a7bd,
+        placeholderTextColor: UIColor = .appGrayColor,
         borderStyle: UITextField.BorderStyle = .none,
         font: UIFont = .systemFont(ofSize: 17, weight: .semibold)
     ) -> UITextField {

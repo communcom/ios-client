@@ -16,7 +16,7 @@ class WalletAddFriendVC: SubsViewController<ResponseAPIContentSearchItem, Wallet
     lazy var searchController = UISearchController.default()
     
     // MARK: - Subviews
-    let searchContainerView = UIView(backgroundColor: .white)
+    let searchContainerView = UIView(backgroundColor: .appWhiteColor)
     var searchBar: UISearchBar {
         get {searchController.searchBar}
         set {}
@@ -148,8 +148,8 @@ class WalletAddFriendVC: SubsViewController<ResponseAPIContentSearchItem, Wallet
         let img = UIImage()
         navigationController?.navigationBar.setBackgroundImage(img, for: .default)
         navigationController?.navigationBar.barStyle = .default
-        navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.subviews.first?.backgroundColor = .white
+        navigationController?.navigationBar.barTintColor = .appWhiteColor
+        navigationController?.navigationBar.subviews.first?.backgroundColor = .appWhiteColor
     }
     
     func sendPointButtonDidTouch(friend: ResponseAPIContentGetProfile) {

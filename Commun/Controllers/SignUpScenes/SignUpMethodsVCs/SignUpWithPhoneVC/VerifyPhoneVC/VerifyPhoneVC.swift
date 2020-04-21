@@ -56,8 +56,8 @@ class VerifyPhoneVC: BaseVerifyVC {
             appearance: ItemAppearance(
                 itemSize: CGSize(width: 48, height: 56),
                 font: .systemFont(ofSize: 26),
-                textColor: .black,
-                backgroundColor: .f3f5fa,
+                textColor: .appBlackColor,
+                backgroundColor: .appLightGrayColor,
                 cursorColor: UIColor(red: 69 / 255, green: 108 / 255, blue: 1, alpha: 1),
                 cornerRadius: 8)
         )

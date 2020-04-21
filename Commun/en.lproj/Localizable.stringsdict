@@ -212,5 +212,19 @@
             <string>leaders</string>
         </dict>
     </dict>
+    <key>%d new</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@new@</string>
+        <key>new</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>other</key>
+            <string>%d new</string>
+        </dict>
+    </dict>
 </dict>
 </plist>

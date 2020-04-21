@@ -52,7 +52,7 @@ class TransferHistorySegmentedControl: MyView {
         super.commonInit()
         cornerRadius = 16
         borderWidth = 1
-        borderColor = .e2e6e8
+        borderColor = .appLightGrayColor
         
         addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
@@ -64,7 +64,7 @@ class TransferHistorySegmentedControl: MyView {
         for (index, view) in stackView.arrangedSubviews.enumerated() {
             // TODO: Animation
             view.backgroundColor = (index == selectedIndex) ? .appMainColor : .clear
-            (view as! UILabel).textColor = (index == selectedIndex) ? .white : .a5a7bd
+            (view as! UILabel).textColor = (index == selectedIndex) ? .appWhiteColor : .appGrayColor
         }
     }
     

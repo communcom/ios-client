@@ -14,7 +14,7 @@ class PNAlertView: MyView {
     
     override func commonInit() {
         super.commonInit()
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
         cornerRadius = 15
         
         let title = UILabel.with(text: "enable push notifications".localized().capitalized, textSize: 17, weight: .semibold, numberOfLines: 0)
@@ -28,7 +28,7 @@ class PNAlertView: MyView {
         closeButton.autoAlignAxis(.horizontal, toSameAxisOf: title)
         closeButton.autoPinEdge(.leading, to: .trailing, of: title, withOffset: 10)
         
-        let content = UILabel.with(text: "let us notify you about receiving rewards, replies, or upvotes! Stay tuned for the most important and pleasant activities on Commun".localized().uppercaseFirst, textSize: 15, textColor: .a5a7bd, numberOfLines: 0)
+        let content = UILabel.with(text: "let us notify you about receiving rewards, replies, or upvotes! Stay tuned for the most important and pleasant activities on Commun".localized().uppercaseFirst, textSize: 15, textColor: .appGrayColor, numberOfLines: 0)
         addSubview(content)
         content.autoPinEdge(.top, to: .bottom, of: title, withOffset: 6)
         content.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -65,8 +65,8 @@ class PNAlertTableHeaderView: MyTableHeaderView {
     
     override func commonInit() {
         super.commonInit()
-        backgroundColor = .white
-        pnAlertView.backgroundColor = .f3f5fa
+        backgroundColor = .appWhiteColor
+        pnAlertView.backgroundColor = .appLightGrayColor
         
         addSubview(pnAlertView)
         pnAlertView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))

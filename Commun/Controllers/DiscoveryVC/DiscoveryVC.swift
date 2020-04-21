@@ -48,7 +48,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     
     // MARK: - Subviews
     lazy var topBarContainerView: UIView = {
-        let view = UIView(backgroundColor: .white)
+        let view = UIView(backgroundColor: .appWhiteColor)
         view.addSubview(topTabBar)
         topTabBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
         return view
@@ -94,7 +94,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         super.setUp()
         
         // modify view
-        view.backgroundColor = .f3f5fa
+        view.backgroundColor = .appLightGrayColor
         
         // search controller
         layoutSearchBar()

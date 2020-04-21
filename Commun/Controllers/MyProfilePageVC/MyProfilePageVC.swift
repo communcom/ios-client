@@ -75,7 +75,7 @@ class MyProfilePageVC: UserProfilePageVC {
         offSetY
             .map { $0 < -43 }
             .subscribe(onNext: { showNavBar in
-                self.optionsButton.tintColor = !showNavBar ? .black : .white
+                self.optionsButton.tintColor = !showNavBar ? .appBlackColor : .white
                 self.title = !showNavBar ? self.username : nil
             })
             .disposed(by: disposeBag)

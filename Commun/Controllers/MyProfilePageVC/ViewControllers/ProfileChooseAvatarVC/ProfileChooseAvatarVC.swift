@@ -121,7 +121,7 @@ class ProfileChooseAvatarVC: UIViewController {
         option.isSynchronous = false
         option.isNetworkAccessAllowed = true
 
-        avatarScrollView.showLoading(cover: false, spinnerColor: .white)
+        avatarScrollView.showLoading(cover: false, spinnerColor: .appWhiteColor)
         
         manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: option) { [weak self] (image, info) in
             if asset != self?.currentAsset {return}

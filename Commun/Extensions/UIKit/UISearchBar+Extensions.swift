@@ -10,7 +10,7 @@ import Foundation
 
 extension UISearchBar {
     static func `default`(
-        placeholder: String = "search placeholder".localized().uppercaseFirst
+        placeholder: String = "search".localized().uppercaseFirst
     ) -> UISearchBar {
         let sc = UISearchBar(frame: .zero)
         sc.tintColor = .appMainColor
@@ -18,7 +18,7 @@ extension UISearchBar {
         return sc
     }
     
-    func setStyle(placeholder: String = "search placeholder".localized().uppercaseFirst) {
+    func setStyle(placeholder: String = "search".localized().uppercaseFirst) {
         let searchTextField: UITextField
 
         if #available(iOS 13, *) {

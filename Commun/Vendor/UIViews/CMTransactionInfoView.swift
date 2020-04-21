@@ -32,7 +32,7 @@ class CMTransactionInfoView: MyView {
         
         defer {
             configureForAutoLayout()
-            backgroundColor = .white
+            backgroundColor = .appWhiteColor
             cornerRadius = 20
             clipsToBounds = true
         }
@@ -48,18 +48,18 @@ class CMTransactionInfoView: MyView {
         
         // first part
         let readyCheckMark = CommunButton.circle(size: 60,
-            backgroundColor: #colorLiteral(red: 0.3125971854, green: 0.8584119678, blue: 0.6879913807, alpha: 1),
-            tintColor: UIColor.white,
+            backgroundColor: .appGreenColor,
+            tintColor: UIColor.appWhiteColor,
             imageName: "icon-checkmark-white",
             imageEdgeInsets: .zero)
-        readyCheckMark.addShadow(ofColor: #colorLiteral(red: 0.732, green: 0.954, blue: 0.886, alpha: 1), radius: 24.0, offset: CGSize(width: 0.0, height: 8.0), opacity: 1.0)
+        readyCheckMark.addShadow(ofColor: UIColor.colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.732, green: 0.954, blue: 0.886, alpha: 1), darkColor: .clear), radius: 24.0, offset: CGSize(width: 0.0, height: 8.0), opacity: 1.0)
         
         let transactionCompletedLabel = UILabel.with(text: "transaction completed".localized().uppercaseFirst, textSize: 17, weight: .bold, textAlignment: .center)
         let transactionTimestampLabel = UILabel.with(text: transaction.operationDate.convert(toStringFormat: .transactionCompletedType), textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
         
         // second part
         let amount = transaction.amount
-        let textColor: UIColor = amount > 0 ? .appGreenColor : .black
+        let textColor: UIColor = amount > 0 ? .appGreenColor : .appBlackColor
         let amountLabel = UILabel.with(textSize: 20)
         amountLabel.attributedString = NSMutableAttributedString()
             .text((amount > 0 ? "+" : "-") + String(Double(abs(amount)).currencyValueFormatted + " "), size: 20, weight: .semibold, color: textColor)
@@ -115,7 +115,7 @@ class CMTransactionInfoView: MyView {
     override func layoutSubviews() {
         super.layoutSubviews()
         for dash in dashLines {
-            dash.draw(lineColor: .e2e6e8,
+            dash.draw(lineColor: .appLightGrayColor,
                 lineWidth: 2.0,
                 startPoint: CGPoint(x: 22, y: 1.0),
                 endPoint: CGPoint(x: bounds.maxX - 22, y: 1.0),

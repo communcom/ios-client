@@ -17,7 +17,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     var bottomViewHeigthConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
-    lazy var topView = UIView(backgroundColor: .f3f5fa)
+    lazy var topView = UIView(backgroundColor: .appLightGrayColor)
     lazy var metaView = PostMetaView(height: 40.0)
     
     lazy var moreActionButton: UIButton = {
@@ -31,7 +31,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     lazy var postStatsView = PostStatsView(forAutoLayout: ())
 
-    lazy var bottomView = UIView(backgroundColor: .f3f5fa)
+    lazy var bottomView = UIView(backgroundColor: .appLightGrayColor)
     
     // MARK: - Layout
     override func setUpViews() {

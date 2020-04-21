@@ -20,7 +20,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     var searchBarTopConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
-    lazy var searchContainerView = UIView(backgroundColor: .white)
+    lazy var searchContainerView = UIView(backgroundColor: .appWhiteColor)
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar(forAutoLayout: ())
         searchBar.searchBarStyle = .minimal
@@ -80,7 +80,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
 
     // bottomBar
     private lazy var shadowView = UIView(height: bottomBarHeight)
-    lazy var bottomBar = UIView(backgroundColor: .white)
+    lazy var bottomBar = UIView(backgroundColor: .appWhiteColor)
     
     // MARK: - Methods
     override func viewDidLayoutSubviews() {

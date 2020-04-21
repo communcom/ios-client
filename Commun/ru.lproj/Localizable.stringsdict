@@ -362,5 +362,29 @@
             <string>лидеры</string>
         </dict>
     </dict>
+    <key>%d new</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@new@</string>
+        <key>new</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>%d новых</string>
+            <key>one</key>
+            <string>%d новое</string>
+            <key>two</key>
+            <string>%d новых</string>
+            <key>few</key>
+            <string>%d новых</string>
+            <key>many</key>
+            <string>%d новых</string>
+            <key>other</key>
+            <string>%d новых</string>
+        </dict>
+    </dict>
 </dict>
 </plist>

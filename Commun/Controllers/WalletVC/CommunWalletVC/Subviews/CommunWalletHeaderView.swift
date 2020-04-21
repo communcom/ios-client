@@ -153,12 +153,12 @@ class CommunWalletHeaderView: MyView {
     
     private func makeShadowAndRoundCorner() {
         contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 25)
-        
-        var color = UIColor(red: 106, green: 128, blue: 245)!
+
+        var color = UIColor.colorSupportDarkMode(defaultColor: UIColor(red: 106, green: 128, blue: 245)!, darkColor: .clear)
         var opacity: Float = 0.3
         
         if isCollapsed {
-            color = UIColor(red: 108, green: 123, blue: 173)!
+            color = UIColor.colorSupportDarkMode(defaultColor: UIColor(red: 108, green: 123, blue: 173)!, darkColor: .black)
             opacity = 0.08
         }
         
