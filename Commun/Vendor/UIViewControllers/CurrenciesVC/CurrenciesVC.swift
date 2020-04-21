@@ -65,7 +65,7 @@ class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell>, Se
         Observable.merge(viewModel.items.asObservable(), viewModel.searchResult.filter {$0 != nil}.map {$0!}.asObservable())
             .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
             .do(onNext: { (items) in
-                if items.count == 0 {
+                if items.count == 0 && self.viewModel.state.value != .loading(true) {
                     self.handleListEmpty()
                 }
             })
