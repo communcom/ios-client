@@ -457,7 +457,7 @@ extension CommunityPageVC: UITableViewDelegate {
             self.updatePostSortingView()
         }
         
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         nc.transitioningDelegate = vc
         nc.modalPresentationStyle = .custom
         

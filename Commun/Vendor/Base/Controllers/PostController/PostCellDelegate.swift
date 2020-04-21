@@ -149,7 +149,7 @@ extension PostCellDelegate where Self: BaseViewController {
     
     func reportPost(_ post: ResponseAPIContentGetPost) {
         let vc = ContentReportVC(content: post)
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         
         nc.modalPresentationStyle = .custom
         nc.transitioningDelegate = vc
