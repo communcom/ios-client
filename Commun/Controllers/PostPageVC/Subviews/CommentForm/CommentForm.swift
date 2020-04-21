@@ -251,6 +251,18 @@ class CommentForm: MyView {
                 self.sendButton.isEnabled = shouldEnableSendButton
                 self.sendButton.isHidden = !shouldEnableSendButton
                 
+                // Check pasted link
+                if self.textView.text.trimmed.isImageType(), let stringURL = self.textView.text?.trimmed, let url = URL(string: stringURL) {
+                    DispatchQueue.global().async { [weak self] in
+                        if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                self?.localImage.accept(image)
+                                self?.textView.text = nil
+                            }
+                        }
+                    }
+                }
+                
                 UIView.animate(withDuration: 0.3, animations: {
                     self.layoutIfNeeded()
                 })
