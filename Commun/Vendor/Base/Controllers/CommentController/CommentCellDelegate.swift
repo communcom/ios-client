@@ -139,7 +139,7 @@ extension CommentCellDelegate where Self: BaseViewController {
     
     func reportComment(_ comment: ResponseAPIContentGetComment) {
         let vc = ContentReportVC(content: comment)
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         
         nc.modalPresentationStyle = .custom
         nc.transitioningDelegate = vc

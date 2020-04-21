@@ -20,12 +20,12 @@ extension MyProfileSettingsVC {
     }
 
     @objc func selectLanguage() {
-        let navVC = BaseNavigationController(rootViewController: SelectLanguageVC())
+        let navVC = SwipeNavigationController(rootViewController: SelectLanguageVC())
         present(navVC, animated: true, completion: nil)
     }
     
     @objc func showNotificationSettings() {
-        let navVC = BaseNavigationController(rootViewController: NotificationsSettingsVC())
+        let navVC = SwipeNavigationController(rootViewController: NotificationsSettingsVC())
         present(navVC, animated: true, completion: nil)
     }
     

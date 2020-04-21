@@ -32,7 +32,7 @@ extension CommentController {
     func report() {
         guard let comment = comment else {return}
         let vc = ContentReportVC(content: comment)
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         
         nc.modalPresentationStyle = .custom
         nc.transitioningDelegate = vc

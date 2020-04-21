@@ -243,7 +243,7 @@ class WalletBuyCommunVC: WalletConvertVC {
             self.walletCarouselWrapper.scrollTo(itemAtIndex: balanceIndex == 0 ? 0 : balanceIndex - 1)
         }
         
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
 }

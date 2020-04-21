@@ -109,7 +109,7 @@ extension MyProfilePageVC {
                     .disposed(by: self.disposeBag)
             }
             
-            let nc = BaseNavigationController(rootViewController: coverEditVC)
+            let nc = SwipeNavigationController(rootViewController: coverEditVC)
             pickerVC.present(nc, animated: true, completion: nil)
         }
         

@@ -466,7 +466,7 @@ class WalletSendPointsVC: BaseViewController {
             self.updateSendInfoByEnteredPoints()
         }
         
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
     
@@ -481,7 +481,7 @@ class WalletSendPointsVC: BaseViewController {
            strongSelf.updateSendInfoByEnteredPoints()
         }
         
-        let nc = BaseNavigationController(rootViewController: friendsListVC)
+        let nc = SwipeNavigationController(rootViewController: friendsListVC)
         present(nc, animated: true, completion: nil)        
     }
 

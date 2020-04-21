@@ -40,9 +40,8 @@ class MyEmptyPlaceHolderView: MyView {
     // MARK: - Subviews
     lazy var emojiLabel = UILabel.with(text: "😿", textSize: 32.0)
     lazy var titleLabel = UILabel.with(text: "Nothing", textSize: 15.0, weight: .semibold)
-    lazy var descriptionLabel = UILabel.with(text: "Nothing's here", textSize: 15.0, weight: .medium, textColor: .appGrayColor)
+    lazy var descriptionLabel = UILabel.with(text: "Nothing's here", textSize: 15.0, weight: .medium, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
     lazy var button = CommunButton.default(label: "retry")
-    
     
     // MARK: - Initializers
     init(emoji: String? = nil, title: String, description: String?, buttonLabel: String? = nil, buttonAction: (() -> Void)? = nil) {
@@ -60,7 +59,6 @@ class MyEmptyPlaceHolderView: MyView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     // MARK: - Custom Functions
     override func commonInit() {
@@ -86,7 +84,8 @@ class MyEmptyPlaceHolderView: MyView {
         
         containerView.addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 5.0)
-        descriptionLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         if let buttonLabel = buttonLabel {
             containerView.addSubview(button)
