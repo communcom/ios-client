@@ -19,7 +19,7 @@ extension PostEditorVC {
             self.viewModel.community.accept(community)
         }
 
-        let navigation = BaseNavigationController(rootViewController: vc)
+        let navigation = SwipeNavigationController(rootViewController: vc)
         navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         navigation.modalPresentationStyle = .custom
         navigation.transitioningDelegate = vc

@@ -96,7 +96,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followersButton.rx.tap.subscribe { _ in
             let vc = SubscribersVC(title: self.profile?.username, userId: self.profile?.userId)
             vc.dismissModalWhenPushing = true
-            let navigation = BaseNavigationController(rootViewController: vc)
+            let navigation = SwipeNavigationController(rootViewController: vc)
             navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
             self.parentViewController?.present(navigation, animated: true, completion: nil)
         }.disposed(by: disposeBag)
@@ -124,7 +124,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             .subscribe { _ in
                 let vc = SubscriptionsVC(title: self.profile?.username, userId: self.profile?.userId, type: .user)
                 vc.dismissModalWhenPushing = true
-                let navigation = BaseNavigationController(rootViewController: vc)
+                let navigation = SwipeNavigationController(rootViewController: vc)
                 navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
                 self.parentViewController?.present(navigation, animated: true, completion: nil)
             }
@@ -281,7 +281,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     
     @objc func seeAllButtonDidTouch() {
         let vc = SubscriptionsVC(title: profile?.username, userId: profile?.userId, type: .community)
-        let navigation = BaseNavigationController(rootViewController: vc)
+        let navigation = SwipeNavigationController(rootViewController: vc)
         navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         parentViewController?.present(navigation, animated: true, completion: nil)
     }

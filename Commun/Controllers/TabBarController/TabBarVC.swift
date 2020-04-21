@@ -112,25 +112,25 @@ class TabBarVC: UITabBarController {
     private func configTabs() {
         // Feed Tab
         let feed = FeedPageVC()
-        let feedNC = BaseNavigationController(rootViewController: feed, tabBarVC: self)
+        let feedNC = SwipeNavigationController(rootViewController: feed, tabBarVC: self)
         let feedItem = buttonTabBarItem(image: UIImage(named: "feed")!, tag: feedTabIndex)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
         let discoveryVC = DiscoveryVC()
-        let discoveryNC = BaseNavigationController(rootViewController: discoveryVC, tabBarVC: self)
+        let discoveryNC = SwipeNavigationController(rootViewController: discoveryVC, tabBarVC: self)
         let discoveryItem = buttonTabBarItem(image: UIImage(named: "tabbar-discovery-icon")!, tag: discoveryTabIndex)
         discoveryVC.accessibilityLabel = "TabBarDiscoveryTabBarItem"
         
         // Notifications Tab
         let notifications = NotificationsPageVC()
-        let notificationsNC = BaseNavigationController(rootViewController: notifications, tabBarVC: self)
+        let notificationsNC = SwipeNavigationController(rootViewController: notifications, tabBarVC: self)
         notificationsNC.navigationBar.prefersLargeTitles = true
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
 
         // Profile Tab
         let profile = MyProfilePageVC()
-        let profileNC = BaseNavigationController(rootViewController: profile, tabBarVC: self)
+        let profileNC = SwipeNavigationController(rootViewController: profile, tabBarVC: self)
         let profileItem = buttonTabBarItem(image: UIImage(named: "tabbar-profile")!, tag: profileTabIndex)
         profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
         profileNC.navigationBar.tintColor = UIColor.appMainColor

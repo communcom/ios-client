@@ -350,7 +350,7 @@ class CommunWalletVC: TransferHistoryVC {
             }
         }
         
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
     
@@ -359,7 +359,7 @@ class CommunWalletVC: TransferHistoryVC {
             self.openOtherBalancesWalletVC(withSelectedBalance: balance)
         }
         
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
         
@@ -370,7 +370,7 @@ class CommunWalletVC: TransferHistoryVC {
                 self.sendPoint(to: user)
             }
         }
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
     
