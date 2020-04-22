@@ -40,7 +40,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         let horizontalSpacing: CGFloat = 16 * Config.heightRatio
         let itemWidth = (width - horizontalSpacing) / 2
         layout.itemSize = CGSize(width: itemWidth, height: 190)
-        layout.headerReferenceSize = CGSize(width: width, height: 132 + searchBar.height + 10)
+        layout.headerReferenceSize = CGSize(width: width, height: FTUECommunitiesHeaderView.height)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
@@ -164,7 +164,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         searchBar.sizeToFit()
         
         view.addSubview(searchContainerView)
-        searchBarTopConstraint = searchContainerView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 132)
+        searchBarTopConstraint = searchContainerView.autoPinEdge(toSuperviewSafeArea: .top, withInset: FTUECommunitiesHeaderView.height - 10 - 8 - searchBar.height - 8)
         searchContainerView.autoPinEdge(toSuperviewEdge: .leading)
         searchContainerView.autoPinEdge(toSuperviewEdge: .trailing)
     }
