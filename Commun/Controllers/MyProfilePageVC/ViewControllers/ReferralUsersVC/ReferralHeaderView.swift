@@ -68,7 +68,7 @@ class ReferralHeaderView: MyTableHeaderView {
         containerView.addSubview(buttonsStackView)
         buttonsStackView.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 10)
         buttonsStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
-        buttonsStackView.autoPinEdge(.trailing, to: .leading, of: imageView)
+//        buttonsStackView.autoPinEdge(.trailing, to: .leading, of: imageView)
         
         buttonsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
         
