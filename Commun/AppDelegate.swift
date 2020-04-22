@@ -140,6 +140,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // create new TabBarVC when user logged out
             if AuthManager.shared.isLoggedOut {
                 tabBarVC = TabBarVC()
+                SubscribersViewModel.ofCurrentUser = SubscribersViewModel(userId: Config.currentUser?.id)
+                SubscriptionsViewModel.ofCurrentUserTypeUser = SubscriptionsViewModel(type: .user)
+                SubscriptionsViewModel.ofCurrentUserTypeCommunity = SubscriptionsViewModel(type: .community)
+                BalancesViewModel.ofCurrentUser = BalancesViewModel()
             }
             
             self.changeRootVC(tabBarVC)
