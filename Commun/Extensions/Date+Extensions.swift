@@ -7,6 +7,7 @@
 //
 import Foundation
 import CyberSwift
+import Localize_Swift
 
 extension Date {
     
@@ -23,6 +24,7 @@ extension Date {
         let toDate = Date()
 
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: Localize.currentLanguage())
 
         // Estimation
         // Year

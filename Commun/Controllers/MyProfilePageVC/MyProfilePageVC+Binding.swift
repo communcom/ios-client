@@ -38,6 +38,7 @@ extension MyProfilePageVC {
         // communities
         (viewModel as! MyProfilePageViewModel).subscriptionsVM.items
             .map {$0.compactMap {$0.communityValue}}
+            .map {$0.filter {$0.isBeingJoined == true || $0.isSubscribed == true}}
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: CommunityCollectionCell.self)) { index, model, cell in
                 cell.setUp(with: model)
                 cell.delegate = self

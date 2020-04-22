@@ -132,4 +132,14 @@ extension String {
         let testString = NSPredicate(format: "SELF MATCHES %@", regex)
         return testString.evaluate(with: self)
     }
+    
+    func heightWithFont(font: UIFont = .systemFont(ofSize: 15), width: CGFloat) -> CGFloat {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: .greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.font = font
+        label.text = self
+        label.sizeToFit()
+        return label.frame.height
+    }
 }
