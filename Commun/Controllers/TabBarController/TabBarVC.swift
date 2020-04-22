@@ -276,8 +276,7 @@ class TabBarVC: UITabBarController {
             .map {$0!}
             .subscribe(onNext: { (data) in
                 if let presentedVC = self.presentedViewController as? BasicEditorVC {
-                    if !presentedVC.contentTextView.text.isEmpty || presentedVC._viewModel.attachment.value != nil
-                    {
+                    if !presentedVC.contentTextView.text.isEmpty || presentedVC._viewModel.attachment.value != nil {
                         presentedVC.showAlert(title: "replace content".localized().uppercaseFirst, message: "you are currently editing a post".localized().uppercaseFirst + ".\n" + "would you like to replace this content".localized().uppercaseFirst, buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 1) { (index) in
                             if index == 0 {
                                 presentedVC.shareExtensionData = data
@@ -289,11 +288,20 @@ class TabBarVC: UITabBarController {
                         presentedVC.loadShareExtensionData()
                     }
                 } else if let presentedVC = self.presentedViewController {
-                    presentedVC.showAlert(title: "open editor".localized().uppercaseFirst, message: "close this screen and open editor".localized().uppercaseFirst + "?", buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 0) { (index) in
-                        if index == 0 {
-                            presentedVC.dismiss(animated: true) {
-                                let basicEditorScene = BasicEditorVC(shareExtensionData: data)
-                                self.present(basicEditorScene, animated: true, completion: nil)
+                    if let activityVC = presentedVC as? UIActivityViewController {
+                        activityVC.dismiss(animated: true, completion: {
+                            let basicEditorScene = BasicEditorVC(shareExtensionData: data, chooseCommunityAfterLoading: true)
+                            self.present(basicEditorScene, animated: true, completion: nil)
+                        })
+                    }
+                    
+                    else {
+                        presentedVC.showAlert(title: "open editor".localized().uppercaseFirst, message: "close this screen and open editor".localized().uppercaseFirst + "?", buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 0) { (index) in
+                            if index == 0 {
+                                presentedVC.dismiss(animated: true) {
+                                    let basicEditorScene = BasicEditorVC(shareExtensionData: data)
+                                    self.present(basicEditorScene, animated: true, completion: nil)
+                                }
                             }
                         }
                     }
@@ -301,6 +309,7 @@ class TabBarVC: UITabBarController {
                     let basicEditorScene = BasicEditorVC(shareExtensionData: data)
                     self.present(basicEditorScene, animated: true, completion: nil)
                 }
+                
                 DispatchQueue.main.async {
                     appDelegate.shareExtensionDataRelay.accept(nil)
                 }
