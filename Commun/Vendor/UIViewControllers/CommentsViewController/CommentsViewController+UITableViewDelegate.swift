@@ -38,7 +38,7 @@ extension CommentsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard let parentComment = viewModel.items.value[safe: section] else {return nil}
+        guard let parentComment = viewModel.items.value[safe: section] else { return nil }
         
         // if all comments was fetched
         if parentComment.childCommentsCount + 1 == tableView.numberOfRows(inSection: section) {
@@ -55,6 +55,9 @@ extension CommentsViewController: UITableViewDelegate {
         button.parentComment = parentComment
         button.offset = UInt(parentComment.children?.count ?? 0)
         button.addTarget(self, action: #selector(repliesDidTouch(_:)), for: .touchUpInside)
+        
+        // Automatically disclose Reply comments
+        self.repliesDidTouch(button)
         
         let view = UIView(frame: .zero)
         view.addSubview(button)
@@ -76,29 +79,31 @@ extension CommentsViewController: UITableViewDelegate {
     }
     
     @objc func repliesDidTouch(_ button: ReplyButton) {
-        guard let post = (viewModel as! PostPageViewModel).post.value,
-            let comment = button.parentComment
-        else {return}
+        guard let post = (viewModel as! PostPageViewModel).post.value, let comment = button.parentComment else { return }
+        
         let originTitle = button.titleLabel?.text
         button.setTitle("loading".localized().uppercaseFirst + "...", for: .normal)
         button.isEnabled = false
-        RestAPIManager.instance.getRepliesForComment(
-            forPost: post.contentId,
-            parentComment: comment.contentId,
-            offset: button.offset,
-            limit: button.limit
+        
+        RestAPIManager.instance.getRepliesForComment(forPost: post.contentId,
+                                                     parentComment: comment.contentId,
+                                                     offset: button.offset,
+                                                     limit: button.limit
         )
             .map {$0.items}
             .subscribe(onSuccess: {[weak self] (children) in
                 guard let strongSelf = self else {return}
+                
                 // modify data
                 var comments = strongSelf.viewModel.items.value
+                
                 if let currentCommentIndex = comments.firstIndex(where: {$0.identity == comment.identity}) {
                     var newChildren = comments[currentCommentIndex].children ?? []
                     newChildren.joinUnique(children ?? [])
                     newChildren = newChildren.sortedByTimeDesc
                     comments[currentCommentIndex].children = newChildren
                 }
+                
                 strongSelf.viewModel.items.accept(comments)
             }) { [weak self] (error) in
                 self?.showError(error)
