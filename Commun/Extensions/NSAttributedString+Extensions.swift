@@ -145,4 +145,13 @@ extension NSAttributedString {
         let separator = NSMutableAttributedString(string: "\n")
         return separator
     }
+    
+    func heightWithWidth(width: CGFloat) -> CGFloat {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: .greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.attributedText = self
+        label.sizeToFit()
+        return label.frame.height
+    }
 }
