@@ -28,7 +28,9 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     
     lazy var walletShadowView = UIView(forAutoLayout: ())
     lazy var walletView = UIView(cornerRadius: 16)
-    lazy var communValueLabel = UILabel.with(text: "0.0000", textSize: 20, weight: .semibold, textColor: .white)
+    lazy var equityValueLabel = UILabel.with(text: "equity Commun Value".localized().uppercaseFirst, textSize: 12 * Config.widthRatio, weight: .semibold, textColor: .white, numberOfLines: 0)
+    lazy var valueLabel = UILabel.with(text: "0.0000", textSize: 20, weight: .semibold, textColor: .white)
+    
     
     override func commonInit() {
         super.commonInit()
@@ -109,13 +111,12 @@ final class MyProfileHeaderView: UserProfileHeaderView {
             // commun value
             let communValueContainerView: UIView = {
                 let containerView = UIView(forAutoLayout: ())
-                let equityCommunValueLabel = UILabel.with(text: "equity Commun Value".localized().uppercaseFirst, textSize: 12 * Config.widthRatio, weight: .semibold, textColor: whiteColor, numberOfLines: 0)
-                containerView.addSubview(equityCommunValueLabel)
-                equityCommunValueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+                containerView.addSubview(equityValueLabel)
+                equityValueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
                 
-                containerView.addSubview(self.communValueLabel)
-                self.communValueLabel.autoPinEdge(.top, to: .bottom, of: equityCommunValueLabel, withOffset: 4)
-                self.communValueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+                containerView.addSubview(self.valueLabel)
+                self.valueLabel.autoPinEdge(.top, to: .bottom, of: equityValueLabel, withOffset: 4)
+                self.valueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
                 
                 return containerView
             }()

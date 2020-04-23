@@ -103,7 +103,9 @@ class CommunWalletVC: TransferHistoryVC {
         
         tableHeaderView.setMyPointHidden(false)
         
-        isShowingUSD = true
+        isShowingUSD = !UserDefaults.standard.bool(forKey: Config.currentEquityValueIsShowingCMN)
+        
+        titleView.delegate = self
     }
     
     override func viewWillSetUpTableView() {

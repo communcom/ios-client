@@ -8,11 +8,17 @@
 
 import Foundation
 
+protocol CMWalletTitleViewDelegate: class {
+    func viewModeDidChange(isShowingUSD: Bool)
+}
+
 class CMWalletTitleView: MyView {
     let unselectedBackgroundColor = UIColor.white.withAlphaComponent(0.2)
     let unselectedTintColor = UIColor.white
     let selectedBackgroundColor = UIColor.white
     let selectedTintColor = UIColor.appMainColor
+    
+    weak var delegate: CMWalletTitleViewDelegate?
     
     lazy var logoView: UIView = {
         let view = UIView(width: 40, height: 40, backgroundColor: unselectedBackgroundColor, cornerRadius: 20)
@@ -38,6 +44,12 @@ class CMWalletTitleView: MyView {
         logoView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .leading)
         
         logoView.autoPinEdge(.leading, to: .trailing, of: usdView, withOffset: 10)
+        
+        logoView.isUserInteractionEnabled = true
+        logoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(logoViewDidTouch)))
+        
+        usdView.isUserInteractionEnabled = true
+        usdView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(usdViewDidTouch)))
     }
     
     func setShowUSD(_ show: Bool) {
@@ -54,5 +66,13 @@ class CMWalletTitleView: MyView {
             usdView.backgroundColor = unselectedBackgroundColor
             usdSymbol.textColor = unselectedTintColor
         }
+    }
+    
+    @objc func logoViewDidTouch() {
+        delegate?.viewModeDidChange(isShowingUSD: false)
+    }
+    
+    @objc func usdViewDidTouch() {
+        delegate?.viewModeDidChange(isShowingUSD: true)
     }
 }

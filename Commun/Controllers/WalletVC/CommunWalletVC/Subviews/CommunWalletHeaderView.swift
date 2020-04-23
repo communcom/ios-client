@@ -97,7 +97,7 @@ class CommunWalletHeaderView: MyView {
         // set up with commun value
         if isShowingUSD {
             titleLabel.text = "equity USD Value".localized().uppercaseFirst
-            pointLabel.text = "$ \((balances.enquityCommunValue * 0.01).currencyValueFormatted)"
+            pointLabel.text = "$ \(balances.equityUSDValue.currencyValueFormatted)"
         } else {
             titleLabel.text = "equity Commun Value".localized().uppercaseFirst
             pointLabel.text = "\(balances.enquityCommunValue.currencyValueFormatted)"
