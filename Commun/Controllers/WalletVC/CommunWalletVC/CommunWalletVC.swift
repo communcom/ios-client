@@ -287,7 +287,6 @@ class CommunWalletVC: TransferHistoryVC {
 
     // MARK: - Actions
     @objc func optionButtonDidTouch() {
-        let nc = BaseNavigationController(rootViewController: CommunWalletOptionsVC())
         present(CommunWalletOptionsVC(), animated: true, completion: nil)
     }
     

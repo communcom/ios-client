@@ -26,6 +26,20 @@ class CommunWalletOptionsVC: BaseViewController {
     }
     
     // MARK: - Subviews
+    lazy var headerView: UIView = {
+        let view = UIView(height: 58 * Config.heightRatio, backgroundColor: .appWhiteColor)
+        let label = UILabel.with(text: "settings".localized().uppercaseFirst, textSize: 15, weight: .semibold)
+        view.addSubview(label)
+        label.autoCenterInSuperview()
+        
+        let closeButton = UIButton.close()
+        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        
+        view.addSubview(closeButton)
+        closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        closeButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        return view
+    }()
     lazy var stackView = UIStackView(axis: .vertical, spacing: 2, alignment: .fill, distribution: .fill)
     lazy var hideEmptyView: UIView = {
         let view = UIView(height: optionHeight, backgroundColor: optionBackgroundColor)
@@ -39,6 +53,7 @@ class CommunWalletOptionsVC: BaseViewController {
         switcher.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         switcher.autoAlignAxis(toSuperviewAxis: .horizontal)
         switcher.autoPinEdge(.leading, to: .trailing, of: label, withOffset: 8)
+        switcher.onTintColor = .appMainColor
         
         return view
     }()
@@ -63,14 +78,14 @@ class CommunWalletOptionsVC: BaseViewController {
         title = "settings".localized().uppercaseFirst
         view.backgroundColor = .appLightGrayColor
         
-        let closeButton = UIButton.close()
-        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-        setRightNavBarButton(with: closeButton)
-        
         let backgroundView = UIView( cornerRadius: 10)
         
+        view.addSubview(headerView)
+        headerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        
         view.addSubview(backgroundView)
-        backgroundView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(inset: 16))
+        backgroundView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
+        backgroundView.autoPinEdge(.top, to: .bottom, of: headerView, withOffset: 16) 
         
         backgroundView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
