@@ -14,7 +14,6 @@ protocol CommunWalletHeaderViewDatasource: class {
 
 class CommunWalletHeaderView: MyView {
     // MARK: - Properties
-    let themeColor = UIColor.colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1), darkColor: #colorLiteral(red: 0.1725490196, green: 0.1843137255, blue: 0.2117647059, alpha: 1))
     var isCollapsed = false
     weak var dataSource: CommunWalletHeaderViewDatasource?
     
@@ -27,7 +26,7 @@ class CommunWalletHeaderView: MyView {
     // MARK: - Subviews
     var carousel: WalletCarousel?
     lazy var shadowView = UIView(forAutoLayout: ())
-    lazy var contentView = UIView(backgroundColor: themeColor)
+    lazy var contentView = UIView(backgroundColor: .appMainColorDarkBlack)
 
     lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
     lazy var pointLabel = UILabel.with(text: "167 500.23", textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
@@ -121,7 +120,7 @@ class CommunWalletHeaderView: MyView {
         layoutBalanceExpanded()
 
         // modify fonts, colors
-        self.contentView.backgroundColor = themeColor
+        self.contentView.backgroundColor = .appMainColorDarkBlack
 
         self.titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         self.pointLabel.font = .systemFont(ofSize: 30, weight: .bold)

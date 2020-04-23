@@ -20,6 +20,10 @@ extension UIColor {
     static var appMainColor: UIColor {
         return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1), darkColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1))
     }
+    
+    static var appMainColorDarkBlack: UIColor {
+        colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1), darkColor: #colorLiteral(red: 0.1725490196, green: 0.1843137255, blue: 0.2117647059, alpha: 1))
+    }
 
     static var appRedColor: UIColor {
         return colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.9607843137, green: 0.2392156863, blue: 0.3568627451, alpha: 1), darkColor: #colorLiteral(red: 0.9607843137, green: 0.2392156863, blue: 0.3568627451, alpha: 1))
