@@ -12,7 +12,7 @@ import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
-    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: false, backgroundColor: .appMainColor, textColor: .white)}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: false, backgroundColor: UIColor.colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1), darkColor: #colorLiteral(red: 0.1725490196, green: 0.1843137255, blue: 0.2117647059, alpha: 1)), textColor: .white)}
     // MARK: - Properties
     var balancesVM: BalancesViewModel {
         (viewModel as! WalletViewModel).balancesVM
