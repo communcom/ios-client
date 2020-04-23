@@ -198,7 +198,7 @@ class CommunWalletVC: TransferHistoryVC {
             .map { (items, shouldHideEmpty) -> [ResponseAPIWalletGetBalance] in
                 var items = items
                 if shouldHideEmpty {
-                    items = items.filter {$0.balanceValue > 0}
+                    items = items.filter {$0.symbol == "CMN" || $0.balanceValue > 0}
                 }
                 return items
             }
