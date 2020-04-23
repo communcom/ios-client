@@ -17,6 +17,8 @@ class CommunWalletOptionsVC: BaseViewController {
     
     var shouldHideEmptyPoints: Bool { UserDefaults.standard.bool(forKey: CommunWalletOptionsVC.hideEmptyPointsKey) }
     
+    var hideEmptyPointCompletion: ((Bool) -> Void)?
+    
     // MARK: - Initializers
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -103,12 +105,11 @@ class CommunWalletOptionsVC: BaseViewController {
     }
     
     @objc func backWithAction() {
-        backCompletion {
-            if self.shouldHideEmptyPoints != self.switcher.isOn
-            {
-                UserDefaults.standard.set(self.switcher.isOn, forKey: CommunWalletOptionsVC.hideEmptyPointsKey)
-            }
+        if self.shouldHideEmptyPoints != self.switcher.isOn
+        {
+            hideEmptyPointCompletion?(self.switcher.isOn)
         }
+        back()
     }
 }
 

@@ -74,6 +74,7 @@ class CommunWalletVC: TransferHistoryVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUpNavBarItems()
+        (viewModel as! WalletViewModel).balancesVM.update()
     }
     
     func setUpNavBarItems() {
@@ -193,7 +194,14 @@ class CommunWalletVC: TransferHistoryVC {
             })
             .disposed(by: disposeBag)
         
-        balancesVM.items
+        Observable.combineLatest(balancesVM.items, (viewModel as! WalletViewModel).hideEmptyPointsRelay)
+            .map { (items, shouldHideEmpty) -> [ResponseAPIWalletGetBalance] in
+                var items = items
+                if shouldHideEmpty {
+                    items = items.filter {$0.balanceValue > 0}
+                }
+                return items
+            }
             .do(onNext: {self.tableHeaderView.setMyPointHidden($0.count == 0)})
             .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
@@ -287,7 +295,12 @@ class CommunWalletVC: TransferHistoryVC {
 
     // MARK: - Actions
     @objc func optionButtonDidTouch() {
-        present(CommunWalletOptionsVC(), animated: true, completion: nil)
+        let vc = CommunWalletOptionsVC()
+        vc.hideEmptyPointCompletion = { isOn in
+            UserDefaults.standard.set(isOn, forKey: CommunWalletOptionsVC.hideEmptyPointsKey)
+            (self.viewModel as! WalletViewModel).hideEmptyPointsRelay.accept(isOn)
+        }
+        present(vc, animated: true, completion: nil)
     }
     
     @objc func convertButtonDidTouch() {
