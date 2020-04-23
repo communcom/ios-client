@@ -34,6 +34,14 @@ class CommunWalletVC: TransferHistoryVC {
 
     var headerTopConstraint: NSLayoutConstraint!
     
+    var isShowingUSD = false {
+        didSet {
+            titleView.setShowUSD(isShowingUSD)
+            headerView.isShowingUSD = isShowingUSD
+            headerView.reloadData()
+        }
+    }
+    
     // MARK: - Subviews
     lazy var headerView: CommunWalletHeaderView = createHeaderView()
     
@@ -52,7 +60,7 @@ class CommunWalletVC: TransferHistoryVC {
     lazy var barPointLabel = UILabel.with(text: "167 500.23", textSize: 15, weight: .bold, textColor: .white, textAlignment: .center)
 
     lazy var barBalanceView = createBalanceView()
-    lazy var logoView = UIView.transparentCommunLogo(size: 40)
+    lazy var titleView = CMWalletTitleView(forAutoLayout: ())
 
     func createBalanceView() -> UIView {
         let view = UIView(forAutoLayout: ())
@@ -94,6 +102,8 @@ class CommunWalletVC: TransferHistoryVC {
         tableHeaderView.filterButton.addTarget(self, action: #selector(openFilter), for: .touchUpInside)
         
         tableHeaderView.setMyPointHidden(false)
+        
+        isShowingUSD = true
     }
     
     override func viewWillSetUpTableView() {
@@ -169,10 +179,10 @@ class CommunWalletVC: TransferHistoryVC {
                     let alpha = 1 - ((100 / 50) / 100 * diff)
                     
                     if self.isCommunBalance {
-                        self.logoView.alpha = alpha
+                        self.titleView.alpha = alpha
                         
-                        if self.navigationItem.titleView != self.logoView {
-                            self.navigationItem.titleView = self.logoView
+                        if self.navigationItem.titleView != self.titleView {
+                            self.navigationItem.titleView = self.titleView
                         }
                     } else if let carousel = self.headerView.carousel {
                         carousel.alpha = alpha

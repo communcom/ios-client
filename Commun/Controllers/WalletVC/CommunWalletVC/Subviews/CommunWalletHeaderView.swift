@@ -16,6 +16,7 @@ class CommunWalletHeaderView: MyView {
     // MARK: - Properties
     var isCollapsed = false
     weak var dataSource: CommunWalletHeaderViewDatasource?
+    var isShowingUSD = false
     
     // MARK: - ConfigurableConstraints
     var titleTopConstraint: NSLayoutConstraint?
@@ -94,8 +95,13 @@ class CommunWalletHeaderView: MyView {
         guard let balances = dataSource?.data(forWalletHeaderView: self)
         else {return}
         // set up with commun value
-        titleLabel.text = "equity Commun Value".localized().uppercaseFirst
-        pointLabel.text = "\(balances.enquityCommunValue.currencyValueFormatted)"
+        if isShowingUSD {
+            titleLabel.text = "equity USD Value".localized().uppercaseFirst
+            pointLabel.text = "$ \((balances.enquityCommunValue * 0.01).currencyValueFormatted)"
+        } else {
+            titleLabel.text = "equity Commun Value".localized().uppercaseFirst
+            pointLabel.text = "\(balances.enquityCommunValue.currencyValueFormatted)"
+        }
     }
     
     // MARK: - Private functions
