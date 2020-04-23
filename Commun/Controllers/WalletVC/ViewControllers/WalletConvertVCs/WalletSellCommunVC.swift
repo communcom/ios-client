@@ -11,9 +11,9 @@ import RxSwift
 
 class WalletSellCommunVC: WalletConvertVC {
     // MARK: - Properties
-    override var topColor: UIColor {
-        .appMainColor
-    }
+//    override var topColor: UIColor {
+//        .appMainColorDarkBlack
+//    }
     
     // MARK: - Methods
     override func setUp() {
