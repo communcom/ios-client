@@ -82,7 +82,6 @@ class CommunWalletVC: TransferHistoryVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUpNavBarItems()
-        (viewModel as! WalletViewModel).balancesVM.update()
     }
     
     func setUpNavBarItems() {
