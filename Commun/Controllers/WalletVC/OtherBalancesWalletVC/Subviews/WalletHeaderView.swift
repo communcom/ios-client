@@ -24,7 +24,7 @@ class WalletHeaderView: CommunWalletHeaderView {
     
     // MARK: - Balance
     lazy var balanceContainerView = UIView(forAutoLayout: ())
-    lazy var communValueLabel = UILabel.with(text: "= 150 Commun", textSize: 12, weight: .semibold, textColor: .appWhiteColor)
+    lazy var communValueLabel = UILabel.with(text: "= 150 Commun", textSize: 12, weight: .semibold, textColor: .white)
     lazy var progressBar = GradientProgressBar(height: 10)
     lazy var availableHoldValueLabel = UILabel.with(text: "available".localized().uppercaseFirst + "/" + "hold".localized().uppercaseFirst, textSize: 12, textColor: .appWhiteColor)
     
@@ -62,8 +62,8 @@ class WalletHeaderView: CommunWalletHeaderView {
         // set up with other value
         communValueLabel.text = "= \(balance.communValue.currencyValueFormatted)" + " " + "Commun"
         availableHoldValueLabel.attributedText = NSMutableAttributedString()
-            .text("\(balance.balanceValue.currencyValueFormatted)", size: 12, color: .appWhiteColor)
-            .text("/\(balance.frozenValue.currencyValueFormatted)", size: 12, color: UIColor.appWhiteColor.withAlphaComponent(0.5))
+            .text("\(balance.balanceValue.currencyValueFormatted)", size: 12, color: .white)
+            .text("/\(balance.frozenValue.currencyValueFormatted)", size: 12, color: UIColor.white.withAlphaComponent(0.5))
         
         // progress bar
         var progress: Double = 0
@@ -119,10 +119,10 @@ class WalletHeaderView: CommunWalletHeaderView {
         progressBar.autoPinEdge(toSuperviewEdge: .leading, withInset: 22 * Config.widthRatio)
         progressBar.autoPinEdge(toSuperviewEdge: .trailing, withInset: 22 * Config.widthRatio)
         
-        let label = UILabel.with(textSize: 12, textColor: .appWhiteColor)
+        let label = UILabel.with(textSize: 12)
         label.attributedText = NSMutableAttributedString()
-            .text("available".localized().uppercaseFirst, size: 12, color: .appWhiteColor)
-            .text("/" + "hold".localized().uppercaseFirst, size: 12, color: UIColor.appWhiteColor.withAlphaComponent(0.5))
+            .text("available".localized().uppercaseFirst, size: 12, color: .white)
+            .text("/" + "hold".localized().uppercaseFirst, size: 12, color: UIColor.white.withAlphaComponent(0.5))
         
         balanceContainerView.addSubview(label)
         label.autoPinEdge(.leading, to: .leading, of: progressBar)
