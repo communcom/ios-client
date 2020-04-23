@@ -53,7 +53,7 @@ final class FeedPageVC: PostsViewController {
         tableView.backgroundColor = .appLightGrayColor
         tableView.keyboardDismissMode = .onDrag
         
-        let statusBarView = UIView(backgroundColor: .appMainColor)
+        let statusBarView = UIView(backgroundColor: .appMainColorDarkBlack)
         view.addSubview(statusBarView)
         statusBarView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
