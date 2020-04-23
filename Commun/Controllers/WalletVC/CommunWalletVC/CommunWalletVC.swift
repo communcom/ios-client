@@ -12,7 +12,7 @@ import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
-    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: false, backgroundColor: .appMainColor)}
+    override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: false, backgroundColor: .appMainColor, textColor: .white)}
     // MARK: - Properties
     var balancesVM: BalancesViewModel {
         (viewModel as! WalletViewModel).balancesVM
@@ -73,8 +73,13 @@ class CommunWalletVC: TransferHistoryVC {
     // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        setUpNavBarItems()
+        (viewModel as! WalletViewModel).balancesVM.update()
+    }
+    
+    func setUpNavBarItems() {
         self.setNavBarBackButton(tintColor: .white)
+        self.setRightBarButton(imageName: "icon-post-cell-more-center-default", tintColor: .white, action: #selector(optionButtonDidTouch))
     }
     
     // MARK: - Custom Functions
@@ -189,7 +194,14 @@ class CommunWalletVC: TransferHistoryVC {
             })
             .disposed(by: disposeBag)
         
-        balancesVM.items
+        Observable.combineLatest(balancesVM.items, (viewModel as! WalletViewModel).hideEmptyPointsRelay)
+            .map { (items, shouldHideEmpty) -> [ResponseAPIWalletGetBalance] in
+                var items = items
+                if shouldHideEmpty {
+                    items = items.filter {$0.symbol == "CMN" || $0.balanceValue > 0}
+                }
+                return items
+            }
             .do(onNext: {self.tableHeaderView.setMyPointHidden($0.count == 0)})
             .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
@@ -211,10 +223,6 @@ class CommunWalletVC: TransferHistoryVC {
                 cell.setUp(with: model)
             }
             .disposed(by: disposeBag)
-    }
-    
-    func reloadData() {
-        headerView.reloadData()
     }
     
     override func bindItemSelected() {
@@ -280,8 +288,21 @@ class CommunWalletVC: TransferHistoryVC {
         balancesVM.reload()
         subscriptionsVM.reload()
     }
+    
+    func reloadData() {
+        headerView.reloadData()
+    }
 
     // MARK: - Actions
+    @objc func optionButtonDidTouch() {
+        let vc = CommunWalletOptionsVC()
+        vc.hideEmptyPointCompletion = { isOn in
+            UserDefaults.standard.set(isOn, forKey: CommunWalletOptionsVC.hideEmptyPointsKey)
+            (self.viewModel as! WalletViewModel).hideEmptyPointsRelay.accept(isOn)
+        }
+        present(vc, animated: true, completion: nil)
+    }
+    
     @objc func convertButtonDidTouch() {
         guard let vc = createConvertVC() else {return}
         show(vc, sender: nil)
@@ -392,21 +413,5 @@ class CommunWalletVC: TransferHistoryVC {
         
         let vc = OtherBalancesWalletVC(balances: balances, symbol: selectedBalance.symbol, subscriptions: subscriptions, history: viewModel.items.value)
         show(vc, sender: nil)
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension CommunWalletVC: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == sendPointsCollectionView {
-            return CGSize(width: 90, height: SendPointCollectionCell.height)
-        }
-        return CGSize(width: 140, height: MyPointCollectionCell.height)
-    }
-}
-
-extension CommunWalletVC: CommunWalletHeaderViewDatasource {
-    func data(forWalletHeaderView headerView: CommunWalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
-        balances
     }
 }

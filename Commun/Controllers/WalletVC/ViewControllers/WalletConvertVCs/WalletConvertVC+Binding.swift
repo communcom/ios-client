@@ -120,10 +120,6 @@ extension WalletConvertVC {
         scrollView.rx.contentOffset
             .map {$0.y}
             .subscribe(onNext: { (offsetY) in
-                print(offsetY)
-                print("\(self.scrollView.contentSize.height)")
-                print("\(self.view.safeAreaInsets.top)")
-                
                 if offsetY >= keyboardOnOffset {
                     convertLogoContainerViewBottomConstraint.isActive = false
                     self.navigationController?.navigationBar.subviews.first?.backgroundColor = self.topColor
