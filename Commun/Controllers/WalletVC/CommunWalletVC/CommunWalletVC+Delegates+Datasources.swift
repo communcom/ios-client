@@ -23,3 +23,10 @@ extension CommunWalletVC: CommunWalletHeaderViewDatasource {
         balances
     }
 }
+
+extension CommunWalletVC: CMWalletTitleViewDelegate {
+    func viewModeDidChange(isShowingUSD: Bool) {
+        self.isShowingUSD = isShowingUSD
+        UserDefaults.standard.set(!isShowingUSD, forKey: Config.currentEquityValueIsShowingCMN)
+    }
+}

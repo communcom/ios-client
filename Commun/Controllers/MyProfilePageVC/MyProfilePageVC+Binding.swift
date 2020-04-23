@@ -52,7 +52,7 @@ extension MyProfilePageVC {
     
     func bindBalances() {
         let walletView = (headerView as! MyProfileHeaderView).walletShadowView
-        let label = (headerView as! MyProfileHeaderView).communValueLabel
+        
         (viewModel as! MyProfilePageViewModel).balancesVM.state
             .subscribe(onNext: {[weak self] (state) in
                 switch state {
@@ -75,8 +75,27 @@ extension MyProfilePageVC {
             .disposed(by: disposeBag)
         
         (viewModel as! MyProfilePageViewModel).balancesVM.items
-            .map {$0.enquityCommunValue.currencyValueFormatted}
-            .bind(to: label.rx.text)
+            .subscribe(onNext: { (balances) in
+                self.setUpEquityValue(balances: balances)
+            })
             .disposed(by: disposeBag)
+        
+        UserDefaults.standard.rx
+            .observe(Bool.self, Config.currentEquityValueIsShowingCMN)
+            .subscribe(onNext: { (_) in
+                let balances = (self.viewModel as! MyProfilePageViewModel).balancesVM.items.value
+                self.setUpEquityValue(balances: balances)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setUpEquityValue(balances: [ResponseAPIWalletGetBalance]) {
+        if UserDefaults.standard.bool(forKey: Config.currentEquityValueIsShowingCMN) {
+            (headerView as! MyProfileHeaderView).equityValueLabel.text = "equity Commun Value".localized().uppercaseFirst
+            (headerView as! MyProfileHeaderView).valueLabel.text = balances.enquityCommunValue.currencyValueFormatted
+        } else {
+            (headerView as! MyProfileHeaderView).equityValueLabel.text = "equity USD Value".localized().uppercaseFirst
+            (headerView as! MyProfileHeaderView).valueLabel.text = "$ " + balances.equityUSDValue.currencyValueFormatted
+        }
     }
 }
