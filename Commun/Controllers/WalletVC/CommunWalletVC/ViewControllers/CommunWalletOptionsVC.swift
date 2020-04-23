@@ -9,9 +9,13 @@
 import Foundation
 
 class CommunWalletOptionsVC: BaseViewController {
+    static let hideEmptyPointsKey = "CommunWalletOptionsVC.hideEmptyPointsKey"
+    
     // MARK: - Properties
     let optionHeight: CGFloat = 58
     let optionBackgroundColor = UIColor.appWhiteColor
+    
+    var shouldHideEmptyPoints: Bool { UserDefaults.standard.bool(forKey: CommunWalletOptionsVC.hideEmptyPointsKey) }
     
     // MARK: - Initializers
     init() {
@@ -33,7 +37,7 @@ class CommunWalletOptionsVC: BaseViewController {
         label.autoCenterInSuperview()
         
         let closeButton = UIButton.close()
-        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(backWithAction), for: .touchUpInside)
         
         view.addSubview(closeButton)
         closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
@@ -48,15 +52,17 @@ class CommunWalletOptionsVC: BaseViewController {
         label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         label.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        let switcher = UISwitch()
         view.addSubview(switcher)
         switcher.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         switcher.autoAlignAxis(toSuperviewAxis: .horizontal)
         switcher.autoPinEdge(.leading, to: .trailing, of: label, withOffset: 8)
         switcher.onTintColor = .appMainColor
+        switcher.isOn = shouldHideEmptyPoints
         
         return view
     }()
+    lazy var switcher = UISwitch()
+    
     lazy var viewInExplorerView: UIView = {
         let view = UIView(height: optionHeight, backgroundColor: optionBackgroundColor)
         let label = UILabel.with(text: "view in Explorer".localized().uppercaseFirst, weight: .semibold)
@@ -94,6 +100,15 @@ class CommunWalletOptionsVC: BaseViewController {
             hideEmptyView,
             viewInExplorerView
         ])
+    }
+    
+    @objc func backWithAction() {
+        backCompletion {
+            if self.shouldHideEmptyPoints != self.switcher.isOn
+            {
+                UserDefaults.standard.set(self.switcher.isOn, forKey: CommunWalletOptionsVC.hideEmptyPointsKey)
+            }
+        }
     }
 }
 
