@@ -8,6 +8,22 @@
 
 import Foundation
 class CMActionSheetPresentationController: DimmingPresentationController {
+    lazy var backingView = UIView(backgroundColor: .appLightGrayColor)
+    
+    override func presentationTransitionWillBegin() {
+        guard let containerView = containerView else {return}
+        containerView.addSubview(backingView)
+        backingView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        backingView.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor)
+            .isActive = true
+        super.presentationTransitionWillBegin()
+    }
+    
+    override func dismissalTransitionWillBegin() {
+        super.dismissalTransitionWillBegin()
+        backingView.isHidden = true
+    }
+    
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let containerView = containerView,
             let presentedView = presentedView else { return .zero }
