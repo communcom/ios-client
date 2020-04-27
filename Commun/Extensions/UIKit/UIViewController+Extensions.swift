@@ -228,6 +228,7 @@ extension UIViewController {
             vc.view.shake()
             return
         }
+        
         let communityVC = CommunityPageVC(communityId: id)
         show(communityVC, sender: nil)
     }
@@ -237,6 +238,7 @@ extension UIViewController {
             vc.view.shake()
             return
         }
+       
         let communityVC = CommunityPageVC(communityAlias: alias)
         show(communityVC, sender: nil)
     }

@@ -88,7 +88,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }()
     
     lazy var communValueLabel: UILabel = {
-        let label = UILabel.with(text: "10", textSize: 12, weight: .bold, textColor: .white)
+        let label = UILabel.with(text: "1", textSize: 12, weight: .bold, textColor: .white)
         label.alpha = 0.7
         
         return label
@@ -191,7 +191,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))
     func setUp(walletPrice: ResponseAPIWalletGetPrice) {
         walletCurrencyValue.text = walletPrice.priceValue.string
-        walletCurrencyLabel.text = (walletPrice.symbol ?? "Commun").lowercased().uppercaseFirst // "Binance"
+        walletCurrencyLabel.text = (self.community?.name ?? "Commun").lowercased().uppercaseFirst // "Binance"
+//        walletCurrencyLabel.text = (walletPrice.symbol ?? "Commun").lowercased().uppercaseFirst // "Binance"
         walletCurrencyValue.isHidden = false
         walletCurrencyLabel.isHidden = false
     }

@@ -59,6 +59,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
         if let alias = communityAlias {
             return RestAPIManager.instance.getCommunity(alias: alias)
         }
+       
         return RestAPIManager.instance.getCommunity(id: communityId ?? "")
     }
     
@@ -67,7 +68,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     }
     
     var walletGetBuyPriceRequest: Single<ResponseAPIWalletGetPrice> {
-        return RestAPIManager.instance.getBuyPrice(symbol: communityId ?? communityAlias?.uppercased() ?? "CMN", quantity: "10 CMN")
+        return RestAPIManager.instance.getBuyPrice(symbol: communityId ?? communityAlias?.uppercased() ?? "CMN", quantity: "1 CMN")
     }
 
     override func bind() {
