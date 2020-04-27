@@ -15,9 +15,6 @@ class PostStatsView: MyView {
     // MARK: - Subviews
     lazy var voteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     
-    lazy var plusLabel = UILabel.with(text: "+", textSize: 17, weight: .semibold, textColor: .appMainColor)
-    lazy var donationCountLabel = UILabel.with(numberOfLines: 2)
-    
     lazy var sharesCountLabel = self.createDescriptionLabel()
     
     lazy var shareButton: UIButton = {
@@ -60,14 +57,6 @@ class PostStatsView: MyView {
         addSubview(voteContainerView)
         voteContainerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
         
-        addSubview(plusLabel)
-        plusLabel.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 6)
-        plusLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        addSubview(donationCountLabel)
-        donationCountLabel.autoPinEdge(.leading, to: .trailing, of: plusLabel, withOffset: 4)
-        donationCountLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
         // Shares
         addSubview(shareButton)
         shareButton.autoPinEdge(toSuperviewEdge: .trailing)
@@ -96,20 +85,6 @@ class PostStatsView: MyView {
     
     func setUp(with post: ResponseAPIContentGetPost) {
         voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
-        
-        // Donation
-        if let donationCount = post.donationCount {
-            donationCountLabel.isHidden = false
-            plusLabel.isHidden = false
-            donationCountLabel.attributedText = NSMutableAttributedString()
-                .text("\(donationCount.kmFormatted)", size: 14, weight: .bold, color: .appMainColor)
-                .text("\n")
-                .text("points".localized(), size: 14, weight: .medium, color: .appMainColor)
-                .withParagraphStyle(minimumLineHeight: 12)
-        } else {
-            donationCountLabel.isHidden = true
-            plusLabel.isHidden = true
-        }
         
         // Comments count
         self.commentsCountLabel.text = "\(post.stats?.commentsCount ?? 0)"

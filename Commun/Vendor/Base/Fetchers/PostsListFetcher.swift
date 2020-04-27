@@ -106,15 +106,6 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         RestAPIManager.instance.getPosts(userId: filter.userId ?? Config.currentUser?.id, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.type, sortBy: filter.sortBy, timeframe: filter.timeframe, limit: limit, offset: offset
         )
             .map { $0.items ?? [] }
-            .map {posts in
-                // TODO: - For testing only, remove later
-                var posts = posts
-                if var post = posts.first {
-                    post.donationCount = 100000
-                    posts[0] = post
-                }
-                return posts
-            }
             .do(onSuccess: { (posts) in
                 self.loadRewards(fromPosts: posts)
             })
