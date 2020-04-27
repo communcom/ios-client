@@ -15,7 +15,7 @@ extension CommentsViewController: UITableViewDelegate {
             return viewModel.items.value[safe: indexPath.section]
         }
         
-        return viewModel.items.value[safe: indexPath.section]?.children?[safe: indexPath.row]
+        return viewModel.items.value[safe: indexPath.section]?.children?[safe: indexPath.row + 1]
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
