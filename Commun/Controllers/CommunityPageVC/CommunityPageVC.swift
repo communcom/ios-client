@@ -47,6 +47,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         if let alias = communityAlias {
             return CommunityPageViewModel(communityAlias: alias)
         }
+        
         return CommunityPageViewModel(communityId: communityId)
     }
     var leadersVM: LeadersViewModel {(viewModel as! CommunityPageViewModel).leadsVM}
