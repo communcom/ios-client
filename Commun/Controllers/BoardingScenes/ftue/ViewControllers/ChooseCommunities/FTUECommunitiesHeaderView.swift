@@ -53,4 +53,25 @@ class FTUECommunitiesHeaderView: UICollectionReusableView {
         
         return 10 + titleHeight + 16 + descriptionHeight + 16 + 44 + 10
     }
+    
+    static var additionalSpaceToSearchBar: CGFloat {
+        var additionalHeight: CGFloat = 0
+        switch UIDevice.current.screenType {
+        case .iPhones_4_4S, .iPhones_6_6s_7_8:
+            break
+        case .iPhones_5_5s_5c_SE:
+            additionalHeight = 4
+        case .iPhones_6Plus_6sPlus_7Plus_8Plus, .iPhones_X_XS:
+            additionalHeight = 16
+        case .iPhone_XR_11:
+            additionalHeight = 20
+        case .iPhone_XSMax_ProMax:
+            additionalHeight = 16
+        case .iPhone_11Pro:
+            break
+        case .unknown:
+            break
+        }
+        return additionalHeight
+    }
 }
