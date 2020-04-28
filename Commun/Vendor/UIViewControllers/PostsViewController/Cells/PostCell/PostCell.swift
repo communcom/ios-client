@@ -79,6 +79,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         postStatsView.voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
         postStatsView.voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
         postStatsView.commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
+        postStatsView.delegate = self
     }
     
     func layoutContent() {
@@ -195,5 +196,11 @@ class PostCell: MyTableViewCell, ListItemCellType {
             post?.bottomExplanation = .hidden
             post?.notifyChanged()
         }
+    }
+}
+
+extension PostCell: PostStatsViewDelegate {
+    func postStatsView(_ postStatsView: PostStatsView, didTapOnDonationCountLabel donationCountLabel: UIView) {
+        // TODO: - show donations
     }
 }

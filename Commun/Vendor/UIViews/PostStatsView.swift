@@ -8,9 +8,16 @@
 
 import Foundation
 
+protocol PostStatsViewDelegate: class {
+    func postStatsView(_ postStatsView: PostStatsView, didTapOnDonationCountLabel donationCountLabel: UIView)
+}
+
 class PostStatsView: MyView {
     // MARK: - Constants
     let voteActionsContainerViewHeight: CGFloat = 35
+    
+    // MARK: - Properties
+    weak var delegate: PostStatsViewDelegate?
     
     // MARK: - Subviews
     lazy var voteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
@@ -92,6 +99,11 @@ class PostStatsView: MyView {
         viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         
         viewsCountButton.isUserInteractionEnabled = false
+        
+        donationCountLabel.isUserInteractionEnabled = true
+        plusLabel.isUserInteractionEnabled = true
+        donationCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationCountLabelDidTouch)))
+        plusLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationCountLabelDidTouch)))
     }
     
     func setUp(with post: ResponseAPIContentGetPost) {
@@ -128,5 +140,9 @@ class PostStatsView: MyView {
     func fillCommentCountButton(_ fill: Bool = true) {
         commentsCountButton.setImage(UIImage(named: fill ? "comment-count-fill" : "comment-count"), for: .normal)
         commentsCountLabel.textColor = fill ? .appMainColor : .appGrayColor
+    }
+    
+    @objc func donationCountLabelDidTouch() {
+        delegate?.postStatsView(self, didTapOnDonationCountLabel: donationCountLabel)
     }
 }
