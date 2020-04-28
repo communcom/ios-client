@@ -10,6 +10,7 @@ import Foundation
 
 protocol PostStatsViewDelegate: class {
     func postStatsView(_ postStatsView: PostStatsView, didTapOnDonationCountLabel donationCountLabel: UIView)
+    func postStatsView(_ postStatsView: PostStatsView, didTapOnLikeCountLabel likeCountLabel: UIView)
 }
 
 class PostStatsView: MyView {

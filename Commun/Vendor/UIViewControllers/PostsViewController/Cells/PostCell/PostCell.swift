@@ -222,4 +222,8 @@ extension PostCell: PostStatsViewDelegate {
         
         donationUsersView.senderView = donationCountLabel
     }
+    
+    func postStatsView(_ postStatsView: PostStatsView, didTapOnLikeCountLabel likeCountLabel: UIView) {
+        
+    }
 }

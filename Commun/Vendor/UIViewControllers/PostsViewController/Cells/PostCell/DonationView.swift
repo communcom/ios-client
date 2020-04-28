@@ -19,6 +19,15 @@ class DonationView: CMMessageView {
     lazy var otherButton = UIButton(width: 60, height: 34, label: "other".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12), backgroundColor: UIColor.white.withAlphaComponent(0.1), textColor: .white, cornerRadius: 17)
     
     // MARK: - Methods
+    init() {
+        super.init(frame: .zero)
+        autoSetDimension(.height, toSize: 50)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func commonInit() {
         super.commonInit()
         contentView.addSubview(leadingLabel)
