@@ -33,7 +33,14 @@ class PostCell: MyTableViewCell, ListItemCellType {
 
     lazy var bottomView = UIView(backgroundColor: .appLightGrayColor)
     
+    lazy var donationUsersView = DonationUsersView()
+    
     // MARK: - Layout
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        donationUsersView.removeFromSuperview()
+    }
+    
     override func setUpViews() {
         super.setUpViews()
         
@@ -202,5 +209,11 @@ class PostCell: MyTableViewCell, ListItemCellType {
 extension PostCell: PostStatsViewDelegate {
     func postStatsView(_ postStatsView: PostStatsView, didTapOnDonationCountLabel donationCountLabel: UIView) {
         // TODO: - show donations
+        donationUsersView.removeFromSuperview()
+        addSubview(donationUsersView)
+        donationUsersView.autoSetDimension(.width, toSize: 200)
+        donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
+        donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView)
+        donationUsersView.shownXPosition = donationCountLabel.center.x
     }
 }

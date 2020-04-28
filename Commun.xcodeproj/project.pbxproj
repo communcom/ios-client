@@ -188,6 +188,7 @@
 		BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC31D1C12457D094000F5BE5 /* DonationUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */; };
+		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
 		BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */; };
 		BC3694ED236979A700B2E078 /* ProfileChooseAvatarVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC3694EC236979A700B2E078 /* ProfileChooseAvatarVC.storyboard */; };
 		BC3694EF2369850100B2E078 /* EditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3694EE2369850100B2E078 /* EditorVC.swift */; };
@@ -706,6 +707,7 @@
 		BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationUsersView.swift; sourceTree = "<group>"; };
+		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
 		BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordVC.swift; sourceTree = "<group>"; };
 		BC3694EC236979A700B2E078 /* ProfileChooseAvatarVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileChooseAvatarVC.storyboard; sourceTree = "<group>"; };
 		BC3694EE2369850100B2E078 /* EditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorVC.swift; sourceTree = "<group>"; };
@@ -2472,6 +2474,7 @@
 				B10DB960240F8789001BD0E4 /* CMAppLikeView.swift */,
 				BCFFE93B2420C4DE007D7BB8 /* ExplanationView.swift */,
 				BC7540082424B2CD000616B5 /* AttentionView.swift */,
+				BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -3091,6 +3094,7 @@
 				BC3AAF1923E0223F005E8DAB /* CurrenciesViewModel.swift in Sources */,
 				3B8DDF5A234AF04C00B213F0 /* ArticleEditorVC.swift in Sources */,
 				B1D7AD5623A10582007D1A13 /* ErrorView.swift in Sources */,
+				BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */,
 				BC597A6E238BC7C200103F4F /* PostsFilterVC.swift in Sources */,
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,
 				AC2CCB792412962D00C2DFD4 /* BoardingVC.swift in Sources */,
