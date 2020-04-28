@@ -35,6 +35,8 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     lazy var donationUsersView = DonationUsersView()
     
+    lazy var donationView = DonationView()
+    
     // MARK: - Layout
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -213,6 +215,8 @@ extension PostCell: PostStatsViewDelegate {
             return
         }
         
+        donationView.removeFromSuperview()
+        
         guard let donations = post?.donations else {return}
         addSubview(donationUsersView)
         donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -224,6 +228,17 @@ extension PostCell: PostStatsViewDelegate {
     }
     
     func postStatsView(_ postStatsView: PostStatsView, didTapOnLikeCountLabel likeCountLabel: UIView) {
+        if donationView.isDescendant(of: self) {
+            donationView.removeFromSuperview()
+            return
+        }
         
+        donationUsersView.removeFromSuperview()
+        
+        addSubview(donationView)
+        donationView.autoAlignAxis(toSuperviewAxis: .vertical)
+        donationView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
+        
+        donationView.senderView = likeCountLabel
     }
 }

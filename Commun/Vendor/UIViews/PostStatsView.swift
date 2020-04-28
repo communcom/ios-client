@@ -105,6 +105,9 @@ class PostStatsView: MyView {
         plusLabel.isUserInteractionEnabled = true
         donationCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationCountLabelDidTouch)))
         plusLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationCountLabelDidTouch)))
+        
+        voteContainerView.likeCountLabel.isUserInteractionEnabled = true
+        voteContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeCountLabelDidTouch)))
     }
     
     func setUp(with post: ResponseAPIContentGetPost) {
@@ -145,5 +148,9 @@ class PostStatsView: MyView {
     
     @objc func donationCountLabelDidTouch() {
         delegate?.postStatsView(self, didTapOnDonationCountLabel: donationCountLabel)
+    }
+    
+    @objc func likeCountLabelDidTouch() {
+        delegate?.postStatsView(self, didTapOnLikeCountLabel: voteContainerView.likeCountLabel)
     }
 }

@@ -37,7 +37,7 @@ class DonationView: CMMessageView {
         leadingLabel.attributedText = NSMutableAttributedString()
             .text("donate".localized().uppercaseFirst + ":", size: 12, weight: .semibold, color: .white)
             .text("\n")
-            .text("points".localized().uppercaseFirst, size: 10, weight: .medium, color: UIColor.white.withAlphaComponent(0.3))
+            .text("points".localized().uppercaseFirst, size: 10, weight: .medium, color: UIColor.white.withAlphaComponent(0.7))
         
         contentView.addSubview(buttonStackView)
         buttonStackView.autoPinEdge(.leading, to: .trailing, of: leadingLabel, withOffset: 8)
