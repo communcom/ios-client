@@ -208,8 +208,12 @@ class PostCell: MyTableViewCell, ListItemCellType {
 
 extension PostCell: PostStatsViewDelegate {
     func postStatsView(_ postStatsView: PostStatsView, didTapOnDonationCountLabel donationCountLabel: UIView) {
+        if donationUsersView.isDescendant(of: self) {
+            donationUsersView.removeFromSuperview()
+            return
+        }
+        
         guard let donations = post?.donations else {return}
-        donationUsersView.removeFromSuperview()
         addSubview(donationUsersView)
         donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
         donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
