@@ -164,7 +164,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         searchBar.sizeToFit()
         
         view.addSubview(searchContainerView)
-        searchBarTopConstraint = searchContainerView.autoPinEdge(toSuperviewSafeArea: .top, withInset: FTUECommunitiesHeaderView.height - 10 - 8 - searchBar.height - 8)
+        searchBarTopConstraint = searchContainerView.autoPinEdge(toSuperviewSafeArea: .top, withInset: FTUECommunitiesHeaderView.height - 10 - 8 - searchBar.height - 8 + FTUECommunitiesHeaderView.additionalSpaceToSearchBar)
         searchContainerView.autoPinEdge(toSuperviewEdge: .leading)
         searchContainerView.autoPinEdge(toSuperviewEdge: .trailing)
     }
