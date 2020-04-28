@@ -12,6 +12,7 @@ import CyberSwift
 class UsersStackView: MyView {
     // MARK: - Properties
     let maxNumberOfAvatars = 3
+    var textColor = UIColor.appBlackColor
     
     // MARK: - Subviews
     lazy var avatarsStackView: UIStackView = {
@@ -68,7 +69,7 @@ class UsersStackView: MyView {
             text = "+\((friends.count - 3).kmFormatted)"
         }
         
-        let label = UILabel.with(text: text, textSize: 15, weight: .bold)
+        let label = UILabel.with(text: text, textSize: 15, weight: .bold, textColor: textColor)
         addSubview(label)
         label.autoPinEdge(.leading, to: .trailing, of: avatarsStackView, withOffset: 5)
         label.autoAlignAxis(.horizontal, toSameAxisOf: avatarsStackView)
