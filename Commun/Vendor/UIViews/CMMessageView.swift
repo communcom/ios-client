@@ -30,6 +30,8 @@ class CMMessageView: MyView {
         return arrowView
     }()
     
+    lazy var closeButton = UIButton.close(size: 34, backgroundColor: .clear, tintColor: .white)
+    
     override func commonInit() {
         super.commonInit()
         configureForAutoLayout()
@@ -38,5 +40,15 @@ class CMMessageView: MyView {
         contentView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: arrowSize - 2, right: 0))
         
         addShadow(ofColor: UIColor.colorSupportDarkMode(defaultColor: UIColor(red: 176, green: 176, blue: 204)!, darkColor: .black), radius: 25, offset: CGSize(width: 0, height: 10), opacity: 0.25)
+        
+        contentView.addSubview(closeButton)
+        closeButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 5)
+        
+        closeButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
+    }
+    
+    @objc func closeButtonDidTouch() {
+        removeFromSuperview()
     }
 }

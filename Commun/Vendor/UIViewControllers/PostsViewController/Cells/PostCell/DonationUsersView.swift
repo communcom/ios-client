@@ -16,7 +16,6 @@ class DonationUsersView: CMMessageView {
     }()
     
     lazy var donationsLabel = UILabel.with(textSize: 15, weight: .semibold, textColor: .white)
-    lazy var closeButton = UIButton.close(size: 34, backgroundColor: .clear, tintColor: .white)
     
     init() {
         super.init(frame: .zero)
@@ -37,20 +36,11 @@ class DonationUsersView: CMMessageView {
         donationsLabel.autoPinEdge(.leading, to: .trailing, of: userStackView, withOffset: 4)
         donationsLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        contentView.addSubview(closeButton)
         closeButton.autoPinEdge(.leading, to: .trailing, of: donationsLabel, withOffset: 16)
-        closeButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 5)
-        
-        closeButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
     }
     
     func setUp(with donations: [ResponseAPIContentGetProfile]) {
         userStackView.setUp(with: donations)
         donationsLabel.text = String(format: NSLocalizedString("donations-count", comment: ""), (donations.count - 3))
-    }
-    
-    @objc func closeButtonDidTouch() {
-        removeFromSuperview()
     }
 }
