@@ -110,6 +110,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
                 // TODO: - For testing only, remove later
                 var posts = posts
                 if var post = posts.first {
+                    post.donations = ResponseAPIContentGetSubscribers.mockData()?.items
                     post.donationCount = 100000
                     posts[0] = post
                 }
