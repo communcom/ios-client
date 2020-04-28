@@ -11,12 +11,13 @@ import Foundation
 class CMMessageView: MyView {
     let arrowSize: CGFloat = 8
     
-    var shownXPosition: CGFloat = 0 {
+    weak var senderView: UIView? {
         didSet {
+            guard let senderView = senderView else {return}
             arrowView.removeFromSuperview()
             insertSubview(arrowView, at: 0)
             arrowView.autoPinEdge(toSuperviewEdge: .bottom)
-            arrowView.centerXAnchor.constraint(equalTo: leadingAnchor, constant: shownXPosition).isActive = true
+            arrowView.centerXAnchor.constraint(equalTo: senderView.centerXAnchor).isActive = true
             setNeedsLayout()
         }
     }

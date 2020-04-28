@@ -213,7 +213,8 @@ extension PostCell: PostStatsViewDelegate {
         addSubview(donationUsersView)
         donationUsersView.autoSetDimension(.width, toSize: 200)
         donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
-        donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView)
-        donationUsersView.shownXPosition = donationCountLabel.center.x
+        donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
+        
+        donationUsersView.senderView = donationCountLabel
     }
 }
