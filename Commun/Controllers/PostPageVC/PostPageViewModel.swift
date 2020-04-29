@@ -12,10 +12,6 @@ import RxCocoa
 import CyberSwift
 
 class PostPageViewModel: CommentsViewModel {
-    // MARK: - Properties
-    var username: String?
-    var communityAlias: String?
-    
     // MARK: - Objects
     let loadingState = BehaviorRelay<LoadingState>(value: .loading)
     let post: BehaviorRelay<ResponseAPIContentGetPost?>
@@ -31,26 +27,17 @@ class PostPageViewModel: CommentsViewModel {
     }
     
     init(userId: String?, username: String?, permlink: String, communityId: String?, communityAlias: String?) {
-        self.username = username
-        self.communityAlias = communityAlias
-        
         self.post = BehaviorRelay<ResponseAPIContentGetPost?>(value: nil)
-        super.init(filter: CommentsListFetcher.Filter(type: .post, userId: userId, permlink: permlink, communityId: communityId), prefetch: false)
+        super.init(filter: CommentsListFetcher.Filter(sortBy: .popularity, type: .post, userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias))
         defer {
             loadPost()
             bind()
+            fetchNext(forceRetry: true)
         }
-    }
-    
-    override func fetchNext(forceRetry: Bool = false) {
-        if filter.value.userId == nil && filter.value.communityId == nil {
-            return
-        }
-        super.fetchNext(forceRetry: forceRetry)
     }
     
     func loadPost() {
-        RestAPIManager.instance.loadPost(userId: filter.value.userId, username: username, permlink: filter.value.permlink!, communityId: filter.value.communityId, communityAlias: communityAlias)
+        RestAPIManager.instance.loadPost(userId: filter.value.userId, username: filter.value.username, permlink: filter.value.permlink!, communityId: filter.value.communityId, communityAlias: filter.value.communityAlias)
             .do(onSubscribe: {
                 self.loadingState.accept(.loading)
             })

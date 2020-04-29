@@ -27,8 +27,10 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         var sortBy: CommentSortMode = .timeDesc
         var type: GetCommentsType
         var userId: String?
+        var username: String?
         var permlink: String?
         var communityId: String?
+        var communityAlias: String?
         var parentComment: ResponseAPIContentId?
         var resolveNestedComments: Bool = false
         
@@ -36,6 +38,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
             withSortBy sortBy: CommentSortMode? = nil,
             type: GetCommentsType? = nil,
             userId: String? = nil,
+            username: String? = nil,
             permlink: String? = nil,
             communityId: String? = nil,
             communityAlias: String? = nil,
@@ -56,11 +59,18 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                 newFilter.userId = userId
             }
             
+            if let username = username {
+                newFilter.username = username
+            }
+            
             if let permlink = permlink {
                 newFilter.permlink = permlink
             }
             if let communityId = communityId {
                 newFilter.communityId = communityId
+            }
+            if let communityAlias = communityAlias {
+                newFilter.communityAlias = communityAlias
             }
             if let parentComment = parentComment {
                 newFilter.parentComment = parentComment
@@ -94,8 +104,10 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                         offset: offset,
                         limit: 30,
                         userId: filter.userId,
+                        username: filter.username,
                         permlink: filter.permlink ?? "",
-                        communityId: filter.communityId
+                        communityId: filter.communityId,
+                        communityAlias: filter.communityAlias
                     )
                 
                 case .user:
