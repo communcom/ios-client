@@ -19,6 +19,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }
     
     // MARK: - Subviews
+    lazy var friendsCountLabel = UILabel.with(textSize: 12, weight: .bold, textColor: .appGrayColor)
+    
     lazy var pointsContainerView: UIView = {
         let view = UIView(height: 70, backgroundColor: .appMainColor)
         view.cornerRadius = 10
@@ -127,6 +129,11 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(friendsLabelDidTouch))
         usersStackView.label.isUserInteractionEnabled = true
         usersStackView.label.addGestureRecognizer(tap)
+        
+        statsStackView.addArrangedSubview(friendsCountLabel)
+        statsStackView.setCustomSpacing(4, after: usersStackView)
+        friendsCountLabel.isHidden = true
+        friendsCountLabel.setContentHuggingPriority(.required, for: .horizontal)
     }
     
     // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))
@@ -194,10 +201,14 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         // friends
         if let friends = community.friends, friends.count > 0 {
             let count = friends.count > 3 ? friends.count - 3 : friends.count
+            friendsCountLabel.isHidden = false
+            usersStackView.isHidden = false
+            
             usersStackView.setUp(with: friends)
-            usersStackView.label.attributedText = NSMutableAttributedString()
-                .text(usersStackView.label.text ?? "", size: 15, weight: .bold)
-                .text(String(format: NSLocalizedString("friend-count", comment: ""), count), size: 12, weight: .bold, color: .appGrayColor)
+            friendsCountLabel.text = String(format: NSLocalizedString("friend-count", comment: ""), count)
+        } else {
+            friendsCountLabel.isHidden = true
+            usersStackView.isHidden = true
         }
     }
     

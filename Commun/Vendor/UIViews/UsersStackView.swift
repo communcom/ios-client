@@ -31,6 +31,7 @@ class UsersStackView: MyView {
         addSubview(avatarsStackView)
         avatarsStackView.autoPinEdge(toSuperviewEdge: .leading)
         avatarsStackView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        label.setContentHuggingPriority(.required, for: .horizontal)
     }
     
     // MARK: - Methods
