@@ -105,11 +105,14 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     override func mapItems(items: [ResponseAPIContentGetSubscriptionsItem]) -> [AnimatableSectionModel<String, ResponseAPIContentGetSubscriptionsItem>]
     {
         var items = items
-        switch type {
-        case .community:
-            items = items.filter {$0.communityValue?.isBeingJoined == true || $0.communityValue?.isSubscribed == true}
-        case .user:
-            items = items.filter {$0.userValue?.isBeingToggledFollow == true || $0.userValue?.isSubscribed == true}
+        if (viewModel.fetcher as! SubscriptionsListFetcher).userId == Config.currentUser?.id
+        {
+            switch type {
+            case .community:
+                items = items.filter {$0.communityValue?.isBeingJoined == true || $0.communityValue?.isSubscribed == true}
+            case .user:
+                items = items.filter {$0.userValue?.isBeingToggledFollow == true || $0.userValue?.isSubscribed == true}
+            }
         }
         return items.count > 0 ? [ListSection(model: "", items: items)] : []
     }
