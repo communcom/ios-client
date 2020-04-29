@@ -31,7 +31,6 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     lazy var equityValueLabel = UILabel.with(text: "equity Commun Value".localized().uppercaseFirst, textSize: 12 * Config.widthRatio, weight: .semibold, textColor: .white, numberOfLines: 0)
     lazy var valueLabel = UILabel.with(text: "0.0000", textSize: 20, weight: .semibold, textColor: .white)
     
-    
     override func commonInit() {
         super.commonInit()
         
@@ -46,13 +45,10 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     
     func bind() {
         descriptionLabel.rx.observe(String.self, "text")
-            .map {$0?.isEmpty == false}
-            .subscribe(onNext: { (shouldHide) in
-                if shouldHide {
-                    self.addBioButton.removeFromSuperview()
-                } else {
-                    self.stackView.insertArrangedSubview(self.addBioButton, at: 1)
-                }
+            .map {$0 == nil || $0?.isEmpty == true}
+            .subscribe(onNext: { (shouldHideDescription) in
+                self.descriptionLabel.isHidden = shouldHideDescription
+                self.addBioButton.isHidden = !shouldHideDescription
             })
             .disposed(by: disposeBag)
     }
@@ -66,7 +62,11 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         
         setUpWalletView()
         
-        stackView.insertArrangedSubview(walletShadowView, at: 2)
+        stackView.insertArrangedSubview(addBioButton, at: 1)
+        stackView.insertArrangedSubview(walletShadowView, at: 3)
+        
+        stackView.setCustomSpacing(16, after: addBioButton)
+        stackView.setCustomSpacing(28, after: walletShadowView)
     }
     
     override func setUp(with profile: ResponseAPIContentGetProfile) {

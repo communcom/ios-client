@@ -40,6 +40,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         return collectionView
     }()
     
+    lazy var separator1 = UIView(height: 2, backgroundColor: .appLightGrayColor)
+    lazy var separator2 = UIView(height: 2, backgroundColor: .appLightGrayColor)
+    
     // MARK: - Initializers
     override func commonInit() {
         super.commonInit()
@@ -66,10 +69,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     }
     
     func setUpStackView() {
-        var createSeparator: UIView {UIView(height: 2, backgroundColor: .appLightGrayColor)}
-        let separator1 = createSeparator
-        let separator2 = createSeparator
-        
         stackView.addArrangedSubviews([
             headerStackView,
             descriptionLabel,
@@ -87,11 +86,8 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     }
 
     private func showCommunities() {
-        if isCommunitiesHidden {
-            communitiesView.removeFromSuperview()
-        } else {
-            stackView.insertArrangedSubview(communitiesView, at: 4)
-        }
+        communitiesView.isHidden = isCommunitiesHidden
+        separator1.isHidden = isCommunitiesHidden
     }
     
     func setUp(with userProfile: ResponseAPIContentGetProfile) {
