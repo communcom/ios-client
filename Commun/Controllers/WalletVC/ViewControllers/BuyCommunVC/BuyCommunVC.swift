@@ -22,9 +22,9 @@ class BuyCommunVC: BaseViewController {
     lazy var currencyAvatarImageView = MyAvatarImageView(size: 40)
     lazy var currencyNameLabel = UILabel.with(textSize: 15, weight: .medium)
     lazy var youSendTextField = UITextField.decimalPad()
-    lazy var minimunChargeLabel = UILabel.with(text: "minimum charge is".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd)
+    lazy var minimunChargeLabel = UILabel.with(text: "minimum charge is".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
     lazy var youGetTextField = UITextField.decimalPad()
-    lazy var rateLabel = UILabel.with(text: "Rate:", textSize: 12, weight: .medium, textColor: .a5a7bd, textAlignment: .center)
+    lazy var rateLabel = UILabel.with(text: "Rate:", textSize: 12, weight: .medium, textColor: .appGrayColor, textAlignment: .center)
     lazy var buyCommunButton = CommunButton.default(height: 50,
                                                     label: String(format: "%@ %@", "buy".localized().uppercaseFirst, "commun".localized().uppercaseFirst),
                                                     cornerRadius: 25,
@@ -35,7 +35,7 @@ class BuyCommunVC: BaseViewController {
     override func setUp() {
         super.setUp()
         title = String(format: "%@ %@", "buy".localized().uppercaseFirst, "commun".localized().uppercaseFirst)
-        view.backgroundColor = .f3f5fa
+        view.backgroundColor = .appLightGrayColor
         
         view.addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
@@ -54,7 +54,7 @@ class BuyCommunVC: BaseViewController {
         
         // currency container
         let youSendContainerView: UIView = {
-            let view = UIView(backgroundColor: .white, cornerRadius: 10)
+            let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
             view.addSubview(self.currencyAvatarImageView)
             self.currencyAvatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
             self.currencyAvatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
@@ -69,13 +69,13 @@ class BuyCommunVC: BaseViewController {
             dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
             dropdownButton.autoAlignAxis(.horizontal, toSameAxisOf: self.currencyAvatarImageView)
             
-            let separator = UIView(height: 2, backgroundColor: .f3f5fa)
+            let separator = UIView(height: 2, backgroundColor: .appLightGrayColor)
             view.addSubview(separator)
             separator.autoPinEdge(.top, to: .bottom, of: self.currencyAvatarImageView, withOffset: 16)
             separator.autoPinEdge(toSuperviewEdge: .leading)
             separator.autoPinEdge(toSuperviewEdge: .trailing)
             
-            let amountLabel = UILabel.with(text: "amount".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd)
+            let amountLabel = UILabel.with(text: "amount".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
             view.addSubview(amountLabel)
             amountLabel.autoPinEdge(.top, to: .bottom, of: separator, withOffset: 10)
             amountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -102,7 +102,7 @@ class BuyCommunVC: BaseViewController {
         youGetLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 25)
         
         let youGetContainerView: UIView = {
-            let view = UIView(backgroundColor: .white, cornerRadius: 10)
+            let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
             
             let communLogo = UIImageView(width: 40, height: 40, cornerRadius: 20, imageNamed: "tux")
             view.addSubview(communLogo)
@@ -113,7 +113,7 @@ class BuyCommunVC: BaseViewController {
             communLabel.autoPinEdge(.leading, to: .trailing, of: communLogo, withOffset: 10)
             communLabel.autoAlignAxis(.horizontal, toSameAxisOf: communLogo)
             
-            let separator = UIView(height: 2, backgroundColor: .f3f5fa)
+            let separator = UIView(height: 2, backgroundColor: .appLightGrayColor)
             view.addSubview(separator)
             separator.autoPinEdge(.top, to: .bottom, of: communLogo, withOffset: 16)
             separator.autoPinEdge(toSuperviewEdge: .leading)
@@ -137,7 +137,7 @@ class BuyCommunVC: BaseViewController {
         rateLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         let changeHeroView: UIView = {
-            let view = UIView(backgroundColor: .white, cornerRadius: 10)
+            let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
             let imageView = UIImageView(width: 50, height: 50, imageNamed: "changeHeroLogo")
             view.addSubview(imageView)
             imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 16, vertical: 10), excludingEdge: .trailing)
@@ -145,7 +145,7 @@ class BuyCommunVC: BaseViewController {
             let label = UILabel.with(textSize: 15, numberOfLines: 0)
             
             label.attributedText = NSMutableAttributedString()
-                .text("the purchase is made by".localized().uppercaseFirst, size: 12, weight: .medium, color: .a5a7bd)
+                .text("the purchase is made by".localized().uppercaseFirst, size: 12, weight: .medium, color: .appGrayColor)
                 .normal("\n")
                 .text("Change Hero", size: 15, weight: .semibold)
             
@@ -172,7 +172,7 @@ class BuyCommunVC: BaseViewController {
         
         let termsOfUseLabel = UILabel.with(textSize: 15, numberOfLines: 2, textAlignment: .center)
         let aStr = NSMutableAttributedString()
-            .text("by clicking convert, you agree to".localized().uppercaseFirst, size: 12, weight: .medium, color: .a5a7bd)
+            .text("by clicking convert, you agree to".localized().uppercaseFirst, size: 12, weight: .medium, color: .appGrayColor)
         termsOfUseLabel.attributedText = aStr.applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "terms of service.".localized())
         termsOfUseLabel.isUserInteractionEnabled = true
         termsOfUseLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(changeHeroViewDidTouch)))
@@ -281,7 +281,7 @@ class BuyCommunVC: BaseViewController {
             .share()
             
         isGreaterThanOrEqualMinValue
-            .map {$0 ? UIColor.a5a7bd: UIColor.red}
+            .map {$0 ? UIColor.appGrayColor: UIColor.red}
             .subscribe(onNext: {color in
                 self.minimunChargeLabel.textColor = color
             })

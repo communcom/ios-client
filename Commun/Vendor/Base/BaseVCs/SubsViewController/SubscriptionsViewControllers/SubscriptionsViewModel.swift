@@ -67,6 +67,10 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
         }
     }
     
+    func update() {
+        reload(clearResult: false)
+    }
+    
     override func observeItemDeleted() {
         ResponseAPIContentGetProfile.observeItemDeleted()
             .subscribe(onNext: { (deletedUser) in

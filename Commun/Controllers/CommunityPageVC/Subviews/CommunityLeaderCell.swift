@@ -15,9 +15,7 @@ class CommunityLeaderCell: CommunityPageCell {
     
     // MARK: - Subviews
     lazy var avatarImageView = LeaderAvatarImageView(size: 56)
-    lazy var userNameLabel = UILabel.with(text: "Sergey Marchenko", textSize: 15, weight: .semibold, numberOfLines: 0)
-    lazy var pointsCountLabel = UILabel.with(text: "12,2k", textSize: 12, weight: .semibold, textColor: .a5a7bd)
-    lazy var percentsCountLabel = UILabel.with(text: "50", textSize: 12, weight: .semibold, textColor: .appMainColor)
+    lazy var label = UILabel.with(numberOfLines: 0)
     lazy var voteButton = CommunButton.default(label: "voted".localized().uppercaseFirst)
     lazy var descriptionLabel = UILabel.with(textSize: 14, numberOfLines: 0)
     
@@ -26,34 +24,24 @@ class CommunityLeaderCell: CommunityPageCell {
         super.setUpViews()
         
         // background color
-        contentView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
+        contentView.backgroundColor = .appLightGrayColor
         
         // card
-        let cardView = UIView(backgroundColor: .white, cornerRadius: .adaptive(width: 10.0))
+        let cardView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
         contentView.addSubview(cardView)
-        cardView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0,
-                                                                 left: .adaptive(width: 10.0),
-                                                                 bottom: .adaptive(height: 20.0),
-                                                                 right: .adaptive(width: 10.0)))
+        cardView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0, left: 10, bottom: 20, right: 10))
         
-        let mainVerticalStackView = UIStackView(axis: .vertical, spacing: .adaptive(height: 14.0), alignment: .leading, distribution: .fill)
+        let vStack = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
+        cardView.addSubview(vStack)
+        vStack.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
         
-        cardView.addSubview(mainVerticalStackView)
-        mainVerticalStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
+        let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+        hStack.addArrangedSubviews([avatarImageView, label, voteButton])
+        label.setContentHuggingPriority(.required, for: .vertical)
+//        hStack.setContentHuggingPriority(.required, for: .vertical)
         
-        let topHorizontalStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-
-        let middleVerticalStackView = UIStackView(axis: .vertical, spacing: 3, alignment: .leading, distribution: .fill)
-        middleVerticalStackView.setContentHuggingPriority(.required, for: .vertical)
-        
-        let pointsHorizontalStackView = UIStackView(axis: .horizontal, spacing: 4, alignment: .leading, distribution: .fill)
-        
-        pointsHorizontalStackView.addArrangedSubviews([ pointsCountLabel, percentsCountLabel, percentsCountLabel ])
-        middleVerticalStackView.addArrangedSubviews([ userNameLabel, pointsHorizontalStackView ])
-        
-        topHorizontalStackView.addArrangedSubviews([ avatarImageView, middleVerticalStackView, voteButton ])
-        mainVerticalStackView.addArrangedSubviews([ topHorizontalStackView, descriptionLabel ])
-        topHorizontalStackView.autoPinEdge(.trailing, to: .trailing, of: mainVerticalStackView, withOffset: 0.0)
+        vStack.addArrangedSubviews([hStack, descriptionLabel])
+        descriptionLabel.setContentHuggingPriority(.required, for: .vertical)
    }
     
     func setUp(with leader: ResponseAPIContentGetLeader) {
@@ -63,13 +51,15 @@ class CommunityLeaderCell: CommunityPageCell {
         avatarImageView.setAvatar(urlString: leader.avatarUrl)
         avatarImageView.percent = leader.ratingPercent
         
-        // username label
-        userNameLabel.text = leader.username
-        
-        // point
+        // label
         let rating = leader.rating / 1000
-        pointsCountLabel.text = (rating > 1 ? String(format: "%.1fk ", rating) : String(format: "%.0f ", leader.rating)).replacingOccurrences(of: ".", with: ",") + "points".localized() + " •"
-        percentsCountLabel.text = String(format: "%.0f%%", leader.ratingPercent * 100)
+        
+        label.attributedText = NSMutableAttributedString()
+            .text(leader.username, size: 15, weight: .semibold)
+            .text("\n")
+            .text((rating > 1 ? String(format: "%.1fk ", rating) : String(format: "%.0f ", leader.rating)).replacingOccurrences(of: ".", with: ",") + "points".localized() + " • ", size: 12, weight: .semibold, color: .appGrayColor)
+            .text(String(format: "%.0f%%", leader.ratingPercent * 100), size: 12, weight: .semibold, color: .appMainColor)
+            .withParagraphStyle(lineSpacing: 3)
         
         // description
         descriptionLabel.text = leader.url
@@ -77,15 +67,15 @@ class CommunityLeaderCell: CommunityPageCell {
 
         // voteButton
         let voted = leader.isVoted ?? false
-        voteButton.backgroundColor = voted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
-        voteButton.setTitleColor(voted ? .appMainColor: .white, for: .normal)
+        voteButton.backgroundColor = voted ? .appLightGrayColor : .appMainColor
+        voteButton.setTitleColor(voted ? .appMainColor: .appWhiteColor, for: .normal)
         voteButton.setTitle(voted ? "voted".localized().uppercaseFirst : "vote".localized().uppercaseFirst, for: .normal)
         voteButton.isEnabled = !(leader.isBeingVoted ?? false)
         voteButton.addTarget(self, action: #selector(voteButtonDidTouch), for: .touchUpInside)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(userNameTapped))
-        userNameLabel.addGestureRecognizer(tap)
-        userNameLabel.isUserInteractionEnabled = true
+        label.addGestureRecognizer(tap)
+        label.isUserInteractionEnabled = true
 
         let tapAvatar = UITapGestureRecognizer(target: self, action: #selector(userNameTapped))
         avatarImageView.addGestureRecognizer(tapAvatar)

@@ -11,7 +11,7 @@ import Foundation
 // MARK: - UIViewControllerTransitioningDelegate
 extension CommunActionSheet: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return CustomHeightPresentationController(height: height, presentedViewController: presented, presenting: presenting)
+        return CMActionSheetPresentationController(presentedViewController: presented, presenting: presenting)
     }
     
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {

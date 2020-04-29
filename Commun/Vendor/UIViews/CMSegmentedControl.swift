@@ -94,7 +94,7 @@ class CMSegmentedControl: MyView {
         if selectedIndex.value >= items.count {return}
         
         for i in 0..<labels.count {
-            labels[i].textColor = (selectedIndex.value == i) ? .black : UIColor(hexString: "#A5A7BD")
+            labels[i].textColor = (selectedIndex.value == i) ? .appBlackColor : .appGrayColor
         }
         
         // remove constraint

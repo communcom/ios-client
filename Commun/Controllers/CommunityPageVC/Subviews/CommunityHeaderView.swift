@@ -35,7 +35,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         walletCurrencyLabel.autoPinEdge(.leading, to: .trailing, of: walletCurrencyValue, withOffset: 4.0)
         walletCurrencyLabel.autoPinEdge(.bottom, to: .bottom, of: walletCurrencyValue, withOffset: -1.0)
         
-        let equalLabel = UILabel.with(text: "=", textSize: 12, weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        let equalLabel = UILabel.with(text: "=", textSize: 12, weight: .semibold, textColor: .white)
         equalLabel.alpha = 0.7
         
         view.addSubview(equalLabel)
@@ -46,7 +46,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         communValueLabel.autoPinEdge(.leading, to: .trailing, of: equalLabel, withOffset: 2)
         communValueLabel.autoAlignAxis(.horizontal, toSameAxisOf: equalLabel)
         
-        let communLabel = UILabel.with(text: "Commun", textSize: 12, weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        let communLabel = UILabel.with(text: "Commun", textSize: 12, weight: .semibold, textColor: .white)
         communLabel.alpha = 0.7
         
         view.addSubview(communLabel)
@@ -71,14 +71,14 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }()
     
     lazy var walletCurrencyValue: UILabel = {
-        let label = UILabel.with(text: "1000", textSize: 15, weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        let label = UILabel.with(text: "1000", textSize: 15, weight: .semibold, textColor: .white)
         label.isHidden = true
 
         return label
     }()
     
     lazy var walletCurrencyLabel: UILabel = {
-        let label = UILabel.with(text: "Binance", textSize: 12, weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        let label = UILabel.with(text: "Binance", textSize: 12, weight: .semibold, textColor: .white)
         label.isHidden = true
         label.alpha = 0.7
 
@@ -86,7 +86,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }()
     
     lazy var communValueLabel: UILabel = {
-        let label = UILabel.with(text: "10", textSize: 12, weight: .bold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        let label = UILabel.with(text: "1", textSize: 12, weight: .bold, textColor: .white)
         label.alpha = 0.7
         
         return label
@@ -97,7 +97,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
                               height: 35,
                               label: "get points".localized().uppercaseFirst,
                               labelFont: UIFont.systemFont(ofSize: 15, weight: .medium),
-                              backgroundColor: .white,
+                              backgroundColor: .appWhiteColor,
                               textColor: .appMainColor,
                               cornerRadius: 12.5)
         return button
@@ -132,7 +132,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))
     func setUp(walletPrice: ResponseAPIWalletGetPrice) {
         walletCurrencyValue.text = walletPrice.priceValue.string
-        walletCurrencyLabel.text = (walletPrice.symbol ?? "Commun").lowercased().uppercaseFirst // "Binance"
+        walletCurrencyLabel.text = (self.community?.name ?? "Commun").lowercased().uppercaseFirst // "Binance"
+//        walletCurrencyLabel.text = (walletPrice.symbol ?? "Commun").lowercased().uppercaseFirst // "Binance"
         walletCurrencyValue.isHidden = false
         walletCurrencyLabel.isHidden = false
     }
@@ -154,7 +155,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let attributedText = NSMutableAttributedString()
             .text(community.name, size: 20, weight: .bold)
             .text("\n")
-            .text(Formatter.joinedText(with: community.registrationTime), size: 12, weight: .semibold, color: .a5a7bd)
+            .text(Formatter.joinedText(with: community.registrationTime), size: 12, weight: .semibold, color: .appGrayColor)
         headerLabel.attributedText = attributedText
 
         // joinButton
@@ -182,11 +183,11 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let aStr = NSMutableAttributedString()
             .bold(membersCount.kmFormatted, font: .boldSystemFont(ofSize: 15))
             .bold(" ")
-            .bold(String(format: NSLocalizedString("members-count", comment: ""), membersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
-            .bold(statsSeparator, font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
+            .bold(String(format: NSLocalizedString("members-count", comment: ""), membersCount), font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
+            .bold(statsSeparator, font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
             .bold("\(leadersCount.kmFormatted)", font: .boldSystemFont(ofSize: 15))
             .bold(" ")
-            .bold(String(format: NSLocalizedString("leaders-count", comment: ""), leadersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
+            .bold(String(format: NSLocalizedString("leaders-count", comment: ""), leadersCount), font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
         
         statsLabel.attributedText = aStr
 
@@ -196,7 +197,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             usersStackView.setUp(with: friends)
             usersStackView.label.attributedText = NSMutableAttributedString()
                 .text(usersStackView.label.text ?? "", size: 15, weight: .bold)
-                .text(String(format: NSLocalizedString("friend-count", comment: ""), count), size: 12, weight: .bold, color: .a5a7bd)
+                .text(String(format: NSLocalizedString("friend-count", comment: ""), count), size: 12, weight: .bold, color: .appGrayColor)
         }
     }
     

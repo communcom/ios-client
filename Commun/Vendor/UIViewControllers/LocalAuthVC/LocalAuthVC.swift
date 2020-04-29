@@ -30,9 +30,9 @@ class LocalAuthVC: THPinViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Setup views
-        backgroundColor = .white
-        promptColor = .black
-        view.tintColor = .black
+        backgroundColor = .appWhiteColor
+        promptColor = .appBlackColor
+        view.tintColor = .appBlackColor
         promptTitle = "enter passcode".localized().uppercaseFirst
         
         // face id, touch id button

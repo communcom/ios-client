@@ -44,7 +44,7 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
         tableView.configureForAutoLayout()
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .appWhiteColor
         
         tableView.rowHeight = UITableView.automaticDimension
         

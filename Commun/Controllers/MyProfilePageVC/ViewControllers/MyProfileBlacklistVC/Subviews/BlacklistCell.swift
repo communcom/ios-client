@@ -102,8 +102,8 @@ class BlacklistCell: SubsItemCell, ListItemCellType {
             contentLabel.attributedText = attributedText
             actionButton.isEnabled = !(user.isBeingUnblocked ?? false)
             actionButton.setTitle((user.isInBlacklist ?? true) ? "unblock".localized().uppercaseFirst : "reblock".localized().uppercaseFirst, for: .normal)
-            actionButton.backgroundColor = !(user.isInBlacklist ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
-            actionButton.setTitleColor(!(user.isInBlacklist ?? true) ? .appMainColor : .white, for: .normal)
+            actionButton.backgroundColor = !(user.isInBlacklist ?? true) ? .appLightGrayColor : .appMainColor
+            actionButton.setTitleColor(!(user.isInBlacklist ?? true) ? .appMainColor : .appWhiteColor, for: .normal)
         case .community(let community):
             avatarImageView.setAvatar(urlString: community.avatarUrl)
             let attributedText = NSMutableAttributedString()
@@ -111,8 +111,8 @@ class BlacklistCell: SubsItemCell, ListItemCellType {
             contentLabel.attributedText = attributedText
             actionButton.isEnabled = !(community.isBeingUnblocked ?? false)
             actionButton.setTitle((community.isInBlacklist ?? true) ? "unhide".localized().uppercaseFirst : "hide".localized().uppercaseFirst, for: .normal)
-            actionButton.backgroundColor = !(community.isInBlacklist ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
-            actionButton.setTitleColor(!(community.isInBlacklist ?? true) ? .appMainColor : .white, for: .normal)
+            actionButton.backgroundColor = !(community.isInBlacklist ?? true) ? .appLightGrayColor : .appMainColor
+            actionButton.setTitleColor(!(community.isInBlacklist ?? true) ? .appMainColor : .appWhiteColor, for: .normal)
         }
     }
     

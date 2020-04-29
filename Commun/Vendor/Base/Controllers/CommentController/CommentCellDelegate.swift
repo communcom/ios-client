@@ -73,7 +73,7 @@ extension CommentCellDelegate where Self: BaseViewController {
         if texts.count > 0 {
             actions.append(CommunActionSheet.Action(title: "copy".localized().uppercaseFirst,
                                                     icon: UIImage(named: "copy"),
-                                                    tintColor: .black,
+                                                    tintColor: .appBlackColor,
                                                     handle: {
                                                         UIPasteboard.general.string = texts.joined(separator: "\n")
                                                         self.showDone("copied to clipboard".localized().uppercaseFirst)
@@ -84,7 +84,7 @@ extension CommentCellDelegate where Self: BaseViewController {
         if comment.author?.userId == Config.currentUser?.id {
             actions.append(CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
                                                     icon: UIImage(named: "edit"),
-                                                    tintColor: .black,
+                                                    tintColor: .appBlackColor,
                                                     handle: {
                                                         self.cell(cell, didTapEditForComment: comment)
                                                     })
@@ -92,7 +92,7 @@ extension CommentCellDelegate where Self: BaseViewController {
             
             actions.append(CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
                                                     icon: UIImage(named: "delete"),
-                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    tintColor: .appRedColor,
                                                     handle: {
                                                         self.deleteComment(comment)
                                                     })
@@ -100,7 +100,7 @@ extension CommentCellDelegate where Self: BaseViewController {
         } else {
             actions.append(CommunActionSheet.Action(title: "report".localized().uppercaseFirst,
                                                     icon: UIImage(named: "report"),
-                                                    tintColor: UIColor(hexString: "#ED2C5B")!,
+                                                    tintColor: .appRedColor,
                                                     handle: {
                                                         self.reportComment(comment)
                                                     })
@@ -139,7 +139,7 @@ extension CommentCellDelegate where Self: BaseViewController {
     
     func reportComment(_ comment: ResponseAPIContentGetComment) {
         let vc = ContentReportVC(content: comment)
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         
         nc.modalPresentationStyle = .custom
         nc.transitioningDelegate = vc

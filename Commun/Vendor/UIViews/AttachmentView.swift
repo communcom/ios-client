@@ -32,11 +32,11 @@ class AttachmentView: UIView {
     lazy var contentView: UIView = UIView(forAutoLayout: ())
     lazy var descriptionView: UIView = {
         let bottomView = UIView(forAutoLayout: ())
-        bottomView.backgroundColor = UIColor(hexString: "#F3F5FA")
+        bottomView.backgroundColor = .appGrayColor
         return bottomView
     }()
     lazy var titleLabel = UILabel.with(textSize: 15, weight: .bold, numberOfLines: 1)
-    lazy var urlLabel = UILabel.with(textSize: 12, textColor: .e2e6e8, numberOfLines: 1)
+    lazy var urlLabel = UILabel.with(textSize: 12, textColor: .appLightGrayColor, numberOfLines: 1)
     
     // MARK: - Initializers
     required init?(coder aDecoder: NSCoder) {
@@ -51,7 +51,7 @@ class AttachmentView: UIView {
     
     func commonInit() {
         // setup apperance
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
         
         // pin imageView
         addSubview(contentView)

@@ -25,7 +25,7 @@ class EmbedView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel(forAutoLayout: ())
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        label.textColor = .black
+        label.textColor = .appBlackColor
         return label
     }()
 
@@ -45,7 +45,7 @@ class EmbedView: UIView {
 
     private lazy var loadingView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = .appBlackColor
         return view
     }()
 
@@ -160,7 +160,7 @@ class EmbedView: UIView {
             return
         }
 
-        backgroundColor = UIColor(hexString: "#F3F5FA")
+        backgroundColor = .appLightGrayColor
         let insetX: CGFloat = 16
         let insetY: CGFloat = 10.0
 

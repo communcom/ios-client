@@ -9,14 +9,14 @@
 import Foundation
 
 class ChooseCommunityExplanationView: MyTableHeaderView {
-    lazy var closeButton = UIButton.close(size: 26, imageName: "close-x", backgroundColor: .clear, tintColor: .a5a7bd)
+    lazy var closeButton = UIButton.close(size: 26, imageName: "close-x", backgroundColor: .clear, tintColor: .appGrayColor)
     lazy var learnMoreButton = UIButton(width: 20, height: 20)
     
     override func commonInit() {
         super.commonInit()
         
-        let containerView = UIView(backgroundColor: .white)
-        containerView.backgroundColor = .white
+        let containerView = UIView(backgroundColor: .appWhiteColor)
+        containerView.backgroundColor = .appWhiteColor
         containerView.cornerRadius = 6
         addSubview(containerView)
         containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
@@ -34,7 +34,7 @@ class ChooseCommunityExplanationView: MyTableHeaderView {
         learnMoreButton.autoPinEdge(.leading, to: .trailing, of: headerLabel, withOffset: 10)
         learnMoreButton.autoAlignAxis(.horizontal, toSameAxisOf: headerLabel)
         
-        let descriptionLabel = UILabel.with(text: "choose community in which you want".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd, numberOfLines: 0)
+        let descriptionLabel = UILabel.with(text: "choose community in which you want".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor, numberOfLines: 0)
         containerView.addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 15)

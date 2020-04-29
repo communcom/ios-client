@@ -28,6 +28,7 @@ open class MySubviewAttachingTextView: UITextView {
         self.attachmentBehavior.textView = self
         self.layoutManager.delegate = self.attachmentBehavior
         self.textStorage.delegate = self.attachmentBehavior
+        self.backgroundColor = .clear
     }
 
     open override var textContainerInset: UIEdgeInsets {

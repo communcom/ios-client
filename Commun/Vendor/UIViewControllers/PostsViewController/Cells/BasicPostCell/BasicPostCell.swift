@@ -25,6 +25,7 @@ final class BasicPostCell: PostCell {
         contentTextView.dataDetectorTypes = .link
         contentTextView.isUserInteractionEnabled = false
         contentTextView.delegate = self
+        contentTextView.backgroundColor = .clear
     }
     
     // MARK: - Layout
@@ -47,6 +48,7 @@ final class BasicPostCell: PostCell {
     
     override func setUp(with post: ResponseAPIContentGetPost) {
         super.setUp(with: post)
+        backgroundColor = .appWhiteColor
        
         self.accessibilityLabel = "PostCardCell"
         centerConstraint.isActive = false
@@ -57,7 +59,8 @@ final class BasicPostCell: PostCell {
 
         let defaultAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 14),
-            .paragraphStyle: paragraph
+            .paragraphStyle: paragraph,
+            .foregroundColor: UIColor.appBlackColor
         ]
 
         var texts = NSMutableAttributedString()

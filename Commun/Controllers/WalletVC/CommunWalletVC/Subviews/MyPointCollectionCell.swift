@@ -23,7 +23,7 @@ class MyPointCollectionCell: MyCollectionViewCell {
     // MARK: - Methods
     override func setUpViews() {
         super.setUpViews()
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .appWhiteColor
         contentView.cornerRadius = 10
         
         contentView.addSubview(logoImageView)
@@ -46,20 +46,20 @@ class MyPointCollectionCell: MyCollectionViewCell {
             nameLabel.attributedText = NSAttributedString(string: "Commun", attributes: [.font: UIFont.systemFont(ofSize: 17, weight: .semibold)])
             pointLabel.attributedText = NSMutableAttributedString()
                 .text("\(balance.balanceValue.kmFormatted())", size: 16, weight: .semibold)
-                .text(" " + "token".localized().uppercaseFirst, size: 12, weight: .semibold, color: .a5a7bd)
-                .withParagraphSpacing(20)
+                .text(" " + "token".localized().uppercaseFirst, size: 12, weight: .semibold, color: .appGrayColor)
+                .withParagraphStyle(minimumLineHeight: 20)
             pointLabel.numberOfLines = 1
         } else {
             logoImageView.setAvatar(urlString: balance.logo)
             nameLabel.attributedText = NSMutableAttributedString()
                 .text(balance.name ?? "B", size: 17, weight: .semibold)
-                .text("\n\(balance.frozenValue.currencyValueFormatted) " + String(format: "%@ %@", "on".localized(), "hold".localized()), size: 12, weight: .semibold, color: .a5a7bd)
-                .withParagraphSpacing(20)
+                .text("\n\(balance.frozenValue.currencyValueFormatted) " + String(format: "%@ %@", "on".localized(), "hold".localized()), size: 12, weight: .semibold, color: .appGrayColor)
+                .withParagraphStyle(minimumLineHeight: 20)
             pointLabel.attributedText = NSMutableAttributedString()
                 .text("\(balance.balanceValue.kmFormatted())", size: 16, weight: .semibold)
-                .text(" " + "points".localized().uppercaseFirst, size: 12, weight: .semibold, color: .a5a7bd)
-                .text("\n= \(balance.communValue.kmFormatted()) Commun", size: 12, weight: .semibold, color: .a5a7bd)
-                .withParagraphSpacing(20)
+                .text(" " + "points".localized().uppercaseFirst, size: 12, weight: .semibold, color: .appGrayColor)
+                .text("\n= \(balance.communValue.kmFormatted()) Commun", size: 12, weight: .semibold, color: .appGrayColor)
+                .withParagraphStyle(minimumLineHeight: 20)
             pointLabel.numberOfLines = 2
         }
         nameLabel.lineBreakMode = .byTruncatingTail

@@ -11,7 +11,7 @@ import RxSwift
 import RxDataSources
 import CyberSwift
 
-class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate, CommunityPageVCType {
+class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate, CommunityPageVCType, HasLeadersVM {
     
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
@@ -47,8 +47,10 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         if let alias = communityAlias {
             return CommunityPageViewModel(communityAlias: alias)
         }
+        
         return CommunityPageViewModel(communityId: communityId)
     }
+    var leadersVM: LeadersViewModel {(viewModel as! CommunityPageViewModel).leadsVM}
     
     // MARK: - Subviews
     lazy var headerView = CommunityHeaderView(tableView: tableView)
@@ -76,7 +78,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         view.addGestureRecognizer(tap)
         
         let containerView = UIView(frame: .zero)
-        containerView.backgroundColor = .white
+        containerView.backgroundColor = .appWhiteColor
         containerView.addSubview(view)
         view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 2, right: 0), excludingEdge: .trailing)
         
@@ -295,6 +297,11 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                 }
                 return [AnimatableSectionModel<String, CustomElementType>(model: "", items: items)]
             }
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -346,7 +353,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             }),
             CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_blacklist"),
-                                     tintColor: profile.isInBlacklist == true ? .black: .ed2c5b,
+                                     tintColor: profile.isInBlacklist == true ? .appBlackColor: .appRedColor,
                                      marginTop: 10,
                                      handle: {
                                         self.showAlert(
@@ -423,7 +430,7 @@ extension CommunityPageVC: UITableViewDelegate {
         }
         
         let aStr = NSMutableAttributedString()
-            .semibold("sort".localized().uppercaseFirst + ":", color: .a5a7bd)
+            .semibold("sort".localized().uppercaseFirst + ":", color: .appGrayColor)
             .semibold(" ")
             .semibold(type.localizedLabel!.uppercaseFirst)
         
@@ -451,7 +458,7 @@ extension CommunityPageVC: UITableViewDelegate {
             self.updatePostSortingView()
         }
         
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         nc.transitioningDelegate = vc
         nc.modalPresentationStyle = .custom
         
@@ -467,8 +474,8 @@ extension CommunityPageVC: UITableViewDelegate {
         switch item {
         case let post as ResponseAPIContentGetPost:
             return (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] ?? UITableView.automaticDimension
-        case let leader as ResponseAPIContentGetLeader:
-            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? UITableView.automaticDimension
+//        case let leader as ResponseAPIContentGetLeader:
+//            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? UITableView.automaticDimension
         case let rule as ResponseAPIContentGetCommunityRule:
             return (viewModel as! CommunityPageViewModel).ruleRowHeights[rule.identity] ?? UITableView.automaticDimension
         default:
@@ -484,8 +491,8 @@ extension CommunityPageVC: UITableViewDelegate {
         switch item {
         case let post as ResponseAPIContentGetPost:
             return (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] ?? 200
-        case let leader as ResponseAPIContentGetLeader:
-            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? 121
+//        case let leader as ResponseAPIContentGetLeader:
+//            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? 121
         case let rule as ResponseAPIContentGetCommunityRule:
             return (viewModel as! CommunityPageViewModel).ruleRowHeights[rule.identity] ?? 68
         default:

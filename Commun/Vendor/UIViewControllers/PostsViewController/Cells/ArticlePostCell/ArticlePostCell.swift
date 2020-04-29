@@ -19,7 +19,7 @@ final class ArticlePostCell: PostCell {
 
         let blackoutView = UIView()
         imageView.addSubview(blackoutView)
-        blackoutView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        blackoutView.backgroundColor = UIColor.appBlackColor.withAlphaComponent(0.2)
         blackoutView.autoPinEdgesToSuperviewEdges()
 
         imageView.cornerRadius = 10
@@ -28,14 +28,14 @@ final class ArticlePostCell: PostCell {
     }()
     
     lazy var titleLabel: UILabel = {
-        let label = UILabel.with(textSize: 21, weight: .bold, textColor: .white, numberOfLines: 2)
+        let label = UILabel.with(textSize: 21, weight: .bold, textColor: .appWhiteColor, numberOfLines: 2)
         label.textAlignment = .center
         return label
     }()
     
     lazy var readButton: UIView = {
         let button = UIView(height: 34)
-        button.backgroundColor = .white
+        button.backgroundColor = .appWhiteColor
         button.cornerRadius = 17
         
         let imageView = UIImageView(width: 24, height: 24)
@@ -69,7 +69,7 @@ final class ArticlePostCell: PostCell {
         // dim card image
         let maskView = UIView(forAutoLayout: ())
         maskView.cornerRadius = 10
-        maskView.backgroundColor = .black
+        maskView.backgroundColor = .appBlackColor
         maskView.alpha = 0.4
         cardImageView.addSubview(maskView)
         maskView.autoPinEdge(.top, to: .top, of: cardImageView)

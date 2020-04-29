@@ -27,14 +27,14 @@ extension UILabel {
         let label = UILabel(forAutoLayout: ())
         label.text = text
         label.font = .systemFont(ofSize: size, weight: .semibold)
-        label.textColor = UIColor(hexString: "#A5A7BD")
+        label.textColor = .appGrayColor
         if let numberOfLines = numberOfLines {
             label.numberOfLines = numberOfLines
         }
         return label
     }
     
-    static func with(text: String? = nil, textSize: CGFloat = 15, weight: UIFont.Weight = .regular, textColor: UIColor = .black, numberOfLines: Int? = nil, textAlignment: NSTextAlignment? = nil) -> UILabel {
+    static func with(text: String? = nil, textSize: CGFloat = 15, weight: UIFont.Weight = .regular, textColor: UIColor = .appBlackColor, numberOfLines: Int? = nil, textAlignment: NSTextAlignment? = nil) -> UILabel {
         let label = UILabel(forAutoLayout: ())
         label.text = text
         label.font = .systemFont(ofSize: textSize, weight: weight)

@@ -20,7 +20,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
     var searchBarTopConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
-    lazy var searchContainerView = UIView(backgroundColor: .white)
+    lazy var searchContainerView = UIView(backgroundColor: .appWhiteColor)
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar(forAutoLayout: ())
         searchBar.searchBarStyle = .minimal
@@ -40,7 +40,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         let horizontalSpacing: CGFloat = 16 * Config.heightRatio
         let itemWidth = (width - horizontalSpacing) / 2
         layout.itemSize = CGSize(width: itemWidth, height: 190)
-        layout.headerReferenceSize = CGSize(width: width, height: 132 + searchBar.height + 10)
+        layout.headerReferenceSize = CGSize(width: width, height: FTUECommunitiesHeaderView.height)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
@@ -80,7 +80,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
 
     // bottomBar
     private lazy var shadowView = UIView(height: bottomBarHeight)
-    lazy var bottomBar = UIView(backgroundColor: .white)
+    lazy var bottomBar = UIView(backgroundColor: .appWhiteColor)
     
     // MARK: - Methods
     override func viewDidLayoutSubviews() {
@@ -164,7 +164,7 @@ class FTUECommunitiesVC: BaseViewController, SearchableViewControllerType {
         searchBar.sizeToFit()
         
         view.addSubview(searchContainerView)
-        searchBarTopConstraint = searchContainerView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 132)
+        searchBarTopConstraint = searchContainerView.autoPinEdge(toSuperviewSafeArea: .top, withInset: FTUECommunitiesHeaderView.height - 10 - 8 - searchBar.height - 8 + FTUECommunitiesHeaderView.additionalSpaceToSearchBar)
         searchContainerView.autoPinEdge(toSuperviewEdge: .leading)
         searchContainerView.autoPinEdge(toSuperviewEdge: .trailing)
     }

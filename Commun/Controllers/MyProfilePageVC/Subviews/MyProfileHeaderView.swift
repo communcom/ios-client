@@ -10,10 +10,10 @@ import Foundation
 
 final class MyProfileHeaderView: UserProfileHeaderView {
     lazy var changeAvatarButton: UIButton = {
-        let button = UIButton(width: 20, height: 20, backgroundColor: .f3f5fa, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
-        button.tintColor = .a5a7bd
+        let button = UIButton(width: 20, height: 20, backgroundColor: .appLightGrayColor, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
+        button.tintColor = .appGrayColor
         button.setImage(UIImage(named: "photo_solid")!, for: .normal)
-        button.borderColor = .white
+        button.borderColor = UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appLightGrayColor)
         button.borderWidth = 2
         button.touchAreaEdgeInsets = UIEdgeInsets(top: -24, left: -24, bottom: 0, right: 0)
         return button
@@ -22,13 +22,15 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     lazy var addBioButton = UIButton(height: 35,
                                      label: String(format: "%@ %@", "add".localized().uppercaseFirst, "bio".localized()),
                                      labelFont: .boldSystemFont(ofSize: 15),
-                                     backgroundColor: .f3f5fa,
+                                     backgroundColor: .appLightGrayColor,
                                      textColor: .appMainColor,
                                      cornerRadius: 35/2)
     
     lazy var walletShadowView = UIView(forAutoLayout: ())
     lazy var walletView = UIView(cornerRadius: 16)
-    lazy var communValueLabel = UILabel.with(text: "0", textSize: 20, weight: .semibold, textColor: .white)
+    lazy var equityValueLabel = UILabel.with(text: "equity Commun Value".localized().uppercaseFirst, textSize: 12 * Config.widthRatio, weight: .semibold, textColor: .white, numberOfLines: 0)
+    lazy var valueLabel = UILabel.with(text: "0.0000", textSize: 20, weight: .semibold, textColor: .white)
+    
     
     override func commonInit() {
         super.commonInit()
@@ -76,16 +78,16 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     func setUpWalletView(withError: Bool = false) {
         // clean
         walletView.removeSubviews()
-        
+        let whiteColor = UIColor.white
         // layout
         if withError {
-            let label = UILabel.with(text: "loading failed".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .white)
+            let label = UILabel.with(text: "loading failed".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: whiteColor)
             walletView.addSubview(label)
             label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
             label.autoAlignAxis(toSuperviewAxis: .horizontal)
             
             let retryButton = CommunButton.default(height: 35, label: "retry".localized().uppercaseFirst, cornerRadius: 35 / 2, isHuggingContent: true)
-            retryButton.backgroundColor = UIColor.white.withAlphaComponent(0.1)
+            retryButton.backgroundColor = whiteColor.withAlphaComponent(0.1)
             walletView.addSubview(retryButton)
             retryButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 22, left: 0, bottom: 22, right: 16), excludingEdge: .leading)
         } else {
@@ -93,7 +95,7 @@ final class MyProfileHeaderView: UserProfileHeaderView {
                 let imageView = UIImageView(width: 19.69 * Config.widthRatio, height: 18.05 * Config.widthRatio)
                 imageView.image = UIImage(named: "wallet-icon")
                 
-                let imageContainerView = UIView(width: 50 * Config.widthRatio, height: 50 * Config.widthRatio, backgroundColor: UIColor.white.withAlphaComponent(0.2), cornerRadius: 25 * Config.widthRatio)
+                let imageContainerView = UIView(width: 50 * Config.widthRatio, height: 50 * Config.widthRatio, backgroundColor: whiteColor.withAlphaComponent(0.2), cornerRadius: 25 * Config.widthRatio)
                 imageContainerView.addSubview(imageView)
                 imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
                 imageView.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -111,13 +113,12 @@ final class MyProfileHeaderView: UserProfileHeaderView {
             // commun value
             let communValueContainerView: UIView = {
                 let containerView = UIView(forAutoLayout: ())
-                let equityCommunValueLabel = UILabel.with(text: "equity Commun Value".localized().uppercaseFirst, textSize: 12 * Config.widthRatio, weight: .semibold, textColor: .white, numberOfLines: 0)
-                containerView.addSubview(equityCommunValueLabel)
-                equityCommunValueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+                containerView.addSubview(equityValueLabel)
+                equityValueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
                 
-                containerView.addSubview(self.communValueLabel)
-                self.communValueLabel.autoPinEdge(.top, to: .bottom, of: equityCommunValueLabel, withOffset: 4)
-                self.communValueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+                containerView.addSubview(self.valueLabel)
+                self.valueLabel.autoPinEdge(.top, to: .bottom, of: equityValueLabel, withOffset: 4)
+                self.valueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
                 
                 return containerView
             }()
@@ -131,16 +132,16 @@ final class MyProfileHeaderView: UserProfileHeaderView {
                 .isActive = true
             
             let nextView: UIView = {
-                let view = UIView(height: 35, backgroundColor: UIColor.white.withAlphaComponent(0.1), cornerRadius: 35 / 2)
+                let view = UIView(height: 35, backgroundColor: whiteColor.withAlphaComponent(0.1), cornerRadius: 35 / 2)
                 
-                let label = UILabel.with(text: "wallet".localized().uppercaseFirst, textSize: 15 * Config.widthRatio, weight: .medium, textColor: .white)
+                let label = UILabel.with(text: "wallet".localized().uppercaseFirst, textSize: 15 * Config.widthRatio, weight: .medium, textColor: whiteColor)
                 label.setContentHuggingPriority(.required, for: .horizontal)
                 view.addSubview(label)
                 label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16 * Config.widthRatio)
                 label.autoAlignAxis(toSuperviewAxis: .horizontal)
                 
                 let nextArrow = UIImageView(width: 7.5, height: 15, imageNamed: "next-arrow")
-                nextArrow.tintColor = .white
+                nextArrow.tintColor = whiteColor
                 view.addSubview(nextArrow)
                 nextArrow.autoAlignAxis(toSuperviewAxis: .horizontal)
                 nextArrow.autoPinEdge(.leading, to: .trailing, of: label, withOffset: 10 * Config.widthRatio)
@@ -165,14 +166,14 @@ final class MyProfileHeaderView: UserProfileHeaderView {
             gradient.frame = walletView.bounds
             gradient.startPoint = CGPoint(x: 1.0, y: 0.5)
             gradient.endPoint = CGPoint(x: 0, y: 0.5)
-            gradient.colors = [UIColor(hexString: "#6A80F5")!.cgColor, UIColor(hexString: "#A4B1F9")!.cgColor]
+            gradient.colors = [UIColor.appMainColor.cgColor, UIColor.colorSupportDarkMode(defaultColor: UIColor(hexString: "#99A8F8")!, darkColor: .appMainColor).cgColor]
             walletView.layer.insertSublayer(gradient, at: 0)
-            
+
             // corner radius
-            walletView.cornerRadius = 16
+            walletView.cornerRadius = 15
             
             // shadow
-            walletShadowView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 24, offset: CGSize(width: 0, height: 14), opacity: 0.4)
+            walletShadowView.addShadow(ofColor: UIColor.onlyLightModeShadowColor(UIColor(red: 106, green: 128, blue: 245)!), radius: 24, offset: CGSize(width: 0, height: 14), opacity: 0.4)
         }
     }
 }

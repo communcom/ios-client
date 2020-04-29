@@ -111,7 +111,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         let attributedText = NSMutableAttributedString()
             .text(userProfile.username, size: 20, weight: .bold)
             .text("\n")
-            .text(Formatter.joinedText(with: userProfile.registration?.time), size: 12, weight: .semibold, color: .a5a7bd)
+            .text(Formatter.joinedText(with: userProfile.registration?.time), size: 12, weight: .semibold, color: .appGrayColor)
         headerLabel.attributedText = attributedText
         
         // bio
@@ -132,15 +132,15 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         let aStr = NSMutableAttributedString()
             .bold(followersCount.kmFormatted, font: .boldSystemFont(ofSize: 15))
             .bold(" ")
-            .bold(String(format: NSLocalizedString("followers-count", comment: ""), followersCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
-            .bold(statsSeparator, font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
+            .bold(String(format: NSLocalizedString("followers-count", comment: ""), followersCount), font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
+            .bold(statsSeparator, font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
             .bold("\(followingsCount.kmFormatted)", font: .boldSystemFont(ofSize: 15))
             .bold(" ")
-            .bold(String(format: NSLocalizedString("followings-count", comment: ""), followingsCount), font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
+            .bold(String(format: NSLocalizedString("followings-count", comment: ""), followingsCount), font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
         
         if userProfile.isSubscribed == true {
             aStr
-                .bold(statsSeparator, font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
+                .bold(statsSeparator, font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
                 .bold("follows you".localized().uppercaseFirst, font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
         }
         
@@ -149,7 +149,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         communitiesLabel.attributedText = NSMutableAttributedString()
             .text("communities".localized().uppercaseFirst, size: 20, weight: .bold)
             .text("\n")
-            .text("\(userProfile.subscriptions?.communitiesCount ?? 0) (\(userProfile.highlightCommunitiesCount ?? 0) " + "mutual".localized().uppercaseFirst + ")", size: 15, weight: .semibold, color: .a5a7bd)
+            .text("\(userProfile.subscriptions?.communitiesCount ?? 0) (\(userProfile.highlightCommunitiesCount ?? 0) " + "mutual".localized().uppercaseFirst + ")", size: 15, weight: .semibold, color: .appGrayColor)
 
         if userProfile.userId != Config.currentUser?.id {
             isCommunitiesHidden = !(userProfile.highlightCommunitiesCount ?? 0 > 0)
@@ -164,7 +164,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     
     @objc func seeAllButtonDidTouch() {
         let vc = SubscriptionsVC(title: profile?.username, userId: profile?.userId, type: .community)
-        let navigation = BaseNavigationController(rootViewController: vc)
+        let navigation = SwipeNavigationController(rootViewController: vc)
         navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         parentViewController?.present(navigation, animated: true, completion: nil)
     }

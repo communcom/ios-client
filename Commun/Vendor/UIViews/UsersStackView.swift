@@ -52,7 +52,7 @@ class UsersStackView: MyView {
             for friend in friends {
                 let imageView = MyAvatarImageView(size: 34)
                 imageView.layer.borderWidth = 2
-                imageView.layer.borderColor = UIColor.white.cgColor
+                imageView.layer.borderColor = UIColor.appWhiteColor.cgColor
                 imageView.addTapToOpenUserProfile(profileId: friend.userId)
                 avatarsStackView.addArrangedSubview(imageView)
                 imageView.setAvatar(urlString: friend.avatarUrl)
@@ -62,7 +62,7 @@ class UsersStackView: MyView {
             for i in 0..<maxNumberOfAvatars {
                 let imageView = MyAvatarImageView(size: 34)
                 imageView.layer.borderWidth = 2
-                imageView.layer.borderColor = UIColor.white.cgColor
+                imageView.layer.borderColor = UIColor.appWhiteColor.cgColor
                 imageView.addTapToOpenUserProfile(profileId: friends[i].userId)
                 avatarsStackView.addArrangedSubview(imageView)
                 imageView.setAvatar(urlString: friends[i].avatarUrl)
@@ -97,7 +97,7 @@ class UsersStackView: MyView {
                 let imageView = UIImageView(width: 34, height: 34)
                 imageView.layer.masksToBounds = true
                 imageView.layer.borderWidth = 2
-                imageView.layer.borderColor = UIColor.white.cgColor
+                imageView.layer.borderColor = UIColor.appWhiteColor.cgColor
                 imageView.layer.cornerRadius = 17
                 imageView.image = UIImage(named: "ProfilePageCover")
                 avatarsStackView.addArrangedSubview(imageView)
@@ -108,7 +108,7 @@ class UsersStackView: MyView {
                 let imageView = UIImageView(width: 34, height: 34)
                 imageView.layer.masksToBounds = true
                 imageView.layer.borderWidth = 2
-                imageView.layer.borderColor = UIColor.white.cgColor
+                imageView.layer.borderColor = UIColor.appWhiteColor.cgColor
                 imageView.layer.cornerRadius = 17
                 imageView.image = UIImage(named: "ProfilePageCover")
                 avatarsStackView.addArrangedSubview(imageView)

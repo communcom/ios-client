@@ -43,7 +43,7 @@ extension UIImageView {
             let spinnerView = ASSpinnerView(width: size, height: size)
             spinnerView.spinnerLineWidth = size/10
             spinnerView.spinnerDuration = 0.3
-            spinnerView.spinnerStrokeColor = UIColor.white.cgColor
+            spinnerView.spinnerStrokeColor = UIColor.appWhiteColor.cgColor
             
             setGifFromURL(url, customLoader: spinnerView)
         } else {
@@ -73,7 +73,7 @@ extension UIImageView {
             }
         }
 
-        showLoading(cover: false, spinnerColor: .white)
+        showLoading(cover: false, spinnerColor: .appWhiteColor)
 
         if let placeholderUrl = placeholderUrl {
             self.showBlur(true)

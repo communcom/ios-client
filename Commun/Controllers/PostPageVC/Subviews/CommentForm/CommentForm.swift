@@ -23,9 +23,7 @@ class CommentForm: MyView {
     private let disposeBag = DisposeBag()
     lazy var viewModel = CommentFormViewModel()
     var post: ResponseAPIContentGetPost? {
-        didSet {
-            viewModel.post = post
-        }
+        (parentViewController as? PostPageVC)?.post
     }
     
     private var parentComment: ResponseAPIContentGetComment?
@@ -39,21 +37,21 @@ class CommentForm: MyView {
     lazy var textView: CommentTextView = {
         let textView = CommentTextView(forExpandable: ())
         textView.placeholder = "write a comment".localized().uppercaseFirst + "..."
-        textView.backgroundColor = .f3f5fa
+        textView.backgroundColor = .appLightGrayColor
         textView.cornerRadius = 35 / 2
 
         return textView
     }()
 
     lazy var imageButton = CommunButton.circle(size: .adaptive(width: 35.0),
-                                               backgroundColor: .white,
-                                               tintColor: UIColor(hexString: "#A5A7BD"),
+                                               backgroundColor: .appWhiteColor,
+                                               tintColor: .appGrayColor,
                                                imageName: "icon-send-comment-gray-default",
                                                imageEdgeInsets: .zero)
 
     lazy var sendButton = CommunButton.circle(size: .adaptive(width: 35.0),
-                                              backgroundColor: UIColor(hexString: "#6A80F5")!,
-                                              tintColor: .white,
+                                              backgroundColor: .appMainColor,
+                                              tintColor: .appWhiteColor,
                                               imageName: "send",
                                               imageEdgeInsets: .zero)
     
@@ -125,7 +123,7 @@ class CommentForm: MyView {
             imageView!.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: .adaptive(height: -10.0))
             
             let closeButton = UIButton.close(size: 24)
-            closeButton.borderColor = .white
+            closeButton.borderColor = .appWhiteColor
             closeButton.borderWidth = 2
             addSubview(closeButton)
             closeButton.autoPinEdge(.top, to: .top, of: imageView!, withOffset: -6)
@@ -210,7 +208,7 @@ class CommentForm: MyView {
         
         stackView.addArrangedSubviews([parentCommentTitleLabel, parentCommentLabel])
         
-        let closeParentCommentButton = UIButton.circle(size: .adaptive(width: 20.0), backgroundColor: .white, imageName: "icon-close-black-default")
+        let closeParentCommentButton = UIButton.circle(size: .adaptive(width: 20.0), backgroundColor: .appWhiteColor, imageName: "icon-close-black-default")
         closeParentCommentButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
         
         view.addSubview(closeParentCommentButton)
@@ -252,6 +250,18 @@ class CommentForm: MyView {
             .subscribe(onNext: { (shouldEnableSendButton) in
                 self.sendButton.isEnabled = shouldEnableSendButton
                 self.sendButton.isHidden = !shouldEnableSendButton
+                
+                // Check pasted link
+                if self.textView.text.trimmed.isImageType(), let stringURL = self.textView.text?.trimmed, let url = URL(string: stringURL) {
+                    DispatchQueue.global().async { [weak self] in
+                        if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                self?.localImage.accept(image)
+                                self?.textView.text = nil
+                            }
+                        }
+                    }
+                }
                 
                 UIView.animate(withDuration: 0.3, animations: {
                     self.layoutIfNeeded()
@@ -313,11 +323,11 @@ extension CommentForm {
                 let request: Single<SendPostCompletion>
                 switch self.mode {
                 case .new:
-                    request = self.viewModel.sendNewComment(block: block, uploadingImage: self.localImage.value)
+                    request = self.viewModel.sendNewComment(post: self.post, block: block, uploadingImage: self.localImage.value)
                 case .edit:
-                    request = self.viewModel.updateComment(self.parentComment!, block: block, uploadingImage: self.localImage.value)
+                    request = self.viewModel.updateComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
                 case .reply:
-                    request = self.viewModel.replyToComment(self.parentComment!, block: block, uploadingImage: self.localImage.value)
+                    request = self.viewModel.replyToComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
                 }
                 
                 self.textView.text = ""

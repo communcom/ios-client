@@ -37,6 +37,11 @@ class DiscoveryCommunitiesVC: CommunitiesVC {
         let viewModel = self.viewModel as! CommunitiesViewModel
         viewModel.mergedItems
             .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

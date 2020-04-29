@@ -15,8 +15,8 @@ protocol CommunWalletHeaderViewDatasource: class {
 class CommunWalletHeaderView: MyView {
     // MARK: - Properties
     var isCollapsed = false
-
     weak var dataSource: CommunWalletHeaderViewDatasource?
+    var isShowingUSD = false
     
     // MARK: - ConfigurableConstraints
     var titleTopConstraint: NSLayoutConstraint?
@@ -27,7 +27,7 @@ class CommunWalletHeaderView: MyView {
     // MARK: - Subviews
     var carousel: WalletCarousel?
     lazy var shadowView = UIView(forAutoLayout: ())
-    lazy var contentView = UIView(backgroundColor: .appMainColor)
+    lazy var contentView = UIView(backgroundColor: .appMainColorDarkBlack)
 
     lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
     lazy var pointLabel = UILabel.with(text: "167 500.23", textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
@@ -95,8 +95,13 @@ class CommunWalletHeaderView: MyView {
         guard let balances = dataSource?.data(forWalletHeaderView: self)
         else {return}
         // set up with commun value
-        titleLabel.text = "equity Commun Value".localized().uppercaseFirst
-        pointLabel.text = "\(balances.enquityCommunValue.currencyValueFormatted)"
+        if isShowingUSD {
+            titleLabel.text = "equity USD Value".localized().uppercaseFirst
+            pointLabel.text = "$ \(balances.equityUSDValue.currencyValueFormatted)"
+        } else {
+            titleLabel.text = "equity Commun Value".localized().uppercaseFirst
+            pointLabel.text = "\(balances.enquityCommunValue.currencyValueFormatted)"
+        }
     }
     
     // MARK: - Private functions
@@ -121,7 +126,7 @@ class CommunWalletHeaderView: MyView {
         layoutBalanceExpanded()
 
         // modify fonts, colors
-        self.contentView.backgroundColor = .appMainColor
+        self.contentView.backgroundColor = .appMainColorDarkBlack
 
         self.titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         self.pointLabel.font = .systemFont(ofSize: 30, weight: .bold)
@@ -153,12 +158,12 @@ class CommunWalletHeaderView: MyView {
     
     private func makeShadowAndRoundCorner() {
         contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 25)
-        
-        var color = UIColor(red: 106, green: 128, blue: 245)!
+
+        var color = UIColor.colorSupportDarkMode(defaultColor: UIColor(red: 106, green: 128, blue: 245)!, darkColor: .clear)
         var opacity: Float = 0.3
         
         if isCollapsed {
-            color = UIColor(red: 108, green: 123, blue: 173)!
+            color = UIColor.colorSupportDarkMode(defaultColor: UIColor(red: 108, green: 123, blue: 173)!, darkColor: .black)
             opacity = 0.08
         }
         

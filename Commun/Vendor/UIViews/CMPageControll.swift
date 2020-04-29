@@ -13,8 +13,8 @@ final class CMPageControll: MyView {
     let itemHeight: CGFloat = 5
     let selectedItemWidth: CGFloat = 20
     let spaceBetweenItems: CGFloat = 6
-    let unselectedColor = UIColor(hexString: "#E2E6E8")
-    let selectedColor = UIColor.appMainColor
+    let unselectedColor: UIColor = .appGrayColor
+    let selectedColor: UIColor = .appMainColor
     
     // MARK: - Properties
     let numberOfPages: Int

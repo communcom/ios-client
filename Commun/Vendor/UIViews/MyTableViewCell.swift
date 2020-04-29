@@ -46,7 +46,6 @@ class MyTableViewCell: UITableViewCell {
     }
     
     func roundCorners() {
-        if roundedCorner.isEmpty {return}
         roundCorners(roundedCorner, radius: 10)
     }
 }

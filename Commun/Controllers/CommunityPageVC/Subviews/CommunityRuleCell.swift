@@ -15,7 +15,7 @@ class CommunityRuleCell: CommunityPageCell {
     var bottomConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
-    lazy var containerView = UIView(backgroundColor: .white, cornerRadius: 10)
+    lazy var containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     lazy var titleLabel = UILabel.with(text: "2. Content should be Safe for Work", textSize: 15.0, weight: .bold, numberOfLines: 0)
     lazy var contentLabel = UILabel.with(text: "All content (title, articles, video, image, website, etc.) must be SFW: Safe For Work. Content that is NSFW: Not Safe For Work, is banned. This rule applies to all posts and comments.", textSize: 15.0, numberOfLines: 0)
     lazy var expandButton = UIButton.circleGray(imageName: "rule_expand")
@@ -23,7 +23,7 @@ class CommunityRuleCell: CommunityPageCell {
     override func setUpViews() {
         super.setUpViews()
         // background color
-        contentView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
+        contentView.backgroundColor = .appLightGrayColor
         
         contentView.addSubview(containerView)
         containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0, left: 10.0, bottom: 10.0, right: 10.0))

@@ -13,7 +13,7 @@ class VerticalActionsVC: BaseVerticalStackVC {
     struct Action {
         var title: String
         var icon: UIImage?
-        var tintColor: UIColor = .black
+        var tintColor: UIColor = .appBlackColor
         var marginTop: CGFloat = 0
         var isActive: Bool = false
         var isSelected: Bool = false
@@ -56,7 +56,7 @@ class VerticalActionsVC: BaseVerticalStackVC {
     }
     
     func viewForAction(_ action: Action) -> UIView {
-        let actionView = UIView(height: 65, backgroundColor: .white)
+        let actionView = UIView(height: 65, backgroundColor: .appWhiteColor)
         let imageView = UIImageView(width: 35, height: 35)
         imageView.image = action.icon
         actionView.addSubview(imageView)

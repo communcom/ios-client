@@ -45,7 +45,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
         segmentedControl.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
         
         // type
-        let typeLabel = UILabel.with(text: "type".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .a5a7bd)
+        let typeLabel = UILabel.with(text: "type".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appGrayColor)
         view.addSubview(typeLabel)
         typeLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
         typeLabel.autoPinEdge(.top, to: .bottom, of: segmentedControl, withOffset: 30 * Config.heightRatio)
@@ -56,7 +56,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
         typeSegmentedControl.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
         
         // reward
-        let rewardsLabel = UILabel.with(text: "rewards".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .a5a7bd)
+        let rewardsLabel = UILabel.with(text: "rewards".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appGrayColor)
         view.addSubview(rewardsLabel)
         rewardsLabel.autoPinEdge(.top, to: .bottom, of: typeSegmentedControl, withOffset: 30 * Config.heightRatio)
         rewardsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
@@ -74,7 +74,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
         saveButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         
-        let cleanAllButton = UIButton(height: 50 * Config.heightRatio, label: "clean all".localized().uppercaseFirst, labelFont: UIFont.systemFont(ofSize: 15, weight: .semibold), backgroundColor: .f3f5fa, textColor: .appMainColor, cornerRadius: 50 * Config.heightRatio / 2)
+        let cleanAllButton = UIButton(height: 50 * Config.heightRatio, label: "clean all".localized().uppercaseFirst, labelFont: UIFont.systemFont(ofSize: 15, weight: .semibold), backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 50 * Config.heightRatio / 2)
         view.addSubview(cleanAllButton)
         cleanAllButton.autoPinEdge(.top, to: .bottom, of: saveButton, withOffset: 10)
         cleanAllButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)

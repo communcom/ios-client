@@ -20,7 +20,7 @@ class WelcomeItemVC: BaseViewController {
     // MARK: - Subviews
     lazy var imageView = UIImageView(imageNamed: "image-welcome-item-\(index)", contentMode: .scaleAspectFit)
     lazy var titleLabel = UILabel.with(textSize: 36, numberOfLines: 0, textAlignment: .center)
-    lazy var descriptionLabel = UILabel.with(textSize: 17, weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+    lazy var descriptionLabel = UILabel.with(textSize: 17, weight: .medium, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
     
     // MARK: - Initializers
     init(index: Int) {
@@ -136,11 +136,11 @@ class WelcomeItemVC: BaseViewController {
                     .semibold("Подписывайся на лучшие сообщества и зарабатывай награды", color: descriptionColor)
                     .text("\n")
                     .text(" ")
-                    .withParagraphSpacing(26, alignment: .center)
+                    .withParagraphStyle(minimumLineHeight: 26, alignment: .center)
             case 2:
                 description = NSMutableAttributedString()
                     .semibold("Благодоря блокчейну Commun полностью принадлежит и управляется пользователями", color: descriptionColor)
-                    .withParagraphSpacing(26, alignment: .center)
+                    .withParagraphStyle(minimumLineHeight: 26, alignment: .center)
             default:
                 description = NSMutableAttributedString()
                     .semibold("Социальную сеть на технологиях Блокчейн", color: descriptionColor)
@@ -149,7 +149,7 @@ class WelcomeItemVC: BaseViewController {
                     .text(" ")
                     .bold("зарабатываете награды", color: descriptionColor)
                     .semibold("за посты лайки и комментарии", color: descriptionColor)
-                    .withParagraphSpacing(26, alignment: .center)
+                    .withParagraphStyle(minimumLineHeight: 26, alignment: .center)
             }
         default:
             switch index {
@@ -164,11 +164,11 @@ class WelcomeItemVC: BaseViewController {
                     .semibold("for your actions".localized(), color: descriptionColor)
                     .text("\n")
                     .text(" ")
-                    .withParagraphSpacing(26, alignment: .center)
+                    .withParagraphStyle(minimumLineHeight: 26, alignment: .center)
             case 2:
                 description = NSMutableAttributedString()
                     .semibold("welcome-item-3".localized().uppercaseFirst, color: descriptionColor)
-                    .withParagraphSpacing(26, alignment: .center)
+                    .withParagraphStyle(minimumLineHeight: 26, alignment: .center)
 
             default:
                 description = NSMutableAttributedString()
@@ -179,7 +179,7 @@ class WelcomeItemVC: BaseViewController {
                     .bold("rewards".localized(), color: .appMainColor)
                     .text("\n")
                     .semibold("for posts, comments and likes".localized(), color: descriptionColor)
-                    .withParagraphSpacing(26, alignment: .center)
+                    .withParagraphStyle(minimumLineHeight: 26, alignment: .center)
             }
         }
 

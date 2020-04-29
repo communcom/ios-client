@@ -31,7 +31,7 @@ class NotificationsSettingsVC: VerticalActionsVC, PNAlertViewDelegate {
 //            Action(title: "downvote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_downvote")),
             Action(title: "transfer".localized().uppercaseFirst, icon: UIImage(named: "profile_options_points_transfer")),
             Action(title: "reply".localized().uppercaseFirst, icon: UIImage(named: "profile_options_comment_and_reply")),
-            Action(title: "mention".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention")),
+            Action(title: "mention".localized().uppercaseFirst, icon: UIImage(named: "profile_options_notifications")),
             Action(title: "reward".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_post")),
 //            Action(title: "rewards for vote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_vote")),
             Action(title: "subscribe".localized().uppercaseFirst, icon: UIImage(named: "profile_options_following"))
@@ -48,7 +48,7 @@ class NotificationsSettingsVC: VerticalActionsVC, PNAlertViewDelegate {
         
         title = "notifications".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
-        closeButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         
         checkPNAuthorizationStatus()
     }
@@ -92,7 +92,7 @@ class NotificationsSettingsVC: VerticalActionsVC, PNAlertViewDelegate {
     }
     
     override func viewForAction(_ action: Action) -> UIView {
-        let actionView = NotificationSettingsView(height: 65, backgroundColor: .white)
+        let actionView = NotificationSettingsView(height: 65, backgroundColor: .appWhiteColor)
         var notificationType = ""
         switch action.title {
         case "upvote".localized().uppercaseFirst:

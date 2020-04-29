@@ -35,7 +35,7 @@ class AttentionView: MyView {
     // MARK: - Custom Functions
     override func commonInit() {
         super.commonInit()
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
         configureForAutoLayout()
         
         let closeButton = UIButton.close(size: 30 * Config.heightRatio)
@@ -68,7 +68,7 @@ class AttentionView: MyView {
         
         let secondAStr = NSAttributedString(string: descriptionText, attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.systemFont(ofSize: 17 * Config.heightRatio)])
         
-        let secondDescriptionLabel = UILabel.with(textSize: 15 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+        let secondDescriptionLabel = UILabel.with(textSize: 15 * Config.heightRatio, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
         secondDescriptionLabel.attributedText = secondAStr
         addSubview(secondDescriptionLabel)
         secondDescriptionLabel.autoPinEdge(.top, to: .bottom, of: firstDescriptionLabel, withOffset: 16 * Config.heightRatio)
@@ -84,7 +84,7 @@ class AttentionView: MyView {
         backButton.addTarget(self, action: #selector(closeButtonTapped(_:)), for: .touchUpInside)
         
         let ignoreButton = CommunButton.default(height: 50 * Config.heightRatio, label: ignoreButtonLabel, isHuggingContent: false)
-        ignoreButton.backgroundColor = .f3f5fa
+        ignoreButton.backgroundColor = .appLightGrayColor
         ignoreButton.setTitleColor(.appMainColor, for: .normal)
         addSubview(ignoreButton)
         ignoreButton.autoPinEdge(.top, to: .bottom, of: backButton, withOffset: 10)

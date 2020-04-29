@@ -67,7 +67,7 @@ extension WalletCarouselWrapper: CircularCarouselDataSource, CircularCarouselDel
         if view == nil || view?.viewWithTag(1) == nil {
             view = UIView(frame: CGRect(x: 0, y: 0, width: carouselHeight, height: carouselHeight))
             let imageView = MyAvatarImageView(size: carouselHeight)
-            imageView.borderColor = .white
+            imageView.borderColor = .appWhiteColor
             imageView.borderWidth = 2
             imageView.tag = 1
             view!.addSubview(imageView)

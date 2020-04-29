@@ -28,11 +28,11 @@ class ContentTextView: UITextView {
         var isItalic = false
         // if format is unpersisted alongside selection
         var isMixed = false
-        var textColor: UIColor = .black
+        var textColor: UIColor = .appBlackColor
         var urlString: String?
         
         static var `default`: TextStyle {
-            return TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .black, urlString: nil)
+            return TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .appBlackColor, urlString: nil)
         }
         
         /// Return new TextStyle by modifying current TextStyle
@@ -96,7 +96,7 @@ class ContentTextView: UITextView {
     let disposeBag = DisposeBag()
     var originalAttributedString: NSAttributedString?
     
-    var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .black, urlString: nil))
+    var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .appBlackColor, urlString: nil))
     
     // MARK: - Class Initialization
     required init?(coder aDecoder: NSCoder) {
@@ -110,6 +110,7 @@ class ContentTextView: UITextView {
     }
     
     func commonInit() {
+        backgroundColor = .clear
         isScrollEnabled = false
         typingAttributes = defaultTypingAttributes
         textContainer.lineFragmentPadding = 0

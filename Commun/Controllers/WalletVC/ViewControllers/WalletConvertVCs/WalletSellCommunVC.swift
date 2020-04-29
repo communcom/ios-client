@@ -11,9 +11,9 @@ import RxSwift
 
 class WalletSellCommunVC: WalletConvertVC {
     // MARK: - Properties
-    override var topColor: UIColor {
-        .appMainColor
-    }
+//    override var topColor: UIColor {
+//        .appMainColorDarkBlack
+//    }
     
     // MARK: - Methods
     override func setUp() {
@@ -163,7 +163,7 @@ class WalletSellCommunVC: WalletConvertVC {
         let vc = BalancesVC(canChooseCommun: false) { (balance) in
             self.currentBalance = balance
         }
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
     

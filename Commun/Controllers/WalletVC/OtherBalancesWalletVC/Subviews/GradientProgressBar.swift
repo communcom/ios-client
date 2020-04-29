@@ -47,7 +47,7 @@ class GradientProgressBar: MyView {
         
         configureForAutoLayout()
         autoSetDimension(.height, toSize: actualHeight)
-        backgroundColor = UIColor.white.withAlphaComponent(0.1)
+        backgroundColor = UIColor.appWhiteColor.withAlphaComponent(0.1)
         cornerRadius = actualHeight / 2
         
         progressView.cornerRadius = (actualHeight - padding * 2) / 2

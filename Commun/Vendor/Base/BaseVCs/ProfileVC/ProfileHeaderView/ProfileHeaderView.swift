@@ -45,7 +45,7 @@ class ProfileHeaderView: MyTableHeaderView {
     override func commonInit() {
         super.commonInit()
         
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
         
         addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)

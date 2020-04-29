@@ -9,22 +9,21 @@
 import Foundation
 import RxSwift
 
-class PostHeaderView: MyTableHeaderView, PostController {
-    var voteContainerView: VoteContainerView {
-        get {
-            postStatsView.voteContainerView
-        }
-        set {
-            postStatsView.voteContainerView = newValue
-        }
-    }
+protocol PostHeaderViewDelegate: class {
+    func headerViewUpVoteButtonDidTouch(_ headerView: PostHeaderView)
+    func headerViewDownVoteButtonDidTouch(_ headerView: PostHeaderView)
+    func headerViewShareButtonDidTouch(_ headerView: PostHeaderView)
+    func headerViewCommentButtonDidTouch(_ headerView: PostHeaderView)
+}
+
+class PostHeaderView: MyTableHeaderView {
+    var voteContainerView: VoteContainerView { postStatsView.voteContainerView }
     
     // MARK: - Constants
     let voteActionsContainerViewHeight: CGFloat = 35
     
     // MARK: - Properties
-    let disposeBag = DisposeBag()
-    var post: ResponseAPIContentGetPost?
+    weak var delegate: PostHeaderViewDelegate?
 
     // MARK: - Subviews
     lazy var titleLabel = UILabel.with(text: "", textSize: 21, weight: .bold, numberOfLines: 0)
@@ -56,6 +55,8 @@ class PostHeaderView: MyTableHeaderView, PostController {
         postStatsView.voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch(_:)), for: .touchUpInside)
         postStatsView.shareButton.addTarget(self, action: #selector(shareButtonDidTouch(_:)), for: .touchUpInside)
         
+        postStatsView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
+        
         let commentsLabel = UILabel.with(text: "comments".localized().uppercaseFirst, textSize: 21, weight: .bold)
         addSubview(commentsLabel)
         commentsLabel.autoPinEdge(.top, to: .bottom, of: postStatsView, withOffset: 20)
@@ -67,14 +68,9 @@ class PostHeaderView: MyTableHeaderView, PostController {
         
         // Pin bottom
         commentsLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
-        
-        // observe
-        observePostChange()
     }
     
     func setUp(with post: ResponseAPIContentGetPost) {
-        self.post = post
-        
         titleLabel.removeFromSuperview()
         contentTextViewTopConstraint?.isActive = false
         
@@ -117,14 +113,22 @@ class PostHeaderView: MyTableHeaderView, PostController {
     
     // MARK: - Actions
     @objc func upVoteButtonDidTouch(_ sender: Any) {
-        upVote()
+        voteContainerView.animateUpVote {
+            self.delegate?.headerViewUpVoteButtonDidTouch(self)
+        }
     }
     
     @objc func downVoteButtonDidTouch(_ sender: Any) {
-        downVote()
+        voteContainerView.animateDownVote {
+            self.delegate?.headerViewDownVoteButtonDidTouch(self)
+        }
     }
     
     @objc func shareButtonDidTouch(_ sender: Any) {
-        sharePost()
+        delegate?.headerViewShareButtonDidTouch(self)
+    }
+    
+    @objc func commentsCountButtonDidTouch() {
+        delegate?.headerViewCommentButtonDidTouch(self)
     }
 }

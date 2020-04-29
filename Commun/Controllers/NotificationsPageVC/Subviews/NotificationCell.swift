@@ -32,9 +32,10 @@ class NotificationCell: MyTableViewCell, ListItemCellType, UITextViewDelegate {
         textView.showsHorizontalScrollIndicator = false
         textView.textContainer.lineFragmentPadding = 0
         textView.textContainerInset = .zero
+        textView.backgroundColor = .clear
         return textView
     }()
-    lazy var timestampLabel = UILabel.with(text: "ago".localized(), textSize: 13, textColor: .a5a7bd)
+    lazy var timestampLabel = UILabel.with(text: "ago".localized(), textSize: 13, textColor: .appGrayColor)
     
     lazy var descriptionImageView: UIImageView = {
         let imageView = UIImageView(width: 44, height: 44, cornerRadius: 10)
@@ -47,7 +48,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType, UITextViewDelegate {
     
     override func setUpViews() {
         super.setUpViews()
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .appWhiteColor
         contentView.addSubview(isNewMark)
         isNewMark.autoPinTopAndLeadingToSuperView(inset: 13)
         
@@ -96,7 +97,9 @@ class NotificationCell: MyTableViewCell, ListItemCellType, UITextViewDelegate {
         
         // common setup
         isNewMark.isHidden = !item.isNew
-        
+        iconImageView.layer.cornerRadius = 11
+        iconImageView.borderWidth = 2
+        iconImageView.borderColor = .appWhiteColor
         iconImageView.isHidden = false
         iconImageView.borderColor = .clear
         iconImageView.borderWidth = 0
@@ -153,8 +156,6 @@ class NotificationCell: MyTableViewCell, ListItemCellType, UITextViewDelegate {
                 iconImageView.isHidden = true
             } else {
                 iconImageView.setAvatar(urlString: item.community?.avatarUrl)
-                iconImageView.borderWidth = 2
-                iconImageView.borderColor = .white
             }
         case "referralRegistrationBonus", "referralPurchaseBonus":
             avatarUrl = item.from?.avatarUrl

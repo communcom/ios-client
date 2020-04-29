@@ -1,3 +1,13 @@
+"do you really want to delete this comment" = "ты действительно хочешь удалить этот комментарий";
+"THPinViewController_delete_title" = "Удалить";
+"saved souls" = "спасенные души";
+"get your first points" = "получи свои первые поинты";
+"view in Explorer" = "посмотреть в Explorer";
+"all time" = "за все время";
+"hot" = "горячее";
+"popular" = "популярное";
+"your" = "твой";
+"comment" = "комментарий";
 "of your identity" = "своего профиля";
 "lowercase" = "строчная";
 "uppercase" = "большая";
@@ -37,6 +47,7 @@
 "an email has been sent with" = "было отправлено письмо с проверочным кодом. Пожалуйста, введите код здесь";
 "an error has occured" = "произошла ошибка";
 "archiving" = "архивирование";
+"are you sure you want to take the vote back?" = "вы уверены, что хотите вернуть голос?";
 "attachments" = "вложения";
 "attention" = "внимание";
 "authorize on web" = "авторизуйтесь на сайте";
@@ -66,8 +77,10 @@
 "can not fetch next items" = "не могу получить следующие данные";
 "can't cancel vote on own publication" = "нельзя голосовать за свой пост";
 "cancel" = "отмена";
+"Cancel" = "Oтмена";
 "cannot use Back Camera" = "не может использовать камеру";
 "change" = "изменить";
+"change to" = "сменить на";
 "change position" = "изменить положение";
 "characters" = "символы";
 "check your Internet connection" = "проверь свое интернет соединение \nи попробуй еще раз";
@@ -139,12 +152,15 @@
 "enable" = "включить";
 "enable push notifications" = "включить push-уведомления";
 "end editing" = "конец редактирования";
+"english language" = "английский язык";
+"russian language" = "русский язык";
 "enter code" = "введите код";
 "enter passcode" = "введите пин-код";
 "enter sms-code" = "введите код из SMS";
 "enter text" = "введите текст";
 "enter your current passcode" = "введите свой пин-код";
 "equity Commun Value" = "Капитализация в Commun";
+"equity USD Value" = "Капитализация в USD";
 "error" = "ошибка";
 "feed" = "лента";
 "feedback" = "обратная связь";
@@ -166,6 +182,7 @@
 "have a referral code?" = "есть реферальный код?";
 "hide" = "скрыть";
 "hide community" = "скрыть сообщество";
+"hide empty points" = "скрыть пустые балансы";
 "hiding" = "прячется";
 "hint type choose community" = "выбрать сообщество";
 "hint type choose friend" = "выберите пользователя";
@@ -183,6 +200,7 @@
 "if someone is in immediate danger" = "если кто-то находится в непосредственной опасности, позвоните в местную аварийную службу. Не ждите.";
 "income" = "доход";
 "info" = "информация";
+"interface language" = "язык интерфейса";
 "interesting first" = "сначала интересные";
 "invalid email address" = "неправильный адрес электронной почты";
 "invite a friend and get 1 Commun" = "пригласите друга и получите 1 Commun, когда он зарегистрируется";
@@ -228,7 +246,7 @@
 "my" = "мой";
 "my blacklist" = "мой чёрный список";
 "name" = "имя";
-"new" = "новый";
+"new" = "новое";
 "newest first" = "от новых к старым";
 "next" = "далее";
 "no" = "нет";
@@ -286,9 +304,12 @@
 "past year" = "в прошлом году";
 "phone number placeholder" = "введите номер телефона";
 "placeholder" = "placeholder";
+"please consider that you have only 1 vote. By giving it to another nominee, you'll reduce your currently chosen nominee's influence equal to the current number of your Points." = "пожалуйста, учтите, что у вас есть только 1 голос. Передавая его другому кандидату, вы уменьшите влияние выбранного в настоящее время кандидата на текущее количество ваших поинтов.";
 "please enter a reason" = "пожалуйста, введите причину";
 "please select a reason" = "пожалуйста, выберите причину";
 "please try again later" = "попробуйте снова";
+"please wait" = "подождите";
+"please wait for last operations to finish" = "пожалуйста, подождите завершения предыдущих операций";
 "points" = "поинты";
 "post" = "пост";
 "post not found" = "сообщение не найдено";
@@ -335,7 +356,7 @@
 "save post as draft" = "сохранить пост в черновике";
 "save to iCloud" = "сохранить в iCloud";
 "scan QR" = "сканировать QR";
-"search placeholder" = "поиск";
+"search" = "поиск";
 "see" = "показать";
 "select a link to add to text" = "выберите ссылку для добавления в текст";
 "select country placeholder" = "выберите страну";
@@ -366,7 +387,7 @@
 "sort by" = "сортировать по";
 "start and get 30 points" = "начать и получить 30 поинтов";
 "subscribe" = "подписаться";
-"subscribe to at least 3 communities" = "подпишись как минимум на 3 сообщества и получи свои первые поинты сообщества";
+"subscribe to at least 3 communities and get your first Community Points" = "подпишись как минимум на 3 сообщества и получи свои первые поинты сообщества";
 "successfully resent code" = "код успешно введен";
 "terms of service." = "условия использования";
 "terms of use, Privacy Policy" = "Пользовательским соглашением, Политикой приватности";
@@ -435,6 +456,7 @@
 "what does it mean?" = "что бы это значило?";
 "what's new" = "что нового";
 "where you get" = "ты получишь";
+"would you like to change the application's language to" = "хотите сменить язык интерфейса приложения на";
 "would you like to replace this content" = "хочешь заменить этот контент";
 "wow, this post will be rewarded!" = "Ух ты! Этот пост был награжден!\nХочешь тоже получать награды? Создать пост - это самый простой путь к успеху!";
 "write a comment" = "написать комментарий";

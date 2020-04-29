@@ -32,7 +32,7 @@ class FTUEVC: BoardingVC {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhiteColor
         
         let communLabel = UILabel.with(text: "commun", textSize: 20, weight: .bold)
         view.addSubview(communLabel)

@@ -23,6 +23,7 @@ class MyProfileEditBioVC: EditorVC {
         textView.textContainer.lineFragmentPadding = 0
         textView.placeholder = "enter text".localized().uppercaseFirst + "..."
         textView.keyboardDismissMode = .onDrag
+        textView.backgroundColor = .clear
         
         return textView
     }()
@@ -51,7 +52,7 @@ class MyProfileEditBioVC: EditorVC {
         textViewCharactersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
         textViewCharactersCountLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        let limitLabel = UILabel.with(text: "/\(bioLimit)", textSize: 15, weight: .semibold, textColor: #colorLiteral(red: 0.6874092221, green: 0.693797946, blue: 0.7710194588, alpha: 1))
+        let limitLabel = UILabel.with(text: "/\(bioLimit)", textSize: 15, weight: .semibold, textColor: .appGrayColor)
         charactersCountContainerView.addSubview(limitLabel)
         limitLabel.autoPinEdge(.leading, to: .trailing, of: textViewCharactersCountLabel)
         limitLabel.autoAlignAxis(toSuperviewAxis: .horizontal)

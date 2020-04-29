@@ -11,7 +11,7 @@ import Foundation
 class PasswordConstraintView: MyView {
     var constraint: CreatePasswordViewModel.Constraint?
     let activeColor = UIColor.appMainColor
-    let inactiveColor = UIColor.a5a7bd
+    let inactiveColor = UIColor.appGrayColor
     lazy var symbol = UILabel.with(textSize: 22, weight: .medium, textColor: inactiveColor, textAlignment: .center)
     lazy var title = UILabel.with(textSize: 12, textColor: inactiveColor, textAlignment: .center)
     

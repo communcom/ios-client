@@ -7,11 +7,13 @@
 //
 
 import Foundation
+import RxCocoa
 
 class WalletViewModel: TransferHistoryViewModel {
     // MARK: - Properties
     lazy var balancesVM = BalancesViewModel.ofCurrentUser
     lazy var subscriptionsVM = SubscriptionsViewModel(type: .user)
+    let hideEmptyPointsRelay = BehaviorRelay<Bool>(value: UserDefaults.standard.bool(forKey: CommunWalletOptionsVC.hideEmptyPointsKey))
 
     // MARK: - Initializers
     init(symbol: String) {

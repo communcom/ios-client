@@ -23,7 +23,8 @@ class PostHeaderTextView: MySubviewAttachingTextView {
         paragraphStyle.paragraphSpacing = 8
         return [
             .font: defaultFont,
-            .paragraphStyle: paragraphStyle
+            .paragraphStyle: paragraphStyle,
+            .foregroundColor: UIColor.appBlackColor
         ]
     }
     

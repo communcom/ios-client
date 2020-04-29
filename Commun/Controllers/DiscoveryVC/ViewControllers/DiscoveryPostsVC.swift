@@ -30,13 +30,13 @@ class DiscoveryPostsVC: PostsViewController {
     
     override func setUp() {
         super.setUp()
-        view.backgroundColor = .f3f5fa
+        view.backgroundColor = .appLightGrayColor
         refreshControl.subviews.first?.bounds.origin.y = 15
     }
     
     override func setUpTableView() {
         super.setUpTableView()
-        tableView.backgroundColor = .f3f5fa
+        tableView.backgroundColor = .appLightGrayColor
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     }
     
@@ -49,6 +49,11 @@ class DiscoveryPostsVC: PostsViewController {
                 .map{$0.compactMap{$0.postValue}}
         )
             .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

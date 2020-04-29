@@ -15,7 +15,7 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
     var masterPassword: String?
     
     // MARK: - Subviews
-    lazy var copyButton = UIButton.circle(size: 24, backgroundColor: .a5a7bd, tintColor: .white, imageName: "copy", imageEdgeInsets: UIEdgeInsets(inset: 6))
+    lazy var copyButton = UIButton.circle(size: 24, backgroundColor: .appGrayColor, tintColor: .appWhiteColor, imageName: "copy", imageEdgeInsets: UIEdgeInsets(inset: 6))
     lazy var backUpICloudButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save to iCloud".localized().uppercaseFirst)
 
     lazy var iSavedItButton: UIButton = {
@@ -28,7 +28,7 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
     override func setUp() {
         super.setUp()
         AnalyticsManger.shared.openMasterPasswordGenerated()
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhiteColor
         
         let imageView = UIImageView(imageNamed: "masterkey-save")
         
@@ -52,7 +52,7 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
         
         let infoLabel = UILabel.with(numberOfLines: 0, textAlignment: .center)
         infoLabel.attributedText = NSMutableAttributedString()
-            .text("commun doesn't have access to your password".localized().uppercaseFirst + ". ", size: 17 * Config.heightRatio, weight: .medium, color: .a5a7bd)
+            .text("commun doesn't have access to your password".localized().uppercaseFirst + ". ", size: 17 * Config.heightRatio, weight: .medium, color: .appGrayColor)
             .text("save it securely".localized().uppercaseFirst + "!", size: 17 * Config.heightRatio, weight: .medium)
         view.addSubview(infoLabel)
         infoLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 6)
@@ -61,13 +61,13 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
         
         let masterPasswordContainer = UIView(cornerRadius: 10)
         masterPasswordContainer.borderWidth = 1
-        masterPasswordContainer.borderColor = .e2e6e8
+        masterPasswordContainer.borderColor = .appLightGrayColor
         view.addSubview(masterPasswordContainer)
         masterPasswordContainer.autoPinEdge(.top, to: .bottom, of: infoLabel, withOffset: 16)
         masterPasswordContainer.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         masterPasswordContainer.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
-        let masterPasswordLabel = UILabel.with(text: "master password".localized().uppercaseFirst, textSize: 12 * Config.heightRatio, weight: .semibold, textColor: .a5a7bd)
+        let masterPasswordLabel = UILabel.with(text: "master password".localized().uppercaseFirst, textSize: 12 * Config.heightRatio, weight: .semibold, textColor: .appGrayColor)
         masterPasswordContainer.addSubview(masterPasswordLabel)
         masterPasswordLabel.autoPinTopAndLeadingToSuperView(inset: 10, xInset: 16)
         

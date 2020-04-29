@@ -19,7 +19,7 @@ class BaseVerticalStackVC: BaseViewController {
     
     override func setUp() {
         super.setUp()
-        view.backgroundColor = .f3f5fa
+        view.backgroundColor = .appLightGrayColor
         
         // scrollView
         viewWillSetUpScrollView()

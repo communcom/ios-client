@@ -22,9 +22,10 @@ extension FTUECommunitiesVC: CommunityCellDelegate {
         offsetY
             .distinctUntilChanged()
             .subscribe(onNext: { offsetY in
-                var constant = 112 - offsetY
+                if self.searchContainerView.height <= 0 {return}
+                var constant = FTUECommunitiesHeaderView.height - self.searchContainerView.height - 18 - offsetY + FTUECommunitiesHeaderView.additionalSpaceToSearchBar
                 if constant < 0 {constant = 0}
-                self.searchBarTopConstraint?.constant = constant
+                self.searchBarTopConstraint?.constant = constant 
                 self.view.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
@@ -140,7 +141,7 @@ extension FTUECommunitiesVC: CommunityCellDelegate {
             .distinctUntilChanged()
             .subscribe(onNext: { (isLoading) in
                 if isLoading {
-                    self.nextButton.showLoading(cover: false, spinnerColor: UIColor.white.withAlphaComponent(0.7), size: 30, spinerLineWidth: 3)
+                    self.nextButton.showLoading(cover: false, spinnerColor: UIColor.appWhiteColor.withAlphaComponent(0.7), size: 30, spinerLineWidth: 3)
                     self.nextButton.setImage(nil, for: .normal)
                 } else {
                     self.nextButton.hideLoading()

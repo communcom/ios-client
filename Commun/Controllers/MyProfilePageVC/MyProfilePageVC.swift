@@ -75,7 +75,7 @@ class MyProfilePageVC: UserProfilePageVC {
         offSetY
             .map { $0 < -43 }
             .subscribe(onNext: { showNavBar in
-                self.optionsButton.tintColor = !showNavBar ? .black : .white
+                self.optionsButton.tintColor = !showNavBar ? .appBlackColor : .white
                 self.title = !showNavBar ? self.username : nil
             })
             .disposed(by: disposeBag)
@@ -125,7 +125,7 @@ class MyProfilePageVC: UserProfilePageVC {
                                      handle: {
                                         ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
             }),
-            CommunActionSheet.Action(title: "referral".localized().uppercaseFirst,
+            CommunActionSheet.Action(title: "saved souls".localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_referral"),
                                      style: .profile,
                                      marginTop: 15,

@@ -9,8 +9,14 @@
 import Foundation
 
 class FTUECommunitiesHeaderView: UICollectionReusableView {
-    lazy var contentView = UIView(forAutoLayout: ())
-    lazy var descriptionLabel = UILabel.with(textSize: 17 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0)
+    static let title = "get your first points".localized().uppercaseFirst
+    static let description: NSAttributedString = {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 10 * Config.heightRatio
+        let attrString = NSAttributedString(string: "subscribe to at least 3 communities and get your first Community Points".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle])
+        return attrString
+    }()
+    static let titleTextSize = 33 * Config.heightRatio
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,23 +30,48 @@ class FTUECommunitiesHeaderView: UICollectionReusableView {
     }
     
     func commonInit() {
-        addSubview(contentView)
-        contentView.autoPinEdgesToSuperviewEdges()
+        let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fill)
         
-        // titleLabel
-        let titleLabel = UILabel.with(text: "get your first points".localized().uppercaseFirst, textSize: 33 * Config.heightRatio, weight: .bold, numberOfLines: 0)
-        contentView.addSubview(titleLabel)
-        titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
+        addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 25 + 56 + 10, right: 0), excludingEdge: .bottom)
         
+        let titleLabel = UILabel.with(text: FTUECommunitiesHeaderView.title, textSize: FTUECommunitiesHeaderView.titleTextSize, weight: .bold, numberOfLines: 0)
+        
+        let descriptionLabel = UILabel.with(textSize: 17 * Config.heightRatio, textColor: .appGrayColor, numberOfLines: 0)
         // descriptionLabel
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 10 * Config.heightRatio
-        let attrString = NSAttributedString(string: "subscribe to at least 3 communities and get your first Community Points".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle])
-        descriptionLabel.attributedText = attrString
-        contentView.addSubview(descriptionLabel)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 16 * Config.heightRatio)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 25 + 56 + 10)
+        descriptionLabel.attributedText = FTUECommunitiesHeaderView.description
+        
+        stackView.addArrangedSubviews([titleLabel, descriptionLabel])
+    }
+    
+    static var height: CGFloat {
+        let width = UIScreen.main.bounds.width - 16 - 16
+        
+        let titleHeight = title.heightWithFont(font: .boldSystemFont(ofSize: titleTextSize), width: width)
+        
+        let descriptionHeight = description.heightWithWidth(width: width)
+        
+        return 10 + titleHeight + 16 + descriptionHeight + 16 + 44 + 10
+    }
+    
+    static var additionalSpaceToSearchBar: CGFloat {
+        var additionalHeight: CGFloat = 0
+        switch UIDevice.current.screenType {
+        case .iPhones_4_4S, .iPhones_6_6s_7_8:
+            break
+        case .iPhones_5_5s_5c_SE:
+            additionalHeight = 4
+        case .iPhones_6Plus_6sPlus_7Plus_8Plus, .iPhones_X_XS:
+            additionalHeight = 16
+        case .iPhone_XR_11:
+            additionalHeight = 20
+        case .iPhone_XSMax_ProMax:
+            additionalHeight = 16
+        case .iPhone_11Pro:
+            break
+        case .unknown:
+            break
+        }
+        return additionalHeight
     }
 }
