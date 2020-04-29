@@ -51,7 +51,7 @@ extension MyProfilePageVC {
     }
     
     func bindBalances() {
-        let walletView = (headerView as! MyProfileHeaderView).walletShadowView
+        let walletView = (headerView as! MyProfileHeaderView).walletView
         
         (viewModel as! MyProfilePageViewModel).balancesVM.state
             .subscribe(onNext: {[weak self] (state) in
@@ -90,12 +90,6 @@ extension MyProfilePageVC {
     }
     
     private func setUpEquityValue(balances: [ResponseAPIWalletGetBalance]) {
-        if UserDefaults.standard.bool(forKey: Config.currentEquityValueIsShowingCMN) {
-            (headerView as! MyProfileHeaderView).equityValueLabel.text = "equity Commun Value".localized().uppercaseFirst
-            (headerView as! MyProfileHeaderView).valueLabel.text = balances.enquityCommunValue.currencyValueFormatted
-        } else {
-            (headerView as! MyProfileHeaderView).equityValueLabel.text = "equity USD Value".localized().uppercaseFirst
-            (headerView as! MyProfileHeaderView).valueLabel.text = "$ " + balances.equityUSDValue.currencyValueFormatted
-        }
+        (headerView as! MyProfileHeaderView).walletView.setUp(balances: balances)
     }
 }
