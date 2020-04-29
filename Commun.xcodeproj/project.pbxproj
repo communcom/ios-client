@@ -2433,6 +2433,7 @@
 		BCA971292361304800AE37E1 /* UIViews */ = {
 			isa = PBXGroup;
 			children = (
+				BC84820524595CEE0099C7C5 /* CMWalletView.swift */,
 				BC067E2E2435910900D770AC /* CMTransactionInfoView.swift */,
 				BCB2A6E12354512D00B3582B /* AttachmentView.swift */,
 				3BC613A42341AAAF00075570 /* CMCheckbox.swift */,
@@ -2585,7 +2586,6 @@
 			isa = PBXGroup;
 			children = (
 				BCCE0AB12368225600A183AA /* MyProfileHeaderView.swift */,
-				BC84820524595CEE0099C7C5 /* CMWalletView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";

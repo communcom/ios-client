@@ -20,90 +20,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     // MARK: - Subviews
     lazy var friendsCountLabel = UILabel.with(textSize: 12, weight: .bold, textColor: .appGrayColor)
-    
-    lazy var pointsContainerView: UIView = {
-        let view = UIView(height: 70, backgroundColor: .appMainColor)
-        view.cornerRadius = 10
-        
-        view.addSubview(walletImageView)
-        walletImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
-        walletImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        view.addSubview(walletCurrencyValue)
-        walletCurrencyValue.autoPinEdge(.leading, to: .trailing, of: walletImageView, withOffset: 10)
-        walletCurrencyValue.autoPinEdge(.top, to: .top, of: walletImageView, withOffset: 2.0)
-        
-        view.addSubview(walletCurrencyLabel)
-        walletCurrencyLabel.autoPinEdge(.leading, to: .trailing, of: walletCurrencyValue, withOffset: 4.0)
-        walletCurrencyLabel.autoPinEdge(.bottom, to: .bottom, of: walletCurrencyValue, withOffset: -1.0)
-        
-        let equalLabel = UILabel.with(text: "=", textSize: 12, weight: .semibold, textColor: .white)
-        equalLabel.alpha = 0.7
-        
-        view.addSubview(equalLabel)
-        equalLabel.autoPinEdge(.leading, to: .trailing, of: walletImageView, withOffset: 10)
-        equalLabel.autoPinEdge(.bottom, to: .bottom, of: walletImageView, withOffset: -2.0)
-        
-        view.addSubview(communValueLabel)
-        communValueLabel.autoPinEdge(.leading, to: .trailing, of: equalLabel, withOffset: 2)
-        communValueLabel.autoAlignAxis(.horizontal, toSameAxisOf: equalLabel)
-        
-        let communLabel = UILabel.with(text: "Commun", textSize: 12, weight: .semibold, textColor: .white)
-        communLabel.alpha = 0.7
-        
-        view.addSubview(communLabel)
-        communLabel.autoPinEdge(.leading, to: .trailing, of: communValueLabel, withOffset: 2)
-        communLabel.autoAlignAxis(.horizontal, toSameAxisOf: equalLabel)
-        
-        view.addSubview(walletButton)
-        walletButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 15)
-        walletButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        view.addShadow(ofColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 0.3), radius: 24, offset: CGSize(width: 0.0, height: 14), opacity: 1.0)
-        
-        return view
-    }()
-    
-    lazy var walletImageView: UIImageView = {
-        let imageView = UIImageView(width: 40, height: 40, backgroundColor: .clear)
-        imageView.cornerRadius = 20
-        imageView.image = UIImage(named: "community-wallet")
-        
-        return imageView
-    }()
-    
-    lazy var walletCurrencyValue: UILabel = {
-        let label = UILabel.with(text: "1000", textSize: 15, weight: .semibold, textColor: .white)
-        label.isHidden = true
-
-        return label
-    }()
-    
-    lazy var walletCurrencyLabel: UILabel = {
-        let label = UILabel.with(text: "Binance", textSize: 12, weight: .semibold, textColor: .white)
-        label.isHidden = true
-        label.alpha = 0.7
-
-        return label
-    }()
-    
-    lazy var communValueLabel: UILabel = {
-        let label = UILabel.with(text: "1", textSize: 12, weight: .bold, textColor: .white)
-        label.alpha = 0.7
-        
-        return label
-    }()
-    
-    lazy var walletButton: UIButton = {
-        let button = UIButton(width: 99,
-                              height: 35,
-                              label: "get points".localized().uppercaseFirst,
-                              labelFont: UIFont.systemFont(ofSize: 15, weight: .medium),
-                              backgroundColor: .appWhiteColor,
-                              textColor: .appMainColor,
-                              cornerRadius: 12.5)
-        return button
-    }()
+    lazy var walletView = CMWalletView(forAutoLayout: ())
     
     // MARK: - Methods
     override func commonInit() {
@@ -113,7 +30,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             headerStackView,
             descriptionLabel,
             statsStackView,
-            pointsContainerView
+            walletView
         ])
         
         stackView.setCustomSpacing(10, after: headerStackView)
@@ -138,11 +55,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))
     func setUp(walletPrice: ResponseAPIWalletGetPrice) {
-        walletCurrencyValue.text = walletPrice.priceValue.string
-        walletCurrencyLabel.text = (self.community?.name ?? "Commun").lowercased().uppercaseFirst // "Binance"
-//        walletCurrencyLabel.text = (walletPrice.symbol ?? "Commun").lowercased().uppercaseFirst // "Binance"
-        walletCurrencyValue.isHidden = false
-        walletCurrencyLabel.isHidden = false
+        walletView.setUp(walletPrice: walletPrice, communityName: community?.name ?? "")
     }
     
     func setUp(with community: ResponseAPIContentGetCommunity) {

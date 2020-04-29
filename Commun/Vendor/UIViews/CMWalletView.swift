@@ -86,6 +86,20 @@ class CMWalletView: MyView {
         }
     }
     
+    func setUp(walletPrice: ResponseAPIWalletGetPrice, communityName: String) {
+        nextButtonLabel.isHidden = false
+        imageContainerView.isHidden = false
+
+        label.attributedText = NSMutableAttributedString()
+            .text(walletPrice.priceValue.string, size: 20, weight: .semibold, color: .white)
+            .text(" ")
+            .text(communityName.lowercased().uppercaseFirst, size: 12, weight: .semibold, color: UIColor.white.withAlphaComponent(0.7))
+            .text("\n")
+            .text("= 1 Commun", size: 12, weight: .semibold, color: UIColor.white.withAlphaComponent(0.7))
+        
+        nextButtonLabel.text = "get points".localized().uppercaseFirst
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         if contentView.frame != .zero {
