@@ -51,6 +51,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         statsStackView.setCustomSpacing(4, after: usersStackView)
         friendsCountLabel.isHidden = true
         friendsCountLabel.setContentHuggingPriority(.required, for: .horizontal)
+        
+        friendsCountLabel.isUserInteractionEnabled = true
+        friendsCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(friendsLabelDidTouch)))
     }
     
     // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))
