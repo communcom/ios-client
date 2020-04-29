@@ -168,4 +168,34 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         parentViewController?.present(navigation, animated: true, completion: nil)
     }
+    
+    override func statsLabelDidTouch(_ gesture: UITapGestureRecognizer) {
+        guard let text = statsLabel.text,
+            let dotIndex = text.index(of: statsSeparator)?.utf16Offset(in: text)
+        else { return }
+        
+        let tappedCharacterIndex = gesture.tappedCharacterIndexInLabel(statsLabel)
+        
+        if tappedCharacterIndex < dotIndex {
+            followersDidTouch()
+        } else {
+            followingDidTouch()
+        }
+    }
+    
+    @objc func followersDidTouch() {
+        let vc = SubscribersVC(title: self.profile?.username, userId: self.profile?.userId)
+        vc.dismissModalWhenPushing = true
+        let navigation = SwipeNavigationController(rootViewController: vc)
+        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        self.parentViewController?.present(navigation, animated: true, completion: nil)
+    }
+    
+    @objc func followingDidTouch() {
+        let vc = SubscriptionsVC(title: self.profile?.username, userId: self.profile?.userId, type: .user)
+        vc.dismissModalWhenPushing = true
+        let navigation = SwipeNavigationController(rootViewController: vc)
+        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        self.parentViewController?.present(navigation, animated: true, completion: nil)
+    }
 }
