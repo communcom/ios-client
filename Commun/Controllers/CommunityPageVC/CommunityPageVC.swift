@@ -47,6 +47,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         if let alias = communityAlias {
             return CommunityPageViewModel(communityAlias: alias)
         }
+        
         return CommunityPageViewModel(communityId: communityId)
     }
     var leadersVM: LeadersViewModel {(viewModel as! CommunityPageViewModel).leadsVM}
@@ -150,7 +151,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         
         // header
         headerView.setUp(with: profile)
-        headerView.walletButton.addTarget(self, action: #selector(getPointsButtonTapped), for: .touchUpInside)
+        headerView.walletView.nextButton.isUserInteractionEnabled = true
+        headerView.walletView.nextButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(getPointsButtonTapped)))
         
         (viewModel as! CommunityPageViewModel).walletGetBuyPriceRequest
             .subscribe(onSuccess: { (buyPrice) in

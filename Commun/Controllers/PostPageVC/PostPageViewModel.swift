@@ -73,6 +73,15 @@ class PostPageViewModel: CommentsViewModel {
                 self.post.accept(newPost)
             })
             .disposed(by: disposeBag)
+        
+        if filter.value.userId == nil && filter.value.communityId == nil {
+            post.filter {$0?.contentId.userId != nil && $0?.contentId.communityId != nil}
+                .take(1).asSingle()
+                .subscribe(onSuccess: { (post) in
+                    self.filter.accept(self.filter.value.newFilter(userId: post?.contentId.userId, communityId: post?.contentId.communityId))
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
     override func reload(clearResult: Bool = true) {

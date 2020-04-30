@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Localize_Swift
 
 class WelcomeItemVC: BaseViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.embeded}
@@ -79,9 +80,8 @@ class WelcomeItemVC: BaseViewController {
     // MARK: - Texts
     private func getTitle(index: Int) -> NSAttributedString {
         let title: NSAttributedString
-
-        switch Locale.preferredLanguages.first {
-        case "ru-US", "ru-RU":
+        switch Localize.currentLanguage() {
+        case "ru-US", "ru-RU", "ru":
             switch index {
             case 1:
                 title = NSMutableAttributedString()
@@ -128,8 +128,9 @@ class WelcomeItemVC: BaseViewController {
     private func getDescription(index: Int) -> NSAttributedString {
         let descriptionColor = UIColor.init(hexString: "#626371")!
         let description: NSAttributedString
+        
         switch Locale.preferredLanguages.first {
-        case "ru-US", "ru-RU":
+        case "ru-US", "ru-RU", "ru":
             switch index {
             case 1:
                 description = NSMutableAttributedString()

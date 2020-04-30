@@ -86,7 +86,7 @@ class CommunWalletVC: TransferHistoryVC {
     
     func setUpNavBarItems() {
         self.setNavBarBackButton(tintColor: .white)
-        self.setRightBarButton(imageName: "icon-post-cell-more-center-default", tintColor: .white, action: #selector(optionButtonDidTouch))
+//        self.setRightBarButton(imageName: "icon-post-cell-more-center-default", tintColor: .white, action: #selector(optionButtonDidTouch))
     }
     
     // MARK: - Custom Functions
@@ -367,7 +367,7 @@ class CommunWalletVC: TransferHistoryVC {
     
     @objc func sendPointsSeeAllDidTouch() {
         guard !subscriptionsVM.items.value.isEmpty else {
-            showAlert(title: "no friend found".localized().uppercaseFirst, message: "you don't have any friend. Do you want to".localized().uppercaseFirst, buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 0) { (index) in
+            showAlert(title: "no friend found".localized().uppercaseFirst, message: "you don't have any friend. Do you want to".localized().uppercaseFirst, buttonTitles: ["OK".localized(), "Cancel".localized()], highlightedButtonIndex: 0) { (index) in
                 if index == 0 {
                     self.addFriend()
                 }

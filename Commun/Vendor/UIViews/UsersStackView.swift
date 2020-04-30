@@ -24,11 +24,14 @@ class UsersStackView: MyView {
         return stackView
     }()
     
+    lazy var label = UILabel.with(textSize: 15, weight: .bold)
+    
     override func commonInit() {
         super.commonInit()
         addSubview(avatarsStackView)
         avatarsStackView.autoPinEdge(toSuperviewEdge: .leading)
         avatarsStackView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        label.setContentHuggingPriority(.required, for: .horizontal)
     }
     
     // MARK: - Methods
@@ -68,7 +71,7 @@ class UsersStackView: MyView {
             text = "+\((friends.count - 3).kmFormatted)"
         }
         
-        let label = UILabel.with(text: text, textSize: 15, weight: .bold)
+        label.text = text
         addSubview(label)
         label.autoPinEdge(.leading, to: .trailing, of: avatarsStackView, withOffset: 5)
         label.autoAlignAxis(.horizontal, toSameAxisOf: avatarsStackView)

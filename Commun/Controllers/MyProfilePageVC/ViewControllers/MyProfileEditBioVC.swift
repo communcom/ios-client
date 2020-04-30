@@ -28,7 +28,7 @@ class MyProfileEditBioVC: EditorVC {
         return textView
     }()
     
-    lazy var textViewCharactersCountLabel = UILabel.with(text: "0", textSize: 15, weight: .semibold, textColor: .appWhiteColor)
+    lazy var textViewCharactersCountLabel = UILabel.with(text: "0", textSize: 15, weight: .semibold, textColor: .white)
     
     // MARK: - Methods
     override func setUp() {
@@ -43,7 +43,7 @@ class MyProfileEditBioVC: EditorVC {
         actionButton.isDisabled = true
         
         // charactersCountLabel
-        let charactersCountContainerView = UIView(height: 35, backgroundColor: .appBlackColor, cornerRadius: 35/2)
+        let charactersCountContainerView = UIView(height: 35, backgroundColor: .black, cornerRadius: 35/2)
         toolbar.addSubview(charactersCountContainerView)
         charactersCountContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         charactersCountContainerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)

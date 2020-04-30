@@ -1,3 +1,5 @@
+"do you really want to delete this comment" = "ты действительно хочешь удалить этот комментарий";
+"THPinViewController_delete_title" = "Удалить";
 "saved souls" = "спасенные души";
 "get your first points" = "получи свои первые поинты";
 "view in Explorer" = "посмотреть в Explorer";
@@ -75,6 +77,7 @@
 "can not fetch next items" = "не могу получить следующие данные";
 "can't cancel vote on own publication" = "нельзя голосовать за свой пост";
 "cancel" = "отмена";
+"Cancel" = "Oтмена";
 "cannot use Back Camera" = "не может использовать камеру";
 "change" = "изменить";
 "change to" = "сменить на";
