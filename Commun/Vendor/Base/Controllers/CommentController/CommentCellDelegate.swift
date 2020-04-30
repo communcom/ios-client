@@ -61,15 +61,26 @@ extension CommentCellDelegate where Self: BaseViewController {
         var actions: [CommunActionSheet.Action] = []
         // parsing all paragraph
         var texts: [String] = []
+       
         for documentContent in comment.document?.content.arrayValue ?? [] where documentContent.type == "paragraph" {
             if documentContent.content.arrayValue?.count ?? 0 > 0 {
                 let paragraphContent = documentContent.content.arrayValue?.first
+                
                 if let text = paragraphContent?.content.stringValue {
                     texts.append(text)
                 }
             }
         }
 
+        // Add action `View in Explorer`
+        if let trxID = comment.meta.trxId {
+            actions.append(CommunActionSheet.Action(title: "view in Explorer".localized().uppercaseFirst,
+                                                    handle: {
+                                                        self.load(url: "https://explorer.cyberway.io/trx/\(trxID)")
+            })
+            )
+        }
+        
         if texts.count > 0 {
             actions.append(CommunActionSheet.Action(title: "copy".localized().uppercaseFirst,
                                                     icon: UIImage(named: "copy"),
