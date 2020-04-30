@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import Localize_Swift
 
 extension ResponseAPIGetNotificationItem {
     static var supportedTypes: [String] = ["subscribe", "reply", "mention", "upvote", "reward", "transfer", "referralRegistrationBonus", "referralPurchaseBonus"]
     
     var attributedContent: NSAttributedString {
         let aStr = NSMutableAttributedString()
-        switch Locale.preferredLanguages.first {
-        case "ru-US", "ru-RU":
+        switch Localize.currentLanguage() {
+        case "ru-US", "ru-RU", "ru":
             switch eventType {
             case "mention":
                 aStr.semibold(author?.username ?? "a user".localized().uppercaseFirst)
@@ -101,7 +102,7 @@ extension ResponseAPIGetNotificationItem {
             case "upvote":
                 aStr.semibold(voter?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("liked".localized() + " " + "your".localized() + (entityType ?? "post").localized())
+                    .normal("liked".localized() + " " + "your".localized() + " " + (entityType ?? "post").localized())
                     .normal(": \"")
                     .normal((comment?.shortText ?? post?.shortText ?? "") + "...\"")
 

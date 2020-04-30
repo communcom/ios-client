@@ -327,6 +327,7 @@
 		BC7D6097237C01BD007D8C1A /* BlacklistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D6096237C01BD007D8C1A /* BlacklistCell.swift */; };
 		BC8481FA24581FB20099C7C5 /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8481F924581FB20099C7C5 /* DonationView.swift */; };
 		BC8481FE245826D40099C7C5 /* CMLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8481FD245826D40099C7C5 /* CMLabel.swift */; };
+		BC84820624595CEE0099C7C5 /* CMWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC84820524595CEE0099C7C5 /* CMWalletView.swift */; };
 		BC8F814023E27ECE0024C04A /* WalletHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F811A23E27ECE0024C04A /* WalletHeaderView.swift */; };
 		BC8F814123E27ECE0024C04A /* GradientProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F811B23E27ECE0024C04A /* GradientProgressBar.swift */; };
 		BC8F814223E27ECE0024C04A /* WalletCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F811C23E27ECE0024C04A /* WalletCarousel.swift */; };
@@ -848,6 +849,7 @@
 		BC7D6096237C01BD007D8C1A /* BlacklistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlacklistCell.swift; sourceTree = "<group>"; };
 		BC8481F924581FB20099C7C5 /* DonationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationView.swift; sourceTree = "<group>"; };
 		BC8481FD245826D40099C7C5 /* CMLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLabel.swift; sourceTree = "<group>"; };
+		BC84820524595CEE0099C7C5 /* CMWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMWalletView.swift; sourceTree = "<group>"; };
 		BC8F811A23E27ECE0024C04A /* WalletHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletHeaderView.swift; sourceTree = "<group>"; };
 		BC8F811B23E27ECE0024C04A /* GradientProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientProgressBar.swift; sourceTree = "<group>"; };
 		BC8F811C23E27ECE0024C04A /* WalletCarousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletCarousel.swift; sourceTree = "<group>"; };
@@ -2441,6 +2443,7 @@
 		BCA971292361304800AE37E1 /* UIViews */ = {
 			isa = PBXGroup;
 			children = (
+				BC84820524595CEE0099C7C5 /* CMWalletView.swift */,
 				BC067E2E2435910900D770AC /* CMTransactionInfoView.swift */,
 				BCB2A6E12354512D00B3582B /* AttachmentView.swift */,
 				3BC613A42341AAAF00075570 /* CMCheckbox.swift */,
@@ -3146,6 +3149,7 @@
 				5721E87122650AC0003BE04B /* String+Extensions.swift in Sources */,
 				BC7470B02410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift in Sources */,
 				3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
+				BC84820624595CEE0099C7C5 /* CMWalletView.swift in Sources */,
 				BCAF5B24241B78DF00C157B5 /* WalletConvertVC+Binding.swift in Sources */,
 				BC5395E7244950F200B5176D /* PostPageVC+Actions.swift in Sources */,
 				BC22BBD6236C26EF00F40658 /* NotificationsSettingsVC.swift in Sources */,
