@@ -86,7 +86,6 @@ extension PostCellDelegate where Self: BaseViewController {
 
         // headerView for actionSheet
         let headerView = PostMetaView(frame: .zero)
-        headerView.isUserNameTappable = false
         
         showCommunActionSheet(headerView: headerView, actions: actions) {
             headerView.setUp(post: post)

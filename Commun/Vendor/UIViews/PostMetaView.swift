@@ -130,11 +130,35 @@ class PostMetaView: MyView {
     // MARK: - Actions
     @objc func userNameTapped(_ sender: TapGesture) {
         guard let userId = sender.post.author?.userId else {return}
+        if parentViewController?.isModal == true,
+            let parentVC = parentViewController?.presentingViewController
+        {
+            var vcToShow = parentVC
+            if let tabBar = parentVC as? TabBarVC {
+                vcToShow = tabBar.selectedViewController!
+            }
+            parentViewController?.dismiss(animated: true, completion: {
+                vcToShow.showProfileWithUserId(userId)
+            })
+            return
+        }
         parentViewController?.showProfileWithUserId(userId)
     }
     
     @objc func communityNameTapped(_ sender: TapGesture) {
         guard let communityId = sender.post.community?.communityId else {return}
+        if parentViewController?.isModal == true,
+            let parentVC = parentViewController?.presentingViewController
+        {
+            var vcToShow = parentVC
+            if let tabBar = parentVC as? TabBarVC {
+                vcToShow = tabBar.selectedViewController!
+            }
+            parentViewController?.dismiss(animated: true, completion: {
+                vcToShow.showCommunityWithCommunityId(communityId)
+            })
+            return
+        }
         parentViewController?.showCommunityWithCommunityId(communityId)
     }
     
