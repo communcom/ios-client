@@ -16,7 +16,7 @@ class BalanceCell: MyTableViewCell, ListItemCellType {
     var item: ResponseAPIWalletGetBalance?
     
     // MARK: - Subviews
-    lazy var containerView = UIView(backgroundColor: .white, cornerRadius: 10)
+    lazy var containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     lazy var firstLabel = UILabel.with(text: "Overwatch\n4000 on hold", textSize: 15, weight: .semibold, numberOfLines: 0)
     lazy var secondLabel = UILabel.with(text: "21 000 points\n= 150 Commun", textSize: 15, weight: .semibold, numberOfLines: 0, textAlignment: .right)
@@ -53,8 +53,8 @@ class BalanceCell: MyTableViewCell, ListItemCellType {
             .text(item.name ?? "Commun", size: 15, weight: .semibold)
             .text("\n")
         if item.frozen != nil {
-            firstText = firstText.text("\(item.frozenValue.currencyValueFormatted) " + "on hold".localized().uppercaseFirst, size: 12, weight: .semibold, color: .a5a7bd)
-                .withParagraphSpacing(20)
+            firstText = firstText.text("\(item.frozenValue.currencyValueFormatted) " + String(format: "%@ %@", "on".localized().uppercaseFirst, "hold".localized()), size: 12, weight: .semibold, color: .appGrayColor)
+                .withParagraphStyle(minimumLineHeight: 20)
             firstLabel.numberOfLines = 2
         } else {
             firstLabel.numberOfLines = 1
@@ -67,7 +67,7 @@ class BalanceCell: MyTableViewCell, ListItemCellType {
             
         if item.symbol != Config.defaultSymbol {
             secondText = secondText
-                .text("\n= \(item.communValue.currencyValueFormatted) Commun", size: 12, weight: .semibold, color: .a5a7bd)
+                .text("\n= \(item.communValue.currencyValueFormatted) Commun", size: 12, weight: .semibold, color: .appGrayColor)
             secondLabel.numberOfLines = 2
         } else {
             secondLabel.numberOfLines = 1

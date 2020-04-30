@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.io.commun.eos.ios</string>
+		<string>group.com.commun.ios</string>
 	</array>
 </dict>
 </plist>

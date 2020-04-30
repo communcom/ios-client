@@ -12,14 +12,14 @@ extension BasicEditorVC {
     func parseLink(_ link: String) {
         // embed loading placeholder view
         let loadingView: UIView = {
-            let view = UIView(backgroundColor: .f3f5fa)
+            let view = UIView(backgroundColor: .appLightGrayColor)
             
             let loadingEmbedLabel = UILabel.with(text: "loading embed".localized().uppercaseFirst + "...", textSize: 15, weight: .semibold)
             view.addSubview(loadingEmbedLabel)
             loadingEmbedLabel.autoPinTopAndLeadingToSuperView(inset: 16)
             
             let indicator = UIActivityIndicatorView(forAutoLayout: ())
-            indicator.color = .a5a7bd
+            indicator.color = .appGrayColor
             view.addSubview(indicator)
             indicator.autoPinEdge(.leading, to: .trailing, of: loadingEmbedLabel, withOffset: 5)
             indicator.autoAlignAxis(.horizontal, toSameAxisOf: loadingEmbedLabel)
@@ -49,7 +49,7 @@ extension BasicEditorVC {
         loadingView.autoPinEdgesToSuperviewEdges()
         
         // detect link type
-        NetworkService.shared.getEmbed(url: link)
+        RestAPIManager.instance.getEmbed(url: link)
             .flatMap {
                 $0.toTextAttachmentSingle(withSize: CGSize(width: self.contentTextView.size.width, height: self.attachmentHeight), forTextView: self._contentTextView) ?? .error(CMError.unknown)
             }

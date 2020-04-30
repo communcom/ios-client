@@ -15,25 +15,20 @@ class CommunityLeaderFollowCell: MyTableViewCell {
     
     // MARK: - Subviews
     lazy var avatarImageView = LeaderAvatarImageView(size: 50)
-    lazy var userNameLabel = UILabel.with(text: "Sergey Marchenko", textSize: 15, weight: .semibold, numberOfLines: 0)
-    lazy var statsLabel = UILabel.with(text: "601k Points • 42.0%", textSize: 12, weight: .medium, numberOfLines: 0)
+    lazy var contentLabel = UILabel.with(numberOfLines: 0)
     lazy var followButton: CommunButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
     
     // MARK: - Methods
     override func setUpViews() {
         super.setUpViews()
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .appWhiteColor
         
         let stackView: UIStackView = {
             let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
             
             // name, statsLabel
-            let vStack = UIStackView(axis: .vertical, alignment: .leading, distribution: .fill)
-            vStack.addArrangedSubview(self.userNameLabel)
-            vStack.addArrangedSubview(self.statsLabel)
-            
             hStack.addArrangedSubview(self.avatarImageView)
-            hStack.addArrangedSubview(vStack)
+            hStack.addArrangedSubview(contentLabel)
             hStack.addArrangedSubview(followButton)
             
             return hStack
@@ -52,17 +47,19 @@ class CommunityLeaderFollowCell: MyTableViewCell {
         avatarImageView.percent = leader.ratingPercent
         
         // username label
-        userNameLabel.text = leader.username
+        let attributedText = NSMutableAttributedString()
+            .text(leader.username, size: 15, weight: .semibold)
+            .text("\n")
+            .text(leader.rating.kmFormatted() + " " + "points".localized().uppercaseFirst + " • ", size: 12, weight: .medium, color: .appGrayColor)
+            .text("\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)%", size: 12, weight: .medium, color: .appMainColor)
         
         // point
-        statsLabel.attributedText = NSMutableAttributedString()
-            .text(leader.rating.kmFormatted() + " " + "points".localized().uppercaseFirst + " • ", size: 12, weight: .medium, color: .a5a7bd)
-            .text("\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)%", size: 12, weight: .medium, color: .appMainColor)
+        contentLabel.attributedText = attributedText
         
         // voteButton
         let followed = leader.isSubscribed ?? false
-        followButton.backgroundColor = followed ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
-        followButton.setTitleColor(followed ? .appMainColor: .white, for: .normal)
+        followButton.backgroundColor = followed ? .appLightGrayColor: .appMainColor
+        followButton.setTitleColor(followed ? .appMainColor: .appWhiteColor, for: .normal)
         followButton.setTitle(followed ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
         followButton.isEnabled = !(leader.isBeingToggledFollow ?? false)
     }

@@ -15,6 +15,7 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     var hideFollowButton = false
     private var isNeedHideCloseButton = false
     var dismissModalWhenPushing = false
+    let type: GetSubscriptionsType
     
     // MARK: - Class Initialization
     init(title: String? = nil, userId: String? = nil, type: GetSubscriptionsType, prefetch: Bool = true) {
@@ -30,6 +31,8 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
             viewModel = SubscriptionsViewModel(userId: userId, type: type, prefetch: prefetch)
         }
         
+        self.type = type
+        
         super.init(viewModel: viewModel)
         defer {self.title = title}
     }
@@ -39,6 +42,11 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     }
     
     // MARK: - Custom Functions
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        (viewModel as! SubscriptionsViewModel).update()
+    }
+    
     override func setUp() {
         super.setUp()
         
@@ -92,6 +100,21 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
         }
         
         return UITableViewCell()
+    }
+    
+    override func mapItems(items: [ResponseAPIContentGetSubscriptionsItem]) -> [AnimatableSectionModel<String, ResponseAPIContentGetSubscriptionsItem>]
+    {
+        var items = items
+        if (viewModel.fetcher as! SubscriptionsListFetcher).userId == Config.currentUser?.id
+        {
+            switch type {
+            case .community:
+                items = items.filter {$0.communityValue?.isBeingJoined == true || $0.communityValue?.isSubscribed == true}
+            case .user:
+                items = items.filter {$0.userValue?.isBeingToggledFollow == true || $0.userValue?.isSubscribed == true}
+            }
+        }
+        return items.count > 0 ? [ListSection(model: "", items: items)] : []
     }
     
     override func handleListEmpty() {

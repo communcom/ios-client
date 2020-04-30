@@ -23,6 +23,7 @@ import SDURLCache
 import SDWebImageWebPCoder
 import ListPlaceholder
 import AppsFlyerLib
+import SwifterSwift
 
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
@@ -51,6 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Prepare for localization
+        Bundle.swizzleLocalization()
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = splashVC
         window!.makeKeyAndVisible()
@@ -136,6 +140,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // create new TabBarVC when user logged out
             if AuthManager.shared.isLoggedOut {
                 tabBarVC = TabBarVC()
+                SubscribersViewModel.ofCurrentUser = SubscribersViewModel(userId: Config.currentUser?.id)
+                SubscriptionsViewModel.ofCurrentUserTypeUser = SubscriptionsViewModel(type: .user)
+                SubscriptionsViewModel.ofCurrentUserTypeCommunity = SubscriptionsViewModel(type: .community)
+                BalancesViewModel.ofCurrentUser = BalancesViewModel()
             }
             
             self.changeRootVC(tabBarVC)
@@ -263,7 +271,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        let snoozeAction    =   UNNotificationAction(identifier: "ActionSnooze", title: "Snooze".localized(), options: [])
+        let snoozeAction    =   UNNotificationAction(identifier: "ActionSnooze", title: "snooze".localized().uppercaseFirst, options: [])
         let deleteAction    =   UNNotificationAction(identifier: "ActionDelete", title: "delete".localized().uppercaseFirst, options: [.destructive])
 
         let category        =   UNNotificationCategory(identifier: categoryIdentifier,

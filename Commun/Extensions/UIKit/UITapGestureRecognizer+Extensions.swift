@@ -11,6 +11,10 @@ import Foundation
 extension UITapGestureRecognizer {
     
     func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
+        return NSLocationInRange(tappedCharacterIndexInLabel(label), targetRange)
+    }
+    
+    func tappedCharacterIndexInLabel(_ label: UILabel) -> Int {
         // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
         let layoutManager = NSLayoutManager()
         let textContainer = NSTextContainer(size: CGSize.zero)
@@ -34,9 +38,7 @@ extension UITapGestureRecognizer {
                                           y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
         let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x,
                                                      y: locationOfTouchInLabel.y - textContainerOffset.y)
-        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        
-        return NSLocationInRange(indexOfCharacter, targetRange)
+        return layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
     }
     
 }

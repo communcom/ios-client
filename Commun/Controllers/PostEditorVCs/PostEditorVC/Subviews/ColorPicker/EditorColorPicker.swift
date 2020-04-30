@@ -47,7 +47,7 @@ class ColorPickerViewController: UIViewController, UICollectionViewDelegate, UIC
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .appWhiteColor
         return collectionView
     }()
     
@@ -60,7 +60,7 @@ class ColorPickerViewController: UIViewController, UICollectionViewDelegate, UIC
         let strings = try! PropertyListDecoder().decode([String].self, from: data)
         colors = strings.map {UIColor(hexString: $0)!}
         
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhiteColor
         
         view.addSubview(collectionView)
         

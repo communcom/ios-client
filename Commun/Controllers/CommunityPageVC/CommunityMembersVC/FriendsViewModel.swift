@@ -20,9 +20,16 @@ class FriendsViewModel: ListViewModel<ResponseAPIContentGetProfile> {
     }
     
     func accept(_ friends: [ResponseAPIContentGetProfile]) {
+        let subscriptionsVM = SubscriptionsViewModel.ofCurrentUserTypeUser
+        
         var friends = friends
         for i in 0..<friends.count {
-            friends[i].isSubscribed = true
+            if let friend = subscriptionsVM.items.value.first(where: {$0.userValue?.identity == friends[i].identity})?.userValue
+            {
+                friends[i] = friend
+            } else {
+                friends[i].isSubscribed = true
+            }
         }
         items.accept(friends)
     }

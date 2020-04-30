@@ -12,7 +12,7 @@ class BaseSignUpVC: BaseViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     // MARK: - Properties
-    var termOfUseText: String {"By continuing, you agree to the Commun’s Terms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst}
+    var termOfUseText: String {"by continuing, you agree to the".localized().uppercaseFirst}
     var alreadyHasAccountText: String {"already have an account? Sign in".localized().uppercaseFirst}
     var autoPinNextButtonToBottom: Bool {false}
     
@@ -22,7 +22,7 @@ class BaseSignUpVC: BaseViewController {
     lazy var subtitleLabel = UILabel.with(textSize: 17, numberOfLines: 0)
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     
-    lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#F53D5B")!, numberOfLines: 0, textAlignment: .center)
+    lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appRedColor, numberOfLines: 0, textAlignment: .center)
     
     lazy var termOfUseLabel: UILabel = {
         let label = UILabel.with(textSize: 10, numberOfLines: 0, textAlignment: .center)
@@ -33,7 +33,7 @@ class BaseSignUpVC: BaseViewController {
         let aStr = NSAttributedString(
             string: termOfUseText,
             attributes: [
-                .foregroundColor: UIColor.a5a7bd,
+                .foregroundColor: UIColor.appGrayColor,
                 .font: UIFont.systemFont(ofSize: 10),
                 .paragraphStyle: style
             ]
@@ -51,7 +51,7 @@ class BaseSignUpVC: BaseViewController {
         let label = UILabel.with(textSize: 15, textAlignment: .center)
         let aStr2 = NSAttributedString(
             string: alreadyHasAccountText,
-            attributes: [.foregroundColor: UIColor.a5a7bd, .font: UIFont.systemFont(ofSize: 15)]
+            attributes: [.foregroundColor: UIColor.appGrayColor, .font: UIFont.systemFont(ofSize: 15)]
         )
             .applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "sign in".localized().uppercaseFirst)
         label.attributedString = aStr2

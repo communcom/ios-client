@@ -24,11 +24,14 @@ class UsersStackView: MyView {
         return stackView
     }()
     
+    lazy var label = UILabel.with(textSize: 15, weight: .bold)
+    
     override func commonInit() {
         super.commonInit()
         addSubview(avatarsStackView)
         avatarsStackView.autoPinEdge(toSuperviewEdge: .leading)
         avatarsStackView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        label.setContentHuggingPriority(.required, for: .horizontal)
     }
     
     // MARK: - Methods
@@ -50,7 +53,7 @@ class UsersStackView: MyView {
             for friend in friends {
                 let imageView = MyAvatarImageView(size: 34)
                 imageView.layer.borderWidth = 2
-                imageView.layer.borderColor = UIColor.white.cgColor
+                imageView.layer.borderColor = UIColor.appWhiteColor.cgColor
                 imageView.addTapToOpenUserProfile(profileId: friend.userId)
                 avatarsStackView.addArrangedSubview(imageView)
                 imageView.setAvatar(urlString: friend.avatarUrl)
@@ -60,7 +63,7 @@ class UsersStackView: MyView {
             for i in 0..<maxNumberOfAvatars {
                 let imageView = MyAvatarImageView(size: 34)
                 imageView.layer.borderWidth = 2
-                imageView.layer.borderColor = UIColor.white.cgColor
+                imageView.layer.borderColor = UIColor.appWhiteColor.cgColor
                 imageView.addTapToOpenUserProfile(profileId: friends[i].userId)
                 avatarsStackView.addArrangedSubview(imageView)
                 imageView.setAvatar(urlString: friends[i].avatarUrl)
@@ -68,7 +71,7 @@ class UsersStackView: MyView {
             text = "+\((friends.count - 3).kmFormatted)"
         }
         
-        let label = UILabel.with(text: text, textSize: 15, weight: .bold)
+        label.text = text
         addSubview(label)
         label.autoPinEdge(.leading, to: .trailing, of: avatarsStackView, withOffset: 5)
         label.autoAlignAxis(.horizontal, toSameAxisOf: avatarsStackView)
@@ -95,7 +98,7 @@ class UsersStackView: MyView {
                 let imageView = UIImageView(width: 34, height: 34)
                 imageView.layer.masksToBounds = true
                 imageView.layer.borderWidth = 2
-                imageView.layer.borderColor = UIColor.white.cgColor
+                imageView.layer.borderColor = UIColor.appWhiteColor.cgColor
                 imageView.layer.cornerRadius = 17
                 imageView.image = UIImage(named: "ProfilePageCover")
                 avatarsStackView.addArrangedSubview(imageView)
@@ -106,15 +109,15 @@ class UsersStackView: MyView {
                 let imageView = UIImageView(width: 34, height: 34)
                 imageView.layer.masksToBounds = true
                 imageView.layer.borderWidth = 2
-                imageView.layer.borderColor = UIColor.white.cgColor
+                imageView.layer.borderColor = UIColor.appWhiteColor.cgColor
                 imageView.layer.cornerRadius = 17
                 imageView.image = UIImage(named: "ProfilePageCover")
                 avatarsStackView.addArrangedSubview(imageView)
             }
             
             let label1 = UILabel.with(text: "+\((i - 3).kmFormatted)", textSize: 15, weight: .bold)
-            let label2 = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
-            
+            let label2 = UILabel.with(text: String(format: NSLocalizedString("friend-count", comment: ""), (i - 3)), textSize: 12, weight: .bold, textColor: .gray)
+
             addSubview(label1)
             label1.autoPinEdge(.leading, to: .trailing, of: avatarsStackView, withOffset: 5)
             label1.autoAlignAxis(.horizontal, toSameAxisOf: avatarsStackView)

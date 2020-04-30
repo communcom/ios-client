@@ -80,7 +80,7 @@ extension PostEditorVC {
                 self.toggleIsEnabledForTool(.setColor, isEnabled: (textStyle.urlString == nil))
                 
                 // clear formatting
-                let isDefaultFormat = !textStyle.isBold && !textStyle.isItalic && textStyle.textColor == .black && textStyle.urlString == nil
+                let isDefaultFormat = !textStyle.isBold && !textStyle.isItalic && textStyle.textColor == .appBlackColor && textStyle.urlString == nil
                 let isMixed = textStyle.isMixed
                 let canTouchClearFormattingButton = isMixed || !isDefaultFormat
                 
@@ -100,17 +100,17 @@ extension PostEditorVC {
                     self.youWillPostInLabel.isHidden = true
                     self.communityAvatarImage.setToCurrentUserAvatar()
                     self.communityNameLabel.text = "my feed".localized().uppercaseFirst
-                    self.communityNameLabel.textColor = .black
+                    self.communityNameLabel.textColor = .appBlackColor
                     return
                 }
                 if let community = community {
                     self.communityAvatarImage.setAvatar(urlString: community.avatarUrl)
                     self.communityNameLabel.text = community.name
-                    self.communityNameLabel.textColor = .black
+                    self.communityNameLabel.textColor = .appBlackColor
                 } else {
                     self.communityAvatarImage.removeAvatar()
-                    self.communityNameLabel.text = "choose a community".localized().uppercaseFirst
-                    self.communityNameLabel.textColor = .a5a7bd
+                    self.communityNameLabel.text = "hint type choose community".localized().uppercaseFirst
+                    self.communityNameLabel.textColor = .appGrayColor
                 }
             })
             .disposed(by: disposeBag)

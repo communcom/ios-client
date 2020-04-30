@@ -26,12 +26,13 @@ class PostPageVC: CommentsViewController {
     lazy var postHeaderView = PostHeaderView(tableView: tableView)
 
     lazy var shadowView = UIView(forAutoLayout: ())
-    lazy var commentForm = CommentForm(backgroundColor: .white)
+    lazy var commentForm = CommentForm(backgroundColor: .appWhiteColor)
     
     // MARK: - Properties
     var startContentOffsetY: CGFloat = 0.0
     var scrollToTopAfterLoadingComment = false
     var selectedComment: ResponseAPIContentGetComment?
+    var post: ResponseAPIContentGetPost? { (viewModel as? PostPageViewModel)?.post.value }
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
@@ -68,7 +69,7 @@ class PostPageVC: CommentsViewController {
         navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
         
         // top white view
-        let topView = UIView(backgroundColor: .white)
+        let topView = UIView(backgroundColor: .appWhiteColor)
         view.addSubview(topView)
         topView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         topView.autoPinEdge(.bottom, to: .top, of: navigationBar)
@@ -78,7 +79,7 @@ class PostPageVC: CommentsViewController {
         tableView.keyboardDismissMode = .onDrag
         
         // postView
-        postHeaderView.postStatsView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
+        postHeaderView.delegate = self
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
@@ -168,7 +169,7 @@ class PostPageVC: CommentsViewController {
             let post = (self.viewModel as! PostPageViewModel).post.value
         else {return}
         
-        showAlert(title: "an error has occured".localized().uppercaseFirst, message: "Do you want to retry".localized().uppercaseFirst + "?", buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0, completion: { (index) in
+        showAlert(title: "an error has occured".localized().uppercaseFirst, message: "do you want to retry".localized().uppercaseFirst + "?", buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0, completion: { (index) in
             // retry
             if index == 0 {
                 // retry
@@ -259,39 +260,5 @@ class PostPageVC: CommentsViewController {
             let commentIndex = self.viewModel.items.value.firstIndex(of: selectedComment) ?? 0
             self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: commentIndex), at: .top, animated: true)
         }
-    }
-    
-    // MARK: - Actions
-    @objc func openMorePostActions() {
-        postHeaderView.openMorePostActions()
-    }
-    
-    @objc func sortButtonDidTouch() {
-        showCommunActionSheet(
-            title: "sort by".localized().uppercaseFirst,
-            actions: [
-                CommunActionSheet.Action(
-                    title: "interesting first".localized().uppercaseFirst,
-                    handle: {
-                        let vm = self.viewModel as! CommentsViewModel
-                        vm.changeFilter(sortBy: .popularity)
-                    }),
-                CommunActionSheet.Action(
-                    title: "newest first".localized().uppercaseFirst,
-                    handle: {
-                        let vm = self.viewModel as! CommentsViewModel
-                        vm.changeFilter(sortBy: .timeDesc)
-                    }),
-                CommunActionSheet.Action(
-                    title: "oldest first".localized().uppercaseFirst,
-                    handle: {
-                        let vm = self.viewModel as! CommentsViewModel
-                        vm.changeFilter(sortBy: .time)
-                    })
-            ])
-    }
-    
-    @objc func commentsCountButtonDidTouch() {
-        tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
 }

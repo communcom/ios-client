@@ -24,7 +24,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     
     override func setUp() {
         super.setUp()
-        view.backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
+        view.backgroundColor = .appLightGrayColor
         
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
@@ -81,7 +81,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                 case 1:
                     sectionLabel = "yesterday".localized().uppercaseFirst
                 default:
-                    sectionLabel = "\(key) " + "days ago".localized()
+                    sectionLabel = String(format: NSLocalizedString("%d day", comment: ""), key) + " " + "ago".localized()
                 }
                 return ListSection(model: sectionLabel, items: dictionary[key] ?? [])
             }
@@ -204,7 +204,7 @@ extension TransferHistoryVC: UITableViewDelegate {
         view.backgroundColor = .clear
         
         let headerView = UIView(frame: .zero)
-        headerView.backgroundColor = .white
+        headerView.backgroundColor = .appWhiteColor
         view.addSubview(headerView)
         headerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         

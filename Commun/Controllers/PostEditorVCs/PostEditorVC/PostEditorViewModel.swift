@@ -57,7 +57,7 @@ class PostEditorViewModel {
                 return .error(CMError.invalidResponse(message: ErrorMessage.postNotFound.rawValue))
         }
         
-        return NetworkService.shared.waitForTransactionWith(id: id)
+        return RestAPIManager.instance.waitForTransactionWith(id: id)
             .observeOn(MainScheduler.instance)
             .andThen(Single<(userId: String, permlink: String)>.just((userId: userId, permlink: permlink)))
         

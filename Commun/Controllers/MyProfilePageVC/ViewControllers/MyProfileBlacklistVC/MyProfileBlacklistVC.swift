@@ -51,9 +51,9 @@ class MyProfileBlacklistVC: BaseViewController {
         setLeftNavBarButtonForGoingBack()
         
         edgesForExtendedLayout = .all
-        view.backgroundColor = .f3f5fa
+        view.backgroundColor = .appLightGrayColor
         
-        let topBarContainerView = UIView(height: 55, backgroundColor: .white)
+        let topBarContainerView = UIView(height: 55, backgroundColor: .appWhiteColor)
         view.addSubview(topBarContainerView)
         topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         
@@ -67,7 +67,7 @@ class MyProfileBlacklistVC: BaseViewController {
         tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
         tableView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
         
-        tableView.backgroundColor = .f3f5fa
+        tableView.backgroundColor = .appLightGrayColor
         tableView.register(BlacklistCell.self, forCellReuseIdentifier: "BlacklistCell")
         
         tableView.separatorStyle = .none

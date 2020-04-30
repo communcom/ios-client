@@ -22,10 +22,10 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     
     // MARK: - Subviews
     private lazy var emptyTableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
-    private lazy var headerView = UIView(backgroundColor: .white)
+    private lazy var headerView = UIView(backgroundColor: .appWhiteColor)
     private lazy var smallTitleLabel = UILabel.with(text: title, textSize: 15, weight: .semibold)
     private lazy var largeTitleLabel = UILabel.with(text: title, textSize: 30, weight: .bold)
-    private lazy var newNotificationsCountLabel = UILabel.with(text: "", textSize: 12, weight: .regular, textColor: .a5a7bd)
+    private lazy var newNotificationsCountLabel = UILabel.with(text: "", textSize: 12, weight: .regular, textColor: .appGrayColor)
     private var pnAlertView: PNAlertTableHeaderView?
     
     // MARK: - Initializers
@@ -62,7 +62,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
         super.viewWillSetUpTableView()
         
         title = "notifications".localized().uppercaseFirst
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhiteColor
         
         // headerView
         headerView.clipsToBounds = true
@@ -95,7 +95,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
         
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewSafeArea()
-        tableView.backgroundColor = .f3f5fa
+        tableView.backgroundColor = .appLightGrayColor
         tableView.separatorStyle = .none
         
         tableView.rowHeight = UITableView.automaticDimension
@@ -167,11 +167,16 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
                         case 1:
                             sectionLabel = "yesterday".localized().uppercaseFirst
                         default:
-                            sectionLabel = "\(key) " + "days ago".localized()
+                            sectionLabel = String(format: NSLocalizedString("%d day", comment: ""), key) + " " + "ago".localized()
                         }
                         return ListSection(model: sectionLabel, items: dictionary[key] ?? [])
                     }
             }
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
@@ -182,7 +187,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
                 if newCount > 0 {
                     text.text("•", size: 20, color: .appMainColor)
                         .normal(" ")
-                        .text("\(newCount) new notifications".localized().uppercaseFirst, size: 12, color: .a5a7bd)
+                        .text(String(format: "%@ %@", String(format: NSLocalizedString("%d new", comment: ""), newCount), "notifications".localized()), size: 12, color: .appGrayColor)
                 }
                 self.newNotificationsCountLabel.attributedText = text
             })
@@ -239,7 +244,7 @@ extension NotificationsPageVC: UITableViewDelegate {
         view.backgroundColor = .clear
         
         let headerView = UIView(frame: .zero)
-        headerView.backgroundColor = .white
+        headerView.backgroundColor = .appWhiteColor
         view.addSubview(headerView)
         headerView.autoPinEdgesToSuperviewEdges()
         

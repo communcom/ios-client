@@ -19,7 +19,7 @@ extension PostEditorVC {
             self.viewModel.community.accept(community)
         }
 
-        let navigation = BaseNavigationController(rootViewController: vc)
+        let navigation = SwipeNavigationController(rootViewController: vc)
         navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         navigation.modalPresentationStyle = .custom
         navigation.transitioningDelegate = vc
@@ -45,7 +45,7 @@ extension PostEditorVC {
         
         self.showAlert(
             title: "save post as draft".localized().uppercaseFirst + "?",
-            message: "draft let you save your edits, so you can come back later".localized().uppercaseFirst,
+            message: "draft let you save your edits, so you can".localized().uppercaseFirst,
             buttonTitles: ["save".localized().uppercaseFirst, "delete".localized().uppercaseFirst],
             highlightedButtonIndex: 0) { (index) in
                 if index == 0 {
@@ -70,7 +70,7 @@ extension PostEditorVC {
     
     func showExplanationViewIfNeeded() {
         if !explanationViewShowed {
-            view.addExplanationView(id: "how-do-i-get-rewards", title: "How do I get rewards for my posts?", description: "After you publish the post, community members will have 48    hours to like or dislike it. If your post reaches the Top 10 posts of the day, you will be rewarded.", from: actionButton, marginLeft: 54, marginRight: 10, learnMoreLink: "https://commun.com/faq#How%20can%20you%20get%20the%20points?")
+            view.addExplanationView(id: "how-do-i-get-rewards", title: "How do I get rewards for my posts?".localized(), description: "After you publish the post, community members will have 48 hours to like or dislike it. If your post reaches the Top 10 posts of the day, you will be rewarded.".localized(), from: actionButton, marginLeft: 54, marginRight: 10, learnMoreLink: "https://commun.com/faq#How%20can%20you%20get%20the%20points?")
             ExplanationView.markAsShown("how-do-i-get-rewards")
             explanationViewShowed = true
         }

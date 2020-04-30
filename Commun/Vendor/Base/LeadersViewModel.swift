@@ -14,4 +14,14 @@ class LeadersViewModel: ListViewModel<ResponseAPIContentGetLeader> {
         let fetcher = LeadersListFetcher(communityId: communityId, communityAlias: communityAlias, query: query)
         self.init(fetcher: fetcher)
     }
+    
+    override func shouldUpdateHeightForItem(_ item: ResponseAPIContentGetLeader?, withUpdatedItem updatedItem: ResponseAPIContentGetLeader?) -> Bool {
+        if item?.isSubscribed != updatedItem?.isSubscribed {
+            return true
+        }
+        if item?.isVoted != updatedItem?.isVoted {
+            return true
+        }
+        return super.shouldUpdateHeightForItem(item, withUpdatedItem: updatedItem)
+    }
 }

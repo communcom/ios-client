@@ -43,6 +43,10 @@ class ProfileViewModel<ProfileType: Decodable>: BaseViewModel {
         loadProfileRequest
             .map {$0 as ProfileType?}
             .do(onSuccess: { (profile) in
+                if let community = profile as? ResponseAPIContentGetCommunity {
+                    self.profileId = community.communityId
+                }
+                
                 self.loadingState.accept(.finished)
             }, onError: { (error) in
                 self.loadingState.accept(.error(error: error))

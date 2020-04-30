@@ -39,7 +39,7 @@ class CMSegmentedControl: MyView {
             
             // setup label
             for i in 0..<items.count {
-                let label = UILabel.with(text: items[i].name, textSize: 15, weight: .bold)
+                let label = UILabel.with(text: items[i].name, textSize: 15 * Config.widthRatio, weight: .bold)
                 
                 label.textAlignment = .center
                 label.isUserInteractionEnabled = true
@@ -94,7 +94,7 @@ class CMSegmentedControl: MyView {
         if selectedIndex.value >= items.count {return}
         
         for i in 0..<labels.count {
-            labels[i].textColor = (selectedIndex.value == i) ? .black : UIColor(hexString: "#A5A7BD")
+            labels[i].textColor = (selectedIndex.value == i) ? .appBlackColor : .appGrayColor
         }
         
         // remove constraint

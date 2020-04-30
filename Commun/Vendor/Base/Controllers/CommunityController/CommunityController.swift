@@ -10,23 +10,6 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-extension ResponseAPIContentGetCommunity {
-    mutating func setIsSubscribed(_ value: Bool) {
-        guard value != isSubscribed
-        else {return}
-        isSubscribed = value
-        var subscribersCount: Int64 = (self.subscribersCount ?? 0)
-        if value == false && subscribersCount == 0 {subscribersCount = 0} else {
-            if value == true {
-                subscribersCount += 1
-            } else {
-                subscribersCount -= 1
-            }
-        }
-        self.subscribersCount = subscribersCount
-    }
-}
-
 protocol CommunityController: class {
     // Required properties
     var disposeBag: DisposeBag {get}
@@ -51,7 +34,7 @@ extension CommunityController {
         guard let vc = UIApplication.topViewController() else {return}
         if community?.isInBlacklist == true
         {
-            vc.showAlert(title: "unhide and follow".localized().uppercaseFirst, message: "this community is on your blacklist. Do you really want to unhide and follow it anyway?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1, completion:
+            vc.showAlert(title: "unhide and follow".localized().uppercaseFirst, message: "this community is on your blacklist".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1, completion:
             { (index) in
                 if index == 0 {
                     self.sendJoinRequest()
@@ -64,7 +47,7 @@ extension CommunityController {
     
     private func sendJoinRequest() {
         guard let community = community else {return}
-        NetworkService.shared.triggerFollow(community: community)
+        BlockchainManager.instance.triggerFollow(community: community)
             .subscribe(onError: { (error) in
                 UIApplication.topViewController()?.showError(error)
             })

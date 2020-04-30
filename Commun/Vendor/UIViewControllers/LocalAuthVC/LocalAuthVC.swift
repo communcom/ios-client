@@ -30,9 +30,9 @@ class LocalAuthVC: THPinViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Setup views
-        backgroundColor = .white
-        promptColor = .black
-        view.tintColor = .black
+        backgroundColor = .appWhiteColor
+        promptColor = .appBlackColor
+        view.tintColor = .appBlackColor
         promptTitle = "enter passcode".localized().uppercaseFirst
         
         // face id, touch id button
@@ -75,6 +75,7 @@ class LocalAuthVC: THPinViewController {
         } else {
             if !isAuto {
                 showAlert(title: "warning".localized().uppercaseFirst, message: LABiometryType.current.stringValue + " " + "was turned off".localized() + "\n" + "do you want to turn it on?".localized().uppercaseFirst, buttonTitles: ["turn on".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                    
                     if index == 0 {
                         if let url = URL.init(string: UIApplication.openSettingsURLString) {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)

@@ -39,7 +39,7 @@ def common_pods_commun
   pod 'SwifterSwift/Foundation', :git => "https://github.com/communcom/SwifterSwift.git"    # Foundation Extensions
   pod 'SwifterSwift/UIKit', :git => "https://github.com/communcom/SwifterSwift.git"         # UIKit Extensions
   
-  pod 'MBProgressHUD', '~> 1.1.0'
+  pod 'MBProgressHUD', '~> 1.2.0'
   pod 'TLPhotoPicker'
   
   pod 'PinCodeInputView'
@@ -47,7 +47,7 @@ def common_pods_commun
   
   pod 'ASSpinnerView'
   
-  pod 'ListPlaceholder'
+  pod 'ListPlaceholder', :git => "https://github.com/communcom/ListPlaceholder.git"
   
   pod 'QRCodeReaderViewController', '~> 4.0.2'
   

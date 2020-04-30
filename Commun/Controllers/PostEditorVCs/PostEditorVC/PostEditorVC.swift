@@ -47,7 +47,7 @@ class PostEditorVC: EditorVC {
     lazy var communityView = UIView(forAutoLayout: ())
     lazy var youWillPostInLabel = UILabel.descriptionLabel("you will post in".localized().uppercaseFirst)
     lazy var communityAvatarImage = MyAvatarImageView(size: 40)
-    lazy var communityNameLabel = UILabel.with(text: "choose a community".localized().uppercaseFirst, textSize: 15, weight: .semibold, numberOfLines: 0)
+    lazy var communityNameLabel = UILabel.with(text: "hint type choose community".localized().uppercaseFirst, textSize: 15, weight: .semibold, numberOfLines: 0)
     lazy var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     var contentTextView: ContentTextView {
@@ -110,11 +110,10 @@ class PostEditorVC: EditorVC {
         
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
-        headerLabel.text = (viewModel.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
-        
+        headerLabel.text = (viewModel.postForEdit != nil ? "edit" : "create").localized().uppercaseFirst + " " + "post".localized()
         contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 16, bottom: 100, right: 16)
         
-        contentTextView.addLinkDidTouch = {[weak self] in
+        contentTextView.addLinkDidTouch = { [weak self] in
             self?.addLink()
         }
 

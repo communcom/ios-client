@@ -19,14 +19,14 @@ class EditorVC: BaseViewController {
     // MARK: - Subviews
     // header
     lazy var closeButton = UIButton.close()
-    lazy var headerLabel = UILabel.with(text: "create post".localized().uppercaseFirst, textSize: 15, weight: .semibold)
+    lazy var headerLabel = UILabel.with(text: String(format: "%@ %@", "create".localized().uppercaseFirst, "post".localized()), textSize: 15, weight: .semibold)
     
     // Content
     lazy var contentView = UIView(forAutoLayout: ())
     
     // Toolbar
     lazy var toolbar: UIView = {
-        let toolbar = UIView(backgroundColor: .white, cornerRadius: 16)
+        let toolbar = UIView(backgroundColor: .appWhiteColor, cornerRadius: 16)
         toolbar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: -6), opacity: 0.07)
         return toolbar
     }()
@@ -38,7 +38,7 @@ class EditorVC: BaseViewController {
                                          label: "send".localized().uppercaseFirst,
                                          labelFont: .systemFont(ofSize: 15.0, weight: .semibold),
                                          backgroundColor: .appMainColor,
-                                         textColor: .white,
+                                         textColor: .appWhiteColor,
                                          cornerRadius: 18,
                                          contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
     
@@ -46,7 +46,7 @@ class EditorVC: BaseViewController {
         super.setUp()
         
         // navigation bar
-        let navigationBar = UIView(height: 44, backgroundColor: .white)
+        let navigationBar = UIView(height: 44, backgroundColor: .appWhiteColor)
         view.addSubview(navigationBar)
         navigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         

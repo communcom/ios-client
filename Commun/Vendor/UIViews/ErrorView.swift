@@ -13,9 +13,9 @@ class ErrorView: MyView {
     
     lazy var imageView = UIImageView(forAutoLayout: ())
     
-    lazy var title = UILabel.with(textSize: .adaptive(height: 30), weight: .semibold, textColor: .black, numberOfLines: 0, textAlignment: .center)
+    lazy var title = UILabel.with(textSize: .adaptive(height: 30), weight: .semibold, textColor: .appBlackColor, numberOfLines: 0, textAlignment: .center)
 
-    lazy var subtitle = UILabel.with(textSize: .adaptive(height: 17), weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+    lazy var subtitle = UILabel.with(textSize: .adaptive(height: 17), weight: .medium, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
     
     lazy var retryButton = UIButton(height: .adaptive(height: 50), labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: .appMainColor, textColor: .white, cornerRadius: .adaptive(height: 25))
 
@@ -33,7 +33,7 @@ class ErrorView: MyView {
         super.init(frame: .zero)
         self.imageView.image = UIImage(named: imageNamed ?? "no-connection-image")
         self.title.text = title ?? "no connection".localized().uppercaseFirst
-        self.subtitle.text = subtitle ?? "check your Internet connection\n and try again".localized().uppercaseFirst
+        self.subtitle.text = subtitle ?? "check your Internet connection".localized().uppercaseFirst
         self.retryButton.setTitle(retryButtonTitle ?? "try again".localized().uppercaseFirst, for: .normal)
         self.retryAction = retryAction
     }
@@ -44,7 +44,7 @@ class ErrorView: MyView {
     
     override func commonInit() {
         super.commonInit()
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
 
         addSubview(imageView)
         layoutImageView()

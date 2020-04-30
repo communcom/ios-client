@@ -8,7 +8,6 @@
 
 import UIKit
 import RxSwift
-import SwifterSwift
 import CyberSwift
 import NotificationView
 
@@ -20,23 +19,23 @@ class TabBarVC: UITabBarController {
     let discoveryTabIndex = 1
     let notificationTabIndex = 2
     let profileTabIndex = 3
-    let selectedColor = UIColor.black
-    let unselectedColor = UIColor(hexString: "#A5A7BD")
+    let selectedColor: UIColor = .appBlackColor
+    let unselectedColor: UIColor = .appGrayColor
     
     // MARK: - Properties
     let viewModel = TabBarViewModel()
     let disposeBag = DisposeBag()
     
     // MARK: - Subviews
-    private lazy var tabBarContainerView = UIView(backgroundColor: .white)
+    private lazy var tabBarContainerView = UIView(backgroundColor: .appWhiteColor)
     private lazy var shadowView = UIView(height: tabBarHeight)
     lazy var tabBarStackView = UIStackView(forAutoLayout: ())
     
     // Notification
     private lazy var notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
     private lazy var notificationRedMark: UIView = {
-        let notificationRedMark = UIView(width: 10, height: 10, backgroundColor: .ed2c5b, cornerRadius: 5)
-        notificationRedMark.borderColor = .white
+        let notificationRedMark = UIView(width: 10, height: 10, backgroundColor: .appRedColor, cornerRadius: 5)
+        notificationRedMark.borderColor = .appWhiteColor
         notificationRedMark.borderWidth = 1
         return notificationRedMark
     }()
@@ -79,7 +78,7 @@ class TabBarVC: UITabBarController {
     }
     
     private func configStyles() {
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhiteColor
         
         // hide default tabBar
         tabBar.isHidden = true
@@ -113,25 +112,25 @@ class TabBarVC: UITabBarController {
     private func configTabs() {
         // Feed Tab
         let feed = FeedPageVC()
-        let feedNC = BaseNavigationController(rootViewController: feed, tabBarVC: self)
+        let feedNC = SwipeNavigationController(rootViewController: feed, tabBarVC: self)
         let feedItem = buttonTabBarItem(image: UIImage(named: "feed")!, tag: feedTabIndex)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
         let discoveryVC = DiscoveryVC()
-        let discoveryNC = BaseNavigationController(rootViewController: discoveryVC, tabBarVC: self)
+        let discoveryNC = SwipeNavigationController(rootViewController: discoveryVC, tabBarVC: self)
         let discoveryItem = buttonTabBarItem(image: UIImage(named: "tabbar-discovery-icon")!, tag: discoveryTabIndex)
         discoveryVC.accessibilityLabel = "TabBarDiscoveryTabBarItem"
         
         // Notifications Tab
         let notifications = NotificationsPageVC()
-        let notificationsNC = BaseNavigationController(rootViewController: notifications, tabBarVC: self)
+        let notificationsNC = SwipeNavigationController(rootViewController: notifications, tabBarVC: self)
         notificationsNC.navigationBar.prefersLargeTitles = true
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
 
         // Profile Tab
         let profile = MyProfilePageVC()
-        let profileNC = BaseNavigationController(rootViewController: profile, tabBarVC: self)
+        let profileNC = SwipeNavigationController(rootViewController: profile, tabBarVC: self)
         let profileItem = buttonTabBarItem(image: UIImage(named: "tabbar-profile")!, tag: profileTabIndex)
         profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
         profileNC.navigationBar.tintColor = UIColor.appMainColor
@@ -181,7 +180,7 @@ class TabBarVC: UITabBarController {
         view.autoAlignAxis(toSuperviewAxis: .vertical)
         view.autoAlignAxis(toSuperviewAxis: .horizontal)
         view.isUserInteractionEnabled = false
-        view.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 10, offset: CGSize(width: 0, height: 6), opacity: 0.35)
+        view.addShadow(ofColor: UIColor.onlyLightModeShadowColor(UIColor(red: 106, green: 128, blue: 245)!), radius: 10, offset: CGSize(width: 0, height: 6), opacity: 0.35)
 
         button.tag = viewControllers!.count + 1
         button.addTarget(self, action: #selector(buttonAddTapped), for: .touchUpInside)
@@ -277,9 +276,8 @@ class TabBarVC: UITabBarController {
             .map {$0!}
             .subscribe(onNext: { (data) in
                 if let presentedVC = self.presentedViewController as? BasicEditorVC {
-                    if !presentedVC.contentTextView.text.isEmpty || presentedVC._viewModel.attachment.value != nil
-                    {
-                        presentedVC.showAlert(title: "replace content".localized().uppercaseFirst, message: "you are currently editing a post".localized().uppercaseFirst + ".\n" + "would you like to replace this content".localized().uppercaseFirst, buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 1) { (index) in
+                    if !presentedVC.contentTextView.text.isEmpty || presentedVC._viewModel.attachment.value != nil {
+                        presentedVC.showAlert(title: "replace content".localized().uppercaseFirst, message: "you are currently editing a post".localized().uppercaseFirst + ".\n" + "would you like to replace this content".localized().uppercaseFirst, buttonTitles: ["OK".localized(), "Cancel".localized()], highlightedButtonIndex: 1) { (index) in
                             if index == 0 {
                                 presentedVC.shareExtensionData = data
                                 presentedVC.loadShareExtensionData()
@@ -290,11 +288,20 @@ class TabBarVC: UITabBarController {
                         presentedVC.loadShareExtensionData()
                     }
                 } else if let presentedVC = self.presentedViewController {
-                    presentedVC.showAlert(title: "open editor".localized().uppercaseFirst, message: "close this screen and open editor".localized().uppercaseFirst + "?", buttonTitles: ["OK", "Cancel"], highlightedButtonIndex: 0) { (index) in
-                        if index == 0 {
-                            presentedVC.dismiss(animated: true) {
-                                let basicEditorScene = BasicEditorVC(shareExtensionData: data)
-                                self.present(basicEditorScene, animated: true, completion: nil)
+                    if let activityVC = presentedVC as? UIActivityViewController {
+                        activityVC.dismiss(animated: true, completion: {
+                            let basicEditorScene = BasicEditorVC(shareExtensionData: data, chooseCommunityAfterLoading: true)
+                            self.present(basicEditorScene, animated: true, completion: nil)
+                        })
+                    }
+                    
+                    else {
+                        presentedVC.showAlert(title: "open editor".localized().uppercaseFirst, message: "close this screen and open editor".localized().uppercaseFirst + "?", buttonTitles: ["OK".localized(), "Cancel".localized()], highlightedButtonIndex: 0) { (index) in
+                            if index == 0 {
+                                presentedVC.dismiss(animated: true) {
+                                    let basicEditorScene = BasicEditorVC(shareExtensionData: data)
+                                    self.present(basicEditorScene, animated: true, completion: nil)
+                                }
                             }
                         }
                     }
@@ -302,6 +309,7 @@ class TabBarVC: UITabBarController {
                     let basicEditorScene = BasicEditorVC(shareExtensionData: data)
                     self.present(basicEditorScene, animated: true, completion: nil)
                 }
+                
                 DispatchQueue.main.async {
                     appDelegate.shareExtensionDataRelay.accept(nil)
                 }

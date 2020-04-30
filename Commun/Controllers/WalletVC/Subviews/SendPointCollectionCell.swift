@@ -23,7 +23,7 @@ class SendPointCollectionCell: MyCollectionViewCell {
     // MARK: - Methods
     override func setUpViews() {
         super.setUpViews()
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .appWhiteColor
         contentView.cornerRadius = 10
         
         contentView.addSubview(avatarImageView)
@@ -45,7 +45,7 @@ class SendPointCollectionCell: MyCollectionViewCell {
         } else {
             // add friend
             avatarImageView.image = UIImage(named: "add-circle")
-            nameLabel.text = "add friend".localized().uppercaseFirst
+            nameLabel.text = String(format: "%@ %@", "add".localized().uppercaseFirst, "friend".localized())
         }
     }
 }

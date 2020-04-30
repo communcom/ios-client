@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxDataSources
 
-class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDelegate {
+class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDelegate, HasLeadersVM {
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
         case subscriber(ResponseAPIContentGetProfile)
@@ -29,6 +29,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     // MARK: - Properties
     var selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem
     var viewModel: CommunityMembersViewModel
+    var leadersVM: LeadersViewModel { viewModel.leadersVM }
     let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // MARK: - Subviews
@@ -72,9 +73,9 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         setLeftNavBarButtonForGoingBack()
 
         edgesForExtendedLayout = .all
-        view.backgroundColor = .f3f5fa
+        view.backgroundColor = .appLightGrayColor
         
-        let topBarContainerView = UIView(height: 55, backgroundColor: .white)
+        let topBarContainerView = UIView(height: 55, backgroundColor: .appWhiteColor)
         view.addSubview(topBarContainerView)
         topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         
@@ -88,7 +89,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
         tableView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
         
-        tableView.backgroundColor = .f3f5fa
+        tableView.backgroundColor = .appLightGrayColor
         tableView.register(SubscribersCell.self, forCellReuseIdentifier: "SubscribersCell")
         tableView.register(CommunityLeaderFollowCell.self, forCellReuseIdentifier: "CommunityLeaderFollowCell")
         

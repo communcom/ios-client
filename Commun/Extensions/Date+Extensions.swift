@@ -7,6 +7,7 @@
 //
 import Foundation
 import CyberSwift
+import Localize_Swift
 
 extension Date {
     
@@ -23,7 +24,7 @@ extension Date {
         let toDate = Date()
 
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_EN")
+        dateFormatter.locale = Locale(identifier: Localize.currentLanguage())
 
         // Estimation
         // Year
@@ -40,21 +41,20 @@ extension Date {
 
         // Day
         if let interval = Calendar.current.dateComponents([.day], from: fromDate, to: toDate).day, interval > 0  {
-            return "\(interval)" + "d ago"
+            return String(format: NSLocalizedString("%d day", comment: ""), interval) + " " + "ago".localized()
         }
 
         // Hours
         if let interval = Calendar.current.dateComponents([.hour], from: fromDate, to: toDate).hour, interval > 0 {
-
-            return "\(interval)" + "h ago"
+            return String(format: NSLocalizedString("%d hour", comment: ""), interval) + " " + "ago".localized()
         }
 
         // Minute
         if let interval = Calendar.current.dateComponents([.minute], from: fromDate, to: toDate).minute, interval > 0 {
-            return "\(interval)" + "m ago"
+            return String(format: NSLocalizedString("%d minute", comment: ""), interval) + " " + "ago".localized()
         }
 
-        return "a moment ago"
+        return "a moment ago".localized()
     }
     
     func dayDifference(from interval: TimeInterval) -> String

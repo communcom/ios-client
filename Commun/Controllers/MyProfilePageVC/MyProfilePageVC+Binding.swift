@@ -38,6 +38,7 @@ extension MyProfilePageVC {
         // communities
         (viewModel as! MyProfilePageViewModel).subscriptionsVM.items
             .map {$0.compactMap {$0.communityValue}}
+            .map {$0.filter {$0.isBeingJoined == true || $0.isSubscribed == true}}
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: CommunityCollectionCell.self)) { index, model, cell in
                 cell.setUp(with: model)
                 cell.delegate = self
@@ -50,15 +51,15 @@ extension MyProfilePageVC {
     }
     
     func bindBalances() {
-        let walletView = (headerView as! MyProfileHeaderView).walletShadowView
-        let label = (headerView as! MyProfileHeaderView).communValueLabel
+        let walletView = (headerView as! MyProfileHeaderView).walletView
+        
         (viewModel as! MyProfilePageViewModel).balancesVM.state
             .subscribe(onNext: {[weak self] (state) in
                 switch state {
                 case .loading(let isLoading):
                     if isLoading {
                         (self?.headerView as? MyProfileHeaderView)?.setUpWalletView()
-                        walletView.showLoading(cover: false, spinnerColor: .white, size: 20, centerYOffset: 10)
+                        walletView.showLoading(cover: false, spinnerColor: .appWhiteColor, size: 20, centerYOffset: 10)
                     } else {
                         walletView.hideLoading()
                     }
@@ -74,8 +75,21 @@ extension MyProfilePageVC {
             .disposed(by: disposeBag)
         
         (viewModel as! MyProfilePageViewModel).balancesVM.items
-            .map {$0.enquityCommunValue.currencyValueFormatted}
-            .bind(to: label.rx.text)
+            .subscribe(onNext: { (balances) in
+                self.setUpEquityValue(balances: balances)
+            })
             .disposed(by: disposeBag)
+        
+        UserDefaults.standard.rx
+            .observe(Bool.self, Config.currentEquityValueIsShowingCMN)
+            .subscribe(onNext: { (_) in
+                let balances = (self.viewModel as! MyProfilePageViewModel).balancesVM.items.value
+                self.setUpEquityValue(balances: balances)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setUpEquityValue(balances: [ResponseAPIWalletGetBalance]) {
+        (headerView as! MyProfileHeaderView).walletView.setUp(balances: balances)
     }
 }

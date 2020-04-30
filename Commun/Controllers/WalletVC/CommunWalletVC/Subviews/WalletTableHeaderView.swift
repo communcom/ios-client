@@ -19,7 +19,7 @@ class WalletTableHeaderView: MyTableHeaderView {
     
     // MARK: - Subviews
     lazy var myPointsContainerView = UIView(forAutoLayout: ())
-    lazy var myPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
+    lazy var myPointsSeeAllButton = UIButton(label: String(format: "%@ %@", "see".localized().uppercaseFirst, "all".localized()), labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
     
     lazy var myPointsCollectionView: UICollectionView = {
         let collectionView = UICollectionView.horizontalFlow(
@@ -33,7 +33,7 @@ class WalletTableHeaderView: MyTableHeaderView {
     
     // MARK: - Send points
     lazy var sendPointsContainerView = UIView(forAutoLayout: ())
-    lazy var sendPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
+    lazy var sendPointsSeeAllButton = UIButton(label: String(format: "%@ %@", "see".localized().uppercaseFirst, "all".localized()), labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
     
     lazy var sendPointsCollectionView: UICollectionView = {
         let collectionView = UICollectionView.horizontalFlow(
@@ -46,11 +46,11 @@ class WalletTableHeaderView: MyTableHeaderView {
     }()
     
     // MARK: - Filter
-    lazy var filterContainerView = UIView(backgroundColor: .white)
+    lazy var filterContainerView = UIView(backgroundColor: .appWhiteColor)
     lazy var filterButton: LeftAlignedIconButton = {
-        let button = LeftAlignedIconButton(height: 35, label: "filter".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), backgroundColor: .f3f5fa, textColor: .a5a7bd, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 16))
+        let button = LeftAlignedIconButton(height: 35, label: "filter".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), backgroundColor: .appLightGrayColor, textColor: .appGrayColor, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 16))
         button.setImage(UIImage(named: "Filter"), for: .normal)
-        button.tintColor = .a5a7bd
+        button.tintColor = .appGrayColor
         return button
     }()
     
@@ -64,7 +64,7 @@ class WalletTableHeaderView: MyTableHeaderView {
         myPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
         
         // set up my points
-        let myPointsLabel = UILabel.with(text: "my points".localized().uppercaseFirst, textSize: 17, weight: .bold)
+        let myPointsLabel = UILabel.with(text: String(format: "%@ %@", "my".localized().uppercaseFirst, "points".localized()), textSize: 17, weight: .bold)
         myPointsContainerView.addSubview(myPointsLabel)
         myPointsLabel.autoPinEdge(toSuperviewEdge: .top)
         myPointsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)

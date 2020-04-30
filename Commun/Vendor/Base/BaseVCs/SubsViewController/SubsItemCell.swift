@@ -12,10 +12,9 @@ import Foundation
 class SubsItemCell: MyTableViewCell {
     lazy var stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
     lazy var avatarImageView = MyAvatarImageView(size: 50)
-    lazy var nameLabel = UILabel.with(textSize: 15, weight: .semibold, numberOfLines: 0)
-    lazy var statsLabel = UILabel.descriptionLabel(numberOfLines: 0)
+    lazy var contentLabel = UILabel.with(numberOfLines: 0)
     lazy var actionButton = CommunButton.default()
-    lazy var separator = UIView(height: 2, backgroundColor: .f3f5fa)
+    lazy var separator = UIView(height: 2, backgroundColor: .appLightGrayColor)
     
     override var roundedCorner: UIRectCorner {
         didSet {
@@ -30,20 +29,15 @@ class SubsItemCell: MyTableViewCell {
     
     override func setUpViews() {
         super.setUpViews()
-        backgroundColor = .white
+        backgroundColor = .appWhiteColor
         selectionStyle = .none
         
         contentView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
         
         // name, stats label
-        let vStack = UIStackView(axis: .vertical, spacing: 3, alignment: .leading, distribution: .fill)
-        nameLabel.setContentHuggingPriority(.required, for: .vertical)
-        vStack.addArrangedSubview(nameLabel)
-        vStack.addArrangedSubview(statsLabel)
-        
         stackView.addArrangedSubview(avatarImageView)
-        stackView.addArrangedSubview(vStack)
+        stackView.addArrangedSubview(contentLabel)
         stackView.addArrangedSubview(actionButton)
         
         // separator

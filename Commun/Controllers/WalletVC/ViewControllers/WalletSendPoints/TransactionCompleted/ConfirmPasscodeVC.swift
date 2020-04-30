@@ -18,7 +18,7 @@ import RxSwift
 class ConfirmPasscodeVC: THPinViewController {
     // MARK: - Properties
     let currentPin: String = Config.currentUser?.passcode ?? "XXXX"
-    let closeButton = UIButton.circle(size: .adaptive(width: 24.0), backgroundColor: #colorLiteral(red: 0.953, green: 0.961, blue: 0.98, alpha: 1), imageName: "icon-round-close-grey-default")
+    let closeButton = UIButton.circle(size: .adaptive(width: 24.0), backgroundColor: .appLightGrayColor, imageName: "icon-round-close-grey-default")
     let touchFaceIdButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 50.0), height: .adaptive(width: 50.0))))
 
     var error: NSError?
@@ -55,8 +55,8 @@ class ConfirmPasscodeVC: THPinViewController {
         super.viewDidLoad()
         
         disableCancel = false
-        view.tintColor = .black
-        backgroundColor = .white
+        view.tintColor = .appBlackColor
+        backgroundColor = .appWhiteColor
         modifyPromtTitle(asError: false)
         
         if !context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
@@ -97,10 +97,10 @@ class ConfirmPasscodeVC: THPinViewController {
     private func modifyPromtTitle(asError isError: Bool) {
         if isError {
             promptTitle = "wrong code".localized().uppercaseFirst
-            promptColor = #colorLiteral(red: 0.929, green: 0.173, blue: 0.357, alpha: 1)
+            promptColor = .appRedColor
         } else {
             promptTitle = "enter passcode".localized().uppercaseFirst
-            promptColor = #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+            promptColor = .appBlackColor
         }
         
         didShowVerifyButton(isError)

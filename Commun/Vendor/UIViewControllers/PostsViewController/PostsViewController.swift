@@ -89,7 +89,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
             viewModel.filter.accept(self.modifyFilter(filter: filter))
         }
         
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         nc.transitioningDelegate = vc
         nc.modalPresentationStyle = .custom
 //        nc.makeTransparent()

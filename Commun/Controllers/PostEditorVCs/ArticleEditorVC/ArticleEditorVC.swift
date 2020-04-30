@@ -56,7 +56,10 @@ class ArticleEditorVC: PostEditorVC {
         
         // content inside limit
         let contentInsideLimit = (content.count <= contentLettersLimit)
-        if !contentInsideLimit {hintType = .error("content must less than \(contentLettersLimit) characters".localized().uppercaseFirst)}
+
+        if !contentInsideLimit {
+            hintType = .error(String(format: "%@ %i %@", "content must less than".localized().uppercaseFirst, contentLettersLimit, "characters".localized()))
+        }
         
         // compare content
         var contentChanged = (title != viewModel.postForEdit?.document?.attributes?.title)

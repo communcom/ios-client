@@ -82,19 +82,25 @@ lane :beta do |options|
 
 end
 
-lane :release do 
+lane :release do |options|
+	version = options[:version]
+
+	if version != nil && version.to_s.length < 3 
+		UI.user_error!("\nERROR: Please use correct version options: 'version:', \nexample: 'fastlane release version:\"2.2.3\"'")
+	end
 
 	build(
 		appstore: true,
 		app_name: APPLICATION_NAME,
 		plist_path: INFO_PLIST_PATH,
-		bundle_id: BUNDLE_ID_RELEASE,
+		bundle_id: BUNDLE_ID_RELEASE,	
 		share_ext_bundle_id: BUNDLE_ID_SHARE_RELEASE,
 		icon_name: "AppIcon-PROD",
 		app_group: GROUP_ID_RELEASE,
 		team_id: TEAM_ID_RELEASE,
 		subxcodeproj: SUBXCODEPROJ,
-		codesigning_identity: "Apple Distribution: CHEINARTSOFT, OOO (E23BKKUH5D)"
+		codesigning_identity: "Apple Distribution: CHEINARTSOFT, OOO (E23BKKUH5D)",
+		version: version
 	)
 
 	build_path = ENV['BUILD_PATH']
@@ -127,6 +133,7 @@ private_lane :build do |options|
 	app_group = options[:app_group]
 	share_ext_bundle_id = options[:share_ext_bundle_id]
 	codesigning_identity = options[:codesigning_identity]
+	version = options[:version]
 
 	# props
 	xcodeproj = 			"#{app_name}.xcodeproj"
@@ -141,7 +148,7 @@ private_lane :build do |options|
 	match_git_branch =		appstore ? MATCH_GIT_BRANCH_RELEASE : MATCH_GIT_BRANCH_DEV
 	match_type = 			appstore ? MATCH_TYPE_RELEASE : MATCH_TYPE_DEV
 	provisioning_profile =  "match #{match_type} #{bundle_id}"
-	build_version = get_version_number(xcodeproj: xcodeproj, target: scheme)
+	build_version = version || get_version_number(xcodeproj: xcodeproj, target: scheme)
 
 	# Log
 	UI.success "app_group: #{app_group}"
@@ -218,6 +225,13 @@ private_lane :build do |options|
     	xcodeproj: xcodeproj,
     	build_number: build_number
     )
+
+    unless version.nil?
+	    increment_version_number(
+		  version_number: version, 
+		  xcodeproj: xcodeproj
+		)
+	end
 
     match(
 		git_branch: match_git_branch,

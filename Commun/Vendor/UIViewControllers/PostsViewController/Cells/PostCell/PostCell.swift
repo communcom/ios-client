@@ -17,7 +17,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     var bottomViewHeigthConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
-    lazy var topView = UIView(backgroundColor: .f3f5fa)
+    lazy var topView = UIView(backgroundColor: .appLightGrayColor)
     lazy var metaView = PostMetaView(height: 40.0)
     
     lazy var moreActionButton: UIButton = {
@@ -31,7 +31,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     lazy var postStatsView = PostStatsView(forAutoLayout: ())
 
-    lazy var bottomView = UIView(backgroundColor: .f3f5fa)
+    lazy var bottomView = UIView(backgroundColor: .appLightGrayColor)
     
     // MARK: - Layout
     override func setUpViews() {
@@ -117,7 +117,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         switch ex {
         case .reward:
             title = "what does it mean?".localized().uppercaseFirst
-            label = "wow, this post will be rewarded!\nDo you want to get rewards too? Create a post - it’s the best way to get them!".localized().uppercaseFirst
+            label = "wow, this post will be rewarded!".localized().uppercaseFirst
             senderView = metaView.stateButton
         default:
             return
@@ -164,17 +164,17 @@ class PostCell: MyTableViewCell, ListItemCellType {
         switch ex {
         case .shareYourPost:
             title = "share your post".localized().uppercaseFirst
-            label = "great, your post is successfully published! Share it with your friends to get more rewards!".localized().uppercaseFirst
+            label = "great, your post is successfully published".localized().uppercaseFirst
             senderView = postStatsView.shareButton
             postStatsView.fillShareCountButton()
         case .rewardsForLikes:
             title = "rewards for like".localized().uppercaseFirst
-            label = "yes, you get rewards for likes as well, and they have more value than you think! By upvoting posts you let it be successful and rewarded.".localized().uppercaseFirst
+            label = "yes, you get rewards for likes as well".localized().uppercaseFirst
             senderView = postStatsView.voteContainerView
             postStatsView.voteContainerView.fill()
         case .rewardsForComments:
             title = "rewards for comment".localized().uppercaseFirst
-            label = "comments get rewards too! Discuss and get more rewards!".localized().uppercaseFirst
+            label = "comments get rewards too".localized().uppercaseFirst
             senderView = postStatsView.commentsCountButton
             postStatsView.fillCommentCountButton()
         default:

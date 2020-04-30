@@ -11,7 +11,7 @@ import RxSwift
 import RxDataSources
 import CyberSwift
 
-class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate, CommunityPageVCType {
+class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate, CommunityPageVCType, HasLeadersVM {
     
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
@@ -47,8 +47,10 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         if let alias = communityAlias {
             return CommunityPageViewModel(communityAlias: alias)
         }
+        
         return CommunityPageViewModel(communityId: communityId)
     }
+    var leadersVM: LeadersViewModel {(viewModel as! CommunityPageViewModel).leadsVM}
     
     // MARK: - Subviews
     lazy var headerView = CommunityHeaderView(tableView: tableView)
@@ -76,7 +78,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         view.addGestureRecognizer(tap)
         
         let containerView = UIView(frame: .zero)
-        containerView.backgroundColor = .white
+        containerView.backgroundColor = .appWhiteColor
         containerView.addSubview(view)
         view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 2, right: 0), excludingEdge: .trailing)
         
@@ -149,7 +151,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         
         // header
         headerView.setUp(with: profile)
-        headerView.walletButton.addTarget(self, action: #selector(getPointsButtonTapped), for: .touchUpInside)
+        headerView.walletView.nextButton.isUserInteractionEnabled = true
+        headerView.walletView.nextButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(getPointsButtonTapped)))
         
         (viewModel as! CommunityPageViewModel).walletGetBuyPriceRequest
             .subscribe(onSuccess: { (buyPrice) in
@@ -295,6 +298,11 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                 }
                 return [AnimatableSectionModel<String, CustomElementType>(model: "", items: items)]
             }
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -315,7 +323,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
-        guard let profile = viewModel.profile.value else {return}
+        guard let profile = viewModel.profile.value, let currentUserID = Config.currentUser?.id else {return}
+        
         let headerView = UIView(height: 40)
         
         let avatarImageView = MyAvatarImageView(size: 40)
@@ -336,13 +345,21 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
         showCommunActionSheet(headerView: headerView, actions: [
+            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
+                                     icon: UIImage(named: "share"),
+                                     style: .default,
+                                     marginTop: 0,
+                                     handle: {
+                                        ShareHelper.share(urlString: self.shareWith(name: profile.name, userID: currentUserID, isCommunity: true))
+            }),
             CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_blacklist"),
-                                     tintColor: profile.isInBlacklist == true ? .black: .ed2c5b,
+                                     tintColor: profile.isInBlacklist == true ? .appBlackColor: .appRedColor,
+                                     marginTop: 10,
                                      handle: {
                                         self.showAlert(
-                                            title: (profile.isInBlacklist == true ? "unhide community": "hide community").localized().uppercaseFirst,
-                                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of": "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
+                                            title: (profile.isInBlacklist == true ? "unhide community" : "hide community").localized().uppercaseFirst,
+                                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of" : "do you really want to unhide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
                                             buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
                                             highlightedButtonIndex: 1) { (index) in
                                                 if index != 0 {return}
@@ -414,7 +431,7 @@ extension CommunityPageVC: UITableViewDelegate {
         }
         
         let aStr = NSMutableAttributedString()
-            .semibold("sort".localized().uppercaseFirst + ":", color: .a5a7bd)
+            .semibold("sort".localized().uppercaseFirst + ":", color: .appGrayColor)
             .semibold(" ")
             .semibold(type.localizedLabel!.uppercaseFirst)
         
@@ -442,7 +459,7 @@ extension CommunityPageVC: UITableViewDelegate {
             self.updatePostSortingView()
         }
         
-        let nc = BaseNavigationController(rootViewController: vc)
+        let nc = SwipeNavigationController(rootViewController: vc)
         nc.transitioningDelegate = vc
         nc.modalPresentationStyle = .custom
         
@@ -458,8 +475,10 @@ extension CommunityPageVC: UITableViewDelegate {
         switch item {
         case let post as ResponseAPIContentGetPost:
             return (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] ?? UITableView.automaticDimension
-        case let leader as ResponseAPIContentGetLeader:
-            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? UITableView.automaticDimension
+//        case let leader as ResponseAPIContentGetLeader:
+//            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? UITableView.automaticDimension
+        case let rule as ResponseAPIContentGetCommunityRule:
+            return (viewModel as! CommunityPageViewModel).ruleRowHeights[rule.identity] ?? UITableView.automaticDimension
         default:
             return UITableView.automaticDimension
         }
@@ -473,8 +492,10 @@ extension CommunityPageVC: UITableViewDelegate {
         switch item {
         case let post as ResponseAPIContentGetPost:
             return (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] ?? 200
-        case let leader as ResponseAPIContentGetLeader:
-            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? 121
+//        case let leader as ResponseAPIContentGetLeader:
+//            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? 121
+        case let rule as ResponseAPIContentGetCommunityRule:
+            return (viewModel as! CommunityPageViewModel).ruleRowHeights[rule.identity] ?? 68
         default:
             return UITableView.automaticDimension
         }
@@ -500,6 +521,8 @@ extension CommunityPageVC: UITableViewDelegate {
             }
         case let leader as ResponseAPIContentGetLeader:
             (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] = cell.bounds.height
+        case let rule as ResponseAPIContentGetCommunityRule:
+            (viewModel as! CommunityPageViewModel).ruleRowHeights[rule.identity] = cell.bounds.height
         default:
             break
         }

@@ -149,6 +149,11 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
                 }
                 return sections
             }
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -197,7 +202,7 @@ extension DiscoveryAllVC: UITableViewDelegate {
         let view = UIView(frame: .zero)
         view.backgroundColor = .clear
         
-        let headerView = UIView(backgroundColor: .white)
+        let headerView = UIView(backgroundColor: .appWhiteColor)
         view.addSubview(headerView)
         headerView.autoPinEdgesToSuperviewEdges()
         
@@ -206,7 +211,7 @@ extension DiscoveryAllVC: UITableViewDelegate {
         label.autoPinBottomAndLeadingToSuperView(inset: 5, xInset: 16)
         
         if dataSource.sectionModels[section].items.count == 5 {
-            let seeAllLabel = UILabel.with(text: "see all".localized(), textSize: 15, weight: .semibold, textColor: .appMainColor)
+            let seeAllLabel = UILabel.with(text: String(format: "%@ %@", "see".localized(), "all".localized()), textSize: 15, weight: .semibold, textColor: .appMainColor)
             headerView.addSubview(seeAllLabel)
             seeAllLabel.autoPinBottomAndTrailingToSuperView(inset: 5, xInset: 16)
             

@@ -21,13 +21,6 @@ class OtherBalancesWalletVC: CommunWalletVC {
         balances[safe: (headerView as! WalletHeaderView).selectedIndex]
     }
     
-    // MARK: - Subviews
-    override func setUp() {
-        isCommunBalance = false
-        super.setUp()
-        tableHeaderView.setMyPointHidden(true)
-    }
-    
     // MARK: - Initializers
     init(
         balances: [ResponseAPIWalletGetBalance]? = nil,
@@ -62,6 +55,16 @@ class OtherBalancesWalletVC: CommunWalletVC {
     }
     
     // MARK: - Method
+    override func setUp() {
+        isCommunBalance = false
+        super.setUp()
+        tableHeaderView.setMyPointHidden(true)
+    }
+    
+    override func setUpNavBarItems() {
+        self.setNavBarBackButton(tintColor: .white)
+    }
+    
     override func createConvertVC() -> WalletConvertVC? {
         guard let balance = currentBalance else { return nil }
         return WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: balance.symbol)

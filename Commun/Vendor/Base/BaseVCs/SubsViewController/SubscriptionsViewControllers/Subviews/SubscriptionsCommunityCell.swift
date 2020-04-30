@@ -32,24 +32,29 @@ class SubscriptionsCommunityCell: SubsItemCell {
             avatarImageView.setAvatar(urlString: community.avatarUrl)
         }
         
-        nameLabel.text = isMyFeed ? "my feed".localized().uppercaseFirst : community.name
+        let attributedText = NSMutableAttributedString()
+            .text(isMyFeed ? "my feed".localized().uppercaseFirst : community.name, size: 15, weight: .semibold)
         
-        if isMyFeed {
-            statsLabel.isHidden = true
-        } else {
-            statsLabel.isHidden = false
-            statsLabel.text = "\((community.subscribersCount ?? 0).kmFormatted) " + "followers".localized().uppercaseFirst + " • " + "\((community.postsCount ?? 0).kmFormatted) " + "posts".localized().uppercaseFirst
+        if !isMyFeed {
+            let subscribersCount: Int64 = community.subscribersCount ?? 0
+            let postsCount: Int64 = community.postsCount ?? 0
+            attributedText
+                .text("\n")
+                .text("\(subscribersCount.kmFormatted) " +
+                String(format: NSLocalizedString("followers-count", comment: ""), subscribersCount) + " • " + "\(postsCount.kmFormatted) " + String(format: NSLocalizedString("post-count", comment: "")), size: 12, weight: .semibold, color: .appGrayColor)
+                .withParagraphStyle(lineSpacing: 3)
         }
         
-
+        contentLabel.attributedText = attributedText
+        
         // joinButton
         if isMyFeed {
             joinButton.isHidden = true
         } else {
             joinButton.isHidden = false
             let joined = community.isSubscribed ?? false
-            joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
-            joinButton.setTitleColor(joined ? .appMainColor: .white, for: .normal)
+            joinButton.backgroundColor = joined ? .appLightGrayColor : .appMainColor
+            joinButton.setTitleColor(joined ? .appMainColor: .appWhiteColor, for: .normal)
             joinButton.setTitle((joined ? "following" : "follow").localized().uppercaseFirst, for: .normal)
             joinButton.isEnabled = !(community.isBeingJoined ?? false)
         }

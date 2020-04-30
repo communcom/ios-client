@@ -141,7 +141,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
             title = String(format: "%@ %@", "no".localized().uppercaseFirst, "posts".localized().uppercaseFirst)
             description = String(format: "%@ %@ %@", "you haven’t created any".localized().uppercaseFirst, "posts".localized(), "yet".localized())
 
-            tableView.addEmptyPlaceholderFooterView(title: title, description: description, buttonLabel: "create post".localized().uppercaseFirst) {
+            tableView.addEmptyPlaceholderFooterView(title: title, description: description, buttonLabel: String(format: "%@ %@", "create".localized().uppercaseFirst, "post".localized())) {
                 if let tabBarVC = self.tabBarController as? TabBarVC {
                     tabBarVC.buttonAddTapped()
                 }
@@ -201,6 +201,11 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                 }
             }
             .map {[AnimatableSectionModel<String, CustomElementType>(model: "", items: $0)]}
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -232,7 +237,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
-        guard let profile = viewModel.profile.value else {return}
+        guard let profile = viewModel.profile.value else { return }
         
         let headerView = UIView(height: 40)
         
@@ -258,20 +263,31 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
         showCommunActionSheet(headerView: headerView, actions: [
-            CommunActionSheet.Action(title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), style: .profile, handle: {
-                
-                self.showAlert(
-                    title: profile.isInBlacklist == true ? "unblock user".localized().uppercaseFirst: "block user".localized().uppercaseFirst,
-                    message: "do you really want to".localized().uppercaseFirst + " " + (profile.isInBlacklist == true ? "unblock".localized(): "block".localized()) + " \(self.viewModel.profile.value?.username ?? "this user")" + "?",
-                    buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
-                    highlightedButtonIndex: 1) { (index) in
-                        if index != 0 {return}
-                        if profile.isInBlacklist == true {
-                            self.unblockUser()
-                        } else {
-                            self.blockUser()
-                        }
-                    }
+            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
+                                     icon: UIImage(named: "icon-share-circle-white"),
+                                     style: .share,
+                                     marginTop: 0,
+                                     handle: {
+                                        ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
+            }),
+            CommunActionSheet.Action(title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst,
+                                     icon: UIImage(named: "profile_options_blacklist"),
+                                     style: .profile,
+                                     marginTop: 15,
+                                     handle: {
+                                        self.showAlert(
+                                            title: profile.isInBlacklist == true ? "unblock user".localized().uppercaseFirst: "block user".localized().uppercaseFirst,
+                                            message: "do you really want to".localized().uppercaseFirst + " " + (profile.isInBlacklist == true ? "unblock".localized(): "block".localized()) + " \(self.viewModel.profile.value?.username ?? "this user")" + "?",
+                                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
+                                            highlightedButtonIndex: 1) { (index) in
+                                                if index != 0 { return }
+                                                
+                                                if profile.isInBlacklist == true {
+                                                    self.unblockUser()
+                                                } else {
+                                                    self.blockUser()
+                                                }
+                                        }
             })
         ]) {
             

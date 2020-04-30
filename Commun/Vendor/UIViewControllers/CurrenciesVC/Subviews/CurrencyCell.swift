@@ -38,6 +38,6 @@ class CurrencyCell: MyTableViewCell, ListItemCellType {
         contentLabel.attributedText = NSMutableAttributedString()
             .text(item.name.uppercased(), size: 15, weight: .medium)
             .normal("\n")
-            .text(item.fullName ?? "", size: 12, weight: .medium, color: .a5a7bd)
+            .text(item.fullName ?? "", size: 12, weight: .medium, color: .appGrayColor)
     }
 }

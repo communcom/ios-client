@@ -79,7 +79,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     func setUpPullToRefresh() {
         refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         tableView.addSubview(refreshControl)
-        refreshControl.tintColor = .appGrayColor
+        refreshControl.tintColor = UIColor.colorSupportDarkMode(defaultColor: .appGrayColor, darkColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1))
     }
     
     func setUpTableView() {
@@ -112,6 +112,11 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     func bindItems() {
         viewModel.items
             .map {self.mapItems(items: $0)}
+            .do(onNext: { (items) in
+                if items.count == 0 && self.viewModel.state.value != .loading(true) {
+                    self.handleListEmpty()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

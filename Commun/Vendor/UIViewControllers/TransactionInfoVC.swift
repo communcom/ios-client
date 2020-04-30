@@ -27,7 +27,7 @@ class TransactionInfoVC: BaseViewController {
     
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     
-    private lazy var repeatButton = UIButton(height: 56 * Config.heightRatio, label: "repeat".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .bold), backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1), textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), cornerRadius: 28 * Config.heightRatio)
+    private lazy var repeatButton = UIButton(height: 56 * Config.heightRatio, label: "repeat".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .bold), backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 28 * Config.heightRatio)
     
     // MARK: - Initializers
     init(transaction: Transaction) {
