@@ -320,7 +320,7 @@ CHECKOUT OPTIONS:
     :commit: 95677cce9b659e3368bc3c355bbecaedefce9ad2
     :git: https://github.com/communcom/ImageViewer.swift.git
   ListPlaceholder:
-    :commit: e83aceaae06df5a0afb8d39b11fe5f9ea4719423
+    :commit: f8c1c98e97eb5bc33cee53132ed7e1a45e3848cf
     :git: https://github.com/communcom/ListPlaceholder.git
   SubviewAttachingTextView:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
