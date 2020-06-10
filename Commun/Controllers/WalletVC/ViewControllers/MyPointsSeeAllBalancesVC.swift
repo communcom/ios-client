@@ -22,6 +22,15 @@ class MyPointsSeeAllBalancesVC: BalancesVC, SearchableViewControllerType {
     }
     
     // MARK: - Methods
+    override init(userId: String? = nil, canChooseCommun: Bool = true, completion: ((ResponseAPIWalletGetBalance) -> Void)? = nil) {
+        super.init(userId: userId, canChooseCommun: canChooseCommun, completion: completion)
+        showShadowWhenScrollUp = false
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         searchController.roundCorners()
