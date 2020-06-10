@@ -15,17 +15,14 @@ class SendPointListVC: SubscriptionsVC, SearchableViewControllerType {
     var tableViewTopConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
-    let searchController = UISearchController.default()
     lazy var searchContainerView = UIView(backgroundColor: .appWhiteColor)
-    var searchBar: UISearchBar {
-        get {searchController.searchBar}
-        set {}
-    }
+    var searchBar = UISearchBar.default()
     
     // MARK: - Initializers
     init() {
         super.init(title: "send points".localized().uppercaseFirst, type: .user)
         showShadowWhenScrollUp = false
+        searchBar.showsCancelButton = true
     }
     
     required init?(coder: NSCoder) {
@@ -33,6 +30,11 @@ class SendPointListVC: SubscriptionsVC, SearchableViewControllerType {
     }
     
     // MARK: - Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchBarDidCancelSearching()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         searchBar.roundCorner()
