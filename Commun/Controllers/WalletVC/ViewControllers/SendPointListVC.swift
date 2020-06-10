@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class SendPointListVC: SubscriptionsVC, SearchableViewControllerType {
     // MARK: - Properties
@@ -66,6 +67,26 @@ class SendPointListVC: SubscriptionsVC, SearchableViewControllerType {
         tableViewTopConstraint = tableView.autoPinEdge(.top, to: .bottom, of: searchBar)
     }
     
+    override func bindItems() {
+        let viewModel = self.viewModel as! SubscriptionsViewModel
+        Observable.merge(
+            viewModel.items.filter {_ in viewModel.searchVM.isQueryEmpty}.asObservable(),
+            viewModel.searchVM.items.filter {_ in !viewModel.searchVM.isQueryEmpty}
+                .map {
+                    $0.compactMap{$0.profileValue}
+                        .map{ResponseAPIContentGetSubscriptionsItem.user($0)}
+                }
+        )
+            .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.handleListEmpty()
+                }
+            })
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+    }
+    
     override func configureCell(with subscription: ResponseAPIContentGetSubscriptionsItem, indexPath: IndexPath) -> UITableViewCell {
         let cell = super.configureCell(with: subscription, indexPath: indexPath) as! SubscriptionsUserCell
         cell.hideActionButton()
@@ -122,10 +143,13 @@ class SendPointListVC: SubscriptionsVC, SearchableViewControllerType {
     }
     
     func searchBarIsSearchingWithQuery(_ query: String) {
-        print(query)
+        (viewModel as! SubscriptionsViewModel).searchVM.query = query
+        (viewModel as! SubscriptionsViewModel).searchVM.reload(clearResult: false)
     }
     
     func searchBarDidCancelSearching() {
-        print("cancel search")
+        (viewModel as! SubscriptionsViewModel).searchVM.query = nil
+        viewModel.items.accept(viewModel.items.value)
+        viewModel.state.accept(.loading(false))
     }
 }
