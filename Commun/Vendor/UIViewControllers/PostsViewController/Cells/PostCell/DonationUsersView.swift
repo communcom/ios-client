@@ -39,8 +39,9 @@ class DonationUsersView: CMMessageView {
         closeButton.autoPinEdge(.leading, to: .trailing, of: donationsLabel, withOffset: 16)
     }
     
-    func setUp(with donations: [ResponseAPIContentGetProfile]) {
-        userStackView.setUp(with: donations)
+    func setUp(with donations: [ResponseAPIWalletDonation]) {
+        let senders = donations.map {$0.sender}
+        userStackView.setUp(with: senders)
         donationsLabel.text = String(format: NSLocalizedString("donations-count", comment: ""), (donations.count - 3))
     }
 }

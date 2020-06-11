@@ -106,18 +106,9 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         RestAPIManager.instance.getPosts(userId: filter.userId ?? Config.currentUser?.id, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.type, sortBy: filter.sortBy, timeframe: filter.timeframe, limit: limit, offset: offset
         )
             .map { $0.items ?? [] }
-            .map {posts in
-                // TODO: - For testing only, remove later
-                var posts = posts
-                if var post = posts.first {
-                    post.donations = ResponseAPIContentGetSubscribers.mockData()?.items
-                    post.donationCount = 100000
-                    posts[0] = post
-                }
-                return posts
-            }
             .do(onSuccess: { (posts) in
                 self.loadRewards(fromPosts: posts)
+                
             })
     }
     
@@ -125,6 +116,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         return super.join(newItems: items).filter { $0.document != nil}
     }
 
+    // MARK: - Rewards
     private func loadRewards(fromPosts posts: [ResponseAPIContentGetPost]) {
         let contentIds = posts.map { RequestAPIContentId(responseAPI: $0.contentId) }
         
@@ -212,5 +204,10 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         
         // assign value
         self.items.accept(posts)
+    }
+    
+    // MARK: - Donations
+    private func loadDonations(forPosts posts: [ResponseAPIContentGetPost]) {
+        
     }
 }

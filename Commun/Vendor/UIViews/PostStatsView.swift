@@ -114,11 +114,11 @@ class PostStatsView: MyView {
         voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
         
         // Donation
-        if let donationCount = post.donationCount {
+        if post.donationsCount > 0 {
             donationCountLabel.isHidden = false
             plusLabel.isHidden = false
             donationCountLabel.attributedText = NSMutableAttributedString()
-                .text("\(donationCount.kmFormatted)", size: 14, weight: .bold, color: .appMainColor)
+                .text("\(post.donationsCount.kmFormatted)", size: 14, weight: .bold, color: .appMainColor)
                 .text("\n")
                 .text("points".localized(), size: 14, weight: .medium, color: .appMainColor)
                 .withParagraphStyle(minimumLineHeight: 12)

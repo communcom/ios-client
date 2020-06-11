@@ -217,7 +217,7 @@ extension PostCell: PostStatsViewDelegate {
         
         donationView.removeFromSuperview()
         
-        guard let donations = post?.donations else {return}
+        guard let donations = post?.donations?.donations else {return}
         addSubview(donationUsersView)
         donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
         donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
