@@ -218,19 +218,13 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     }
     
     private func showDonations(_ donations: [ResponseAPIWalletGetDonationsBulkItem]) {
-        var posts = items.value
-            
-        posts = posts
-            .map { post in
-                var post = post
-                if let donations = donations.first(where: {$0.contentId.userId == post.contentId.userId && $0.contentId.permlink == post.contentId.permlink && $0.contentId.communityId == post.contentId.communityId})
-                {
-                    post.donations = donations
-                }
-                return post
+        items.value.forEach {post in
+            var post = post
+            if let donations = donations.first(where: {$0.contentId.userId == post.contentId.userId && $0.contentId.permlink == post.contentId.permlink && $0.contentId.communityId == post.contentId.communityId})
+            {
+                post.donations = donations
+                post.notifyChanged()
             }
-        
-        // assign value
-        self.items.accept(posts)
+        }
     }
 }
