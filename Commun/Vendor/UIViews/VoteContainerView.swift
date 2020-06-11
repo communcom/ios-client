@@ -14,9 +14,9 @@ class VoteContainerView: MyView {
     var votes: ResponseAPIContentVotes?
     
     // MARK: - Subviews
-    lazy var upVoteButton = UIButton.vote(type: .upvote)
-    lazy var downVoteButton = UIButton.vote(type: .downvote)
-    lazy var likeCountLabel = UILabel.with(textSize: 12, weight: .bold, textColor: .appGrayColor, textAlignment: .center)
+    lazy var upVoteButton = voteButton(type: .upvote)
+    lazy var downVoteButton = voteButton(type: .downvote)
+    lazy var likeCountLabel = CMLabel.with(textSize: 12, weight: .bold, textColor: .appGrayColor, textAlignment: .center)
     
     // MARK: - Methods
     override func commonInit() {
@@ -36,6 +36,8 @@ class VoteContainerView: MyView {
         likeCountLabel.autoPinEdge(toSuperviewEdge: .top)
         likeCountLabel.autoPinEdge(toSuperviewEdge: .bottom)
         likeCountLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        likeCountLabel.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     
     func setUp(with votes: ResponseAPIContentVotes, userID: String?) {
@@ -94,5 +96,13 @@ class VoteContainerView: MyView {
         likeCountLabel.text            = "\(((votes.upCount ?? 0) - (votes.downCount ?? 0)).kmFormatted)"
         downVoteButton.tintColor       = votes.hasDownVote ?? false ? voteActiveColor : voteInactiveColor
         likeCountLabel.textColor = votes.hasUpVote ?? false || votes.hasDownVote ?? false ? voteActiveColor : voteInactiveColor
+    }
+    
+    private func voteButton(type: VoteActionType) -> UIButton {
+        let button = UIButton(width: 30)
+        button.imageEdgeInsets = UIEdgeInsets(top: 10.5, left: 10, bottom: 10.5, right: 10)
+        button.setImage(UIImage(named: type == .upvote ? "upVote" : "downVote"), for: .normal)
+        button.touchAreaEdgeInsets = UIEdgeInsets(inset: -3)
+        return button
     }
 }

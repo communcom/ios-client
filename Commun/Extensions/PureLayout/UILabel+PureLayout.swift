@@ -34,8 +34,8 @@ extension UILabel {
         return label
     }
     
-    static func with(text: String? = nil, textSize: CGFloat = 15, weight: UIFont.Weight = .regular, textColor: UIColor = .appBlackColor, numberOfLines: Int? = nil, textAlignment: NSTextAlignment? = nil) -> UILabel {
-        let label = UILabel(forAutoLayout: ())
+    static func with(text: String? = nil, textSize: CGFloat = 15, weight: UIFont.Weight = .regular, textColor: UIColor = .appBlackColor, numberOfLines: Int? = nil, textAlignment: NSTextAlignment? = nil) -> Self {
+        let label = Self(forAutoLayout: ())
         label.text = text
         label.font = .systemFont(ofSize: textSize, weight: weight)
         label.textColor = textColor

@@ -12,6 +12,11 @@ import CyberSwift
 class UsersStackView: MyView {
     // MARK: - Properties
     let maxNumberOfAvatars = 3
+    var textColor = UIColor.appBlackColor {
+        didSet {
+            label.textColor = textColor
+        }
+    }
     
     // MARK: - Subviews
     lazy var avatarsStackView: UIStackView = {

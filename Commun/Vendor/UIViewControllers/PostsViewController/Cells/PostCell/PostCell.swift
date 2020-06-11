@@ -33,7 +33,16 @@ class PostCell: MyTableViewCell, ListItemCellType {
 
     lazy var bottomView = UIView(backgroundColor: .appLightGrayColor)
     
+    lazy var donationUsersView = DonationUsersView()
+    
+    lazy var donationView = DonationView()
+    
     // MARK: - Layout
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        donationUsersView.removeFromSuperview()
+    }
+    
     override func setUpViews() {
         super.setUpViews()
         
@@ -79,6 +88,11 @@ class PostCell: MyTableViewCell, ListItemCellType {
         postStatsView.voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
         postStatsView.voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
         postStatsView.commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
+        postStatsView.delegate = self
+        
+        // donation
+        donationUsersView.isUserInteractionEnabled = true
+        donationUsersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationUsersViewDidTouch)))
     }
     
     func layoutContent() {
@@ -195,5 +209,56 @@ class PostCell: MyTableViewCell, ListItemCellType {
             post?.bottomExplanation = .hidden
             post?.notifyChanged()
         }
+    }
+    
+    @objc func donationUsersViewDidTouch() {
+        guard let donations = post?.donations?.donations else {return}
+        let vc = DonationsVC(donations: donations)
+        vc.modelSelected = {donation in
+            vc.dismiss(animated: true) {
+                self.parentViewController?.showProfileWithUserId(donation.sender.userId)
+            }
+        }
+        
+        let navigation = SwipeNavigationController(rootViewController: vc)
+        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        navigation.modalPresentationStyle = .custom
+        navigation.transitioningDelegate = vc
+        parentViewController?.present(navigation, animated: true, completion: nil)
+    }
+}
+
+extension PostCell: PostStatsViewDelegate {
+    func postStatsView(_ postStatsView: PostStatsView, didTapOnDonationCountLabel donationCountLabel: UIView) {
+        if donationUsersView.isDescendant(of: self) {
+            donationUsersView.removeFromSuperview()
+            return
+        }
+        
+        donationView.removeFromSuperview()
+        
+        guard let donations = post?.donations?.donations else {return}
+        addSubview(donationUsersView)
+        donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
+        donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
+        
+        donationUsersView.setUp(with: donations)
+        
+        donationUsersView.senderView = donationCountLabel
+    }
+    
+    func postStatsView(_ postStatsView: PostStatsView, didTapOnLikeCountLabel likeCountLabel: UIView) {
+        if donationView.isDescendant(of: self) {
+            donationView.removeFromSuperview()
+            return
+        }
+        
+        donationUsersView.removeFromSuperview()
+        
+        addSubview(donationView)
+        donationView.autoAlignAxis(toSuperviewAxis: .vertical)
+        donationView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
+        
+        donationView.senderView = likeCountLabel
     }
 }

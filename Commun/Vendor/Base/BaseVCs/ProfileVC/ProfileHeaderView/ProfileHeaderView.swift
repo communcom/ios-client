@@ -20,13 +20,13 @@ class ProfileHeaderView: MyTableHeaderView {
     
     lazy var headerStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
     lazy var avatarImageView = MyAvatarImageView(size: 50)
-    lazy var headerLabel = UILabel.with(numberOfLines: 0)
+    lazy var headerLabel = UILabel.with(text: "username", numberOfLines: 0)
     lazy var followButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
     
-    lazy var descriptionLabel = UILabel.with(textSize: 14, numberOfLines: 0)
+    lazy var descriptionLabel = UILabel.with(text: "description", textSize: 14, numberOfLines: 0)
 
     lazy var statsStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-    lazy var statsLabel = UILabel.with(numberOfLines: 0)
+    lazy var statsLabel = UILabel.with(text: "followers and following", numberOfLines: 0)
     lazy var usersStackView = UsersStackView(height: 34)
     
     lazy var segmentedControl: CMSegmentedControl = {

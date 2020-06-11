@@ -93,18 +93,21 @@ class ListFetcher<T: ListItemType> {
         // send request
         request
             .subscribe(onSuccess: { (items) in
-                self.items.accept(self.join(newItems: items))
-                
-                // resign state
-                self.modifyStateAfterRequest(itemsCount: items.count)
-                
-                // get next offset
-                self.offset += self.limit
-                
+                self.handleNewData(items)
             }, onError: {error in
                 self.state.accept(.error(error: error))
             })
             .disposed(by: disposeBag)
+    }
+    
+    func handleNewData(_ items: [T]) {
+        self.items.accept(self.join(newItems: items))
+        
+        // resign state
+        self.modifyStateAfterRequest(itemsCount: items.count)
+        
+        // get next offset
+        self.offset += self.limit
     }
     
     func modifyStateAfterRequest(itemsCount: Int) {
