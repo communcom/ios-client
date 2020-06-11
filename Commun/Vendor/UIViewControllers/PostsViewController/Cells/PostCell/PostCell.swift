@@ -89,6 +89,10 @@ class PostCell: MyTableViewCell, ListItemCellType {
         postStatsView.voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
         postStatsView.commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
         postStatsView.delegate = self
+        
+        // donation
+        donationUsersView.isUserInteractionEnabled = true
+        donationUsersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationUsersViewDidTouch)))
     }
     
     func layoutContent() {
@@ -205,6 +209,12 @@ class PostCell: MyTableViewCell, ListItemCellType {
             post?.bottomExplanation = .hidden
             post?.notifyChanged()
         }
+    }
+    
+    @objc func donationUsersViewDidTouch() {
+        guard let donations = post?.donations?.donations else {return}
+        let vc = DonationsVC(donations: donations)
+        parentViewController?.show(vc, sender: nil)
     }
 }
 

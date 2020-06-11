@@ -450,6 +450,8 @@
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
 		BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift */; };
 		BCEFA63E2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json in Resources */ = {isa = PBXBuildFile; fileRef = BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */; };
+		BCEFA6422492149900971E77 /* DonationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA6412492149900971E77 /* DonationsVC.swift */; };
+		BCEFA645249217F700971E77 /* DonatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA644249217F700971E77 /* DonatorCell.swift */; };
 		BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */; };
 		BCF1B3FC23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3FB23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift */; };
 		BCF3914C235FEAB300A9D1ED /* ListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */; };
@@ -974,6 +976,8 @@
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResponseAPIContentBlock+Extensions.swift"; sourceTree = "<group>"; };
 		BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIWalletGetDonationsBulk.json; sourceTree = "<group>"; };
+		BCEFA6412492149900971E77 /* DonationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationsVC.swift; sourceTree = "<group>"; };
+		BCEFA644249217F700971E77 /* DonatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonatorCell.swift; sourceTree = "<group>"; };
 		BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+Actions.swift"; sourceTree = "<group>"; };
 		BCF1B3FB23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFetcher.swift; sourceTree = "<group>"; };
@@ -1324,6 +1328,7 @@
 				B10DB96A240FB99B001BD0E4 /* CMFeedbackViewController.swift */,
 				BC067E592436EAE900D770AC /* TransactionInfoVC.swift */,
 				BCAFEC94243EC237003A1DC4 /* TransactionCompletedVC.swift */,
+				BCEFA643249217DF00971E77 /* DonationsVC */,
 			);
 			path = UIViewControllers;
 			sourceTree = "<group>";
@@ -2672,6 +2677,15 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		BCEFA643249217DF00971E77 /* DonationsVC */ = {
+			isa = PBXGroup;
+			children = (
+				BCEFA6412492149900971E77 /* DonationsVC.swift */,
+				BCEFA644249217F700971E77 /* DonatorCell.swift */,
+			);
+			path = DonationsVC;
+			sourceTree = "<group>";
+		};
 		BCF3914A235FEAA500A9D1ED /* Fetchers */ = {
 			isa = PBXGroup;
 			children = (
@@ -3151,6 +3165,7 @@
 				BCDEE77723ED642600DD3EB3 /* ReportOtherVC.swift in Sources */,
 				B1D78C0923E335D100772BD9 /* UserDefaults+Extensions.swift in Sources */,
 				BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */,
+				BCEFA645249217F700971E77 /* DonatorCell.swift in Sources */,
 				BC923E0C24319DB700B28413 /* BaseSignUpMethodVC.swift in Sources */,
 				BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */,
 				5721E87122650AC0003BE04B /* String+Extensions.swift in Sources */,
@@ -3482,6 +3497,7 @@
 				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				BC8F814523E27ECE0024C04A /* WalletTableHeaderView.swift in Sources */,
 				BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */,
+				BCEFA6422492149900971E77 /* DonationsVC.swift in Sources */,
 				BCB64772244ED65600C94B84 /* SwipeBackNavigationController.swift in Sources */,
 				BC9066E723A9D48A000F9A3B /* TransferHistoryVC.swift in Sources */,
 				BC69F7D8236FF6790097F870 /* SubscriptionsCommunityCell.swift in Sources */,
