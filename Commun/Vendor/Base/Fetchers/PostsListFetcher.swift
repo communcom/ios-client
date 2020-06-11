@@ -108,7 +108,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
             .map { $0.items ?? [] }
             .do(onSuccess: { (posts) in
                 self.loadRewards(fromPosts: posts)
-                
+                self.loadDonations(forPosts: posts)
             })
     }
     
@@ -208,6 +208,29 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     
     // MARK: - Donations
     private func loadDonations(forPosts posts: [ResponseAPIContentGetPost]) {
+        let contentIds = posts.map { RequestAPIContentId(responseAPI: $0.contentId) }
+        RestAPIManager.instance.getDonationsBulk(posts: contentIds)
+            .map {$0.items}
+            .subscribe(onSuccess: { donations in
+                self.showDonations(donations)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func showDonations(_ donations: [ResponseAPIWalletGetDonationsBulkItem]) {
+        var posts = items.value
+            
+        posts = posts
+            .map { post in
+                var post = post
+                if let donations = donations.first(where: {$0.contentId.userId == post.contentId.userId && $0.contentId.permlink == post.contentId.permlink && $0.contentId.communityId == post.contentId.communityId})
+                {
+                    post.donations = donations
+                }
+                return post
+            }
         
+        // assign value
+        self.items.accept(posts)
     }
 }

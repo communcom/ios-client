@@ -449,6 +449,7 @@
 		BCE0AE1A241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE0AE19241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift */; };
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
 		BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift */; };
+		BCEFA63E2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json in Resources */ = {isa = PBXBuildFile; fileRef = BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */; };
 		BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */; };
 		BCF1B3FC23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3FB23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift */; };
 		BCF3914C235FEAB300A9D1ED /* ListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */; };
@@ -972,6 +973,7 @@
 		BCE0AE19241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+ShareExtension.swift"; sourceTree = "<group>"; };
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResponseAPIContentBlock+Extensions.swift"; sourceTree = "<group>"; };
+		BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIWalletGetDonationsBulk.json; sourceTree = "<group>"; };
 		BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+Actions.swift"; sourceTree = "<group>"; };
 		BCF1B3FB23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFetcher.swift; sourceTree = "<group>"; };
@@ -1082,6 +1084,7 @@
 				BC9066EE23A9DABF000F9A3B /* ResponseAPIWalletGetBalances.json */,
 				BC9066F223A9DFC2000F9A3B /* ResponseAPIWalletGetTransferHistory.json */,
 				BC422E4323D00B08000AE946 /* ResponseAPIGetNotifications.json */,
+				BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */,
 			);
 			path = Mocking;
 			sourceTree = "<group>";
@@ -2883,6 +2886,7 @@
 				BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */,
 				BC247D0523823B650062C979 /* ResponseAPIContentGetProfile.json in Resources */,
 				BC422E4423D00B08000AE946 /* ResponseAPIGetNotifications.json in Resources */,
+				BCEFA63E2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json in Resources */,
 				BC9066F323A9DFC2000F9A3B /* ResponseAPIWalletGetTransferHistory.json in Resources */,
 				BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */,
 			);
