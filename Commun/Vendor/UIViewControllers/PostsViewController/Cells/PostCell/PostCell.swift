@@ -214,7 +214,17 @@ class PostCell: MyTableViewCell, ListItemCellType {
     @objc func donationUsersViewDidTouch() {
         guard let donations = post?.donations?.donations else {return}
         let vc = DonationsVC(donations: donations)
-        parentViewController?.show(vc, sender: nil)
+        vc.modelSelected = {donation in
+            vc.dismiss(animated: true) {
+                self.parentViewController?.showProfileWithUserId(donation.sender.userId)
+            }
+        }
+        
+        let navigation = SwipeNavigationController(rootViewController: vc)
+        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        navigation.modalPresentationStyle = .custom
+        navigation.transitioningDelegate = vc
+        parentViewController?.present(navigation, animated: true, completion: nil)
     }
 }
 

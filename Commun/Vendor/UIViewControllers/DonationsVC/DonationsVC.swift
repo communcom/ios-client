@@ -12,9 +12,11 @@ import RxSwift
 class DonationsVC: BaseViewController {
     // MARK: - Properties
     let donations: [ResponseAPIWalletDonation]
+    var modelSelected: ((ResponseAPIWalletDonation) -> Void)?
     
     // MARK: - Subviews
     lazy var tableView = UITableView(forAutoLayout: ())
+    lazy var closeButton = UIButton.close()
     
     // MARK: - Initializers
     init(donations: [ResponseAPIWalletDonation]) {
@@ -32,6 +34,8 @@ class DonationsVC: BaseViewController {
         view.backgroundColor = .appLightGrayColor
         
         title = "donations".localized().uppercaseFirst
+        setRightNavBarButton(with: closeButton)
+        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
     }
     
     override func setUp() {
@@ -51,16 +55,32 @@ class DonationsVC: BaseViewController {
         
         Observable.just(donations)
             .bind(to: tableView.rx.items(cellIdentifier: "DonatorCell"))
-                { _, model, cell in
+                { row, model, cell in
                     let cell = cell as! DonatorCell
                     cell.setUp(with: model)
+                    cell.roundedCorner = []
+                    
+                    if row == 0 {
+                        cell.roundedCorner.insert([.topLeft, .topRight])
+                    }
+                    
+                    if row == self.donations.count - 1 {
+                        cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+                    }
                 }
             .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(ResponseAPIWalletDonation.self)
             .subscribe(onNext: { donation in
-                self.showProfileWithUserId(donation.sender.userId)
+                self.modelSelected?(donation)
             })
             .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+extension DonationsVC: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
