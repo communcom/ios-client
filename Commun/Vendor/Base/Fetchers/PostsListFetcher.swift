@@ -106,14 +106,16 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         RestAPIManager.instance.getPosts(userId: filter.userId ?? Config.currentUser?.id, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.type, sortBy: filter.sortBy, timeframe: filter.timeframe, limit: limit, offset: offset
         )
             .map { $0.items ?? [] }
-            .do(onSuccess: { (posts) in
-                self.loadRewards(fromPosts: posts)
-                self.loadDonations(forPosts: posts)
-            })
     }
     
     override func join(newItems items: [ResponseAPIContentGetPost]) -> [ResponseAPIContentGetPost] {
         return super.join(newItems: items).filter { $0.document != nil}
+    }
+    
+    override func handleNewData(_ items: [ResponseAPIContentGetPost]) {
+        super.handleNewData(items)
+        loadRewards(fromPosts: items)
+        loadDonations(forPosts: items)
     }
 
     // MARK: - Rewards
@@ -218,8 +220,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     }
     
     private func showDonations(_ donations: [ResponseAPIWalletGetDonationsBulkItem]) {
-        items.value.forEach {post in
-            var post = post
+        for var post in items.value {
             if let donations = donations.first(where: {$0.contentId.userId == post.contentId.userId && $0.contentId.permlink == post.contentId.permlink && $0.contentId.communityId == post.contentId.communityId})
             {
                 post.donations = donations
