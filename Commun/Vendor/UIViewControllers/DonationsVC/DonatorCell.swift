@@ -17,6 +17,8 @@ class DonatorCell: SubscribersCell {
         
         detailLabel.setContentHuggingPriority(.required, for: .horizontal)
         stackView.addArrangedSubview(detailLabel)
+        
+        showFollowersFollowings = false
     }
     
     func setUp(with donation: ResponseAPIWalletDonation, pointType: String) {
