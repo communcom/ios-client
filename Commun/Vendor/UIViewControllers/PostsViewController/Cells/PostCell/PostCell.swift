@@ -212,7 +212,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     }
     
     @objc func donationUsersViewDidTouch() {
-        guard let donations = post?.donations?.donations else {return}
+        guard let donations = post?.donations else {return}
         let vc = DonationsVC(donations: donations)
         vc.modelSelected = {donation in
             vc.dismiss(animated: true) {

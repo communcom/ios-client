@@ -19,9 +19,9 @@ class DonatorCell: SubscribersCell {
         stackView.addArrangedSubview(detailLabel)
     }
     
-    func setUp(with donation: ResponseAPIWalletDonation) {
+    func setUp(with donation: ResponseAPIWalletDonation, pointType: String) {
         setUp(with: donation.sender)
         detailLabel.attributedText = NSMutableAttributedString()
-            .text(donation.quantity, size: 15, weight: .semibold, color: .appGreenColor)
+            .text("\(donation.quantity) \(pointType)", size: 15, weight: .semibold, color: .appGreenColor)
     }
 }
