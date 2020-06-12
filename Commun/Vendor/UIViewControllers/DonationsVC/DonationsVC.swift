@@ -11,7 +11,7 @@ import RxSwift
 
 class DonationsVC: BaseViewController {
     // MARK: - Properties
-    let donations: [ResponseAPIWalletDonation]
+    let donations: ResponseAPIWalletGetDonationsBulkItem
     var modelSelected: ((ResponseAPIWalletDonation) -> Void)?
     
     // MARK: - Subviews
@@ -19,7 +19,7 @@ class DonationsVC: BaseViewController {
     lazy var closeButton = UIButton.close()
     
     // MARK: - Initializers
-    init(donations: [ResponseAPIWalletDonation]) {
+    init(donations: ResponseAPIWalletGetDonationsBulkItem) {
         self.donations = donations
         super.init(nibName: nil, bundle: nil)
     }
@@ -53,18 +53,18 @@ class DonationsVC: BaseViewController {
     override func bind() {
         super.bind()
         
-        Observable.just(donations)
+        Observable.just(donations.donations)
             .bind(to: tableView.rx.items(cellIdentifier: "DonatorCell"))
                 { row, model, cell in
                     let cell = cell as! DonatorCell
-                    cell.setUp(with: model)
+                    cell.setUp(with: model, pointType: self.donations.contentId.communityId ?? "")
                     cell.roundedCorner = []
                     
                     if row == 0 {
                         cell.roundedCorner.insert([.topLeft, .topRight])
                     }
                     
-                    if row == self.donations.count - 1 {
+                    if row == self.donations.donations.count - 1 {
                         cell.roundedCorner.insert([.bottomLeft, .bottomRight])
                     }
                 }

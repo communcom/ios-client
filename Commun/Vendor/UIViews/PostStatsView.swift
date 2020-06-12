@@ -118,7 +118,7 @@ class PostStatsView: MyView {
             donationCountLabel.isHidden = false
             plusLabel.isHidden = false
             donationCountLabel.attributedText = NSMutableAttributedString()
-                .text("\(post.donationsCount.kmFormatted)", size: 14, weight: .bold, color: .appMainColor)
+                .text("\(post.donationsCount.kmFormatted(maximumFractionDigit: 2))", size: 14, weight: .bold, color: .appMainColor)
                 .text("\n")
                 .text("points".localized(), size: 14, weight: .medium, color: .appMainColor)
                 .withParagraphStyle(minimumLineHeight: 12)
