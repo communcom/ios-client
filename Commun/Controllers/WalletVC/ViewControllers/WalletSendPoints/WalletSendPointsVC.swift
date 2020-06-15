@@ -16,6 +16,7 @@ class WalletSendPointsVC: BaseViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .white)}
     override var shouldHideTabBar: Bool {true}
+    var actionName: String {"send"}
     
     // MARK: - Properties
     var dataModel: SendPointsModel
@@ -48,6 +49,8 @@ class WalletSendPointsVC: BaseViewController {
                            height: UIScreen.main.bounds.height - 269,
                            backgroundColor: .appWhiteColor,
                            cornerRadius: 25)
+    
+    lazy var userView = UIView(height: 70)
 
     let pointsToolbar: CMToolbarView = CMToolbarView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 375.0), height: .adaptive(height: 50.0))))
 
@@ -120,7 +123,7 @@ class WalletSendPointsVC: BaseViewController {
     var alertLabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 12, weight: .bold), numberOfLines: 2, color: .appRedColor)
 
     // MARK: - Class Initialization
-    init(withSelectedBalanceSymbol symbol: String, andUser user: ResponseAPIContentGetProfile?) {
+    init(selectedBalanceSymbol symbol: String, user: ResponseAPIContentGetProfile?) {
         self.dataModel = SendPointsModel()
         self.dataModel.transaction.symbol = Symbol(sell: symbol, buy: symbol)
         
@@ -129,7 +132,6 @@ class WalletSendPointsVC: BaseViewController {
         }
         
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .clear
     }
 
     required init?(coder: NSCoder) {
@@ -139,16 +141,14 @@ class WalletSendPointsVC: BaseViewController {
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .clear
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
                 
         dataModel.loadBalances { [weak self] success in
             if success {
-                self?.setupUI()
-                self?.updateBuyerInfo()
-                self?.updateSellerInfo()
-                self?.addGesture()
+                self?.balancesDidFinishLoading()
             }
         }
         
@@ -259,7 +259,6 @@ class WalletSendPointsVC: BaseViewController {
         whiteView.autoPinEdge(toSuperviewEdge: .top)
 
         // user view
-        let userView = UIView(height: 70)
         userView.layer.cornerRadius = 10
         userView.layer.borderWidth = 1
         userView.layer.borderColor = UIColor.appLightGrayColor.cgColor
@@ -317,6 +316,13 @@ class WalletSendPointsVC: BaseViewController {
         buttonBottomConstraint = sendPointsButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 10)
     }
     
+    func balancesDidFinishLoading() {
+        setupUI()
+        updateBuyerInfo()
+        updateSellerInfo()
+        addGesture()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavBar()
@@ -330,15 +336,20 @@ class WalletSendPointsVC: BaseViewController {
 
     // MARK: - Custom Functions
     override func bind() {
+        super.bind()
         pointsTextField.delegate = self
 
         pointsTextField.rx.text
             .orEmpty
             .subscribe(onNext: { value in
-                self.dataModel.transaction.amount = CGFloat(value.toDouble())
-                self.updateSendInfoByEnteredPoints()
+                self.updateAmount(value.toDouble())
             })
             .disposed(by: disposeBag)
+    }
+    
+    func updateAmount(_ amount: Double) {
+        dataModel.transaction.amount = CGFloat(amount)
+        updateSendInfoByEnteredPoints()
     }
 
     private func setupNavBar() {
@@ -358,7 +369,7 @@ class WalletSendPointsVC: BaseViewController {
     }
     
     private func setSendButton(amount: CGFloat = 0.0, percent: CGFloat) {
-        let subtitle1 = String(format: "%@: %@ %@", "send".localized().uppercaseFirst, Double(amount).currencyValueFormatted, dataModel.transaction.symbol.sell.fullName)
+        let subtitle1 = String(format: "%@: %@ %@", actionName.localized().uppercaseFirst, Double(amount).currencyValueFormatted, dataModel.transaction.symbol.sell.fullName)
         var title: NSMutableAttributedString!
         var subtitle2 = ""
         
@@ -488,9 +499,7 @@ class WalletSendPointsVC: BaseViewController {
     @objc func clearButtonTapped(_ sender: UIButton) {
         sender.isHidden = true
         pointsTextField.text = nil
-        dataModel.transaction.amount = 0
-        
-        updateSendInfoByEnteredPoints()
+        updateAmount(0)
     }
 
     @objc func sendPointsButtonTapped(_ sender: UITapGestureRecognizer) {

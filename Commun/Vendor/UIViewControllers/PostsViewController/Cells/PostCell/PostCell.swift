@@ -93,6 +93,13 @@ class PostCell: MyTableViewCell, ListItemCellType {
         // donation
         donationUsersView.isUserInteractionEnabled = true
         donationUsersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationUsersViewDidTouch)))
+        
+        for (i, button) in donationView.amountButtons.enumerated() {
+            button.tag = i
+            button.addTarget(self, action: #selector(donationAmountDidTouch(sender:)), for: .touchUpInside)
+        }
+        donationView.otherButton.tag = donationView.amountButtons.count
+        donationView.otherButton.addTarget(self, action: #selector(donationAmountDidTouch(sender:)), for: .touchUpInside)
     }
     
     func layoutContent() {
@@ -225,6 +232,10 @@ class PostCell: MyTableViewCell, ListItemCellType {
         navigation.modalPresentationStyle = .custom
         navigation.transitioningDelegate = vc
         parentViewController?.present(navigation, animated: true, completion: nil)
+    }
+    
+    @objc func donationAmountDidTouch(sender: UIButton) {
+        
     }
 }
 

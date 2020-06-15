@@ -136,7 +136,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
         completedVC.completionRepeat = { [weak self] in
             guard let strongSelf = self else { return }
             
-            let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: transaction.symbol.sell, andUser: nil)
+            let walletSendPointsVC = WalletSendPointsVC(selectedBalanceSymbol: transaction.symbol.sell, user: nil)
             walletSendPointsVC.dataModel.transaction = transaction
             
             if let communWalletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {

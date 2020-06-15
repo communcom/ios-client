@@ -452,6 +452,7 @@
 		BCEFA63E2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json in Resources */ = {isa = PBXBuildFile; fileRef = BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */; };
 		BCEFA6422492149900971E77 /* DonationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA6412492149900971E77 /* DonationsVC.swift */; };
 		BCEFA645249217F700971E77 /* DonatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA644249217F700971E77 /* DonatorCell.swift */; };
+		BCF0D25B24971FA70094B6EB /* WalletDonateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF0D25A24971FA70094B6EB /* WalletDonateVC.swift */; };
 		BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */; };
 		BCF1B3FC23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3FB23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift */; };
 		BCF3914C235FEAB300A9D1ED /* ListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */; };
@@ -978,6 +979,7 @@
 		BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIWalletGetDonationsBulk.json; sourceTree = "<group>"; };
 		BCEFA6412492149900971E77 /* DonationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationsVC.swift; sourceTree = "<group>"; };
 		BCEFA644249217F700971E77 /* DonatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonatorCell.swift; sourceTree = "<group>"; };
+		BCF0D25A24971FA70094B6EB /* WalletDonateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDonateVC.swift; sourceTree = "<group>"; };
 		BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+Actions.swift"; sourceTree = "<group>"; };
 		BCF1B3FB23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFetcher.swift; sourceTree = "<group>"; };
@@ -2293,6 +2295,7 @@
 			children = (
 				BC7A88F723FE73A400B8CF6E /* WalletAddFriendVC */,
 				BC8F812823E27ECE0024C04A /* WalletSendPoints */,
+				BCF0D25724971F6D0094B6EB /* WalletDonateVC */,
 				BC8F813423E27ECE0024C04A /* SendPointListVC.swift */,
 				BC8F813523E27ECE0024C04A /* BuyCommunVC */,
 				BC8F813A23E27ECE0024C04A /* WalletConvertVCs */,
@@ -2684,6 +2687,14 @@
 				BCEFA644249217F700971E77 /* DonatorCell.swift */,
 			);
 			path = DonationsVC;
+			sourceTree = "<group>";
+		};
+		BCF0D25724971F6D0094B6EB /* WalletDonateVC */ = {
+			isa = PBXGroup;
+			children = (
+				BCF0D25A24971FA70094B6EB /* WalletDonateVC.swift */,
+			);
+			path = WalletDonateVC;
 			sourceTree = "<group>";
 		};
 		BCF3914A235FEAA500A9D1ED /* Fetchers */ = {
@@ -3436,6 +3447,7 @@
 				BC8F814023E27ECE0024C04A /* WalletHeaderView.swift in Sources */,
 				BC8F814C23E27ECE0024C04A /* CMToolbarView.swift in Sources */,
 				3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */,
+				BCF0D25B24971FA70094B6EB /* WalletDonateVC.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B3C8B9C2347928D00D8BADB /* PostEditorVC+Layout.swift in Sources */,
 				BC597A77238BEC2700103F4F /* FTUEVC.swift in Sources */,

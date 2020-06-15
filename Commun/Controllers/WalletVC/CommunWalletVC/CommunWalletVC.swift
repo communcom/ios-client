@@ -355,7 +355,7 @@ class CommunWalletVC: TransferHistoryVC {
     private func routeToSendPointsScene(withUser user: ResponseAPIContentGetProfile? = nil) {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
 
-        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
+        let walletSendPointsVC = WalletSendPointsVC(selectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, user: user)
         show(walletSendPointsVC, sender: nil)
         
         hideHud()
