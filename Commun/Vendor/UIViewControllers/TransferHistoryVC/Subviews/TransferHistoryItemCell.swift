@@ -129,6 +129,17 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             avatarImageView.image = UIImage(named: "notifications-page-referral")
             iconImageView.isHidden = false
             iconImageView.image = UIImage(named: "tux")
+        case "donation":
+            username = item.receiver.username ?? item.receiver.userId
+            memo = NSMutableAttributedString()
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
+            avatarImageView.setAvatar(urlString: item.receiver.avatarUrl)
+            iconImageView.isHidden = false
+            if let logo = item.point.logo, let url = URL(string: logo) {
+                iconImageView.sd_setImage(with: url, completed: nil)
+            } else {
+                iconImageView.image = UIImage(named: "tux")
+            }
         default:
             username = ""
             memo = NSMutableAttributedString()
