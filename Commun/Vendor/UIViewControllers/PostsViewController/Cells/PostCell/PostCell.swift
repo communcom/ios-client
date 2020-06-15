@@ -264,21 +264,4 @@ extension PostCell: PostStatsViewDelegate {
         
         donationUsersView.senderView = donationCountLabel
     }
-    
-    func postStatsView(_ postStatsView: PostStatsView, didTapOnLikeCountLabel likeCountLabel: UIView) {
-        if donationView.isDescendant(of: self) {
-            donationView.removeFromSuperview()
-            return
-        }
-        
-        donationUsersView.removeFromSuperview()
-        
-        if Config.currentUser?.id == post?.author?.userId {return}
-        
-        addSubview(donationView)
-        donationView.autoAlignAxis(toSuperviewAxis: .vertical)
-        donationView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
-        
-        donationView.senderView = likeCountLabel
-    }
 }
