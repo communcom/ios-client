@@ -177,7 +177,7 @@ extension UIViewController {
                 showProfileWithUserId(id)
             }
         
-        case "upvote", "reply", "mention":
+        case "upvote", "reply", "mention", "donation":
             switch item.entityType {
             case "post":
                 if let userId = item.post?.contentId.userId,
