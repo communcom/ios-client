@@ -235,7 +235,13 @@ class PostCell: MyTableViewCell, ListItemCellType {
     }
     
     @objc func donationAmountDidTouch(sender: UIButton) {
+        guard let symbol = post?.community?.communityId,
+            let user = post?.author
+        else {return}
+        let amount = donationView.amounts[safe: sender.tag]?.double
         
+        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, amount: amount)
+        parentViewController?.show(donateVC, sender: nil)
     }
 }
 

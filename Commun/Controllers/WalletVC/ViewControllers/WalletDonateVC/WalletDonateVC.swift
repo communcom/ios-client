@@ -14,7 +14,7 @@ class WalletDonateVC: WalletSendPointsVC {
     override var actionName: String {"donate"}
     
     // MARK: - Initilizers
-    init(selectedBalanceSymbol symbol: String, user: ResponseAPIContentGetProfile?, amount: Double?) {
+    init(selectedBalanceSymbol symbol: String, user: ResponseAPIContentGetProfile, amount: Double?) {
         self.initialAmount = amount
         super.init(selectedBalanceSymbol: symbol, user: user)
     }
@@ -30,8 +30,10 @@ class WalletDonateVC: WalletSendPointsVC {
     
     override func balancesDidFinishLoading() {
         super.balancesDidFinishLoading()
+        carouselView.isUserInteractionEnabled = false
         if let amount = initialAmount {
             pointsTextField.text = "\(amount)"
+            pointsTextField.sendActions(for: .editingChanged)
         }
     }
     
