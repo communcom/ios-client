@@ -21,6 +21,13 @@ extension PostCellDelegate where Self: BaseViewController {
             return
         }
         
+        var post = post
+        if post.votes.hasUpVote != true {
+            // show donationButtons
+            post.showDonationButtons = true
+            post.notifyChanged()
+        }
+        
         BlockchainManager.instance.upvoteMessage(post)
             .subscribe { (error) in
                 self.showError(error)
