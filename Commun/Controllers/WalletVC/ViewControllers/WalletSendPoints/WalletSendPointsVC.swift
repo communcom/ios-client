@@ -17,6 +17,7 @@ class WalletSendPointsVC: BaseViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .white)}
     override var shouldHideTabBar: Bool {true}
     var actionName: String {"send"}
+    var memo = ""
     
     // MARK: - Properties
     var dataModel: SendPointsModel
@@ -517,7 +518,7 @@ class WalletSendPointsVC: BaseViewController {
             
             self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
 
-            BlockchainManager.instance.transferPoints(to: friendID, number: Double(numberValue), currency: self.dataModel.transaction.symbol.sell)
+            BlockchainManager.instance.transferPoints(to: friendID, number: Double(numberValue), currency: self.dataModel.transaction.symbol.sell, memo: self.memo)
                 .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
                 .subscribe(onCompleted: { [weak self] in
                     guard let strongSelf = self else { return }

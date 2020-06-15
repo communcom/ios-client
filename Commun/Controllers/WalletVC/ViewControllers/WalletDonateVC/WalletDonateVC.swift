@@ -14,9 +14,11 @@ class WalletDonateVC: WalletSendPointsVC {
     override var actionName: String {"donate"}
     
     // MARK: - Initilizers
-    init(selectedBalanceSymbol symbol: String, user: ResponseAPIContentGetProfile, amount: Double?) {
+    init(selectedBalanceSymbol symbol: String, user: ResponseAPIContentGetProfile, contentId: ResponseAPIContentId, amount: Double?) {
         self.initialAmount = amount
         super.init(selectedBalanceSymbol: symbol, user: user)
+        
+        memo = "donation for \(symbol):\(contentId.userId):\(contentId.permlink)"
     }
     
     required init?(coder: NSCoder) {
