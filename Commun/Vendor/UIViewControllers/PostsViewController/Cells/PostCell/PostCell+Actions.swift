@@ -17,14 +17,8 @@ extension PostCell {
     
     @objc func upVoteButtonTapped(button: UIButton) {
         guard let post = post else {return}
-        let hasUpVote = post.votes.hasUpVote ?? false
         postStatsView.voteContainerView.animateUpVote {
             self.delegate?.upvoteButtonDidTouch(post: post)
-            DispatchQueue.main.async {
-                if !hasUpVote {
-                    self.showDonationButtons()
-                }
-            }
         }
     }
     
@@ -46,22 +40,5 @@ extension PostCell {
         let postPageVC = PostPageVC(post: post)
         postPageVC.scrollToTopAfterLoadingComment = true
         parentViewController?.show(postPageVC, sender: nil)
-    }
-    
-    private func showDonationButtons() {
-        if donationView.isDescendant(of: self) {
-            donationView.removeFromSuperview()
-            return
-        }
-        
-        donationUsersView.removeFromSuperview()
-        
-        if Config.currentUser?.id == post?.author?.userId {return}
-        
-        addSubview(donationView)
-        donationView.autoAlignAxis(toSuperviewAxis: .vertical)
-        donationView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
-        
-        donationView.senderView = postStatsView.voteContainerView.likeCountLabel
     }
 }

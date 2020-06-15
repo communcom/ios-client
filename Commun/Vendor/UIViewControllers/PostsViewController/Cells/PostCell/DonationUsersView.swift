@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol DonationUsersViewDelegate: class {
+    func donationUsersViewCloseButtonDidTouch(_ donationUserView: DonationUsersView)
+}
+
 class DonationUsersView: CMMessageView {
     lazy var userStackView: UsersStackView = {
         let stackView = UsersStackView(height: 34)
@@ -16,6 +20,8 @@ class DonationUsersView: CMMessageView {
     }()
     
     lazy var donationsLabel = UILabel.with(textSize: 15, weight: .semibold, textColor: .white)
+    
+    weak var delegate: DonationUsersViewDelegate?
     
     init() {
         super.init(frame: .zero)
@@ -43,5 +49,9 @@ class DonationUsersView: CMMessageView {
         let senders = donations.map {$0.sender}
         userStackView.setUp(with: senders)
         donationsLabel.text = String(format: NSLocalizedString("donations-count", comment: ""), (donations.count - 3))
+    }
+    
+    override func closeButtonDidTouch() {
+        delegate?.donationUsersViewCloseButtonDidTouch(self)
     }
 }

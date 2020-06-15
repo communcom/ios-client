@@ -38,10 +38,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
     lazy var donationView = DonationView()
     
     // MARK: - Layout
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        donationUsersView.removeFromSuperview()
-    }
     
     override func setUpViews() {
         super.setUpViews()
@@ -91,8 +87,22 @@ class PostCell: MyTableViewCell, ListItemCellType {
         postStatsView.delegate = self
         
         // donation
+        addSubview(donationUsersView)
+        donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
+        donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
+        donationUsersView.senderView = postStatsView.donationCountLabel
+        donationUsersView.delegate = self
+        
         donationUsersView.isUserInteractionEnabled = true
         donationUsersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationUsersViewDidTouch)))
+        
+        // donation buttons
+        addSubview(donationView)
+        donationView.autoAlignAxis(toSuperviewAxis: .vertical)
+        donationView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
+        donationView.delegate = self
+        
+        donationView.senderView = postStatsView.voteContainerView.likeCountLabel
         
         for (i, button) in donationView.amountButtons.enumerated() {
             button.tag = i
@@ -114,6 +124,22 @@ class PostCell: MyTableViewCell, ListItemCellType {
         
         setTopViewWithExplanation(post.topExplanation)
         setBottomViewWithExplanation(post.bottomExplanation)
+        
+        donationUsersView.isHidden = true
+        if post.showDonator == true,
+            post.showDonationButtons != true,
+            let donations = post.donations?.donations
+        {
+            donationUsersView.isHidden = false
+            donationUsersView.setUp(with: donations)
+        }
+        
+        donationView.isHidden = true
+        if post.showDonationButtons == true,
+            post.author?.userId != Config.currentUser?.id
+        {
+            donationView.isHidden = false
+        }
     }
     
     private func setTopViewWithExplanation(_ explanation: ResponseAPIContentGetPost.TopExplanationType?)
@@ -248,20 +274,22 @@ class PostCell: MyTableViewCell, ListItemCellType {
 
 extension PostCell: PostStatsViewDelegate {
     func postStatsView(_ postStatsView: PostStatsView, didTapOnDonationCountLabel donationCountLabel: UIView) {
-        if donationUsersView.isDescendant(of: self) {
-            donationUsersView.removeFromSuperview()
-            return
-        }
-        
-        donationView.removeFromSuperview()
-        
-        guard let donations = post?.donations?.donations else {return}
-        addSubview(donationUsersView)
-        donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
-        donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
-        
-        donationUsersView.setUp(with: donations)
-        
-        donationUsersView.senderView = donationCountLabel
+        if post?.showDonator == nil {post?.showDonator = false}
+        post?.showDonator?.toggle()
+        post?.notifyChanged()
+    }
+}
+
+extension PostCell: DonationUsersViewDelegate {
+    func donationUsersViewCloseButtonDidTouch(_ donationUserView: DonationUsersView) {
+        post?.showDonator = false
+        post?.notifyChanged()
+    }
+}
+
+extension PostCell: DonationViewDelegate {
+    func donationViewCloseButtonDidTouch(_ donationView: DonationView) {
+        post?.showDonationButtons = false
+        post?.notifyChanged()
     }
 }

@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol DonationViewDelegate: class {
+    func donationViewCloseButtonDidTouch(_ donationView: DonationView)
+}
+
 class DonationView: CMMessageView {
     // MARK: - Properties
     lazy var amounts = [10, 100, 1000]
@@ -17,6 +21,7 @@ class DonationView: CMMessageView {
     lazy var buttonStackView = UIStackView(axis: .horizontal, spacing: 5, alignment: .fill, distribution: .fill)
     lazy var amountButtons: [UIButton] = amounts.map {UIButton(width: 60, height: 34, label: "+\($0)", labelFont: .systemFont(ofSize: 12), backgroundColor: UIColor.white.withAlphaComponent(0.1), textColor: .white, cornerRadius: 17)}
     lazy var otherButton = UIButton(width: 60, height: 34, label: "other".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 12), backgroundColor: UIColor.white.withAlphaComponent(0.1), textColor: .white, cornerRadius: 17)
+    weak var delegate: DonationViewDelegate?
     
     // MARK: - Methods
     init() {
@@ -46,5 +51,9 @@ class DonationView: CMMessageView {
         buttonStackView.autoPinEdge(.trailing, to: .leading, of: closeButton)
         
         buttonStackView.addArrangedSubviews(amountButtons + [otherButton])
+    }
+    
+    override func closeButtonDidTouch() {
+        delegate?.donationViewCloseButtonDidTouch(self)
     }
 }
