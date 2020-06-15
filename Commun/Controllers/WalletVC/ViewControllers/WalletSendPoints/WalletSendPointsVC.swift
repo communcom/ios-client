@@ -528,6 +528,8 @@ class WalletSendPointsVC: BaseViewController {
 
                     strongSelf.hideHud()
                     strongSelf.sendPointsButton.isSelected = true
+                    
+                    strongSelf.sendPointsDidComplete()
                 }) { [weak self] error in
                     guard let strongSelf = self else { return }
                     
@@ -537,6 +539,10 @@ class WalletSendPointsVC: BaseViewController {
             }
             .disposed(by: self.disposeBag)
         }
+    }
+    
+    func sendPointsDidComplete() {
+        
     }
     
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {

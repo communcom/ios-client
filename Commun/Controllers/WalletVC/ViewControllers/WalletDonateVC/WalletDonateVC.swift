@@ -12,13 +12,15 @@ class WalletDonateVC: WalletSendPointsVC {
     // MARK: - Properties
     let initialAmount: Double?
     override var actionName: String {"donate"}
+    var post: ResponseAPIContentGetPost
     
     // MARK: - Initilizers
-    init(selectedBalanceSymbol symbol: String, user: ResponseAPIContentGetProfile, contentId: ResponseAPIContentId, amount: Double?) {
+    init(selectedBalanceSymbol symbol: String, user: ResponseAPIContentGetProfile, post: ResponseAPIContentGetPost, amount: Double?) {
         self.initialAmount = amount
+        self.post = post
         super.init(selectedBalanceSymbol: symbol, user: user)
         
-        memo = "donation for \(symbol):\(contentId.userId):\(contentId.permlink)"
+        memo = "donation for \(symbol):\(post.contentId.userId):\(post.contentId.permlink)"
     }
     
     required init?(coder: NSCoder) {
@@ -42,5 +44,16 @@ class WalletDonateVC: WalletSendPointsVC {
     override func keyboardWillHide() {
         super.keyboardWillHide()
         title = actionName.localized().uppercaseFirst
+    }
+    
+    override func sendPointsDidComplete() {
+        RestAPIManager.instance.getDonationsBulk(posts: [RequestAPIContentId(responseAPI: post.contentId)])
+            .map {$0.items}
+            .subscribe(onSuccess: { donations in
+                guard let donation = donations.first(where: {$0.contentId == self.post.contentId}) else {return}
+                self.post.donations = donation
+                self.post.notifyChanged()
+            })
+            .disposed(by: disposeBag)
     }
 }
