@@ -14,6 +14,9 @@ protocol PostHeaderViewDelegate: class {
     func headerViewDownVoteButtonDidTouch(_ headerView: PostHeaderView)
     func headerViewShareButtonDidTouch(_ headerView: PostHeaderView)
     func headerViewCommentButtonDidTouch(_ headerView: PostHeaderView)
+    func headerViewDonationButtonDidTouch(_ headerView: PostHeaderView, amount: Double?)
+    func headerViewDonationViewCloseButtonDidTouch(_ donationView: CMMessageView)
+    func headerView(_ headerView: PostHeaderView, donationUsersViewDidTouch donationUsersView: DonationUsersView)
 }
 
 class PostHeaderView: MyTableHeaderView {
@@ -31,6 +34,10 @@ class PostHeaderView: MyTableHeaderView {
     lazy var contentTextView = PostHeaderTextView(forExpandable: ())
     
     lazy var postStatsView = PostStatsView(forAutoLayout: ())
+    
+    lazy var donationUsersView = DonationUsersView()
+    
+    lazy var donationView = DonationView()
     
 //    lazy var sortButton = RightAlignedIconButton(imageName: "small-down-arrow", label: "interesting first".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor, contentInsets: UIEdgeInsets(horizontal: 8, vertical: 0))
     
@@ -68,6 +75,30 @@ class PostHeaderView: MyTableHeaderView {
         
         // Pin bottom
         commentsLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
+        
+        // donation
+        addSubview(donationUsersView)
+        donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
+        donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
+        donationUsersView.senderView = postStatsView.donationCountLabel
+        donationUsersView.delegate = self
+        
+        donationUsersView.isUserInteractionEnabled = true
+        donationUsersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationUsersViewDidTouch)))
+        
+        // donation buttons
+        addSubview(donationView)
+        donationView.autoAlignAxis(toSuperviewAxis: .vertical)
+        donationView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
+        donationView.senderView = postStatsView.voteContainerView.likeCountLabel
+        donationView.delegate = self
+        
+        for (i, button) in donationView.amountButtons.enumerated() {
+            button.tag = i
+            button.addTarget(self, action: #selector(donationAmountDidTouch(sender:)), for: .touchUpInside)
+        }
+        donationView.otherButton.tag = donationView.amountButtons.count
+        donationView.otherButton.addTarget(self, action: #selector(donationAmountDidTouch(sender:)), for: .touchUpInside)
     }
     
     func setUp(with post: ResponseAPIContentGetPost) {
@@ -108,6 +139,23 @@ class PostHeaderView: MyTableHeaderView {
             contentTextView.attributedText = nil
         }
         
+        // donations
+        donationUsersView.isHidden = true
+        if post.showDonator == true,
+            post.showDonationButtons != true,
+            let donations = post.donations?.donations
+        {
+            donationUsersView.isHidden = false
+            donationUsersView.setUp(with: donations)
+        }
+        
+        donationView.isHidden = true
+        if post.showDonationButtons == true,
+            post.author?.userId != Config.currentUser?.id
+        {
+            donationView.isHidden = false
+        }
+        
         layoutSubviews()
     }
     
@@ -130,5 +178,23 @@ class PostHeaderView: MyTableHeaderView {
     
     @objc func commentsCountButtonDidTouch() {
         delegate?.headerViewCommentButtonDidTouch(self)
+    }
+}
+
+extension PostHeaderView: DonationUsersViewDelegate, DonationViewDelegate {
+    @objc func donationUsersViewDidTouch() {
+        delegate?.headerView(self, donationUsersViewDidTouch: donationUsersView)
+    }
+    
+    @objc func donationAmountDidTouch(sender: UIButton) {
+        let amount = donationView.amounts[safe: sender.tag]?.double
+        delegate?.headerViewDonationButtonDidTouch(self, amount: amount)
+    }
+    
+    func donationUsersViewCloseButtonDidTouch(_ donationUserView: DonationUsersView) {
+        delegate?.headerViewDonationViewCloseButtonDidTouch(donationUserView)
+    }
+    func donationViewCloseButtonDidTouch(_ donationView: DonationView) {
+        delegate?.headerViewDonationViewCloseButtonDidTouch(donationView)
     }
 }
