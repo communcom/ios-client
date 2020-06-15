@@ -159,6 +159,9 @@ class NotificationCell: MyTableViewCell, ListItemCellType, UITextViewDelegate {
             }
         case "referralRegistrationBonus", "referralPurchaseBonus":
             avatarUrl = item.from?.avatarUrl
+        case "donation":
+            avatarUrl = item.from?.avatarUrl
+            iconImageView.setAvatar(urlString: item.community?.avatarUrl)
         default:
             iconImageView.isHidden = true
         }

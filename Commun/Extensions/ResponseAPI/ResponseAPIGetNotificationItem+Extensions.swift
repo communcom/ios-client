@@ -10,7 +10,7 @@ import Foundation
 import Localize_Swift
 
 extension ResponseAPIGetNotificationItem {
-    static var supportedTypes: [String] = ["subscribe", "reply", "mention", "upvote", "reward", "transfer", "referralRegistrationBonus", "referralPurchaseBonus"]
+    static var supportedTypes: [String] = ["subscribe", "reply", "mention", "upvote", "reward", "transfer", "referralRegistrationBonus", "referralPurchaseBonus", "donation"]
     
     var attributedContent: NSAttributedString {
         let aStr = NSMutableAttributedString()
@@ -81,6 +81,15 @@ extension ResponseAPIGetNotificationItem {
                         .normal(" ")
                         .text("\(amount ?? "0") \(community?.name ?? pointType ?? "points")", weight: .medium, color: .appMainColor)
                 }
+            case "donation":
+                aStr.semibold(from?.username ?? "a user".localized().uppercaseFirst)
+                    .normal(" ")
+                    .normal("пожертвовал твой пост: ")
+                    .normal("\"")
+                    .normal(post?.shortText ?? "")
+                    .normal("\"")
+                    .normal(" с ")
+                    .text("\(amount ?? "0") \(community?.name ?? pointType ?? "points")", weight: .medium, color: .appMainColor)
             default:
                 aStr.normal("you've got a new notification".localized().uppercaseFirst)
             }
@@ -154,6 +163,16 @@ extension ResponseAPIGetNotificationItem {
                         .normal(" ")
                         .normal("bounty")
                 }
+                
+            case "donation":
+                aStr.semibold(from?.username ?? "a user".localized().uppercaseFirst)
+                    .normal(" ")
+                    .normal("donate your post: ")
+                    .normal("\"")
+                    .normal(post?.shortText ?? "")
+                    .normal("\"")
+                    .normal(" with ")
+                    .text("\(amount ?? "0") \(community?.name ?? pointType ?? "points")", weight: .medium, color: .appMainColor)
             default:
                 aStr.normal("you've got a new notification".localized().uppercaseFirst)
             }
