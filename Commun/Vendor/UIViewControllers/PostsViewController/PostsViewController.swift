@@ -10,6 +10,10 @@ import UIKit
 import CyberSwift
 
 class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCell>, PostCellDelegate {
+    // MARK: - Properties
+    var posts: [ResponseAPIContentGetPost] {viewModel.items.value}
+    
+    // MARK: - Initializers
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(type: .subscriptions, sortBy: .time, userId: Config.currentUser?.id), prefetch: Bool = true) {
         let viewModel = PostsViewModel(filter: filter, prefetch: prefetch)
         super.init(viewModel: viewModel)

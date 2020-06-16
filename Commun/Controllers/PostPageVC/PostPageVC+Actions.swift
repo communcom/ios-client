@@ -8,11 +8,11 @@
 
 import Foundation
 
-extension PostPageVC: PostCellDelegate, PostHeaderViewDelegate, PostStatsViewDelegate {
+extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
     // MARK: - Actions
     @objc func openMorePostActions() {
         guard let post = post else {return}
-        menuButtonDidTouch(post: post)
+        showPostMenu(post: post)
     }
     
     @objc func sortButtonDidTouch() {
@@ -42,12 +42,20 @@ extension PostPageVC: PostCellDelegate, PostHeaderViewDelegate, PostStatsViewDel
     
     func headerViewUpVoteButtonDidTouch(_ headerView: PostHeaderView) {
         guard let post = post else {return}
-        upvoteButtonDidTouch(post: post)
+        post.upVote()
+            .subscribe { (error) in
+                self.showError(error)
+            }
+            .disposed(by: self.disposeBag)
     }
     
     func headerViewDownVoteButtonDidTouch(_ headerView: PostHeaderView) {
         guard let post = post else {return}
-        downvoteButtonDidTouch(post: post)
+        post.downVote()
+            .subscribe { (error) in
+                self.showError(error)
+            }
+            .disposed(by: self.disposeBag)
     }
     
     func headerViewShareButtonDidTouch(_ headerView: PostHeaderView) {

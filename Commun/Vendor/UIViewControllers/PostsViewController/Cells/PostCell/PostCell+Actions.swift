@@ -10,22 +10,22 @@ import Foundation
 
 extension PostCell {
     @objc func moreActionsButtonTapped() {
-        guard let post = post else { return }
+        guard let postIdentity = postIdentity else { return }
         
-        self.delegate?.menuButtonDidTouch(post: post)
+        self.delegate?.postCell(self, menuButtonDidTouchForPostWithIdentity: postIdentity)
     }
     
     @objc func upVoteButtonTapped(button: UIButton) {
-        guard let post = post else {return}
+        guard let postIdentity = postIdentity else { return }
         postStatsView.voteContainerView.animateUpVote {
-            self.delegate?.upvoteButtonDidTouch(post: post)
+            self.delegate?.postCell(self, upvoteButtonDidTouchForPostWithIdentity: postIdentity)
         }
     }
     
     @objc func downVoteButtonTapped(button: UIButton) {
-        guard let post = post else {return}
+        guard let postIdentity = postIdentity else { return }
         postStatsView.voteContainerView.animateDownVote {
-            self.delegate?.downvoteButtonDidTouch(post: post)
+            self.delegate?.postCell(self, downvoteButtonDidTouchForPostWithIdentity: postIdentity)
         }
     }
 

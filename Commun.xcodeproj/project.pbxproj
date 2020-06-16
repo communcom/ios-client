@@ -453,6 +453,7 @@
 		BCEFA6422492149900971E77 /* DonationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA6412492149900971E77 /* DonationsVC.swift */; };
 		BCEFA645249217F700971E77 /* DonatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA644249217F700971E77 /* DonatorCell.swift */; };
 		BCF0D25B24971FA70094B6EB /* WalletDonateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF0D25A24971FA70094B6EB /* WalletDonateVC.swift */; };
+		BCF0D261249877420094B6EB /* BaseViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF0D260249877420094B6EB /* BaseViewController+Extensions.swift */; };
 		BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */; };
 		BCF1B3FC23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3FB23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift */; };
 		BCF3914C235FEAB300A9D1ED /* ListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */; };
@@ -980,6 +981,7 @@
 		BCEFA6412492149900971E77 /* DonationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationsVC.swift; sourceTree = "<group>"; };
 		BCEFA644249217F700971E77 /* DonatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonatorCell.swift; sourceTree = "<group>"; };
 		BCF0D25A24971FA70094B6EB /* WalletDonateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDonateVC.swift; sourceTree = "<group>"; };
+		BCF0D260249877420094B6EB /* BaseViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseViewController+Extensions.swift"; sourceTree = "<group>"; };
 		BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+Actions.swift"; sourceTree = "<group>"; };
 		BCF1B3FB23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFetcher.swift; sourceTree = "<group>"; };
@@ -2531,6 +2533,7 @@
 				3B63CD9222AA7AA200DC828B /* UIScrollView+Extensions.swift */,
 				3BF37BC922A11FA700A72FFE /* UIView+Extensions.swift */,
 				576DC920223E42C800EDED41 /* UIViewController+Extensions.swift */,
+				BCF0D260249877420094B6EB /* BaseViewController+Extensions.swift */,
 				3BEC38E2230F801600662374 /* UITextView+Extensions.swift */,
 				3BAD8E802318D838005A8AB3 /* UITextView+UILabel.swift */,
 				3B3C8B83234779FE00D8BADB /* UIImage+Extensions.swift */,
@@ -3484,6 +3487,7 @@
 				BCA9712823608ABD00AE37E1 /* UsersStackView.swift in Sources */,
 				BC016D46235DA0D400F1319F /* PlaceholderPostCell.swift in Sources */,
 				3B289B9A2346E6D800598407 /* UILabel+PureLayout.swift in Sources */,
+				BCF0D261249877420094B6EB /* BaseViewController+Extensions.swift in Sources */,
 				BC529142237941920022EC7F /* CommentTextView.swift in Sources */,
 				BC3694F523698FEE00B2E078 /* EditorVC+Actions.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,

@@ -51,6 +51,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         return CommunityPageViewModel(communityId: communityId)
     }
     var leadersVM: LeadersViewModel {(viewModel as! CommunityPageViewModel).leadsVM}
+    var posts: [ResponseAPIContentGetPost] {(viewModel as! CommunityPageViewModel).postsVM.items.value}
     
     // MARK: - Subviews
     lazy var headerView = CommunityHeaderView(tableView: tableView)

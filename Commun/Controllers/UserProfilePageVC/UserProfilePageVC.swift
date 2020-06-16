@@ -11,10 +11,6 @@ import CyberSwift
 import RxDataSources
 
 class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelegate, CommentCellDelegate {
-    var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
-        (viewModel as! UserProfilePageViewModel).commentsVM
-    }
-    
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
         case post(ResponseAPIContentGetPost)
@@ -36,8 +32,15 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
 
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     
-        override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
+    override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
         UserProfilePageViewModel(userId: userId, username: username)
+    }
+    var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
+        (viewModel as! UserProfilePageViewModel).commentsVM
+    }
+    var posts: [ResponseAPIContentGetPost] {
+        let viewModel = self.viewModel as! UserProfilePageViewModel
+        return viewModel.postsVM.items.value
     }
     
     // MARK: - Subviews

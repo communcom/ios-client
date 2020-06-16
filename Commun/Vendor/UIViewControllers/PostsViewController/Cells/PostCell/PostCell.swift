@@ -11,10 +11,11 @@ import RxSwift
 
 class PostCell: MyTableViewCell, ListItemCellType {
     // MARK: - Properties
-    var post: ResponseAPIContentGetPost?
     weak var delegate: PostCellDelegate?
     var topViewHeightConstraint: NSLayoutConstraint?
     var bottomViewHeigthConstraint: NSLayoutConstraint?
+    var postIdentity: ResponseAPIContentGetPost.Identity?
+    var post: ResponseAPIContentGetPost? {delegate?.posts.first(where: {$0.identity == postIdentity})}
     
     // MARK: - Subviews
     lazy var topView = UIView(backgroundColor: .appLightGrayColor)
@@ -118,7 +119,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     // MARK: - Methods
     func setUp(with post: ResponseAPIContentGetPost) {
-        self.post = post
+        postIdentity = post.identity
         metaView.setUp(post: post)
         postStatsView.setUp(with: post)
         
@@ -274,6 +275,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
 
 extension PostCell: PostStatsViewDelegate {
     func postStatsView(_ postStatsView: PostStatsView, didTapOnDonationCountLabel donationCountLabel: UIView) {
+        var post = self.post
         if post?.showDonator == nil {post?.showDonator = false}
         post?.showDonator?.toggle()
         post?.notifyChanged()
@@ -282,6 +284,7 @@ extension PostCell: PostStatsViewDelegate {
 
 extension PostCell: DonationUsersViewDelegate {
     func donationUsersViewCloseButtonDidTouch(_ donationUserView: DonationUsersView) {
+        var post = self.post
         post?.showDonator = false
         post?.notifyChanged()
     }
@@ -289,6 +292,7 @@ extension PostCell: DonationUsersViewDelegate {
 
 extension PostCell: DonationViewDelegate {
     func donationViewCloseButtonDidTouch(_ donationView: DonationView) {
+        var post = self.post
         post?.showDonationButtons = false
         post?.notifyChanged()
     }
