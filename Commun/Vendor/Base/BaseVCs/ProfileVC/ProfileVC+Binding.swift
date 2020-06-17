@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 extension ProfileVC {
     func bindControls() {
@@ -33,7 +34,9 @@ extension ProfileVC {
         offSetY
             .map {$0 < -43}
             .distinctUntilChanged()
+            .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: { showNavBar in
+                if self.showNavigationBar == !showNavBar {return}
                 self.showNavigationBar = !showNavBar
             })
             .disposed(by: disposeBag)

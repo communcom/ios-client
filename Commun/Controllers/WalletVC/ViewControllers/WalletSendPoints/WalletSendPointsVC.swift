@@ -178,10 +178,10 @@ class WalletSendPointsVC: BaseViewController {
         scrollView.contentInset.top = y
         scrollView.contentOffset.y = -y
         navigationItem.titleView = navigationBarTitleView
-        self.carouselView.alpha = 0
+        
+        carouselView.isHidden = true
 
         UIView.animate(withDuration: 0.1) {
-            self.carouselView.alpha = 1
             self.view.layoutIfNeeded()
         }
     }
@@ -194,8 +194,9 @@ class WalletSendPointsVC: BaseViewController {
 
         self.view.layoutIfNeeded()
         self.buttonBottomConstraint?.constant = -30
+        
+        carouselView.isHidden = false
         UIView.animate(withDuration: 0.1) {
-            self.carouselView.alpha = 1
             self.view.layoutIfNeeded()
         }
     }
@@ -633,7 +634,7 @@ extension WalletSendPointsVC: CircularCarouselDataSource {
     }
     
     func startingItemIndex(inCarousel carousel: CircularCarousel) -> Int {
-        return dataModel.balances.firstIndex(where: { $0.symbol == dataModel.transaction.symbol.sell }) ?? 0
+        return dataModel.balances.firstIndex(where: { $0.symbol == dataModel.transaction.symbol.sell }) ?? dataModel.balances.firstIndex(where: { $0.symbol == Config.defaultSymbol }) ?? 0
     }
 }
 

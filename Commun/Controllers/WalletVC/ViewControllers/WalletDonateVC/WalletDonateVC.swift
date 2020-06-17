@@ -34,7 +34,6 @@ class WalletDonateVC: WalletSendPointsVC {
     
     override func balancesDidFinishLoading() {
         super.balancesDidFinishLoading()
-        carouselView.isUserInteractionEnabled = false
         if let amount = initialAmount {
             pointsTextField.text = "\(amount)"
             pointsTextField.sendActions(for: .editingChanged)

@@ -16,13 +16,13 @@ class SendPointsModel {
     var transaction = Transaction()
 
     // MARK: - Custom Functions
-    private func convert(balance: ResponseAPIWalletGetBalance) -> Balance {
-        return (name: balance.name ?? balance.symbol.fullName, avatarURL: balance.logo, amount: CGFloat(balance.balanceValue), symbol: balance.symbol)
+    private func convert(balance: ResponseAPIWalletGetBalance?) -> Balance {
+        return (name: balance?.name ?? balance?.symbol.fullName ?? "Commun", avatarURL: balance?.logo, amount: CGFloat(balance?.balanceValue ?? 0), symbol: balance?.symbol ?? "CMN")
     }
        
     func getBalance(bySymbol symbol: String = Config.defaultSymbol) -> Balance {
         guard balances.count > 0, let balance = balances.first(where: { $0.symbol == symbol }) else {
-            return convert(balance: balances[0])
+            return convert(balance: balances.first(where: {$0.symbol == "CMN"}))
         }
         
         return convert(balance: balance)
