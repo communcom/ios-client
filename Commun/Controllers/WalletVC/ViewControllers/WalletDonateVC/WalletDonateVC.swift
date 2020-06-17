@@ -54,5 +54,16 @@ class WalletDonateVC: WalletSendPointsVC {
                 self.post.notifyChanged()
             })
             .disposed(by: disposeBag)
+        super.sendPointsDidComplete()
+    }
+    
+    override func showCheck() {
+        let completedVC = WalletDonateCompletedVC(transaction: dataModel.transaction)
+        completedVC.backButtonHandler = {
+            completedVC.backCompletion {
+                self.back()
+            }
+        }
+        show(completedVC, sender: nil)
     }
 }

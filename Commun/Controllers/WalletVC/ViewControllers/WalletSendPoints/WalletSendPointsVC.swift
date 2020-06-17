@@ -523,13 +523,6 @@ class WalletSendPointsVC: BaseViewController {
                 .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
                 .subscribe(onCompleted: { [weak self] in
                     guard let strongSelf = self else { return }
-                    
-                    let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
-                    strongSelf.show(completedVC, sender: nil)
-
-                    strongSelf.hideHud()
-                    strongSelf.sendPointsButton.isSelected = true
-                    
                     strongSelf.sendPointsDidComplete()
                 }) { [weak self] error in
                     guard let strongSelf = self else { return }
@@ -543,7 +536,14 @@ class WalletSendPointsVC: BaseViewController {
     }
     
     func sendPointsDidComplete() {
-        
+        hideHud()
+        sendPointsButton.isSelected = true
+        showCheck()
+    }
+    
+    func showCheck() {
+        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
+        show(completedVC, sender: nil)
     }
     
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {
