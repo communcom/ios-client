@@ -130,10 +130,24 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             iconImageView.isHidden = false
             iconImageView.image = UIImage(named: "tux")
         case "donation":
-            username = item.receiver.username ?? item.receiver.userId
-            memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
-            avatarImageView.setAvatar(urlString: item.receiver.avatarUrl)
+            let isReceiver = Config.currentUser?.id == item.receiver.userId
+            var profile: ResponseAPIWalletGetTransferHistoryProfile?
+            if isReceiver {
+                profile = item.sender
+            } else {
+                profile = item.receiver
+            }
+            
+            username = profile?.username ?? profile?.userId ?? "A user"
+            
+            if isReceiver {
+                memo = NSMutableAttributedString()
+                    .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
+            } else {
+                memo = NSMutableAttributedString()
+                    .semibold("-\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold))
+            }
+            avatarImageView.setAvatar(urlString: profile?.avatarUrl)
             iconImageView.isHidden = false
             if let logo = item.point.logo, let url = URL(string: logo) {
                 iconImageView.sd_setImage(with: url, completed: nil)
