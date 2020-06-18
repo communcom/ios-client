@@ -37,9 +37,6 @@ class CMSearchBar: MyView {
         textField.leftView = leftView
         textField.leftViewMode = .always
         
-        textField.clearButtonMode = .always
-        textField.clearsOnBeginEditing = true
-        
         return textField
     }()
     
@@ -47,6 +44,7 @@ class CMSearchBar: MyView {
         let button = UIButton(label: "cancel".localized().uppercaseFirst, textColor: .appMainColor)
         button.setContentHuggingPriority(.required, for: .horizontal)
         button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        button.addTarget(self, action: #selector(cancelButtonDidTouch), for: .touchUpInside)
         return button
     }()
     
@@ -68,6 +66,10 @@ class CMSearchBar: MyView {
         
         addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
+        
+        cancelButton.isHidden = true
+        
+        textField.delegate = self
     }
     
     override func layoutSubviews() {
@@ -75,5 +77,28 @@ class CMSearchBar: MyView {
         if height > 0 {
             textField.cornerRadius = height / 2
         }
+    }
+    
+    func showCancelButton(_ show: Bool = true) {
+        if cancelButton.isHidden != show {return}
+        cancelButton.isHidden = !show
+        UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: [], animations: {
+            self.stackView.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    // MARK: - Actions
+    @objc func cancelButtonDidTouch() {
+        textField.resignFirstResponder()
+    }
+}
+
+extension CMSearchBar: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        showCancelButton()
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        showCancelButton(false)
     }
 }

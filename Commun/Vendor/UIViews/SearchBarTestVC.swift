@@ -13,6 +13,6 @@ class SearchBarTestVC: BaseViewController {
         super.setUp()
         let searchBar = CMSearchBar()
         view.addSubview(searchBar)
-        searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), excludingEdge: .bottom)
+        searchBar.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), excludingEdge: .bottom)
     }
 }
