@@ -12,6 +12,7 @@ protocol CMSearchBarDelegate: class {
     func cmSearchBar(_ searchBar: CMSearchBar, searchWithKeyword keyword: String)
     func cmSearchBarDidBeginSearching(_ searchBar: CMSearchBar)
     func cmSearchBarDidEndSearching(_ searchBar: CMSearchBar)
+    func cmSearchBarDidCancelSearching(_ searchBar: CMSearchBar)
 }
 
 class CMSearchBar: MyView {
@@ -95,9 +96,15 @@ class CMSearchBar: MyView {
         }, completion: nil)
     }
     
+    func clear() {
+        textField.text = ""
+        textField.sendActions(for: .editingChanged)
+    }
+    
     // MARK: - Actions
     @objc private func cancelButtonDidTouch() {
         textField.resignFirstResponder()
+        delegate?.cmSearchBarDidCancelSearching(self)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
