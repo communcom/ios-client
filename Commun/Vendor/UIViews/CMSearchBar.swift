@@ -10,7 +10,7 @@ import Foundation
 
 protocol CMSearchBarDelegate: class {
     func cmSearchBarDidCancelSearch(_ searchBar: CMSearchBar)
-    func cmSearchBar(_ searchBar: CMSearchBar, searchWithKeyword keyword: String?)
+    func cmSearchBar(_ searchBar: CMSearchBar, searchWithKeyword keyword: String)
 }
 
 class CMSearchBar: MyView {
@@ -100,7 +100,7 @@ class CMSearchBar: MyView {
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        delegate?.cmSearchBar(self, searchWithKeyword: textField.text)
+        delegate?.cmSearchBar(self, searchWithKeyword: textField.text ?? "")
     }
 }
 
