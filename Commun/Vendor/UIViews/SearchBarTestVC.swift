@@ -9,15 +9,19 @@
 import Foundation
 
 class SearchBarTestVC: BaseViewController {
-    
+
+    let searchBar = CMSearchBar()
     override func setUp() {
         super.setUp()
-        let searchBar = CMSearchBar()
+        title = "fuck"
         searchBar.delegate = self
         view.addSubview(searchBar)
         searchBar.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), excludingEdge: .bottom)
     }
     
+    func placeSearchBar(onNavigationBar: Bool) {
+        navigationController?.setNavigationBarHidden(onNavigationBar, animated: true)
+    }
 }
 
 extension SearchBarTestVC: CMSearchBarDelegate {
@@ -26,10 +30,10 @@ extension SearchBarTestVC: CMSearchBarDelegate {
     }
     
     func cmSearchBarDidBeginSearching(_ searchBar: CMSearchBar) {
-        
+        placeSearchBar(onNavigationBar: true)
     }
     
     func cmSearchBarDidEndSearching(_ searchBar: CMSearchBar) {
-        
+        placeSearchBar(onNavigationBar: false)
     }
 }
