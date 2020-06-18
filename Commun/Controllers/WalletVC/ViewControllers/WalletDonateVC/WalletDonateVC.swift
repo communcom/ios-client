@@ -51,6 +51,7 @@ class WalletDonateVC: WalletSendPointsVC {
             .subscribe(onSuccess: { donations in
                 guard let donation = donations.first(where: {$0.contentId == self.post.contentId}) else {return}
                 self.post.donations = donation
+                self.post.showDonationButtons = false
                 self.post.notifyChanged()
             })
             .disposed(by: disposeBag)
