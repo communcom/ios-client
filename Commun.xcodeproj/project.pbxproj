@@ -318,6 +318,8 @@
 		BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */; };
 		BC753FF624235A9E000616B5 /* FeedPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC753FF524235A9E000616B5 /* FeedPageViewModel.swift */; };
 		BC7540092424B2CD000616B5 /* AttentionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7540082424B2CD000616B5 /* AttentionView.swift */; };
+		BC769EEC249B466500BA37E5 /* CMSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC769EEB249B466500BA37E5 /* CMSearchBar.swift */; };
+		BC769EF0249B4AF500BA37E5 /* SearchBarTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC769EEF249B4AF500BA37E5 /* SearchBarTestVC.swift */; };
 		BC7A88FB23FE73C300B8CF6E /* WalletAddFriendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7A88FA23FE73C300B8CF6E /* WalletAddFriendVC.swift */; };
 		BC7C8CBD23FF7AC70038DF5E /* WalletAddFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7C8CBC23FF7AC70038DF5E /* WalletAddFriendCell.swift */; };
 		BC7D608A237BF3F1007D8C1A /* MyProfileBlacklistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D6089237BF3F1007D8C1A /* MyProfileBlacklistVC.swift */; };
@@ -847,6 +849,8 @@
 		BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+CommentCellDelegate.swift"; sourceTree = "<group>"; };
 		BC753FF524235A9E000616B5 /* FeedPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageViewModel.swift; sourceTree = "<group>"; };
 		BC7540082424B2CD000616B5 /* AttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionView.swift; sourceTree = "<group>"; };
+		BC769EEB249B466500BA37E5 /* CMSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchBar.swift; sourceTree = "<group>"; };
+		BC769EEF249B4AF500BA37E5 /* SearchBarTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarTestVC.swift; sourceTree = "<group>"; };
 		BC7A88FA23FE73C300B8CF6E /* WalletAddFriendVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAddFriendVC.swift; sourceTree = "<group>"; };
 		BC7C8CBC23FF7AC70038DF5E /* WalletAddFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAddFriendCell.swift; sourceTree = "<group>"; };
 		BC7D6089237BF3F1007D8C1A /* MyProfileBlacklistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileBlacklistVC.swift; sourceTree = "<group>"; };
@@ -2502,6 +2506,8 @@
 				BCFFE93B2420C4DE007D7BB8 /* ExplanationView.swift */,
 				BC7540082424B2CD000616B5 /* AttentionView.swift */,
 				BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */,
+				BC769EEB249B466500BA37E5 /* CMSearchBar.swift */,
+				BC769EEF249B4AF500BA37E5 /* SearchBarTestVC.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -3277,6 +3283,7 @@
 				BCCC33E823751686004E46EF /* CommentCell.swift in Sources */,
 				BC4692D5239130A50064A38B /* PostCellDelegate.swift in Sources */,
 				AC8C57BD238C408A00B0D260 /* InstagramView.swift in Sources */,
+				BC769EF0249B4AF500BA37E5 /* SearchBarTestVC.swift in Sources */,
 				BC31D1C12457D094000F5BE5 /* DonationUsersView.swift in Sources */,
 				BC016D49235DA2AC00F1319F /* MyTableViewCell.swift in Sources */,
 				BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */,
@@ -3456,6 +3463,7 @@
 				BCF0D25B24971FA70094B6EB /* WalletDonateVC.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B3C8B9C2347928D00D8BADB /* PostEditorVC+Layout.swift in Sources */,
+				BC769EEC249B466500BA37E5 /* CMSearchBar.swift in Sources */,
 				BC597A77238BEC2700103F4F /* FTUEVC.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,
 				BC4AD66123B1BB9D008546A4 /* TransferHistoryFilterVC.swift in Sources */,

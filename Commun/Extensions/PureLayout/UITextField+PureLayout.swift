@@ -25,7 +25,8 @@ extension UITextField {
         leftView: UIView = UIView(width: 16),
         leftViewMode: UITextField.ViewMode = .always,
         rightView: UIView = UIView(width: 16),
-        rightViewMode: UITextField.ViewMode = .always
+        rightViewMode: UITextField.ViewMode = .always,
+        showClearButton: Bool = false
     ) {
         self.init(width: width, height: height, backgroundColor: backgroundColor, cornerRadius: cornerRadius)
         if let font = font {
@@ -53,9 +54,14 @@ extension UITextField {
         self.leftView = leftView
         self.leftViewMode = leftViewMode
         
-        rightView.autoSetDimension(.height, toSize: height ?? 16)
-        self.rightView = rightView
-        self.rightViewMode = rightViewMode
+        if !showClearButton {
+            rightView.autoSetDimension(.height, toSize: height ?? 16)
+            self.rightView = rightView
+            self.rightViewMode = rightViewMode
+        } else {
+            self.clearButtonMode = .whileEditing
+        }
+        
     }
     
     static func signUpTextField(
