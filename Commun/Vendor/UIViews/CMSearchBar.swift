@@ -8,6 +8,11 @@
 
 import Foundation
 
+protocol CMSearchBarDelegate: class {
+    func cmSearchBarDidCancelSearch(_ searchBar: CMSearchBar)
+    func cmSearchBar(_ searchBar: CMSearchBar, searchWithKeyword keyword: String?)
+}
+
 class CMSearchBar: MyView {
     // MARK: - Properties
     var placeholder = "search".localized().uppercaseFirst {
@@ -20,11 +25,12 @@ class CMSearchBar: MyView {
             textField.backgroundColor = textFieldBgColor
         }
     }
+    weak var delegate: CMSearchBarDelegate?
     
     // MARK: - Subviews
-    lazy var stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .fill, distribution: .fill)
+    private lazy var stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .fill, distribution: .fill)
     
-    lazy var textField: UITextField = {
+    private lazy var textField: UITextField = {
         let textField = UITextField(backgroundColor: textFieldBgColor, placeholder: placeholder, showClearButton: true)
         
         // textField's leftView
@@ -40,7 +46,7 @@ class CMSearchBar: MyView {
         return textField
     }()
     
-    lazy var cancelButton: UIButton = {
+    private lazy var cancelButton: UIButton = {
         let button = UIButton(label: "cancel".localized().uppercaseFirst, textColor: .appMainColor)
         button.setContentHuggingPriority(.required, for: .horizontal)
         button.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -70,6 +76,7 @@ class CMSearchBar: MyView {
         cancelButton.isHidden = true
         
         textField.delegate = self
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     override func layoutSubviews() {
@@ -79,7 +86,7 @@ class CMSearchBar: MyView {
         }
     }
     
-    func showCancelButton(_ show: Bool = true) {
+    fileprivate func showCancelButton(_ show: Bool = true) {
         if cancelButton.isHidden != show {return}
         cancelButton.isHidden = !show
         UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: [], animations: {
@@ -88,8 +95,12 @@ class CMSearchBar: MyView {
     }
     
     // MARK: - Actions
-    @objc func cancelButtonDidTouch() {
+    @objc private func cancelButtonDidTouch() {
         textField.resignFirstResponder()
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        delegate?.cmSearchBar(self, searchWithKeyword: textField.text)
     }
 }
 
