@@ -9,8 +9,9 @@
 import Foundation
 
 protocol CMSearchBarDelegate: class {
-    func cmSearchBarDidCancelSearch(_ searchBar: CMSearchBar)
     func cmSearchBar(_ searchBar: CMSearchBar, searchWithKeyword keyword: String)
+    func cmSearchBarDidBeginSearching(_ searchBar: CMSearchBar)
+    func cmSearchBarDidEndSearching(_ searchBar: CMSearchBar)
 }
 
 class CMSearchBar: MyView {
@@ -107,9 +108,11 @@ class CMSearchBar: MyView {
 extension CMSearchBar: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         showCancelButton()
+        delegate?.cmSearchBarDidBeginSearching(self)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         showCancelButton(false)
+        delegate?.cmSearchBarDidEndSearching(self)
     }
 }
