@@ -331,24 +331,33 @@ extension PostEditorVC {
                     var post = post
                     post.bottomExplanation = .shareYourPost
                     
-                    if let items = ((UIApplication.topViewController() as? MyProfilePageVC)?.viewModel as? UserProfilePageViewModel)?.postsVM.items
+                    if let viewModel = ((UIApplication.topViewController() as? MyProfilePageVC)?.viewModel as? UserProfilePageViewModel)?.postsVM
                     {
-                        items.accept([post] + items.value)
+                        if viewModel.state.value == .listEmpty {
+                            viewModel.state.accept(.listEnded)
+                        }
+                        viewModel.items.accept([post] + viewModel.items.value)
                         return
                     }
                     
                     if let communityPageVC = UIApplication.topViewController() as? CommunityPageVC,
-                        let items = (communityPageVC.viewModel as? CommunityPageViewModel)?.postsVM.items,
+                        let viewModel = (communityPageVC.viewModel as? CommunityPageViewModel)?.postsVM,
                         communityPageVC.community?.identity == post.community?.identity
                     {
-                        items.accept([post] + items.value)
+                        if viewModel.state.value == .listEmpty {
+                            viewModel.state.accept(.listEnded)
+                        }
+                        viewModel.items.accept([post] + viewModel.items.value)
                         return
                     }
                     
-                    if let items = (UIApplication.topViewController() as? FeedPageVC)?.viewModel.items,
+                    if let viewModel = (UIApplication.topViewController() as? FeedPageVC)?.viewModel,
                         post.community?.communityId != "FEED"
                     {
-                        items.accept([post] + items.value)
+                        if viewModel.state.value == .listEmpty {
+                            viewModel.state.accept(.listEnded)
+                        }
+                        viewModel.items.accept([post] + viewModel.items.value)
                         (UIApplication.topViewController() as! FeedPageVC).appLiked()
                         return
                     }
