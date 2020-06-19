@@ -9,20 +9,26 @@
 import Foundation
 import RxSwift
 
-class SendPointListVC: SubscriptionsVC, SearchableViewControllerType {
+class SendPointListVC: SubscriptionsVC {
     // MARK: - Properties
     var completion: ((ResponseAPIContentGetProfile) -> Void)?
-    var tableViewTopConstraint: NSLayoutConstraint?
+    override var listLoadingStateObservable: Observable<ListFetcherState> {
+        let viewModel = self.viewModel as! SubscriptionsViewModel
+        return Observable.merge(
+            viewModel.state.filter {_ in viewModel.searchVM.isQueryEmpty},
+            viewModel.searchVM.state.filter {_ in !viewModel.searchVM.isQueryEmpty}
+        )
+    }
     
     // MARK: - Subviews
     lazy var searchContainerView = UIView(backgroundColor: .appWhiteColor)
-    var searchBar = UISearchBar.default()
+    var searchBar = CMSearchBar()
     
     // MARK: - Initializers
     init() {
         super.init(title: "send points".localized().uppercaseFirst, type: .user)
         showShadowWhenScrollUp = false
-        searchBar.showsCancelButton = true
+        searchBar.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -32,29 +38,7 @@ class SendPointListVC: SubscriptionsVC, SearchableViewControllerType {
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBarDidCancelSearching()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        searchBar.roundCorner()
-    }
-    
-    override func bind() {
-        super.bind()
-        bindSearchBar()
-        
-        searchBar.rx.textDidBeginEditing
-            .subscribe(onNext: { (_) in
-                self.showSearchBar(onNavigationBar: true)
-            })
-            .disposed(by: disposeBag)
-        
-        searchBar.rx.textDidEndEditing
-            .subscribe(onNext: { (_) in
-                self.showSearchBar(onNavigationBar: false)
-            })
-            .disposed(by: disposeBag)
+        searchBarDidCancelSearch()
     }
     
     override func viewWillSetUpTableView() {
@@ -66,7 +50,7 @@ class SendPointListVC: SubscriptionsVC, SearchableViewControllerType {
         super.setUpTableView()
         tableView.removeConstraintToSuperView(withAttribute: .top)
         
-        tableViewTopConstraint = tableView.autoPinEdge(.top, to: .bottom, of: searchBar)
+        tableView.autoPinEdge(.top, to: .bottom, of: searchContainerView)
     }
     
     override func bindItems() {
@@ -80,11 +64,6 @@ class SendPointListVC: SubscriptionsVC, SearchableViewControllerType {
                 }
         )
             .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
-            .do(onNext: { (items) in
-                if items.count == 0 {
-                    self.handleListEmpty()
-                }
-            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -102,56 +81,43 @@ class SendPointListVC: SubscriptionsVC, SearchableViewControllerType {
     }
     
     // MARK: - Search manager
-    private func showSearchBar(onNavigationBar: Bool) {
-        if onNavigationBar {
-            navigationItem.titleView = searchBar
-            navigationItem.rightBarButtonItem = nil
-            
-            tableViewTopConstraint?.isActive = false
-            
-            searchContainerView.removeFromSuperview()
-            tableViewTopConstraint = tableView.autoPinEdge(toSuperviewSafeArea: .top)
-            
-            resetNavigationBar()
-        } else {
-            navigationItem.titleView = nil
-            setRightNavBarButton(with: self.closeButton)
-            
-            tableViewTopConstraint?.isActive = false
-            layoutSearchBar()
-            tableViewTopConstraint = tableView.autoPinEdge(.top, to: .bottom, of: searchContainerView)
-            
-            resetNavigationBar()
-        }
-    }
-    
-    private func resetNavigationBar() {
-        let img = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(img, for: .default)
-        navigationController?.navigationBar.barStyle = .default
-        navigationController?.navigationBar.barTintColor = .appWhiteColor
-        navigationController?.navigationBar.subviews.first?.backgroundColor = .appWhiteColor
-    }
-    
     func layoutSearchBar() {
         view.addSubview(searchContainerView)
         searchContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         searchContainerView.addSubview(searchBar)
         
-        searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0))
+        searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
         DispatchQueue.main.async {
             self.view.layoutIfNeeded()
         }
     }
     
-    func searchBarIsSearchingWithQuery(_ query: String) {
-        (viewModel as! SubscriptionsViewModel).searchVM.query = query
+    func searchBarDidCancelSearch() {
+        (viewModel as! SubscriptionsViewModel).searchVM.query = nil
+        viewModel.items.accept(viewModel.items.value)
+        viewModel.state.accept(viewModel.state.value)
+    }
+}
+
+extension SendPointListVC: CMSearchBarDelegate {
+    func cmSearchBar(_ searchBar: CMSearchBar, searchWithKeyword keyword: String) {
+        if keyword.isEmpty {
+            searchBarDidCancelSearch()
+            return
+        }
+        (viewModel as! SubscriptionsViewModel).searchVM.query = keyword
         (viewModel as! SubscriptionsViewModel).searchVM.reload(clearResult: false)
     }
     
-    func searchBarDidCancelSearching() {
-        (viewModel as! SubscriptionsViewModel).searchVM.query = nil
-        viewModel.items.accept(viewModel.items.value)
-        viewModel.state.accept(.loading(false))
+    func cmSearchBarDidBeginSearching(_ searchBar: CMSearchBar) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func cmSearchBarDidEndSearching(_ searchBar: CMSearchBar) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    func cmSearchBarDidCancelSearching(_ searchBar: CMSearchBar) {
+        searchBar.clear()
     }
 }
