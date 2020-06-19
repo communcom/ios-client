@@ -108,6 +108,11 @@ class CMSearchBar: MyView {
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(triggerSearch), object: nil)
+        perform(#selector(triggerSearch), with: nil, afterDelay: 0.3)
+    }
+    
+    @objc private func triggerSearch() {
         delegate?.cmSearchBar(self, searchWithKeyword: textField.text ?? "")
     }
 }

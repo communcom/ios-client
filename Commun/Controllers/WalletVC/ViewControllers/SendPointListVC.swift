@@ -84,7 +84,7 @@ class SendPointListVC: SubscriptionsVC {
         searchContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         searchContainerView.addSubview(searchBar)
         
-        searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
+        searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
         DispatchQueue.main.async {
             self.view.layoutIfNeeded()
         }
