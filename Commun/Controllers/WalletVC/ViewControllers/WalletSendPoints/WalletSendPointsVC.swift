@@ -670,5 +670,7 @@ extension WalletSendPointsVC: CircularCarouselDelegate {
     func carousel(_ carousel: CircularCarousel, willBeginScrollingToIndex index: Int) {
         let selectedSymbol = dataModel.balances[index].symbol
         dataModel.transaction.symbol = Symbol(sell: selectedSymbol, buy: selectedSymbol)
+        updateSellerInfo()
+        updateSendInfoByEnteredPoints()
     }
 }
