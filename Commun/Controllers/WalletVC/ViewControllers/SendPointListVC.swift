@@ -12,6 +12,15 @@ import RxSwift
 class SendPointListVC: SubscriptionsVC {
     // MARK: - Properties
     var completion: ((ResponseAPIContentGetProfile) -> Void)?
+    override var listLoadingStateObservable: Observable<ListFetcherState> {
+        let viewModel = self.viewModel as! SubscriptionsViewModel
+        return Observable.merge(
+            viewModel.state.filter {_ in viewModel.searchVM.isQueryEmpty},
+            viewModel.searchVM.state.filter {_ in !viewModel.searchVM.isQueryEmpty}
+        ).do(onNext: { (state) in
+            print("listLoadingStateObservable: \(state)")
+        })
+    }
     
     // MARK: - Subviews
     lazy var searchContainerView = UIView(backgroundColor: .appWhiteColor)
@@ -57,11 +66,6 @@ class SendPointListVC: SubscriptionsVC {
                 }
         )
             .map {$0.count > 0 ? [ListSection(model: "", items: $0)] : []}
-            .do(onNext: { (items) in
-                if items.count == 0 {
-                    self.handleListEmpty()
-                }
-            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -93,7 +97,7 @@ class SendPointListVC: SubscriptionsVC {
     func searchBarDidCancelSearch() {
         (viewModel as! SubscriptionsViewModel).searchVM.query = nil
         viewModel.items.accept(viewModel.items.value)
-        viewModel.state.accept(.loading(false))
+        viewModel.state.accept(viewModel.state.value)
     }
 }
 
