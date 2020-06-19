@@ -148,6 +148,20 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                 }
             })
             .disposed(by: disposeBag)
+        
+        // Update friends when user follow someone
+        ResponseAPIContentGetProfile.observeProfileFollowed()
+            .filter {profile in
+                self.community.value?.friends?.contains(where: {$0.identity == profile.identity}) == false
+            }
+            .subscribe(onNext: { [weak self] (followedProfile) in
+                guard let strongSelf = self,
+                    var community = strongSelf.community.value
+                else {return}
+                community.friends?.append(followedProfile)
+                strongSelf.community.accept(community)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func reload() {
