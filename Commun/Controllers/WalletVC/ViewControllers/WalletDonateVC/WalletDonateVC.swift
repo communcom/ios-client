@@ -21,6 +21,17 @@ class WalletDonateVC: WalletSendPointsVC {
         super.init(selectedBalanceSymbol: symbol, user: user)
         
         memo = "donation for \(symbol):\(post.contentId.userId):\(post.contentId.permlink)"
+        
+        // observing
+        ResponseAPIContentGetPost.observeItemChanged()
+            .subscribe(onNext: { (post) in
+                if post.identity == self.post.identity,
+                    let newPost = self.post.newUpdatedItem(from: post)
+                {
+                    self.post = newPost
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
