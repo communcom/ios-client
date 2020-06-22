@@ -282,6 +282,7 @@
 		BC5A34932429EF8C001C5054 /* VerifyPhoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34922429EF8C001C5054 /* VerifyPhoneVC.swift */; };
 		BC5A34A0242B08D6001C5054 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A349F242B08D6001C5054 /* WelcomeVC.swift */; };
 		BC5A34A4242B0DA3001C5054 /* WelcomeItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A34A3242B0DA3001C5054 /* WelcomeItemVC.swift */; };
+		BC5F2D7324A0A05000F536A7 /* CMTappableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5F2D7224A0A05000F536A7 /* CMTappableLabel.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -812,6 +813,7 @@
 		BC5A34922429EF8C001C5054 /* VerifyPhoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPhoneVC.swift; sourceTree = "<group>"; };
 		BC5A349F242B08D6001C5054 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		BC5A34A3242B0DA3001C5054 /* WelcomeItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeItemVC.swift; sourceTree = "<group>"; };
+		BC5F2D7224A0A05000F536A7 /* CMTappableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTappableLabel.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -2504,6 +2506,7 @@
 				BCFFE93B2420C4DE007D7BB8 /* ExplanationView.swift */,
 				BC7540082424B2CD000616B5 /* AttentionView.swift */,
 				BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */,
+				BC5F2D7224A0A05000F536A7 /* CMTappableLabel.swift */,
 				BC769EEB249B466500BA37E5 /* CMSearchBar.swift */,
 			);
 			path = UIViews;
@@ -3417,6 +3420,7 @@
 				BCB2A6EE23556EE400B3582B /* BasicEditorVC+Layout.swift in Sources */,
 				3B3C8B84234779FE00D8BADB /* UIImage+Extensions.swift in Sources */,
 				BC067E2F2435910900D770AC /* CMTransactionInfoView.swift in Sources */,
+				BC5F2D7324A0A05000F536A7 /* CMTappableLabel.swift in Sources */,
 				B10DB961240F8789001BD0E4 /* CMAppLikeView.swift in Sources */,
 				BC619B1D2372C1480005BB94 /* CMTopTabBar.swift in Sources */,
 				BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */,

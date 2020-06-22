@@ -139,14 +139,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         parentViewController?.show(vc, sender: nil)
     }
     
-    override func statsLabelDidTouch(_ gesture: UITapGestureRecognizer) {
-        guard let text = statsLabel.text,
-            let dotIndex = text.index(of: statsSeparator)?.utf16Offset(in: text)
-        else { return }
-        
-        let tappedCharacterIndex = gesture.tappedCharacterIndexInLabel(statsLabel)
-        
-        if tappedCharacterIndex < dotIndex {
+    override func statsLabelDidTouchAtIndex(_ index: Int) {
+        if index < (statsLabel.text?.count ?? 0) / 2 {
             membersLabelDidTouch()
         } else {
             leadsLabelDidTouch()

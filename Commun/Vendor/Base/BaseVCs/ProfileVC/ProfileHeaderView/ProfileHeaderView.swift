@@ -26,7 +26,7 @@ class ProfileHeaderView: MyTableHeaderView {
     lazy var descriptionLabel = UILabel.with(text: "description", textSize: 14, numberOfLines: 0)
 
     lazy var statsStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-    lazy var statsLabel = UILabel.with(text: "followers and following", numberOfLines: 0)
+    lazy var statsLabel = CMTappableLabel.with(text: "followers and following", numberOfLines: 0)
     lazy var usersStackView = UsersStackView(height: 34)
     
     lazy var segmentedControl: CMSegmentedControl = {
@@ -65,9 +65,10 @@ class ProfileHeaderView: MyTableHeaderView {
         
         followButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(statsLabelDidTouch(_:)))
-        statsLabel.isUserInteractionEnabled = true
-        statsLabel.addGestureRecognizer(tap)
+        statsLabel.onCharacterTapped = {(_, index) in
+            self.statsLabelDidTouchAtIndex(index)
+        }
+        statsLabel.makeTappable()
     }
     
     override func reassignTableHeaderView() {
@@ -80,7 +81,7 @@ class ProfileHeaderView: MyTableHeaderView {
         
     }
     
-    @objc func statsLabelDidTouch(_ gesture: UITapGestureRecognizer) {
+    func statsLabelDidTouchAtIndex(_ index: Int) {
         
     }
 }
