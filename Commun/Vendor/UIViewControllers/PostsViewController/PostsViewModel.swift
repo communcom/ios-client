@@ -33,21 +33,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     }
     
     override func shouldUpdateHeightForItem(_ item: ResponseAPIContentGetPost?, withUpdatedItem updatedItem: ResponseAPIContentGetPost?) -> Bool {
-        if let item = item, let updatedItem = updatedItem {
-            if item.document != updatedItem.document {
-                return true
-            }
-            if item.topExplanation != updatedItem.topExplanation {
-                return true
-            }
-            if item.bottomExplanation != updatedItem.bottomExplanation {
-                return true
-            }
-            if item.attachments != updatedItem.attachments {
-                return true
-            }
-        }
-        return false
+        item?.shouldUpdateHeightForPostWithUpdatedPost(updatedItem) ?? false
     }
     
     override func fetchNext(forceRetry: Bool = false) {

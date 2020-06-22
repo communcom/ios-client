@@ -205,6 +205,14 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         }
         
         // assign value
+        let oldPosts = self.items.value
+        for i in 0..<oldPosts.count {
+            if let updatedPost = posts.first(where: {$0.identity == oldPosts[i].identity}),
+                oldPosts[i].shouldUpdateHeightForPostWithUpdatedPost(updatedPost)
+            {
+                rowHeights[oldPosts[i].identity] = nil
+            }
+        }
         self.items.accept(posts)
     }
     

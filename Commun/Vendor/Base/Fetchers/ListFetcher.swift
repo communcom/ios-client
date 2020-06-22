@@ -45,6 +45,8 @@ enum ListFetcherState: Equatable {
 }
 
 class ListFetcher<T: ListItemType> {
+    
+    public typealias ItemIdentifier = T.Identity
     // MARK: - Constants
     var isPaginationEnabled: Bool {true}
     
@@ -53,6 +55,7 @@ class ListFetcher<T: ListItemType> {
     var offset: UInt = 0
     
     private var reloadClearedResult = true
+    public lazy var rowHeights = [ItemIdentifier: CGFloat]()
     
     // MARK: - Properties
     let disposeBag = DisposeBag()
