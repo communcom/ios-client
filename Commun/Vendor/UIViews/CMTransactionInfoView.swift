@@ -61,9 +61,20 @@ class CMTransactionInfoView: MyView {
         let amount = transaction.amount
         let textColor: UIColor = amount > 0 ? .appGreenColor : .appBlackColor
         let amountLabel = UILabel.with(textSize: 20)
-        amountLabel.attributedString = NSMutableAttributedString()
-            .text((amount > 0 ? "+" : "-") + String(Double(abs(amount)).currencyValueFormatted + " "), size: 20, weight: .semibold, color: textColor)
-            .text(transaction.symbol.buy.fullName, size: 20, color: textColor)
+        
+        var aStr = NSMutableAttributedString()
+        
+        if transaction.history?.meta.holdType == "like" ||
+            transaction.history?.meta.holdType == "dislike"
+        {
+            aStr = aStr.text("❄️ " + String(Double(abs(amount)).currencyValueFormatted + " "), size: 20, weight: .semibold, color: textColor)
+        } else {
+            aStr = aStr
+                .text((amount > 0 ? "+" : "-") + String(Double(abs(amount)).currencyValueFormatted + " "), size: 20, weight: .semibold, color: textColor)
+                .text(transaction.symbol.buy.fullName, size: 20, color: textColor)
+        }
+        
+        amountLabel.attributedString = aStr
         
         let burnedPercentLabel = UILabel.with(text: String(format: "%.1f%% %@ 🔥", 0.1, "was burned".localized()), textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
         
@@ -110,6 +121,12 @@ class CMTransactionInfoView: MyView {
         stackView.setCustomSpacing(25 * Config.heightRatio, after: buyerBalanceOrFriendIDLabel)
         stackView.setCustomSpacing(25 * Config.heightRatio, after: dashLines[1])
         stackView.setCustomSpacing(16 * Config.heightRatio, after: debitedFromLabel)
+        
+        if transaction.history?.meta.holdType == "like" ||
+            transaction.history?.meta.holdType == "dislike"
+        {
+            burnedPercentLabel.isHidden = true
+        }
     }
     
     override func layoutSubviews() {
