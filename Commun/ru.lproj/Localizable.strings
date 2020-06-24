@@ -295,6 +295,7 @@
 "owned" = "принадлежит";
 "passcode" = "пин-код";
 "password" = "пароль";
+"password" = "пароли";
 "password must contain at least 8 characters" = "пароль должен содержать не менее 8 символов";
 "password must contain at least one digit" = "пароль должен содержать не менее одной цифры";
 "password must contain at least one lowercase" = "пароль должен содержать хотя бы один символ нижнего регистра";
