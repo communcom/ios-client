@@ -110,16 +110,12 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
         case "convert":
             amount = CGFloat(selectedItem.meta.exchangeAmount ?? 0.0)
             
-            // Sell `MEME` -> buy `CMN`
             if selectedItem.symbol != Config.defaultSymbol {
+                symbol.sell = selectedItem.point.symbol ?? Config.defaultSymbol
                 symbol.buy = Config.defaultSymbol
-                symbol.sell = selectedItem.symbol
-            }
-            
-            // Sell `CMN` -> buy `MEME`
-            else {
+            } else {
+                symbol.buy = selectedItem.point.symbol ?? Config.defaultSymbol
                 symbol.sell = Config.defaultSymbol
-                symbol.buy = selectedItem.symbol
             }
             
         default:
