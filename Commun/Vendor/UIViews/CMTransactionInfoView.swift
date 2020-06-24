@@ -71,8 +71,9 @@ class CMTransactionInfoView: MyView {
         } else {
             aStr = aStr
                 .text((amount > 0 ? "+" : "-") + String(Double(abs(amount)).currencyValueFormatted + " "), size: 20, weight: .semibold, color: textColor)
-                .text(transaction.symbol.buy.fullName, size: 20, color: textColor)
         }
+        
+        aStr = aStr.text(transaction.symbol.buy.fullName, size: 20, color: textColor)
         
         amountLabel.attributedString = aStr
         
@@ -98,6 +99,14 @@ class CMTransactionInfoView: MyView {
             debitedFromLabel,
             blueBottomView
         ])
+        
+        if transaction.history?.meta.holdType == "like" ||
+            transaction.history?.meta.holdType == "dislike"
+        {
+            buyerNameLabel.text = ""
+            buyerBalanceOrFriendIDLabel.text = ""
+        }
+        
         dashLines[0].widthAnchor.constraint(equalTo: stackView.widthAnchor)
             .isActive = true
         dashLines[1].widthAnchor.constraint(equalTo: stackView.widthAnchor)
@@ -196,8 +205,8 @@ class CMTransactionInfoView: MyView {
             }
 
         default:
-            buyerNameLabel.text = transaction.friend?.name ?? Config.defaultSymbol
-            buyerBalanceOrFriendIDLabel.text = transaction.friend?.id ?? Config.defaultSymbol
+            buyerNameLabel.text = transaction.friend?.name ?? ""
+            buyerBalanceOrFriendIDLabel.text = transaction.friend?.id ?? ""
             buyerAvatarImageView.setAvatar(urlString: transaction.friend?.avatarURL)
         }
         
