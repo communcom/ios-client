@@ -13,7 +13,7 @@ class TransactionInfoVC: BaseViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
     // MARK: - Propertes
-    var backgroundColor: UIColor {#colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)}
+    var backgroundColor: UIColor {UIColor.black.withAlphaComponent(0.6)}
     let viewModel = SendPointsModel()
     var completionRepeat: (() -> Void)?
     var transaction: Transaction {viewModel.transaction}
@@ -28,6 +28,7 @@ class TransactionInfoVC: BaseViewController {
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     
     private lazy var repeatButton = UIButton(height: 56 * Config.heightRatio, label: "repeat".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .bold), backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 28 * Config.heightRatio)
+    private lazy var viewInExplorerButton = UIButton(height: 56 * Config.heightRatio, label: "view in Explorer".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .bold), textColor: .white)
     
     // MARK: - Initializers
     init(transaction: Transaction) {
@@ -74,6 +75,8 @@ class TransactionInfoVC: BaseViewController {
         if shouldShowRepeatButton {
             buttonStackView.addArrangedSubview(repeatButton)
         }
+        buttonStackView.addArrangedSubview(viewInExplorerButton)
+        viewInExplorerButton.addTarget(self, action: #selector(viewInExplorer), for: .touchUpInside)
     }
     
     func viewDidSetUpButtonStackView() {
@@ -113,6 +116,10 @@ class TransactionInfoVC: BaseViewController {
     
     @objc func stopBarButtonTapped(_ sender: UIBarButtonItem) {
         backToWallet()
+    }
+    
+    @objc func viewInExplorer() {
+        load(url: "https://explorer.cyberway.io/trx/\(transaction.history?.trxId ?? "")")
     }
     
     func backToWallet() {
