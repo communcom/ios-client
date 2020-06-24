@@ -29,6 +29,10 @@ extension MyProfileSettingsVC {
         present(navVC, animated: true, completion: nil)
     }
     
+    @objc func showPassword() {
+        show(PasswordsVC(), sender: nil)
+    }
+    
     @objc func logout() {
         showAlert(title: "logout".localized().uppercaseFirst, message: "do you really want to logout?".localized().uppercaseFirst, buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
             

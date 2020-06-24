@@ -296,6 +296,7 @@
 "owned" = "owned";
 "passcode" = "passcode";
 "password" = "password";
+"passwords" = "passwords";
 "password must contain at least 8 characters" = "password must contain at least 8 characters";
 "password must contain at least one digit" = "password must contain at least one digit";
 "password must contain at least one lowercase" = "password must contain at least one lowercase character";

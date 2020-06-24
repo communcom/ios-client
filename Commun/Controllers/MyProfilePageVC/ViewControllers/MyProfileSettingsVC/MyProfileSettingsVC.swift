@@ -13,7 +13,6 @@ class MyProfileSettingsVC: BaseViewController {
     // MARK: - Properties
 
     // MARK: - Subviews
-    lazy var backButton = UIButton.back(tintColor: .appBlackColor, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     var stackView: UIStackView!
 
@@ -60,8 +59,7 @@ class MyProfileSettingsVC: BaseViewController {
         title = "settings".localized().uppercaseFirst
 
         // backButton
-        setLeftNavBarButton(with: backButton)
-        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        setLeftNavBarButtonForGoingBack()
 
         // scrollView
         view.addSubview(scrollView)
@@ -78,9 +76,9 @@ class MyProfileSettingsVC: BaseViewController {
             CommunActionSheet.Action(title: "interface language".localized().uppercaseFirst, icon: UIImage(named: "profile_options_interface_language"), handle: {
                 self.selectLanguage()
             }),
-//            CommunActionSheet.Action(title: "password".localized().uppercaseFirst, icon: UIImage(named: "profile_options_password"), handle: {
-//
-//            })
+            CommunActionSheet.Action(title: "password".localized().uppercaseFirst, icon: UIImage(named: "profile_options_password"), handle: {
+                self.showPassword()
+            })
         ])
 
         scrollView.contentView.addSubview(stackView)
