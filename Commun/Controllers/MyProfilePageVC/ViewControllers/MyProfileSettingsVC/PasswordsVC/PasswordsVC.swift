@@ -116,8 +116,13 @@ class PasswordsVC: BaseViewController {
             return
         }
         
-        // TODO: - Authentication
-        showPasswordSubject.accept(true)
+        let confirmPasscodeVC = ConfirmPasscodeVC()
+        present(confirmPasscodeVC, animated: true, completion: nil)
+        
+        confirmPasscodeVC.completion = {
+            self.authenticated = true
+            self.showPasswordSubject.accept(true)
+        }
     }
     
     @objc private func fieldDidTouch(_ gesture: FieldTapGestureRecognizer) {
