@@ -10,6 +10,11 @@ import Foundation
 import RxCocoa
 
 class PasswordsVC: BaseViewController {
+    // MARK: - Nested types
+    class FieldTapGestureRecognizer: UITapGestureRecognizer {
+        weak var label: UILabel?
+    }
+    
     // MARK: - Properties
     var authenticated = false
     let showPasswordSubject = BehaviorRelay<Bool>(value: false)
@@ -52,7 +57,9 @@ class PasswordsVC: BaseViewController {
         showPasswordSubject
             .subscribe(onNext: { (show) in
                 if show {
-                    (self.passwordField.viewWithTag(1) as! UILabel).text = "test"
+                    (self.passwordField.viewWithTag(1) as! UILabel).text = Config.currentUser?.masterKey
+                    (self.ownerField.viewWithTag(1) as! UILabel).text = Config.currentUser?.ownerKeys?.privateKey
+                    (self.activeField.viewWithTag(1) as! UILabel).text = Config.currentUser?.activeKeys?.privateKey
                 } else {
                     (self.passwordField.viewWithTag(1) as! UILabel).text = "••••••••••••••••••••••••••••"
                     (self.ownerField.viewWithTag(1) as! UILabel).text = "••••••••••••••••••••••••••••"
@@ -89,6 +96,12 @@ class PasswordsVC: BaseViewController {
         view.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
         
+        view.isUserInteractionEnabled = true
+        let tapGesture = FieldTapGestureRecognizer()
+        tapGesture.label = passwordLabel
+        tapGesture.addTarget(self, action: #selector(fieldDidTouch(_:)))
+        view.addGestureRecognizer(tapGesture)
+        
         return view
     }
     
@@ -105,5 +118,13 @@ class PasswordsVC: BaseViewController {
         
         // TODO: - Authentication
         showPasswordSubject.accept(true)
+    }
+    
+    @objc private func fieldDidTouch(_ gesture: FieldTapGestureRecognizer) {
+        guard showPasswordSubject.value,
+            let textToCopy = gesture.label?.text
+        else {return}
+        UIPasteboard.general.string = textToCopy
+        showDone("copied to clipboard".localized().uppercaseFirst)
     }
 }
