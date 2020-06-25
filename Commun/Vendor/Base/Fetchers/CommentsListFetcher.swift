@@ -131,6 +131,11 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         return newList
     }
     
+    override func handleNewData(_ items: [ResponseAPIContentGetComment]) {
+        super.handleNewData(items)
+        loadDonations(forComments: items)
+    }
+    
     // MARK: - for grouping comments
     private func groupComments(_ comments: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
         guard comments.count > 0 else {return []}
@@ -175,5 +180,38 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         }
 
         return result
+    }
+    
+    // MARK: - Donations
+    private func loadDonations(forComments comments: [ResponseAPIContentGetComment]) {
+        let contentIds = comments.map { RequestAPIContentId(responseAPI: $0.contentId) }
+        RestAPIManager.instance.getDonationsBulk(posts: contentIds)
+            .map {$0.items}
+            .subscribe(onSuccess: { donations in
+                self.showDonations(donations)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func showDonations(_ donations: [ResponseAPIWalletGetDonationsBulkItem]) {
+        for var comment in items.value {
+            if let donations = donations.first(where: {$0.contentId.userId == comment.contentId.userId && $0.contentId.permlink == comment.contentId.permlink && $0.contentId.communityId == comment.contentId.communityId})
+            {
+                comment.donations = donations
+                comment.notifyChanged()
+            }
+            if let children = comment.children
+            {
+                // find in children
+                for var child in children {
+                    if let donations = donations.first(where: {$0.contentId.userId == child.contentId.userId && $0.contentId.permlink == child.contentId.permlink && $0.contentId.communityId == child.contentId.communityId})
+                    {
+                        child.donations = donations
+                        child.notifyChanged()
+                        comment.notifyChildrenChanged()
+                    }
+                }
+            }
+        }
     }
 }

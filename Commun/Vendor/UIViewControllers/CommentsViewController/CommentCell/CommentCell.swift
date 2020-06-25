@@ -45,6 +45,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     lazy var timeLabel = UILabel.with(text: " • 3h", textSize: 13, weight: .bold, textColor: .appGrayColor)
     lazy var statusImageView = UIImageView(width: 16, height: 16, cornerRadius: 8)
     lazy var donationUsersView = DonationUsersView()
+    lazy var donationView = DonationView()
     
     // MARK: - Methods
     override func setUpViews() {
@@ -75,6 +76,22 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonDidTouch), for: .touchUpInside)
         voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch), for: .touchUpInside)
         
+        // donation buttons
+        contentView.addSubview(donationView)
+        donationView.autoAlignAxis(toSuperviewAxis: .vertical)
+        donationView.autoPinEdge(.bottom, to: .top, of: voteContainerView, withOffset: -4)
+        donationView.delegate = self
+        
+        donationView.senderView = voteContainerView.likeCountLabel
+        
+        for (i, button) in donationView.amountButtons.enumerated() {
+            button.tag = i
+            button.addTarget(self, action: #selector(donationAmountDidTouch(sender:)), for: .touchUpInside)
+        }
+        donationView.otherButton.tag = donationView.amountButtons.count
+        donationView.otherButton.addTarget(self, action: #selector(donationAmountDidTouch(sender:)), for: .touchUpInside)
+        
+        // donationsCount
         contentView.addSubview(plusLabel)
         plusLabel.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 6)
         plusLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
@@ -224,6 +241,22 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             plusLabel.isHidden = true
         }
         
+        donationUsersView.isHidden = true
+        if comment.showDonator == true,
+            comment.showDonationButtons != true,
+            let donations = comment.donations?.donations
+        {
+            donationUsersView.isHidden = false
+            donationUsersView.setUp(with: donations)
+        }
+        
+        donationView.isHidden = true
+        if comment.showDonationButtons == true,
+            comment.author?.userId != Config.currentUser?.id
+        {
+            donationView.isHidden = false
+        }
+        
         timeLabel.text = " • " + Date.timeAgo(string: comment.meta.creationTime)
     }
     
@@ -289,5 +322,24 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             )
 
         contentTextView.attributedText = mutableAS
+    }
+}
+
+extension CommentCell: DonationViewDelegate {
+    @objc func donationAmountDidTouch(sender: UIButton) {
+        guard let symbol = comment?.community?.communityId,
+            let comment = comment,
+            let user = comment.author
+        else {return}
+        let amount = donationView.amounts[safe: sender.tag]?.double
+        
+        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: comment, amount: amount)
+        parentViewController?.show(donateVC, sender: nil)
+    }
+    
+    func donationViewCloseButtonDidTouch(_ donationView: DonationView) {
+        var comment = self.comment
+        comment?.showDonationButtons = false
+        comment?.notifyChanged()
     }
 }
