@@ -279,8 +279,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         }
         
         timeLabel.text = Date.timeAgo(string: comment.meta.creationTime) + " • "
-        
-        layoutIfNeeded()
     }
     
     func setText() {
@@ -388,8 +386,5 @@ extension CommentCell: DonationUsersViewDelegate {
         var comment = self.comment
         comment?.showDonator = false
         comment?.notifyChanged()
-        
-        donationUsersViewTopConstraint?.isActive = false
-        layoutIfNeeded()
     }
 }
