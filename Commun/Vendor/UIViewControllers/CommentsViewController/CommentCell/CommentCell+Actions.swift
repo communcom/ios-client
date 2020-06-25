@@ -97,7 +97,10 @@ extension CommentCell {
     }
     
     @objc func donationCountLabelDidTouch() {
-        
+        guard var comment = comment else {return}
+        if comment.showDonator == nil {comment.showDonator = false}
+        comment.showDonator?.toggle()
+        comment.notifyChanged()
     }
     
     @objc func retrySendingCommentDidTouch(gestureRecognizer: UITapGestureRecognizer) {

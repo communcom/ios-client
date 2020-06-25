@@ -122,11 +122,14 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         constraint.priority = .defaultLow
         constraint.isActive = true
         
-//        contentView.addSubview(donationUsersView)
-//        donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
-//        donationUsersView.autoPinEdge(.bottom, to: .top, of: voteContainerView, withOffset: -4)
-//
-//
+        contentView.addSubview(donationUsersView)
+        donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
+        donationUsersView.autoPinEdge(.bottom, to: .top, of: voteContainerView, withOffset: -4)
+        donationUsersView.senderView = donationCountLabel
+        donationUsersView.delegate = self
+        donationUsersView.isUserInteractionEnabled = true
+        donationUsersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationUsersViewDidTouch)))
+
         voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
         
         // handle tap on see more
@@ -340,6 +343,30 @@ extension CommentCell: DonationViewDelegate {
     func donationViewCloseButtonDidTouch(_ donationView: DonationView) {
         var comment = self.comment
         comment?.showDonationButtons = false
+        comment?.notifyChanged()
+    }
+}
+
+extension CommentCell: DonationUsersViewDelegate {
+    @objc func donationUsersViewDidTouch() {
+        guard let donations = comment?.donations else {return}
+        let vc = DonationsVC(donations: donations)
+        vc.modelSelected = {donation in
+            vc.dismiss(animated: true) {
+                self.parentViewController?.showProfileWithUserId(donation.sender.userId)
+            }
+        }
+        
+        let navigation = SwipeNavigationController(rootViewController: vc)
+        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        navigation.modalPresentationStyle = .custom
+        navigation.transitioningDelegate = vc
+        parentViewController?.present(navigation, animated: true, completion: nil)
+    }
+    
+    func donationUsersViewCloseButtonDidTouch(_ donationUserView: DonationUsersView) {
+        var comment = self.comment
+        comment?.showDonator = false
         comment?.notifyChanged()
     }
 }
