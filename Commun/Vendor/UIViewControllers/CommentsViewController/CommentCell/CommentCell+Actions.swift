@@ -75,10 +75,6 @@ extension CommentCell {
     
     @objc func upVoteButtonDidTouch() {
         guard let comment = comment else {return}
-        if comment.contentId.userId == Config.currentUser?.id {
-            parentViewController?.showAlert(title: "error".localized().uppercaseFirst, message: "can't cancel vote on own publication".localized().uppercaseFirst)
-            return
-        }
         voteContainerView.animateUpVote {
             self.delegate?.cell(self, didTapUpVoteForComment: comment)
         }
@@ -98,6 +94,13 @@ extension CommentCell {
     @objc func replyButtonDidTouch() {
         guard let comment = comment else {return}
         delegate?.cell(self, didTapReplyButtonForComment: comment)
+    }
+    
+    @objc func donationCountLabelDidTouch() {
+        guard var comment = comment else {return}
+        if comment.showDonator == nil {comment.showDonator = false}
+        comment.showDonator?.toggle()
+        comment.notifyChanged()
     }
     
     @objc func retrySendingCommentDidTouch(gestureRecognizer: UITapGestureRecognizer) {

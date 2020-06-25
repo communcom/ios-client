@@ -128,7 +128,7 @@ extension CommentCellDelegate where Self: BaseViewController {
     }
     
     func cell(_ cell: CommentCell, didTapUpVoteForComment comment: ResponseAPIContentGetComment) {
-        BlockchainManager.instance.upvoteMessage(comment)
+        comment.upVote()
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
             }
@@ -136,7 +136,7 @@ extension CommentCellDelegate where Self: BaseViewController {
     }
     
     func cell(_ cell: CommentCell, didTapDownVoteForComment comment: ResponseAPIContentGetComment) {
-        BlockchainManager.instance.downvoteMessage(comment)
+        comment.downVote()
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
             }

@@ -88,7 +88,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         postStatsView.delegate = self
         
         // donation
-        addSubview(donationUsersView)
+        contentView.addSubview(donationUsersView)
         donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
         donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
         donationUsersView.senderView = postStatsView.donationCountLabel
@@ -98,7 +98,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         donationUsersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationUsersViewDidTouch)))
         
         // donation buttons
-        addSubview(donationView)
+        contentView.addSubview(donationView)
         donationView.autoAlignAxis(toSuperviewAxis: .vertical)
         donationView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
         donationView.delegate = self
@@ -268,7 +268,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         else {return}
         let amount = donationView.amounts[safe: sender.tag]?.double
         
-        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, post: post, amount: amount)
+        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: post, amount: amount)
         parentViewController?.show(donateVC, sender: nil)
     }
 }

@@ -8,27 +8,27 @@
 
 import Foundation
 
-class WalletDonateVC: WalletSendPointsVC {
+class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
     // MARK: - Properties
     let initialAmount: Double?
     override var actionName: String {"donate"}
-    var post: ResponseAPIContentGetPost
+    var message: T
     
     // MARK: - Initilizers
-    init(selectedBalanceSymbol symbol: String, user: ResponseAPIContentGetProfile, post: ResponseAPIContentGetPost, amount: Double?) {
+    init(selectedBalanceSymbol symbol: String, user: ResponseAPIContentGetProfile, message: T, amount: Double?) {
         self.initialAmount = amount
-        self.post = post
+        self.message = message
         super.init(selectedBalanceSymbol: symbol, user: user)
         
-        memo = "donation for \(symbol):\(post.contentId.userId):\(post.contentId.permlink)"
+        memo = "donation for \(symbol):\(message.contentId.userId):\(message.contentId.permlink)"
         
         // observing
-        ResponseAPIContentGetPost.observeItemChanged()
+        T.observeItemChanged()
             .subscribe(onNext: { (post) in
-                if post.identity == self.post.identity,
-                    let newPost = self.post.newUpdatedItem(from: post)
+                if post.identity == self.message.identity,
+                    let newPost = self.message.newUpdatedItem(from: post)
                 {
-                    self.post = newPost
+                    self.message = newPost
                 }
             })
             .disposed(by: disposeBag)
@@ -57,13 +57,13 @@ class WalletDonateVC: WalletSendPointsVC {
     }
     
     override func sendPointsDidComplete() {
-        RestAPIManager.instance.getDonationsBulk(posts: [RequestAPIContentId(responseAPI: post.contentId)])
+        RestAPIManager.instance.getDonationsBulk(posts: [RequestAPIContentId(responseAPI: message.contentId)])
             .map {$0.items}
             .subscribe(onSuccess: { donations in
-                guard let donation = donations.first(where: {$0.contentId == self.post.contentId}) else {return}
-                self.post.donations = donation
-                self.post.showDonationButtons = false
-                self.post.notifyChanged()
+                guard let donation = donations.first(where: {$0.contentId == self.message.contentId}) else {return}
+                self.message.donations = donation
+                self.message.showDonationButtons = false
+                self.message.notifyChanged()
             })
             .disposed(by: disposeBag)
         super.sendPointsDidComplete()
