@@ -23,6 +23,8 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     weak var delegate: CommentCellDelegate?
     var textViewToEmbedConstraint: NSLayoutConstraint?
     var showIndentForChildComment = true
+    var donationUsersViewTopConstraint: NSLayoutConstraint?
+    var donationViewTopConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 35)
@@ -52,8 +54,9 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         super.setUpViews()
         selectionStyle = .none
         backgroundColor = .appWhiteColor
+        
         contentView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
+        avatarImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 8).isActive = true
         avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         
         avatarImageView.isUserInteractionEnabled = true
@@ -78,6 +81,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         
         // donation buttons
         contentView.addSubview(donationView)
+        donationViewTopConstraint = donationView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 0)
         donationView.autoAlignAxis(toSuperviewAxis: .vertical)
         donationView.autoPinEdge(.bottom, to: .top, of: voteContainerView, withOffset: -4)
         donationView.delegate = self
@@ -123,6 +127,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         constraint.isActive = true
         
         contentView.addSubview(donationUsersView)
+        donationUsersViewTopConstraint = donationUsersView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 0)
         donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
         donationUsersView.autoPinEdge(.bottom, to: .top, of: voteContainerView, withOffset: -4)
         donationUsersView.senderView = donationCountLabel
@@ -244,12 +249,16 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             plusLabel.isHidden = true
         }
         
+        donationUsersViewTopConstraint?.isActive = false
+        donationViewTopConstraint?.isActive = false
+        
         donationUsersView.isHidden = true
         if comment.showDonator == true,
             comment.showDonationButtons != true,
             let donations = comment.donations?.donations
         {
             donationUsersView.isHidden = false
+            donationUsersViewTopConstraint?.isActive = true
             donationUsersView.setUp(with: donations)
         }
         
@@ -258,9 +267,12 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             comment.author?.userId != Config.currentUser?.id
         {
             donationView.isHidden = false
+            donationViewTopConstraint?.isActive = true
         }
         
         timeLabel.text = " • " + Date.timeAgo(string: comment.meta.creationTime)
+        
+        layoutIfNeeded()
     }
     
     func setText() {
@@ -368,5 +380,8 @@ extension CommentCell: DonationUsersViewDelegate {
         var comment = self.comment
         comment?.showDonator = false
         comment?.notifyChanged()
+        
+        donationUsersViewTopConstraint?.isActive = false
+        layoutIfNeeded()
     }
 }

@@ -95,8 +95,11 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     }
     
     override func shouldUpdateHeightForItem(_ cmt1: ResponseAPIContentGetComment?, withUpdatedItem cmt2: ResponseAPIContentGetComment?) -> Bool {
-        !(cmt1?.attachments.count == cmt2?.attachments.count &&
+        let contentChanged = !(cmt1?.attachments.count == cmt2?.attachments.count &&
         (try? cmt1?.document?.jsonString()) == (try? cmt2?.document?.jsonString()))
+        let showDonatorsChanged = cmt1?.showDonator != cmt2?.showDonator
+        let showDonationsButtonChanged = cmt1?.showDonationButtons != cmt2?.showDonationButtons
+        return contentChanged || showDonatorsChanged || showDonationsButtonChanged
     }
     
     override func updateItem(_ updatedItem: ResponseAPIContentGetComment) {
