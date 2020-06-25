@@ -100,6 +100,10 @@ extension CommentCell {
         delegate?.cell(self, didTapReplyButtonForComment: comment)
     }
     
+    @objc func donationCountLabelDidTouch() {
+        
+    }
+    
     @objc func retrySendingCommentDidTouch(gestureRecognizer: UITapGestureRecognizer) {
         guard let comment = comment else {return}
         delegate?.cell(self, didTapRetryForComment: comment)

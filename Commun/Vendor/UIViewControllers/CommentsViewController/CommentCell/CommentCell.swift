@@ -39,9 +39,12 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     }()
     lazy var gridView = GridView(width: embedSize.width, height: embedSize.height, cornerRadius: 12)
     lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
+    lazy var plusLabel = UILabel.with(text: "+", textSize: 17, weight: .semibold, textColor: .appMainColor)
+    lazy var donationCountLabel = UILabel.with(numberOfLines: 2)
     lazy var replyButton = UIButton(label: "reply".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
     lazy var timeLabel = UILabel.with(text: " • 3h", textSize: 13, weight: .bold, textColor: .appGrayColor)
     lazy var statusImageView = UIImageView(width: 16, height: 16, cornerRadius: 8)
+    lazy var donationUsersView = DonationUsersView()
     
     // MARK: - Methods
     override func setUpViews() {
@@ -72,8 +75,20 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonDidTouch), for: .touchUpInside)
         voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch), for: .touchUpInside)
         
+        contentView.addSubview(plusLabel)
+        plusLabel.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 6)
+        plusLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        plusLabel.isUserInteractionEnabled = true
+        plusLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationCountLabelDidTouch)))
+        
+        contentView.addSubview(donationCountLabel)
+        donationCountLabel.autoPinEdge(.leading, to: .trailing, of: plusLabel, withOffset: 4)
+        donationCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        donationCountLabel.isUserInteractionEnabled = true
+        donationCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationCountLabelDidTouch)))
+        
         contentView.addSubview(replyButton)
-        replyButton.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 10)
+        replyButton.autoPinEdge(.leading, to: .trailing, of: donationCountLabel, withOffset: 10)
         replyButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         replyButton.addTarget(self, action: #selector(replyButtonDidTouch), for: .touchUpInside)
         replyButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -90,6 +105,11 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         constraint.priority = .defaultLow
         constraint.isActive = true
         
+//        contentView.addSubview(donationUsersView)
+//        donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
+//        donationUsersView.autoPinEdge(.bottom, to: .top, of: voteContainerView, withOffset: -4)
+//
+//
         voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
         
         // handle tap on see more
@@ -189,6 +209,21 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             self.comment!.votes.isBeingVoted = true
         }
         voteContainerView.setUp(with: self.comment!.votes, userID: comment.author?.userId)
+        
+        // Donation
+        if comment.donationsCount > 0 {
+            donationCountLabel.isHidden = false
+            plusLabel.isHidden = false
+            donationCountLabel.attributedText = NSMutableAttributedString()
+                .text("\(1000.0.kmFormatted(maximumFractionDigit: 2))", size: 14, weight: .bold, color: .appMainColor)
+                .text("\n")
+                .text("points".localized(), size: 14, weight: .medium, color: .appMainColor)
+                .withParagraphStyle(minimumLineHeight: 12)
+        } else {
+            donationCountLabel.isHidden = true
+            plusLabel.isHidden = true
+        }
+        
         timeLabel.text = " • " + Date.timeAgo(string: comment.meta.creationTime)
     }
     
