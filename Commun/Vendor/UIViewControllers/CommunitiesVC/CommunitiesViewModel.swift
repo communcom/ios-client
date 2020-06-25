@@ -11,13 +11,15 @@ import CyberSwift
 import RxSwift
 
 class CommunitiesViewModel: ListViewModel<ResponseAPIContentGetCommunity> {
-    lazy var searchVM: SearchViewModel = {
+    lazy var searchVM: SearchViewModel = createSearchVM()
+    
+    func createSearchVM() -> SearchViewModel {
         let fetcher = SearchListFetcher()
         fetcher.limit = 20
         fetcher.searchType = .entitySearch
         fetcher.entitySearchEntity = .communities
         return SearchViewModel(fetcher: fetcher)
-    }()
+    }
     
     init(type: GetCommunitiesType, userId: String? = nil, authorizationRequired: Bool = true, prefetch: Bool = true) {
         let fetcher = CommunitiesListFetcher(type: type, userId: userId, authorizationRequired: authorizationRequired)

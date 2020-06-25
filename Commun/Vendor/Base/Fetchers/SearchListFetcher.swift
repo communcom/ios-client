@@ -25,6 +25,7 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
     lazy var extendedSearchEntity = [SearchEntityType: [String: UInt]]()
     lazy var entitySearchEntity = SearchEntityType.communities
     var queryString: String?
+    var authorizationRequired = true
     
     override var request: Single<[ResponseAPIContentSearchItem]> {
         switch searchType {
@@ -43,7 +44,7 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
                     (result.communities?.items ?? []) + (result.profiles?.items ?? []) + (result.posts?.items ?? [])
                 }
         case .entitySearch:
-            return  RestAPIManager.instance.entitySearch(queryString: queryString ?? "", entity: entitySearchEntity, limit: limit, offset: offset)
+            return  RestAPIManager.instance.entitySearch(queryString: queryString ?? "", entity: entitySearchEntity, limit: limit, offset: offset, authorizationRequired: authorizationRequired)
                 .do(onSuccess: { (result) in
                     self.total = result.total
                 })
