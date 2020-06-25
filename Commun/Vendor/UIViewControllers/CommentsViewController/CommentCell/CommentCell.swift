@@ -23,6 +23,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     weak var delegate: CommentCellDelegate?
     var textViewToEmbedConstraint: NSLayoutConstraint?
     var showIndentForChildComment = true
+    var timeLabelLeadingConstraint: NSLayoutConstraint?
     var donationUsersViewTopConstraint: NSLayoutConstraint?
     var donationViewTopConstraint: NSLayoutConstraint?
     
@@ -42,9 +43,9 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     lazy var gridView = GridView(width: embedSize.width, height: embedSize.height, cornerRadius: 12)
     lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     lazy var plusLabel = UILabel.with(text: "+", textSize: 17, weight: .semibold, textColor: .appMainColor)
-    lazy var donationCountLabel = UILabel.with(numberOfLines: 2)
-    lazy var replyButton = UIButton(label: "reply".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
+    lazy var donationCountLabel = UILabel.with(numberOfLines: 2, textAlignment: .center)
     lazy var timeLabel = UILabel.with(text: " • 3h", textSize: 13, weight: .bold, textColor: .appGrayColor)
+    lazy var replyButton = UIButton(label: "reply".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
     lazy var statusImageView = UIImageView(width: 16, height: 16, cornerRadius: 8)
     lazy var donationUsersView = DonationUsersView()
     lazy var donationView = DonationView()
@@ -108,16 +109,16 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         donationCountLabel.isUserInteractionEnabled = true
         donationCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationCountLabelDidTouch)))
         
+        contentView.addSubview(timeLabel)
+        timeLabelLeadingConstraint = timeLabel.autoPinEdge(.leading, to: .trailing, of: donationCountLabel, withOffset: 10)
+        timeLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
         contentView.addSubview(replyButton)
-        replyButton.autoPinEdge(.leading, to: .trailing, of: donationCountLabel, withOffset: 10)
+        replyButton.autoPinEdge(.leading, to: .trailing, of: timeLabel)
         replyButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         replyButton.addTarget(self, action: #selector(replyButtonDidTouch), for: .touchUpInside)
         replyButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
-        contentView.addSubview(timeLabel)
-        timeLabel.autoPinEdge(.leading, to: .trailing, of: replyButton)
-        timeLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         contentView.addSubview(statusImageView)
         statusImageView.autoPinEdge(.leading, to: .trailing, of: timeLabel, withOffset: 10)
@@ -243,10 +244,16 @@ class CommentCell: MyTableViewCell, ListItemCellType {
                 .text("\(comment.donationsCount.kmFormatted(maximumFractionDigit: 2))", size: 14, weight: .bold, color: .appMainColor)
                 .text("\n")
                 .text("points".localized(), size: 14, weight: .medium, color: .appMainColor)
-                .withParagraphStyle(minimumLineHeight: 12)
+                .withParagraphStyle(minimumLineHeight: 12, alignment: .center)
+
+            timeLabelLeadingConstraint?.constant = 10
         } else {
             donationCountLabel.isHidden = true
             plusLabel.isHidden = true
+            donationCountLabel.text = nil
+            plusLabel.text = nil
+
+            timeLabelLeadingConstraint?.constant = 0
         }
         
         donationUsersViewTopConstraint?.isActive = false
@@ -270,7 +277,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             donationViewTopConstraint?.isActive = true
         }
         
-        timeLabel.text = " • " + Date.timeAgo(string: comment.meta.creationTime)
+        timeLabel.text = Date.timeAgo(string: comment.meta.creationTime) + " • "
         
         layoutIfNeeded()
     }
