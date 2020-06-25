@@ -240,6 +240,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         if comment.donationsCount > 0 {
             donationCountLabel.isHidden = false
             plusLabel.isHidden = false
+            plusLabel.text = "+"
             donationCountLabel.attributedText = NSMutableAttributedString()
                 .text("\(comment.donationsCount.kmFormatted(maximumFractionDigit: 2))", size: 14, weight: .bold, color: .appMainColor)
                 .text("\n")
