@@ -232,7 +232,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             donationCountLabel.isHidden = false
             plusLabel.isHidden = false
             donationCountLabel.attributedText = NSMutableAttributedString()
-                .text("\(1000.0.kmFormatted(maximumFractionDigit: 2))", size: 14, weight: .bold, color: .appMainColor)
+                .text("\(comment.donationsCount.kmFormatted(maximumFractionDigit: 2))", size: 14, weight: .bold, color: .appMainColor)
                 .text("\n")
                 .text("points".localized(), size: 14, weight: .medium, color: .appMainColor)
                 .withParagraphStyle(minimumLineHeight: 12)
