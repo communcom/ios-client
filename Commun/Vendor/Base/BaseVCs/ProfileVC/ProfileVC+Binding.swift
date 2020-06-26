@@ -12,11 +12,9 @@ import RxSwift
 extension ProfileVC {
     func bindControls() {
         // headerView parallax
-        let offSetY = tableView.rx.contentOffset
-            .map {$0.y}
-            .share()
             
-        offSetY
+        tableView.rx.contentOffset
+            .map {$0.y}
             .subscribe(onNext: {offSetY in
                 // return contentInset after updating tableView
                 if let inset = self.originInsetBottom,
@@ -27,15 +25,8 @@ extension ProfileVC {
                 
                 // headerView paralax effect
                 self.updateHeaderView()
-            })
-            .disposed(by: disposeBag)
-        
-        // scrolling
-        offSetY
-            .map {$0 < -43}
-            .distinctUntilChanged()
-            .observeOn(MainScheduler.asyncInstance)
-            .subscribe(onNext: { showNavBar in
+                
+                let showNavBar = offSetY < -43
                 if self.showNavigationBar == !showNavBar {return}
                 self.showNavigationBar = !showNavBar
             })
