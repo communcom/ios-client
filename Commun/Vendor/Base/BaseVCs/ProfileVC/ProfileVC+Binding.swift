@@ -28,8 +28,10 @@ extension ProfileVC {
                 self.updateHeaderView()
                 
                 let showNavBar = offSetY < -43
-                if self.showNavigationBar == !showNavBar {return}
-                self.showNavigationBar = !showNavBar
+                if self.showNavigationBar != !showNavBar {
+                    self.showNavigationBar = !showNavBar
+                }
+                
             })
             .disposed(by: disposeBag)
         

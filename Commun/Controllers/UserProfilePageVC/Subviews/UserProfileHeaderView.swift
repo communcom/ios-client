@@ -134,7 +134,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             .bold(" ")
             .bold(String(format: NSLocalizedString("followings-count", comment: ""), followingsCount), font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
         
-        if userProfile.isSubscribed == true {
+        if userProfile.isSubscription == true {
             aStr
                 .bold(statsSeparator, font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
                 .bold("follows you".localized().uppercaseFirst, font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
