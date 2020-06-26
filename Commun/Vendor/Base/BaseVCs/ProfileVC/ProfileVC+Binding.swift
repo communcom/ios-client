@@ -15,6 +15,7 @@ extension ProfileVC {
             
         tableView.rx.contentOffset
             .map {$0.y}
+            .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: {offSetY in
                 // return contentInset after updating tableView
                 if let inset = self.originInsetBottom,
