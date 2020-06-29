@@ -110,8 +110,12 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     }
     
     override func reload() {
-        postsVM.fetcher.reset()
-        commentsVM.fetcher.reset()
+        switch segmentedItem.value {
+        case .posts:
+            postsVM.reload()
+        case .comments:
+            commentsVM.reload()
+        }
         super.reload()
     }
     

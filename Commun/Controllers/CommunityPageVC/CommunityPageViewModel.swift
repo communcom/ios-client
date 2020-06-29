@@ -165,8 +165,14 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     }
     
     override func reload() {
-        postsVM.fetcher.reset()
-        leadsVM.fetcher.reset()
+        switch segmentedItem.value {
+        case .posts:
+            postsVM.reload()
+        case .leads:
+            leadsVM.reload()
+        default:
+            break
+        }
         super.reload()
     }
     
