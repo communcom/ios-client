@@ -166,7 +166,11 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     }
     
     override func statsLabelDidTouchAtIndex(_ index: Int) {
-        if index < (statsLabel.text?.count ?? 0) / 2 {
+        guard let text = statsLabel.text,
+            let dotIndex = text.index(of: statsSeparator)?.utf16Offset(in: text)
+        else {return}
+
+        if index < dotIndex {
             followersDidTouch()
         } else {
             followingDidTouch()
