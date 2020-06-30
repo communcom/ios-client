@@ -114,9 +114,9 @@ floatView.changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeB
             .filter {$0 != nil}
             .map {$0!}
             .subscribe(onNext: { (claimedPromos) in
-                if !claimedPromos.contains("DANK") {
-                    self.headerView.showPromoBanner()
-                }
+//                if !claimedPromos.contains("DANK") {
+//                    self.headerView.showPromoBanner()
+//                }
             })
             .disposed(by: disposeBag)
     }
@@ -158,21 +158,21 @@ floatView.changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeB
     
     // MARK: - Actions
     @objc func promoGetButtonDidTouch() {
-        AnalyticsManger.shared.clickGetDankMeme()
-        headerView.getButton.showLoading(cover: true, coverColor: .appMainColor, spinnerColor: .appWhiteColor, size: 20)
-        RestAPIManager.instance.getAirdrop(communityId: "DANK")
-            .subscribe(onSuccess: { (_) in
-                self.headerView.getButton.hideLoading()
-                self.headerView.hidePromoBanner()
-                UIView.animate(withDuration: 0.3) {
-                    self.headerView.layoutIfNeeded()
-                }
-                self.showDone("done".localized().uppercaseFirst + "!")
-            }) { (error) in
-                self.headerView.getButton.hideLoading()
-                self.showError(error)
-            }
-            .disposed(by: disposeBag)
+//        AnalyticsManger.shared.clickGetDankMeme()
+//        headerView.getButton.showLoading(cover: true, coverColor: .appMainColor, spinnerColor: .appWhiteColor, size: 20)
+//        RestAPIManager.instance.getAirdrop(communityId: "DANK")
+//            .subscribe(onSuccess: { (_) in
+//                self.headerView.getButton.hideLoading()
+//                self.headerView.hidePromoBanner()
+//                UIView.animate(withDuration: 0.3) {
+//                    self.headerView.layoutIfNeeded()
+//                }
+//                self.showDone("done".localized().uppercaseFirst + "!")
+//            }) { (error) in
+//                self.headerView.getButton.hideLoading()
+//                self.showError(error)
+//            }
+//            .disposed(by: disposeBag)
     }
     
     @objc func changeFeedTypeButtonDidTouch(_ sender: Any) {
