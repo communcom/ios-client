@@ -121,13 +121,8 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
     @objc func backupIcloudDidTouch() {
         guard let password = masterPassword, let userName = Config.currentUser?.name
         else {return}
-        
-        var domain = "dev.commun.com"
-        #if APPSTORE
-            domain = "commun.com"
-        #endif
 
-        SecAddSharedWebCredential(domain as CFString, userName as CFString, password as CFString) { [weak self] (error) in
+        SecAddSharedWebCredential(URL.appDomain as CFString, userName as CFString, password as CFString) { [weak self] (error) in
             DispatchQueue.main.async {
                 if error != nil {
                     self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password".localized().uppercaseFirst, message: "You need to enable Keychain, then".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in

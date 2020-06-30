@@ -515,10 +515,7 @@ extension UIViewController {
 
         components.scheme = "https"
         
-        components.host = "dev.commun.com"
-        #if APPSTORE
-            components.host = "commun.com"
-        #endif
+        components.host = URL.appDomain
 
         components.path = (isCommunity ? "/" : "/@") + name.lowercased()
         components.queryItems = [queryItemInvite]
