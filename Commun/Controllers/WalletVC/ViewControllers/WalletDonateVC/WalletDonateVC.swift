@@ -70,7 +70,11 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
     }
     
     override func showCheck() {
-        let completedVC = WalletDonateCompletedVC(transaction: dataModel.transaction)
+        var transaction = dataModel.transaction
+        if transaction.amount > 0 {
+            transaction.amount = -transaction.amount
+        }
+        let completedVC = WalletDonateCompletedVC(transaction: transaction)
         completedVC.backButtonHandler = {
             completedVC.backCompletion {
                 self.back()
