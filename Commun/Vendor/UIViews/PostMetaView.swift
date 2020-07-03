@@ -163,18 +163,15 @@ class PostMetaView: MyView {
     }
     
     @objc func stateButtonTapped(_ gesture: UITapGestureRecognizer) {
+        let rewardExplanationView = RewardExplanationView(params: gesture.view?.tag == 0 ? .topState : .rewardState)
         let postLink = "https://commun.com/faq?#What%20else%20can%20you%20do%20with%20the%20points?"
-        let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 193.0))), andParameters: gesture.view?.tag == 0 ? .topState : .rewardState)
-        
-        let cardVC = CardViewController(contentView: userNameRulesView)
-        parentViewController?.present(cardVC, animated: true, completion: nil)
-        
-        userNameRulesView.completionDismissWithAction = { value in
+        rewardExplanationView.explanationView.completionDismissWithAction = { value in
             self.parentViewController?.dismiss(animated: true, completion: {
                 if value, let baseVC = self.parentViewController as? BaseViewController {
                     baseVC.load(url: postLink)
                 }
             })
         }
+        parentViewController?.showCardWithView(rewardExplanationView, backgroundColor: .clear)
     }
 }

@@ -405,8 +405,8 @@ extension UIViewController {
         self.navigationItem.leftBarButtonItem = newBackButton
     }
     
-    func showCardWithView(_ view: UIView) {
-        let cardVC = CardViewController(contentView: view)
+    func showCardWithView(_ view: UIView, backgroundColor: UIColor = .appWhiteColor) {
+        let cardVC = CardViewController(contentView: view, backgroundColor: backgroundColor)
         self.present(cardVC, animated: true, completion: nil)
     }
     

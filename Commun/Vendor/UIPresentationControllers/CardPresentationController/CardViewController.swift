@@ -11,13 +11,13 @@ import Foundation
 class CardViewController: BaseViewController {
     var contentView: UIView
     
-    init(contentView: UIView) {
+    init(contentView: UIView, backgroundColor: UIColor = .appWhiteColor) {
         self.contentView = contentView
         super.init(nibName: nil, bundle: nil)
         
         transitioningDelegate = self
         modalPresentationStyle = .custom
-        view.backgroundColor = .appWhiteColor
+        view.backgroundColor = backgroundColor
     }
     
     required init?(coder: NSCoder) {

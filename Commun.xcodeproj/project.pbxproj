@@ -166,6 +166,7 @@
 		BC08E8C0240388EF00436A5C /* PNAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC08E8BF240388EF00436A5C /* PNAlertView.swift */; };
 		BC08E8C52403C72E00436A5C /* PNAlertViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC08E8C42403C72E00436A5C /* PNAlertViewDelegate.swift */; };
 		BC0AE72C24440EE1005EFF02 /* CreatePasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0AE72B24440EE1005EFF02 /* CreatePasswordTextField.swift */; };
+		BC0FBC7D24AF0B0000CFDE4C /* RewardExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FBC7C24AF0B0000CFDE4C /* RewardExplanationView.swift */; };
 		BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */; };
 		BC18FA2123D54E26005DC7E3 /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */; };
 		BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */; };
@@ -699,6 +700,7 @@
 		BC08E8BF240388EF00436A5C /* PNAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNAlertView.swift; sourceTree = "<group>"; };
 		BC08E8C42403C72E00436A5C /* PNAlertViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNAlertViewDelegate.swift; sourceTree = "<group>"; };
 		BC0AE72B24440EE1005EFF02 /* CreatePasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordTextField.swift; sourceTree = "<group>"; };
+		BC0FBC7C24AF0B0000CFDE4C /* RewardExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardExplanationView.swift; sourceTree = "<group>"; };
 		BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesListFetcher.swift; sourceTree = "<group>"; };
 		BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
 		BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesVC.swift; sourceTree = "<group>"; };
@@ -2490,6 +2492,7 @@
 				BC40719623CEF7F3000027A3 /* PlaceholderNotificationCell */,
 				B1D7AD5523A10581007D1A13 /* ErrorView.swift */,
 				3BB32F1A234436EF006572F3 /* PostMetaView.swift */,
+				BC0FBC7C24AF0B0000CFDE4C /* RewardExplanationView.swift */,
 				3B06862F2346FFA6008953C5 /* CommunButton.swift */,
 				BCA9712A2361306700AE37E1 /* MyView.swift */,
 				BC472D9E23A37FD800822371 /* MyCardView.swift */,
@@ -3250,6 +3253,7 @@
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
 				BC0AE72C24440EE1005EFF02 /* CreatePasswordTextField.swift in Sources */,
 				BC52914023793D330022EC7F /* CommentForm.swift in Sources */,
+				BC0FBC7D24AF0B0000CFDE4C /* RewardExplanationView.swift in Sources */,
 				3BAE5CD4233899F30055F23E /* ContentTextView.swift in Sources */,
 				BC597A7C238CBFE700103F4F /* CMPageControll.swift in Sources */,
 				BC619B1B2372B5760005BB94 /* CommunityMembersViewModel.swift in Sources */,
