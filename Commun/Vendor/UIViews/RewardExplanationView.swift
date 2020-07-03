@@ -7,16 +7,23 @@
 //
 
 import Foundation
+import RxSwift
+
+protocol RewardExplanationViewDelegate: class {
+    func rewardExplanationViewDidTapOnShowInDropdown(_ rewardExplanationView: RewardExplanationView)
+}
 
 class RewardExplanationView: MyView {
     let params: CMCardViewParameters
+    let disposeBag = DisposeBag()
+    weak var delegate: RewardExplanationViewDelegate?
     
     lazy var swipeDownButton = UIView(width: 50, height: 5, backgroundColor: .appWhiteColor, cornerRadius: 2.5)
+    lazy var showingOptionButtonLabel = UILabel.with(text: "community points".localized().uppercaseFirst, textColor: .appGrayColor)
     lazy var showingOptionButton: UIStackView = {
         let view = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         let dropdownButton = UIButton.circleGray(imageName: "drop-down")
-        let label = UILabel.with(text: "community points".localized().uppercaseFirst, textColor: .appGrayColor)
-        view.addArrangedSubviews([label, dropdownButton])
+        view.addArrangedSubviews([showingOptionButtonLabel, dropdownButton])
         return view
     }()
     lazy var explanationView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 193.0))), andParameters: params)
@@ -57,11 +64,25 @@ class RewardExplanationView: MyView {
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownButtonDidTouch(_:)))
         gesture.direction = .down
         swipeDownButton.addGestureRecognizer(gesture)
+        
+        showingOptionButton.isUserInteractionEnabled = true
+        showingOptionButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showInDropdownDidTouch)))
+        
+        UserDefaults.standard.rx.observe(String.self, Config.currentRewardShownSymbol)
+            .subscribe(onNext: { (symbol) in
+                let symbol = symbol ?? "community points"
+                self.showingOptionButtonLabel.text = symbol.localized().uppercaseFirst
+            })
+            .disposed(by: disposeBag)
     }
     
     @objc func swipeDownButtonDidTouch(_ gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .down {
             parentViewController?.dismiss(animated: true, completion: nil)
         }
+    }
+    
+    @objc func showInDropdownDidTouch() {
+        delegate?.rewardExplanationViewDidTapOnShowInDropdown(self)
     }
 }

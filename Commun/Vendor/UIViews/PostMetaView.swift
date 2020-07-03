@@ -164,6 +164,7 @@ class PostMetaView: MyView {
     
     @objc func stateButtonTapped(_ gesture: UITapGestureRecognizer) {
         let rewardExplanationView = RewardExplanationView(params: gesture.view?.tag == 0 ? .topState : .rewardState)
+        rewardExplanationView.delegate = self
         let postLink = "https://commun.com/faq?#What%20else%20can%20you%20do%20with%20the%20points?"
         rewardExplanationView.explanationView.completionDismissWithAction = { value in
             self.parentViewController?.dismiss(animated: true, completion: {
@@ -173,5 +174,23 @@ class PostMetaView: MyView {
             })
         }
         parentViewController?.showCardWithView(rewardExplanationView, backgroundColor: .clear)
+    }
+}
+
+extension PostMetaView: RewardExplanationViewDelegate {
+    func rewardExplanationViewDidTapOnShowInDropdown(_ rewardExplanationView: RewardExplanationView) {
+        self.parentViewController?.dismiss(animated: true, completion: {
+            UIApplication.topViewController()?.showActionSheet(title: "show rewards in".localized().uppercaseFirst, actions: [
+                UIAlertAction(title: "USD", style: .default, handler: { (_) in
+                    UserDefaults.standard.set("USD", forKey: Config.currentRewardShownSymbol)
+                }),
+                UIAlertAction(title: "CMN", style: .default, handler: { (_) in
+                    UserDefaults.standard.set("CMN", forKey: Config.currentRewardShownSymbol)
+                }),
+                UIAlertAction(title: "community points".localized().uppercaseFirst, style: .default, handler: { (_) in
+                    UserDefaults.standard.set("community points", forKey: Config.currentRewardShownSymbol)
+                })
+            ])
+        })
     }
 }
