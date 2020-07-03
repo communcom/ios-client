@@ -70,7 +70,7 @@ class PasswordsVC: BaseViewController {
     }
     
     private func secretFieldWithTitle(_ title: String) -> UIView {
-        let view = UIView(backgroundColor: .white, cornerRadius: 10)
+        let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
         let stackView = UIStackView(axis: .vertical, spacing: 8, alignment: .fill, distribution: .fill)
         view.addSubview(stackView)
         
