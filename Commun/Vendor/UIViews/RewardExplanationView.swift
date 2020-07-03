@@ -52,5 +52,14 @@ class RewardExplanationView: MyView {
         
         showInView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         explanationView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        swipeDownButton.isUserInteractionEnabled = true
+        swipeDownButton.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(swipeDownButtonDidTouch(_:))))
+    }
+    
+    @objc func swipeDownButtonDidTouch(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .down {
+            parentViewController?.dismiss(animated: true, completion: nil)
+        }
     }
 }
