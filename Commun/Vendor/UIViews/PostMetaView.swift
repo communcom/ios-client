@@ -123,7 +123,21 @@ class PostMetaView: MyView {
         trailingConstraint?.isActive = true
         
         let isRewardState = mosaicItem.isClosed
-        stateButtonLabel.text = isRewardState ? mosaicItem.rewardDouble.currencyValueFormatted : "top".localized().uppercaseFirst
+        
+        var value: String?
+        
+        let symbol = UserDefaults.standard.string(forKey: Config.currentRewardShownSymbol)
+        if !isRewardState {
+            value = "top".localized().uppercaseFirst
+        } else if symbol == "USD" {
+            value = (mosaicItem.convertedReward?.usd ?? "") + " $"
+        } else if symbol == "CMN" {
+            value = (mosaicItem.convertedReward?.cmn ?? "") + " CMN"
+        } else {
+            value = mosaicItem.rewardDouble.currencyValueFormatted
+        }
+        
+        stateButtonLabel.text = value
         stateButton.tag = Int(isRewardState.int)
     }
     
@@ -163,18 +177,34 @@ class PostMetaView: MyView {
     }
     
     @objc func stateButtonTapped(_ gesture: UITapGestureRecognizer) {
+        let rewardExplanationView = RewardExplanationView(params: gesture.view?.tag == 0 ? .topState : .rewardState)
+        rewardExplanationView.delegate = self
         let postLink = "https://commun.com/faq?#What%20else%20can%20you%20do%20with%20the%20points?"
-        let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 193.0))), andParameters: gesture.view?.tag == 0 ? .topState : .rewardState)
-        
-        let cardVC = CardViewController(contentView: userNameRulesView)
-        parentViewController?.present(cardVC, animated: true, completion: nil)
-        
-        userNameRulesView.completionDismissWithAction = { value in
+        rewardExplanationView.explanationView.completionDismissWithAction = { value in
             self.parentViewController?.dismiss(animated: true, completion: {
                 if value, let baseVC = self.parentViewController as? BaseViewController {
                     baseVC.load(url: postLink)
                 }
             })
         }
+        parentViewController?.showCardWithView(rewardExplanationView, backgroundColor: .clear)
+    }
+}
+
+extension PostMetaView: RewardExplanationViewDelegate {
+    func rewardExplanationViewDidTapOnShowInDropdown(_ rewardExplanationView: RewardExplanationView) {
+        self.parentViewController?.dismiss(animated: true, completion: {
+            UIApplication.topViewController()?.showActionSheet(title: "show rewards in".localized().uppercaseFirst, actions: [
+                UIAlertAction(title: "USD", style: .default, handler: { (_) in
+                    UserDefaults.standard.set("USD", forKey: Config.currentRewardShownSymbol)
+                }),
+                UIAlertAction(title: "CMN", style: .default, handler: { (_) in
+                    UserDefaults.standard.set("CMN", forKey: Config.currentRewardShownSymbol)
+                }),
+                UIAlertAction(title: "community points".localized().uppercaseFirst, style: .default, handler: { (_) in
+                    UserDefaults.standard.set("community points", forKey: Config.currentRewardShownSymbol)
+                })
+            ])
+        })
     }
 }
