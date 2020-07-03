@@ -123,7 +123,21 @@ class PostMetaView: MyView {
         trailingConstraint?.isActive = true
         
         let isRewardState = mosaicItem.isClosed
-        stateButtonLabel.text = isRewardState ? mosaicItem.rewardDouble.currencyValueFormatted : "top".localized().uppercaseFirst
+        
+        var value: String?
+        
+        let symbol = UserDefaults.standard.string(forKey: Config.currentRewardShownSymbol)
+        if !isRewardState {
+            value = "top".localized().uppercaseFirst
+        } else if symbol == "USD" {
+            value = (mosaicItem.convertedReward?.usd ?? "") + " $"
+        } else if symbol == "CMN" {
+            value = (mosaicItem.convertedReward?.cmn ?? "") + " CMN"
+        } else {
+            value = mosaicItem.rewardDouble.currencyValueFormatted
+        }
+        
+        stateButtonLabel.text = value
         stateButton.tag = Int(isRewardState.int)
     }
     
