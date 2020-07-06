@@ -15,4 +15,22 @@ extension URL {
     static var appDomain    =   "commun.com"
     #endif
     static var appURL       =   "https://\(appDomain)"
+    
+    static func string(_ string: String, isValidURLWithExtension ext: String) -> Bool {
+        ext == (string as NSString).pathExtension
+    }
+    
+    static func string(_ string: String, isImageURLIncludeGIF gifIncluded: Bool = true) -> Bool {
+        var imageFormats = ["jpg", "png"]
+        if gifIncluded {
+            imageFormats.append("gif")
+        }
+        
+        for format in imageFormats {
+            if Self.string(string, isValidURLWithExtension: format) {
+                return true
+            }
+        }
+        return false
+    }
 }

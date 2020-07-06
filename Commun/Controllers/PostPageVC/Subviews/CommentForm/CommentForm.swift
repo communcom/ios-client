@@ -114,8 +114,8 @@ class CommentForm: MyView {
         
         // mode
         var imageView: UIImageView?
-        if (localImage.value != nil) || (mode == .edit && url != nil) {
-            imageView = MyImageView(width: .adaptive(height: 80), height: .adaptive(height: 80), cornerRadius: .adaptive(height: 15))
+        if (localImage.value != nil) || (mode == .edit && url != nil) || (mode == .new && url != nil && URL.string(url!, isValidURLWithExtension: "gif")) {
+            imageView = MyImageView(width: .adaptive(height: 80), height: .adaptive(height: 80), backgroundColor: .appLightGrayColor, cornerRadius: .adaptive(height: 15))
             imageView?.contentMode = .scaleAspectFill
             addSubview(imageView!)
             constraintTop = imageView!.autoPinEdge(toSuperviewEdge: .top, withInset: .adaptive(height: 10.0))
@@ -245,6 +245,10 @@ class CommentForm: MyView {
                     return true
                 }
                 
+                if self.mode == .new && self.url != nil && URL.string(self.url!, isValidURLWithExtension: "gif") {
+                    return true
+                }
+                
                 return !isTextViewEmpty && isTextChanged
             }
             .subscribe(onNext: { (shouldEnableSendButton) in
@@ -252,15 +256,26 @@ class CommentForm: MyView {
                 self.sendButton.isHidden = !shouldEnableSendButton
                 
                 // Check pasted link
-                if self.textView.text.trimmed.isImageType(), let stringURL = self.textView.text?.trimmed, let url = URL(string: stringURL) {
+                let isImageURL = URL.string(self.textView.text.trimmed, isImageURLIncludeGIF: false)
+                if isImageURL, let stringURL = self.textView.text?.trimmed, let url = URL(string: stringURL) {
                     DispatchQueue.global().async { [weak self] in
                         if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
                             DispatchQueue.main.async {
                                 self?.localImage.accept(image)
-                                self?.textView.text = nil
+                                if let range = (self?.textView.text as NSString?)?.range(of: stringURL) {
+                                    self?.textView.textStorage.deleteCharacters(in: range)
+                                }
                             }
                         }
                     }
+                }
+                
+                if URL.string(self.textView.text.trimmed, isValidURLWithExtension: "gif") {
+                    self.url = self.textView.text.trimmed
+                    if let range = (self.textView.text as NSString?)?.range(of: self.textView.text.trimmed) {
+                        self.textView.textStorage.deleteCharacters(in: range)
+                    }
+                    self.setUp()
                 }
                 
                 UIView.animate(withDuration: 0.3, animations: {
@@ -333,6 +348,7 @@ extension CommentForm {
                 self.textView.text = ""
                 self.mode = .new
                 self.parentComment = nil
+                self.url = nil
                 self.localImage.accept(nil)
                 self.endEditing(true)
                 

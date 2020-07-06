@@ -153,7 +153,6 @@ extension Reactive where Base: UIImageView {
     }
 }
 
-
 // MARK: - RightNavItemDelegate
 extension UIImageView: RightNavItemDelegate {
     public func imageViewer(_ imageViewer: ImageCarouselViewController, didTapRightNavItem index: Int) {
