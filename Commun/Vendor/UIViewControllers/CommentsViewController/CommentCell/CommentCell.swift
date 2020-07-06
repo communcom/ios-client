@@ -121,7 +121,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         replyButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         contentView.addSubview(statusImageView)
-        statusImageView.autoPinEdge(.leading, to: .trailing, of: timeLabel, withOffset: 10)
+        statusImageView.autoPinEdge(.leading, to: .trailing, of: replyButton, withOffset: 10)
         statusImageView.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         let constraint = statusImageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -4)
         constraint.priority = .defaultLow
