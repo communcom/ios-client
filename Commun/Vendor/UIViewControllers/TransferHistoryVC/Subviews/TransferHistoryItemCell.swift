@@ -104,7 +104,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         case "hold":
             username = item.meta.holdType?.localized().uppercaseFirst ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
+                .semibold("\(item.quantityValue.currencyValueFormatted) \(pointName)")
             
             avatarImageView.image = UIImage(named: "wallet-like")
             iconImageView.isHidden = true

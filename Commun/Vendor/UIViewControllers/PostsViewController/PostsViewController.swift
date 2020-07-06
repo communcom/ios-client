@@ -74,7 +74,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
         UserDefaults.standard.rx.observe(String.self, Config.currentRewardShownSymbol)
             .skip(1)
             .distinctUntilChanged()
-            .subscribe(onNext: { (symbol) in
+            .subscribe(onNext: { _ in
                 self.tableView.reloadData()
             })
             .disposed(by: disposeBag)
