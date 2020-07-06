@@ -256,26 +256,40 @@ class CommentForm: MyView {
                 self.sendButton.isHidden = !shouldEnableSendButton
                 
                 // Check pasted link
-                let isImageURL = URL.string(self.textView.text.trimmed, isImageURLIncludeGIF: false)
-                if isImageURL, let stringURL = self.textView.text?.trimmed, let url = URL(string: stringURL) {
-                    DispatchQueue.global().async { [weak self] in
-                        if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self?.localImage.accept(image)
-                                if let range = (self?.textView.text as NSString?)?.range(of: stringURL) {
-                                    self?.textView.textStorage.deleteCharacters(in: range)
+                let text = self.textView.text.trimmed
+                let types: NSTextCheckingResult.CheckingType = .link
+
+                let detector = try? NSDataDetector(types: types.rawValue)
+
+                guard let detect = detector else {
+                   return
+                }
+
+                let matches = detect.matches(in: text, options: .reportCompletion, range: NSMakeRange(0, text.count))
+
+                if let url = matches.first?.url {
+                    // for normal Image
+                    if URL.string(url.absoluteString, isImageURLIncludeGIF: false) {
+                        DispatchQueue.global().async { [weak self] in
+                            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    self?.localImage.accept(image)
+                                    if let range = (self?.textView.text as NSString?)?.range(of: url.absoluteString) {
+                                        self?.textView.textStorage.deleteCharacters(in: range)
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                
-                if URL.string(self.textView.text.trimmed, isValidURLWithExtension: "gif") {
-                    self.url = self.textView.text.trimmed
-                    if let range = (self.textView.text as NSString?)?.range(of: self.textView.text.trimmed) {
-                        self.textView.textStorage.deleteCharacters(in: range)
+                    
+                    // for GIF image
+                    if URL.string(url.absoluteString, isValidURLWithExtension: "gif") {
+                        self.url = url.absoluteString
+                        if let range = (self.textView.text as NSString?)?.range(of: url.absoluteString) {
+                            self.textView.textStorage.deleteCharacters(in: range)
+                        }
+                        self.setUp()
                     }
-                    self.setUp()
                 }
                 
                 UIView.animate(withDuration: 0.3, animations: {
