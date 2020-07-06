@@ -39,7 +39,8 @@ extension UIImageView {
         else {return}
         if urlString.lowercased().ends(with: ".gif") {
             // add spinnerView
-            let size = (height > 76 ? 60: height-16)
+            var size = (height > 76 ? 60: height-16)
+            if size < 30 {size = 30}
             let spinnerView = ASSpinnerView(width: size, height: size)
             spinnerView.spinnerLineWidth = size/10
             spinnerView.spinnerDuration = 0.3
