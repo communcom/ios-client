@@ -31,6 +31,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         var communityId: String?
         var parentComment: ResponseAPIContentId?
         var resolveNestedComments: Bool = false
+        var authorizationRequired: Bool = true
         
         func newFilter(
             withSortBy sortBy: CommentSortMode? = nil,
@@ -95,7 +96,8 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                         limit: 30,
                         userId: filter.userId,
                         permlink: filter.permlink ?? "",
-                        communityId: filter.communityId
+                        communityId: filter.communityId,
+                        authorizationRequired: filter.authorizationRequired
                     )
                 
                 case .user:
@@ -103,7 +105,9 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                         sortBy: filter.sortBy,
                         offset: offset,
                         limit: 30,
-                        userId: filter.userId)
+                        userId: filter.userId,
+                        authorizationRequired: filter.authorizationRequired
+                    )
                     maxNestedLevel = 0
 
                 case .replies:
@@ -114,7 +118,8 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                         permlink: filter.permlink ?? "",
                         communityId: filter.communityId,
                         parentCommentUserId: filter.parentComment?.userId,
-                        parentCommentPermlink: filter.parentComment?.permlink
+                        parentCommentPermlink: filter.parentComment?.permlink,
+                        authorizationRequired: filter.authorizationRequired
                     )
                 }
                 

@@ -11,7 +11,22 @@ import Foundation
 class NonAuthPostPageVC: PostPageVC, NonAuthVCType {
     override class var authorizationRequired: Bool {false}
     
+    lazy var commentFormCoverView = UIView(forAutoLayout: ())
+    
+    override func setUp() {
+        super.setUp()
+        shadowView.addSubview(commentFormCoverView)
+        commentFormCoverView.autoPinEdgesToSuperviewEdges()
+        
+        commentFormCoverView.isUserInteractionEnabled = true
+        commentFormCoverView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(commentFormCoverViewDidTouch)))
+    }
+    
     override func replyToComment(_ comment: ResponseAPIContentGetComment) {
+        showAuthVC()
+    }
+    
+    @objc func commentFormCoverViewDidTouch() {
         showAuthVC()
     }
 }
