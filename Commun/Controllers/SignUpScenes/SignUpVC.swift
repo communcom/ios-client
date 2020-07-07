@@ -27,25 +27,28 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
     
     // MARK: - Properties
     lazy var methods: [Method] = {
-        [Method(serviceName: phoneServiceName), Method(serviceName: emailServiceName)] +
-            SocialNetwork.allCases.filter({
-                // temp hide sigh up with google
-                $0 == .facebook
-            }).map { network in
-            var backgroundColor: UIColor?
-            var textColor: UIColor?
-            switch network {
-            case .facebook:
-                backgroundColor = UIColor(hexString: "#415A94")!
-                textColor = .white
-//            case .twitter:
-//                backgroundColor = UIColor(hexString: "#4AA1EC")!
-//                textColor = .appWhiteColor
-//            case .apple:
-//                backgroundColor = .appBlackColor
-//                textColor: .appWhiteColor
-            case .google:
-                break
+        var social = SocialNetwork.allCases
+
+        // remove google all and remove apple for ios 12
+        if #available(iOS 13.0, *) {
+        } else {
+            social = social.filter({ $0 != .apple })
+        }
+        social = social.filter({ $0 != .google })
+
+        return [Method(serviceName: phoneServiceName), Method(serviceName: emailServiceName)] +
+            social.map { network in
+                var backgroundColor: UIColor?
+                var textColor: UIColor?
+                switch network {
+                case .facebook:
+                    backgroundColor = UIColor(hexString: "#415A94")!
+                    textColor = .white
+                case .apple:
+                    backgroundColor = .appBlackColor
+                    textColor = .appLightGrayColor
+                case .google:
+                    break
             }
             return Method(serviceName: network.rawValue, backgroundColor: backgroundColor ?? .clear, textColor: textColor ?? .appBlackColor)
         }
@@ -76,33 +79,32 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         // set up stack view
         for method in methods {
             let methodView = UIView(height: 44, backgroundColor: method.backgroundColor, cornerRadius: 6)
-            methodView.borderColor = .appGrayColor
-            methodView.borderWidth = 1
-            let imageView = UIImageView(width: 30, height: 30)
-            imageView.image = UIImage(named: "sign-up-with-\(method.serviceName)")!.withRenderingMode(.alwaysTemplate)
-            if method.serviceName == emailServiceName || method.serviceName == phoneServiceName {
-                imageView.tintColor = .appBlackColor
+
+            if method.backgroundColor == .clear {
+                methodView.borderColor = .appGrayColor
+                methodView.borderWidth = 1
             }
 
-            if method.serviceName == SocialNetwork.facebook.rawValue {
-                imageView.tintColor = .white
-            }
+            let imageView = UIImageView(width: 20, height: 20)
+            imageView.image = UIImage(named: "sign-up-with-\(method.serviceName)")!.withRenderingMode(.alwaysTemplate)
+            imageView.tintColor = method.textColor
 
             methodView.addSubview(imageView)
-            imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 7), excludingEdge: .trailing)
-            
+
+            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+            imageView.autoPinEdge(toSuperviewEdge: .left, withInset: 14)
+
             let label = UILabel.with(text: "continue with".localized().uppercaseFirst + " " + method.serviceName.localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: method.textColor, textAlignment: .center)
             methodView.addSubview(label)
-            label.autoAlignAxis(toSuperviewAxis: .horizontal)
-            label.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 7)
-            label.autoPinEdge(toSuperviewEdge: .trailing, withInset: 7)
-            
+            label.autoCenterInSuperview()
+
             stackView.addArrangedSubview(methodView)
-            
+
             methodView.autoPinEdge(toSuperviewEdge: .leading)
             methodView.autoPinEdge(toSuperviewEdge: .trailing)
-            
+            methodView.accessibilityLabel = label.text
             methodView.isUserInteractionEnabled = true
+            
             let tap = MethodTapGesture(target: self, action: #selector(methodDidTap(_:)))
             tap.method = method
             methodView.addGestureRecognizer(tap)
@@ -164,6 +166,9 @@ class SignUpVC: BaseSignUpVC, SignUpRouter {
         } else if method.serviceName == SocialNetwork.google.rawValue {
             manager = GoogleLoginManager()
             AnalyticsManger.shared.registrationOpenScreen(.google)
+        } else if method.serviceName == SocialNetwork.apple.rawValue {
+            manager = AppleLoginManager()
+            AnalyticsManger.shared.registrationOpenScreen(.apple)
         } else {
             return
         }

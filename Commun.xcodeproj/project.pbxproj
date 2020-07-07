@@ -111,6 +111,7 @@
 		AC2CCB762412924C00C2DFD4 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2CCB722412924C00C2DFD4 /* UIButton+Extensions.swift */; };
 		AC2CCB792412962D00C2DFD4 /* BoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2CCB782412962D00C2DFD4 /* BoardingVC.swift */; };
 		AC3386A12371D1B6009DB3BB /* EmbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3386A02371D1B6009DB3BB /* EmbedView.swift */; };
+		AC5B0E1C24B4956800C67786 /* AppleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B0E1B24B4956800C67786 /* AppleLoginManager.swift */; };
 		AC5D7D8B2385A1C400EEC5ED /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */; };
 		AC6A7CBA23FC4C9A004CA486 /* DeviceScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A7CB923FC4C99004CA486 /* DeviceScreen.swift */; };
 		AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC88ADCF2386B12A00D72374 /* ShareHelper.swift */; };
@@ -640,6 +641,7 @@
 		AC2CCB722412924C00C2DFD4 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		AC2CCB782412962D00C2DFD4 /* BoardingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardingVC.swift; sourceTree = "<group>"; };
 		AC3386A02371D1B6009DB3BB /* EmbedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedView.swift; sourceTree = "<group>"; };
+		AC5B0E1B24B4956800C67786 /* AppleLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginManager.swift; sourceTree = "<group>"; };
 		AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		AC6A7CB923FC4C99004CA486 /* DeviceScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceScreen.swift; sourceTree = "<group>"; };
 		AC759B91237C15C20069D169 /* CyberSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CyberSwift.xcodeproj; path = cyberSwift/CyberSwift.xcodeproj; sourceTree = "<group>"; };
@@ -1627,6 +1629,7 @@
 			children = (
 				ACE812D824238283001D9AE2 /* SocialLoginManager.swift */,
 				ACE812D224238215001D9AE2 /* FacebookLoginManager.swift */,
+				AC5B0E1B24B4956800C67786 /* AppleLoginManager.swift */,
 				ACE812D524238215001D9AE2 /* GoogleLoginManager.swift */,
 			);
 			path = Social;
@@ -3280,6 +3283,7 @@
 				B1D7AD5C23A10664007D1A13 /* QRScannerViewController.swift in Sources */,
 				BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
+				AC5B0E1C24B4956800C67786 /* AppleLoginManager.swift in Sources */,
 				AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */,
 				BCCE669C2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift in Sources */,
 				BC65FD4224514514006F0846 /* CommunWalletVC+Delegates+Datasources.swift in Sources */,
