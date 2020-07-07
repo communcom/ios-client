@@ -14,7 +14,6 @@ import RxDataSources
 class PostPageVC: CommentsViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     override var shouldHideTabBar: Bool {true}
-    class var authorizationRequired: Bool {true}
     
     // MARK: - Constants
     let navigationBarHeight: CGFloat = 56

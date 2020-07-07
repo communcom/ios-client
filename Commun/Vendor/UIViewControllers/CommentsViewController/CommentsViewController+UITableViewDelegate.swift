@@ -88,7 +88,8 @@ extension CommentsViewController: UITableViewDelegate {
         RestAPIManager.instance.getRepliesForComment(forPost: post.contentId,
                                                      parentComment: comment.contentId,
                                                      offset: button.offset,
-                                                     limit: button.limit
+                                                     limit: button.limit,
+                                                     authorizationRequired: Self.authorizationRequired
         )
             .map {$0.items}
             .subscribe(onSuccess: {[weak self] (children) in
