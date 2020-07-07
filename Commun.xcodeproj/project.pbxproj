@@ -210,6 +210,7 @@
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC3E0D3624B4913900C5F368 /* NonAuthPostPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D3524B4913900C5F368 /* NonAuthPostPageVC.swift */; };
 		BC3E0D3924B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D3824B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift */; };
+		BC3E0D3D24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D3C24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift */; };
 		BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */; };
 		BC40719923CEF801000027A3 /* PlaceholderNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */; };
 		BC40719A23CEF801000027A3 /* PlaceholderNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC40719823CEF801000027A3 /* PlaceholderNotificationCell.xib */; };
@@ -749,6 +750,7 @@
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC3E0D3524B4913900C5F368 /* NonAuthPostPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthPostPageVC.swift; sourceTree = "<group>"; };
 		BC3E0D3824B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthUserProfilePageVC.swift; sourceTree = "<group>"; };
+		BC3E0D3C24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthCommunityPageVC.swift; sourceTree = "<group>"; };
 		BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderAvatarImageView.swift; sourceTree = "<group>"; };
 		BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderNotificationCell.swift; sourceTree = "<group>"; };
 		BC40719823CEF801000027A3 /* PlaceholderNotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceholderNotificationCell.xib; sourceTree = "<group>"; };
@@ -2579,6 +2581,7 @@
 				BC3E0D3124B4910F00C5F368 /* NonAuthFeedPage */,
 				BC3E0D3424B4911F00C5F368 /* NonAuthPostPage */,
 				BC3E0D3824B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift */,
+				BC3E0D3C24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift */,
 			);
 			path = NonAuthScene;
 			sourceTree = "<group>";
@@ -3251,6 +3254,7 @@
 				5721E87122650AC0003BE04B /* String+Extensions.swift in Sources */,
 				BC7470B02410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift in Sources */,
 				3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
+				BC3E0D3D24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift in Sources */,
 				BC84820624595CEE0099C7C5 /* CMWalletView.swift in Sources */,
 				BCAF5B24241B78DF00C157B5 /* WalletConvertVC+Binding.swift in Sources */,
 				BC5395E7244950F200B5176D /* PostPageVC+Actions.swift in Sources */,

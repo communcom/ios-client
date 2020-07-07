@@ -26,13 +26,11 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     lazy var highlightCommunities = BehaviorRelay<[ResponseAPIContentGetCommunity]>(value: [])
     
     var username: String?
-    let authorizationRequired: Bool
     
     // MARK: - Initializers
     init(userId: String? = nil, username: String? = nil, authorizationRequired: Bool = true) {
         self.username = username
-        self.authorizationRequired = authorizationRequired
-        super.init(profileId: userId)
+        super.init(profileId: userId, authorizationRequired: authorizationRequired)
     }
     
     // MARK: - Methods

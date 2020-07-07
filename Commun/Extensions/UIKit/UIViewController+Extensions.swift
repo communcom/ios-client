@@ -230,6 +230,12 @@ extension UIViewController {
     }
     
     func showCommunityWithCommunityId(_ id: String) {
+        if self is NonAuthVCType {
+            let profileVC = NonAuthCommunityPageVC(communityId: id)
+            show(profileVC, sender: nil)
+            return
+        }
+        
         if let vc = self as? CommunityPageVC, vc.communityId == id {
             vc.view.shake()
             return
@@ -240,6 +246,12 @@ extension UIViewController {
     }
     
     func showCommunityWithCommunityAlias(_ alias: String) {
+        if self is NonAuthVCType {
+            let profileVC = NonAuthCommunityPageVC(communityAlias: alias)
+            show(profileVC, sender: nil)
+            return
+        }
+        
         if let vc = self as? CommunityPageVC, vc.communityAlias == alias {
             vc.view.shake()
             return
