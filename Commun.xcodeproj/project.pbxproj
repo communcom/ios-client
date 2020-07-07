@@ -208,6 +208,7 @@
 		BC3AF38523FBEB4200528EEB /* DiscoveryUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AF38423FBEB4200528EEB /* DiscoveryUsersVC.swift */; };
 		BC3AF38723FBEC9000528EEB /* DiscoveryPostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AF38623FBEC9000528EEB /* DiscoveryPostsVC.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
+		BC3E0D3624B4913900C5F368 /* NonAuthPostPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D3524B4913900C5F368 /* NonAuthPostPageVC.swift */; };
 		BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */; };
 		BC40719923CEF801000027A3 /* PlaceholderNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */; };
 		BC40719A23CEF801000027A3 /* PlaceholderNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC40719823CEF801000027A3 /* PlaceholderNotificationCell.xib */; };
@@ -745,6 +746,7 @@
 		BC3AF38423FBEB4200528EEB /* DiscoveryUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryUsersVC.swift; sourceTree = "<group>"; };
 		BC3AF38623FBEC9000528EEB /* DiscoveryPostsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryPostsVC.swift; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
+		BC3E0D3524B4913900C5F368 /* NonAuthPostPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthPostPageVC.swift; sourceTree = "<group>"; };
 		BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderAvatarImageView.swift; sourceTree = "<group>"; };
 		BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderNotificationCell.swift; sourceTree = "<group>"; };
 		BC40719823CEF801000027A3 /* PlaceholderNotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceholderNotificationCell.xib; sourceTree = "<group>"; };
@@ -1894,6 +1896,23 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		BC3E0D3124B4910F00C5F368 /* NonAuthFeedPage */ = {
+			isa = PBXGroup;
+			children = (
+				BCB08D5F24B4682B00EA2BDB /* NonAuthFeedPageVC.swift */,
+				BCB08D6124B4696600EA2BDB /* NonAuthFeedPageVM.swift */,
+			);
+			path = NonAuthFeedPage;
+			sourceTree = "<group>";
+		};
+		BC3E0D3424B4911F00C5F368 /* NonAuthPostPage */ = {
+			isa = PBXGroup;
+			children = (
+				BC3E0D3524B4913900C5F368 /* NonAuthPostPageVC.swift */,
+			);
+			path = NonAuthPostPage;
+			sourceTree = "<group>";
+		};
 		BC40719623CEF7F3000027A3 /* PlaceholderNotificationCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2555,8 +2574,8 @@
 			isa = PBXGroup;
 			children = (
 				BCB08D6624B4759500EA2BDB /* NonAuthVCType.swift */,
-				BCB08D5F24B4682B00EA2BDB /* NonAuthFeedPageVC.swift */,
-				BCB08D6124B4696600EA2BDB /* NonAuthFeedPageVM.swift */,
+				BC3E0D3124B4910F00C5F368 /* NonAuthFeedPage */,
+				BC3E0D3424B4911F00C5F368 /* NonAuthPostPage */,
 			);
 			path = NonAuthScene;
 			sourceTree = "<group>";
@@ -3404,6 +3423,7 @@
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
 				BC8481FA24581FB20099C7C5 /* DonationView.swift in Sources */,
+				BC3E0D3624B4913900C5F368 /* NonAuthPostPageVC.swift in Sources */,
 				BC923E152431A76D00B28413 /* BaseVerifyVC.swift in Sources */,
 				BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift in Sources */,
 				BC3694F923699B8600B2E078 /* ArticleEditorVC+Actions.swift in Sources */,

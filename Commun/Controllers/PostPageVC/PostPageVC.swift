@@ -14,6 +14,7 @@ import RxDataSources
 class PostPageVC: CommentsViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     override var shouldHideTabBar: Bool {true}
+    class var authorizationRequired: Bool {true}
     
     // MARK: - Constants
     let navigationBarHeight: CGFloat = 56
@@ -36,12 +37,12 @@ class PostPageVC: CommentsViewController {
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
-        let viewModel = PostPageViewModel(post: post)
+        let viewModel = PostPageViewModel(post: post, authorizationRequired: Self.authorizationRequired)
         super.init(viewModel: viewModel)
     }
     
     init(userId: String? = nil, username: String? = nil, permlink: String, communityId: String? = nil, communityAlias: String? = nil) {
-        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias)
+        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias, authorizationRequired: Self.authorizationRequired)
         super.init(viewModel: viewModel)
     }
     

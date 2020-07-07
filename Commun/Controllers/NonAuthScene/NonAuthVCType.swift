@@ -13,5 +13,6 @@ protocol NonAuthVCType: BaseViewController {}
 extension NonAuthVCType {
     func showAuthVC() {
         // TODO: - Show Auth
+        showAlert(title: "TODO", message: "Authorization needed")
     }
 }

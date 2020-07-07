@@ -15,13 +15,15 @@ class PostPageViewModel: CommentsViewModel {
     // MARK: - Properties
     var username: String?
     var communityAlias: String?
+    let authorizationRequired: Bool
     
     // MARK: - Objects
     let loadingState = BehaviorRelay<LoadingState>(value: .loading)
     let post: BehaviorRelay<ResponseAPIContentGetPost?>
     
     // MARK: - Initializers
-    init(post: ResponseAPIContentGetPost) {
+    init(post: ResponseAPIContentGetPost, authorizationRequired: Bool = true) {
+        self.authorizationRequired = authorizationRequired
         self.post = BehaviorRelay<ResponseAPIContentGetPost?>(value: post)
         super.init(filter: CommentsListFetcher.Filter(sortBy: .popularity, type: .post, userId: post.contentId.userId, permlink: post.contentId.permlink, communityId: post.community?.communityId))
         defer {
@@ -30,7 +32,8 @@ class PostPageViewModel: CommentsViewModel {
         }
     }
     
-    init(userId: String?, username: String?, permlink: String, communityId: String?, communityAlias: String?) {
+    init(userId: String?, username: String?, permlink: String, communityId: String?, communityAlias: String?, authorizationRequired: Bool = true) {
+        self.authorizationRequired = authorizationRequired
         self.username = username
         self.communityAlias = communityAlias
         
@@ -50,7 +53,7 @@ class PostPageViewModel: CommentsViewModel {
     }
     
     func loadPost() {
-        RestAPIManager.instance.loadPost(userId: filter.value.userId, username: username, permlink: filter.value.permlink!, communityId: filter.value.communityId, communityAlias: communityAlias)
+        RestAPIManager.instance.loadPost(userId: filter.value.userId, username: username, permlink: filter.value.permlink!, communityId: filter.value.communityId, communityAlias: communityAlias, authorizationRequired: authorizationRequired)
             .do(onSubscribe: {
                 self.loadingState.accept(.loading)
             })

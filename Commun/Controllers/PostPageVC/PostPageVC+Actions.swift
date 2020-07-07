@@ -40,7 +40,7 @@ extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
             ])
     }
     
-    func headerViewUpVoteButtonDidTouch(_ headerView: PostHeaderView) {
+    @objc func headerViewUpVoteButtonDidTouch(_ headerView: PostHeaderView) {
         guard let post = post else {return}
         post.upVote()
             .subscribe { (error) in
@@ -49,7 +49,7 @@ extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
             .disposed(by: self.disposeBag)
     }
     
-    func headerViewDownVoteButtonDidTouch(_ headerView: PostHeaderView) {
+    @objc func headerViewDownVoteButtonDidTouch(_ headerView: PostHeaderView) {
         guard let post = post else {return}
         post.downVote()
             .subscribe { (error) in

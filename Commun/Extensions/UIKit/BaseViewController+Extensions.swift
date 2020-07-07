@@ -20,7 +20,9 @@ extension BaseViewController {
             )
         )
         
-        if let community = post.community, let isSubscribed = community.isSubscribed {
+        if let community = post.community, let isSubscribed = community.isSubscribed,
+            !(self is NonAuthVCType)
+        {
             let actionProperties = self.setupAction(isSubscribed: isSubscribed)
             
             let action = CommunActionSheet.Action(title: actionProperties.title, icon: actionProperties.icon, style: .follow, post: post, handle: {

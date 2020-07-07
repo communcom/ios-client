@@ -30,4 +30,9 @@ class NonAuthFeedPageVC: FeedPageVC, NonAuthVCType {
     override func openEditor(completion: ((BasicEditorVC) -> Void)? = nil) {
         showAuthVC()
     }
+    
+    override func modelSelected(_ post: ResponseAPIContentGetPost) {
+        let postPageVC = NonAuthPostPageVC(post: post)
+        show(postPageVC, sender: nil)
+    }
 }

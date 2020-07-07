@@ -13,6 +13,7 @@ protocol PostCellDelegate: class {
     func postCell(_ postCell: PostCell, upvoteButtonDidTouchForPostWithIdentity identity: ResponseAPIContentGetPost.Identity)
     func postCell(_ postCell: PostCell, downvoteButtonDidTouchForPostWithIdentity identity: ResponseAPIContentGetPost.Identity)
     func postCell(_ postCell: PostCell, menuButtonDidTouchForPostWithIdentity identity: ResponseAPIContentGetPost.Identity)
+    func postCell(_ postCell: PostCell, commentButtonDidTouchForPost post: ResponseAPIContentGetPost)
 }
 
 extension PostCellDelegate where Self: BaseViewController {
@@ -52,5 +53,18 @@ extension PostCellDelegate where Self: BaseViewController {
     {
         guard let post = posts.first(where: {$0.identity == identity}) else {return}
         showPostMenu(post: post)
+    }
+    
+    func postCell(_ postCell: PostCell, commentButtonDidTouchForPost post: ResponseAPIContentGetPost) {
+        
+        let vc: PostPageVC
+        if self is NonAuthVCType {
+            vc = NonAuthPostPageVC(post: post)
+        } else {
+            vc = PostPageVC(post: post)
+        }
+        
+        vc.scrollToTopAfterLoadingComment = true
+        show(vc, sender: nil)
     }
 }
