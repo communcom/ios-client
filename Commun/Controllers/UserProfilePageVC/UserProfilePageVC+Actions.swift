@@ -11,7 +11,7 @@ import CyberSwift
 import RxSwift
 
 extension UserProfilePageVC {    
-    @objc func blockUser() {
+    func blockUser() {
         guard let userId = viewModel.profile.value?.userId else {return}
         showIndetermineHudWithMessage("blocking".localized().uppercaseFirst + "...")
         
@@ -39,7 +39,7 @@ extension UserProfilePageVC {
         
     }
     
-    @objc func unblockUser() {
+    func unblockUser() {
         guard let userId = viewModel.profile.value?.userId else {return}
         showIndetermineHudWithMessage("unblocking".localized().uppercaseFirst + "...")
         

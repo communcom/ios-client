@@ -2576,9 +2576,9 @@
 			isa = PBXGroup;
 			children = (
 				BCB08D6624B4759500EA2BDB /* NonAuthVCType.swift */,
-				BC3E0D3824B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift */,
 				BC3E0D3124B4910F00C5F368 /* NonAuthFeedPage */,
 				BC3E0D3424B4911F00C5F368 /* NonAuthPostPage */,
+				BC3E0D3824B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift */,
 			);
 			path = NonAuthScene;
 			sourceTree = "<group>";

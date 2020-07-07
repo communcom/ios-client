@@ -11,11 +11,13 @@ import Foundation
 class NonAuthUserProfilePageVC: UserProfilePageVC, NonAuthVCType {
     override var authorizationRequired: Bool {false}
     
-    override func blockUser() {
-        showAuthVC()
+    override func createHeaderView() -> UserProfileHeaderView {
+        let headerView = super.createHeaderView()
+        headerView.authorizationRequired = false
+        return headerView
     }
     
-    override func unblockUser() {
+    override func confirmBlock() {
         showAuthVC()
     }
 }
