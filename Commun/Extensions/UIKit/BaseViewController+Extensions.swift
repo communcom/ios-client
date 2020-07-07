@@ -142,6 +142,11 @@ extension BaseViewController {
     }
     
     private func reportPost(_ post: ResponseAPIContentGetPost) {
+        if let nonAuthVC = self as? NonAuthVCType {
+            nonAuthVC.showAuthVC()
+            return
+        }
+        
         let vc = ContentReportVC(content: post)
         let nc = SwipeNavigationController(rootViewController: vc)
         

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NonAuthFeedPageVC: FeedPageVC {
+class NonAuthFeedPageVC: FeedPageVC, NonAuthVCType {
     override init() {
         let vm = NonAuthFeedPageVM()
         super.init(viewModel: vm)
@@ -28,6 +28,6 @@ class NonAuthFeedPageVC: FeedPageVC {
     }
     
     override func openEditor(completion: ((BasicEditorVC) -> Void)? = nil) {
-        // TODO: - Show Auth
+        showAuthVC()
     }
 }

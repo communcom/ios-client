@@ -18,6 +18,12 @@ protocol PostCellDelegate: class {
 extension PostCellDelegate where Self: BaseViewController {
     func postCell(_ postCell: PostCell, upvoteButtonDidTouchForPostWithIdentity identity: ResponseAPIContentGetPost.Identity)
     {
+        // Prevent upvoting when user is in NonAuthVCType
+        if let nonAuthVC = self as? NonAuthVCType {
+            nonAuthVC.showAuthVC()
+            return
+        }
+        
         guard let post = posts.first(where: {$0.identity == identity}) else {return}
         post.upVote()
             .subscribe { (error) in
@@ -28,6 +34,12 @@ extension PostCellDelegate where Self: BaseViewController {
     
     func postCell(_ postCell: PostCell, downvoteButtonDidTouchForPostWithIdentity identity: ResponseAPIContentGetPost.Identity)
     {
+        // Prevent downvoting when user is in NonAuthVCType
+        if let nonAuthVC = self as? NonAuthVCType {
+            nonAuthVC.showAuthVC()
+            return
+        }
+        
         guard let post = posts.first(where: {$0.identity == identity}) else {return}
         post.downVote()
             .subscribe { (error) in

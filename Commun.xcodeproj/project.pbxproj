@@ -398,6 +398,7 @@
 		BCAFFF2F24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */; };
 		BCB08D6024B4682B00EA2BDB /* NonAuthFeedPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB08D5F24B4682B00EA2BDB /* NonAuthFeedPageVC.swift */; };
 		BCB08D6224B4696600EA2BDB /* NonAuthFeedPageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB08D6124B4696600EA2BDB /* NonAuthFeedPageVM.swift */; };
+		BCB08D6724B4759500EA2BDB /* NonAuthVCType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB08D6624B4759500EA2BDB /* NonAuthVCType.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */; };
 		BCB2A6E62355536D00B3582B /* UITableViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E52355536D00B3582B /* UITableViewCell+Extensions.swift */; };
@@ -934,6 +935,7 @@
 		BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCommunityExplanationView.swift; sourceTree = "<group>"; };
 		BCB08D5F24B4682B00EA2BDB /* NonAuthFeedPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthFeedPageVC.swift; sourceTree = "<group>"; };
 		BCB08D6124B4696600EA2BDB /* NonAuthFeedPageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthFeedPageVM.swift; sourceTree = "<group>"; };
+		BCB08D6624B4759500EA2BDB /* NonAuthVCType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthVCType.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
 		BCB2A6E52355536D00B3582B /* UITableViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extensions.swift"; sourceTree = "<group>"; };
@@ -2552,6 +2554,7 @@
 		BCB08D5C24B4679E00EA2BDB /* NonAuthScene */ = {
 			isa = PBXGroup;
 			children = (
+				BCB08D6624B4759500EA2BDB /* NonAuthVCType.swift */,
 				BCB08D5F24B4682B00EA2BDB /* NonAuthFeedPageVC.swift */,
 				BCB08D6124B4696600EA2BDB /* NonAuthFeedPageVM.swift */,
 			);
@@ -3528,6 +3531,7 @@
 				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,
 				BC923E182431AB2600B28413 /* VerifyEmailVC.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,
+				BCB08D6724B4759500EA2BDB /* NonAuthVCType.swift in Sources */,
 				BCCE0AA82367EB5900A183AA /* MyCollectionViewCell.swift in Sources */,
 				BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */,
 				BCA9712823608ABD00AE37E1 /* UsersStackView.swift in Sources */,
