@@ -396,6 +396,8 @@
 		BCAFEC95243EC237003A1DC4 /* TransactionCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAFEC94243EC237003A1DC4 /* TransactionCompletedVC.swift */; };
 		BCAFEC9B243F0C03003A1DC4 /* LinkResponsiveTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAFEC9A243F0C03003A1DC4 /* LinkResponsiveTextView.swift */; };
 		BCAFFF2F24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */; };
+		BCB08D6024B4682B00EA2BDB /* NonAuthFeedPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB08D5F24B4682B00EA2BDB /* NonAuthFeedPageVC.swift */; };
+		BCB08D6224B4696600EA2BDB /* NonAuthFeedPageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB08D6124B4696600EA2BDB /* NonAuthFeedPageVM.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */; };
 		BCB2A6E62355536D00B3582B /* UITableViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E52355536D00B3582B /* UITableViewCell+Extensions.swift */; };
@@ -930,6 +932,8 @@
 		BCAFEC94243EC237003A1DC4 /* TransactionCompletedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCompletedVC.swift; sourceTree = "<group>"; };
 		BCAFEC9A243F0C03003A1DC4 /* LinkResponsiveTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkResponsiveTextView.swift; sourceTree = "<group>"; };
 		BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCommunityExplanationView.swift; sourceTree = "<group>"; };
+		BCB08D5F24B4682B00EA2BDB /* NonAuthFeedPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthFeedPageVC.swift; sourceTree = "<group>"; };
+		BCB08D6124B4696600EA2BDB /* NonAuthFeedPageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthFeedPageVM.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
 		BCB2A6E52355536D00B3582B /* UITableViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extensions.swift"; sourceTree = "<group>"; };
@@ -1440,6 +1444,7 @@
 		571B1508223A937200630C8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BCB08D5C24B4679E00EA2BDB /* NonAuthScene */,
 				3B67FC0522C4BB5100D05F01 /* SplashVC.swift */,
 				BC5A349E242B083B001C5054 /* WelcomeVC */,
 				3B986B6322CE4B8100C1E985 /* SignUpScenes */,
@@ -2544,6 +2549,15 @@
 			path = ProfileHeaderView;
 			sourceTree = "<group>";
 		};
+		BCB08D5C24B4679E00EA2BDB /* NonAuthScene */ = {
+			isa = PBXGroup;
+			children = (
+				BCB08D5F24B4682B00EA2BDB /* NonAuthFeedPageVC.swift */,
+				BCB08D6124B4696600EA2BDB /* NonAuthFeedPageVM.swift */,
+			);
+			path = NonAuthScene;
+			sourceTree = "<group>";
+		};
 		BCB49CD5242DED6600758BA1 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -3162,6 +3176,7 @@
 				3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */,
 				BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */,
 				BC3AAF1923E0223F005E8DAB /* CurrenciesViewModel.swift in Sources */,
+				BCB08D6224B4696600EA2BDB /* NonAuthFeedPageVM.swift in Sources */,
 				3B8DDF5A234AF04C00B213F0 /* ArticleEditorVC.swift in Sources */,
 				B1D7AD5623A10582007D1A13 /* ErrorView.swift in Sources */,
 				BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */,
@@ -3558,6 +3573,7 @@
 				BC597A6B238BBDAC00103F4F /* FittingSizePresentationController.swift in Sources */,
 				3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */,
 				BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */,
+				BCB08D6024B4682B00EA2BDB /* NonAuthFeedPageVC.swift in Sources */,
 				B10DB96B240FB99B001BD0E4 /* CMFeedbackViewController.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,
 				BC8F815423E27ECE0024C04A /* BuyCommunViewModel.swift in Sources */,

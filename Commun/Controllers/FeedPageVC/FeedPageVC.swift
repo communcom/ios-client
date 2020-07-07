@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxDataSources
 
-final class FeedPageVC: PostsViewController {
+class FeedPageVC: PostsViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     
@@ -24,6 +24,10 @@ final class FeedPageVC: PostsViewController {
     // MARK: - Initializers
     init() {
         let viewModel = FeedPageViewModel(prefetch: true)
+        super.init(viewModel: viewModel)
+    }
+    
+    override init(viewModel: PostsViewModel) {
         super.init(viewModel: viewModel)
     }
     
@@ -68,7 +72,7 @@ final class FeedPageVC: PostsViewController {
         
         headerView = FeedPageHeaderView(tableView: tableView)
         
-floatView.changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeButtonDidTouch(_:)), for: .touchUpInside)
+        floatView.changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeButtonDidTouch(_:)), for: .touchUpInside)
         floatView.sortButton.addTarget(self, action: #selector(changeFilterButtonDidTouch(_:)), for: .touchUpInside)
         headerView.getButton.addTarget(self, action: #selector(promoGetButtonDidTouch), for: .touchUpInside)
         
@@ -110,7 +114,7 @@ floatView.changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeB
         }.disposed(by: disposeBag)
         
         // promo
-        (viewModel as! FeedPageViewModel).claimedPromos
+        (viewModel as? FeedPageViewModel)?.claimedPromos
             .filter {$0 != nil}
             .map {$0!}
             .subscribe(onNext: { (claimedPromos) in
@@ -146,14 +150,16 @@ floatView.changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeB
     override func filterChanged(filter: PostsListFetcher.Filter) {
         super.filterChanged(filter: filter)
         floatView.setUp(with: filter)
-        
+        saveFilter(filter: filter)
+    }
+    
+    func saveFilter(filter: PostsListFetcher.Filter) {
         // save filter
         do {
             try filter.save()
         } catch {
             print(error)
         }
-        
     }
     
     // MARK: - Actions
