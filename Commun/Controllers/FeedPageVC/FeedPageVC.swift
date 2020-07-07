@@ -71,6 +71,7 @@ class FeedPageVC: PostsViewController {
         view.bringSubviewToFront(statusBarView)
         
         headerView = FeedPageHeaderView(tableView: tableView)
+        headerView.delegate = self
         
         floatView.changeFeedTypeButton.addTarget(self, action: #selector(changeFeedTypeButtonDidTouch(_:)), for: .touchUpInside)
         floatView.sortButton.addTarget(self, action: #selector(changeFilterButtonDidTouch(_:)), for: .touchUpInside)
@@ -162,6 +163,14 @@ class FeedPageVC: PostsViewController {
         }
     }
     
+    func openEditor(completion: ((BasicEditorVC) -> Void)? = nil) {
+        let editorVC = BasicEditorVC(chooseCommunityAfterLoading: completion == nil)
+        
+        present(editorVC, animated: true, completion: {
+            completion?(editorVC)
+        })
+    }
+    
     // MARK: - Actions
     @objc func promoGetButtonDidTouch() {
 //        AnalyticsManger.shared.clickGetDankMeme()
@@ -193,5 +202,17 @@ class FeedPageVC: PostsViewController {
     
     @objc func changeFilterButtonDidTouch(_ sender: Any) {
         openFilterVC()
+    }
+}
+
+extension FeedPageVC: FeedPageHeaderViewDelegate {
+    func feedPageHeaderViewDidTouchWhatsNew(_ headerView: FeedPageHeaderView) {
+        openEditor()
+    }
+    
+    func feedPageHeaderViewDidTouchImageButton(_ headerView: FeedPageHeaderView) {
+        openEditor { (editorVC) in
+            editorVC.addImage()
+        }
     }
 }

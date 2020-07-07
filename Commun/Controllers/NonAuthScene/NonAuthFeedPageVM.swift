@@ -10,7 +10,8 @@ import Foundation
 
 class NonAuthFeedPageVM: PostsViewModel {
     init() {
-        let filter = PostsListFetcher.Filter(type: .new, sortBy: .time, timeframe: .all)
+        var filter = PostsListFetcher.Filter(type: .new, sortBy: .time, timeframe: .all)
+        filter.authorizationRequired = false
         super.init(filter: filter, prefetch: true)
     }
 }

@@ -26,4 +26,8 @@ class NonAuthFeedPageVC: FeedPageVC {
     override func saveFilter(filter: PostsListFetcher.Filter) {
         // do nothing
     }
+    
+    override func openEditor(completion: ((BasicEditorVC) -> Void)? = nil) {
+        // TODO: - Show Auth
+    }
 }
