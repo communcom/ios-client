@@ -146,6 +146,12 @@ extension UIViewController {
 //            return
 //        }
         
+        if self is NonAuthVCType {
+            let profileVC = NonAuthUserProfilePageVC(userId: userId, username: username)
+            show(profileVC, sender: nil)
+            return
+        }
+        
         // Open other user's profile
         if userId != Config.currentUser?.id && username != Config.currentUser?.name {
             let profileVC = UserProfilePageVC(userId: userId, username: username)

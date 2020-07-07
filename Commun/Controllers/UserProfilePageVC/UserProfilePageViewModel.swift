@@ -21,21 +21,23 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     // MARK: - Objects
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
-    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(type: .byUser, sortBy: .timeDesc, timeframe: .all, userId: profileId), prefetch: profileId != nil)
-    lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(type: .user, userId: profileId), prefetch: profileId != nil, shouldGroupComments: false)
+    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(authorizationRequired: authorizationRequired, type: .byUser, sortBy: .timeDesc, timeframe: .all, userId: profileId), prefetch: profileId != nil)
+    lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(type: .user, userId: profileId, authorizationRequired: authorizationRequired), prefetch: profileId != nil, shouldGroupComments: false)
     lazy var highlightCommunities = BehaviorRelay<[ResponseAPIContentGetCommunity]>(value: [])
     
     var username: String?
+    let authorizationRequired: Bool
     
     // MARK: - Initializers
-    init(userId: String? = nil, username: String? = nil) {
+    init(userId: String? = nil, username: String? = nil, authorizationRequired: Bool = true) {
         self.username = username
+        self.authorizationRequired = authorizationRequired
         super.init(profileId: userId)
     }
     
     // MARK: - Methods
     override var loadProfileRequest: Single<ResponseAPIContentGetProfile> {
-        RestAPIManager.instance.getProfile(user: profileId ?? username)
+        RestAPIManager.instance.getProfile(user: profileId ?? username, authorizationRequired: authorizationRequired)
     }
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {

@@ -33,7 +33,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
-        UserProfilePageViewModel(userId: userId, username: username)
+        UserProfilePageViewModel(userId: userId, username: username, authorizationRequired: authorizationRequired)
     }
     var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
         (viewModel as! UserProfilePageViewModel).commentsVM
