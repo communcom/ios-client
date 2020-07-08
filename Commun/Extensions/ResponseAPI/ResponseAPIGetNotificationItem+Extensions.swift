@@ -63,7 +63,7 @@ extension ResponseAPIGetNotificationItem {
                     .normal(" ")
                     .normal("\(amount ?? "0") \(community?.name ?? community?.communityId ?? "Commun")")
                     .normal(". ")
-                    .normal("Реферальный бонус - 5% \(percent ?? 5)% от покупки")
+                    .normal("Реферальный бонус -    \(percent ?? 5)% от покупки")
                     .normal(" ")
                     .text("\(referral?.username ?? "")", weight: .medium, color: .appMainColor)
             case "transfer":
@@ -84,7 +84,7 @@ extension ResponseAPIGetNotificationItem {
             case "donation":
                 aStr.semibold(from?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("пожертвовал твой пост: ")
+                    .normal("задонатил вашему посту: ")
                     .normal("\"")
                     .normal(post?.shortText ?? "")
                     .normal("\"")
