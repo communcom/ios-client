@@ -18,9 +18,8 @@ class NonAuthFeedPageVC: FeedPageVC, NonAuthVCType {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setUp() {
-        super.setUp()
-        floatView.changeFeedTypeButton.isHidden = true
+    override func changeFeedTypeButtonDidTouch(_ sender: Any) {
+        showAuthVC()
     }
     
     override func saveFilter(filter: PostsListFetcher.Filter) {
