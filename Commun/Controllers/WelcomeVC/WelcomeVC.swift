@@ -23,21 +23,21 @@ class WelcomeVC: BaseViewController {
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fillEqually)
     
     lazy var nextButton = CommunButton.default(height: 50, label: "next".localized().uppercaseFirst, isHuggingContent: false)
-    lazy var bottomSignInButton = UIButton(height: 50, label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 25)
-    lazy var signUpButton: UIView = {
-        let view = UIView(height: 50, backgroundColor: .appMainColor, cornerRadius: 25)
-        let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-        hStack.addArrangedSubviews([
-            UILabel.with(text: "start and get 30 points".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .white),
-            UIImageView(width: 35, height: 33, imageNamed: "coin-reward")
-        ])
-        view.addSubview(hStack)
-        hStack.autoCenterInSuperview()
-        
-        view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(signUpButtonTap(_:))))
-        return view
-    }()
+    lazy var startButton = CommunButton.default(height: 50, label: "start".localized().uppercaseFirst, isHuggingContent: false)
+//    lazy var signUpButton: UIView = {
+//        let view = UIView(height: 50, backgroundColor: .appMainColor, cornerRadius: 25)
+//        let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+//        hStack.addArrangedSubviews([
+//            UILabel.with(text: "start and get 30 points".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .white),
+//            UIImageView(width: 35, height: 33, imageNamed: "coin-reward")
+//        ])
+//        view.addSubview(hStack)
+//        hStack.autoCenterInSuperview()
+//
+//        view.isUserInteractionEnabled = true
+//        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(signUpButtonTap(_:))))
+//        return view
+//    }()
     
     // MARK: - Methods
     override func viewDidLayoutSubviews() {
@@ -84,11 +84,10 @@ class WelcomeVC: BaseViewController {
         
         buttonStackView.addArrangedSubviews([
             nextButton,
-            signUpButton,
-            bottomSignInButton
+            startButton
         ])
         
-        bottomSignInButton.addTarget(self, action: #selector(signInButtonTap(_:)), for: .touchUpInside)
+        startButton.addTarget(self, action: #selector(startButtonDidTap(_:)), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(nextButtonTap(_:)), for: .touchUpInside)
         
         // container view
@@ -113,9 +112,8 @@ class WelcomeVC: BaseViewController {
     func showActionButtons(_ index: Int) {
         let lastScreenIndex = numberOfPages - 1
         nextButton.isHidden = index == lastScreenIndex
-        signUpButton.isHidden = index != lastScreenIndex
-        topSignInButton.isHidden = index == lastScreenIndex
-        bottomSignInButton.isHidden = index != lastScreenIndex
+//        topSignInButton.isHidden = index == lastScreenIndex
+        startButton.isHidden = index != lastScreenIndex
 //        coinImageView.isHidden = index != lastScreenIndex
     }
     
@@ -147,6 +145,16 @@ class WelcomeVC: BaseViewController {
         currentPage = nextIndex
         showActionButtons(nextIndex)
         pageControl.selectedIndex = nextIndex
+    }
+    
+    @objc func startButtonDidTap(_ sender: Any) {
+        UserDefaults.standard.set(true, forKey: Config.currentUserDidShowWelcomeScreen)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.changeRootVC(appDelegate.splashVC)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                appDelegate.changeRootVC(NonAuthTabBarVC())
+            }
+        }
     }
 }
 
