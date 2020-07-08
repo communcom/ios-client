@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol NonAuthVCType: BaseViewController {}
+protocol NonAuthVCType: UIViewController {}
 
 extension NonAuthVCType {
     func showAuthVC() {
