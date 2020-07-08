@@ -20,4 +20,19 @@ class NonAuthCommunityPageVC: CommunityPageVC, NonAuthVCType {
     override func getPointsButtonTapped(_ sender: UIButton) {
         showAuthVC()
     }
+    
+    override func cellSelected(_ indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        switch cell {
+        case is PostCell:
+            let post = (viewModel as! CommunityPageViewModel).postsVM.items.value[indexPath.row]
+            let postPageVC = NonAuthPostPageVC(post: post)
+            self.show(postPageVC, sender: nil)
+        case is CommunityLeaderCell:
+            // TODO: - Tap a leaderCell
+            break
+        default:
+            break
+        }
+    }
 }
