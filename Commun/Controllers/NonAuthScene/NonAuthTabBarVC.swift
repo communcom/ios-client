@@ -31,4 +31,8 @@ class NonAuthTabBarVC: TabBarVC, NonAuthVCType {
         }
         super.switchTab(index: index)
     }
+    
+    override func buttonAddTapped() {
+        showAuthVC()
+    }
 }
