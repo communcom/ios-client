@@ -19,6 +19,12 @@ protocol HasLeadersVM: class {
 
 extension LeaderCellDelegate where Self: BaseViewController & HasLeadersVM {
     func buttonVoteDidTouch(leader: ResponseAPIContentGetLeader) {
+        // Prevent upvoting when user is in NonAuthVCType
+        if let nonAuthVC = self as? NonAuthVCType {
+            nonAuthVC.showAuthVC()
+            return
+        }
+        
         if leadersVM.items.value.first(where: {$0.isBeingVoted == true}) != nil {
             showAlert(title: "please wait".localized().uppercaseFirst, message: "please wait for last operations to finish".localized().uppercaseFirst)
             return
@@ -66,6 +72,12 @@ extension LeaderCellDelegate where Self: BaseViewController & HasLeadersVM {
     }
     
     func buttonFollowDidTouch(leader: ResponseAPIContentGetLeader) {
+        // Prevent upvoting when user is in NonAuthVCType
+        if let nonAuthVC = self as? NonAuthVCType {
+            nonAuthVC.showAuthVC()
+            return
+        }
+        
         BlockchainManager.instance.triggerFollow(user: leader)
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)

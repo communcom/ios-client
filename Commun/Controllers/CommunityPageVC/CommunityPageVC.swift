@@ -54,7 +54,10 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     var posts: [ResponseAPIContentGetPost] {(viewModel as! CommunityPageViewModel).postsVM.items.value}
     
     // MARK: - Subviews
-    lazy var headerView = CommunityHeaderView(tableView: tableView)
+    lazy var headerView = createHeaderView()
+    func createHeaderView() -> CommunityHeaderView {
+        CommunityHeaderView(tableView: tableView)
+    }
     
     override var _headerView: ProfileHeaderView! {
         return headerView
