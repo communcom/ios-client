@@ -12,7 +12,8 @@ protocol NonAuthVCType: UIViewController {}
 
 extension NonAuthVCType {
     func showAuthVC() {
-        // TODO: - Show Auth
-        showAlert(title: "TODO", message: "Authorization needed")
+        let vc: UIViewController = self.tabBarController ?? self
+        let controller = BaseNavigationController(rootViewController: SignUpVC())
+        vc.show(controller, sender: nil)
     }
 }

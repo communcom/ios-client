@@ -57,12 +57,6 @@ class WelcomeVC: BaseViewController {
             .font: UIFont.systemFont(ofSize: .adaptive(width: 30), weight: .bold)
         ]
         
-        // if signUp is processing
-        if KeychainManager.currentUser()?.registrationStep != nil
-        {
-            navigateToSignUp()
-        }
-        
         // top sign in button
         view.addSubview(topSignInButton)
         topSignInButton.autoPinTopAndTrailingToSuperViewSafeArea(inset: 0, xInset: 16)
@@ -124,19 +118,9 @@ class WelcomeVC: BaseViewController {
         showActionButtons(0)
     }
     
-    func navigateToSignUp() {
-        let controller = SignUpVC()
-        show(controller, sender: nil)
-    }
-    
     @objc func signInButtonTap(_ sender: UIButton) {
         let signInVC = SignInVC()
         show(signInVC, sender: nil)
-    }
-    
-    @objc func signUpButtonTap(_ sender: Any) {
-        AnalyticsManger.shared.signUpButtonPressed()
-        self.navigateToSignUp()
     }
     
     @objc func nextButtonTap(_ sender: Any) {
