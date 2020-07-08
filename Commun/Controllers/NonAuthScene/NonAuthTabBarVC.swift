@@ -14,7 +14,7 @@ class NonAuthTabBarVC: TabBarVC, NonAuthVCType {
         case feedTabIndex:
             return NonAuthFeedPageVC()
         case discoveryTabIndex:
-            return DiscoveryVC()
+            return NonAuthDiscoveryVC()
         case notificationTabIndex:
             return BaseViewController()
         case profileTabIndex:
