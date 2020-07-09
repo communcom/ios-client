@@ -45,6 +45,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         var userId: String?
         var communityId: String?
         var communityAlias: String?
+        var language: String = UserDefaults.standard.string(forKey: Config.currentUserFeedLanguage) ?? "all"
         
         func save() throws {
             UserDefaults.standard.set(try JSONEncoder().encode(self), forKey: Filter.filterKey)
@@ -71,7 +72,8 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
             searchKey: String? = nil,
             userId: String? = nil,
             communityId: String? = nil,
-            communityAlias: String? = nil
+            communityAlias: String? = nil,
+            allowedLanguages: [String]? = nil
         ) -> Filter {
             var newFilter = self
             if let type = type,
@@ -112,6 +114,13 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
                 newFilter.communityAlias = alias
             }
             
+            if let allowedLanguages = allowedLanguages,
+                allowedLanguages.count > 0,
+                allowedLanguages != [newFilter.language]
+            {
+                newFilter.language = allowedLanguages.first!
+            }
+            
             return newFilter
         }
     }
@@ -126,7 +135,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     }
         
     override var request: Single<[ResponseAPIContentGetPost]> {
-        RestAPIManager.instance.getPosts(userId: filter.userId ?? Config.currentUser?.id, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.type, sortBy: filter.sortBy, timeframe: filter.timeframe, limit: limit, offset: offset
+        RestAPIManager.instance.getPosts(userId: filter.userId ?? Config.currentUser?.id, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.type, sortBy: filter.sortBy, timeframe: filter.timeframe, limit: limit, offset: offset, allowedLanguages: [filter.language]
         )
             .map { $0.items ?? [] }
     }
