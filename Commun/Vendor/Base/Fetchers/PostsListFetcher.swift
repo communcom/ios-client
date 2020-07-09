@@ -13,6 +13,29 @@ import RxSwift
 class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     // MARK: - Enums
     struct Filter: FilterType, Codable {
+        enum Language: String {
+            case all = "all"
+            case english = "en"
+            case russian = "ru"
+            
+            var localizedName: String {
+                switch self {
+                case .all:
+                    return "all".localized()
+                case .english:
+                    return "english".localized()
+                case .russian:
+                    return "russian".localized()
+                }
+            }
+            
+            static var observable: Observable<Language> {
+                UserDefaults.standard.rx.observe(String.self, Config.currentUserFeedLanguage)
+                    .map {$0 ?? "all"}
+                    .map {PostsListFetcher.Filter.Language(rawValue: $0) ?? .all}
+            }
+        }
+        
         static let filterKey = "currentUserFeedFilterKey"
         
         var type: FeedTypeMode
