@@ -13,7 +13,7 @@ import RxSwift
 class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     // MARK: - Enums
     struct Filter: FilterType, Codable {
-        enum Language: String {
+        enum Language: String, CaseIterable {
             case all = "all"
             case english = "en"
             case russian = "ru"

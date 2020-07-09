@@ -34,7 +34,7 @@ class PostsFilterVC: BaseViewController {
         languageLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         PostsListFetcher.Filter.Language.observable
-            .map {$0.localizedName}
+            .map {$0.localizedName.uppercaseFirst}
             .asDriver(onErrorJustReturn: "")
             .drive(languageLabel.rx.text)
             .disposed(by: disposeBag)
@@ -200,7 +200,13 @@ class PostsFilterVC: BaseViewController {
     }
     
     @objc func languageViewDidTouch() {
-        
+        self.dismiss(animated: true) {
+            UIApplication.topViewController()?.showCommunActionSheet(actions: PostsListFetcher.Filter.Language.allCases.map({ language -> CommunActionSheet.Action in
+                CommunActionSheet.Action(title: language.localizedName.uppercaseFirst, style: .default, tintColor: .black) {
+                    UserDefaults.standard.set(language.rawValue, forKey: Config.currentUserFeedLanguage)
+                }
+            }))
+        }
     }
 }
 
