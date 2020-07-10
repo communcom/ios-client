@@ -23,6 +23,7 @@ class RewardExplanationView: MyView {
     lazy var showingOptionButton: UIStackView = {
         let view = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         let dropdownButton = UIButton.circleGray(imageName: "drop-down")
+        dropdownButton.isUserInteractionEnabled = false
         view.addArrangedSubviews([showingOptionButtonLabel, dropdownButton])
         return view
     }()
