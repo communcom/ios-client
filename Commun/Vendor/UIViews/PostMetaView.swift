@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class PostMetaView: MyView {
     // MARK: - Enums
@@ -15,8 +16,10 @@ class PostMetaView: MyView {
     }
     
     // MARK: - Properties
+    private let disposeBag = DisposeBag()
     var stackViewTrailingConstraint: NSLayoutConstraint?
     var trailingConstraint: NSLayoutConstraint?
+    private var mosaic: ResponseAPIRewardsGetStateBulkMosaic?
 
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 40)
@@ -67,6 +70,15 @@ class PostMetaView: MyView {
         
         stackView.addArrangedSubview(comunityNameLabel)
         stackView.addArrangedSubview(subtitleLabel)
+        
+        // currency changed
+        UserDefaults.standard.rx.observe(String.self, Config.currentRewardShownSymbol)
+            .skip(1)
+            .distinctUntilChanged()
+            .subscribe(onNext: { _ in
+                self.setMosaic()
+            })
+            .disposed(by: disposeBag)
     }
     
     func setUp(post: ResponseAPIContentGetPost) {
@@ -98,10 +110,11 @@ class PostMetaView: MyView {
             comunityNameLabel.addGestureRecognizer(tapLabel)
         }
         
-        setMosaic(post.mosaic)
+        self.mosaic = post.mosaic
+        setMosaic()
     }
     
-    private func setMosaic(_ mosaic: ResponseAPIRewardsGetStateBulkMosaic?) {
+    private func setMosaic() {
         // clean
         stateButton.removeFromSuperview()
         stackViewTrailingConstraint?.isActive = false
