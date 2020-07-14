@@ -200,6 +200,7 @@
 "i want to use Master Password" = "i want to use Master Password";
 "identify yourself!" = "identify yourself!";
 "if someone is in immediate danger" = "if someone is in immediate danger, call local emergency services. Don't wait.";
+"in top" = "top";
 "income" = "income";
 "info" = "info";
 "interface language" = "interface language";
@@ -425,7 +426,6 @@
 "to secure your transactions" = "to secure your transactions";
 "today" = "today";
 "token" = "token";
-"top" = "top";
 "transaction completed" = "transaction completed";
 "transfer" = "transfer";
 "trending" = "trending";
