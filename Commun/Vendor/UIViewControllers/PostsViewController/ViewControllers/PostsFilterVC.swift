@@ -18,6 +18,35 @@ class PostsFilterVC: BaseViewController {
     var completion: ((PostsListFetcher.Filter) -> Void)?
     
     // MARK: - Subview
+    lazy var languageView: MyTableHeaderView = {
+        let view = MyTableHeaderView(tableView: tableView)
+        let whiteView = UIView(height: 58, backgroundColor: .white, cornerRadius: 10)
+        view.addSubview(whiteView)
+        whiteView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
+        
+        let label = UILabel.with(text: "language".localized().uppercaseFirst, textSize: 15, weight: .semibold)
+        whiteView.addSubview(label)
+        label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        label.autoAlignAxis(toSuperviewAxis: .horizontal)
+
+        let languageLabel = UILabel.with(textSize: 15, weight: .semibold, textColor: .appGrayColor)
+        whiteView.addSubview(languageLabel)
+        languageLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        PostsListFetcher.Filter.Language.observable
+            .map {$0.localizedName.uppercaseFirst}
+            .asDriver(onErrorJustReturn: "")
+            .drive(languageLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        let arrow = UIImageView(width: 12, height: 6, imageNamed: "drop-down")
+        whiteView.addSubview(arrow)
+
+        languageLabel.autoPinEdge(.trailing, to: .leading, of: arrow, withOffset: -10)
+        arrow.autoAlignAxis(toSuperviewAxis: .horizontal)
+        arrow.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        return view
+    }()
     lazy var closeButton = UIButton.close(size: 30.0)
     lazy var backButton = UIButton.circle(size: 30.0, backgroundColor: .appLightGrayColor, tintColor: .appGrayColor, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
     
@@ -57,6 +86,12 @@ class PostsFilterVC: BaseViewController {
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
+        
+        // language
+        if !isTimeFrameMode {
+            languageView.isUserInteractionEnabled = true
+            languageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(languageViewDidTouch)))
+        }
         
         view.addSubview(saveButton)
         saveButton.autoPinEdge(.top, to: .bottom, of: tableView, withOffset: 20)
@@ -162,6 +197,16 @@ class PostsFilterVC: BaseViewController {
     
     @objc func backButtonDidTouch() {
         navigationController?.popViewController()
+    }
+    
+    @objc func languageViewDidTouch() {
+        self.dismiss(animated: true) {
+            UIApplication.topViewController()?.showCommunActionSheet(actions: PostsListFetcher.Filter.Language.allCases.map({ language -> CommunActionSheet.Action in
+                CommunActionSheet.Action(title: language.localizedName.uppercaseFirst, style: .default, tintColor: .black) {
+                    UserDefaults.standard.set(language.rawValue, forKey: Config.currentUserFeedLanguage)
+                }
+            }))
+        }
     }
 }
 

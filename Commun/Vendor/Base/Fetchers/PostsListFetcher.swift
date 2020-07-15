@@ -13,6 +13,29 @@ import RxSwift
 class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     // MARK: - Enums
     struct Filter: FilterType, Codable {
+        enum Language: String, CaseIterable {
+            case all = "all"
+            case english = "en"
+            case russian = "ru"
+            
+            var localizedName: String {
+                switch self {
+                case .all:
+                    return "all".localized()
+                case .english:
+                    return "english language".localized()
+                case .russian:
+                    return "russian language".localized()
+                }
+            }
+            
+            static var observable: Observable<Language> {
+                UserDefaults.standard.rx.observe(String.self, Config.currentUserFeedLanguage)
+                    .map {$0 ?? "all"}
+                    .map {PostsListFetcher.Filter.Language(rawValue: $0) ?? .all}
+            }
+        }
+        
         static let filterKey = "currentUserFeedFilterKey"
         var authorizationRequired = true
         
@@ -23,6 +46,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         var userId: String?
         var communityId: String?
         var communityAlias: String?
+        var language: String = UserDefaults.standard.string(forKey: Config.currentUserFeedLanguage) ?? "all"
         
         func save() throws {
             UserDefaults.standard.set(try JSONEncoder().encode(self), forKey: Filter.filterKey)
@@ -49,7 +73,8 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
             searchKey: String? = nil,
             userId: String? = nil,
             communityId: String? = nil,
-            communityAlias: String? = nil
+            communityAlias: String? = nil,
+            allowedLanguages: [String]? = nil
         ) -> Filter {
             var newFilter = self
             if let type = type,
@@ -90,6 +115,13 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
                 newFilter.communityAlias = alias
             }
             
+            if let allowedLanguages = allowedLanguages,
+                allowedLanguages.count > 0,
+                allowedLanguages != [newFilter.language]
+            {
+                newFilter.language = allowedLanguages.first!
+            }
+            
             return newFilter
         }
     }
@@ -104,7 +136,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     }
         
     override var request: Single<[ResponseAPIContentGetPost]> {
-        RestAPIManager.instance.getPosts(userId: filter.userId ?? Config.currentUser?.id, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.type, sortBy: filter.sortBy, timeframe: filter.timeframe, limit: limit, offset: offset, authorizationRequired: filter.authorizationRequired
+        RestAPIManager.instance.getPosts(userId: filter.userId ?? Config.currentUser?.id, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.type, sortBy: filter.sortBy, timeframe: filter.timeframe, limit: limit, offset: offset, authorizationRequired: filter.authorizationRequired, allowedLanguages: [filter.language]
         )
             .map { $0.items ?? [] }
     }

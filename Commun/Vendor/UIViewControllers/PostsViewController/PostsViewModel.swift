@@ -70,6 +70,14 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
                 self.fetchNext()
             })
             .disposed(by: disposeBag)
+        
+        PostsListFetcher.Filter.Language.observable
+            .skip(1)
+            .distinctUntilChanged()
+            .subscribe(onNext: { language in
+                self.filter.accept(self.filter.value.newFilter(allowedLanguages: [language.rawValue]))
+            })
+            .disposed(by: disposeBag)
     }
     
     func observeUserEvents() {
@@ -240,9 +248,10 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         type: FeedTypeMode? = nil,
         sortBy: FeedSortMode? = nil,
         timeframe: FeedTimeFrameMode? = nil,
-        searchKey: String? = nil
+        searchKey: String? = nil,
+        allowedLanguages: [String]? = nil
     ) {
-        let newFilter = filter.value.newFilter(type: type, sortBy: sortBy, timeframe: timeframe, searchKey: searchKey)
+        let newFilter = filter.value.newFilter(type: type, sortBy: sortBy, timeframe: timeframe, searchKey: searchKey, allowedLanguages: allowedLanguages)
         if newFilter != filter.value {
             filter.accept(newFilter)
         }
