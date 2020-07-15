@@ -14,6 +14,7 @@ class ProfileViewModel<ProfileType: Decodable>: BaseViewModel {
     // MARK: - Input
     var profileForRequest: ProfileType?
     var profileId: String?
+    let authorizationRequired: Bool
     
     // MARK: - Objects
     let loadingState = BehaviorRelay<LoadingState>(value: .loading)
@@ -22,7 +23,8 @@ class ProfileViewModel<ProfileType: Decodable>: BaseViewModel {
     let items = BehaviorRelay<[Any]>(value: [])
     
     // MARK: - Initializers
-    init(profileId: String?, prefetch: Bool = true) {
+    init(profileId: String?, prefetch: Bool = true, authorizationRequired: Bool = true) {
+        self.authorizationRequired = authorizationRequired
         super.init()
         self.profileId = profileId
         

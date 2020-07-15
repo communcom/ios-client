@@ -130,6 +130,10 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     // MARK: - Actions
     override func joinButtonDidTouch() {
+        if !authorizationRequired {
+            (parentViewController as? NonAuthVCType)?.showAuthVC()
+            return
+        }
         toggleJoin()
     }
     
@@ -140,6 +144,10 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }
     
     override func statsLabelDidTouchAtIndex(_ index: Int) {
+        if !authorizationRequired {
+            (parentViewController as? NonAuthVCType)?.showAuthVC()
+            return
+        }
         guard let text = statsLabel.text,
             let dotIndex = text.index(of: statsSeparator)?.utf16Offset(in: text)
         else {return}

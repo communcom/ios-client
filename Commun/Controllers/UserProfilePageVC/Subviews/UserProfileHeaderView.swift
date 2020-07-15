@@ -155,6 +155,10 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     }
     
     override func joinButtonDidTouch() {
+        if !authorizationRequired {
+            (parentViewController as? NonAuthVCType)?.showAuthVC()
+            return
+        }
         toggleFollow()
     }
     
@@ -166,6 +170,10 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     }
     
     override func statsLabelDidTouchAtIndex(_ index: Int) {
+        if !authorizationRequired {
+            (parentViewController as? NonAuthVCType)?.showAuthVC()
+            return
+        }
         guard let text = statsLabel.text,
             let dotIndex = text.index(of: statsSeparator)?.utf16Offset(in: text)
         else {return}

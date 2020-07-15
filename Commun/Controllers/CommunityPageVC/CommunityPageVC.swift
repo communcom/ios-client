@@ -45,16 +45,19 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetCommunity> {
         if let alias = communityAlias {
-            return CommunityPageViewModel(communityAlias: alias)
+            return CommunityPageViewModel(communityAlias: alias, authorizationRequired: authorizationRequired)
         }
         
-        return CommunityPageViewModel(communityId: communityId)
+        return CommunityPageViewModel(communityId: communityId, authorizationRequired: authorizationRequired)
     }
     var leadersVM: LeadersViewModel {(viewModel as! CommunityPageViewModel).leadsVM}
     var posts: [ResponseAPIContentGetPost] {(viewModel as! CommunityPageViewModel).postsVM.items.value}
     
     // MARK: - Subviews
-    lazy var headerView = CommunityHeaderView(tableView: tableView)
+    lazy var headerView = createHeaderView()
+    func createHeaderView() -> CommunityHeaderView {
+        CommunityHeaderView(tableView: tableView)
+    }
     
     override var _headerView: ProfileHeaderView! {
         return headerView

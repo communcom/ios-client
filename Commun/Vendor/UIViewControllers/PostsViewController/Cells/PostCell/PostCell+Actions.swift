@@ -35,10 +35,7 @@ extension PostCell {
     }
     
     @objc func commentCountsButtonDidTouch() {
-        guard let post = post else {return}
-        
-        let postPageVC = PostPageVC(post: post)
-        postPageVC.scrollToTopAfterLoadingComment = true
-        parentViewController?.show(postPageVC, sender: nil)
+        guard let post = post else { return }
+        delegate?.postCell(self, commentButtonDidTouchForPost: post)
     }
 }

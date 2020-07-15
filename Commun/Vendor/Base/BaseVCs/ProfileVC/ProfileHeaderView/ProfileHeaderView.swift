@@ -14,6 +14,7 @@ class ProfileHeaderView: MyTableHeaderView {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     let statsSeparator = " • "
+    var authorizationRequired: Bool = true
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)

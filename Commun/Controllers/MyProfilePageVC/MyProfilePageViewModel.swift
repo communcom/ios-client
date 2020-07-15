@@ -12,7 +12,7 @@ class MyProfilePageViewModel: UserProfilePageViewModel {
     lazy var subscriptionsVM = SubscriptionsViewModel.ofCurrentUserTypeCommunity
     lazy var balancesVM = BalancesViewModel.ofCurrentUser
     
-    override init(userId: String? = nil, username: String? = nil) {
+    override init(userId: String? = nil, username: String? = nil, authorizationRequired: Bool = true) {
         super.init(userId: userId, username: username)
         
         defer {

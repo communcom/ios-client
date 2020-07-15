@@ -30,13 +30,13 @@ class SearchListFetcher: ListFetcher<ResponseAPIContentSearchItem> {
     override var request: Single<[ResponseAPIContentSearchItem]> {
         switch searchType {
         case .quickSearch:
-            return RestAPIManager.instance.quickSearch(queryString: queryString ?? "", entities: entities, limit: limit)
+            return RestAPIManager.instance.quickSearch(queryString: queryString ?? "", entities: entities, limit: limit, authorizationRequired: authorizationRequired)
                 .do(onSuccess: { (result) in
                     self.total = result.total
                 })
                 .map {$0.items}
         case .extendedSearch:
-            return RestAPIManager.instance.extendedSearch(queryString: queryString ?? "", entities: extendedSearchEntity)
+            return RestAPIManager.instance.extendedSearch(queryString: queryString ?? "", entities: extendedSearchEntity, authorizationRequired: authorizationRequired)
                 .do(onSuccess: {result in
                     self.total = (result.communities?.total ?? 0) + (result.profiles?.total ?? 0) + (result.posts?.total ?? 0)
                 })

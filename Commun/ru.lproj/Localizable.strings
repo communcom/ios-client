@@ -14,6 +14,7 @@
 "number" = "цифра";
 "min length" = "мин. длинна";
 "Attempt to abuse" = "Попытка обмана системы";
+"Breaks Community rules" = "Это нарушает правила сообщества";
 "False News" = "Ложные новости";
 "Harassment" = "Домогательство";
 "Hate Speech" = "Оскорбления";
@@ -200,6 +201,7 @@
 "i want to use Master Password" = "Я хочу использовать мастер-пароль";
 "identify yourself!" = "идентифицировать себя!";
 "if someone is in immediate danger" = "если кто-то находится в непосредственной опасности, позвоните в местную аварийную службу. Не ждите.";
+"in top" = "в топе";
 "income" = "доход";
 "info" = "информация";
 "interface language" = "язык интерфейса";
@@ -388,6 +390,7 @@
 "sorry" = "простите";
 "sort" = "сортировать";
 "sort by" = "сортировать по";
+"start" = "начать";
 "start and get 30 points" = "начать и получить 30 поинтов";
 "subscribe" = "подписаться";
 "subscribe to at least 3 communities and get your first Community Points" = "подпишись как минимум на 3 сообщества и получи свои первые поинты сообщества";
@@ -411,7 +414,6 @@
 "to secure your transactions" = "чтобы обезопасить транзакции";
 "today" = "сегодня";
 "token" = "токен";
-"top" = "лучшее";
 "transaction completed" = "транзакция завершена";
 "transfer" = "перевод";
 "trending" = "в тренде";

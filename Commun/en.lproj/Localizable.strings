@@ -14,6 +14,7 @@
 "number" = "number";
 "min length" = "min length";
 "Attempt to abuse" = "Attempt to abuse";
+"Breaks Community rules" = "It breaks community rules";
 "False News" = "False News";
 "Harassment" = "Harassment";
 "Hate Speech" = "Hate Speech";
@@ -200,6 +201,7 @@
 "i want to use Master Password" = "i want to use Master Password";
 "identify yourself!" = "identify yourself!";
 "if someone is in immediate danger" = "if someone is in immediate danger, call local emergency services. Don't wait.";
+"in top" = "top";
 "income" = "income";
 "info" = "info";
 "interface language" = "interface language";
@@ -393,6 +395,7 @@
 "sorry" = "sorry";
 "sort" = "sort";
 "sort by" = "sort by";
+"start" = "start";
 "start and get 30 points" = "start and get 30 points";
 "subscribe" = "subscribe";
 "subscribe to at least 3 communities and get your first Community Points" = "subscribe to at least 3 communities and get your first Community Points";
@@ -425,7 +428,6 @@
 "to secure your transactions" = "to secure your transactions";
 "today" = "today";
 "token" = "token";
-"top" = "top";
 "transaction completed" = "transaction completed";
 "transfer" = "transfer";
 "trending" = "trending";
