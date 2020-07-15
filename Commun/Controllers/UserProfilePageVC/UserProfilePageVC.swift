@@ -33,7 +33,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
-        UserProfilePageViewModel(userId: userId, username: username)
+        UserProfilePageViewModel(userId: userId, username: username, authorizationRequired: authorizationRequired)
     }
     var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
         (viewModel as! UserProfilePageViewModel).commentsVM
@@ -278,22 +278,27 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                                      style: .profile,
                                      marginTop: 15,
                                      handle: {
-                                        self.showAlert(
-                                            title: profile.isInBlacklist == true ? "unblock user".localized().uppercaseFirst: "block user".localized().uppercaseFirst,
-                                            message: "do you really want to".localized().uppercaseFirst + " " + (profile.isInBlacklist == true ? "unblock".localized(): "block".localized()) + " \(self.viewModel.profile.value?.username ?? "this user")" + "?",
-                                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
-                                            highlightedButtonIndex: 1) { (index) in
-                                                if index != 0 { return }
-                                                
-                                                if profile.isInBlacklist == true {
-                                                    self.unblockUser()
-                                                } else {
-                                                    self.blockUser()
-                                                }
-                                        }
+                                        self.confirmBlock()
             })
         ]) {
             
+        }
+    }
+    
+    func confirmBlock() {
+        guard let profile = viewModel.profile.value else { return }
+        self.showAlert(
+            title: profile.isInBlacklist == true ? "unblock user".localized().uppercaseFirst: "block user".localized().uppercaseFirst,
+            message: "do you really want to".localized().uppercaseFirst + " " + (profile.isInBlacklist == true ? "unblock".localized(): "block".localized()) + " \(self.viewModel.profile.value?.username ?? "this user")" + "?",
+            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
+            highlightedButtonIndex: 1) { (index) in
+                if index != 0 { return }
+                
+                if profile.isInBlacklist == true {
+                    self.unblockUser()
+                } else {
+                    self.blockUser()
+                }
         }
     }
 }

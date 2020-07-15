@@ -10,8 +10,8 @@ import Foundation
 import CyberSwift
 
 class LeadersViewModel: ListViewModel<ResponseAPIContentGetLeader> {
-    convenience init(communityId: String? = nil, communityAlias: String? = nil, query: String? = nil) {
-        let fetcher = LeadersListFetcher(communityId: communityId, communityAlias: communityAlias, query: query)
+    convenience init(communityId: String? = nil, communityAlias: String? = nil, query: String? = nil, authorizationRequired: Bool = true) {
+        let fetcher = LeadersListFetcher(communityId: communityId, communityAlias: communityAlias, query: query, authorizationRequired: authorizationRequired)
         self.init(fetcher: fetcher)
     }
     

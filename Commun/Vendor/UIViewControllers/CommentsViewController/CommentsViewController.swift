@@ -20,6 +20,7 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     }
     
     // MARK: - Properties
+    class var authorizationRequired: Bool {true}
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
         return viewModel

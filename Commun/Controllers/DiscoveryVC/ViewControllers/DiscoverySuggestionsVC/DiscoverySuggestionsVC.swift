@@ -103,7 +103,7 @@ class DiscoverySuggestionsVC: ListViewController<ResponseAPIContentSearchItem, D
 }
 
 extension DiscoverySuggestionsVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    @objc func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         (viewModel as! SearchViewModel).isQueryEmpty ? 0 : 51
     }
     

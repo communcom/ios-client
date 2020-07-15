@@ -111,25 +111,25 @@ class TabBarVC: UITabBarController {
     
     private func configTabs() {
         // Feed Tab
-        let feed = FeedPageVC()
+        let feed = createViewController(index: feedTabIndex)
         let feedNC = SwipeNavigationController(rootViewController: feed, tabBarVC: self)
         let feedItem = buttonTabBarItem(image: UIImage(named: "feed")!, tag: feedTabIndex)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
-        let discoveryVC = DiscoveryVC()
+        let discoveryVC = createViewController(index: discoveryTabIndex)
         let discoveryNC = SwipeNavigationController(rootViewController: discoveryVC, tabBarVC: self)
         let discoveryItem = buttonTabBarItem(image: UIImage(named: "tabbar-discovery-icon")!, tag: discoveryTabIndex)
         discoveryVC.accessibilityLabel = "TabBarDiscoveryTabBarItem"
         
         // Notifications Tab
-        let notifications = NotificationsPageVC()
+        let notifications = createViewController(index: notificationTabIndex)
         let notificationsNC = SwipeNavigationController(rootViewController: notifications, tabBarVC: self)
         notificationsNC.navigationBar.prefersLargeTitles = true
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
 
         // Profile Tab
-        let profile = MyProfilePageVC()
+        let profile = createViewController(index: profileTabIndex)
         let profileNC = SwipeNavigationController(rootViewController: profile, tabBarVC: self)
         let profileItem = buttonTabBarItem(image: UIImage(named: "tabbar-profile")!, tag: profileTabIndex)
         profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
@@ -148,6 +148,21 @@ class TabBarVC: UITabBarController {
                 
         // highlight first
         feedItem.tintColor = selectedColor
+    }
+    
+    func createViewController(index: Int) -> BaseViewController {
+        switch index {
+        case feedTabIndex:
+            return FeedPageVC()
+        case discoveryTabIndex:
+            return DiscoveryVC()
+        case notificationTabIndex:
+            return NotificationsPageVC()
+        case profileTabIndex:
+            return MyProfilePageVC()
+        default:
+            fatalError()
+        }
     }
     
     private func buttonTabBarItem(image: UIImage, tag: Int) -> UIButton {

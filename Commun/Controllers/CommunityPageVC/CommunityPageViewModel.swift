@@ -38,29 +38,29 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     }
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
-    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(type: .community, sortBy: .time, timeframe: .all, communityId: communityId, communityAlias: communityAlias))
-    lazy var leadsVM = LeadersViewModel(communityId: communityId, communityAlias: communityAlias)
+    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(authorizationRequired: authorizationRequired, type: .community, sortBy: .time, timeframe: .all, communityId: communityId, communityAlias: communityAlias))
+    lazy var leadsVM = LeadersViewModel(communityId: communityId, communityAlias: communityAlias, authorizationRequired: authorizationRequired)
     
     lazy var aboutSubject = PublishSubject<String?>()
     lazy var rules = BehaviorRelay<[ResponseAPIContentGetCommunityRule]>(value: [])
     
     // MARK: - Initializers
-    init(communityId: String?) {
-        super.init(profileId: communityId)
+    init(communityId: String?, authorizationRequired: Bool = true) {
+        super.init(profileId: communityId, authorizationRequired: authorizationRequired)
     }
     
-    init(communityAlias: String) {
+    init(communityAlias: String, authorizationRequired: Bool = true) {
         self.communityAlias = communityAlias
-        super.init(profileId: nil)
+        super.init(profileId: nil, authorizationRequired: authorizationRequired)
     }
     
     // MARK: - Methods
     override var loadProfileRequest: Single<ResponseAPIContentGetCommunity> {
         if let alias = communityAlias {
-            return RestAPIManager.instance.getCommunity(alias: alias)
+            return RestAPIManager.instance.getCommunity(alias: alias, authorizationRequired: authorizationRequired)
         }
        
-        return RestAPIManager.instance.getCommunity(id: communityId ?? "")
+        return RestAPIManager.instance.getCommunity(id: communityId ?? "", authorizationRequired: authorizationRequired)
     }
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {
@@ -68,7 +68,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     }
     
     var walletGetBuyPriceRequest: Single<ResponseAPIWalletGetPrice> {
-        return RestAPIManager.instance.getBuyPrice(symbol: communityId ?? communityAlias?.uppercased() ?? "CMN", quantity: "1 CMN")
+        return RestAPIManager.instance.getBuyPrice(symbol: communityId ?? communityAlias?.uppercased() ?? "CMN", quantity: "1 CMN", authorizationRequired: authorizationRequired)
     }
 
     override func bind() {

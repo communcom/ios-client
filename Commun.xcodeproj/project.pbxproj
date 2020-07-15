@@ -209,6 +209,11 @@
 		BC3AF38523FBEB4200528EEB /* DiscoveryUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AF38423FBEB4200528EEB /* DiscoveryUsersVC.swift */; };
 		BC3AF38723FBEC9000528EEB /* DiscoveryPostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AF38623FBEC9000528EEB /* DiscoveryPostsVC.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
+		BC3E0D3624B4913900C5F368 /* NonAuthPostPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D3524B4913900C5F368 /* NonAuthPostPageVC.swift */; };
+		BC3E0D3924B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D3824B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift */; };
+		BC3E0D3D24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D3C24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift */; };
+		BC3E0D3F24B5642500C5F368 /* NonAuthTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D3E24B5642500C5F368 /* NonAuthTabBarVC.swift */; };
+		BC3E0D4124B5685400C5F368 /* NonAuthDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D4024B5685400C5F368 /* NonAuthDiscoveryVC.swift */; };
 		BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */; };
 		BC40719923CEF801000027A3 /* PlaceholderNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */; };
 		BC40719A23CEF801000027A3 /* PlaceholderNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC40719823CEF801000027A3 /* PlaceholderNotificationCell.xib */; };
@@ -397,6 +402,9 @@
 		BCAFEC95243EC237003A1DC4 /* TransactionCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAFEC94243EC237003A1DC4 /* TransactionCompletedVC.swift */; };
 		BCAFEC9B243F0C03003A1DC4 /* LinkResponsiveTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAFEC9A243F0C03003A1DC4 /* LinkResponsiveTextView.swift */; };
 		BCAFFF2F24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */; };
+		BCB08D6024B4682B00EA2BDB /* NonAuthFeedPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB08D5F24B4682B00EA2BDB /* NonAuthFeedPageVC.swift */; };
+		BCB08D6224B4696600EA2BDB /* NonAuthFeedPageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB08D6124B4696600EA2BDB /* NonAuthFeedPageVM.swift */; };
+		BCB08D6724B4759500EA2BDB /* NonAuthVCType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB08D6624B4759500EA2BDB /* NonAuthVCType.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */; };
 		BCB2A6E62355536D00B3582B /* UITableViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E52355536D00B3582B /* UITableViewCell+Extensions.swift */; };
@@ -744,6 +752,11 @@
 		BC3AF38423FBEB4200528EEB /* DiscoveryUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryUsersVC.swift; sourceTree = "<group>"; };
 		BC3AF38623FBEC9000528EEB /* DiscoveryPostsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryPostsVC.swift; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
+		BC3E0D3524B4913900C5F368 /* NonAuthPostPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthPostPageVC.swift; sourceTree = "<group>"; };
+		BC3E0D3824B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthUserProfilePageVC.swift; sourceTree = "<group>"; };
+		BC3E0D3C24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthCommunityPageVC.swift; sourceTree = "<group>"; };
+		BC3E0D3E24B5642500C5F368 /* NonAuthTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthTabBarVC.swift; sourceTree = "<group>"; };
+		BC3E0D4024B5685400C5F368 /* NonAuthDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthDiscoveryVC.swift; sourceTree = "<group>"; };
 		BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderAvatarImageView.swift; sourceTree = "<group>"; };
 		BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderNotificationCell.swift; sourceTree = "<group>"; };
 		BC40719823CEF801000027A3 /* PlaceholderNotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceholderNotificationCell.xib; sourceTree = "<group>"; };
@@ -932,6 +945,9 @@
 		BCAFEC94243EC237003A1DC4 /* TransactionCompletedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCompletedVC.swift; sourceTree = "<group>"; };
 		BCAFEC9A243F0C03003A1DC4 /* LinkResponsiveTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkResponsiveTextView.swift; sourceTree = "<group>"; };
 		BCAFFF2E24232C0A005FC0A4 /* ChooseCommunityExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCommunityExplanationView.swift; sourceTree = "<group>"; };
+		BCB08D5F24B4682B00EA2BDB /* NonAuthFeedPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthFeedPageVC.swift; sourceTree = "<group>"; };
+		BCB08D6124B4696600EA2BDB /* NonAuthFeedPageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthFeedPageVM.swift; sourceTree = "<group>"; };
+		BCB08D6624B4759500EA2BDB /* NonAuthVCType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthVCType.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
 		BCB2A6E52355536D00B3582B /* UITableViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extensions.swift"; sourceTree = "<group>"; };
@@ -1442,6 +1458,7 @@
 		571B1508223A937200630C8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BCB08D5C24B4679E00EA2BDB /* NonAuthScene */,
 				3B67FC0522C4BB5100D05F01 /* SplashVC.swift */,
 				BC5A349E242B083B001C5054 /* WelcomeVC */,
 				3B986B6322CE4B8100C1E985 /* SignUpScenes */,
@@ -1888,6 +1905,23 @@
 				BC3AF37E23FBC24400528EEB /* DiscoverySuggestionCell.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		BC3E0D3124B4910F00C5F368 /* NonAuthFeedPage */ = {
+			isa = PBXGroup;
+			children = (
+				BCB08D5F24B4682B00EA2BDB /* NonAuthFeedPageVC.swift */,
+				BCB08D6124B4696600EA2BDB /* NonAuthFeedPageVM.swift */,
+			);
+			path = NonAuthFeedPage;
+			sourceTree = "<group>";
+		};
+		BC3E0D3424B4911F00C5F368 /* NonAuthPostPage */ = {
+			isa = PBXGroup;
+			children = (
+				BC3E0D3524B4913900C5F368 /* NonAuthPostPageVC.swift */,
+			);
+			path = NonAuthPostPage;
 			sourceTree = "<group>";
 		};
 		BC40719623CEF7F3000027A3 /* PlaceholderNotificationCell */ = {
@@ -2547,6 +2581,20 @@
 			path = ProfileHeaderView;
 			sourceTree = "<group>";
 		};
+		BCB08D5C24B4679E00EA2BDB /* NonAuthScene */ = {
+			isa = PBXGroup;
+			children = (
+				BC3E0D3E24B5642500C5F368 /* NonAuthTabBarVC.swift */,
+				BCB08D6624B4759500EA2BDB /* NonAuthVCType.swift */,
+				BC3E0D3124B4910F00C5F368 /* NonAuthFeedPage */,
+				BC3E0D3424B4911F00C5F368 /* NonAuthPostPage */,
+				BC3E0D3824B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift */,
+				BC3E0D4024B5685400C5F368 /* NonAuthDiscoveryVC.swift */,
+				BC3E0D3C24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift */,
+			);
+			path = NonAuthScene;
+			sourceTree = "<group>";
+		};
 		BCB49CD5242DED6600758BA1 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -3165,6 +3213,7 @@
 				3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */,
 				BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */,
 				BC3AAF1923E0223F005E8DAB /* CurrenciesViewModel.swift in Sources */,
+				BCB08D6224B4696600EA2BDB /* NonAuthFeedPageVM.swift in Sources */,
 				3B8DDF5A234AF04C00B213F0 /* ArticleEditorVC.swift in Sources */,
 				B1D7AD5623A10582007D1A13 /* ErrorView.swift in Sources */,
 				BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */,
@@ -3208,12 +3257,14 @@
 				BCDEE77723ED642600DD3EB3 /* ReportOtherVC.swift in Sources */,
 				B1D78C0923E335D100772BD9 /* UserDefaults+Extensions.swift in Sources */,
 				BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */,
+				BC3E0D4124B5685400C5F368 /* NonAuthDiscoveryVC.swift in Sources */,
 				BCEFA645249217F700971E77 /* DonatorCell.swift in Sources */,
 				BC923E0C24319DB700B28413 /* BaseSignUpMethodVC.swift in Sources */,
 				BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */,
 				5721E87122650AC0003BE04B /* String+Extensions.swift in Sources */,
 				BC7470B02410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift in Sources */,
 				3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
+				BC3E0D3D24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift in Sources */,
 				BC84820624595CEE0099C7C5 /* CMWalletView.swift in Sources */,
 				BCAF5B24241B78DF00C157B5 /* WalletConvertVC+Binding.swift in Sources */,
 				BC5395E7244950F200B5176D /* PostPageVC+Actions.swift in Sources */,
@@ -3390,6 +3441,7 @@
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
 				BC8481FA24581FB20099C7C5 /* DonationView.swift in Sources */,
+				BC3E0D3624B4913900C5F368 /* NonAuthPostPageVC.swift in Sources */,
 				BC923E152431A76D00B28413 /* BaseVerifyVC.swift in Sources */,
 				BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift in Sources */,
 				BC3694F923699B8600B2E078 /* ArticleEditorVC+Actions.swift in Sources */,
@@ -3399,6 +3451,7 @@
 				BC9066EB23A9D9EC000F9A3B /* BalancesListFetcher.swift in Sources */,
 				3B3C8B902347876000D8BADB /* ArticleEditorTextView+Attachment.swift in Sources */,
 				BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */,
+				BC3E0D3F24B5642500C5F368 /* NonAuthTabBarVC.swift in Sources */,
 				BC06A99F23E7CAEE000B690E /* SearchListFetcher.swift in Sources */,
 				BC597A70238BD03C00103F4F /* FilterCell.swift in Sources */,
 				BCD812482410A2B80035EE13 /* UINavigationBar+Extensions.swift in Sources */,
@@ -3517,6 +3570,7 @@
 				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,
 				BC923E182431AB2600B28413 /* VerifyEmailVC.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,
+				BCB08D6724B4759500EA2BDB /* NonAuthVCType.swift in Sources */,
 				BCCE0AA82367EB5900A183AA /* MyCollectionViewCell.swift in Sources */,
 				BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */,
 				BCA9712823608ABD00AE37E1 /* UsersStackView.swift in Sources */,
@@ -3556,12 +3610,14 @@
 				BC1DF1AB2499C97D00CCA135 /* WalletDonateCompletedVC.swift in Sources */,
 				BC4692BD2390C3B20064A38B /* FeedPageFloatView.swift in Sources */,
 				BCCE66982429ABC1004F47DC /* SignUpWithPhoneVC+Location.swift in Sources */,
+				BC3E0D3924B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift in Sources */,
 				BCB2A6EC23556E7100B3582B /* ArticleEditorVC+Draft.swift in Sources */,
 				BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */,
 				B182FF7F23F5318C00AC18D1 /* Bundle+Extensions.swift in Sources */,
 				BC597A6B238BBDAC00103F4F /* FittingSizePresentationController.swift in Sources */,
 				3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */,
 				BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */,
+				BCB08D6024B4682B00EA2BDB /* NonAuthFeedPageVC.swift in Sources */,
 				B10DB96B240FB99B001BD0E4 /* CMFeedbackViewController.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,
 				BC8F815423E27ECE0024C04A /* BuyCommunViewModel.swift in Sources */,

@@ -128,6 +128,12 @@ extension CommentCellDelegate where Self: BaseViewController {
     }
     
     func cell(_ cell: CommentCell, didTapUpVoteForComment comment: ResponseAPIContentGetComment) {
+        // Prevent downvoting when user is in NonAuthVCType
+        if let nonAuthVC = self as? NonAuthVCType {
+            nonAuthVC.showAuthVC()
+            return
+        }
+        
         comment.upVote()
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
@@ -136,6 +142,12 @@ extension CommentCellDelegate where Self: BaseViewController {
     }
     
     func cell(_ cell: CommentCell, didTapDownVoteForComment comment: ResponseAPIContentGetComment) {
+        // Prevent downvoting when user is in NonAuthVCType
+        if let nonAuthVC = self as? NonAuthVCType {
+            nonAuthVC.showAuthVC()
+            return
+        }
+        
         comment.downVote()
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
@@ -149,6 +161,12 @@ extension CommentCellDelegate where Self: BaseViewController {
     }
     
     func reportComment(_ comment: ResponseAPIContentGetComment) {
+        // Prevent reporting when user is in NonAuthVCType
+        if let nonAuthVC = self as? NonAuthVCType {
+            nonAuthVC.showAuthVC()
+            return
+        }
+        
         let vc = ContentReportVC(content: comment)
         let nc = SwipeNavigationController(rootViewController: vc)
         

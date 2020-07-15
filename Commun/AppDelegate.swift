@@ -130,7 +130,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Closing animation
             self.window?.rootViewController = splashVC
         case .registering:
-            self.changeRootVC(welcomeNC)
+            if UserDefaults.standard.bool(forKey: Config.currentUserDidShowWelcomeScreen)
+            {
+                self.changeRootVC(NonAuthTabBarVC())
+            } else {
+                self.changeRootVC(welcomeNC)
+            }
         case .boarding:
             let boardingNC = UINavigationController(rootViewController: boardingSetPasscodeVC)
             self.changeRootVC(boardingNC)
