@@ -23,9 +23,9 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
                 case .all:
                     return "all".localized()
                 case .english:
-                    return "english".localized()
+                    return "english language".localized()
                 case .russian:
-                    return "russian".localized()
+                    return "russian language".localized()
                 }
             }
             
