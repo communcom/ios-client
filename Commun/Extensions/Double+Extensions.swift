@@ -47,7 +47,7 @@ extension Double {
         } else if self < 100 {
             formatter.maximumFractionDigits = 3
         } else {
-            formatter.maximumFractionDigits = 8
+            formatter.maximumFractionDigits = 2
         }
         
         return (formatter.string(from: self as NSNumber) ?? "0").replacingOccurrences(of: ",", with: " ")

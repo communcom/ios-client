@@ -79,6 +79,7 @@ class CMWalletView: MyView {
                 .text(title, size: 12 * Config.widthRatio, weight: .semibold, color: .white)
                 .text("\n")
                 .text(balance, size: 20 * Config.widthRatio, weight: .semibold, color: .white)
+            nextButtonLabel.text = "wallet".localized().uppercaseFirst
         } else {
             label.attributedText = NSMutableAttributedString()
                 .text("loading...".localized().uppercaseFirst, size: 17, weight: .medium, color: .white)

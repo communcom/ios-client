@@ -140,7 +140,7 @@ class WelcomeItemVC: BaseViewController {
                     .withParagraphStyle(minimumLineHeight: 26, alignment: .center)
             case 2:
                 description = NSMutableAttributedString()
-                    .semibold("Благодоря блокчейну Commun полностью принадлежит и управляется пользователями", color: descriptionColor)
+                    .semibold("Благодаря блокчейну Commun полностью принадлежит и управляется пользователями", color: descriptionColor)
                     .withParagraphStyle(minimumLineHeight: 26, alignment: .center)
             default:
                 description = NSMutableAttributedString()

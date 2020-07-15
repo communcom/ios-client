@@ -14,6 +14,7 @@
 "number" = "цифра";
 "min length" = "мин. длинна";
 "Attempt to abuse" = "Попытка обмана системы";
+"Breaks Community rules" = "Это нарушает правила сообщества";
 "False News" = "Ложные новости";
 "Harassment" = "Домогательство";
 "Hate Speech" = "Оскорбления";
@@ -200,6 +201,7 @@
 "i want to use Master Password" = "Я хочу использовать мастер-пароль";
 "identify yourself!" = "идентифицировать себя!";
 "if someone is in immediate danger" = "если кто-то находится в непосредственной опасности, позвоните в местную аварийную службу. Не ждите.";
+"in top" = "в топе";
 "income" = "доход";
 "info" = "информация";
 "interface language" = "язык интерфейса";
@@ -412,7 +414,6 @@
 "to secure your transactions" = "чтобы обезопасить транзакции";
 "today" = "сегодня";
 "token" = "токен";
-"top" = "лучшее";
 "transaction completed" = "транзакция завершена";
 "transfer" = "перевод";
 "trending" = "в тренде";
@@ -496,6 +497,7 @@
 "your socializing" = "ваше общение";
 "my Feed" = "моя лента";
 "facebook" = "facebook";
+"apple" = "apple";
 "google" = "google";
 "phone" = "телефон";
 "email" = "почту";

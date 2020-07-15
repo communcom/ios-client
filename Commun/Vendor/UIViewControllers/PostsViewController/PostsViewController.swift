@@ -69,15 +69,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
         // forward delegate
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-        
-        // currency changed
-        UserDefaults.standard.rx.observe(String.self, Config.currentRewardShownSymbol)
-            .skip(1)
-            .distinctUntilChanged()
-            .subscribe(onNext: { _ in
-                self.tableView.reloadData()
-            })
-            .disposed(by: disposeBag)
     }
     
     override func handleLoading() {
