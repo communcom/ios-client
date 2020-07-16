@@ -252,6 +252,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     // MARK: - Donations
     private func loadDonations(forPosts posts: [ResponseAPIContentGetPost]) {
         let contentIds = posts.map { RequestAPIContentId(responseAPI: $0.contentId) }
+        guard contentIds.count > 0 else {return}
         RestAPIManager.instance.getDonationsBulk(posts: contentIds)
             .map {$0.items}
             .subscribe(onSuccess: { donations in

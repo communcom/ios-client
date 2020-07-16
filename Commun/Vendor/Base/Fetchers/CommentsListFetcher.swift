@@ -202,13 +202,21 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     
     // MARK: - Donations
     func loadDonations(forComments comments: [ResponseAPIContentGetComment]) {
-        let contentIds = comments.map { RequestAPIContentId(responseAPI: $0.contentId) }
-        RestAPIManager.instance.getDonationsBulk(posts: contentIds)
-            .map {$0.items}
-            .subscribe(onSuccess: { donations in
-                self.showDonations(donations)
-            })
-            .disposed(by: disposeBag)
+        if comments.count > 0 {
+            let splitedComments = comments.prefix(20)
+            
+            let contentIds = splitedComments.map { RequestAPIContentId(responseAPI: $0.contentId) }
+            RestAPIManager.instance.getDonationsBulk(posts: contentIds)
+                .map {$0.items}
+                .subscribe(onSuccess: { donations in
+                    self.showDonations(donations)
+                })
+                .disposed(by: disposeBag)
+            
+            if comments.count > 20 {
+                loadDonations(forComments: Array(comments.suffix(from: 20)))
+            }
+        }
     }
     
     private func showDonations(_ donations: [ResponseAPIWalletGetDonationsBulkItem]) {
