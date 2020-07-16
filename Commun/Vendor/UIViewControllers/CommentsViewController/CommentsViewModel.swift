@@ -8,6 +8,7 @@
 
 import Foundation
 import RxCocoa
+import RxSwift
 
 class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     var filter: BehaviorRelay<CommentsListFetcher.Filter>!
@@ -159,5 +160,28 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
                 fetcher.items.accept(items)
             }
         }
+    }
+    
+    func getRepliesForComment(_ comment: ResponseAPIContentGetComment, inPost post: ResponseAPIContentGetPost, offset: UInt, limit: UInt) -> Completable {
+        (fetcher as! CommentsListFetcher).requestRepliesForComment(comment.contentId, inPost: post.contentId, offset: offset, limit: limit)
+            .do(onSuccess: { [weak self] (children) in
+                guard let strongSelf = self else {return}
+            
+                // modify data
+                var comments = strongSelf.items.value
+                
+                if let currentCommentIndex = comments.firstIndex(where: {$0.identity == comment.identity}) {
+                    var newChildren = comments[currentCommentIndex].children ?? []
+                    newChildren.joinUnique(children)
+                    newChildren = newChildren.sortedByTimeDesc
+                    comments[currentCommentIndex].children = newChildren
+                }
+                
+                strongSelf.items.accept(comments)
+                
+                // load donations
+                (strongSelf.fetcher as! CommentsListFetcher).loadDonations(forComments: children)
+            })
+            .flatMapToCompletable()
     }
 }

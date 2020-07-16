@@ -87,44 +87,44 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         //        return ResponseAPIContentGetComments.singleWithMockData()
         //            .map {$0.items!}
                 
-                switch filter.type {
-                case .post:
-                    // get post's comment
-                    result = RestAPIManager.instance.loadPostComments(
-                        sortBy: filter.sortBy,
-                        offset: offset,
-                        limit: 30,
-                        userId: filter.userId,
-                        permlink: filter.permlink ?? "",
-                        communityId: filter.communityId,
-                        authorizationRequired: filter.authorizationRequired
-                    )
-                
-                case .user:
-                    result = RestAPIManager.instance.loadUserComments(
-                        sortBy: filter.sortBy,
-                        offset: offset,
-                        limit: 30,
-                        userId: filter.userId,
-                        authorizationRequired: filter.authorizationRequired
-                    )
-                    maxNestedLevel = 0
+        switch filter.type {
+        case .post:
+            // get post's comment
+            result = RestAPIManager.instance.loadPostComments(
+                sortBy: filter.sortBy,
+                offset: offset,
+                limit: 30,
+                userId: filter.userId,
+                permlink: filter.permlink ?? "",
+                communityId: filter.communityId,
+                authorizationRequired: filter.authorizationRequired
+            )
+        
+        case .user:
+            result = RestAPIManager.instance.loadUserComments(
+                sortBy: filter.sortBy,
+                offset: offset,
+                limit: 30,
+                userId: filter.userId,
+                authorizationRequired: filter.authorizationRequired
+            )
+            maxNestedLevel = 0
 
-                case .replies:
-                    result = RestAPIManager.instance.loadPostComments(
-                        sortBy: filter.sortBy,
-                        offset: offset,
-                        limit: 30,
-                        permlink: filter.permlink ?? "",
-                        communityId: filter.communityId,
-                        parentCommentUserId: filter.parentComment?.userId,
-                        parentCommentPermlink: filter.parentComment?.permlink,
-                        authorizationRequired: filter.authorizationRequired
-                    )
-                }
-                
-                return result
-                    .map {$0.items ?? []}
+        case .replies:
+            result = RestAPIManager.instance.loadPostComments(
+                sortBy: filter.sortBy,
+                offset: offset,
+                limit: 30,
+                permlink: filter.permlink ?? "",
+                communityId: filter.communityId,
+                parentCommentUserId: filter.parentComment?.userId,
+                parentCommentPermlink: filter.parentComment?.permlink,
+                authorizationRequired: filter.authorizationRequired
+            )
+        }
+        
+        return result
+            .map {$0.items ?? []}
     }
     
     override func join(newItems items: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
@@ -141,6 +141,19 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         loadDonations(forComments: items)
     }
     
+    // MARK: - Replies
+    func requestRepliesForComment(_ comment: ResponseAPIContentId, inPost post: ResponseAPIContentId, offset: UInt, limit: UInt) -> Single<[ResponseAPIContentGetComment]>
+    {
+        RestAPIManager.instance.getRepliesForComment(
+            forPost: post,
+            parentComment: comment,
+            offset: offset,
+            limit: limit,
+            authorizationRequired: filter.authorizationRequired
+        )
+            .map {$0.items ?? []}
+    }
+    
     // MARK: - for grouping comments
     private func groupComments(_ comments: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
         guard comments.count > 0 else {return []}
@@ -154,7 +167,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         return flat(result)
     }
     
-    func flat(_ array: [GroupedComment]) -> [ResponseAPIContentGetComment] {
+    private func flat(_ array: [GroupedComment]) -> [ResponseAPIContentGetComment] {
         var myArray = [ResponseAPIContentGetComment]()
         for element in array {
             myArray.append(element.comment)
@@ -166,7 +179,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         return myArray
     }
 
-    func getChildForComment(_ comment: ResponseAPIContentGetComment, in source: [ResponseAPIContentGetComment]) -> [GroupedComment] {
+    private func getChildForComment(_ comment: ResponseAPIContentGetComment, in source: [ResponseAPIContentGetComment]) -> [GroupedComment] {
         var result = [GroupedComment]()
 
         // filter child
@@ -188,7 +201,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     }
     
     // MARK: - Donations
-    private func loadDonations(forComments comments: [ResponseAPIContentGetComment]) {
+    func loadDonations(forComments comments: [ResponseAPIContentGetComment]) {
         let contentIds = comments.map { RequestAPIContentId(responseAPI: $0.contentId) }
         RestAPIManager.instance.getDonationsBulk(posts: contentIds)
             .map {$0.items}
@@ -213,7 +226,6 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                     {
                         child.donations = donations
                         child.notifyChanged()
-                        comment.notifyChildrenChanged()
                     }
                 }
             }

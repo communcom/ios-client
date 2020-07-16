@@ -85,32 +85,12 @@ extension CommentsViewController: UITableViewDelegate {
         button.setTitle("loading".localized().uppercaseFirst + "...", for: .normal)
         button.isEnabled = false
         
-        RestAPIManager.instance.getRepliesForComment(forPost: post.contentId,
-                                                     parentComment: comment.contentId,
-                                                     offset: button.offset,
-                                                     limit: button.limit,
-                                                     authorizationRequired: Self.authorizationRequired
-        )
-            .map {$0.items}
-            .subscribe(onSuccess: {[weak self] (children) in
-                guard let strongSelf = self else {return}
-                
-                // modify data
-                var comments = strongSelf.viewModel.items.value
-                
-                if let currentCommentIndex = comments.firstIndex(where: {$0.identity == comment.identity}) {
-                    var newChildren = comments[currentCommentIndex].children ?? []
-                    newChildren.joinUnique(children ?? [])
-                    newChildren = newChildren.sortedByTimeDesc
-                    comments[currentCommentIndex].children = newChildren
-                }
-                
-                strongSelf.viewModel.items.accept(comments)
-            }) { [weak self] (error) in
+        (viewModel as! CommentsViewModel).getRepliesForComment(comment, inPost: post, offset: button.offset, limit: button.limit)
+            .subscribe(onError: {[weak self] (error) in
                 self?.showError(error)
                 button.setTitle(originTitle, for: .normal)
                 button.isEnabled = true
-            }
+            })
             .disposed(by: disposeBag)
     }
 }
