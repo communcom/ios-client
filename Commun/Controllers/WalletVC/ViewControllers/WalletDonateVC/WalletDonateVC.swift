@@ -83,4 +83,11 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
         }
         show(completedVC, sender: nil)
     }
+    
+    // MARK: - Actions
+    override func createChooseBalancesVC() -> BalancesVC {
+        BalancesVC(showEmptyBalances: false) { (balance) in
+            self.handleBalanceChosen(balance)
+        }
+    }
 }

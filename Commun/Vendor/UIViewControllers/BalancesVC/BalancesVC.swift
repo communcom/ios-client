@@ -13,10 +13,12 @@ class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     // MARK: - Properties
     var canChooseCommun: Bool
     var completion: ((ResponseAPIWalletGetBalance) -> Void)?
+    var showEmptyBalances: Bool
     
     // MARK: - Initializers
-    init(userId: String? = nil, canChooseCommun: Bool = true, completion: ((ResponseAPIWalletGetBalance) -> Void)? = nil) {
+    init(userId: String? = nil, canChooseCommun: Bool = true, showEmptyBalances: Bool = true, completion: ((ResponseAPIWalletGetBalance) -> Void)? = nil) {
         self.canChooseCommun = canChooseCommun
+        self.showEmptyBalances = showEmptyBalances
         self.completion = completion
         
         let vm: BalancesViewModel
@@ -48,7 +50,11 @@ class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     }
     
     override func mapItems(items: [ResponseAPIWalletGetBalance]) -> [AnimatableSectionModel<String, ResponseAPIWalletGetBalance>] {
-        let items = items.sorted(by: {$0.balanceValue > $1.balanceValue})
+        var items = items
+        if !showEmptyBalances {
+            items = items.filter {$0.balanceValue > 0}
+        }
+        items = items.sorted(by: {$0.balanceValue > $1.balanceValue})
         return super.mapItems(items: items)
     }
     

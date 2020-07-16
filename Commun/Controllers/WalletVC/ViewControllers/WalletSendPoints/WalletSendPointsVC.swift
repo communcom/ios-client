@@ -471,16 +471,24 @@ class WalletSendPointsVC: BaseViewController {
 
     // MARK: - Actions
     @objc func pointsListButtonDidTouch() {
-        let vc = BalancesVC { balance in
-            guard let selectedBalanceIndex = self.dataModel.balances.firstIndex(where: { $0.symbol == balance.symbol }) else { return }
-
-            self.carouselView.scroll(toItemAtIndex: selectedBalanceIndex, animated: true)
-            self.updateSellerInfo()
-            self.updateSendInfoByEnteredPoints()
-        }
+        let vc = createChooseBalancesVC()
         
         let nc = SwipeNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
+    }
+    
+    func createChooseBalancesVC() -> BalancesVC {
+        BalancesVC { balance in
+            self.handleBalanceChosen(balance)
+        }
+    }
+
+    func handleBalanceChosen(_ balance: ResponseAPIWalletGetBalance) {
+        guard let selectedBalanceIndex = self.dataModel.balances.firstIndex(where: { $0.symbol == balance.symbol }) else { return }
+
+        self.carouselView.scroll(toItemAtIndex: selectedBalanceIndex, animated: true)
+        self.updateSellerInfo()
+        self.updateSendInfoByEnteredPoints()
     }
     
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {

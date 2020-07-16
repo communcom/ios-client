@@ -15,8 +15,8 @@ class SearchableBalancesVC: BalancesVC, SearchableViewControllerType {
     lazy var searchContainerView = UIView(backgroundColor: .appWhiteColor)
     var searchBar = UISearchBar.default()
     
-    override init(userId: String? = nil, canChooseCommun: Bool = true, completion: ((ResponseAPIWalletGetBalance) -> Void)? = nil) {
-        super.init(userId: userId, canChooseCommun: canChooseCommun, completion: completion)
+    override init(userId: String? = nil, canChooseCommun: Bool = true, showEmptyBalances: Bool = true, completion: ((ResponseAPIWalletGetBalance) -> Void)? = nil) {
+        super.init(userId: userId, canChooseCommun: canChooseCommun, showEmptyBalances: showEmptyBalances, completion: completion)
         showShadowWhenScrollUp = false
         searchBar.showsCancelButton = true
     }
