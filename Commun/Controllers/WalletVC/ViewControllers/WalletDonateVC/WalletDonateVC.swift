@@ -44,6 +44,7 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
     }
     
     override func balancesDidFinishLoading() {
+        dataModel.balances = dataModel.balances.filter {$0.balanceValue > 0}
         super.balancesDidFinishLoading()
         if let amount = initialAmount {
             pointsTextField.text = "\(amount)"
