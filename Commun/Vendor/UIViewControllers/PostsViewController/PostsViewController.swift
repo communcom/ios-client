@@ -145,4 +145,14 @@ extension PostsViewController: UITableViewDelegate {
             }
         }
     }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard var post = postAtIndexPath(indexPath) else {return}
+        
+        // hide donation buttons when cell was removed
+        if !tableView.isCellVisible(indexPath: indexPath), post.showDonationButtons == true {
+            post.showDonationButtons = false
+            post.notifyChanged()
+        }
+    }
 }
