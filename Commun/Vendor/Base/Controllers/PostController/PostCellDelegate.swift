@@ -25,6 +25,13 @@ extension PostCellDelegate where Self: BaseViewController {
             return
         }
         
+        // Hide all donation buttons
+        for var post in posts where post.showDonationButtons == true {
+            post.showDonationButtons = false
+            post.notifyChanged()
+        }
+        
+        // Upvote and show donations buttons
         guard let post = posts.first(where: {$0.identity == identity}) else {return}
         post.upVote()
             .subscribe { (error) in
