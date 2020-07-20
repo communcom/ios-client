@@ -59,6 +59,15 @@ class PostPageVC: CommentsViewController {
         startContentOffsetY = tableView.contentOffset.y
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if isMovingFromParent, var post = post, post.showDonationButtons == true {
+            post.showDonationButtons = false
+            post.notifyChanged()
+        }
+    }
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
