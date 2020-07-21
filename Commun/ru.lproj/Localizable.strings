@@ -13,7 +13,7 @@
 "uppercase" = "большая";
 "number" = "цифра";
 "min length" = "мин. длинна";
-"Attempt to abuse" = "Попытка обмана системы";
+"Abuse" = "Попытка обмана системы";
 "Breaks Community rules" = "Это нарушает правила сообщества";
 "False News" = "Ложные новости";
 "Harassment" = "Домогательство";
