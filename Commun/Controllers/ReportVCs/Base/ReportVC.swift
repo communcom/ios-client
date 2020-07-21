@@ -107,6 +107,11 @@ class ReportVC: VerticalActionsVC {
                 self.sendButton.isDisabled = true
             }
             
+            vc.cancelCompletion = {
+                guard let deselectingAction = self.actions.first(where: {$0.title == BlockchainManager.ReportReason.other.rawValue }) else {return}
+                self.didSelectAction(deselectingAction)
+            }
+            
             show(vc, sender: nil)
         }
     }

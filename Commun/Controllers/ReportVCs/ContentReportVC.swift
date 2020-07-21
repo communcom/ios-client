@@ -30,7 +30,6 @@ class ContentReportVC<T: ResponseAPIContentMessageType>: ReportVC {
             let communityId = content.community?.communityId,
             let authorId = content.author?.userId
         else {
-            showGeneralError()
             return
         }
         
