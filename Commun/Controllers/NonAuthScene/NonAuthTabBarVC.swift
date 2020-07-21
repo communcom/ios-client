@@ -33,6 +33,7 @@ class NonAuthTabBarVC: TabBarVC, NonAuthVCType {
     }
     
     override func buttonAddTapped() {
-        showAuthVC()
+        let editorVC = NonAuthPostEditorVC()
+        self.present(editorVC, animated: true, completion: nil)
     }
 }
