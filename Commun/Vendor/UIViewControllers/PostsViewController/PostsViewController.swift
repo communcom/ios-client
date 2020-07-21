@@ -133,7 +133,6 @@ extension PostsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let post = postAtIndexPath(indexPath)
         else {return}
-        viewModel.rowHeights[post.identity] = cell.bounds.height
         
         // record post view
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -148,6 +147,9 @@ extension PostsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard var post = postAtIndexPath(indexPath) else {return}
+        
+        // cache height
+        viewModel.rowHeights[post.identity] = cell.bounds.height
         
         // hide donation buttons when cell was removed
         if !tableView.isCellVisible(indexPath: indexPath), post.showDonationButtons == true {
