@@ -249,11 +249,6 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         }
     }
     
-    private func addSubview(_ subView: UIView, toView parentView: UIView) {
-        parentView.addSubview(subView)
-        subView.autoPinEdgesToSuperviewEdges()
-    }
-    
     // MARK: - Search manager
     private func search(_ keyword: String?) {
         tableView?.scrollToTop()

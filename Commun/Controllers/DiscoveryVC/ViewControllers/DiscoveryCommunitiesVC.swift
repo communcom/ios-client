@@ -17,15 +17,11 @@ class DiscoveryCommunitiesVC: CommunitiesVC {
         return viewModel.mergedState
     }
     
-    init(prefetch: Bool) {
-        super.init(type: .all, prefetch: prefetch)
+    convenience init(prefetch: Bool) {
+        self.init(type: .all, prefetch: prefetch)
         defer {
             showShadowWhenScrollUp = false
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     override func setUp() {

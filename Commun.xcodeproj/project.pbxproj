@@ -213,7 +213,7 @@
 		BC3E0D3924B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D3824B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift */; };
 		BC3E0D3D24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D3C24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift */; };
 		BC3E0D3F24B5642500C5F368 /* NonAuthTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D3E24B5642500C5F368 /* NonAuthTabBarVC.swift */; };
-		BC3E0D4124B5685400C5F368 /* NonAuthDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D4024B5685400C5F368 /* NonAuthDiscoveryVC.swift */; };
+		BC3E0D4124B5685400C5F368 /* NonAuthSuggestionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E0D4024B5685400C5F368 /* NonAuthSuggestionsVC.swift */; };
 		BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */; };
 		BC40719923CEF801000027A3 /* PlaceholderNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */; };
 		BC40719A23CEF801000027A3 /* PlaceholderNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC40719823CEF801000027A3 /* PlaceholderNotificationCell.xib */; };
@@ -456,6 +456,8 @@
 		BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */; };
 		BCD453AF2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */; };
 		BCD812482410A2B80035EE13 /* UINavigationBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD812472410A2B80035EE13 /* UINavigationBar+Extensions.swift */; };
+		BCDD53E824C69265007BE222 /* NonAuthCommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53E724C69265007BE222 /* NonAuthCommunitiesVC.swift */; };
+		BCDD53ED24C692F7007BE222 /* NonAuthDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53EC24C692F7007BE222 /* NonAuthDiscoveryVC.swift */; };
 		BCDEE77723ED642600DD3EB3 /* ReportOtherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE77623ED642600DD3EB3 /* ReportOtherVC.swift */; };
 		BCDEE78C23F28D4400DD3EB3 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE78B23F28D4400DD3EB3 /* Int+Extensions.swift */; };
 		BCDEE7A123F4E99300DD3EB3 /* DiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEE7A023F4E99300DD3EB3 /* DiscoveryVC.swift */; };
@@ -756,7 +758,7 @@
 		BC3E0D3824B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthUserProfilePageVC.swift; sourceTree = "<group>"; };
 		BC3E0D3C24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthCommunityPageVC.swift; sourceTree = "<group>"; };
 		BC3E0D3E24B5642500C5F368 /* NonAuthTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthTabBarVC.swift; sourceTree = "<group>"; };
-		BC3E0D4024B5685400C5F368 /* NonAuthDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthDiscoveryVC.swift; sourceTree = "<group>"; };
+		BC3E0D4024B5685400C5F368 /* NonAuthSuggestionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthSuggestionsVC.swift; sourceTree = "<group>"; };
 		BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderAvatarImageView.swift; sourceTree = "<group>"; };
 		BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderNotificationCell.swift; sourceTree = "<group>"; };
 		BC40719823CEF801000027A3 /* PlaceholderNotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceholderNotificationCell.xib; sourceTree = "<group>"; };
@@ -999,6 +1001,8 @@
 		BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCD812472410A2B80035EE13 /* UINavigationBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Extensions.swift"; sourceTree = "<group>"; };
+		BCDD53E724C69265007BE222 /* NonAuthCommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthCommunitiesVC.swift; sourceTree = "<group>"; };
+		BCDD53EC24C692F7007BE222 /* NonAuthDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthDiscoveryVC.swift; sourceTree = "<group>"; };
 		BCDEE77623ED642600DD3EB3 /* ReportOtherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOtherVC.swift; sourceTree = "<group>"; };
 		BCDEE78B23F28D4400DD3EB3 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		BCDEE7A023F4E99300DD3EB3 /* DiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryVC.swift; sourceTree = "<group>"; };
@@ -2589,7 +2593,7 @@
 				BC3E0D3124B4910F00C5F368 /* NonAuthFeedPage */,
 				BC3E0D3424B4911F00C5F368 /* NonAuthPostPage */,
 				BC3E0D3824B4E2F300C5F368 /* NonAuthUserProfilePageVC.swift */,
-				BC3E0D4024B5685400C5F368 /* NonAuthDiscoveryVC.swift */,
+				BCDD53EB24C692A8007BE222 /* NonAuthDiscovery */,
 				BC3E0D3C24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift */,
 			);
 			path = NonAuthScene;
@@ -2736,6 +2740,16 @@
 				BC529141237941920022EC7F /* CommentTextView.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		BCDD53EB24C692A8007BE222 /* NonAuthDiscovery */ = {
+			isa = PBXGroup;
+			children = (
+				BCDD53EC24C692F7007BE222 /* NonAuthDiscoveryVC.swift */,
+				BC3E0D4024B5685400C5F368 /* NonAuthSuggestionsVC.swift */,
+				BCDD53E724C69265007BE222 /* NonAuthCommunitiesVC.swift */,
+			);
+			path = NonAuthDiscovery;
 			sourceTree = "<group>";
 		};
 		BCDEE79D23F4E97300DD3EB3 /* DiscoveryVC */ = {
@@ -3257,7 +3271,7 @@
 				BCDEE77723ED642600DD3EB3 /* ReportOtherVC.swift in Sources */,
 				B1D78C0923E335D100772BD9 /* UserDefaults+Extensions.swift in Sources */,
 				BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */,
-				BC3E0D4124B5685400C5F368 /* NonAuthDiscoveryVC.swift in Sources */,
+				BC3E0D4124B5685400C5F368 /* NonAuthSuggestionsVC.swift in Sources */,
 				BCEFA645249217F700971E77 /* DonatorCell.swift in Sources */,
 				BC923E0C24319DB700B28413 /* BaseSignUpMethodVC.swift in Sources */,
 				BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */,
@@ -3422,6 +3436,7 @@
 				BC465927238E563F00AF9C29 /* GenerateMasterPasswordVC.swift in Sources */,
 				BC016D43235DA0D400F1319F /* PostCell.swift in Sources */,
 				BC69F7CF236FC63F0097F870 /* BaseViewModel.swift in Sources */,
+				BCDD53ED24C692F7007BE222 /* NonAuthDiscoveryVC.swift in Sources */,
 				BCFFE93C2420C4DE007D7BB8 /* ExplanationView.swift in Sources */,
 				BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */,
 				BC597A8E238D0CEC00103F4F /* FTUEChosenCommunityCell.swift in Sources */,
@@ -3579,6 +3594,7 @@
 				BCF0D261249877420094B6EB /* BaseViewController+Extensions.swift in Sources */,
 				BC529142237941920022EC7F /* CommentTextView.swift in Sources */,
 				BC3694F523698FEE00B2E078 /* EditorVC+Actions.swift in Sources */,
+				BCDD53E824C69265007BE222 /* NonAuthCommunitiesVC.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */,
 				BC1E865B242C853500CF202F /* MyProfileEditVC.swift in Sources */,
