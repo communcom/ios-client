@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 import RxSwift
 
-class ContentReportVC<T: ListItemType>: ReportVC {
+class ContentReportVC<T: ResponseAPIContentMessageType>: ReportVC {
     // MARK: - Properties
     let content: T
     
@@ -26,33 +26,19 @@ class ContentReportVC<T: ListItemType>: ReportVC {
     
     // MARK: - Methods
     override func sendButtonDidTouch() {
-        guard checkValues() else { return }
-
-//        guard choosedReasons.count > 0 else {
-//            showAlert(title: "reason needed".localized().uppercaseFirst, message: "you must choose at least one reason".localized().uppercaseFirst)
-//
-//            return
-//        }
-        
-        var communityId: String?
-        var authorId: String?
-        var permlink: String?
-        
-        if let post = content as? ResponseAPIContentGetPost {
-            communityId = post.community?.communityId
-            authorId = post.author?.userId
-            permlink = post.contentId.permlink
+        guard checkValues(),
+            let communityId = content.community?.communityId,
+            let authorId = content.author?.userId
+        else {
+            showGeneralError()
+            return
         }
         
-        if let comment = content as? ResponseAPIContentGetComment {
-            communityId = comment.community?.communityId
-            authorId = comment.author?.userId
-            permlink = comment.contentId.permlink
-        }
+        let permlink = content.contentId.permlink
         
         showIndetermineHudWithMessage("reporting".localized().uppercaseFirst + "...")
         
-        BlockchainManager.instance.report(communityID: communityId ?? "", autorID: authorId ?? "", permlink: permlink ?? "", reasons: choosedReasons, message: otherReason)
+        BlockchainManager.instance.report(communityID: communityId, autorID: authorId, permlink: permlink, reasons: choosedReasons, message: otherReason)
 //            .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { (_) in
                 self.hideHud()

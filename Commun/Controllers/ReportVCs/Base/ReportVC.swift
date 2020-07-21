@@ -25,7 +25,7 @@ class ReportVC: VerticalActionsVC {
     // MARK: - Initializers
     init() {
         super.init(actions: BlockchainManager.ReportReason.allCases.map({ (reason) -> Action in
-            Action(title: reason.rawValue.localized(), icon: nil)
+            Action(title: reason.rawValue, icon: nil)
         }))
     }
     
@@ -81,7 +81,7 @@ class ReportVC: VerticalActionsVC {
     override func viewForAction(_ action: VerticalActionsVC.Action) -> UIView {
         let actionView = ReportOptionView(height: 58, backgroundColor: .appWhiteColor)
         actionView.checkBox.isUserInteractionEnabled = false
-        actionView.titleLabel.text = action.title
+        actionView.titleLabel.text = action.title.localized()
         actionView.checkBox.isSelected = action.isSelected
         
         return actionView
