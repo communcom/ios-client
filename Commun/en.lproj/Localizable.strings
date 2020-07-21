@@ -85,6 +85,7 @@
 "change position" = "change position";
 "characters" = "characters";
 "check your Internet connection" = "check your Internet connection\n and try again";
+"choose community" = "choose community";
 "choose communities of interest and" = "choose communities of interest and";
 "choose community in which you want" = "choose community in which you want to create a post";
 "choose from gallery" = "choose from gallery";
@@ -499,6 +500,7 @@
 "you haven't had any transactions yet" = "you haven't had any transactions yet";
 "you haven’t created any" = "you haven’t created any";
 "you haven’t written any" = "you haven’t written any";
+"you must sign in to choose community to post in" = "you must sign in to choose community to post in";
 "you received" = "you received";
 "you want to select the advanced mode" = "you want to select the advanced mode and continue with the Master Password";
 "you will post in" = "you will post in";
