@@ -16,6 +16,12 @@ protocol CommunityCellDelegate: class {
 
 extension CommunityCellDelegate where Self: BaseViewController {
     func buttonFollowDidTouch(community: ResponseAPIContentGetCommunity) {
+        // Prevent upvoting when user is in NonAuthVCType
+        if let nonAuthVC = self as? NonAuthVCType {
+            nonAuthVC.showAuthVC()
+            return
+        }
+        
         BlockchainManager.instance.triggerFollow(community: community)
             .subscribe { [weak self] (error) in
                 self?.showError(error)
