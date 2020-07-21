@@ -26,3 +26,20 @@ class NonAuthPostEditorVC: BasicEditorVC, NonAuthVCType {
         self.viewModel.community.accept(ResponseAPIContentGetCommunity.myFeed)
     }
 }
+
+extension NonAuthPostEditorVC {
+    override func chooseCommunityDidTouch() {
+        showAlert(title: "choose community".localized().uppercaseFirst, message: "you must sign in to choose community to post in".localized().uppercaseFirst, buttonTitles: ["sign in".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { index in
+            if index == 0 {
+                self.showAuthVC()
+            }
+        }
+    }
+    
+    override func send() {
+        DispatchQueue(label: "archiving").async {
+            self.saveDraft()
+        }
+        showAuthVC()
+    }
+}
