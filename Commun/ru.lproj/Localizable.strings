@@ -85,6 +85,7 @@
 "change position" = "изменить положение";
 "characters" = "символы";
 "check your Internet connection" = "проверь свое интернет соединение \nи попробуй еще раз";
+"choose community" = "выбирать сообщество";
 "choose communities of interest and" = "выбирайте сообщества по интересам и";
 "choose community in which you want" = "выберите сообщество, в котором вы хотите создать пост";
 "choose from gallery" = "выбрать из галереи";
@@ -485,6 +486,7 @@
 "you haven't had any transactions yet" = "у тебя еще не было транзакций";
 "you haven’t created any" = "ты не создал ни одного";
 "you haven’t written any" = "ты не написал ни одного";
+"you must sign in to choose community to post in" = "вам надо войти чтобы выбирать сообщество, в котором вы хотите создать пост";
 "you received" = "ты получил";
 "you want to select the advanced mode" = "хочешь выбрать расширенный режим и использовать мастер-пароль";
 "you will post in" = "ты отправишь в";
