@@ -43,6 +43,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         return viewModel.profile.value
     }
     
+    var price: Double?
+    
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetCommunity> {
         if let alias = communityAlias {
             return CommunityPageViewModel(communityAlias: alias, authorizationRequired: authorizationRequired)
@@ -160,6 +162,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         
         (viewModel as! CommunityPageViewModel).walletGetBuyPriceRequest
             .subscribe(onSuccess: { (buyPrice) in
+                self.price = buyPrice.priceValue
                 self.headerView.setUp(walletPrice: buyPrice)
             }, onError: { (error) in
                 self.showError(error)

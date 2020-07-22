@@ -57,11 +57,41 @@ extension CommunityPageVC {
     }
     
     @objc func getPointsButtonTapped(_ sender: UIButton) {
-        guard let viewModel = viewModel as? CommunityPageViewModel else { return }
-        let communityID: String = viewModel.communityId ?? viewModel.communityAlias ?? ""
-
-        if !communityID.isEmpty {
-            showOtherBalanceWalletVC(symbol: communityID.uppercased())
+        guard let viewModel = viewModel as? CommunityPageViewModel,
+            let communityCode = viewModel.community.value?.code ?? viewModel.community.value?.communityId,
+            let price = self.price
+        else { return }
+        
+        let vm = BalancesViewModel.ofCurrentUser
+        
+        let showWalletSellCommunVC: (() -> Void) =
+            { [weak self] in
+                let vc = WalletSellCommunVC(balances: vm.items.value, symbol: communityCode)
+                self?.show(vc, sender: nil)
+            }
+        
+        if !vm.items.value.contains(where: {$0.symbol == communityCode}) {
+            showAlert(title: "open balance".localized().uppercaseFirst, message: "you do not have balance for this community.\nWould you like to open one?".localized().uppercaseFirst, buttonTitles: ["open".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                if index == 0 {
+                    self.showIndetermineHudWithMessage("open balance".localized().uppercaseFirst)
+                    BlockchainManager.instance.openCommunityBalance(communityCode: communityCode)
+                        .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                        .subscribe(onCompleted: {
+                            self.hideHud()
+                            let balance = ResponseAPIWalletGetBalance(symbol: communityCode, balance: "0", logo: viewModel.profile.value?.avatarUrl, name: viewModel.profile.value?.name, frozen: "0", price: Conflicted(string: price.string))
+                            var items = vm.items.value
+                            items.append(balance)
+                            vm.items.accept(items)
+                            showWalletSellCommunVC()
+                        }) { (error) in
+                            self.hideHud()
+                            self.showError(error)
+                        }
+                        .disposed(by: self.disposeBag)
+                }
+            }
+        } else {
+            showWalletSellCommunVC()
         }
     }
 }
