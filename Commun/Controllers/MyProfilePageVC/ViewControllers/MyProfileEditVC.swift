@@ -18,6 +18,7 @@ class MyProfileEditVC: BaseVerticalStackVC {
     // MARK: - Sections
     lazy var generalInfoView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     lazy var contactsView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+    lazy var linksView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     
     // MARK: - Methods
     override func setUp() {
@@ -43,7 +44,8 @@ class MyProfileEditVC: BaseVerticalStackVC {
     override func setUpArrangedSubviews() {
         stackView.addArrangedSubviews([
             generalInfoView,
-            contactsView
+            contactsView,
+            linksView
         ])
     }
     
@@ -56,6 +58,7 @@ class MyProfileEditVC: BaseVerticalStackVC {
     func reloadData() {
         updateGeneralInfo()
         updateContacts()
+        updateLinks()
     }
     
     func updateGeneralInfo() {
@@ -107,7 +110,7 @@ class MyProfileEditVC: BaseVerticalStackVC {
         
         // bio
         let spacer3 = spacer
-        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: nil)
+        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: "")
         stackView.addArrangedSubviews([spacer3, websiteField])
         spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
@@ -134,25 +137,39 @@ class MyProfileEditVC: BaseVerticalStackVC {
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // whatsapp
-        let spacer1 = spacer
-        let whatsappField = contactField(icon: "whatsapp-icon", serviceName: "Whatsapp", username: profile?.personal?.contacts?.whatsApp)
-        stackView.addArrangedSubviews([spacer1, whatsappField])
-        spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        whatsappField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        addContactField(icon: "whatsapp-icon", serviceName: "Whatsapp", username: profile?.personal?.contacts?.whatsApp, to: stackView)
         
         // telegram
-        let spacer2 = spacer
-        let telegramField = contactField(icon: "telegram-icon", serviceName: "Telegram", username: profile?.personal?.contacts?.telegram)
-        stackView.addArrangedSubviews([spacer2, telegramField])
-        spacer2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        telegramField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        addContactField(icon: "telegram-icon", serviceName: "Telegram", username: profile?.personal?.contacts?.telegram, to: stackView)
         
         // wechat
-        let spacer3 = spacer
-        let wechatField = contactField(icon: "wechat-icon", serviceName: "WeChat", username: profile?.personal?.contacts?.weChat)
-        stackView.addArrangedSubviews([spacer3, wechatField])
-        spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        wechatField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        addContactField(icon: "wechat-icon", serviceName: "WeChat", username: profile?.personal?.contacts?.weChat, to: stackView)
+    }
+    
+    func updateLinks() {
+        linksView.removeSubviews()
+        let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
+        linksView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        
+        let headerView = sectionHeaderView(title: "links".localized().uppercaseFirst)
+        stackView.addArrangedSubview(headerView)
+        headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // twitter
+        addContactField(icon: "twitter-icon", serviceName: "Twitter", username: "", to: stackView)
+        
+        // facebook
+        addContactField(icon: "facebook-icon", serviceName: "Facebook", username: "", to: stackView)
+        
+        // youtube
+        addContactField(icon: "youtube-icon", serviceName: "Youtube", username: "", to: stackView)
+        
+        // instagram
+        addContactField(icon: "instagram-icon", serviceName: "Instagram", username: "", to: stackView)
+        
+        // github
+        addContactField(icon: "github-icon", serviceName: "Github", username: "", to: stackView)
     }
     
     // MARK: - View builders
@@ -177,7 +194,7 @@ class MyProfileEditVC: BaseVerticalStackVC {
         return stackView
     }
     
-    private func contactField(icon: String?, serviceName: String, username: String?) -> UIStackView {
+    private func addContactField(icon: String?, serviceName: String, username: String?, to parentStackView: UIStackView) {
         let stackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
         let icon = UIImageView(width: 20, height: 20, imageNamed: icon)
         let label = UILabel.with(textSize: 14, numberOfLines: 2)
@@ -189,6 +206,10 @@ class MyProfileEditVC: BaseVerticalStackVC {
         stackView.addArrangedSubviews([icon, label])
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
-        return stackView
+        
+        let spacer1 = spacer
+        parentStackView.addArrangedSubviews([spacer1, stackView])
+        spacer1.widthAnchor.constraint(equalTo: parentStackView.widthAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalTo: parentStackView.widthAnchor).isActive = true
     }
 }
