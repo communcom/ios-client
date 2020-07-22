@@ -107,6 +107,7 @@
 "confirm it's you" = "confirm it's you";
 "confirm password" = "confirm password";
 "connecting" = "connecting";
+"contacts" = "contacts";
 "content must less than" = "content must less than";
 "content wasn't changed" = "content wasn't changed";
 "continue" = "continue";
@@ -179,6 +180,7 @@
 "friend" = "friend";
 "friends" = "friends";
 "friends not found" = "friends not found";
+"general info" = "general info";
 "get" = "get";
 "get you first points" = "get you first points";
 "go to commun.com and scan QR" = "go to commun.com and scan QR";
@@ -222,6 +224,7 @@
 "left a comment" = "left a comment";
 "let us notify you about receiving rewards" = "let us notify you about receiving rewards, replies, or upvotes! Stay tuned for the most important and pleasant activities on Commun";
 "liked" = "liked";
+"links" = "links";
 "loading" = "loading";
 "loading embed" = "loading embed";
 "loading failed" = "loading failed";
@@ -251,6 +254,7 @@
 "mutual" = "mutual";
 "my" = "my";
 "my blacklist" = "my blacklist";
+"my profile" = "my profile";
 "name" = "name";
 "new" = "new";
 "newest first" = "newest first";
@@ -468,6 +472,7 @@
 "was turned off" = "was turned off";
 "we have flagged this post for investigation" = "we have flagged this post for investigation. Thank you for being with us";
 "we're sorry that you've had this experience" = "we're sorry that you've had this experience";
+"website" = "website";
 "welcome" = "welcome";
 "welcome-item-0" = "Social network based on blockchain\n independent communities";
 "welcome-item-1" = "Find your Comminity and make it the center of your communication with like-minded people";

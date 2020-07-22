@@ -107,6 +107,7 @@
 "confirm it's you" = "подтвердить, что это ты";
 "confirm password" = "подтвердить пароль";
 "connecting" = "подключение";
+"contacts" = "контакты";
 "content must less than" = "содержание должно меньше, чем";
 "content wasn't changed" = "содержание не было изменено";
 "continue" = "продолжить";
@@ -179,6 +180,7 @@
 "friend" = "друга";
 "friends" = "друзья";
 "friends not found" = "друзья не найдены";
+"general info" = "общая информация";
 "get" = "получить";
 "get you first points" = "получить первые очки";
 "go to commun.com and scan QR" = "перейдите на commun.com и отсканируйте QR";
@@ -222,6 +224,7 @@
 "left a comment" = "оставил комментарий";
 "let us notify you about receiving rewards" = "Разрешите нам уведомлять вас о получении вознаграждений, ответов или голосов! Следите за самыми важными и приятными событиями";
 "liked" = "понравилось";
+"links" = "ссылки";
 "loading" = "загрузка";
 "loading embed" = "загрузка миниатюры";
 "loading failed" = "ошибка загрузки";
@@ -250,6 +253,7 @@
 "mutual" = "общие";
 "my" = "мой";
 "my blacklist" = "мой чёрный список";
+"my profile" = "мой профиль";
 "name" = "имя";
 "new" = "новое";
 "newest first" = "от новых к старым";
@@ -454,6 +458,7 @@
 "was turned off" = "был выключен";
 "we have flagged this post for investigation" = "Спасибо, твоя жалоба будет рассмотрена модераторами.";
 "we're sorry that you've had this experience" = "нам жаль, что у вас был такой опыт";
+"website" = "вебсайт";
 "welcome" = "добро пожаловать";
 "welcome-item-0" = "Социальную сеть на технологиях Блокчейн\nЗдесь ты заработаешь награды за посты лайки и комментарии";
 "welcome-item-1" = "Найдите свою сообщество и сделайте ее центром вашего общения с единомышленниками.";
