@@ -35,7 +35,7 @@ class MyProfileSettingsVC: BaseViewController {
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImage, withOffset: 10)
 
-        let button = UIButton.circleGray(imageName: "next-arrow", imageEdgeInsets: UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8))
+        let button = UIButton.nextArrow()
         button.isUserInteractionEnabled = false
         view.addSubview(button)
         button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
@@ -135,7 +135,7 @@ class MyProfileSettingsVC: BaseViewController {
             label.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
             label.autoAlignAxis(toSuperviewAxis: .horizontal)
 
-            let button = UIButton.circleGray(imageName: "next-arrow", imageEdgeInsets: UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8))
+            let button = UIButton.nextArrow()
             button.isUserInteractionEnabled = false
             actionView.addSubview(button)
             button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)

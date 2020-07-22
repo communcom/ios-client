@@ -15,7 +15,7 @@ class BaseVerticalStackVC: BaseViewController {
     
     // MARK: - Subviews
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
-    lazy var stackView = UIStackView(axis: .vertical, spacing: 2)
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 2, alignment: .fill, distribution: .fill)
     
     override func setUp() {
         super.setUp()
