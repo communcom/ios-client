@@ -17,6 +17,7 @@ class MyProfileEditVC: BaseVerticalStackVC {
     
     // MARK: - Sections
     lazy var generalInfoView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+    lazy var contactsView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     
     // MARK: - Methods
     override func setUp() {
@@ -40,13 +41,21 @@ class MyProfileEditVC: BaseVerticalStackVC {
     }
     
     override func setUpArrangedSubviews() {
-        stackView.addArrangedSubview(generalInfoView)
+        stackView.addArrangedSubviews([
+            generalInfoView,
+            contactsView
+        ])
+    }
+    
+    override func viewDidSetUpStackView() {
+        super.viewDidSetUpStackView()
+        stackView.spacing = 20
     }
     
     // MARK: - Data handler
     func reloadData() {
-        // general info
         updateGeneralInfo()
+        updateContacts()
     }
     
     func updateGeneralInfo() {
@@ -114,6 +123,38 @@ class MyProfileEditVC: BaseVerticalStackVC {
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
     }
     
+    func updateContacts() {
+        contactsView.removeSubviews()
+        let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
+        contactsView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        
+        let headerView = sectionHeaderView(title: "contacts".localized().uppercaseFirst)
+        stackView.addArrangedSubview(headerView)
+        headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // whatsapp
+        let spacer1 = spacer
+        let whatsappField = contactField(icon: "whatsapp-icon", serviceName: "Whatsapp", username: profile?.personal?.contacts?.whatsApp)
+        stackView.addArrangedSubviews([spacer1, whatsappField])
+        spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        whatsappField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // telegram
+        let spacer2 = spacer
+        let telegramField = contactField(icon: "telegram-icon", serviceName: "Telegram", username: profile?.personal?.contacts?.telegram)
+        stackView.addArrangedSubviews([spacer2, telegramField])
+        spacer2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        telegramField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // wechat
+        let spacer3 = spacer
+        let wechatField = contactField(icon: "wechat-icon", serviceName: "WeChat", username: profile?.personal?.contacts?.weChat)
+        stackView.addArrangedSubviews([spacer3, wechatField])
+        spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        wechatField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+    }
+    
     // MARK: - View builders
     private func sectionHeaderView(title: String) -> UIStackView {
         let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
@@ -133,6 +174,21 @@ class MyProfileEditVC: BaseVerticalStackVC {
         stackView.addArrangedSubviews([titleLabel, contentLabel])
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 7, trailing: 16)
+        return stackView
+    }
+    
+    private func contactField(icon: String?, serviceName: String, username: String?) -> UIStackView {
+        let stackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
+        let icon = UIImageView(width: 20, height: 20, imageNamed: icon)
+        let label = UILabel.with(textSize: 14, numberOfLines: 2)
+        label.attributedText = NSMutableAttributedString()
+            .text(serviceName, size: 14, weight: .semibold, color: .appGrayColor)
+            .text("\n")
+            .text("@" + (username ?? ""), size: 14, weight: .semibold, color: .appMainColor)
+            .withParagraphStyle(lineSpacing: 5)
+        stackView.addArrangedSubviews([icon, label])
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         return stackView
     }
 }
