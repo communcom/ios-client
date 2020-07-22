@@ -9,20 +9,14 @@
 import Foundation
 
 class MyProfileEditVC: BaseVerticalStackVC {
-    // MARK: - Subviews
-    lazy var generalInfoStackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
+    // MARK: - Properties
+    var profile: ResponseAPIContentGetProfile?
     
+    // MARK: - Subviews
     var spacer: UIView { UIView(height: 2, backgroundColor: .appLightGrayColor)}
     
-//    lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst, isHuggingContent: false, isDisableGrayColor: true)
-    
     // MARK: - Sections
-    lazy var generalInfoView: UIView = {
-        let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
-        view.addSubview(generalInfoStackView)
-        generalInfoStackView.autoPinEdgesToSuperviewEdges()
-        return view
-    }()
+    lazy var generalInfoView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     
     // MARK: - Methods
     override func setUp() {
@@ -30,6 +24,19 @@ class MyProfileEditVC: BaseVerticalStackVC {
         title = "my profile".localized().uppercaseFirst
         
         reloadData()
+    }
+    
+    override func bind() {
+        super.bind()
+        UserDefaults.standard.rx.observe(Data.self, Config.currentUserGetProfileKey)
+            .filter {$0 != nil}
+            .map {$0!}
+            .map {try? JSONDecoder().decode(ResponseAPIContentGetProfile.self, from: $0)}
+            .subscribe(onNext: { profile in
+                self.profile = profile
+                self.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
     
     override func setUpArrangedSubviews() {
@@ -43,8 +50,10 @@ class MyProfileEditVC: BaseVerticalStackVC {
     }
     
     func updateGeneralInfo() {
-        let stackView = generalInfoStackView
-        stackView.removeArrangedSubviews()
+        generalInfoView.removeSubviews()
+        let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
+        generalInfoView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
         
         let headerView = sectionHeaderView(title: "general info".localized().uppercaseFirst)
         
@@ -60,7 +69,7 @@ class MyProfileEditVC: BaseVerticalStackVC {
             let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleAspectFit)
             imageView.borderWidth = 7
             imageView.borderColor = .appWhiteColor
-            imageView.setCover(urlString: UserDefaults.standard.string(forKey: Config.currentUserCoverUrlKey))
+            imageView.setCover(urlString: profile?.coverUrl)
             return imageView
         }()
         
@@ -69,23 +78,40 @@ class MyProfileEditVC: BaseVerticalStackVC {
             avatarImageView,
             coverImageView
         ])
-        
-        let spacer1 = spacer
-        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, content: Config.currentUser?.name)
-        let spacer2 = spacer
-        let usernameInfoField = infoField(title: "username".localized().uppercaseFirst, content: "@" + (Config.currentUser?.id ?? ""))
-        
-        let infoFields: [UIView] = [
-            spacer1,
-            nameInfoField,
-            spacer2,
-            usernameInfoField
-        ]
-        stackView.addArrangedSubviews(infoFields)
-        
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         coverImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        
+        // name
+        let spacer1 = spacer
+        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, content: Config.currentUser?.name)
+        
+        stackView.addArrangedSubviews([spacer1, nameInfoField])
         spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        nameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // username
+        let spacer2 = spacer
+        let usernameInfoField = infoField(title: "username".localized().uppercaseFirst, content: "@" + (Config.currentUser?.id ?? ""))
+        stackView.addArrangedSubviews([spacer2, usernameInfoField])
+        spacer2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        usernameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // bio
+        let spacer3 = spacer
+        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: nil)
+        stackView.addArrangedSubviews([spacer3, websiteField])
+        spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // bio
+        let spacer4 = spacer
+        let bioField = infoField(title: "bio".localized().uppercaseFirst, content: profile?.personal?.biography)
+        stackView.addArrangedSubviews([spacer4, bioField])
+        spacer4.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        bioField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
     }
     
     // MARK: - View builders
