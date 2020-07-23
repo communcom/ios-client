@@ -60,7 +60,7 @@ extension MyProfileEditGeneralInfoVC {
         websiteInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
         // bio
-        bioTextView.text = ""
+        bioTextView.text = profile?.personal?.biography
         let bioField = infoField(title: "bio".localized().uppercaseFirst, editor: bioTextView)
         stackView.addArrangedSubview(bioField)
         bioField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true

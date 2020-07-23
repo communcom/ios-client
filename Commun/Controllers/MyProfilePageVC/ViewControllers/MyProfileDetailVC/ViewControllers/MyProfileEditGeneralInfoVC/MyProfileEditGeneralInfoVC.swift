@@ -35,6 +35,8 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
         let tv = UITextView(forExpandable: ())
         tv.backgroundColor = .clear
         tv.font = .systemFont(ofSize: 17, weight: .semibold)
+        tv.textContainerInset = .zero
+        tv.textContainer.lineFragmentPadding = 0
         return tv
     }()
     
