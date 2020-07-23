@@ -59,7 +59,7 @@ extension MyProfileEditGeneralInfoVC {
         stackView.setCustomSpacing(29, after: avatarWrapper)
     }
     
-    private func infoField(title: String, editor: UIView) -> UIView {
+    private func infoField(title: String, editor: UITextEditor) -> UIView {
         let stackView = UIStackView(axis: .vertical, spacing: 8, alignment: .leading, distribution: .fill)
         let titleLabel = UILabel.with(text: title, textSize: 12, weight: .medium, textColor: .appGrayColor)
         

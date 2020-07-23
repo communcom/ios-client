@@ -193,6 +193,7 @@
 		BC31D1C12457D094000F5BE5 /* DonationUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */; };
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
 		BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */; };
+		BC34F96C24C98F9200BDD816 /* UITextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34F96B24C98F9200BDD816 /* UITextEditor.swift */; };
 		BC3694ED236979A700B2E078 /* ProfileChooseAvatarVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC3694EC236979A700B2E078 /* ProfileChooseAvatarVC.storyboard */; };
 		BC3694EF2369850100B2E078 /* EditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3694EE2369850100B2E078 /* EditorVC.swift */; };
 		BC3694F523698FEE00B2E078 /* EditorVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3694F423698FEE00B2E078 /* EditorVC+Actions.swift */; };
@@ -742,6 +743,7 @@
 		BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationUsersView.swift; sourceTree = "<group>"; };
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
 		BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordVC.swift; sourceTree = "<group>"; };
+		BC34F96B24C98F9200BDD816 /* UITextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextEditor.swift; sourceTree = "<group>"; };
 		BC3694EC236979A700B2E078 /* ProfileChooseAvatarVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileChooseAvatarVC.storyboard; sourceTree = "<group>"; };
 		BC3694EE2369850100B2E078 /* EditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorVC.swift; sourceTree = "<group>"; };
 		BC3694F423698FEE00B2E078 /* EditorVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Actions.swift"; sourceTree = "<group>"; };
@@ -2632,6 +2634,7 @@
 				BC6908B9240CC0A100A1F7EC /* UISearchBar+Extensions.swift */,
 				BCD01A0323F65231003B0E1E /* UINavigationController+Extensions.swift */,
 				BCD812472410A2B80035EE13 /* UINavigationBar+Extensions.swift */,
+				BC34F96B24C98F9200BDD816 /* UITextEditor.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -3259,6 +3262,7 @@
 				BC3694FB23699C0F00B2E078 /* BasicEditorVC+Actions.swift in Sources */,
 				BC99B65A23E17848004AA74E /* UISearchController+Extensions.swift in Sources */,
 				3BAD8E832318FB1C005A8AB3 /* NSAttributedString+Extensions.swift in Sources */,
+				BC34F96C24C98F9200BDD816 /* UITextEditor.swift in Sources */,
 				BC18FA2723D56325005DC7E3 /* UITextField+Extensions.swift in Sources */,
 				3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */,
 				BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */,
