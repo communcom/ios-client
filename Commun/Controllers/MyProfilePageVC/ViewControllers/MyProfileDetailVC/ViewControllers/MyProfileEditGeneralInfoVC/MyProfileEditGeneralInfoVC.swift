@@ -70,6 +70,7 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
     private func createTextField() -> UITextField {
         let tf = UITextField()
         tf.borderStyle = .none
+        tf.font = .systemFont(ofSize: 17, weight: .semibold)
         return tf
     }
 }

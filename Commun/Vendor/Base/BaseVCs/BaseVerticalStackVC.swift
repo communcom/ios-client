@@ -38,7 +38,9 @@ class BaseVerticalStackVC: BaseViewController {
     func setUpScrollView() {
         view.addSubview(scrollView)
         scrollViewTopConstraint = scrollView.autoPinEdge(toSuperviewEdge: .top)
-        scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        scrollView.autoPinEdge(toSuperviewEdge: .leading)
+        scrollView.autoPinEdge(toSuperviewEdge: .trailing)
+        scrollView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard()
     }
     
     func viewDidSetUpScrollView() {}

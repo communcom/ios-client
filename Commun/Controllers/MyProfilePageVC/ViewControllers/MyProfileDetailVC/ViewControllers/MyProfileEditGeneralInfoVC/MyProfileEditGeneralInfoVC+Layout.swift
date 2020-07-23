@@ -41,9 +41,40 @@ extension MyProfileEditGeneralInfoVC {
         
         coverImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
+        // name
+        nameTextField.text = profile?.username
+        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, editor: nameTextField)
+        stackView.addArrangedSubview(nameInfoField)
+        nameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        
+        // username
+        usernameTextField.text = profile?.username
+        let usernamenameInfoField = infoField(title: "username".localized().uppercaseFirst, editor: usernameTextField)
+        stackView.addArrangedSubview(usernamenameInfoField)
+        usernamenameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 24, leading: 0, bottom: 20, trailing: 0)
         
         stackView.setCustomSpacing(29, after: avatarWrapper)
+    }
+    
+    private func infoField(title: String, editor: UIView) -> UIView {
+        let stackView = UIStackView(axis: .vertical, spacing: 8, alignment: .leading, distribution: .fill)
+        let titleLabel = UILabel.with(text: title, textSize: 12, weight: .medium, textColor: .appGrayColor)
+        
+        stackView.addArrangedSubviews([titleLabel, editor])
+        editor.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32)
+            .isActive = true
+        
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 7, trailing: 16)
+        
+        let field = UIView(cornerRadius: 10)
+        field.borderColor = .appLightGrayColor
+        field.borderWidth = 1
+        field.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        return field
     }
 }
