@@ -54,6 +54,8 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
             self.profile = profile
         }
         
+        scrollView.keyboardDismissMode = .onDrag
+        
         reloadData()
     }
     
