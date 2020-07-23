@@ -15,7 +15,7 @@ extension MyProfileDetailVC {
         generalInfoView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
-        let headerView = sectionHeaderView(title: "general info".localized().uppercaseFirst)
+        let headerView = sectionHeaderView(title: "general info".localized().uppercaseFirst, action: #selector(editGeneralInfoButtonDidTouch))
         
         let avatarImageView: MyAvatarImageView = {
             let imageView = MyAvatarImageView(size: 120)
@@ -80,7 +80,7 @@ extension MyProfileDetailVC {
         contactsView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
-        let headerView = sectionHeaderView(title: "contacts".localized().uppercaseFirst)
+        let headerView = sectionHeaderView(title: "contacts".localized().uppercaseFirst, action: #selector(editContactsButtonDidTouch))
         stackView.addArrangedSubview(headerView)
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
@@ -100,7 +100,7 @@ extension MyProfileDetailVC {
         linksView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
-        let headerView = sectionHeaderView(title: "links".localized().uppercaseFirst)
+        let headerView = sectionHeaderView(title: "links".localized().uppercaseFirst, action: #selector(editLinksButtonDidTouch))
         stackView.addArrangedSubview(headerView)
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
@@ -121,7 +121,7 @@ extension MyProfileDetailVC {
     }
     
     // MARK: - View builders
-    private func sectionHeaderView(title: String) -> UIStackView {
+    private func sectionHeaderView(title: String, action: Selector) -> UIStackView {
         let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         stackView.autoSetDimension(.height, toSize: 55)
         let label = UILabel.with(text: title, textSize: 17, weight: .semibold)
@@ -129,6 +129,8 @@ extension MyProfileDetailVC {
         stackView.addArrangedSubviews([label, arrow])
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        
+        arrow.addTarget(self, action: action, for: .touchUpInside)
         return stackView
     }
     

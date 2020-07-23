@@ -60,4 +60,17 @@ class MyProfileDetailVC: BaseVerticalStackVC {
         updateContacts()
         updateLinks()
     }
+    
+    @objc func editGeneralInfoButtonDidTouch() {
+        let vc = MyProfileEditGeneralInfoVC()
+        show(vc, sender: nil)
+    }
+    
+    @objc func editContactsButtonDidTouch() {
+        
+    }
+    
+    @objc func editLinksButtonDidTouch() {
+        
+    }
 }
