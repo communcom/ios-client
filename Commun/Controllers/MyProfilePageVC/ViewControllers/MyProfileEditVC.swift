@@ -76,7 +76,7 @@ class MyProfileEditVC: BaseVerticalStackVC {
         }()
         
         let coverImageView: UIImageView = {
-            let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleAspectFit)
+            let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleToFill)
             imageView.setCover(urlString: profile?.coverUrl, namePlaceHolder: "cover-placeholder")
             return imageView
         }()
@@ -106,7 +106,7 @@ class MyProfileEditVC: BaseVerticalStackVC {
         
         // bio
         let spacer3 = spacer
-        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: "")
+        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: " ")
         stackView.addArrangedSubviews([spacer3, websiteField])
         spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
@@ -120,6 +120,10 @@ class MyProfileEditVC: BaseVerticalStackVC {
         
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
+        
+        stackView.setCustomSpacing(29, after: avatarImageView)
+        stackView.setCustomSpacing(12, after: coverImageView)
+        stackView.setCustomSpacing(0, after: spacer1)
     }
     
     func updateContacts() {
