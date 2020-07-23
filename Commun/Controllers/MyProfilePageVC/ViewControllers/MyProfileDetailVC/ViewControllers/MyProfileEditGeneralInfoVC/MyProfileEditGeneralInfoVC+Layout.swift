@@ -49,14 +49,31 @@ extension MyProfileEditGeneralInfoVC {
         
         // username
         usernameTextField.text = profile?.username
-        let usernamenameInfoField = infoField(title: "username".localized().uppercaseFirst, editor: usernameTextField)
-        stackView.addArrangedSubview(usernamenameInfoField)
-        usernamenameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        let usernameInfoField = infoField(title: "username".localized().uppercaseFirst, editor: usernameTextField)
+        stackView.addArrangedSubview(usernameInfoField)
+        usernameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        
+        // website
+        websiteTextField.text = ""
+        let websiteInfoField = infoField(title: "website".localized().uppercaseFirst, editor: websiteTextField)
+        stackView.addArrangedSubview(websiteInfoField)
+        websiteInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        
+        // bio
+        bioTextView.text = ""
+        let bioField = infoField(title: "bio".localized().uppercaseFirst, editor: bioTextView)
+        stackView.addArrangedSubview(bioField)
+        bioField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 24, leading: 0, bottom: 20, trailing: 0)
         
         stackView.setCustomSpacing(29, after: avatarWrapper)
+        stackView.setCustomSpacing(30, after: coverWrapper)
+        stackView.setCustomSpacing(10, after: nameInfoField)
+        stackView.setCustomSpacing(10, after: usernameInfoField)
+        stackView.setCustomSpacing(10, after: websiteInfoField)
+        stackView.setCustomSpacing(10, after: bioField)
     }
     
     private func infoField(title: String, editor: UITextEditor) -> UIView {

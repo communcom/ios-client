@@ -29,11 +29,12 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
     
     lazy var nameTextField = createTextField()
     lazy var usernameTextField = createTextField()
-    lazy var websiteTextView = createTextField()
+    lazy var websiteTextField = createTextField()
     
     lazy var bioTextView: UITextView = {
         let tv = UITextView(forExpandable: ())
         tv.backgroundColor = .clear
+        tv.font = .systemFont(ofSize: 17, weight: .semibold)
         return tv
     }()
     
