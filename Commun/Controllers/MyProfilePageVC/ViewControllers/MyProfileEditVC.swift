@@ -71,17 +71,13 @@ class MyProfileEditVC: BaseVerticalStackVC {
         
         let avatarImageView: MyAvatarImageView = {
             let imageView = MyAvatarImageView(size: 120)
-            imageView.borderWidth = 5
-            imageView.borderColor = .appWhiteColor
             imageView.setToCurrentUserAvatar()
             return imageView
         }()
         
         let coverImageView: UIImageView = {
             let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleAspectFit)
-            imageView.borderWidth = 7
-            imageView.borderColor = .appWhiteColor
-            imageView.setCover(urlString: profile?.coverUrl)
+            imageView.setCover(urlString: profile?.coverUrl, namePlaceHolder: "cover-placeholder")
             return imageView
         }()
         
