@@ -26,6 +26,7 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
     lazy var changeAvatarButton = UIButton.circle(size: 44, backgroundColor: .clear, imageName: "profile-edit-change-image")
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleToFill)
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 335 / 150).isActive = true
         imageView.setCover(urlString: profile?.coverUrl, namePlaceHolder: "cover-placeholder")
         originalCoverImage = imageView.image
         return imageView
@@ -62,6 +63,9 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
         scrollView.keyboardDismissMode = .onDrag
         
         reloadData()
+        
+        changeAvatarButton.addTarget(self, action: #selector(chooseAvatarButtonDidTouch), for: .touchUpInside)
+        changeCoverButton.addTarget(self, action: #selector(chooseCoverButtonDidTouch), for: .touchUpInside)
     }
     
     override func bind() {
@@ -107,5 +111,43 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
         tf.borderStyle = .none
         tf.font = .systemFont(ofSize: 17, weight: .semibold)
         return tf
+    }
+    
+    // MARK: - Actions
+    @objc private func chooseAvatarButtonDidTouch() {
+        // On updating
+        let chooseAvatarVC = ProfileChooseAvatarVC.fromStoryboard("ProfileChooseAvatarVC", withIdentifier: "ProfileChooseAvatarVC")
+        self.present(chooseAvatarVC, animated: true, completion: nil)
+        
+        chooseAvatarVC.viewModel.didSelectImage
+            .filter {$0 != nil}
+            .map {$0!}
+            .subscribe(onNext: { (image) in
+                self.avatarImageView.image = image
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    @objc private func chooseCoverButtonDidTouch() {
+        let pickerVC = SinglePhotoPickerVC()
+        
+        pickerVC.completion = { image in
+            let coverEditVC = MyProfileEditCoverVC()
+            coverEditVC.modalPresentationStyle = .fullScreen
+            coverEditVC.joinedDateString = self.profile?.registration?.time
+            coverEditVC.updateWithImage(image)
+            coverEditVC.completion = {image in
+                coverEditVC.dismiss(animated: true, completion: {
+                    pickerVC.dismiss(animated: true, completion: nil)
+                })
+                self.coverImageView.image = image
+            }
+            
+            let nc = SwipeNavigationController(rootViewController: coverEditVC)
+            pickerVC.present(nc, animated: true, completion: nil)
+        }
+        
+        pickerVC.modalPresentationStyle = .fullScreen
+        self.present(pickerVC, animated: true, completion: nil)
     }
 }

@@ -25,6 +25,7 @@ extension MyProfileDetailVC {
         
         let coverImageView: UIImageView = {
             let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleToFill)
+            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 335 / 150).isActive = true
             imageView.setCover(urlString: profile?.coverUrl, namePlaceHolder: "cover-placeholder")
             return imageView
         }()
