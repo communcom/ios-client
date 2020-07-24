@@ -22,7 +22,7 @@ class MyAvatarImageView: MyView {
     
     var originSize: CGFloat!
     
-    private lazy var imageView: UIImageView = {
+    lazy var imageView: UIImageView = {
         let imageView = UIImageView(forAutoLayout: ())
         imageView.image = UIImage(named: "empty-avatar")
         imageView.contentMode = .scaleAspectFill

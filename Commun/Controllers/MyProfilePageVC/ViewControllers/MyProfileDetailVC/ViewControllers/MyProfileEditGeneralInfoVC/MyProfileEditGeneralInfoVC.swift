@@ -7,22 +7,27 @@
 //
 
 import Foundation
+import RxSwift
 
 class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
     // MARK: - Properties
     var profile: ResponseAPIContentGetProfile?
+    var originalAvatarImage: UIImage?
+    var originalCoverImage: UIImage?
     
     // MARK: - Subviews
     lazy var contentView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     lazy var avatarImageView: MyAvatarImageView = {
         let imageView = MyAvatarImageView(size: 120)
         imageView.setToCurrentUserAvatar()
+        originalAvatarImage = imageView.image
         return imageView
     }()
     lazy var changeAvatarButton = UIButton.circle(size: 44, backgroundColor: .clear, imageName: "profile-edit-change-image")
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleToFill)
-//        imageView.setCover(urlString: profile?.coverUrl, namePlaceHolder: "cover-placeholder")
+        imageView.setCover(urlString: profile?.coverUrl, namePlaceHolder: "cover-placeholder")
+        originalCoverImage = imageView.image
         return imageView
     }()
     lazy var changeCoverButton = UIButton.circle(size: 44, backgroundColor: .clear, imageName: "profile-edit-change-image")
@@ -44,9 +49,6 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
     
     // MARK: - Methods
     override func setUp() {
-        super.setUp()
-        title = "general info".localized().uppercaseFirst
-        
         // parse current data
         if let data = UserDefaults.standard.data(forKey: Config.currentUserGetProfileKey),
             let profile = try? JSONDecoder().decode(ResponseAPIContentGetProfile.self, from: data)
@@ -54,9 +56,37 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
             self.profile = profile
         }
         
+        super.setUp()
+        title = "general info".localized().uppercaseFirst
+        
         scrollView.keyboardDismissMode = .onDrag
         
         reloadData()
+    }
+    
+    override func bind() {
+        super.bind()
+        
+        Observable.combineLatest(
+            avatarImageView.imageView.rx.observe(Optional<UIImage>.self, "image"),
+            coverImageView.rx.observe(Optional<UIImage>.self, "image"),
+            nameTextField.rx.text,
+            usernameTextField.rx.text,
+            websiteTextField.rx.text,
+            bioTextView.rx.text
+        )
+            .map { (avatar, cover, name, username, website, bio) -> Bool in
+                // define if should enable save button
+                if avatar != self.originalAvatarImage {return true}
+                if cover != self.originalCoverImage {return true}
+                if name != self.profile?.username {return true}
+                if username != self.profile?.username {return true}
+                // TODO: - Website
+                if bio != (self.profile?.personal?.biography ?? "") {return true}
+                return false
+            }
+            .bind(to: saveButton.rx.isDisabled)
+            .disposed(by: disposeBag)
     }
     
     override func setUpArrangedSubviews() {

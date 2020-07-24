@@ -10,9 +10,6 @@ import Foundation
 
 extension MyProfileEditGeneralInfoVC {
     func reloadData() {
-        // set cover
-        coverImageView.setCover(urlString: profile?.coverUrl, namePlaceHolder: "cover-placeholder")
-        
         // add views
         contentView.removeSubviews()
         let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
