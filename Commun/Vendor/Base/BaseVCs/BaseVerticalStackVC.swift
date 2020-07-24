@@ -53,7 +53,7 @@ class BaseVerticalStackVC: BaseViewController {
     }
     
     func setUpArrangedSubviews() {
-        fatalError("Must override")
+        
     }
     
     func viewDidSetUpStackView() {}

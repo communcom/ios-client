@@ -194,6 +194,7 @@
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
 		BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */; };
 		BC34F96C24C98F9200BDD816 /* UITextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34F96B24C98F9200BDD816 /* UITextEditor.swift */; };
+		BC34F97424CAC55600BDD816 /* MyProfileEditContactsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34F97324CAC55600BDD816 /* MyProfileEditContactsVC.swift */; };
 		BC3694ED236979A700B2E078 /* ProfileChooseAvatarVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC3694EC236979A700B2E078 /* ProfileChooseAvatarVC.storyboard */; };
 		BC3694EF2369850100B2E078 /* EditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3694EE2369850100B2E078 /* EditorVC.swift */; };
 		BC3694F523698FEE00B2E078 /* EditorVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3694F423698FEE00B2E078 /* EditorVC+Actions.swift */; };
@@ -744,6 +745,7 @@
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
 		BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordVC.swift; sourceTree = "<group>"; };
 		BC34F96B24C98F9200BDD816 /* UITextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextEditor.swift; sourceTree = "<group>"; };
+		BC34F97324CAC55600BDD816 /* MyProfileEditContactsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditContactsVC.swift; sourceTree = "<group>"; };
 		BC3694EC236979A700B2E078 /* ProfileChooseAvatarVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileChooseAvatarVC.storyboard; sourceTree = "<group>"; };
 		BC3694EE2369850100B2E078 /* EditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorVC.swift; sourceTree = "<group>"; };
 		BC3694F423698FEE00B2E078 /* EditorVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Actions.swift"; sourceTree = "<group>"; };
@@ -2768,6 +2770,7 @@
 			isa = PBXGroup;
 			children = (
 				BCD6E36B24C987B7007653E2 /* MyProfileEditGeneralInfoVC */,
+				BC34F97324CAC55600BDD816 /* MyProfileEditContactsVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3413,6 +3416,7 @@
 				BCCC33E823751686004E46EF /* CommentCell.swift in Sources */,
 				BC4692D5239130A50064A38B /* PostCellDelegate.swift in Sources */,
 				AC8C57BD238C408A00B0D260 /* InstagramView.swift in Sources */,
+				BC34F97424CAC55600BDD816 /* MyProfileEditContactsVC.swift in Sources */,
 				BC31D1C12457D094000F5BE5 /* DonationUsersView.swift in Sources */,
 				BC016D49235DA2AC00F1319F /* MyTableViewCell.swift in Sources */,
 				BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */,
