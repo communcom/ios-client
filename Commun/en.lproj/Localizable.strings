@@ -408,8 +408,12 @@
 "terms of use, Privacy Policy" = "terms of use, Privacy Policy";
 "text view feedback placeholder" = "describe the problem...";
 "thank you for reporting this post" = "thank you for reporting this post";
+"the hyphen character cannot be at the beginning or at the end of the username" = "the hyphen character cannot be at the beginning or at the end of the username";
+"the number of characters must not exceed 32" = "the number of characters must not exceed 32";
 "the post has been deleted" = "the post has been deleted";
+"the presence of two \"dot\" characters in a row is not valid" = "the presence of two \"dot\" characters in a row is not valid";
 "the purchase is made by" = "the purchase is made by";
+"the user name may contain a \"dot\" character" = "the user name may contain a \"dot\" character";
 "there is an error occurs" = "there is an error occurs";
 "there is no currency available" = "there is no currency available";
 "this app is not authorized to use Back Camera" = "this app is not authorized to use Back Camera.\nPlease enable it in Settings";
@@ -448,11 +452,13 @@
 "update" = "update";
 "update the app" = "update the app";
 "uploading" = "uploading";
+"uppercase letters in the username are not allowed" = "uppercase letters in the username are not allowed";
 "upvote" = "upvote";
 "user blocked" = "user blocked";
 "user unblocked" = "user unblocked";
 "username" = "username";
 "users" = "users";
+"valid characters: letters, numbers, hyphen" = "valid characters: letters, numbers, hyphen";
 "verification" = "verification";
 "verification code" = "verification code";
 "verify your new passcode" = "verify your new passcode";
