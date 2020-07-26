@@ -12,7 +12,7 @@ import AuthenticationServices
 
 class AppleLoginManager: NSObject, SocialLoginManager {
     var network: SocialNetwork { .apple }
-    var viewController: UIViewController?
+    weak var viewController: UIViewController?
 
     private let subject = PublishSubject<String>()
 
