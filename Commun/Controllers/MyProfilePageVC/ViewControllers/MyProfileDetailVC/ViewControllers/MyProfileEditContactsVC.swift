@@ -18,6 +18,9 @@ class MyProfileEditContactsVC: BaseVerticalStackVC {
         let label = UILabel.with(text: "+ " + "add contact".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .appMainColor)
         view.addSubview(label)
         label.autoCenterInSuperview()
+        
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addContactButtonDidTouch)))
         return view
     }()
     
@@ -57,5 +60,51 @@ class MyProfileEditContactsVC: BaseVerticalStackVC {
         }
         
         stackView.addArrangedSubview(addContactButton)
+    }
+    
+    // MARK: - Actions
+    @objc func addContactButtonDidTouch() {
+        showCommunActionSheet(title: "add contact".localized().uppercaseFirst, actions: [
+            CommunActionSheet.Action(
+                title: "WeChat",
+                icon: UIImage(named: "wechat-icon"),
+                style: .default,
+                marginTop: 0,
+                defaultIconOnTheRight: false,
+                handle: {
+                    
+                }
+            ),
+            CommunActionSheet.Action(
+                title: "email".localized().uppercaseFirst,
+                icon: UIImage(named: "email-icon"),
+                style: .default,
+                marginTop: 0,
+                defaultIconOnTheRight: false,
+                handle: {
+                    
+                }
+            ),
+            CommunActionSheet.Action(
+                title: "Facetime",
+                icon: UIImage(named: "facetime-icon"),
+                style: .default,
+                marginTop: 0,
+                defaultIconOnTheRight: false,
+                handle: {
+                    
+                }
+            ),
+            CommunActionSheet.Action(
+                title: "Facebook messenger",
+                icon: UIImage(named: "facebook-messenger-icon"),
+                style: .default,
+                marginTop: 0,
+                defaultIconOnTheRight: false,
+                handle: {
+                    
+                }
+            ),
+        ])
     }
 }
