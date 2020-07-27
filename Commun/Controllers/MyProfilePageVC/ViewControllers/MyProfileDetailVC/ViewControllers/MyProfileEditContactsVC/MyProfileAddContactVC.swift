@@ -44,6 +44,7 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
     
     lazy var sendCodeButton: CommunButton = {
         let button = CommunButton.default(height: 50, label: "send confirmation code".localized().uppercaseFirst, isHuggingContent: false, isDisableGrayColor: true)
+        button.addTarget(self, action: #selector(buttonSendCodeDidTouch), for: .touchUpInside)
         return button
     }()
     
@@ -61,6 +62,26 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
     override func setUp() {
         super.setUp()
         title = contact.rawValue
+    }
+    
+    override func bind() {
+        super.bind()
+        textField.rx.text.orEmpty
+            .map {self.verify(text: $0)}
+            .bind(to: sendCodeButton.rx.isDisabled)
+            .disposed(by: disposeBag)
+    }
+    
+    func verify(text: String) -> Bool {
+        switch contact.idType {
+        case .username:
+            return text.count >= 3
+            // verify username
+        case .phoneNumber:
+            fatalError("TODO: Choose region, phone number")
+            // verify phone number
+        }
+        return true
     }
     
     override func setUpArrangedSubviews() {
@@ -95,5 +116,10 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
         field.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         return field
+    }
+    
+    // MARK: - Actions
+    @objc func buttonSendCodeDidTouch() {
+        
     }
 }
