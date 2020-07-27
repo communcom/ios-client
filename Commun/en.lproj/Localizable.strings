@@ -422,6 +422,7 @@
 "social network"                                =   "social network";
 "send points"                                   =   "send points";
 "send"                                          =   "send";
+"send confirmation code" = "send confirmation code";
 "share"                                         =   "share";
 "this comment was deleted" = "this comment was deleted";
 "this community is on your blacklist" = "this community is on your blacklist. Do you really want to unhide and follow it anyway?";
@@ -514,8 +515,10 @@
 "you've got a new notification" = "you've got a new notification";
 "you've unblocked" = "you've unblocked";
 "your email address" = "your email address";
+"your phone number" = "your phone number";
 "your referrals" = "your referrals";
 "your socializing" = "your socializing";
+"your username" = "your username";
 "my Feed" = "my Feed";
 "facebook" = "facebook";
 "apple" = "apple";

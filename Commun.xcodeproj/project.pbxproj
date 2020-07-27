@@ -381,6 +381,7 @@
 		BC923E182431AB2600B28413 /* VerifyEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E172431AB2600B28413 /* VerifyEmailVC.swift */; };
 		BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */; };
 		BC99B65A23E17848004AA74E /* UISearchController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */; };
+		BC9A1EFE24CEB89E007BDB3A /* MyProfileAddContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1EFD24CEB89E007BDB3A /* MyProfileAddContactVC.swift */; };
 		BC9FD2F724909A26001AAF2C /* SearchableBalancesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9FD2F624909A26001AAF2C /* SearchableBalancesVC.swift */; };
 		BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */ = {isa = PBXBuildFile; fileRef = BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */; };
 		BCA5B722242C94DB00C8F693 /* MyProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA5B721242C94DB00C8F693 /* MyProfileEditCoverVC.swift */; };
@@ -932,6 +933,7 @@
 		BC923E172431AB2600B28413 /* VerifyEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailVC.swift; sourceTree = "<group>"; };
 		BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorChooseCommunityVC.swift; sourceTree = "<group>"; };
 		BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchController+Extensions.swift"; sourceTree = "<group>"; };
+		BC9A1EFD24CEB89E007BDB3A /* MyProfileAddContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileAddContactVC.swift; sourceTree = "<group>"; };
 		BC9FD2F624909A26001AAF2C /* SearchableBalancesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableBalancesVC.swift; sourceTree = "<group>"; };
 		BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetLeaders.json; sourceTree = "<group>"; };
 		BCA5B721242C94DB00C8F693 /* MyProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditCoverVC.swift; sourceTree = "<group>"; };
@@ -2771,6 +2773,7 @@
 			children = (
 				BCD6E36B24C987B7007653E2 /* MyProfileEditGeneralInfoVC */,
 				BC34F97324CAC55600BDD816 /* MyProfileEditContactsVC.swift */,
+				BC9A1EFD24CEB89E007BDB3A /* MyProfileAddContactVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3267,6 +3270,7 @@
 				3BAD8E832318FB1C005A8AB3 /* NSAttributedString+Extensions.swift in Sources */,
 				BC34F96C24C98F9200BDD816 /* UITextEditor.swift in Sources */,
 				BC18FA2723D56325005DC7E3 /* UITextField+Extensions.swift in Sources */,
+				BC9A1EFE24CEB89E007BDB3A /* MyProfileAddContactVC.swift in Sources */,
 				3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */,
 				BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */,
 				BC3AAF1923E0223F005E8DAB /* CurrenciesViewModel.swift in Sources */,

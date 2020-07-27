@@ -72,7 +72,8 @@ class MyProfileEditContactsVC: BaseVerticalStackVC {
                 marginTop: 0,
                 defaultIconOnTheRight: false,
                 handle: {
-                    
+                    let vc = MyProfileAddContactVC(contact: .weChat)
+                    self.show(vc, sender: nil)
                 }
             ),
             CommunActionSheet.Action(
@@ -104,7 +105,7 @@ class MyProfileEditContactsVC: BaseVerticalStackVC {
                 handle: {
                     
                 }
-            ),
+            )
         ])
     }
 }

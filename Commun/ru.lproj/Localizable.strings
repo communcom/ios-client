@@ -374,6 +374,7 @@
 "sell" = "продать";
 "selling" = "продажа";
 "send" = "отправить";
+"send confirmation code" = "отправить код подтверждения";
 "send points" = "отправить поинты";
 "send post" = "пост";
 "send report" = "пожаловаться";
@@ -499,9 +500,11 @@
 "you've got" = "у тебя есть";
 "you've got a new notification" = "есть новое уведомление";
 "you've unblocked" = "ты разблокировал";
+"your phone number" = "ваш номер телефона";
 "your email address" = "электронная почта";
 "your referrals" = "ваши рефералы";
 "your socializing" = "ваше общение";
+"your username" = "ваше имя пользователя";
 "my Feed" = "моя лента";
 "facebook" = "facebook";
 "apple" = "apple";
