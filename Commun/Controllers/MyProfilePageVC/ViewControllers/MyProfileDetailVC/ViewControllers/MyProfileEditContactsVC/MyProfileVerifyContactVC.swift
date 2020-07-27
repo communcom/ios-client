@@ -12,6 +12,7 @@ import PinCodeInputView
 class MyProfileVerifyContactVC: BaseVerticalStackVC {
     // MARK: - Constants
     let contact: Contact
+    let numberOfDigits = 4
     
     // MARK: - Properties
     var resendTimer: Timer?
@@ -20,7 +21,7 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
     
     // MARK: - Subviews
     lazy var pinCodeInputView = PinCodeInputView<ItemView>(
-        digit: 4,
+        digit: numberOfDigits,
         itemSpacing: 12,
         itemFactory: {
             let itemView = ItemView()
@@ -44,6 +45,18 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Methods
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        pinCodeInputView.becomeFirstResponder()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        deleteCode()
+        pinCodeInputView.resignFirstResponder()
     }
     
     override func setUp() {
@@ -72,7 +85,7 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
     
     override func setUpArrangedSubviews() {
         let logo = UIImageView.circle(size: 64, imageName: contact.rawValue.lowercased() + "-icon")
-        let subtitle = UILabel.with(text: "Enter 4 digit code we sent to your \(contact.rawValue)", textSize: 15, weight: .semibold, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
+        let subtitle = UILabel.with(text: "enter 4 digit code we sent to your".localized().uppercaseFirst + " " + contact.rawValue, textSize: 15, weight: .semibold, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
         
         stackView.addArrangedSubviews([
             logo,
@@ -119,5 +132,11 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
     // MARK: - Actions
     private func verify() {
         
+    }
+    
+    func deleteCode() {
+        for _ in 0..<numberOfDigits {
+            pinCodeInputView.deleteBackward()
+        }
     }
 }
