@@ -120,6 +120,7 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
     
     // MARK: - Actions
     @objc func buttonSendCodeDidTouch() {
-        
+        let vc = MyProfileVerifyContactVC(contact: contact)
+        show(vc, sender: nil)
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PinCodeInputView
 
 class MyProfileVerifyContactVC: BaseVerticalStackVC {
     // MARK: - Constants
@@ -15,8 +16,24 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
     // MARK: - Properties
     var resendTimer: Timer?
     var resendSeconds = 45
+    private var counter = 0
     
     // MARK: - Subviews
+    lazy var pinCodeInputView = PinCodeInputView<ItemView>(
+        digit: 4,
+        itemSpacing: 12,
+        itemFactory: {
+            let itemView = ItemView()
+            let autoTestMarker = String(format: "ConfirmUserPinCodeInputView-%i", self.counter)
+            
+            // For autotest
+            itemView.accessibilityLabel = autoTestMarker
+            itemView.accessibilityIdentifier = autoTestMarker
+            self.counter += 1
+            
+            return itemView
+    })
+    
     lazy var resendButton = UIButton(labelFont: .systemFont(ofSize: 15, weight: .semibold))
     
     // MARK: - Initializers
@@ -31,11 +48,46 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
     
     override func setUp() {
         super.setUp()
+        title = contact.rawValue + " " + "confirmation".localized().uppercaseFirst
+        
+        // pinCodeInputView
+        pinCodeInputView.set { _ in
+            self.verify()
+        }
+        
+        pinCodeInputView.set(
+            appearance: ItemAppearance(
+                itemSize: CGSize(width: 48, height: 56),
+                font: .systemFont(ofSize: 26),
+                textColor: .black,
+                backgroundColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1),
+                cursorColor: UIColor(red: 69 / 255, green: 108 / 255, blue: 1, alpha: 1),
+                cornerRadius: 8)
+        )
+        pinCodeInputView.autoSetDimensions(to: CGSize(width: 228.0, height: 56.0))
+        
         // Run timer
         resendTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
     }
     
-    // MARK: - Actions
+    override func setUpArrangedSubviews() {
+        let logo = UIImageView.circle(size: 64, imageName: contact.rawValue.lowercased() + "-icon")
+        let subtitle = UILabel.with(text: "Enter 4 digit code we sent to your \(contact.rawValue)", textSize: 15, weight: .semibold, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
+        
+        stackView.addArrangedSubviews([
+            logo,
+            subtitle,
+            pinCodeInputView,
+            resendButton
+        ])
+    }
+    
+    override func viewDidSetUpStackView() {
+        super.viewDidSetUpStackView()
+        stackView.alignment = .center
+    }
+    
+    // MARK: - Timer handler
     @objc func onTimerFires() {
         guard self.resendSeconds > 1 else {
             resendTimer?.invalidate()
@@ -61,5 +113,10 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
             time = " 0:\(String(describing: resendSeconds).addFirstZero())"
             resendButton.setTitle("code expires in".localized().uppercaseFirst + time, for: .normal)
         }
+    }
+    
+    // MARK: - Actions
+    private func verify() {
+        
     }
 }
