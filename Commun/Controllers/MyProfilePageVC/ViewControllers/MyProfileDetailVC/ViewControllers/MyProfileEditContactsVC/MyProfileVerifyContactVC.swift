@@ -85,6 +85,7 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
     override func viewDidSetUpStackView() {
         super.viewDidSetUpStackView()
         stackView.alignment = .center
+        stackView.spacing = 20
     }
     
     // MARK: - Timer handler

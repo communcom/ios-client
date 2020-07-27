@@ -95,6 +95,7 @@
 "close" = "close";
 "close this screen and open editor" = "close this screen and open editor";
 "code" = "code";
+"code expires in" = "code expires in";
 "color" = "color";
 "comment" = "comment";
 "comments" = "comments";
@@ -107,6 +108,7 @@
 "community unhidden" = "community unhidden";
 "confirm it's you" = "confirm it's you";
 "confirm password" = "confirm password";
+"confirmation" = "confirmation";
 "connecting" = "connecting";
 "contacts" = "contacts";
 "content must less than" = "content must less than";
