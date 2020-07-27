@@ -31,10 +31,14 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
     // MARK: - Subviews
     lazy var textField: UITextField = {
         let tf = UITextField()
-        var placeholder: String?
         tf.placeholder = ("your " + contact.idType.rawValue).localized().uppercaseFirst
         tf.borderStyle = .none
         tf.font = .systemFont(ofSize: 17, weight: .semibold)
+        if contact.idType == .username {
+            tf.leftView = UILabel.with(text: "@", textSize: 17, weight: .semibold)
+            tf.leftViewMode = .always
+        }
+        tf.autocapitalizationType = .none
         return tf
     }()
     
