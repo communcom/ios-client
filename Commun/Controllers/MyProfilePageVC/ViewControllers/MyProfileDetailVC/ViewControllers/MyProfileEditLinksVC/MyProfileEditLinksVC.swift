@@ -65,9 +65,7 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
         
         links
             .subscribe(onNext: { (_) in
-                UIView.animate(withDuration: 0.3) {
-                    self.reloadData()
-                }
+                self.reloadData()
             })
             .disposed(by: disposeBag)
     }
@@ -98,6 +96,10 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
         
         if let value = links.value?.linkedIn {
             addLinkField(serviceName: "linkedin", value: value)
+        }
+        
+        if let value = links.value?.github {
+            addLinkField(serviceName: "github", value: value)
         }
         
         stackView.addArrangedSubview(addLinkButton)
@@ -189,16 +191,16 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
                     self.addLinkToService("github")
                 }
             ),
-            CommunActionSheet.Action(
-                title: "Dribbble",
-                icon: UIImage(named: "dribble-icon"),
-                style: .default,
-                marginTop: 0,
-                defaultIconOnTheRight: false,
-                handle: {
-                    
-                }
-            )
+//            CommunActionSheet.Action(
+//                title: "Dribbble",
+//                icon: UIImage(named: "dribble-icon"),
+//                style: .default,
+//                marginTop: 0,
+//                defaultIconOnTheRight: false,
+//                handle: {
+//
+//                }
+//            )
         ])
     }
     
