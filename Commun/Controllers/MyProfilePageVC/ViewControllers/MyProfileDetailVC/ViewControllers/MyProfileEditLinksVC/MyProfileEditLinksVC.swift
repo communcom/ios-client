@@ -14,6 +14,19 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
     lazy var links = BehaviorRelay<ResponseAPIContentGetProfileContact?>(value: nil)
     
     // MARK: - Subviews
+    lazy var textField: UITextField = {
+        let tf = UITextField()
+//        tf.placeholder = ("your " + links.idType.rawValue).localized().uppercaseFirst
+        tf.borderStyle = .none
+        tf.font = .systemFont(ofSize: 17, weight: .semibold)
+//        if contact.idType == .username {
+//            tf.leftView = UILabel.with(text: "@", textSize: 17, weight: .semibold)
+//            tf.leftViewMode = .always
+//        }
+        tf.autocapitalizationType = .none
+        return tf
+    }()
+    
     lazy var addLinkButton: UIView = {
         let view = UIView(height: 57, backgroundColor: .white, cornerRadius: 10)
         let label = UILabel.with(text: "+ " + "add link".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .appMainColor)
@@ -35,14 +48,13 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
         }
         
         super.setUp()
-        title = "contacts".localized().uppercaseFirst
+        title = "links".localized().uppercaseFirst
     }
     
     override func bind() {
         super.bind()
         
-        links.filter {$0 != nil}.map {$0!}
-            .subscribe(onNext: { (links) in
+        links.subscribe(onNext: { (links) in
                 self.reloadData()
             })
             .disposed(by: disposeBag)
@@ -56,12 +68,43 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
     func reloadData() {
         stackView.removeArrangedSubviews()
         
+        let testField = linkField(serviceName: "telegram", linkType: "username", textField: textField)
         
-        if let whatsApp = links.value?.facebook {
+        stackView.addArrangedSubviews([testField, addLinkButton])
+    }
+    
+    // MARK: - View builders
+    private func linkField(serviceName: String, linkType: String, textField: UITextField) -> UIView {
+        let vStack = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fillEqually)
+        
+        let titleView: UIStackView = {
+            let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
+            let icon = UIImageView(width: 20, height: 20, imageNamed: serviceName + "-icon")
+            let label = UILabel.with(text: serviceName, textSize: 15, weight: .semibold)
+            hStack.addArrangedSubviews([icon, label])
             
-        }
+            return hStack
+        }()
         
-        stackView.addArrangedSubview(addLinkButton)
+        let textFieldWrapper: UIStackView = {
+            let vStack = UIStackView(axis: .vertical, spacing: 6, alignment: .fill, distribution: .fill)
+            let label = UILabel.with(text: linkType, textSize: 12, weight: .medium, textColor: .appGrayColor)
+            vStack.addArrangedSubviews([label, textField])
+            return vStack
+        }()
+        
+        vStack.addArrangedSubviews([titleView, textFieldWrapper])
+        
+        let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+        view.addSubview(vStack)
+        vStack.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 6, left: 16, bottom: 10, right: 16))
+        
+        let spacer = UIView(height: 2, backgroundColor: .appLightGrayColor)
+        view.addSubview(spacer)
+        spacer.autoAlignAxis(toSuperviewAxis: .horizontal)
+        spacer.autoPinEdge(toSuperviewEdge: .leading)
+        spacer.autoPinEdge(toSuperviewEdge: .trailing)
+        return view
     }
     
     // MARK: - Actions
