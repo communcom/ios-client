@@ -10,23 +10,32 @@ import Foundation
 import RxCocoa
 
 class MyProfileEditLinksVC: BaseVerticalStackVC {
+    // MARK: - Nested types
+    class TextField: UITextField {
+        enum IdType: String {
+            case username
+            case link
+        }
+        
+        var idType: IdType = .link {
+            didSet {
+                switch idType {
+                case .username:
+                    leftView = UILabel.with(text: "@", textSize: 17, weight: .semibold)
+                    leftViewMode = .always
+                case .link:
+                    leftView = nil
+                    leftViewMode = .never
+                }
+            }
+        }
+        var serviceName: String?
+    }
+    
     // MARK: - Properties
     lazy var links = BehaviorRelay<ResponseAPIContentGetProfileContact?>(value: nil)
     
     // MARK: - Subviews
-    lazy var textField: UITextField = {
-        let tf = UITextField()
-//        tf.placeholder = ("your " + links.idType.rawValue).localized().uppercaseFirst
-        tf.borderStyle = .none
-        tf.font = .systemFont(ofSize: 17, weight: .semibold)
-//        if contact.idType == .username {
-//            tf.leftView = UILabel.with(text: "@", textSize: 17, weight: .semibold)
-//            tf.leftViewMode = .always
-//        }
-        tf.autocapitalizationType = .none
-        return tf
-    }()
-    
     lazy var addLinkButton: UIView = {
         let view = UIView(height: 57, backgroundColor: .white, cornerRadius: 10)
         let label = UILabel.with(text: "+ " + "add link".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .appMainColor)
@@ -54,8 +63,11 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
     override func bind() {
         super.bind()
         
-        links.subscribe(onNext: { (links) in
-                self.reloadData()
+        links
+            .subscribe(onNext: { (_) in
+                UIView.animate(withDuration: 0.3) {
+                    self.reloadData()
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -68,26 +80,62 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
     func reloadData() {
         stackView.removeArrangedSubviews()
         
-        let testField = linkField(serviceName: "telegram", linkType: "username", textField: textField)
+        if let value = links.value?.twitter {
+            addLinkField(serviceName: "twitter", value: value)
+        }
         
-        stackView.addArrangedSubviews([testField, addLinkButton])
+        if let value = links.value?.facebook {
+            addLinkField(serviceName: "facebook", value: value)
+        }
+        
+        if let value = links.value?.youtube {
+            addLinkField(serviceName: "youtube", value: value)
+        }
+        
+        if let value = links.value?.instagram {
+            addLinkField(serviceName: "instagram", value: value)
+        }
+        
+        if let value = links.value?.linkedIn {
+            addLinkField(serviceName: "linkedin", value: value)
+        }
+        
+        stackView.addArrangedSubview(addLinkButton)
     }
     
     // MARK: - View builders
-    private func linkField(serviceName: String, linkType: String, textField: UITextField) -> UIView {
+    private func addLinkField(serviceName: String, value: String?) {
         let vStack = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fillEqually)
         
         let titleView: UIStackView = {
             let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
             let icon = UIImageView(width: 20, height: 20, imageNamed: serviceName + "-icon")
-            let label = UILabel.with(text: serviceName, textSize: 15, weight: .semibold)
+            let label = UILabel.with(text: serviceName.uppercaseFirst, textSize: 15, weight: .semibold)
             hStack.addArrangedSubviews([icon, label])
             
             return hStack
         }()
         
+        let textField = TextField()
+        textField.serviceName = serviceName
+        switch serviceName {
+        case "youtube":
+            textField.idType = .link
+        default:
+            textField.idType = .username
+        }
+        textField.placeholder = ("your " + textField.idType.rawValue).localized().uppercaseFirst
+        textField.borderStyle = .none
+        textField.font = .systemFont(ofSize: 17, weight: .semibold)
+        textField.autocapitalizationType = .none
+        textField.text = value
+        
         let textFieldWrapper: UIStackView = {
             let vStack = UIStackView(axis: .vertical, spacing: 6, alignment: .fill, distribution: .fill)
+            var linkType = textField.idType.rawValue
+            if serviceName == "youtube" {
+                linkType = "channel link".localized().uppercaseFirst
+            }
             let label = UILabel.with(text: linkType, textSize: 12, weight: .medium, textColor: .appGrayColor)
             vStack.addArrangedSubviews([label, textField])
             return vStack
@@ -104,7 +152,8 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
         spacer.autoAlignAxis(toSuperviewAxis: .horizontal)
         spacer.autoPinEdge(toSuperviewEdge: .leading)
         spacer.autoPinEdge(toSuperviewEdge: .trailing)
-        return view
+        
+        stackView.addArrangedSubview(view)
     }
     
     // MARK: - Actions
@@ -117,7 +166,7 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
                 marginTop: 0,
                 defaultIconOnTheRight: false,
                 handle: {
-                    
+                    self.addLinkToService("instagram")
                 }
             ),
             CommunActionSheet.Action(
@@ -127,7 +176,7 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
                 marginTop: 0,
                 defaultIconOnTheRight: false,
                 handle: {
-                    
+                    self.addLinkToService("linkedin")
                 }
             ),
             CommunActionSheet.Action(
@@ -137,7 +186,7 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
                 marginTop: 0,
                 defaultIconOnTheRight: false,
                 handle: {
-                    
+                    self.addLinkToService("github")
                 }
             ),
             CommunActionSheet.Action(
@@ -151,5 +200,21 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
                 }
             )
         ])
+    }
+    
+    // MARK: - Helpers
+    private func addLinkToService(_ serviceName: String) {
+        var links = self.links.value ?? ResponseAPIContentGetProfileContact()
+        switch serviceName {
+        case "instagram":
+            links.instagram = ""
+        case "linkedin":
+            links.linkedIn = ""
+        case "github":
+            links.github = ""
+        default:
+            return
+        }
+        self.links.accept(links)
     }
 }
