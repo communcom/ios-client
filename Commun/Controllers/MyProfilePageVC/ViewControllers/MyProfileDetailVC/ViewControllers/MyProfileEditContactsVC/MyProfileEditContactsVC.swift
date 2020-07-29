@@ -34,7 +34,8 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC {
         stackView.spacing = 20
     }
     
-    func reloadData() {
+    override func reloadData() {
+        super.reloadData()
         let contacts = profile?.personal?.contacts
         
         stackView.removeArrangedSubviews()

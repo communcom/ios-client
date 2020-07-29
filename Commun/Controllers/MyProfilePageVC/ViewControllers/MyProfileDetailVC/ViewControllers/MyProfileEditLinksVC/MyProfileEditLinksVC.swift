@@ -50,8 +50,11 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        self.links.accept(profile?.personal?.contacts)
         title = "links".localized().uppercaseFirst
+    }
+    
+    override func profileDidUpdate(_ profile: ResponseAPIContentGetProfile?) {
+        self.links.accept(profile?.personal?.contacts)
     }
     
     override func bind() {
@@ -69,30 +72,32 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         stackView.spacing = 20
     }
     
-    func reloadData() {
+    // MARK: - Data handler
+    override func reloadData() {
+        super.reloadData()
         stackView.removeArrangedSubviews()
         
-        if let value = links.value?.twitter {
+        if let value = links.value?.twitter?.value {
             addLinkField(serviceName: "twitter", value: value)
         }
         
-        if let value = links.value?.facebook {
+        if let value = links.value?.facebook?.value {
             addLinkField(serviceName: "facebook", value: value)
         }
         
-        if let value = links.value?.youtube {
+        if let value = links.value?.youtube?.value {
             addLinkField(serviceName: "youtube", value: value)
         }
         
-        if let value = links.value?.instagram {
+        if let value = links.value?.instagram?.value {
             addLinkField(serviceName: "instagram", value: value)
         }
         
-        if let value = links.value?.linkedIn {
+        if let value = links.value?.linkedin?.value {
             addLinkField(serviceName: "linkedin", value: value)
         }
         
-        if let value = links.value?.github {
+        if let value = links.value?.gitHub?.value {
             addLinkField(serviceName: "github", value: value)
         }
         
@@ -203,11 +208,11 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         var links = self.links.value ?? ResponseAPIContentGetProfileContacts()
         switch serviceName {
         case "instagram":
-            links.instagram = ""
+            links.instagram = ResponseAPIContentGetProfileContact(value: "", default: false)
         case "linkedin":
-            links.linkedIn = ""
+            links.linkedin = ResponseAPIContentGetProfileContact(value: "", default: false)
         case "github":
-            links.github = ""
+            links.gitHub = ResponseAPIContentGetProfileContact(value: "", default: false)
         default:
             return
         }
