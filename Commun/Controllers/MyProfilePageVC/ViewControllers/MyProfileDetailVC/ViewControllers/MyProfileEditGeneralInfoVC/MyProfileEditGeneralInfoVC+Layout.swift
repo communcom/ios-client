@@ -50,11 +50,11 @@ extension MyProfileEditGeneralInfoVC {
         stackView.addArrangedSubview(lastNameInfoView)
         lastNameInfoView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
-        // username
-        usernameTextField.text = profile?.username
-        let usernameInfoField = infoField(title: "username".localized().uppercaseFirst, editor: usernameTextField)
-        stackView.addArrangedSubview(usernameInfoField)
-        usernameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+//        // username
+//        usernameTextField.text = profile?.username
+//        let usernameInfoField = infoField(title: "username".localized().uppercaseFirst, editor: usernameTextField)
+//        stackView.addArrangedSubview(usernameInfoField)
+//        usernameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
         // website
         websiteTextField.text = profile?.personal?.contacts?.websiteUrl?.value
@@ -75,7 +75,7 @@ extension MyProfileEditGeneralInfoVC {
         stackView.setCustomSpacing(30, after: coverWrapper)
         stackView.setCustomSpacing(10, after: firstNameInfoView)
         stackView.setCustomSpacing(10, after: lastNameInfoView)
-        stackView.setCustomSpacing(10, after: usernameInfoField)
+//        stackView.setCustomSpacing(10, after: usernameInfoField)
         stackView.setCustomSpacing(10, after: websiteInfoField)
         stackView.setCustomSpacing(10, after: bioField)
     }

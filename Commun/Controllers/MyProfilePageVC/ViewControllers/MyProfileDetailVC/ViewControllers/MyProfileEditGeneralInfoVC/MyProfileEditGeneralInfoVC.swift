@@ -42,7 +42,7 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
     
     lazy var firstNameTextField = createTextField()
     lazy var lastNameTextField = createTextField()
-    lazy var usernameTextField = createTextField()
+//    lazy var usernameTextField = createTextField()
     lazy var websiteTextField = createTextField()
     
     lazy var bioTextView: UITextView = {
@@ -54,7 +54,11 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         return tv
     }()
     
-    lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst, isHuggingContent: false, isDisableGrayColor: true)
+    lazy var saveButton: CommunButton = {
+        let button = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst, isHuggingContent: false, isDisableGrayColor: true)
+        button.addTarget(self, action: #selector(saveButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
     
     // MARK: - Methods
     override func setUp() {
@@ -83,17 +87,17 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
             coverImageView.rx.observe(Optional<UIImage>.self, "image"),
             firstNameTextField.rx.text,
             lastNameTextField.rx.text,
-            usernameTextField.rx.text,
+//            usernameTextField.rx.text,
             websiteTextField.rx.text,
             bioTextView.rx.text
         )
-            .map { (avatar, cover, firstName, lastName, username, website, bio) -> Bool in
+            .map { (avatar, cover, firstName, lastName, website, bio) -> Bool in
                 // define if should enable save button
                 if avatar != self.originalAvatarImage {return true}
                 if cover != self.originalCoverImage {return true}
                 if firstName?.trimmed != self.profile?.personal?.contacts?.firstName {return true}
                 if lastName?.trimmed != self.profile?.personal?.contacts?.lastName {return true}
-                if username?.trimmed != self.profile?.username {return true}
+//                if username?.trimmed != self.profile?.username {return true}
                 if website?.trimmed != self.profile?.personal?.contacts?.websiteUrl?.value {return true}
                 if bio?.trimmed != (self.profile?.personal?.biography ?? "") {return true}
                 return false
@@ -152,5 +156,58 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         
         pickerVC.modalPresentationStyle = .fullScreen
         self.present(pickerVC, animated: true, completion: nil)
+    }
+    
+    @objc private func saveButtonDidTouch() {
+        // TODO: avatar, cover
+//        if avatar != self.originalAvatarImage {return true}
+//        if cover != self.originalCoverImage {return true}
+        var params = [String: String]()
+        var profile = self.profile
+        if let firstName = firstNameTextField.text,
+            firstName.trimmed != self.profile?.personal?.contacts?.firstName
+        {
+            params["first_name"] = firstName
+            profile?.personal?.contacts?.firstName = firstName
+        }
+        
+        if let lastName = lastNameTextField.text,
+            lastName.trimmed != self.profile?.personal?.contacts?.lastName
+        {
+            params["last_name"] = lastName
+            profile?.personal?.contacts?.lastName = lastName
+        }
+        
+//        if let username = usernameTextField.text,
+//            username.trimmed != self.profile?.username
+//        {
+//            params["username"]
+//        }
+        
+        // TODO: Website constraint
+        if let website = websiteTextField.text,
+            website.trimmed != self.profile?.personal?.contacts?.websiteUrl?.value
+        {
+            params["website"] = website
+            profile?.personal?.contacts?.websiteUrl?.value = website
+        }
+        
+        if let bio = bioTextView.text,
+            bio.trimmed != (self.profile?.personal?.biography ?? "")
+        {
+            params["biography"] = bio
+            profile?.personal?.biography = bio
+        }
+        
+        showIndetermineHudWithMessage("saving".localized().uppercaseFirst + "...")
+        BlockchainManager.instance.updateProfile(params: params, waitForTransaction: false)
+            .subscribe(onCompleted: {
+                self.hideHud()
+                UserDefaults.standard.set(profile, forKey: Config.currentUserGetProfileKey)
+            }) { (error) in
+                self.hideHud()
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }
