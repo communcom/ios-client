@@ -52,12 +52,6 @@ class TabBarVC: UITabBarController {
         
         // bind view model
         bind()
-
-        BlockchainManager.instance.changePassword(activeKey: "", ownerKey: "").subscribe(onSuccess: { (String) in
-            print(String)
-        }) { (Error) in
-            print(Error)
-        }.disposed(by: disposeBag)
     }
     
     func setTabBarHiden(_ hide: Bool) {
