@@ -55,7 +55,7 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
     }()
     
     lazy var saveButton: CommunButton = {
-        let button = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst, isHuggingContent: false, isDisableGrayColor: true)
+        let button = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst, isHuggingContent: false)
         button.addTarget(self, action: #selector(saveButtonDidTouch), for: .touchUpInside)
         return button
     }()
@@ -98,11 +98,12 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
                 if firstName.trimmed != (self.profile?.personal?.firstName ?? "") {return true}
                 if lastName.trimmed != (self.profile?.personal?.lastName ?? "") {return true}
 //                if username.trimmed != self.profile?.username {return true}
-                if website.trimmed != (self.profile?.personal?.websiteUrl ?? "") {return true}
+                if (website.trimmed != (self.profile?.personal?.websiteUrl ?? "")) && website.isLink {return true}
+                
                 if bio.trimmed != (self.profile?.personal?.biography ?? "") {return true}
                 return false
             }
-            .bind(to: saveButton.rx.isDisabled)
+            .bind(to: saveButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
     
@@ -159,9 +160,25 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
     }
     
     @objc private func saveButtonDidTouch() {
-        // TODO: avatar, cover
-//        if avatar != self.originalAvatarImage {return true}
-//        if cover != self.originalCoverImage {return true}
+        view.endEditing(true)
+        
+        var singles = [Single<String>]()
+        
+        var avatarHasChanged = false
+        var coverHasChanged = false
+        if let image = avatarImageView.image,
+            image != self.originalAvatarImage
+        {
+            avatarHasChanged = true
+            singles.append(RestAPIManager.instance.uploadImage(image))
+        }
+        if let image = coverImageView.image,
+            image != self.originalCoverImage
+        {
+            coverHasChanged = true
+            singles.append(RestAPIManager.instance.uploadImage(image))
+        }
+        
         var params = [String: String]()
         var profile = self.profile
         if let firstName = firstNameTextField.text,
@@ -200,11 +217,24 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         }
         
         showIndetermineHudWithMessage("saving".localized().uppercaseFirst + "...")
-        BlockchainManager.instance.updateProfile(params: params, waitForTransaction: false)
+        Single<String>.zip(singles)
+            .map { strings -> [String: String] in
+                if avatarHasChanged {
+                    profile?.avatarUrl = strings.first
+                    params["avatar_url"] = strings.first
+                }
+                if coverHasChanged {
+                    profile?.coverUrl = strings.last
+                    params["cover_url"] = strings.last
+                }
+                return params
+            }
+            .flatMapCompletable {BlockchainManager.instance.updateProfile(params: $0, waitForTransaction: false)}
             .subscribe(onCompleted: {
                 UserDefaults.standard.set(object: profile, forKey: Config.currentUserGetProfileKey)
                 self.hideHud()
                 self.showDone("saved".localized().uppercaseFirst)
+                self.saveButton.isEnabled = false
             }) { (error) in
                 self.hideHud()
                 self.showError(error)
