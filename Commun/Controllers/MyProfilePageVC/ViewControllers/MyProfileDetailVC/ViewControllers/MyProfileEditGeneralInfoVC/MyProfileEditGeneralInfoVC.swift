@@ -201,17 +201,15 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
 //            params["username"]
 //        }
         
-        // TODO: Website constraint
         if let website = websiteTextField.text,
             website.trimmed != self.profile?.personal?.websiteUrl
         {
-            params["website_url"] = website
-            profile?.personal?.websiteUrl = website
-            
             if !website.isLink {
                 showErrorWithMessage("the link to website is invalid".localized().uppercaseFirst)
                 return
             }
+            params["website_url"] = website
+            profile?.personal?.websiteUrl = website
         }
         
         if let bio = bioTextView.text,
