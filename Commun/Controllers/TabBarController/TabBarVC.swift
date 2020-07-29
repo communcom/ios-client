@@ -52,6 +52,12 @@ class TabBarVC: UITabBarController {
         
         // bind view model
         bind()
+
+        BlockchainManager.instance.changePassword(activeKey: "", ownerKey: "").subscribe(onSuccess: { (String) in
+            print(String)
+        }) { (Error) in
+            print(Error)
+        }.disposed(by: disposeBag)
     }
     
     func setTabBarHiden(_ hide: Bool) {
@@ -366,7 +372,9 @@ class TabBarVC: UITabBarController {
             } else {
                 // community
                 let alias = path[0]
-                self.selectedViewController?.showCommunityWithCommunityAlias(alias)
+                if !alias.isEmpty {
+                    self.selectedViewController?.showCommunityWithCommunityAlias(alias)
+                }
             }
         } else {
             let communityAlias = path[0]
