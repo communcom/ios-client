@@ -55,7 +55,7 @@ extension MyProfileDetailVC {
         
         // bio
         let spacer3 = separator()
-        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile?.personal?.contacts?.websiteUrl?.value)
+        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile?.personal?.websiteUrl)
         stackView.addArrangedSubviews([spacer3, websiteField])
         spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true

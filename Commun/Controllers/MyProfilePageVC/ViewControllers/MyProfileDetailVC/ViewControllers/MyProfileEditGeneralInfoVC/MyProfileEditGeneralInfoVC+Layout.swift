@@ -57,7 +57,7 @@ extension MyProfileEditGeneralInfoVC {
 //        usernameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
         // website
-        websiteTextField.text = profile?.personal?.contacts?.websiteUrl?.value
+        websiteTextField.text = profile?.personal?.websiteUrl
         let websiteInfoField = infoField(title: "website".localized().uppercaseFirst, editor: websiteTextField)
         stackView.addArrangedSubview(websiteInfoField)
         websiteInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true

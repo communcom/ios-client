@@ -98,7 +98,7 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
                 if firstName.trimmed != (self.profile?.personal?.firstName ?? "") {return true}
                 if lastName.trimmed != (self.profile?.personal?.lastName ?? "") {return true}
 //                if username.trimmed != self.profile?.username {return true}
-                if website.trimmed != (self.profile?.personal?.contacts?.websiteUrl?.value ?? "") {return true}
+                if website.trimmed != (self.profile?.personal?.websiteUrl ?? "") {return true}
                 if bio.trimmed != (self.profile?.personal?.biography ?? "") {return true}
                 return false
             }
@@ -186,10 +186,10 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         
         // TODO: Website constraint
         if let website = websiteTextField.text,
-            website.trimmed != self.profile?.personal?.contacts?.websiteUrl?.value
+            website.trimmed != self.profile?.personal?.websiteUrl
         {
-            params["website"] = website
-            profile?.personal?.contacts?.websiteUrl?.value = website
+            params["website_url"] = website
+            profile?.personal?.websiteUrl = website
         }
         
         if let bio = bioTextView.text,
