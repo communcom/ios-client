@@ -85,21 +85,21 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         Observable.combineLatest(
             avatarImageView.imageView.rx.observe(Optional<UIImage>.self, "image"),
             coverImageView.rx.observe(Optional<UIImage>.self, "image"),
-            firstNameTextField.rx.text,
-            lastNameTextField.rx.text,
-//            usernameTextField.rx.text,
-            websiteTextField.rx.text,
-            bioTextView.rx.text
+            firstNameTextField.rx.text.orEmpty,
+            lastNameTextField.rx.text.orEmpty,
+//            usernameTextField.rx.text.orEmpty,
+            websiteTextField.rx.text.orEmpty,
+            bioTextView.rx.text.orEmpty
         )
             .map { (avatar, cover, firstName, lastName, website, bio) -> Bool in
                 // define if should enable save button
                 if avatar != self.originalAvatarImage {return true}
                 if cover != self.originalCoverImage {return true}
-                if firstName?.trimmed != self.profile?.personal?.contacts?.firstName {return true}
-                if lastName?.trimmed != self.profile?.personal?.contacts?.lastName {return true}
-//                if username?.trimmed != self.profile?.username {return true}
-                if website?.trimmed != self.profile?.personal?.contacts?.websiteUrl?.value {return true}
-                if bio?.trimmed != (self.profile?.personal?.biography ?? "") {return true}
+                if firstName.trimmed != (self.profile?.personal?.firstName ?? "") {return true}
+                if lastName.trimmed != (self.profile?.personal?.lastName ?? "") {return true}
+//                if username.trimmed != self.profile?.username {return true}
+                if website.trimmed != (self.profile?.personal?.contacts?.websiteUrl?.value ?? "") {return true}
+                if bio.trimmed != (self.profile?.personal?.biography ?? "") {return true}
                 return false
             }
             .bind(to: saveButton.rx.isDisabled)
@@ -165,17 +165,17 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         var params = [String: String]()
         var profile = self.profile
         if let firstName = firstNameTextField.text,
-            firstName.trimmed != self.profile?.personal?.contacts?.firstName
+            firstName.trimmed != self.profile?.personal?.firstName
         {
             params["first_name"] = firstName
-            profile?.personal?.contacts?.firstName = firstName
+            profile?.personal?.firstName = firstName
         }
         
         if let lastName = lastNameTextField.text,
-            lastName.trimmed != self.profile?.personal?.contacts?.lastName
+            lastName.trimmed != self.profile?.personal?.lastName
         {
             params["last_name"] = lastName
-            profile?.personal?.contacts?.lastName = lastName
+            profile?.personal?.lastName = lastName
         }
         
 //        if let username = usernameTextField.text,
@@ -202,8 +202,9 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         showIndetermineHudWithMessage("saving".localized().uppercaseFirst + "...")
         BlockchainManager.instance.updateProfile(params: params, waitForTransaction: false)
             .subscribe(onCompleted: {
+                UserDefaults.standard.set(object: profile, forKey: Config.currentUserGetProfileKey)
                 self.hideHud()
-                UserDefaults.standard.set(profile, forKey: Config.currentUserGetProfileKey)
+                self.showDone("saved".localized().uppercaseFirst)
             }) { (error) in
                 self.hideHud()
                 self.showError(error)

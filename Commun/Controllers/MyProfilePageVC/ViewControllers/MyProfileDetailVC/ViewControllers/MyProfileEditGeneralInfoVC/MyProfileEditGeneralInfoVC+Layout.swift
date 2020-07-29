@@ -39,13 +39,13 @@ extension MyProfileEditGeneralInfoVC {
         coverImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
         // name
-        firstNameTextField.text = profile?.personal?.contacts?.firstName
+        firstNameTextField.text = profile?.personal?.firstName
         let firstNameInfoView = infoField(title: "first name".localized().uppercaseFirst, editor: firstNameTextField)
         stackView.addArrangedSubview(firstNameInfoView)
         firstNameInfoView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
         // name
-        lastNameTextField.text = profile?.personal?.contacts?.lastName
+        lastNameTextField.text = profile?.personal?.lastName
         let lastNameInfoView = infoField(title: "last name".localized().uppercaseFirst, editor: lastNameTextField)
         stackView.addArrangedSubview(lastNameInfoView)
         lastNameInfoView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
