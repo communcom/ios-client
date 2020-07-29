@@ -8,13 +8,7 @@
 
 import Foundation
 
-class MyProfileDetailVC: BaseVerticalStackVC {
-    // MARK: - Properties
-    var profile: ResponseAPIContentGetProfile?
-    
-    // MARK: - Subviews
-    var spacer: UIView { UIView(height: 2, backgroundColor: .appLightGrayColor)}
-    
+class MyProfileDetailVC: MyProfileDetailFlowVC {
     // MARK: - Sections
     lazy var generalInfoView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     lazy var contactsView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
@@ -24,21 +18,6 @@ class MyProfileDetailVC: BaseVerticalStackVC {
     override func setUp() {
         super.setUp()
         title = "my profile".localized().uppercaseFirst
-        
-        reloadData()
-    }
-    
-    override func bind() {
-        super.bind()
-        UserDefaults.standard.rx.observe(Data.self, Config.currentUserGetProfileKey)
-            .filter {$0 != nil}
-            .map {$0!}
-            .map {try? JSONDecoder().decode(ResponseAPIContentGetProfile.self, from: $0)}
-            .subscribe(onNext: { profile in
-                self.profile = profile
-                self.reloadData()
-            })
-            .disposed(by: disposeBag)
     }
     
     override func setUpArrangedSubviews() {
@@ -55,7 +34,8 @@ class MyProfileDetailVC: BaseVerticalStackVC {
     }
     
     // MARK: - Actions
-    private func reloadData() {
+    override func reloadData() {
+        super.reloadData()
         updateGeneralInfo()
         updateContacts()
         updateLinks()

@@ -8,10 +8,7 @@
 
 import Foundation
 
-class MyProfileEditContactsVC: BaseVerticalStackVC {
-    // MARK: - Properties
-    var contacts: ResponseAPIContentGetProfileContact?
-    
+class MyProfileEditContactsVC: MyProfileDetailFlowVC {
     // MARK: - Subviews
     lazy var addContactButton: UIView = {
         let view = UIView(height: 57, backgroundColor: .white, cornerRadius: 10)
@@ -26,13 +23,6 @@ class MyProfileEditContactsVC: BaseVerticalStackVC {
     
     // MARK: - Methods
     override func setUp() {
-        // parse current data
-        if let data = UserDefaults.standard.data(forKey: Config.currentUserGetProfileKey),
-            let profile = try? JSONDecoder().decode(ResponseAPIContentGetProfile.self, from: data)
-        {
-            self.contacts = profile.personal?.contacts
-        }
-        
         super.setUp()
         title = "contacts".localized().uppercaseFirst
         
@@ -45,6 +35,8 @@ class MyProfileEditContactsVC: BaseVerticalStackVC {
     }
     
     func reloadData() {
+        let contacts = profile?.personal?.contacts
+        
         stackView.removeArrangedSubviews()
         
         if let whatsApp = contacts?.whatsApp {

@@ -9,9 +9,8 @@
 import Foundation
 import RxSwift
 
-class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
+class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
     // MARK: - Properties
-    var profile: ResponseAPIContentGetProfile?
     var originalAvatarImage: UIImage?
     var originalCoverImage: UIImage?
     
@@ -23,7 +22,11 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
         originalAvatarImage = imageView.image
         return imageView
     }()
-    lazy var changeAvatarButton = UIButton.circle(size: 44, backgroundColor: .clear, imageName: "profile-edit-change-image")
+    lazy var changeAvatarButton: UIButton = {
+        let button = UIButton.circle(size: 44, backgroundColor: .clear, imageName: "profile-edit-change-image")
+        button.addTarget(self, action: #selector(chooseAvatarButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleToFill)
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 335 / 150).isActive = true
@@ -31,7 +34,11 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
         originalCoverImage = imageView.image
         return imageView
     }()
-    lazy var changeCoverButton = UIButton.circle(size: 44, backgroundColor: .clear, imageName: "profile-edit-change-image")
+    lazy var changeCoverButton: UIButton = {
+        let button = UIButton.circle(size: 44, backgroundColor: .clear, imageName: "profile-edit-change-image")
+        button.addTarget(self, action: #selector(chooseCoverButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
     
     lazy var nameTextField = createTextField()
     lazy var usernameTextField = createTextField()
@@ -50,22 +57,12 @@ class MyProfileEditGeneralInfoVC: BaseVerticalStackVC {
     
     // MARK: - Methods
     override func setUp() {
-        // parse current data
-        if let data = UserDefaults.standard.data(forKey: Config.currentUserGetProfileKey),
-            let profile = try? JSONDecoder().decode(ResponseAPIContentGetProfile.self, from: data)
-        {
-            self.profile = profile
-        }
-        
         super.setUp()
         title = "general info".localized().uppercaseFirst
         
         scrollView.keyboardDismissMode = .onDrag
         
         reloadData()
-        
-        changeAvatarButton.addTarget(self, action: #selector(chooseAvatarButtonDidTouch), for: .touchUpInside)
-        changeCoverButton.addTarget(self, action: #selector(chooseCoverButtonDidTouch), for: .touchUpInside)
     }
     
     override func bind() {

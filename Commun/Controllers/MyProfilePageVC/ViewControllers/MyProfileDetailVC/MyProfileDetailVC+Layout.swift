@@ -39,29 +39,29 @@ extension MyProfileDetailVC {
         coverImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
         // name
-        let spacer1 = spacer
-        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, content: Config.currentUser?.name)
+        let spacer1 = separator()
+        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, content: (profile?.personal?.contacts?.firstName ?? "") + " " + (profile?.personal?.contacts?.lastName ?? ""))
         
         stackView.addArrangedSubviews([spacer1, nameInfoField])
         spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         nameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // username
-        let spacer2 = spacer
-        let usernameInfoField = infoField(title: "username".localized().uppercaseFirst, content: "@" + (Config.currentUser?.id ?? ""))
+        let spacer2 = separator()
+        let usernameInfoField = infoField(title: "username".localized().uppercaseFirst, content: "@" + (Config.currentUser?.name ?? ""))
         stackView.addArrangedSubviews([spacer2, usernameInfoField])
         spacer2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         usernameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // bio
-        let spacer3 = spacer
-        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: " ")
+        let spacer3 = separator()
+        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile?.personal?.contacts?.websiteUrl ?? "")
         stackView.addArrangedSubviews([spacer3, websiteField])
         spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // bio
-        let spacer4 = spacer
+        let spacer4 = separator()
         let bioField = infoField(title: "bio".localized().uppercaseFirst, content: profile?.personal?.biography)
         stackView.addArrangedSubviews([spacer4, bioField])
         spacer4.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
@@ -158,7 +158,7 @@ extension MyProfileDetailVC {
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         
-        let spacer1 = spacer
+        let spacer1 = separator()
         parentStackView.addArrangedSubviews([spacer1, stackView])
         spacer1.widthAnchor.constraint(equalTo: parentStackView.widthAnchor).isActive = true
         stackView.widthAnchor.constraint(equalTo: parentStackView.widthAnchor).isActive = true

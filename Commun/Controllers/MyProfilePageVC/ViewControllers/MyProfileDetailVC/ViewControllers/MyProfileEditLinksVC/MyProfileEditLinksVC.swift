@@ -9,7 +9,7 @@
 import Foundation
 import RxCocoa
 
-class MyProfileEditLinksVC: BaseVerticalStackVC {
+class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     // MARK: - Nested types
     class TextField: UITextField {
         enum IdType: String {
@@ -33,7 +33,7 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
     }
     
     // MARK: - Properties
-    lazy var links = BehaviorRelay<ResponseAPIContentGetProfileContact?>(value: nil)
+    lazy var links = BehaviorRelay<ResponseAPIContentGetProfileContacts?>(value: nil)
     
     // MARK: - Subviews
     lazy var addLinkButton: UIView = {
@@ -49,14 +49,8 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
     
     // MARK: - Methods
     override func setUp() {
-        // parse current data
-        if let data = UserDefaults.standard.data(forKey: Config.currentUserGetProfileKey),
-            let profile = try? JSONDecoder().decode(ResponseAPIContentGetProfile.self, from: data)
-        {
-            self.links.accept(profile.personal?.contacts)
-        }
-        
         super.setUp()
+        self.links.accept(profile?.personal?.contacts)
         title = "links".localized().uppercaseFirst
     }
     
@@ -206,7 +200,7 @@ class MyProfileEditLinksVC: BaseVerticalStackVC {
     
     // MARK: - Helpers
     private func addLinkToService(_ serviceName: String) {
-        var links = self.links.value ?? ResponseAPIContentGetProfileContact()
+        var links = self.links.value ?? ResponseAPIContentGetProfileContacts()
         switch serviceName {
         case "instagram":
             links.instagram = ""
