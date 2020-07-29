@@ -92,7 +92,7 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
                 // TODO: - Compare name
                 if name != self.profile?.personal?.contacts?.fullName {return true}
                 if username != self.profile?.username {return true}
-                if website != self.profile?.personal?.contacts?.websiteUrl {return true}
+                if website != self.profile?.personal?.contacts?.websiteUrl?.value {return true}
                 if bio != (self.profile?.personal?.biography ?? "") {return true}
                 return false
             }

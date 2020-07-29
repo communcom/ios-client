@@ -55,7 +55,7 @@ extension MyProfileDetailVC {
         
         // bio
         let spacer3 = separator()
-        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile?.personal?.contacts?.websiteUrl)
+        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile?.personal?.contacts?.websiteUrl?.value)
         stackView.addArrangedSubviews([spacer3, websiteField])
         spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
@@ -138,7 +138,7 @@ extension MyProfileDetailVC {
     private func infoField(title: String, content: String?) -> UIStackView {
         let stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .leading, distribution: .fill)
         let titleLabel = UILabel.with(text: title, textSize: 12, weight: .medium, textColor: .appGrayColor)
-        let contentLabel = UILabel.with(text: content, textSize: 17, weight: .semibold, textColor: .appBlackColor, numberOfLines: 0)
+        let contentLabel = UILabel.with(text: content ?? "", textSize: 17, weight: .semibold, textColor: .appBlackColor, numberOfLines: 0)
         stackView.addArrangedSubviews([titleLabel, contentLabel])
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 7, trailing: 16)
