@@ -207,6 +207,11 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         {
             params["website_url"] = website
             profile?.personal?.websiteUrl = website
+            
+            if !website.isLink {
+                showErrorWithMessage("the link to website is invalid".localized().uppercaseFirst)
+                return
+            }
         }
         
         if let bio = bioTextView.text,
