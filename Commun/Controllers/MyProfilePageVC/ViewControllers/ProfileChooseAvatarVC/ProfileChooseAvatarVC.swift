@@ -45,7 +45,7 @@ class ProfileChooseAvatarVC: UIViewController {
     
     func bindUI() {
         // bind avatar
-        if let urlString = UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey),
+        if let urlString = ResponseAPIContentGetProfile.current?.avatarUrl,
             let url = URL(string: urlString)
         {
             avatarImageView.sd_setImage(with: url, completed: nil)

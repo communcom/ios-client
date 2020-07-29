@@ -65,6 +65,8 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         super.setUp()
         title = "general info".localized().uppercaseFirst
         scrollView.keyboardDismissMode = .onDrag
+        
+        setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
     }
     
     override func setUpArrangedSubviews() {
@@ -91,23 +93,24 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
             websiteTextField.rx.text.orEmpty,
             bioTextView.rx.text.orEmpty
         )
-            .map { (avatar, cover, firstName, lastName, website, bio) -> Bool in
-                // define if should enable save button
-                if avatar != self.originalAvatarImage {return true}
-                if cover != self.originalCoverImage {return true}
-                if firstName.trimmed != (self.profile?.personal?.firstName ?? "") {return true}
-                if lastName.trimmed != (self.profile?.personal?.lastName ?? "") {return true}
-//                if username.trimmed != self.profile?.username {return true}
-                if (website.trimmed != (self.profile?.personal?.websiteUrl ?? "")) && website.isLink {return true}
-                
-                if bio.trimmed != (self.profile?.personal?.biography ?? "") {return true}
-                return false
-            }
+            .map { _ in self.dataHasChanged()}
             .bind(to: saveButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
     
     // MARK: - Data handler
+    func dataHasChanged() -> Bool {
+        if avatarImageView.image != self.originalAvatarImage {return true}
+        if coverImageView.image != self.originalCoverImage {return true}
+        if (firstNameTextField.text ?? "").trimmed != (self.profile?.personal?.firstName ?? "").trimmed {return true}
+        if (lastNameTextField.text ?? "").trimmed != (self.profile?.personal?.lastName ?? "").trimmed {return true}
+//                if username.trimmed != self.profile?.username {return true}
+        if ((websiteTextField.text ?? "").trimmed != (self.profile?.personal?.websiteUrl ?? "").trimmed) && (websiteTextField.text ?? "").isLink {return true}
+        
+        if (bioTextView.text ?? "").trimmed != (self.profile?.personal?.biography ?? "").trimmed {return true}
+        return false
+    }
+    
     override func reloadData() {
         super.reloadData()
         updateViews()
@@ -238,10 +241,25 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
                 self.hideHud()
                 self.showDone("saved".localized().uppercaseFirst)
                 self.saveButton.isEnabled = false
+                self.back()
             }) { (error) in
                 self.hideHud()
                 self.showError(error)
             }
             .disposed(by: disposeBag)
+    }
+    
+    @objc func askForSavingAndGoBack() {
+        if dataHasChanged() {
+            showAlert(title: "save".localized().uppercaseFirst, message: "do you want to save the changes you've made?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                if index == 0 {
+                    self.saveButtonDidTouch()
+                    return
+                }
+                self.back()
+            }
+        } else {
+            back()
+        }
     }
 }

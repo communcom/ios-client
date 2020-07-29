@@ -20,7 +20,7 @@ class MyProfileSettingsVC: BaseViewController {
         let view = UIView(height: 80, backgroundColor: .appWhiteColor, cornerRadius: 10)
 
         let avatarImage = MyAvatarImageView(size: 50)
-        avatarImage.setToCurrentUserAvatar()
+        avatarImage.observeCurrentUserAvatar().disposed(by: disposeBag)
         view.addSubview(avatarImage)
         avatarImage.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         avatarImage.autoAlignAxis(toSuperviewAxis: .horizontal)

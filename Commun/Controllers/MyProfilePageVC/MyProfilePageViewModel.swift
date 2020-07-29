@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class MyProfilePageViewModel: UserProfilePageViewModel {
     lazy var subscriptionsVM = SubscriptionsViewModel.ofCurrentUserTypeCommunity
@@ -17,7 +18,17 @@ class MyProfilePageViewModel: UserProfilePageViewModel {
         
         defer {
             balancesVM.update()
+            bindCurrentProfile()
         }
+    }
+    
+    
+    func bindCurrentProfile() {
+        ResponseAPIContentGetProfile.observeCurrentProfile
+            .filter {$0 != nil}
+            .filter {$0 != self.profile.value}
+            .bind(to: profile)
+            .disposed(by: disposeBag)
     }
     
     override func reload() {

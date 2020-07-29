@@ -91,16 +91,16 @@ class MyAvatarImageView: MyView {
     
     func observeCurrentUserAvatar() -> Disposable {
         // avatarImage
-        return UserDefaults.standard.rx
-            .observe(String.self, Config.currentUserAvatarUrlKey)
+        return ResponseAPIContentGetProfile.observeCurrentProfile
             .distinctUntilChanged()
-            .subscribe(onNext: { urlString in
-                self.setAvatar(urlString: urlString)
+            .subscribe(onNext: { profile in
+                self.setAvatar(urlString: profile?.avatarUrl)
             })
     }
     
     func setToCurrentUserAvatar() {
-        setAvatar(urlString: UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey))
+        guard let avatarUrl = ResponseAPIContentGetProfile.current?.avatarUrl else {return}
+        setAvatar(urlString: avatarUrl)
     }
     
     func addTapToViewer(with imageURL: String? = nil) {

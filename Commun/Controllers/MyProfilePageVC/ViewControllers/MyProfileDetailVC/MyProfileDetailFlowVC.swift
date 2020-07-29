@@ -13,6 +13,10 @@ class MyProfileDetailFlowVC: BaseVerticalStackVC {
     var profile: ResponseAPIContentGetProfile?
     
     // MARK: - Methods
+    override func setUp() {
+        super.setUp()
+        setLeftNavBarButtonForGoingBack()
+    }
     
     override func bind() {
         super.bind()
