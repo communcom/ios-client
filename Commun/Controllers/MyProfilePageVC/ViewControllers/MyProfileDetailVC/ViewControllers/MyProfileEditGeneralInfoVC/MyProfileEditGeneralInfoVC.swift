@@ -40,7 +40,8 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         return button
     }()
     
-    lazy var nameTextField = createTextField()
+    lazy var firstNameTextField = createTextField()
+    lazy var lastNameTextField = createTextField()
     lazy var usernameTextField = createTextField()
     lazy var websiteTextField = createTextField()
     
@@ -80,20 +81,21 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         Observable.combineLatest(
             avatarImageView.imageView.rx.observe(Optional<UIImage>.self, "image"),
             coverImageView.rx.observe(Optional<UIImage>.self, "image"),
-            nameTextField.rx.text,
+            firstNameTextField.rx.text,
+            lastNameTextField.rx.text,
             usernameTextField.rx.text,
             websiteTextField.rx.text,
             bioTextView.rx.text
         )
-            .map { (avatar, cover, name, username, website, bio) -> Bool in
+            .map { (avatar, cover, firstName, lastName, username, website, bio) -> Bool in
                 // define if should enable save button
                 if avatar != self.originalAvatarImage {return true}
                 if cover != self.originalCoverImage {return true}
-                // TODO: - Compare name
-                if name != self.profile?.personal?.contacts?.fullName {return true}
-                if username != self.profile?.username {return true}
-                if website != self.profile?.personal?.contacts?.websiteUrl?.value {return true}
-                if bio != (self.profile?.personal?.biography ?? "") {return true}
+                if firstName?.trimmed != self.profile?.personal?.contacts?.firstName {return true}
+                if lastName?.trimmed != self.profile?.personal?.contacts?.lastName {return true}
+                if username?.trimmed != self.profile?.username {return true}
+                if website?.trimmed != self.profile?.personal?.contacts?.websiteUrl?.value {return true}
+                if bio?.trimmed != (self.profile?.personal?.biography ?? "") {return true}
                 return false
             }
             .bind(to: saveButton.rx.isDisabled)

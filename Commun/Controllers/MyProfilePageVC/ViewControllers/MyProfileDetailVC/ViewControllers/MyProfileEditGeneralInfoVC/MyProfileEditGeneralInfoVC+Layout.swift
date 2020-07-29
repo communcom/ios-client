@@ -39,10 +39,16 @@ extension MyProfileEditGeneralInfoVC {
         coverImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
         // name
-        nameTextField.text = profile?.personal?.contacts?.fullName
-        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, editor: nameTextField)
-        stackView.addArrangedSubview(nameInfoField)
-        nameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        firstNameTextField.text = profile?.personal?.contacts?.firstName
+        let firstNameInfoView = infoField(title: "first name".localized().uppercaseFirst, editor: firstNameTextField)
+        stackView.addArrangedSubview(firstNameInfoView)
+        firstNameInfoView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        
+        // name
+        lastNameTextField.text = profile?.personal?.contacts?.lastName
+        let lastNameInfoView = infoField(title: "last name".localized().uppercaseFirst, editor: lastNameTextField)
+        stackView.addArrangedSubview(lastNameInfoView)
+        lastNameInfoView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
         // username
         usernameTextField.text = profile?.username
@@ -67,7 +73,8 @@ extension MyProfileEditGeneralInfoVC {
         
         stackView.setCustomSpacing(29, after: avatarWrapper)
         stackView.setCustomSpacing(30, after: coverWrapper)
-        stackView.setCustomSpacing(10, after: nameInfoField)
+        stackView.setCustomSpacing(10, after: firstNameInfoView)
+        stackView.setCustomSpacing(10, after: lastNameInfoView)
         stackView.setCustomSpacing(10, after: usernameInfoField)
         stackView.setCustomSpacing(10, after: websiteInfoField)
         stackView.setCustomSpacing(10, after: bioField)
