@@ -59,10 +59,19 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
     override func setUp() {
         super.setUp()
         title = "general info".localized().uppercaseFirst
-        
         scrollView.keyboardDismissMode = .onDrag
-        
-        reloadData()
+    }
+    
+    override func setUpArrangedSubviews() {
+        stackView.addArrangedSubviews([
+            contentView,
+            saveButton
+        ])
+    }
+    
+    override func viewDidSetUpStackView() {
+        super.viewDidSetUpStackView()
+        stackView.spacing = 20
     }
     
     override func bind() {
@@ -80,9 +89,10 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
                 // define if should enable save button
                 if avatar != self.originalAvatarImage {return true}
                 if cover != self.originalCoverImage {return true}
-                if name != self.profile?.username {return true}
+                // TODO: - Compare name
+                if name != self.profile?.personal?.contacts?.fullName {return true}
                 if username != self.profile?.username {return true}
-                // TODO: - Website
+                if website != self.profile?.personal?.contacts?.websiteUrl {return true}
                 if bio != (self.profile?.personal?.biography ?? "") {return true}
                 return false
             }
@@ -90,16 +100,10 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
             .disposed(by: disposeBag)
     }
     
-    override func setUpArrangedSubviews() {
-        stackView.addArrangedSubviews([
-            contentView,
-            saveButton
-        ])
-    }
-    
-    override func viewDidSetUpStackView() {
-        super.viewDidSetUpStackView()
-        stackView.spacing = 20
+    // MARK: - Data handler
+    override func reloadData() {
+        super.reloadData()
+        updateViews()
     }
     
     // MARK: - View builders

@@ -9,7 +9,7 @@
 import Foundation
 
 extension MyProfileEditGeneralInfoVC {
-    func reloadData() {
+    func updateViews() {
         // add views
         contentView.removeSubviews()
         let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
@@ -39,7 +39,7 @@ extension MyProfileEditGeneralInfoVC {
         coverImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
         // name
-        nameTextField.text = profile?.username
+        nameTextField.text = profile?.personal?.contacts?.fullName
         let nameInfoField = infoField(title: "name".localized().uppercaseFirst, editor: nameTextField)
         stackView.addArrangedSubview(nameInfoField)
         nameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
@@ -51,7 +51,7 @@ extension MyProfileEditGeneralInfoVC {
         usernameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
         // website
-        websiteTextField.text = ""
+        websiteTextField.text = profile?.personal?.contacts?.websiteUrl
         let websiteInfoField = infoField(title: "website".localized().uppercaseFirst, editor: websiteTextField)
         stackView.addArrangedSubview(websiteInfoField)
         websiteInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true

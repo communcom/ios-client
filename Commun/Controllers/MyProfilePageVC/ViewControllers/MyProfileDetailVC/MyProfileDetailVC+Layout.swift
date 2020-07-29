@@ -40,7 +40,7 @@ extension MyProfileDetailVC {
         
         // name
         let spacer1 = separator()
-        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, content: (profile?.personal?.contacts?.firstName ?? "") + " " + (profile?.personal?.contacts?.lastName ?? ""))
+        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, content: profile?.personal?.contacts?.fullName)
         
         stackView.addArrangedSubviews([spacer1, nameInfoField])
         spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
