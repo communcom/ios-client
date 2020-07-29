@@ -141,6 +141,7 @@
 "do you really want to quit without saving" = "do you really want to quit without saving";
 "do you really want to unhide all posts of" = "do you really want to unhide all posts of";
 "do you want to retry" = "do you want to retry";
+"do you want to save the changes you've made?" = "do you want to save the changes you've made?";
 "do you want to turn it on?" = "do you want to turn it on?";
 "don't have an account?" = "don't have an account?";
 "don't show this again" = "don't show this again";
@@ -370,6 +371,7 @@
 "rules" = "rules";
 "rules not found" = "rules not found";
 "save" = "save";
+"saving" = "saving";
 "save it securely" = "save it securely";
 
 "save post as draft" = "save post as draft";

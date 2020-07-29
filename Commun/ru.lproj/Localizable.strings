@@ -141,6 +141,7 @@
 "do you really want to quit without saving" = "хотите выйти без сохранения";
 "do you really want to unhide all posts of" = "хотите показать все сообщения";
 "do you want to retry" = "хотите повторить попытку";
+"do you want to save the changes you've made?" = "вы хотите сохранить изменения, которые вы внесли?";
 "do you want to turn it on?" = "хочешь включить?";
 "don't have an account?" = "нет аккаунта?";
 "don't show this again" = "больше не показывать";
@@ -366,6 +367,7 @@
 "rules" = "правила";
 "rules not found" = "правила не найдены";
 "save" = "сохранить";
+"saving" = "сохраняю";
 "save it securely" = "сохранить его надежно";
 "save post as draft" = "сохранить пост в черновике";
 "save to iCloud" = "сохранить в iCloud";
