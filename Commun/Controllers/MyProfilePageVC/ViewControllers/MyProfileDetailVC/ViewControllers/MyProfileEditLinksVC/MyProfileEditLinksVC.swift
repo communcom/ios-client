@@ -54,7 +54,10 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     override func reloadData() {
         super.reloadData()
         
-        guard let links = self.links.value else {return}
+        guard let links = self.links.value else {
+            self.links.accept(ResponseAPIContentGetProfileContacts())
+            return
+        }
         stackView.removeArrangedSubviews()
         
         for (key, value) in links.filledContacts {
