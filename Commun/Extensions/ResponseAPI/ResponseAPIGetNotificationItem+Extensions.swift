@@ -77,7 +77,7 @@ extension ResponseAPIGetNotificationItem {
                 } else {
                     aStr.semibold(from?.username ?? "a user".localized().uppercaseFirst)
                         .normal(" ")
-                        .normal("отправил тебе")
+                        .normal("отправил Вам")
                         .normal(" ")
                         .text("\(amount ?? "0") \(community?.name ?? pointType ?? "points")", weight: .medium, color: .appMainColor)
                 }
