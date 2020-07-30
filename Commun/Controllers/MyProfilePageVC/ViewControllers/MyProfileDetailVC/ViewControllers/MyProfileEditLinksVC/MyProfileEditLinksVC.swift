@@ -85,10 +85,6 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
             addLinkField(serviceName: "facebook", value: value)
         }
         
-        if let value = links.value?.youtube?.value {
-            addLinkField(serviceName: "youtube", value: value)
-        }
-        
         if let value = links.value?.instagram?.value {
             addLinkField(serviceName: "instagram", value: value)
         }

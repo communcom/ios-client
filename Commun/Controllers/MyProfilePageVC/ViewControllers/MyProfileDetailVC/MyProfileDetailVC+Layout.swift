@@ -111,9 +111,6 @@ extension MyProfileDetailVC {
         // facebook
         addContactField(icon: "facebook-icon", serviceName: "Facebook", username: profile?.personal?.contacts?.facebook?.value, to: stackView)
         
-        // youtube
-        addContactField(icon: "youtube-icon", serviceName: "Youtube", username: profile?.personal?.contacts?.youtube?.value, to: stackView)
-        
         // instagram
         addContactField(icon: "instagram-icon", serviceName: "Instagram", username: profile?.personal?.contacts?.instagram?.value, to: stackView)
         
