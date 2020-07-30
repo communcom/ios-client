@@ -55,7 +55,9 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         super.reloadData()
         
         guard let links = self.links.value else {
-            self.links.accept(ResponseAPIContentGetProfileContacts())
+            DispatchQueue.main.async {
+                self.links.accept(ResponseAPIContentGetProfileContacts())
+            }
             return
         }
         stackView.removeArrangedSubviews()
