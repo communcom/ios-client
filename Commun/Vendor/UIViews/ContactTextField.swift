@@ -31,6 +31,7 @@ class ContactTextField: UITextField {
             break
         }
         
+        autocorrectionType = .no
         autocapitalizationType = .none
         placeholder = ("your " + contact.identifiedBy.rawValue).localized().uppercaseFirst
     }

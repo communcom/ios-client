@@ -8,10 +8,12 @@
 
 import Foundation
 import RxCocoa
+import RxSwift
 
 class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     // MARK: - Properties
-    lazy var links = BehaviorRelay<ResponseAPIContentGetProfileContacts?>(value: nil)
+    lazy var links = BehaviorRelay<ResponseAPIContentGetProfileContacts>(value: ResponseAPIContentGetProfileContacts())
+    var linkCells: [LinkCell] {stackView.arrangedSubviews.compactMap {$0 as? LinkCell}}
     
     // MARK: - Subviews
     lazy var addLinkButton: UIView = {
@@ -31,8 +33,16 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         title = "links".localized().uppercaseFirst
     }
     
+    override func setUpArrangedSubviews() {
+        var subviews = links.value.filledLinks.compactMap {self.addLinkField(contact: $0.key, value: $0.value.value)}
+        subviews.append(contentsOf: links.value.unfilledLinks.compactMap{self.addLinkField(contact: $0, value: "")})
+        subviews.forEach {$0.isHidden = true}
+        stackView.addArrangedSubviews(subviews)
+        stackView.addArrangedSubview(addLinkButton)
+    }
+    
     override func profileDidUpdate(_ profile: ResponseAPIContentGetProfile?) {
-        self.links.accept(profile?.personal?.contacts)
+        self.links.accept(profile?.personal?.contacts ?? ResponseAPIContentGetProfileContacts())
     }
     
     override func bind() {
@@ -54,65 +64,27 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     override func reloadData() {
         super.reloadData()
         
-        guard let links = self.links.value else {
-            DispatchQueue.main.async {
-                self.links.accept(ResponseAPIContentGetProfileContacts())
-            }
-            return
-        }
-        stackView.removeArrangedSubviews()
-        
-        for (key, value) in links.filledLinks {
-            addLinkField(contact: key, value: value.value)
+        for (key, _) in links.value.filledLinks  {
+            linkCells.first(where: {$0.contact == key})?.isHidden = false
         }
         
-        if !links.unfilledLinks.isEmpty {
-            stackView.addArrangedSubview(addLinkButton)
+        for link in links.value.unfilledLinks {
+            linkCells.first(where: {$0.contact == link})?.isHidden = true
         }
+        
+        addLinkButton.isHidden = links.value.unfilledLinks.isEmpty
     }
     
     // MARK: - View builders
-    private func addLinkField(contact: ResponseAPIContentGetProfileContacts.ContactType, value: String?) {
-        let vStack = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fillEqually)
-        
-        let titleView: UIStackView = {
-            let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
-            let icon = UIImageView(width: 20, height: 20, imageNamed: contact.rawValue + "-icon")
-            let label = UILabel.with(text: contact.rawValue.uppercaseFirst, textSize: 15, weight: .semibold)
-            hStack.addArrangedSubviews([icon, label])
-            
-            return hStack
-        }()
-        
-        let textField = ContactTextField(contact: contact)
-        textField.text = value
-        
-        let textFieldWrapper: UIStackView = {
-            let vStack = UIStackView(axis: .vertical, spacing: 6, alignment: .fill, distribution: .fill)
-            let label = UILabel.with(text: contact.identifiedBy.rawValue.localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
-            vStack.addArrangedSubviews([label, textField])
-            return vStack
-        }()
-        
-        vStack.addArrangedSubviews([titleView, textFieldWrapper])
-        
-        let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
-        view.addSubview(vStack)
-        vStack.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 6, left: 16, bottom: 10, right: 16))
-        
-        let spacer = UIView(height: 2, backgroundColor: .appLightGrayColor)
-        view.addSubview(spacer)
-        spacer.autoAlignAxis(toSuperviewAxis: .horizontal)
-        spacer.autoPinEdge(toSuperviewEdge: .leading)
-        spacer.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        stackView.addArrangedSubview(view)
+    private func addLinkField(contact: ResponseAPIContentGetProfileContacts.ContactType, value: String?) -> LinkCell {
+        let linkCell = LinkCell(contact: contact)
+        stackView.addArrangedSubview(linkCell)
+        return linkCell
     }
     
     // MARK: - Actions
     @objc func addLinkButtonDidTouch() {
-        guard let links = self.links.value else {return}
-        let actions: [CommunActionSheet.Action] = links.unfilledLinks.map { contact in
+        let actions: [CommunActionSheet.Action] = links.value.unfilledLinks.map { contact in
             var imageNamed = contact.rawValue + "-icon"
             if contact == .instagram {imageNamed = "sign-up-with-instagram"}
             return CommunActionSheet.Action(
@@ -131,9 +103,9 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     }
     
     // MARK: - Helpers
-    private func addLinkToService(_ contact: ResponseAPIContentGetProfileContacts.ContactType) {
-        var links = self.links.value ?? ResponseAPIContentGetProfileContacts()
-        let emptyContact = ResponseAPIContentGetProfileContact(value: "", default: false)
+    private func addLinkToService(_ contact: ResponseAPIContentGetProfileContacts.ContactType, value: String = "") {
+        var links = self.links.value
+        let emptyContact = ResponseAPIContentGetProfileContact(value: value, default: false)
         switch contact {
         case .twitter:
             links.twitter = emptyContact

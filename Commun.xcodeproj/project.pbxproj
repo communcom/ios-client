@@ -386,6 +386,7 @@
 		BC9A1F0B24CFD317007BDB3A /* MyProfileEditLinksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1F0A24CFD317007BDB3A /* MyProfileEditLinksVC.swift */; };
 		BC9A1F1824D1225D007BDB3A /* MyProfileDetailFlowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1F1724D1225D007BDB3A /* MyProfileDetailFlowVC.swift */; };
 		BC9A1F2324D276BD007BDB3A /* ContactTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1F2224D276BD007BDB3A /* ContactTextField.swift */; };
+		BC9A1F2524D29FC1007BDB3A /* LinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1F2424D29FC1007BDB3A /* LinkCell.swift */; };
 		BC9FD2F724909A26001AAF2C /* SearchableBalancesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9FD2F624909A26001AAF2C /* SearchableBalancesVC.swift */; };
 		BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */ = {isa = PBXBuildFile; fileRef = BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */; };
 		BCA5B722242C94DB00C8F693 /* MyProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA5B721242C94DB00C8F693 /* MyProfileEditCoverVC.swift */; };
@@ -942,6 +943,7 @@
 		BC9A1F0A24CFD317007BDB3A /* MyProfileEditLinksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditLinksVC.swift; sourceTree = "<group>"; };
 		BC9A1F1724D1225D007BDB3A /* MyProfileDetailFlowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileDetailFlowVC.swift; sourceTree = "<group>"; };
 		BC9A1F2224D276BD007BDB3A /* ContactTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTextField.swift; sourceTree = "<group>"; };
+		BC9A1F2424D29FC1007BDB3A /* LinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
 		BC9FD2F624909A26001AAF2C /* SearchableBalancesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableBalancesVC.swift; sourceTree = "<group>"; };
 		BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetLeaders.json; sourceTree = "<group>"; };
 		BCA5B721242C94DB00C8F693 /* MyProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditCoverVC.swift; sourceTree = "<group>"; };
@@ -2517,6 +2519,7 @@
 			isa = PBXGroup;
 			children = (
 				BC9A1F0A24CFD317007BDB3A /* MyProfileEditLinksVC.swift */,
+				BC9A1F2424D29FC1007BDB3A /* LinkCell.swift */,
 			);
 			path = MyProfileEditLinksVC;
 			sourceTree = "<group>";
@@ -3295,6 +3298,7 @@
 				BCE0AE1A241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift in Sources */,
 				3BEC38EC230FED2B00662374 /* TextAttachment.swift in Sources */,
 				3B3C8B862347866D00D8BADB /* ContentTextView+Utilities.swift in Sources */,
+				BC9A1F2524D29FC1007BDB3A /* LinkCell.swift in Sources */,
 				BC74F503237957790018DB8E /* CommentsVC+CommentCellDelegate.swift in Sources */,
 				3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */,
 				3B5CB30322A56BD500757533 /* UITapGestureRecognizer+Extensions.swift in Sources */,
