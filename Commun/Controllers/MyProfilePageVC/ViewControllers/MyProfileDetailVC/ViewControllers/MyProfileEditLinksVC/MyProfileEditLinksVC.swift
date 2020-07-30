@@ -10,7 +10,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-class MyProfileEditLinksVC: MyProfileDetailFlowVC {
+class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     // MARK: - Properties
     lazy var links = BehaviorRelay<ResponseAPIContentGetProfilePersonal>(value: ResponseAPIContentGetProfilePersonal())
     var linkCells: [LinkCell] {stackView.arrangedSubviews.compactMap {$0 as? LinkCell}}
@@ -38,8 +38,8 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     
     override func profileDidUpdate(_ profile: ResponseAPIContentGetProfile?) {
         stackView.removeArrangedSubviews()
-        var subviews = profile?.personal?.filledLinks.compactMap {self.addLinkField(contact: $0.key, value: $0.value.value)} ?? []
-        subviews.append(contentsOf: profile?.personal?.unfilledLinks.compactMap{self.addLinkField(contact: $0, value: "")} ?? [])
+        var subviews = profile?.personal?.filledLinks.compactMap {self.addLinkField(contactType: $0.key, value: $0.value.value)} ?? []
+        subviews.append(contentsOf: profile?.personal?.unfilledLinks.compactMap{self.addLinkField(contactType: $0, value: "")} ?? [])
         subviews.forEach {
             $0.isHidden = true
         }
@@ -68,20 +68,21 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         super.reloadData()
         
         for (key, _) in links.value.filledLinks  {
-            linkCells.first(where: {$0.contact == key})?.isHidden = false
+            linkCells.first(where: {$0.contactType == key})?.isHidden = false
         }
         
         for link in links.value.unfilledLinks {
-            linkCells.first(where: {$0.contact == link})?.isHidden = true
+            linkCells.first(where: {$0.contactType == link})?.isHidden = true
         }
         
         addLinkButton.isHidden = links.value.unfilledLinks.isEmpty
     }
     
     // MARK: - View builders
-    private func addLinkField(contact: ResponseAPIContentGetProfilePersonal.LinkType, value: String?) -> LinkCell {
-        let linkCell = LinkCell(contact: contact)
+    private func addLinkField(contactType: ResponseAPIContentGetProfilePersonal.LinkType, value: String?) -> LinkCell {
+        let linkCell = LinkCell(contactType: contactType)
         linkCell.textField.text = value
+        linkCell.delegate = self
         return linkCell
     }
     
@@ -118,8 +119,8 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
                 contact = ResponseAPIContentGetProfileContact(value: cell.textField.text, default: false)
                 string = contact!.encodedString
             }
-            params[cell.contact.rawValue] = string
-            switch cell.contact {
+            params[cell.contactType.rawValue] = string
+            switch cell.contactType {
             case .twitter:
                 personal.twitter = contact
             case .facebook:
@@ -156,23 +157,46 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     }
     
     // MARK: - Helpers
-    private func addLinkToService(_ contact: ResponseAPIContentGetProfilePersonal.LinkType, value: String = "") {
+    private func addLinkToService(_ contactType: ResponseAPIContentGetProfilePersonal.LinkType, value: String = "") {
+        let value = ResponseAPIContentGetProfileContact(value: value, default: false)
+        addContactType(contactType, value: value)
+    }
+    
+    private func addContactType(_ contactType: ResponseAPIContentGetProfilePersonal.LinkType, value: ResponseAPIContentGetProfileContact?) {
         var links = self.links.value
-        let emptyContact = ResponseAPIContentGetProfileContact(value: value, default: false)
-        switch contact {
+        switch contactType {
         case .twitter:
-            links.twitter = emptyContact
+            links.twitter = value
         case .facebook:
-            links.facebook = emptyContact
+            links.facebook = value
         case .instagram:
-            links.instagram = emptyContact
+            links.instagram = value
         case .linkedin:
-            links.linkedin = emptyContact
+            links.linkedin = value
         case .github:
-            links.gitHub = emptyContact
+            links.gitHub = value
         default:
             return
         }
         self.links.accept(links)
+    }
+    
+    func linkCellOptionButtonDidTouch(_ linkCell: LinkCell) {
+        showCommunActionSheet(
+            title: linkCell.contactType.rawValue.uppercaseFirst,
+            actions: [
+//                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
+//                                         icon: UIImage(named: "edit"),
+//                                         handle: {[unowned self] in
+//                                            self.onUpdateBio()
+//                }),
+                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
+                                         icon: UIImage(named: "delete"),
+                                         tintColor: .red,
+                                         handle: {[unowned self] in
+                                             self.addContactType(linkCell.contactType, value: nil)
+                    }
+                )
+        ])
     }
 }

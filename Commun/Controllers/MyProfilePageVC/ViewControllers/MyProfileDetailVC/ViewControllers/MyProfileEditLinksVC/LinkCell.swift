@@ -8,14 +8,19 @@
 
 import Foundation
 
+protocol LinkCellDelegate: class {
+    func linkCellOptionButtonDidTouch(_ linkCell: LinkCell)
+}
+
 class LinkCell: MyView {
-    let contact: ResponseAPIContentGetProfilePersonal.LinkType
-    lazy var label = UILabel.with(text: contact.rawValue.uppercaseFirst, textSize: 15, weight: .semibold)
-    lazy var icon = UIImageView(width: 20, height: 20, imageNamed: contact.rawValue + "-icon")
-    lazy var textField = ContactTextField(contact: contact)
+    let contactType: ResponseAPIContentGetProfilePersonal.LinkType
+    lazy var label = UILabel.with(text: contactType.rawValue.uppercaseFirst, textSize: 15, weight: .semibold)
+    lazy var icon = UIImageView(width: 20, height: 20, imageNamed: contactType.rawValue + "-icon")
+    lazy var textField = ContactTextField(contactType: contactType)
+    weak var delegate: LinkCellDelegate?
     
-    init(contact: ResponseAPIContentGetProfilePersonal.LinkType) {
-        self.contact = contact
+    init(contactType: ResponseAPIContentGetProfilePersonal.LinkType) {
+        self.contactType = contactType
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
     }
@@ -32,15 +37,15 @@ class LinkCell: MyView {
         
         let titleView: UIStackView = {
             let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
-            
-            hStack.addArrangedSubviews([icon, label])
-            
+            let optionButton = UIButton.option(tintColor: .appBlackColor, contentInsets: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 0))
+            optionButton.addTarget(self, action: #selector(optionButtonDidTouch), for: .touchUpInside)
+            hStack.addArrangedSubviews([icon, label, optionButton])
             return hStack
         }()
         
         let textFieldWrapper: UIStackView = {
             let vStack = UIStackView(axis: .vertical, spacing: 6, alignment: .fill, distribution: .fill)
-            let label = UILabel.with(text: contact.identifiedBy.rawValue.localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
+            let label = UILabel.with(text: contactType.identifiedBy.rawValue.localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
             vStack.addArrangedSubviews([label, textField])
             return vStack
         }()
@@ -55,5 +60,9 @@ class LinkCell: MyView {
         spacer.autoAlignAxis(toSuperviewAxis: .horizontal)
         spacer.autoPinEdge(toSuperviewEdge: .leading)
         spacer.autoPinEdge(toSuperviewEdge: .trailing)
+    }
+    
+    @objc func optionButtonDidTouch() {
+        delegate?.linkCellOptionButtonDidTouch(self)
     }
 }

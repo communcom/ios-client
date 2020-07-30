@@ -10,11 +10,11 @@ import Foundation
 import RxSwift
 
 class ContactTextField: UITextField {
-    let contact: ResponseAPIContentGetProfilePersonal.LinkType
+    let contactType: ResponseAPIContentGetProfilePersonal.LinkType
     var isValid = false
     
-    init(contact: ResponseAPIContentGetProfilePersonal.LinkType) {
-        self.contact = contact
+    init(contactType: ResponseAPIContentGetProfilePersonal.LinkType) {
+        self.contactType = contactType
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         setUp()
@@ -24,7 +24,7 @@ class ContactTextField: UITextField {
         borderStyle = .none
         font = .systemFont(ofSize: 17, weight: .semibold)
         
-        switch contact.identifiedBy {
+        switch contactType.identifiedBy {
         case .username:
             leftView = UILabel.with(text: "@", textSize: 17, weight: .semibold)
             leftViewMode = .always
@@ -34,7 +34,7 @@ class ContactTextField: UITextField {
         
         autocorrectionType = .no
         autocapitalizationType = .none
-        placeholder = ("your " + contact.identifiedBy.rawValue).localized().uppercaseFirst
+        placeholder = ("your " + contactType.identifiedBy.rawValue).localized().uppercaseFirst
     }
     
     @discardableResult
@@ -43,7 +43,7 @@ class ContactTextField: UITextField {
             isValid = false
             return false
         }
-        switch contact.identifiedBy {
+        switch contactType.identifiedBy {
         case .username:
             isValid = text.count >= 3
             // verify username

@@ -43,7 +43,7 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
     lazy var firstNameTextField = createTextField(allowWhiteSpaces: true)
     lazy var lastNameTextField = createTextField()
 //    lazy var usernameTextField = createTextField()
-    lazy var websiteTextField = ContactTextField(contact: .website_url)
+    lazy var websiteTextField = ContactTextField(contactType: .website_url)
     
     lazy var bioTextView: UITextView = {
         let tv = UITextView(forExpandable: ())

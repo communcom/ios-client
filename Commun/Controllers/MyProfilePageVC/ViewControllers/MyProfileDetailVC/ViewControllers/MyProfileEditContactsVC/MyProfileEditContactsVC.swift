@@ -65,7 +65,7 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC {
                 marginTop: 0,
                 defaultIconOnTheRight: false,
                 handle: {
-                    let vc = MyProfileAddContactVC(contact: .wechat)
+                    let vc = MyProfileAddContactVC(contactType: .wechat)
                     self.show(vc, sender: nil)
                 }
             ),

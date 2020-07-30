@@ -10,10 +10,10 @@ import Foundation
 
 class MyProfileAddContactVC: BaseVerticalStackVC {
     // MARK: - Properties
-    let contact: ResponseAPIContentGetProfilePersonal.LinkType
+    let contactType: ResponseAPIContentGetProfilePersonal.LinkType
     
     // MARK: - Subviews
-    lazy var textField = ContactTextField(contact: contact)
+    lazy var textField = ContactTextField(contactType: contactType)
     
     lazy var sendCodeButton: CommunButton = {
         let button = CommunButton.default(height: 50, label: "send confirmation code".localized().uppercaseFirst, isHuggingContent: false, isDisableGrayColor: true)
@@ -22,8 +22,8 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
     }()
     
     // MARK: - Initializers
-    init(contact: ResponseAPIContentGetProfilePersonal.LinkType) {
-        self.contact = contact
+    init(contactType: ResponseAPIContentGetProfilePersonal.LinkType) {
+        self.contactType = contactType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,7 +45,7 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
     
     override func setUp() {
         super.setUp()
-        title = contact.rawValue
+        title = contactType.rawValue
     }
     
     override func bind() {
@@ -56,7 +56,7 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
     }
     
     override func setUpArrangedSubviews() {
-        let field = infoField(title: contact.rawValue, editor: textField)
+        let field = infoField(title: contactType.rawValue, editor: textField)
         let label = UILabel.with(text: "That contact should be confirmed.\nWe will send you a 4-digits code to confirm it.", textSize: 12, weight: .semibold, textColor: .appGrayColor, numberOfLines: 0)
         
         stackView.addArrangedSubviews([field, label, sendCodeButton])
@@ -91,7 +91,7 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
     
     // MARK: - Actions
     @objc func buttonSendCodeDidTouch() {
-        let vc = MyProfileVerifyContactVC(contact: contact)
+        let vc = MyProfileVerifyContactVC(contactType: contactType)
         show(vc, sender: nil)
     }
 }

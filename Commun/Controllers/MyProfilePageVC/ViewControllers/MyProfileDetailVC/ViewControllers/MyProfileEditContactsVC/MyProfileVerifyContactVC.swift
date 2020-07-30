@@ -11,7 +11,7 @@ import PinCodeInputView
 
 class MyProfileVerifyContactVC: BaseVerticalStackVC {
     // MARK: - Constants
-    let contact: ResponseAPIContentGetProfilePersonal.LinkType
+    let contactType: ResponseAPIContentGetProfilePersonal.LinkType
     let numberOfDigits = 4
     
     // MARK: - Properties
@@ -38,8 +38,8 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
     lazy var resendButton = UIButton(labelFont: .systemFont(ofSize: 15, weight: .semibold))
     
     // MARK: - Initializers
-    init(contact: ResponseAPIContentGetProfilePersonal.LinkType) {
-        self.contact = contact
+    init(contactType: ResponseAPIContentGetProfilePersonal.LinkType) {
+        self.contactType = contactType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,7 +61,7 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
     
     override func setUp() {
         super.setUp()
-        title = contact.rawValue + " " + "confirmation".localized().uppercaseFirst
+        title = contactType.rawValue + " " + "confirmation".localized().uppercaseFirst
         
         // pinCodeInputView
         pinCodeInputView.set { _ in
@@ -84,8 +84,8 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
     }
     
     override func setUpArrangedSubviews() {
-        let logo = UIImageView.circle(size: 64, imageName: contact.rawValue.lowercased() + "-icon")
-        let subtitle = UILabel.with(text: "enter 4 digit code we sent to your".localized().uppercaseFirst + " " + contact.rawValue, textSize: 15, weight: .semibold, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
+        let logo = UIImageView.circle(size: 64, imageName: contactType.rawValue.lowercased() + "-icon")
+        let subtitle = UILabel.with(text: "enter 4 digit code we sent to your".localized().uppercaseFirst + " " + contactType.rawValue, textSize: 15, weight: .semibold, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
         
         stackView.addArrangedSubviews([
             logo,
