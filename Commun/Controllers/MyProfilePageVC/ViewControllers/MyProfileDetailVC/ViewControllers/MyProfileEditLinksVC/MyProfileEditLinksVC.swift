@@ -112,27 +112,26 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         var profile = ResponseAPIContentGetProfile.current
         var personal = profile?.personal ?? ResponseAPIContentGetProfilePersonal()
         linkCells.forEach { cell in
-            if cell.isHidden {
-                params[cell.contact.rawValue] = ""
-            } else {
-                let contact = ResponseAPIContentGetProfileContact(value: cell.textField.text, default: false)
-                let string = contact.encodedString
-                params[cell.contact.rawValue] = string
-                
-                switch cell.contact {
-                case .twitter:
-                    personal.twitter = contact
-                case .facebook:
-                    personal.facebook = contact
-                case .instagram:
-                    personal.instagram = contact
-                case .linkedin:
-                    personal.linkedin = contact
-                case .github:
-                    personal.gitHub = contact
-                default:
-                    return
-                }
+            var contact: ResponseAPIContentGetProfileContact?
+            var string = ""
+            if !cell.isHidden && cell.textField.text?.isEmpty == false {
+                contact = ResponseAPIContentGetProfileContact(value: cell.textField.text, default: false)
+                string = contact!.encodedString
+            }
+            params[cell.contact.rawValue] = string
+            switch cell.contact {
+            case .twitter:
+                personal.twitter = contact
+            case .facebook:
+                personal.facebook = contact
+            case .instagram:
+                personal.instagram = contact
+            case .linkedin:
+                personal.linkedin = contact
+            case .github:
+                personal.gitHub = contact
+            default:
+                return
             }
         }
         
