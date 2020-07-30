@@ -40,10 +40,10 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         return button
     }()
     
-    lazy var firstNameTextField = createTextField()
+    lazy var firstNameTextField = createTextField(allowWhiteSpaces: true)
     lazy var lastNameTextField = createTextField()
 //    lazy var usernameTextField = createTextField()
-    lazy var websiteTextField = createTextField()
+    lazy var websiteTextField = ContactTextField(contact: .website_url)
     
     lazy var bioTextView: UITextView = {
         let tv = UITextView(forExpandable: ())
@@ -114,14 +114,6 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
     override func reloadData() {
         super.reloadData()
         updateViews()
-    }
-    
-    // MARK: - View builders
-    private func createTextField() -> UITextField {
-        let tf = UITextField()
-        tf.borderStyle = .none
-        tf.font = .systemFont(ofSize: 17, weight: .semibold)
-        return tf
     }
     
     // MARK: - Actions

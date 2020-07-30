@@ -8,39 +8,12 @@
 
 import Foundation
 
-enum Contact: String {
-    enum IdentifyType: String {
-        case phoneNumber = "phone number"
-        case username = "username"
-    }
-    
-    case weChat = "WeChat"
-    
-    var idType: IdentifyType {
-        switch self {
-        case .weChat:
-            return .username
-        }
-    }
-}
-
 class MyProfileAddContactVC: BaseVerticalStackVC {
     // MARK: - Properties
     let contact: Contact
     
     // MARK: - Subviews
-    lazy var textField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = ("your " + contact.idType.rawValue).localized().uppercaseFirst
-        tf.borderStyle = .none
-        tf.font = .systemFont(ofSize: 17, weight: .semibold)
-        if contact.idType == .username {
-            tf.leftView = UILabel.with(text: "@", textSize: 17, weight: .semibold)
-            tf.leftViewMode = .always
-        }
-        tf.autocapitalizationType = .none
-        return tf
-    }()
+    lazy var textField = ContactTextField(contact: contact)
     
     lazy var sendCodeButton: CommunButton = {
         let button = CommunButton.default(height: 50, label: "send confirmation code".localized().uppercaseFirst, isHuggingContent: false, isDisableGrayColor: true)
@@ -77,22 +50,9 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
     
     override func bind() {
         super.bind()
-        textField.rx.text.orEmpty
-            .map {self.verify(text: $0)}
+        textField.rx.isValid
             .bind(to: sendCodeButton.rx.isDisabled)
             .disposed(by: disposeBag)
-    }
-    
-    func verify(text: String) -> Bool {
-        switch contact.idType {
-        case .username:
-            return text.count >= 3
-            // verify username
-        case .phoneNumber:
-            fatalError("TODO: Choose region, phone number")
-            // verify phone number
-        }
-        return true
     }
     
     override func setUpArrangedSubviews() {

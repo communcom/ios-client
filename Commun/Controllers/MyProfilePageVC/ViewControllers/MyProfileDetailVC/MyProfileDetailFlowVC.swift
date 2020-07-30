@@ -40,4 +40,11 @@ class MyProfileDetailFlowVC: BaseVerticalStackVC {
     
     // MARK: - ViewBuilder
     func separator() -> UIView { UIView(height: 2, backgroundColor: .appLightGrayColor)}
+    
+    func createTextField(allowWhiteSpaces: Bool = true) -> UITextField {
+        let tf = UITextField()
+        tf.borderStyle = .none
+        tf.font = .systemFont(ofSize: 17, weight: .semibold)
+        return tf
+    }
 }

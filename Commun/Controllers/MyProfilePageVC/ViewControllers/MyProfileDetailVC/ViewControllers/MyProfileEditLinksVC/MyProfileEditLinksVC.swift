@@ -10,30 +10,10 @@ import Foundation
 import RxCocoa
 
 class MyProfileEditLinksVC: MyProfileDetailFlowVC {
-    // MARK: - Nested types
-    class TextField: UITextField {
-        enum IdType: String {
-            case username
-            case link
-        }
-        
-        var idType: IdType = .link {
-            didSet {
-                switch idType {
-                case .username:
-                    leftView = UILabel.with(text: "@", textSize: 17, weight: .semibold)
-                    leftViewMode = .always
-                case .link:
-                    leftView = nil
-                    leftViewMode = .never
-                }
-            }
-        }
-        var serviceName: String?
-    }
-    
     // MARK: - Properties
     lazy var links = BehaviorRelay<ResponseAPIContentGetProfileContacts?>(value: nil)
+    var filledContacts = [Contact: ResponseAPIContentGetProfileContact]()
+    var unfilledContacts = [Contact]()
     
     // MARK: - Subviews
     lazy var addLinkButton: UIView = {
@@ -62,6 +42,39 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         
         links
             .subscribe(onNext: { (_) in
+                self.filledContacts = [Contact: ResponseAPIContentGetProfileContact]()
+                self.unfilledContacts = [Contact]()
+                
+                if let value = self.links.value?.twitter {
+                    self.filledContacts[.twitter] = value
+                } else {
+                    self.unfilledContacts.append(.twitter)
+                }
+                
+                if let value = self.links.value?.facebook {
+                    self.filledContacts[.facebook] = value
+                } else {
+                    self.unfilledContacts.append(.facebook)
+                }
+                
+                if let value = self.links.value?.instagram {
+                    self.filledContacts[.instagram] = value
+                } else {
+                    self.unfilledContacts.append(.instagram)
+                }
+                
+                if let value = self.links.value?.linkedin {
+                    self.filledContacts[.linkedin] = value
+                } else {
+                    self.unfilledContacts.append(.linkedin)
+                }
+                
+                if let value = self.links.value?.gitHub {
+                    self.filledContacts[.github] = value
+                } else {
+                    self.unfilledContacts.append(.github)
+                }
+                
                 self.reloadData()
             })
             .disposed(by: disposeBag)
@@ -77,63 +90,34 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         super.reloadData()
         stackView.removeArrangedSubviews()
         
-        if let value = links.value?.twitter?.value {
-            addLinkField(serviceName: "twitter", value: value)
+        for (key, value) in filledContacts {
+            addLinkField(contact: key, value: value.value)
         }
         
-        if let value = links.value?.facebook?.value {
-            addLinkField(serviceName: "facebook", value: value)
+        if !unfilledContacts.isEmpty {
+            stackView.addArrangedSubview(addLinkButton)
         }
-        
-        if let value = links.value?.instagram?.value {
-            addLinkField(serviceName: "instagram", value: value)
-        }
-        
-        if let value = links.value?.linkedin?.value {
-            addLinkField(serviceName: "linkedin", value: value)
-        }
-        
-        if let value = links.value?.gitHub?.value {
-            addLinkField(serviceName: "github", value: value)
-        }
-        
-        stackView.addArrangedSubview(addLinkButton)
     }
     
     // MARK: - View builders
-    private func addLinkField(serviceName: String, value: String?) {
+    private func addLinkField(contact: Contact, value: String?) {
         let vStack = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fillEqually)
         
         let titleView: UIStackView = {
             let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
-            let icon = UIImageView(width: 20, height: 20, imageNamed: serviceName + "-icon")
-            let label = UILabel.with(text: serviceName.uppercaseFirst, textSize: 15, weight: .semibold)
+            let icon = UIImageView(width: 20, height: 20, imageNamed: contact.rawValue + "-icon")
+            let label = UILabel.with(text: contact.rawValue.uppercaseFirst, textSize: 15, weight: .semibold)
             hStack.addArrangedSubviews([icon, label])
             
             return hStack
         }()
         
-        let textField = TextField()
-        textField.serviceName = serviceName
-        switch serviceName {
-        case "youtube":
-            textField.idType = .link
-        default:
-            textField.idType = .username
-        }
-        textField.placeholder = ("your " + textField.idType.rawValue).localized().uppercaseFirst
-        textField.borderStyle = .none
-        textField.font = .systemFont(ofSize: 17, weight: .semibold)
-        textField.autocapitalizationType = .none
+        let textField = ContactTextField(contact: contact)
         textField.text = value
         
         let textFieldWrapper: UIStackView = {
             let vStack = UIStackView(axis: .vertical, spacing: 6, alignment: .fill, distribution: .fill)
-            var linkType = textField.idType.rawValue
-            if serviceName == "youtube" {
-                linkType = "channel link".localized().uppercaseFirst
-            }
-            let label = UILabel.with(text: linkType, textSize: 12, weight: .medium, textColor: .appGrayColor)
+            let label = UILabel.with(text: contact.identifiedBy.rawValue.localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
             vStack.addArrangedSubviews([label, textField])
             return vStack
         }()
@@ -155,60 +139,39 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     
     // MARK: - Actions
     @objc func addLinkButtonDidTouch() {
-        showCommunActionSheet(title: "add contact".localized().uppercaseFirst, actions: [
-            CommunActionSheet.Action(
-                title: "Instagram",
-                icon: UIImage(named: "sign-up-with-instagram"),
+        let actions: [CommunActionSheet.Action] = unfilledContacts.map { contact in
+            var imageNamed = contact.rawValue + "-icon"
+            if contact == .instagram {imageNamed = "sign-up-with-instagram"}
+            return CommunActionSheet.Action(
+                title: contact.rawValue.uppercaseFirst,
+                icon: UIImage(named: imageNamed),
                 style: .default,
                 marginTop: 0,
                 defaultIconOnTheRight: false,
                 handle: {
-                    self.addLinkToService("instagram")
+                    self.addLinkToService(contact)
                 }
-            ),
-            CommunActionSheet.Action(
-                title: "Linkedin".localized().uppercaseFirst,
-                icon: UIImage(named: "linkedin-icon"),
-                style: .default,
-                marginTop: 0,
-                defaultIconOnTheRight: false,
-                handle: {
-                    self.addLinkToService("linkedin")
-                }
-            ),
-            CommunActionSheet.Action(
-                title: "Github",
-                icon: UIImage(named: "github-icon"),
-                style: .default,
-                marginTop: 0,
-                defaultIconOnTheRight: false,
-                handle: {
-                    self.addLinkToService("github")
-                }
-            ),
-//            CommunActionSheet.Action(
-//                title: "Dribbble",
-//                icon: UIImage(named: "dribble-icon"),
-//                style: .default,
-//                marginTop: 0,
-//                defaultIconOnTheRight: false,
-//                handle: {
-//
-//                }
-//            )
-        ])
+            )
+        }
+        
+        showCommunActionSheet(title: "add contact".localized().uppercaseFirst, actions: actions)
     }
     
     // MARK: - Helpers
-    private func addLinkToService(_ serviceName: String) {
+    private func addLinkToService(_ contact: Contact) {
         var links = self.links.value ?? ResponseAPIContentGetProfileContacts()
-        switch serviceName {
-        case "instagram":
-            links.instagram = ResponseAPIContentGetProfileContact(value: "", default: false)
-        case "linkedin":
-            links.linkedin = ResponseAPIContentGetProfileContact(value: "", default: false)
-        case "github":
-            links.gitHub = ResponseAPIContentGetProfileContact(value: "", default: false)
+        let emptyContact = ResponseAPIContentGetProfileContact(value: "", default: false)
+        switch contact {
+        case .twitter:
+            links.twitter = emptyContact
+        case .facebook:
+            links.facebook = emptyContact
+        case .instagram:
+            links.instagram = emptyContact
+        case .linkedin:
+            links.linkedin = emptyContact
+        case .github:
+            links.gitHub = emptyContact
         default:
             return
         }
