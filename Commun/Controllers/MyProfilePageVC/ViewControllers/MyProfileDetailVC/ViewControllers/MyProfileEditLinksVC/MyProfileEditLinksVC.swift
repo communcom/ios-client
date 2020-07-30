@@ -38,8 +38,8 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     
     override func profileDidUpdate(_ profile: ResponseAPIContentGetProfile?) {
         stackView.removeArrangedSubviews()
-        var subviews = links.value.filledLinks.compactMap {self.addLinkField(contact: $0.key, value: $0.value.value)}
-        subviews.append(contentsOf: links.value.unfilledLinks.compactMap{self.addLinkField(contact: $0, value: "")})
+        var subviews = profile?.personal?.filledLinks.compactMap {self.addLinkField(contact: $0.key, value: $0.value.value)} ?? []
+        subviews.append(contentsOf: profile?.personal?.unfilledLinks.compactMap{self.addLinkField(contact: $0, value: "")} ?? [])
         subviews.forEach {
             $0.isHidden = true
         }
@@ -81,7 +81,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     // MARK: - View builders
     private func addLinkField(contact: ResponseAPIContentGetProfilePersonal.LinkType, value: String?) -> LinkCell {
         let linkCell = LinkCell(contact: contact)
-        stackView.addArrangedSubview(linkCell)
+        linkCell.textField.text = value
         return linkCell
     }
     
@@ -112,10 +112,11 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         var profile = ResponseAPIContentGetProfile.current
         var personal = profile?.personal ?? ResponseAPIContentGetProfilePersonal()
         linkCells.forEach { cell in
-            cell.textField.verify()
-            if cell.textField.isValid {
+            if cell.isHidden {
+                params[cell.contact.rawValue] = ""
+            } else {
                 let contact = ResponseAPIContentGetProfileContact(value: cell.textField.text, default: false)
-                let string = String(data: try! JSONEncoder().encode(contact), encoding: .utf8)
+                let string = contact.encodedString
                 params[cell.contact.rawValue] = string
                 
                 switch cell.contact {
