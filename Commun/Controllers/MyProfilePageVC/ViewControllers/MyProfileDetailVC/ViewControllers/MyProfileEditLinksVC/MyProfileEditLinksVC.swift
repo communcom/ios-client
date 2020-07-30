@@ -62,11 +62,11 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         }
         stackView.removeArrangedSubviews()
         
-        for (key, value) in links.filledContacts {
+        for (key, value) in links.filledLinks {
             addLinkField(contact: key, value: value.value)
         }
         
-        if !links.unfilledContacts.isEmpty {
+        if !links.unfilledLinks.isEmpty {
             stackView.addArrangedSubview(addLinkButton)
         }
     }
@@ -112,7 +112,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     // MARK: - Actions
     @objc func addLinkButtonDidTouch() {
         guard let links = self.links.value else {return}
-        let actions: [CommunActionSheet.Action] = links.unfilledContacts.map { contact in
+        let actions: [CommunActionSheet.Action] = links.unfilledLinks.map { contact in
             var imageNamed = contact.rawValue + "-icon"
             if contact == .instagram {imageNamed = "sign-up-with-instagram"}
             return CommunActionSheet.Action(
