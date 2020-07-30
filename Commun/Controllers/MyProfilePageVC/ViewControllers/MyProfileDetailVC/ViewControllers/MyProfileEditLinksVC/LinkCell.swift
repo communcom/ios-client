@@ -9,12 +9,12 @@
 import Foundation
 
 class LinkCell: MyView {
-    let contact: ResponseAPIContentGetProfileContacts.ContactType
+    let contact: ResponseAPIContentGetProfilePersonal.LinkType
     lazy var label = UILabel.with(text: contact.rawValue.uppercaseFirst, textSize: 15, weight: .semibold)
     lazy var icon = UIImageView(width: 20, height: 20, imageNamed: contact.rawValue + "-icon")
     lazy var textField = ContactTextField(contact: contact)
     
-    init(contact: ResponseAPIContentGetProfileContacts.ContactType) {
+    init(contact: ResponseAPIContentGetProfilePersonal.LinkType) {
         self.contact = contact
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false

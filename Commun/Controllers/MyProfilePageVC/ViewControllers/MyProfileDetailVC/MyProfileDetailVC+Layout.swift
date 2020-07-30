@@ -106,16 +106,16 @@ extension MyProfileDetailVC {
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // twitter
-        addContactField(icon: "twitter-icon", serviceName: "Twitter", username: profile?.personal?.contacts?.twitter?.value, to: stackView)
+        addContactField(icon: "twitter-icon", serviceName: "Twitter", username: profile?.personal?.twitter?.value, to: stackView)
         
         // facebook
-        addContactField(icon: "facebook-icon", serviceName: "Facebook", username: profile?.personal?.contacts?.facebook?.value, to: stackView)
+        addContactField(icon: "facebook-icon", serviceName: "Facebook", username: profile?.personal?.facebook?.value, to: stackView)
         
         // instagram
-        addContactField(icon: "instagram-icon", serviceName: "Instagram", username: profile?.personal?.contacts?.instagram?.value, to: stackView)
+        addContactField(icon: "instagram-icon", serviceName: "Instagram", username: profile?.personal?.instagram?.value, to: stackView)
         
         // github
-        addContactField(icon: "github-icon", serviceName: "Github", username: profile?.personal?.contacts?.gitHub?.value, to: stackView)
+        addContactField(icon: "github-icon", serviceName: "Github", username: profile?.personal?.gitHub?.value, to: stackView)
     }
     
     // MARK: - View builders

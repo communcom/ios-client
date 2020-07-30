@@ -12,7 +12,7 @@ import RxSwift
 
 class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     // MARK: - Properties
-    lazy var links = BehaviorRelay<ResponseAPIContentGetProfileContacts>(value: ResponseAPIContentGetProfileContacts())
+    lazy var links = BehaviorRelay<ResponseAPIContentGetProfilePersonal>(value: ResponseAPIContentGetProfilePersonal())
     var linkCells: [LinkCell] {stackView.arrangedSubviews.compactMap {$0 as? LinkCell}}
     
     // MARK: - Subviews
@@ -45,7 +45,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         }
         stackView.addArrangedSubviews(subviews)
         stackView.addArrangedSubview(addLinkButton)
-        self.links.accept(profile?.personal?.contacts ?? ResponseAPIContentGetProfileContacts())
+        self.links.accept(profile?.personal ?? ResponseAPIContentGetProfilePersonal())
     }
     
     override func bind() {
@@ -79,7 +79,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     }
     
     // MARK: - View builders
-    private func addLinkField(contact: ResponseAPIContentGetProfileContacts.ContactType, value: String?) -> LinkCell {
+    private func addLinkField(contact: ResponseAPIContentGetProfilePersonal.LinkType, value: String?) -> LinkCell {
         let linkCell = LinkCell(contact: contact)
         stackView.addArrangedSubview(linkCell)
         return linkCell
@@ -110,7 +110,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         var params = [String: String]()
         
         var profile = ResponseAPIContentGetProfile.current
-        var contacts = profile?.personal?.contacts ?? ResponseAPIContentGetProfileContacts()
+        var personal = profile?.personal ?? ResponseAPIContentGetProfilePersonal()
         linkCells.forEach { cell in
             cell.textField.verify()
             if cell.textField.isValid {
@@ -120,15 +120,15 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
                 
                 switch cell.contact {
                 case .twitter:
-                    contacts.twitter = contact
+                    personal.twitter = contact
                 case .facebook:
-                    contacts.facebook = contact
+                    personal.facebook = contact
                 case .instagram:
-                    contacts.instagram = contact
+                    personal.instagram = contact
                 case .linkedin:
-                    contacts.linkedin = contact
+                    personal.linkedin = contact
                 case .github:
-                    contacts.gitHub = contact
+                    personal.gitHub = contact
                 default:
                     return
                 }
@@ -143,7 +143,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         showIndetermineHudWithMessage("saving".localized().uppercaseFirst + "...")
         BlockchainManager.instance.updateProfile(params: params, waitForTransaction: false)
             .subscribe(onCompleted: {
-                profile?.personal?.contacts = contacts
+                profile?.personal = personal
                 UserDefaults.standard.set(object: profile, forKey: Config.currentUserGetProfileKey)
                 self.hideHud()
                 self.showDone("saved".localized().uppercaseFirst)
@@ -156,7 +156,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     }
     
     // MARK: - Helpers
-    private func addLinkToService(_ contact: ResponseAPIContentGetProfileContacts.ContactType, value: String = "") {
+    private func addLinkToService(_ contact: ResponseAPIContentGetProfilePersonal.LinkType, value: String = "") {
         var links = self.links.value
         let emptyContact = ResponseAPIContentGetProfileContact(value: value, default: false)
         switch contact {

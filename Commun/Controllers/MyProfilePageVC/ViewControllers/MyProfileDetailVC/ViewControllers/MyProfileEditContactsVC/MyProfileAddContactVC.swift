@@ -10,7 +10,7 @@ import Foundation
 
 class MyProfileAddContactVC: BaseVerticalStackVC {
     // MARK: - Properties
-    let contact: ResponseAPIContentGetProfileContacts.ContactType
+    let contact: ResponseAPIContentGetProfilePersonal.LinkType
     
     // MARK: - Subviews
     lazy var textField = ContactTextField(contact: contact)
@@ -22,7 +22,7 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
     }()
     
     // MARK: - Initializers
-    init(contact: ResponseAPIContentGetProfileContacts.ContactType) {
+    init(contact: ResponseAPIContentGetProfilePersonal.LinkType) {
         self.contact = contact
         super.init(nibName: nil, bundle: nil)
     }
