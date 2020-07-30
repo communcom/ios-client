@@ -9,39 +9,10 @@
 import Foundation
 import RxSwift
 
-enum Contact: String {
-    enum IdentifyType: String {
-        case phoneNumber = "phone number"
-        case username = "username"
-        case link = "link"
-    }
-    
-    case wechat
-    case facebook
-    case telegram
-    case whatsapp
-    case instagram
-    case linkedin
-    case twitter
-    case github
-    case website_url
-    
-    var identifiedBy: IdentifyType {
-        switch self {
-        case .wechat, .facebook, .instagram, .linkedin, .twitter, .github:
-            return .username
-        case .telegram, .whatsapp:
-            return .phoneNumber
-        case .website_url:
-            return .link
-        }
-    }
-}
-
 class ContactTextField: UITextField {
-    let contact: Contact
+    let contact: ResponseAPIContentGetProfileContacts.ContactType
     
-    init(contact: Contact) {
+    init(contact: ResponseAPIContentGetProfileContacts.ContactType) {
         self.contact = contact
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false

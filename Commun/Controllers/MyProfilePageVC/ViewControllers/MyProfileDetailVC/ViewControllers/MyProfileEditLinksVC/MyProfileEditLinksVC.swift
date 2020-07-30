@@ -12,8 +12,6 @@ import RxCocoa
 class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     // MARK: - Properties
     lazy var links = BehaviorRelay<ResponseAPIContentGetProfileContacts?>(value: nil)
-    var filledContacts = [Contact: ResponseAPIContentGetProfileContact]()
-    var unfilledContacts = [Contact]()
     
     // MARK: - Subviews
     lazy var addLinkButton: UIView = {
@@ -42,39 +40,6 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
         
         links
             .subscribe(onNext: { (_) in
-                self.filledContacts = [Contact: ResponseAPIContentGetProfileContact]()
-                self.unfilledContacts = [Contact]()
-                
-                if let value = self.links.value?.twitter {
-                    self.filledContacts[.twitter] = value
-                } else {
-                    self.unfilledContacts.append(.twitter)
-                }
-                
-                if let value = self.links.value?.facebook {
-                    self.filledContacts[.facebook] = value
-                } else {
-                    self.unfilledContacts.append(.facebook)
-                }
-                
-                if let value = self.links.value?.instagram {
-                    self.filledContacts[.instagram] = value
-                } else {
-                    self.unfilledContacts.append(.instagram)
-                }
-                
-                if let value = self.links.value?.linkedin {
-                    self.filledContacts[.linkedin] = value
-                } else {
-                    self.unfilledContacts.append(.linkedin)
-                }
-                
-                if let value = self.links.value?.gitHub {
-                    self.filledContacts[.github] = value
-                } else {
-                    self.unfilledContacts.append(.github)
-                }
-                
                 self.reloadData()
             })
             .disposed(by: disposeBag)
@@ -88,19 +53,21 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     // MARK: - Data handler
     override func reloadData() {
         super.reloadData()
+        
+        guard let links = self.links.value else {return}
         stackView.removeArrangedSubviews()
         
-        for (key, value) in filledContacts {
+        for (key, value) in links.filledContacts {
             addLinkField(contact: key, value: value.value)
         }
         
-        if !unfilledContacts.isEmpty {
+        if !links.unfilledContacts.isEmpty {
             stackView.addArrangedSubview(addLinkButton)
         }
     }
     
     // MARK: - View builders
-    private func addLinkField(contact: Contact, value: String?) {
+    private func addLinkField(contact: ResponseAPIContentGetProfileContacts.ContactType, value: String?) {
         let vStack = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fillEqually)
         
         let titleView: UIStackView = {
@@ -139,7 +106,8 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     
     // MARK: - Actions
     @objc func addLinkButtonDidTouch() {
-        let actions: [CommunActionSheet.Action] = unfilledContacts.map { contact in
+        guard let links = self.links.value else {return}
+        let actions: [CommunActionSheet.Action] = links.unfilledContacts.map { contact in
             var imageNamed = contact.rawValue + "-icon"
             if contact == .instagram {imageNamed = "sign-up-with-instagram"}
             return CommunActionSheet.Action(
@@ -158,7 +126,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     }
     
     // MARK: - Helpers
-    private func addLinkToService(_ contact: Contact) {
+    private func addLinkToService(_ contact: ResponseAPIContentGetProfileContacts.ContactType) {
         var links = self.links.value ?? ResponseAPIContentGetProfileContacts()
         let emptyContact = ResponseAPIContentGetProfileContact(value: "", default: false)
         switch contact {

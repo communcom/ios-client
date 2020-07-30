@@ -11,7 +11,7 @@ import PinCodeInputView
 
 class MyProfileVerifyContactVC: BaseVerticalStackVC {
     // MARK: - Constants
-    let contact: Contact
+    let contact: ResponseAPIContentGetProfileContacts.ContactType
     let numberOfDigits = 4
     
     // MARK: - Properties
@@ -38,7 +38,7 @@ class MyProfileVerifyContactVC: BaseVerticalStackVC {
     lazy var resendButton = UIButton(labelFont: .systemFont(ofSize: 15, weight: .semibold))
     
     // MARK: - Initializers
-    init(contact: Contact) {
+    init(contact: ResponseAPIContentGetProfileContacts.ContactType) {
         self.contact = contact
         super.init(nibName: nil, bundle: nil)
     }
