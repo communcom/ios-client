@@ -20,7 +20,7 @@ extension ResponseAPIGetNotificationItem {
             case "mention":
                 aStr.semibold(author?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("упомянул тебя в")
+                    .normal("упомянул Вас в")
                     .normal(" ")
                     .normal("\(entityType ?? "комментарии")".localized())
                     .normal(": \"")
@@ -29,7 +29,7 @@ extension ResponseAPIGetNotificationItem {
             case "subscribe":
                 aStr.semibold(user?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("подписался на тебя")
+                    .normal("подписался на Вас")
             case "upvote":
                 aStr.semibold(voter?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")

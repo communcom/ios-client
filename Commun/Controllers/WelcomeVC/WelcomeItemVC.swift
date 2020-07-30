@@ -134,7 +134,7 @@ class WelcomeItemVC: BaseViewController {
             switch index {
             case 1:
                 description = NSMutableAttributedString()
-                    .semibold("Подписывайся на лучшие сообщества и зарабатывай награды", color: descriptionColor)
+                    .semibold("Подписывайтесь на лучшие сообщества и получайте награды за активность", color: descriptionColor)
                     .text("\n")
                     .text(" ")
                     .withParagraphStyle(minimumLineHeight: 26, alignment: .center)
@@ -144,12 +144,13 @@ class WelcomeItemVC: BaseViewController {
                     .withParagraphStyle(minimumLineHeight: 26, alignment: .center)
             default:
                 description = NSMutableAttributedString()
-                    .semibold("Социальную сеть на технологиях Блокчейн", color: descriptionColor)
+                    .semibold("Токенизированную социальную сеть", color: descriptionColor)
                     .text("\n")
-                    .semibold("Здесь вы", color: descriptionColor)
+                    .semibold("Здесь Вы", color: descriptionColor)
                     .text(" ")
-                    .bold("зарабатываете награды", color: descriptionColor)
-                    .semibold("за посты лайки и комментарии", color: descriptionColor)
+                    .bold("получаете награды и донаты", color: descriptionColor)
+                    .text(" ")
+                    .semibold("за посты, лайки и комментарии", color: descriptionColor)
                     .withParagraphStyle(minimumLineHeight: 26, alignment: .center)
             }
         default:
