@@ -11,6 +11,7 @@ import RxSwift
 
 class ContactTextField: UITextField {
     let contact: ResponseAPIContentGetProfileContacts.ContactType
+    var isValid = false
     
     init(contact: ResponseAPIContentGetProfileContacts.ContactType) {
         self.contact = contact
@@ -36,18 +37,23 @@ class ContactTextField: UITextField {
         placeholder = ("your " + contact.identifiedBy.rawValue).localized().uppercaseFirst
     }
     
+    @discardableResult
     func verify() -> Bool {
-        guard let text = text else {return false}
+        guard let text = text else {
+            isValid = false
+            return false
+        }
         switch contact.identifiedBy {
         case .username:
-            return text.count >= 3
+            isValid = text.count >= 3
             // verify username
         case .phoneNumber:
             fatalError("TODO: Choose region, phone number")
             // verify phone number
         case .link:
-            return text.isLink
+            isValid = text.isLink
         }
+        return isValid
     }
     
     required init?(coder: NSCoder) {

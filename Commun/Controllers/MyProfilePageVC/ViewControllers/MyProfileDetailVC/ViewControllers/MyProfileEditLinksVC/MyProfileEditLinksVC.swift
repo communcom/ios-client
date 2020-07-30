@@ -31,17 +31,20 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
     override func setUp() {
         super.setUp()
         title = "links".localized().uppercaseFirst
-    }
-    
-    override func setUpArrangedSubviews() {
-        var subviews = links.value.filledLinks.compactMap {self.addLinkField(contact: $0.key, value: $0.value.value)}
-        subviews.append(contentsOf: links.value.unfilledLinks.compactMap{self.addLinkField(contact: $0, value: "")})
-        subviews.forEach {$0.isHidden = true}
-        stackView.addArrangedSubviews(subviews)
-        stackView.addArrangedSubview(addLinkButton)
+        let save = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
+        save.tintColor = .appBlackColor
+        navigationItem.rightBarButtonItem = save
     }
     
     override func profileDidUpdate(_ profile: ResponseAPIContentGetProfile?) {
+        stackView.removeArrangedSubviews()
+        var subviews = links.value.filledLinks.compactMap {self.addLinkField(contact: $0.key, value: $0.value.value)}
+        subviews.append(contentsOf: links.value.unfilledLinks.compactMap{self.addLinkField(contact: $0, value: "")})
+        subviews.forEach {
+            $0.isHidden = true
+        }
+        stackView.addArrangedSubviews(subviews)
+        stackView.addArrangedSubview(addLinkButton)
         self.links.accept(profile?.personal?.contacts ?? ResponseAPIContentGetProfileContacts())
     }
     
@@ -99,7 +102,57 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC {
             )
         }
         
-        showCommunActionSheet(title: "add contact".localized().uppercaseFirst, actions: actions)
+        showCommunActionSheet(title: "add link".localized().uppercaseFirst, actions: actions)
+    }
+    
+    @objc func saveButtonDidTouch() {
+        view.endEditing(true)
+        var params = [String: String]()
+        
+        var profile = ResponseAPIContentGetProfile.current
+        var contacts = profile?.personal?.contacts ?? ResponseAPIContentGetProfileContacts()
+        linkCells.forEach { cell in
+            cell.textField.verify()
+            if cell.textField.isValid {
+                let contact = ResponseAPIContentGetProfileContact(value: cell.textField.text, default: false)
+                let string = String(data: try! JSONEncoder().encode(contact), encoding: .utf8)
+                params[cell.contact.rawValue] = string
+                
+                switch cell.contact {
+                case .twitter:
+                    contacts.twitter = contact
+                case .facebook:
+                    contacts.facebook = contact
+                case .instagram:
+                    contacts.instagram = contact
+                case .linkedin:
+                    contacts.linkedin = contact
+                case .github:
+                    contacts.gitHub = contact
+                default:
+                    return
+                }
+            }
+        }
+        
+        if params.isEmpty {
+            showErrorWithMessage("nothing to save".localized().uppercaseFirst)
+            return
+        }
+        
+        showIndetermineHudWithMessage("saving".localized().uppercaseFirst + "...")
+        BlockchainManager.instance.updateProfile(params: params, waitForTransaction: false)
+            .subscribe(onCompleted: {
+                profile?.personal?.contacts = contacts
+                UserDefaults.standard.set(object: profile, forKey: Config.currentUserGetProfileKey)
+                self.hideHud()
+                self.showDone("saved".localized().uppercaseFirst)
+                self.back()
+            }) { (error) in
+                self.hideHud()
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Helpers
