@@ -116,6 +116,9 @@ extension MyProfileDetailVC {
         
         // github
         addContactField(icon: "github-icon", serviceName: "Github", username: profile?.personal?.gitHub?.value, to: stackView)
+        
+        // linkedin
+        addContactField(icon: "linkedin-icon", serviceName: "Linkedin", username: profile?.personal?.linkedin?.value, to: stackView)
     }
     
     // MARK: - View builders
