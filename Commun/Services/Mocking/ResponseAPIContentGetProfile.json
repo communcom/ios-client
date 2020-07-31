@@ -23,7 +23,23 @@
         "personal": {
             "avatarUrl": "https://img.golos.io/images/3r3CCZXMY7ct5QobX55W82MFeZiX.jpg",
             "biography": "Rockin' and rollin' the web-development",
-            "coverUrl": "https://img.golos.io/images/KWk34xqkvvk7cKLR1miPRscghwz.jpg"
+            "coverUrl": "https://img.golos.io/images/KWk34xqkvvk7cKLR1miPRscghwz.jpg",
+            "contacts": {
+                "facebook": "{\"value\": \"bender\",\"default\": false}",
+                "telegram":"{\"value\": \"bender\",\"default\": true}",
+                "whatsApp":"{\"value\": \"bender\",\"default\": false}",
+                "weChat":"{\"value\": \"bender\",\"default\": false}",
+                "firstName":"Bender",
+                "lastName":"Rodriguez",
+                "country":"United States",
+                "city": "Las Vegas",
+                "birthDate":"23-03-1970",
+                "instagram":"{\"value\": \"bender\",\"default\": false}",
+                "linkedin":"{\"value\": \"bender\",\"default\": false}",
+                "twitter":"{\"value\": \"bender\",\"default\": false}",
+                "gitHub":"{\"value\": \"bender\",\"default\": false}",
+                "websiteUrl":"{\"value\": \"bender\",\"default\": false}"
+            }
         },
         "isSubscribed": false,
         "isSubscription": false,

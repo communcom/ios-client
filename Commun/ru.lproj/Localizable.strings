@@ -36,6 +36,7 @@
 "add a description for your image" = "добавить описание для изображения";
 "add age limit 18+ (coming soon)" = "добавить возрастное ограничение 18+ (скоро)";
 "add article" = "добавить статью";
+"add contact" = "добавить контакт";
 "add link" = "добавить ссылку";
 "adding referralId" = "добавление реферального кода";
 "after confirmation, we'll generate for" = "после подтверждения мы сгенерируем для Вас криптографический пароль из 52 символов. Мы предлагаем Вам скопировать пароль или скачать файл PDF с ним. Мы не храним мастер-пароли и не имеем возможности их восстановить. \n\nМы настоятельно рекомендуем сохранить пароль и сделать его копию.";
@@ -93,6 +94,7 @@
 "close" = "закрыть";
 "close this screen and open editor" = "закройте этот экран и откройте редактор";
 "code" = "код";
+"code expires in" = "срок действия кода";
 "color" = "цвет";
 "comment" = "комментарий";
 "comments" = "комментарии";
@@ -105,7 +107,9 @@
 "community unhidden" = "сообщество раскрыто";
 "confirm it's you" = "подтвердить, что это Вы";
 "confirm password" = "подтвердить пароль";
+"confirmation" = "подтверждение";
 "connecting" = "подключение";
+"contacts" = "контакты";
 "content must less than" = "содержание должно меньше, чем";
 "content wasn't changed" = "содержание не было изменено";
 "continue" = "продолжить";
@@ -137,6 +141,7 @@
 "do you really want to unhide all posts of" = "хотите показать все сообщения";
 "do you want to retry" = "хотите повторить попытку";
 "do you want to turn it on?" = "хотите включить?";
+"do you want to save the changes you've made?" = "вы хотите сохранить изменения, которые вы внесли?";
 "don't have an account?" = "нет аккаунта?";
 "don't show this again" = "больше не показывать";
 "donation" = "пожертвование";
@@ -157,6 +162,7 @@
 "end editing" = "конец редактирования";
 "english language" = "английский язык";
 "russian language" = "русский язык";
+"enter 4 digit code we sent to your" = "введите 4 цифров, которые мы отправили тебе в";
 "enter code" = "введите код";
 "enter passcode" = "введите пин-код";
 "enter sms-code" = "введите код из SMS";
@@ -178,6 +184,7 @@
 "friend" = "друга";
 "friends" = "друзья";
 "friends not found" = "друзья не найдены";
+"general info" = "общая информация";
 "get" = "получить";
 "get you first points" = "получить первые очки";
 "go to commun.com and scan QR" = "перейдите на commun.com и отсканируйте QR";
@@ -221,6 +228,7 @@
 "left a comment" = "оставил комментарий";
 "let us notify you about receiving rewards" = "Разрешите нам уведомлять Вас о получении вознаграждений, ответов или голосов! Следите за самыми важными и приятными событиями";
 "liked" = "понравилось";
+"links" = "ссылки";
 "loading" = "загрузка";
 "loading embed" = "загрузка миниатюры";
 "loading failed" = "ошибка загрузки";
@@ -249,6 +257,7 @@
 "mutual" = "общие";
 "my" = "мой";
 "my blacklist" = "мой чёрный список";
+"my profile" = "мой профиль";
 "name" = "имя";
 "new" = "новое";
 "newest first" = "от новых к старым";
@@ -357,6 +366,7 @@
 "rules" = "правила";
 "rules not found" = "правила не найдены";
 "save" = "сохранить";
+"saving" = "сохраняю";
 "save it securely" = "сохранить его надежно";
 "save post as draft" = "сохранить пост в черновике";
 "save to iCloud" = "сохранить в iCloud";
@@ -369,6 +379,7 @@
 "sell" = "продать";
 "selling" = "продажа";
 "send" = "отправить";
+"send confirmation code" = "отправить код подтверждения";
 "send points" = "отправить поинты";
 "send post" = "пост";
 "send report" = "пожаловаться";
@@ -453,6 +464,7 @@
 "was turned off" = "был выключен";
 "we have flagged this post for investigation" = "Спасибо, Ваша жалоба будет рассмотрена модераторами.";
 "we're sorry that you've had this experience" = "нам жаль, что у Вас был такой опыт";
+"website" = "вебсайт";
 "welcome" = "добро пожаловать";
 "welcome-item-0" = "Токенизированную социальную сеть\nЗдесь Вы получаете награды за посты, лайки и комментарии";
 "welcome-item-1" = "Найдите свое сообщество и сделайте его центром Вашего общения с единомышленниками.";
@@ -492,9 +504,11 @@
 "you've got" = "у Вас есть";
 "you've got a new notification" = "есть новое уведомление";
 "you've unblocked" = "Вы разблокировали";
+"your phone number" = "ваш номер телефона";
 "your email address" = "электронная почта";
 "your referrals" = "ваши рефералы";
 "your socializing" = "ваше общение";
+"your username" = "ваше имя пользователя";
 "my Feed" = "моя лента";
 "facebook" = "facebook";
 "apple" = "apple";

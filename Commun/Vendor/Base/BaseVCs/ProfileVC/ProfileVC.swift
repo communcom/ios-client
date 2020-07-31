@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class ProfileVC<ProfileType: Decodable>: BaseViewController {
+class ProfileVC<ProfileType: Decodable & Equatable>: BaseViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     var authorizationRequired: Bool {true}
     // MARK: - Constants
@@ -177,6 +177,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             .map {$0!}
             
         profile
+            .distinctUntilChanged()
             .subscribe(onNext: { [weak self] (item) in
                 self?.setUp(profile: item)
             })

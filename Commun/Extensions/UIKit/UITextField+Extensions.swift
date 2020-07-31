@@ -32,4 +32,9 @@ extension UITextField {
        textField.keyboardType = .decimalPad
        return textField
     }
+    
+    func changeTextNotify(_ text: String?) {
+        self.text = text
+        sendActions(for: .valueChanged)
+    }
 }

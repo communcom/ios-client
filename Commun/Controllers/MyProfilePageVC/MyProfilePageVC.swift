@@ -81,6 +81,11 @@ class MyProfilePageVC: UserProfilePageVC {
             .disposed(by: disposeBag)
     }
     
+    override func setUp(profile: ResponseAPIContentGetProfile) {
+        super.setUp(profile: profile)
+        UserDefaults.standard.set(object: profile, forKey: Config.currentUserGetProfileKey)
+    }
+    
     override func createHeaderView() -> UserProfileHeaderView {
         let headerView = MyProfileHeaderView(tableView: tableView)
         

@@ -66,7 +66,9 @@ extension MyProfilePageVC {
         if delete {
             coverImageView.image = .placeholder
             BlockchainManager.instance.updateProfile(params: ["cover_url": ""])
-                .subscribe(onError: {[weak self] error in
+                .subscribe(onCompleted: {
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: "")
+                }, onError: {[weak self] (error) in
                     if let gif = originGif {
                         self?.coverImageView.setGifImage(gif)
                     } else {
@@ -97,10 +99,11 @@ extension MyProfilePageVC {
                 guard let image = image else {return}
                 RestAPIManager.instance.uploadImage(image)
                     .flatMap { url -> Single<String> in
-                        BlockchainManager.instance.updateProfile(params: ["cover_url": url]).andThen(Single<String>.just(url))
+                        BlockchainManager.instance.updateProfile(params: ["cover_url": url]).andThen(.just(url))
                     }
-                    .subscribe(onSuccess: { [weak self] (_) in
+                    .subscribe(onSuccess: { [weak self] (url) in
                         self?.coverImageView.hideLoading()
+                        ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: url)
                     }, onError: { [weak self] (error) in
                         self?.coverImageView.hideLoading()
                         self?.coverImageView.image = originalImage
@@ -126,7 +129,9 @@ extension MyProfilePageVC {
         if delete {
             headerView.avatarImageView.image = UIImage(named: "empty-avatar")
             BlockchainManager.instance.updateProfile(params: ["avatar_url": ""])
-                .subscribe(onError: {[weak self] error in
+                .subscribe(onCompleted: {
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(avatarUrl: "")
+                }, onError: {[weak self] error in
                     if let gif = originGif {
                         self?.headerView.avatarImageView.setGifImage(gif)
                     } else {
@@ -155,8 +160,9 @@ extension MyProfilePageVC {
             // Save to db
             .flatMap {BlockchainManager.instance.updateProfile(params: ["avatar_url": $0]).andThen(Single<String>.just($0))}
             // Catch error and reverse image
-            .subscribe(onNext: { [weak self] (_) in
+            .subscribe(onNext: { [weak self] (url) in
                 self?.headerView.avatarImageView.hideLoading()
+                ResponseAPIContentGetProfile.updateCurrentUserProfile(avatarUrl: url)
             }, onError: { [weak self] (error) in
                 self?.headerView.avatarImageView.hideLoading()
                 self?.coverImageView.image = originalImage
@@ -197,7 +203,9 @@ extension MyProfilePageVC {
         if delete {
             headerView.descriptionLabel.text = nil
             BlockchainManager.instance.updateProfile(params: ["biography": ""])
-                .subscribe(onError: {[weak self] error in
+                .subscribe(onCompleted: {
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(bio: "")
+                }, onError: {[weak self] error in
                     self?.showError(error)
                     self?.headerView.descriptionLabel.text = originalBio
                 })
@@ -214,11 +222,14 @@ extension MyProfilePageVC {
         self.present(editBioVC, animated: true, completion: nil)
         
         editBioVC.didConfirm
-            .flatMap {bio -> Completable in
+            .flatMap {bio -> Single<String> in
                 self.headerView.descriptionLabel.text = bio
                 return BlockchainManager.instance.updateProfile(params: ["biography": bio])
+                    .andThen(.just(bio))
             }
-            .subscribe(onError: {[weak self] error in
+            .subscribe(onNext: { (bio) in
+                ResponseAPIContentGetProfile.updateCurrentUserProfile(bio: bio)
+            }, onError: {[weak self] (error) in
                 self?.headerView.descriptionLabel.text = originalBio
                 self?.showError(error)
             })

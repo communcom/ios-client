@@ -15,7 +15,7 @@ extension MyProfileSettingsVC {
     }
     
     @objc func showEditProfile() {
-        let profileEditVC = MyProfileEditVC()
+        let profileEditVC = MyProfileDetailVC()
         navigationController?.pushViewController(profileEditVC)
     }
 

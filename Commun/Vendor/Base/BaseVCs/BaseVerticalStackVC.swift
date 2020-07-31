@@ -15,7 +15,7 @@ class BaseVerticalStackVC: BaseViewController {
     
     // MARK: - Subviews
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
-    lazy var stackView = UIStackView(axis: .vertical, spacing: 2)
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 2, alignment: .fill, distribution: .fill)
     
     override func setUp() {
         super.setUp()
@@ -38,7 +38,9 @@ class BaseVerticalStackVC: BaseViewController {
     func setUpScrollView() {
         view.addSubview(scrollView)
         scrollViewTopConstraint = scrollView.autoPinEdge(toSuperviewEdge: .top)
-        scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        scrollView.autoPinEdge(toSuperviewEdge: .leading)
+        scrollView.autoPinEdge(toSuperviewEdge: .trailing)
+        scrollView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard()
     }
     
     func viewDidSetUpScrollView() {}
@@ -51,7 +53,7 @@ class BaseVerticalStackVC: BaseViewController {
     }
     
     func setUpArrangedSubviews() {
-        fatalError("Must override")
+        
     }
     
     func viewDidSetUpStackView() {}
