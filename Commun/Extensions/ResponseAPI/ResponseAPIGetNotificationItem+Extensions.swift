@@ -33,7 +33,7 @@ extension ResponseAPIGetNotificationItem {
             case "upvote":
                 aStr.semibold(voter?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("лайкнул твой ")
+                    .normal("лайкнул Ваш ")
                     .normal("\(entityType ?? "post")".localized())
                     .normal(": \"")
                     .normal((comment?.shortText ?? post?.shortText ?? "") + "...\"")
@@ -84,7 +84,7 @@ extension ResponseAPIGetNotificationItem {
             case "donation":
                 aStr.semibold(from?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("задонатил вашему посту: ")
+                    .normal("задонатил Вашему посту: ")
                     .normal("\"")
                     .normal(post?.shortText ?? "")
                     .normal("\"")
