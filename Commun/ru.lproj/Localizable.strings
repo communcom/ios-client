@@ -492,10 +492,11 @@
 "you have a new notification" = "Есть новое уведомление";
 "you have no notification" = "нет уведомлений";
 "you have not made any" = "Вы не сделали ни одного";
+"you haven't created any comments yet" = "похоже, Вы еще ничего не комментировали";
+"you haven't created any posts yet" = "вы еще не опубликовали ни одного поста";
 "you haven't had any balance yet" = "у Вас еще нет баланса";
 "you haven't had any notification yet" = "Вы еще не получали уведомления";
 "you haven't had any transactions yet" = "у Вас еще не было транзакций";
-"you haven’t created any" = "Вы не создали ни одного";
 "you haven’t written any" = "Вы не написали ни одного";
 "you received" = "Вы получили";
 "you want to select the advanced mode" = "хотите выбрать расширенный режим и использовать мастер-пароль";

@@ -100,7 +100,7 @@ class CommunWalletOptionsVC: BaseViewController {
         
         stackView.addArrangedSubviews([
             hideEmptyView,
-            viewInExplorerView
+//            viewInExplorerView
         ])
     }
     

@@ -141,8 +141,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         
         switch (viewModel as! UserProfilePageViewModel).segmentedItem.value {
         case .posts:
-            title = String(format: "%@ %@", "no".localized().uppercaseFirst, "posts".localized().uppercaseFirst)
-            description = String(format: "%@ %@ %@", "you haven’t created any".localized().uppercaseFirst, "posts".localized(), "yet".localized())
+            title = "no posts".localized().uppercaseFirst
+            description = "you haven't created any posts yet".localized().uppercaseFirst
 
             tableView.addEmptyPlaceholderFooterView(title: title, description: description, buttonLabel: String(format: "%@ %@", "create".localized().uppercaseFirst, "post".localized())) {
                 if let tabBarVC = self.tabBarController as? TabBarVC {
@@ -151,8 +151,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
             }
 
         case .comments:
-            title = String(format: "%@ %@", "no".localized().uppercaseFirst, "comments".localized().uppercaseFirst)
-            description = String(format: "%@ %@ %@", "you haven’t written any".localized().uppercaseFirst, "comments".localized(), "yet".localized())
+            title = "no comments".localized().uppercaseFirst
+            description = "you haven't created any comments yet".localized().uppercaseFirst
 
             tableView.addEmptyPlaceholderFooterView(title: title, description: description)
         }

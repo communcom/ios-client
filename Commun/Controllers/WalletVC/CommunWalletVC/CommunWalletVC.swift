@@ -86,7 +86,7 @@ class CommunWalletVC: TransferHistoryVC {
     
     func setUpNavBarItems() {
         self.setNavBarBackButton(tintColor: .white)
-//        self.setRightBarButton(imageName: "icon-post-cell-more-center-default", tintColor: .white, action: #selector(optionButtonDidTouch))
+        self.setRightBarButton(imageName: "icon-post-cell-more-center-default", tintColor: .white, action: #selector(optionButtonDidTouch))
     }
     
     // MARK: - Custom Functions

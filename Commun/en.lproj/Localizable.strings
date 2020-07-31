@@ -513,10 +513,11 @@
 "you have a new notification" = "you have a new notification";
 "you have no notification" = "you have no notification";
 "you have not made any" = "you have not made any";
+"you haven't created any comments yet" = "you haven't created any comments yet";
+"you haven't created any posts yet" = "you haven't created any posts yet";
 "you haven't had any balance yet" = "you haven't had any balance yet";
 "you haven't had any notification yet" = "you haven't had any notification yet";
 "you haven't had any transactions yet" = "you haven't had any transactions yet";
-"you haven’t created any" = "you haven’t created any";
 "you haven’t written any" = "you haven’t written any";
 "you must sign in to choose community to post in" = "you must sign in to choose community to post in";
 "you received" = "you received";
