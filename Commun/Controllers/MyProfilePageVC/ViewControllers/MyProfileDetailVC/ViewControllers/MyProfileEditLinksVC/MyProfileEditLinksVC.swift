@@ -12,7 +12,8 @@ import RxSwift
 
 class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     // MARK: - Properties
-    lazy var links = BehaviorRelay<ResponseAPIContentGetProfilePersonal>(value: ResponseAPIContentGetProfilePersonal())
+    var originalLinks: ResponseAPIContentGetProfilePersonal {profile?.personal ?? ResponseAPIContentGetProfilePersonal()}
+    lazy var draftLinks = BehaviorRelay<ResponseAPIContentGetProfilePersonal>(value: ResponseAPIContentGetProfilePersonal())
     var linkCells: [LinkCell] {stackView.arrangedSubviews.compactMap {$0 as? LinkCell}}
     
     // MARK: - Subviews
@@ -39,22 +40,22 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
         navigationItem.rightBarButtonItem = saveButton
     }
     
-    override func profileDidUpdate(_ profile: ResponseAPIContentGetProfile?) {
+    override func profileDidUpdate() {
         stackView.removeArrangedSubviews()
-        var subviews = profile?.personal?.filledLinks.compactMap {self.addLinkField(contactType: $0.key, value: $0.value.value)} ?? []
-        subviews.append(contentsOf: profile?.personal?.unfilledLinks.compactMap{self.addLinkField(contactType: $0, value: "")} ?? [])
+        var subviews = originalLinks.filledLinks.compactMap {self.addLinkField(contactType: $0.key, value: $0.value.value)}
+        subviews.append(contentsOf: originalLinks.unfilledLinks.compactMap{self.addLinkField(contactType: $0, value: "")})
         subviews.forEach {
             $0.isHidden = true
         }
         stackView.addArrangedSubviews(subviews)
         stackView.addArrangedSubview(addLinkButton)
-        self.links.accept(profile?.personal ?? ResponseAPIContentGetProfilePersonal())
+        self.draftLinks.accept(originalLinks)
     }
     
     override func bind() {
         super.bind()
         
-        links
+        draftLinks
             .subscribe(onNext: { (_) in
                 self.reloadData()
             })
@@ -81,11 +82,11 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
             
             if cell.isHidden {
                 // for hidden cell, the old data is about to be deleted
-                let oldValue = profile?.personal?.getContact(contactType: cell.contactType)?.value?.trimmed ?? ""
+                let oldValue = originalLinks.getContact(contactType: cell.contactType)?.value?.trimmed ?? ""
                 if !oldValue.isEmpty {flag = true}
             } else {
                 // for visible cell, compare new data with the old one
-                let newValue = self.links.value.getContact(contactType: cell.contactType)?.value?.trimmed ?? ""
+                let newValue = self.draftLinks.value.getContact(contactType: cell.contactType)?.value?.trimmed ?? ""
                 if textFieldText != newValue {flag = true}
             }
             
@@ -97,15 +98,15 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     override func reloadData() {
         super.reloadData()
         
-        for (key, _) in links.value.filledLinks  {
+        for (key, _) in draftLinks.value.filledLinks  {
             linkCells.first(where: {$0.contactType == key})?.isHidden = false
         }
         
-        for link in links.value.unfilledLinks {
+        for link in draftLinks.value.unfilledLinks {
             linkCells.first(where: {$0.contactType == link})?.isHidden = true
         }
         
-        addLinkButton.isHidden = links.value.unfilledLinks.isEmpty
+        addLinkButton.isHidden = draftLinks.value.unfilledLinks.isEmpty
     }
     
     // MARK: - View builders
@@ -118,7 +119,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     
     // MARK: - Actions
     @objc func addLinkButtonDidTouch() {
-        let actions: [CommunActionSheet.Action] = links.value.unfilledLinks.map { contact in
+        let actions: [CommunActionSheet.Action] = draftLinks.value.unfilledLinks.map { contact in
             var imageNamed = contact.rawValue + "-icon"
             if contact == .instagram {imageNamed = "sign-up-with-instagram"}
             return CommunActionSheet.Action(
@@ -207,7 +208,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     }
     
     private func addContactType(_ contactType: ResponseAPIContentGetProfilePersonal.LinkType, value: ResponseAPIContentGetProfileContact?) {
-        var links = self.links.value
+        var links = self.draftLinks.value
         switch contactType {
         case .twitter:
             links.twitter = value
@@ -222,7 +223,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
         default:
             return
         }
-        self.links.accept(links)
+        self.draftLinks.accept(links)
     }
     
     func linkCellOptionButtonDidTouch(_ linkCell: LinkCell) {

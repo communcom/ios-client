@@ -24,13 +24,13 @@ class MyProfileDetailFlowVC: BaseVerticalStackVC {
         UserDefaults.standard.rx.observe(Data.self, Config.currentUserGetProfileKey)
             .map {$0 == nil ? nil : try? JSONDecoder().decode(ResponseAPIContentGetProfile.self, from: $0!)}
             .subscribe(onNext: { profile in
-                self.profileDidUpdate(profile)
+                self.profile = profile
+                self.profileDidUpdate()
             })
             .disposed(by: disposeBag)
     }
     
-    func profileDidUpdate(_ profile: ResponseAPIContentGetProfile?) {
-        self.profile = profile
+    func profileDidUpdate() {
         self.reloadData()
     }
     
