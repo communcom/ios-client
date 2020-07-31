@@ -16,6 +16,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     var linkCells: [LinkCell] {stackView.arrangedSubviews.compactMap {$0 as? LinkCell}}
     
     // MARK: - Subviews
+    lazy var saveButton = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
     lazy var addLinkButton: UIView = {
         let view = UIView(height: 57, backgroundColor: .white, cornerRadius: 10)
         let label = UILabel.with(text: "+ " + "add link".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .appMainColor)
@@ -31,9 +32,11 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     override func setUp() {
         super.setUp()
         title = "links".localized().uppercaseFirst
-        let save = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
-        save.tintColor = .appBlackColor
-        navigationItem.rightBarButtonItem = save
+        
+        setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
+        
+        saveButton.tintColor = .appBlackColor
+        navigationItem.rightBarButtonItem = saveButton
     }
     
     override func profileDidUpdate(_ profile: ResponseAPIContentGetProfile?) {
@@ -56,6 +59,13 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
                 self.reloadData()
             })
             .disposed(by: disposeBag)
+        
+        Observable<Void>.combineLatest(
+            linkCells.map {$0.textField.rx.text.map {_ in ()}}
+        )
+            .map {_ in self.dataHasChanged()}
+            .bind(to: saveButton.rx.isEnabled)
+            .disposed(by: disposeBag)
     }
     
     override func viewDidSetUpStackView() {
@@ -64,6 +74,26 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     }
     
     // MARK: - Data handler
+    func dataHasChanged() -> Bool {
+        var flag = false
+        for cell in linkCells {
+            let textFieldText = cell.textField.text?.trimmed ?? ""
+            
+            if cell.isHidden {
+                // for hidden cell, the old data is about to be deleted
+                let oldValue = profile?.personal?.getContact(contactType: cell.contactType)?.value?.trimmed ?? ""
+                if !oldValue.isEmpty {flag = true}
+            } else {
+                // for visible cell, compare new data with the old one
+                let newValue = self.links.value.getContact(contactType: cell.contactType)?.value?.trimmed ?? ""
+                if textFieldText != newValue {flag = true}
+            }
+            
+            if flag == true {break}
+        }
+        return flag
+    }
+    
     override func reloadData() {
         super.reloadData()
         
@@ -81,7 +111,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     // MARK: - View builders
     private func addLinkField(contactType: ResponseAPIContentGetProfilePersonal.LinkType, value: String?) -> LinkCell {
         let linkCell = LinkCell(contactType: contactType)
-        linkCell.textField.text = value
+        linkCell.textField.changeTextNotify(value)
         linkCell.delegate = self
         return linkCell
     }
@@ -156,6 +186,20 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
             .disposed(by: disposeBag)
     }
     
+    @objc func askForSavingAndGoBack() {
+        if dataHasChanged() {
+            showAlert(title: "save".localized().uppercaseFirst, message: "do you want to save the changes you've made?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                if index == 0 {
+                    self.saveButtonDidTouch()
+                    return
+                }
+                self.back()
+            }
+        } else {
+            back()
+        }
+    }
+    
     // MARK: - Helpers
     private func addLinkToService(_ contactType: ResponseAPIContentGetProfilePersonal.LinkType, value: String = "") {
         let value = ResponseAPIContentGetProfileContact(value: value, default: false)
@@ -195,6 +239,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
                                          tintColor: .red,
                                          handle: {[unowned self] in
                                              self.addContactType(linkCell.contactType, value: nil)
+                                            linkCell.textField.sendActions(for: .valueChanged)
                     }
                 )
         ])
