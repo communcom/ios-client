@@ -48,7 +48,7 @@ class InstagramView: UIView {
         backgroundView.layer.cornerRadius = 10
         backgroundView.layer.masksToBounds = true
         backgroundView.layer.borderWidth = 1
-        backgroundView.layer.borderColor = UIColor.colorSupportDarkMode(defaultColor: UIColor(hexString: "#E9ECF1")!, darkColor: .appLightGrayColor).cgColor
+        backgroundView.layer.borderColor = UIColor(hexString: "#E9ECF1")!.inDarkMode(.appLightGrayColor).cgColor
         let providerName = content.attributes?.providerName
 
         let multiplier = (CGFloat(content.attributes?.thumbnailWidth ?? 640) / CGFloat(content.attributes?.thumbnailHeight ?? 640))

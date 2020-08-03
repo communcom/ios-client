@@ -44,7 +44,7 @@ class WalletConvertVC: BaseViewController {
     lazy var whiteView = UIView(backgroundColor: .appWhiteColor)
     lazy var buyContainer: UIView = {
         let view = UIView(cornerRadius: 10)
-        view.borderColor = UIColor.colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1), darkColor: .white)
+        view.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
         view.borderWidth = 1
         return view
     }()
@@ -332,7 +332,7 @@ class WalletConvertVC: BaseViewController {
         
         let firstView: UIView = {
             let view = UIView(cornerRadius: 10)
-            view.borderColor = UIColor.colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1), darkColor: .white)
+            view.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
             view.borderWidth = 1
             return view
         }()
@@ -347,7 +347,7 @@ class WalletConvertVC: BaseViewController {
         
         let secondView: UIView = {
             let view = UIView(cornerRadius: 10)
-            view.borderColor = UIColor.colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1), darkColor: .white)
+            view.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
             view.borderWidth = 1
             return view
         }()

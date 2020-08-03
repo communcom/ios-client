@@ -52,7 +52,7 @@ class CMTransactionInfoView: MyView {
             tintColor: UIColor.appWhiteColor,
             imageName: "icon-checkmark-white",
             imageEdgeInsets: .zero)
-        readyCheckMark.addShadow(ofColor: UIColor.colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.732, green: 0.954, blue: 0.886, alpha: 1), darkColor: .clear), radius: 24.0, offset: CGSize(width: 0.0, height: 8.0), opacity: 1.0)
+        readyCheckMark.addShadow(ofColor: #colorLiteral(red: 0.732, green: 0.954, blue: 0.886, alpha: 1).inDarkMode(.clear), radius: 24.0, offset: CGSize(width: 0.0, height: 8.0), opacity: 1.0)
         
         let transactionCompletedLabel = UILabel.with(text: "transaction completed".localized().uppercaseFirst, textSize: 17, weight: .bold, textAlignment: .center)
         let transactionTimestampLabel = UILabel.with(text: transaction.operationDate.convert(toStringFormat: .transactionCompletedType), textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
