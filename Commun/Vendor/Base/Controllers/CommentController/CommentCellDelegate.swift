@@ -130,6 +130,7 @@ extension CommentCellDelegate where Self: BaseViewController {
     func cell(_ cell: CommentCell, didTapUpVoteForComment comment: ResponseAPIContentGetComment) {
         // Prevent downvoting when user is in NonAuthVCType
         if let nonAuthVC = self as? NonAuthVCType {
+            RequestsManager.shared.pendingRequests.append(.toggleLikeComment(comment: comment))
             nonAuthVC.showAuthVC()
             return
         }
@@ -144,6 +145,7 @@ extension CommentCellDelegate where Self: BaseViewController {
     func cell(_ cell: CommentCell, didTapDownVoteForComment comment: ResponseAPIContentGetComment) {
         // Prevent downvoting when user is in NonAuthVCType
         if let nonAuthVC = self as? NonAuthVCType {
+            RequestsManager.shared.pendingRequests.append(.toggleLikeComment(comment: comment, dislike: true))
             nonAuthVC.showAuthVC()
             return
         }

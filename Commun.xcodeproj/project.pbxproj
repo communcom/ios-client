@@ -174,6 +174,7 @@
 		BC18FA2723D56325005DC7E3 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2623D56325005DC7E3 /* UITextField+Extensions.swift */; };
 		BC1DF1AB2499C97D00CCA135 /* WalletDonateCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1DF1AA2499C97D00CCA135 /* WalletDonateCompletedVC.swift */; };
 		BC1E865B242C853500CF202F /* MyProfileDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1E865A242C853500CF202F /* MyProfileDetailVC.swift */; };
+		BC2260B624D8C88400A82D8D /* RequestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260B524D8C88400A82D8D /* RequestsManager.swift */; };
 		BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */; };
 		BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */; };
 		BC22BBCC236C0E0300F40658 /* UIStackView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */; };
@@ -731,6 +732,7 @@
 		BC18FA2623D56325005DC7E3 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		BC1DF1AA2499C97D00CCA135 /* WalletDonateCompletedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDonateCompletedVC.swift; sourceTree = "<group>"; };
 		BC1E865A242C853500CF202F /* MyProfileDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileDetailVC.swift; sourceTree = "<group>"; };
+		BC2260B524D8C88400A82D8D /* RequestsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsManager.swift; sourceTree = "<group>"; };
 		BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileSettingsVC.swift; sourceTree = "<group>"; };
 		BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentHuggingScrollView.swift; sourceTree = "<group>"; };
 		BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+PureLayout.swift"; sourceTree = "<group>"; };
@@ -1254,6 +1256,7 @@
 		3B6CB72E23432D510097B2A1 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				BC2260B524D8C88400A82D8D /* RequestsManager.swift */,
 				ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */,
 			);
 			path = Managers;
@@ -3656,6 +3659,7 @@
 				BC4692F9239640AE0064A38B /* LeaderFollowCollectionCell.swift in Sources */,
 				3B61AC3422E1CA8A00F608AF /* LAContext+Extensions.swift in Sources */,
 				BC22BBD2236C213D00F40658 /* SelectLanguageVC.swift in Sources */,
+				BC2260B624D8C88400A82D8D /* RequestsManager.swift in Sources */,
 				BC4F9343240E60AD00BB935F /* UserProfilePageVC+UITableViewDelegate.swift in Sources */,
 				BCD01A0423F65231003B0E1E /* UINavigationController+Extensions.swift in Sources */,
 				BC472D9623A3755C00822371 /* CardPresentationController.swift in Sources */,
