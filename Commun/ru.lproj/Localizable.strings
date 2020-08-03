@@ -399,8 +399,12 @@
 "terms of use, Privacy Policy" = "Пользовательским соглашением, Политикой приватности";
 "text view feedback placeholder" = "опишите проблему...";
 "thank you for reporting this post" = "жалоба была принята";
+"the hyphen character cannot be at the beginning or at the end of the username" = "дефис не должен находиться в начале или в конце имени";
+"the number of characters must not exceed 32" = "имя пользователя не должно превышать 32 символа";
 "the post has been deleted" = "пост был удален";
+"the presence of two \"dot\" characters in a row is not valid" = "нельзя использовать в имени пользователя более одной точки подряд";
 "the purchase is made by" = "покупка производится через";
+"the user name may contain a \"dot\" character" = "имя пользователя может содержать точку";
 "there is an error occurs" = "произошла ошибка";
 "there is no currency available" = "нет доступной валюты";
 "this app is not authorized to use Back Camera" = "приложение не имеет права использовать камеру.\nПожалуйста, включите камеру в настройках";
@@ -433,11 +437,13 @@
 "update" = "обновить";
 "update the app" = "обновить приложение";
 "uploading" = "загрузка";
+"uppercase letters in the username are not allowed" = "не допускается использовать заглавные буквы";
 "upvote" = "лайк";
 "user blocked" = "пользователь заблокирован";
 "user unblocked" = "пользователь разблокирован";
 "username" = "имя пользователя";
 "users" = "пользователи";
+"valid characters: letters, numbers, hyphen" = "можно использовать: буквы, цифры, дефис";
 "verification" = "проверка";
 "verification code" = "код проверки";
 "verify your new passcode" = "подтвердите новый пин-код";
