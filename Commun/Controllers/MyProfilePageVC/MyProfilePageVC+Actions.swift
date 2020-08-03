@@ -37,7 +37,7 @@ extension MyProfilePageVC {
     // MARK: - Covers + Avatar
     func openActionSheet(cover: Bool) {
         showCommunActionSheet(
-            title: String(format: "%@ %@", "change".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
+            title: "change \(cover ? "cover photo": "avatar")".localized().uppercaseFirst,
             titleFont: .systemFont(ofSize: 15, weight: .semibold),
             titleAlignment: .left,
             actions: [
@@ -47,11 +47,12 @@ extension MyProfilePageVC {
                     handle: {[unowned self] in
                         cover ? self.onUpdateCover() : self.onUpdateAvatar()
                 }),
-                CommunActionSheet.Action(title: String(format: "%@ %@", "delete current".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
-                                         icon: UIImage(named: "delete"),
-                                         tintColor: .red,
-                                         handle: {[unowned self] in
-                                            cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
+                CommunActionSheet.Action(
+                    title: "remove current \(cover ? "cover photo" : "avatar")".localized().uppercaseFirst,
+                    icon: UIImage(named: "delete"),
+                    tintColor: .red,
+                    handle: {[unowned self] in
+                        cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
                     }
                 )
         ])

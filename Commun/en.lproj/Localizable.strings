@@ -82,6 +82,8 @@
 "Cancel" = "Cancel";
 "cannot use Back Camera" = "cannot use Back Camera";
 "change" = "change";
+"change avatar" = "change avatar";
+"change cover photo" = "change cover photo";
 "change to" = "change to";
 "change position" = "change position";
 "characters" = "characters";
@@ -316,6 +318,7 @@
 "password must contain at least one lowercase" = "password must contain at least one lowercase character";
 "password must contain at least one uppercase" = "password must contain at least one uppercase character";
 "password must contain no more than" = "password must contain no more than 52 characters";
+"passwords do not match" = "passwords do not match";
 "past 24 hours" = "past 24 hours";
 "past month" = "past month";
 "past week" = "past week";
@@ -345,6 +348,8 @@
 "registration error" = "registration error";
 "reload" = "reload";
 "remove" = "remove";
+"remove current avatar" = "remove current avatar";
+"remove current cover photo" = "remove current cover photo";
 "repeat" = "repeat";
 "replace content" = "replace content";
 "replies" = "replies";
@@ -380,6 +385,7 @@
 "save to iCloud" = "save to iCloud";
 "scan QR" = "scan QR";
 "search" = "search";
+"Search" = "Search";
 "see" = "see";
 "select a link to add to text" = "select a link to add to text";
 "select country placeholder" = "select country";
@@ -439,6 +445,7 @@
 "this comment was deleted" = "this comment was deleted";
 "this community is on your blacklist" = "this community is on your blacklist. Do you really want to unhide and follow it anyway?";
 "this user" = "this user";
+"This username is already taken" = "This username is already taken";
 "this version of the application is out of" = "this version of the application is out of date.\nPlease update to continue using the app.";
 "title and content must not be empty" = "title and content must not be empty";
 "title placeholder" = "title";
@@ -501,6 +508,7 @@
 "wow, this post will be rewarded!" = "wow, this post will be rewarded!\nDo you want to get rewards too? Create a post - it’s the best way to get them!";
 "write a comment" = "write a comment";
 "write text placeholder" = "write text";
+"Wrong activation code" = "Wrong activation code";
 "wrong code" = "wrong code";
 "wrong phone number" = "wrong phone number";
 "yes" = "yes";
