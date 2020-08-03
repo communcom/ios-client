@@ -67,7 +67,7 @@ class ConfirmPasswordVC: CreatePasswordVC {
         })
     }
 
-    private func sendData() {
+    func sendData() {
         self.showIndetermineHudWithMessage("saving to blockchain")
         RestAPIManager.instance.toBlockChain(password: currentPassword)
             .subscribe(onCompleted: {

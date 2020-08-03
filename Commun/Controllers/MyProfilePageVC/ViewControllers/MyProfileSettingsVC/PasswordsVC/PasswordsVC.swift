@@ -74,17 +74,21 @@ class PasswordsVC: BaseViewController {
         super.bind()
         showPasswordSubject
             .subscribe(onNext: { (show) in
-                if show {
-                    (self.passwordField.viewWithTag(1) as! UILabel).text = Config.currentUser?.masterKey
-                    (self.ownerField.viewWithTag(1) as! UILabel).text = Config.currentUser?.ownerKeys?.privateKey
-                    (self.activeField.viewWithTag(1) as! UILabel).text = Config.currentUser?.activeKeys?.privateKey
-                } else {
-                    (self.passwordField.viewWithTag(1) as! UILabel).text = "••••••••••••••••••••••••••••"
-                    (self.ownerField.viewWithTag(1) as! UILabel).text = "••••••••••••••••••••••••••••"
-                    (self.activeField.viewWithTag(1) as! UILabel).text = "••••••••••••••••••••••••••••"
-                }
+                self.showPassword(show)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func showPassword(_ show: Bool) {
+        if show {
+            (self.passwordField.viewWithTag(1) as! UILabel).text = Config.currentUser?.masterKey
+            (self.ownerField.viewWithTag(1) as! UILabel).text = Config.currentUser?.ownerKeys?.privateKey
+            (self.activeField.viewWithTag(1) as! UILabel).text = Config.currentUser?.activeKeys?.privateKey
+        } else {
+            (self.passwordField.viewWithTag(1) as! UILabel).text = "••••••••••••••••••••••••••••"
+            (self.ownerField.viewWithTag(1) as! UILabel).text = "••••••••••••••••••••••••••••"
+            (self.activeField.viewWithTag(1) as! UILabel).text = "••••••••••••••••••••••••••••"
+        }
     }
     
     private func secretFieldWithTitle(_ title: String) -> UIView {
@@ -152,6 +156,15 @@ class PasswordsVC: BaseViewController {
     }
     
     @objc private func changePasswordButtonDidTouch() {
+        let confirmPasscodeVC = ConfirmPasscodeVC()
+        present(confirmPasscodeVC, animated: true, completion: nil)
         
+        confirmPasscodeVC.completion = {
+            let vc = ChangePasswordVC()
+            vc.completion = {
+                self.showPassword(false)
+            }
+            self.present(vc, animated: true, completion: nil)
+        }
     }
 }

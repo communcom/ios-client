@@ -174,6 +174,8 @@
 		BC18FA2723D56325005DC7E3 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2623D56325005DC7E3 /* UITextField+Extensions.swift */; };
 		BC1DF1AB2499C97D00CCA135 /* WalletDonateCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1DF1AA2499C97D00CCA135 /* WalletDonateCompletedVC.swift */; };
 		BC1E865B242C853500CF202F /* MyProfileDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1E865A242C853500CF202F /* MyProfileDetailVC.swift */; };
+		BC2260AE24D8091E00A82D8D /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260AD24D8091E00A82D8D /* ChangePasswordVC.swift */; };
+		BC2260B224D8093200A82D8D /* ChangePasswordVerifyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260B124D8093200A82D8D /* ChangePasswordVerifyVC.swift */; };
 		BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */; };
 		BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */; };
 		BC22BBCC236C0E0300F40658 /* UIStackView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */; };
@@ -731,6 +733,8 @@
 		BC18FA2623D56325005DC7E3 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		BC1DF1AA2499C97D00CCA135 /* WalletDonateCompletedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDonateCompletedVC.swift; sourceTree = "<group>"; };
 		BC1E865A242C853500CF202F /* MyProfileDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileDetailVC.swift; sourceTree = "<group>"; };
+		BC2260AD24D8091E00A82D8D /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
+		BC2260B124D8093200A82D8D /* ChangePasswordVerifyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVerifyVC.swift; sourceTree = "<group>"; };
 		BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileSettingsVC.swift; sourceTree = "<group>"; };
 		BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentHuggingScrollView.swift; sourceTree = "<group>"; };
 		BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+PureLayout.swift"; sourceTree = "<group>"; };
@@ -2274,6 +2278,8 @@
 			isa = PBXGroup;
 			children = (
 				BC73833124A2F50F006BB60F /* PasswordsVC.swift */,
+				BC2260AD24D8091E00A82D8D /* ChangePasswordVC.swift */,
+				BC2260B124D8093200A82D8D /* ChangePasswordVerifyVC.swift */,
 			);
 			path = PasswordsVC;
 			sourceTree = "<group>";
@@ -3515,6 +3521,7 @@
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */,
 				BC51B48D2407BA8B009DFB48 /* PostStatsView.swift in Sources */,
+				BC2260B224D8093200A82D8D /* ChangePasswordVerifyVC.swift in Sources */,
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
 				BCF74A62236180B900B91089 /* SubscribersViewModel.swift in Sources */,
 				BCAF5B20241B433400C157B5 /* ViewTag.swift in Sources */,
@@ -3727,6 +3734,7 @@
 				BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */,
 				B182FF7F23F5318C00AC18D1 /* Bundle+Extensions.swift in Sources */,
 				BC597A6B238BBDAC00103F4F /* FittingSizePresentationController.swift in Sources */,
+				BC2260AE24D8091E00A82D8D /* ChangePasswordVC.swift in Sources */,
 				3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */,
 				BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */,
 				BCB08D6024B4682B00EA2BDB /* NonAuthFeedPageVC.swift in Sources */,
