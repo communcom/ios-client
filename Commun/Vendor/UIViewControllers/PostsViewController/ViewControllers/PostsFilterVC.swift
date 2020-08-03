@@ -20,7 +20,7 @@ class PostsFilterVC: BaseViewController {
     // MARK: - Subview
     lazy var languageView: MyTableHeaderView = {
         let view = MyTableHeaderView(tableView: tableView)
-        let whiteView = UIView(height: 58, backgroundColor: .white, cornerRadius: 10)
+        let whiteView = UIView(height: 58, backgroundColor: .appWhiteColor, cornerRadius: 10)
         view.addSubview(whiteView)
         whiteView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
         
@@ -202,7 +202,7 @@ class PostsFilterVC: BaseViewController {
     @objc func languageViewDidTouch() {
         self.dismiss(animated: true) {
             UIApplication.topViewController()?.showCommunActionSheet(actions: PostsListFetcher.Filter.Language.allCases.map({ language -> CommunActionSheet.Action in
-                CommunActionSheet.Action(title: language.localizedName.uppercaseFirst, style: .default, tintColor: .black) {
+                CommunActionSheet.Action(title: language.localizedName.uppercaseFirst, style: .default, tintColor: .appBlackColor) {
                     UserDefaults.standard.set(language.rawValue, forKey: Config.currentUserFeedLanguage)
                 }
             }))

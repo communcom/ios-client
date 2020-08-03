@@ -20,7 +20,7 @@ class MyProfileSettingsVC: BaseViewController {
         let view = UIView(height: 80, backgroundColor: .appWhiteColor, cornerRadius: 10)
 
         let avatarImage = MyAvatarImageView(size: 50)
-        avatarImage.setToCurrentUserAvatar()
+        avatarImage.observeCurrentUserAvatar().disposed(by: disposeBag)
         view.addSubview(avatarImage)
         avatarImage.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         avatarImage.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -35,17 +35,17 @@ class MyProfileSettingsVC: BaseViewController {
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImage, withOffset: 10)
 
-//        let button = UIButton.circleGray(imageName: "next-arrow")
-//        button.isUserInteractionEnabled = false
-//        view.addSubview(button)
-//        button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-//        button.autoAlignAxis(toSuperviewAxis: .horizontal)
-//        button.autoPinEdge(.leading, to: .trailing, of: userLabel, withOffset: 10)
+        let button = UIButton.nextArrow()
+        button.isUserInteractionEnabled = false
+        view.addSubview(button)
+        button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        button.autoAlignAxis(toSuperviewAxis: .horizontal)
+        button.autoPinEdge(.leading, to: .trailing, of: userLabel, withOffset: 10)
 
         view.isUserInteractionEnabled = true
         let tap = CommunActionSheet.Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
         tap.action = CommunActionSheet.Action(title: "profileEdit", icon: UIImage(named: "profile_options_notifications"), handle: {
-//            self.showEditProfile()
+            self.showEditProfile()
         })
 
         view.addGestureRecognizer(tap)
@@ -135,7 +135,7 @@ class MyProfileSettingsVC: BaseViewController {
             label.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
             label.autoAlignAxis(toSuperviewAxis: .horizontal)
 
-            let button = UIButton.circleGray(imageName: "next-arrow")
+            let button = UIButton.nextArrow()
             button.isUserInteractionEnabled = false
             actionView.addSubview(button)
             button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)

@@ -24,6 +24,8 @@ class FilterCell: MyTableViewCell {
         
     override func setUpViews() {
         super.setUpViews()
+        contentView.backgroundColor = .appWhiteColor
+        
         contentView.addSubview(titleLabel)
         titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15.0)
         titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)

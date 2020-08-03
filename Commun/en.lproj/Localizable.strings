@@ -36,6 +36,7 @@
 "add a description for your image" = "add a description for your image";
 "add age limit 18+ (coming soon)" = "add age limit 18+ (coming soon)";
 "add article" = "add article";
+"add contact" = "add contact";
 "add link" = "add link";
 "adding referralId" = "adding referralId";
 "after confirmation, we'll generate for" = "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.";
@@ -85,6 +86,7 @@
 "change position" = "change position";
 "characters" = "characters";
 "check your Internet connection" = "check your Internet connection\n and try again";
+"choose community" = "choose community";
 "choose communities of interest and" = "choose communities of interest and";
 "choose community in which you want" = "choose community in which you want to create a post";
 "choose from gallery" = "choose from gallery";
@@ -93,6 +95,7 @@
 "close" = "close";
 "close this screen and open editor" = "close this screen and open editor";
 "code" = "code";
+"code expires in" = "code expires in";
 "color" = "color";
 "comment" = "comment";
 "comments" = "comments";
@@ -105,7 +108,9 @@
 "community unhidden" = "community unhidden";
 "confirm it's you" = "confirm it's you";
 "confirm password" = "confirm password";
+"confirmation" = "confirmation";
 "connecting" = "connecting";
+"contacts" = "contacts";
 "content must less than" = "content must less than";
 "content wasn't changed" = "content wasn't changed";
 "continue" = "continue";
@@ -136,6 +141,7 @@
 "do you really want to quit without saving" = "do you really want to quit without saving";
 "do you really want to unhide all posts of" = "do you really want to unhide all posts of";
 "do you want to retry" = "do you want to retry";
+"do you want to save the changes you've made?" = "do you want to save the changes you've made?";
 "do you want to turn it on?" = "do you want to turn it on?";
 "don't have an account?" = "don't have an account?";
 "don't show this again" = "don't show this again";
@@ -157,6 +163,7 @@
 "end editing" = "end editing";
 "english language" = "english";
 "russian language" = "russian";
+"enter 4 digit code we sent to your" = "enter 4 digit code we sent to your";
 "enter code" = "enter code";
 "enter passcode" = "enter passcode";
 "enter sms-code" = "enter SMS-code";
@@ -178,6 +185,7 @@
 "friend" = "friend";
 "friends" = "friends";
 "friends not found" = "friends not found";
+"general info" = "general info";
 "get" = "get";
 "get you first points" = "get you first points";
 "go to commun.com and scan QR" = "go to commun.com and scan QR";
@@ -221,6 +229,7 @@
 "left a comment" = "left a comment";
 "let us notify you about receiving rewards" = "let us notify you about receiving rewards, replies, or upvotes! Stay tuned for the most important and pleasant activities on Commun";
 "liked" = "liked";
+"links" = "links";
 "loading" = "loading";
 "loading embed" = "loading embed";
 "loading failed" = "loading failed";
@@ -250,6 +259,7 @@
 "mutual" = "mutual";
 "my" = "my";
 "my blacklist" = "my blacklist";
+"my profile" = "my profile";
 "name" = "name";
 "new" = "new";
 "newest first" = "newest first";
@@ -361,6 +371,7 @@
 "rules" = "rules";
 "rules not found" = "rules not found";
 "save" = "save";
+"saving" = "saving";
 "save it securely" = "save it securely";
 
 "save post as draft" = "save post as draft";
@@ -407,8 +418,12 @@
 "terms of use, Privacy Policy" = "terms of use, Privacy Policy";
 "text view feedback placeholder" = "describe the problem...";
 "thank you for reporting this post" = "thank you for reporting this post";
+"the hyphen character cannot be at the beginning or at the end of the username" = "the hyphen character cannot be at the beginning or at the end of the username";
+"the number of characters must not exceed 32" = "the number of characters must not exceed 32";
 "the post has been deleted" = "the post has been deleted";
+"the presence of two \"dot\" characters in a row is not valid" = "the presence of two \"dot\" characters in a row is not valid";
 "the purchase is made by" = "the purchase is made by";
+"the user name may contain a \"dot\" character" = "the user name may contain a \"dot\" character";
 "there is an error occurs" = "there is an error occurs";
 "there is no currency available" = "there is no currency available";
 "this app is not authorized to use Back Camera" = "this app is not authorized to use Back Camera.\nPlease enable it in Settings";
@@ -417,6 +432,7 @@
 "social network"                                =   "social network";
 "send points"                                   =   "send points";
 "send"                                          =   "send";
+"send confirmation code" = "send confirmation code";
 "share"                                         =   "share";
 "this comment was deleted" = "this comment was deleted";
 "this community is on your blacklist" = "this community is on your blacklist. Do you really want to unhide and follow it anyway?";
@@ -447,11 +463,13 @@
 "update" = "update";
 "update the app" = "update the app";
 "uploading" = "uploading";
+"uppercase letters in the username are not allowed" = "uppercase letters in the username are not allowed";
 "upvote" = "upvote";
 "user blocked" = "user blocked";
 "user unblocked" = "user unblocked";
 "username" = "username";
 "users" = "users";
+"valid characters: letters, numbers, hyphen" = "valid characters: letters, numbers, hyphen";
 "verification" = "verification";
 "verification code" = "verification code";
 "verify your new passcode" = "verify your new passcode";
@@ -467,6 +485,7 @@
 "was turned off" = "was turned off";
 "we have flagged this post for investigation" = "we have flagged this post for investigation. Thank you for being with us";
 "we're sorry that you've had this experience" = "we're sorry that you've had this experience";
+"website" = "website";
 "welcome" = "welcome";
 "welcome-item-0" = "Social network based on blockchain\n independent communities";
 "welcome-item-1" = "Find your Comminity and make it the center of your communication with like-minded people";
@@ -494,11 +513,13 @@
 "you have a new notification" = "you have a new notification";
 "you have no notification" = "you have no notification";
 "you have not made any" = "you have not made any";
+"you haven't created any comments yet" = "you haven't created any comments yet";
+"you haven't created any posts yet" = "you haven't created any posts yet";
 "you haven't had any balance yet" = "you haven't had any balance yet";
 "you haven't had any notification yet" = "you haven't had any notification yet";
 "you haven't had any transactions yet" = "you haven't had any transactions yet";
-"you haven’t created any" = "you haven’t created any";
 "you haven’t written any" = "you haven’t written any";
+"you must sign in to choose community to post in" = "you must sign in to choose community to post in";
 "you received" = "you received";
 "you want to select the advanced mode" = "you want to select the advanced mode and continue with the Master Password";
 "you will post in" = "you will post in";
@@ -507,8 +528,10 @@
 "you've got a new notification" = "you've got a new notification";
 "you've unblocked" = "you've unblocked";
 "your email address" = "your email address";
+"your phone number" = "your phone number";
 "your referrals" = "your referrals";
 "your socializing" = "your socializing";
+"your username" = "your username";
 "my Feed" = "my Feed";
 "facebook" = "facebook";
 "apple" = "apple";

@@ -51,6 +51,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
         var tintColor: UIColor = .appBlackColor
         var marginTop: CGFloat = 0
         var post: ResponseAPIContentGetPost?
+        var defaultIconOnTheRight = true
         var handle: (() -> Void)?
 
         class TapGesture: UITapGestureRecognizer {
@@ -194,7 +195,11 @@ class CommunActionSheet: SwipeDownDismissViewController {
             
             switch action.style {
             case .default, .follow:
-                iconImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: action.style.defaultMargin)
+                if action.defaultIconOnTheRight {
+                    iconImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: action.style.defaultMargin)
+                } else {
+                    iconImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: action.style.defaultMargin)
+                }
                 iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
                 iconImageView.autoSetDimensions(to: CGSize(width: 24, height: 24))
             
@@ -211,9 +216,16 @@ class CommunActionSheet: SwipeDownDismissViewController {
             
             switch action.style {
             case .default, .follow:
-                titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: action.style.defaultMargin)
+                if action.defaultIconOnTheRight {
+                    titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: action.style.defaultMargin)
+                    titleLabel.autoPinEdge(.trailing, to: .leading, of: iconImageView, withOffset: -action.style.defaultMargin)
+                } else {
+                    titleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: action.style.defaultMargin)
+                    titleLabel.autoPinEdge(.leading, to: .trailing, of: iconImageView, withOffset: action.style.defaultMargin)
+                }
+                
                 titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-                titleLabel.autoPinEdge(.trailing, to: .leading, of: iconImageView, withOffset: -action.style.defaultMargin)
+                
                 
                 if action.style == .follow {
                     titleLabel.tag = 777

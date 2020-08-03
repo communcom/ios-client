@@ -20,7 +20,7 @@ extension ResponseAPIGetNotificationItem {
             case "mention":
                 aStr.semibold(author?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("упомянул тебя в")
+                    .normal("упомянул Вас в")
                     .normal(" ")
                     .normal("\(entityType ?? "комментарии")".localized())
                     .normal(": \"")
@@ -29,11 +29,11 @@ extension ResponseAPIGetNotificationItem {
             case "subscribe":
                 aStr.semibold(user?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("подписался на тебя")
+                    .normal("подписался на Вас")
             case "upvote":
                 aStr.semibold(voter?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("лайкнул твой ")
+                    .normal("лайкнул Ваш ")
                     .normal("\(entityType ?? "post")".localized())
                     .normal(": \"")
                     .normal((comment?.shortText ?? post?.shortText ?? "") + "...\"")
@@ -77,14 +77,14 @@ extension ResponseAPIGetNotificationItem {
                 } else {
                     aStr.semibold(from?.username ?? "a user".localized().uppercaseFirst)
                         .normal(" ")
-                        .normal("отправил тебе")
+                        .normal("отправил Вам")
                         .normal(" ")
                         .text("\(amount ?? "0") \(community?.name ?? pointType ?? "points")", weight: .medium, color: .appMainColor)
                 }
             case "donation":
                 aStr.semibold(from?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
-                    .normal("задонатил вашему посту: ")
+                    .normal("задонатил Вашему посту: ")
                     .normal("\"")
                     .normal(post?.shortText ?? "")
                     .normal("\"")

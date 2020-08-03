@@ -137,24 +137,15 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     
     override func handleListEmpty() {
         var title = "empty"
-        var description = "not found"
         
         switch (viewModel as! UserProfilePageViewModel).segmentedItem.value {
         case .posts:
-            title = String(format: "%@ %@", "no".localized().uppercaseFirst, "posts".localized().uppercaseFirst)
-            description = String(format: "%@ %@ %@", "you haven’t created any".localized().uppercaseFirst, "posts".localized(), "yet".localized())
-
-            tableView.addEmptyPlaceholderFooterView(title: title, description: description, buttonLabel: String(format: "%@ %@", "create".localized().uppercaseFirst, "post".localized())) {
-                if let tabBarVC = self.tabBarController as? TabBarVC {
-                    tabBarVC.buttonAddTapped()
-                }
-            }
+            title = "no posts".localized().uppercaseFirst
+            tableView.addEmptyPlaceholderFooterView(title: title)
 
         case .comments:
-            title = String(format: "%@ %@", "no".localized().uppercaseFirst, "comments".localized().uppercaseFirst)
-            description = String(format: "%@ %@ %@", "you haven’t written any".localized().uppercaseFirst, "comments".localized(), "yet".localized())
-
-            tableView.addEmptyPlaceholderFooterView(title: title, description: description)
+            title = "no comments".localized().uppercaseFirst
+            tableView.addEmptyPlaceholderFooterView(title: title)
         }
     }
     

@@ -366,7 +366,9 @@ class TabBarVC: UITabBarController {
             } else {
                 // community
                 let alias = path[0]
-                self.selectedViewController?.showCommunityWithCommunityAlias(alias)
+                if !alias.isEmpty {
+                    self.selectedViewController?.showCommunityWithCommunityAlias(alias)
+                }
             }
         } else {
             let communityAlias = path[0]

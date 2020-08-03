@@ -101,6 +101,10 @@ extension UIButton {
         }
         return button
     }
+    
+    static func nextArrow() -> UIButton {
+        UIButton.circleGray(imageName: "next-arrow", imageEdgeInsets: UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8))
+    }
 
     static func close(size: CGFloat = 24, imageName: String = "close-x", backgroundColor: UIColor = .appLightGrayColor, tintColor: UIColor = .appGrayColor) -> UIButton {
         let button = UIButton(width: size, height: size, backgroundColor: backgroundColor, cornerRadius: size / 2)

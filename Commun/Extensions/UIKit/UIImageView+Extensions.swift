@@ -21,15 +21,10 @@ extension UIImageView {
     func setCover(urlString: String?, namePlaceHolder: String = "ProfilePageCover") {
          // Cover image
          if let coverUrlValue = urlString {
-             sd_setImage(with: URL(string: coverUrlValue), placeholderImage: UIImage(named: namePlaceHolder)) { [weak self] (_, error, _, _) in
-                 if error != nil {
-                     // Placeholder image
-                     self?.image = .placeholder
-                 }
-             }
+             sd_setImage(with: URL(string: coverUrlValue), placeholderImage: UIImage(named: namePlaceHolder))
          } else {
              // Placeholder image
-             self.image = .placeholder
+             self.image = UIImage(named: namePlaceHolder)
          }
      }
 

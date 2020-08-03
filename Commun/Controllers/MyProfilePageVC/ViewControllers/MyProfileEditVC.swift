@@ -8,125 +8,208 @@
 
 import Foundation
 
-class MyProfileEditVC: BaseViewController {
+class MyProfileDetailVC: BaseVerticalStackVC {
+    // MARK: - Properties
+    var profile: ResponseAPIContentGetProfile?
+    
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical, contentInset: UIEdgeInsets(inset: 16))
-    lazy var avatarImageView: MyAvatarImageView = {
-        let imageView = MyAvatarImageView(size: 120)
-        imageView.borderWidth = 5
-        imageView.borderColor = .appWhiteColor
-        imageView.setToCurrentUserAvatar()
-        return imageView
-    }()
+    var spacer: UIView { UIView(height: 2, backgroundColor: .appLightGrayColor)}
     
-    lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView(height: 150, cornerRadius: 7, contentMode: .scaleAspectFit)
-        imageView.borderWidth = 7
-        imageView.borderColor = .appWhiteColor
-        imageView.setCover(urlString: UserDefaults.standard.string(forKey: Config.currentUserCoverUrlKey))
-        return imageView
-    }()
-    
-    lazy var nameTextField: UITextField = {
-        let tf = UITextField()
-        tf.borderStyle = .none
-        return tf
-    }()
-    
-    lazy var usernameTextField: UITextField = {
-        let tf = UITextField()
-        tf.borderStyle = .none
-        return tf
-    }()
-    
-    lazy var bioTextView: UITextView = {
-        let tv = UITextView(forExpandable: ())
-        tv.backgroundColor = .clear
-        return tv
-    }()
-    
-    lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst, isHuggingContent: false, isDisableGrayColor: true)
+    // MARK: - Sections
+    lazy var generalInfoView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+    lazy var contactsView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+    lazy var linksView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        view.backgroundColor = .appLightGrayColor
+        title = "my profile".localized().uppercaseFirst
         
-        view.addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        
-        scrollView.contentView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 20)
-        avatarImageView.autoAlignAxis(toSuperviewAxis: .vertical)
-        
-        scrollView.contentView.addSubview(coverImageView)
-        coverImageView.autoPinEdge(.top, to: .bottom, of: avatarImageView, withOffset: 25)
-        coverImageView.autoPinEdge(toSuperviewEdge: .leading)
-        coverImageView.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        let nameContainerView: UIView = {
-            let containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
-            containerView.borderWidth = 1
-            containerView.borderColor = .appLightGrayColor
-            let label = UILabel.with(text: "name".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
-            containerView.addSubview(label)
-            label.autoPinTopAndLeadingToSuperView(inset: 11, xInset: 15)
-            
-            containerView.addSubview(nameTextField)
-            nameTextField.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 15, bottom: 11, right: 15), excludingEdge: .top)
-            nameTextField.autoPinEdge(.top, to: .bottom, of: label, withOffset: 8)
-            return containerView
-        }()
-        
-        scrollView.contentView.addSubview(nameContainerView)
-        nameContainerView.autoPinEdge(.top, to: .bottom, of: coverImageView, withOffset: 20)
-        nameContainerView.autoPinEdge(toSuperviewEdge: .leading)
-        nameContainerView.autoPinEdge(toSuperviewEdge: .trailing)
+        reloadData()
+    }
     
-        let usernameContainerView: UIView = {
-            let containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
-            containerView.borderWidth = 1
-            containerView.borderColor = .appLightGrayColor
-            let label = UILabel.with(text: "username".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
-            containerView.addSubview(label)
-            label.autoPinTopAndLeadingToSuperView(inset: 11, xInset: 15)
-            
-            containerView.addSubview(usernameTextField)
-            usernameTextField.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 15, bottom: 11, right: 15), excludingEdge: .top)
-            usernameTextField.autoPinEdge(.top, to: .bottom, of: label, withOffset: 8)
-            return containerView
+    override func bind() {
+        super.bind()
+        UserDefaults.standard.rx.observe(Data.self, Config.currentUserGetProfileKey)
+            .filter {$0 != nil}
+            .map {$0!}
+            .map {try? JSONDecoder().decode(ResponseAPIContentGetProfile.self, from: $0)}
+            .subscribe(onNext: { profile in
+                self.profile = profile
+                self.reloadData()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    override func setUpArrangedSubviews() {
+        stackView.addArrangedSubviews([
+            generalInfoView,
+            contactsView,
+            linksView
+        ])
+    }
+    
+    override func viewDidSetUpStackView() {
+        super.viewDidSetUpStackView()
+        stackView.spacing = 20
+    }
+    
+    // MARK: - Data handler
+    func reloadData() {
+        updateGeneralInfo()
+        updateContacts()
+        updateLinks()
+    }
+    
+    func updateGeneralInfo() {
+        generalInfoView.removeSubviews()
+        let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
+        generalInfoView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        
+        let headerView = sectionHeaderView(title: "general info".localized().uppercaseFirst)
+        
+        let avatarImageView: MyAvatarImageView = {
+            let imageView = MyAvatarImageView(size: 120)
+            imageView.setToCurrentUserAvatar()
+            return imageView
         }()
         
-        scrollView.contentView.addSubview(usernameContainerView)
-        usernameContainerView.autoPinEdge(.top, to: .bottom, of: nameContainerView, withOffset: 10)
-        usernameContainerView.autoPinEdge(toSuperviewEdge: .leading)
-        usernameContainerView.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        let bioContainerView: UIView = {
-            let containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
-            containerView.borderWidth = 1
-            containerView.borderColor = .appLightGrayColor
-            let label = UILabel.with(text: "bio".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
-            containerView.addSubview(label)
-            label.autoPinTopAndLeadingToSuperView(inset: 11, xInset: 15)
-            
-            containerView.addSubview(bioTextView)
-            bioTextView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 15, bottom: 11, right: 15), excludingEdge: .top)
-            bioTextView.autoPinEdge(.top, to: .bottom, of: label, withOffset: 8)
-            return containerView
+        let coverImageView: UIImageView = {
+            let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleToFill)
+            imageView.setCover(urlString: profile?.coverUrl, namePlaceHolder: "cover-placeholder")
+            return imageView
         }()
         
-        scrollView.contentView.addSubview(bioContainerView)
-        bioContainerView.autoPinEdge(.top, to: .bottom, of: usernameContainerView, withOffset: 10)
-        bioContainerView.autoPinEdge(toSuperviewEdge: .leading)
-        bioContainerView.autoPinEdge(toSuperviewEdge: .trailing)
+        stackView.addArrangedSubviews([
+            headerView,
+            avatarImageView,
+            coverImageView
+        ])
+        headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        coverImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
-        bioContainerView.autoPinEdge(toSuperviewEdge: .bottom)
+        // name
+        let spacer1 = spacer
+        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, content: Config.currentUser?.name)
         
-        view.addSubview(saveButton)
-        saveButton.autoPinEdge(.top, to: .bottom, of: scrollView)
-        saveButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        saveButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        saveButton.autoPinBottomToSuperViewSafeAreaAvoidKeyboard(inset: 16)
+        stackView.addArrangedSubviews([spacer1, nameInfoField])
+        spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        nameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // username
+        let spacer2 = spacer
+        let usernameInfoField = infoField(title: "username".localized().uppercaseFirst, content: "@" + (Config.currentUser?.id ?? ""))
+        stackView.addArrangedSubviews([spacer2, usernameInfoField])
+        spacer2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        usernameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // bio
+        let spacer3 = spacer
+        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: " ")
+        stackView.addArrangedSubviews([spacer3, websiteField])
+        spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // bio
+        let spacer4 = spacer
+        let bioField = infoField(title: "bio".localized().uppercaseFirst, content: profile?.personal?.biography)
+        stackView.addArrangedSubviews([spacer4, bioField])
+        spacer4.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        bioField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
+        
+        stackView.setCustomSpacing(29, after: avatarImageView)
+        stackView.setCustomSpacing(12, after: coverImageView)
+        stackView.setCustomSpacing(0, after: spacer1)
+    }
+    
+    func updateContacts() {
+        contactsView.removeSubviews()
+        let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
+        contactsView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        
+        let headerView = sectionHeaderView(title: "contacts".localized().uppercaseFirst)
+        stackView.addArrangedSubview(headerView)
+        headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // whatsapp
+        addContactField(icon: "whatsapp-icon", serviceName: "Whatsapp", username: profile?.personal?.contacts?.whatsApp, to: stackView)
+        
+        // telegram
+        addContactField(icon: "telegram-icon", serviceName: "Telegram", username: profile?.personal?.contacts?.telegram, to: stackView)
+        
+        // wechat
+        addContactField(icon: "wechat-icon", serviceName: "WeChat", username: profile?.personal?.contacts?.weChat, to: stackView)
+    }
+    
+    func updateLinks() {
+        linksView.removeSubviews()
+        let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
+        linksView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        
+        let headerView = sectionHeaderView(title: "links".localized().uppercaseFirst)
+        stackView.addArrangedSubview(headerView)
+        headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // twitter
+        addContactField(icon: "twitter-icon", serviceName: "Twitter", username: "", to: stackView)
+        
+        // facebook
+        addContactField(icon: "facebook-icon", serviceName: "Facebook", username: "", to: stackView)
+        
+        // youtube
+        addContactField(icon: "youtube-icon", serviceName: "Youtube", username: "", to: stackView)
+        
+        // instagram
+        addContactField(icon: "instagram-icon", serviceName: "Instagram", username: "", to: stackView)
+        
+        // github
+        addContactField(icon: "github-icon", serviceName: "Github", username: "", to: stackView)
+    }
+    
+    // MARK: - View builders
+    private func sectionHeaderView(title: String) -> UIStackView {
+        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+        stackView.autoSetDimension(.height, toSize: 55)
+        let label = UILabel.with(text: title, textSize: 17, weight: .semibold)
+        let arrow = UIButton.nextArrow()
+        stackView.addArrangedSubviews([label, arrow])
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        return stackView
+    }
+    
+    private func infoField(title: String, content: String?) -> UIStackView {
+        let stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .leading, distribution: .fill)
+        let titleLabel = UILabel.with(text: title, textSize: 12, weight: .medium, textColor: .appGrayColor)
+        let contentLabel = UILabel.with(text: content, textSize: 17, weight: .semibold, textColor: .appBlackColor, numberOfLines: 0)
+        stackView.addArrangedSubviews([titleLabel, contentLabel])
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 7, trailing: 16)
+        return stackView
+    }
+    
+    private func addContactField(icon: String?, serviceName: String, username: String?, to parentStackView: UIStackView) {
+        let stackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
+        let icon = UIImageView(width: 20, height: 20, imageNamed: icon)
+        let label = UILabel.with(textSize: 14, numberOfLines: 2)
+        label.attributedText = NSMutableAttributedString()
+            .text(serviceName, size: 14, weight: .semibold, color: .appGrayColor)
+            .text("\n")
+            .text("@" + (username ?? ""), size: 14, weight: .semibold, color: .appMainColor)
+            .withParagraphStyle(lineSpacing: 5)
+        stackView.addArrangedSubviews([icon, label])
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+        
+        let spacer1 = spacer
+        parentStackView.addArrangedSubviews([spacer1, stackView])
+        spacer1.widthAnchor.constraint(equalTo: parentStackView.widthAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalTo: parentStackView.widthAnchor).isActive = true
     }
 }

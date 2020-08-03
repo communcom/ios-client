@@ -81,6 +81,11 @@ class MyProfilePageVC: UserProfilePageVC {
             .disposed(by: disposeBag)
     }
     
+    override func setUp(profile: ResponseAPIContentGetProfile) {
+        super.setUp(profile: profile)
+        UserDefaults.standard.set(object: profile, forKey: Config.currentUserGetProfileKey)
+    }
+    
     override func createHeaderView() -> UserProfileHeaderView {
         let headerView = MyProfileHeaderView(tableView: tableView)
         
@@ -162,6 +167,29 @@ class MyProfilePageVC: UserProfilePageVC {
             })
         ]) {
             
+        }
+    }
+    
+    override func handleListEmpty() {
+        var title = "empty"
+        var description = "not found"
+        
+        switch (viewModel as! UserProfilePageViewModel).segmentedItem.value {
+        case .posts:
+            title = "no posts".localized().uppercaseFirst
+            description = "you haven't created any posts yet".localized().uppercaseFirst
+
+            tableView.addEmptyPlaceholderFooterView(title: title, description: description, buttonLabel: String(format: "%@ %@", "create".localized().uppercaseFirst, "post".localized())) {
+                if let tabBarVC = self.tabBarController as? TabBarVC {
+                    tabBarVC.buttonAddTapped()
+                }
+            }
+
+        case .comments:
+            title = "no comments".localized().uppercaseFirst
+            description = "you haven't created any comments yet".localized().uppercaseFirst
+
+            tableView.addEmptyPlaceholderFooterView(title: title, description: description)
         }
     }
 }
