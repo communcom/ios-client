@@ -298,6 +298,8 @@
 "on" = "on";
 "only Latin characters, digits and" = "only Latin characters, digits and special symbols\nare allowed";
 "oops, we couldn’t save your password" = "oops, we couldn’t save your password in iCloud!";
+"open" = "open";
+"open balance" = "open balance";
 "open Settings" = "open Settings";
 "open editor" = "open editor";
 "open iOS Settings" = "open iOS Settings";
@@ -507,6 +509,7 @@
 "yet" = "yet";
 "you are currently editing a post" = "you are currently editing a post";
 "you are the owner" = "you are the owner";
+"you do not have balance for this community.\nWould you like to open one?" = "you do not have balance for this community.\nWould you like to open one?";
 "you don't have any friend. Do you want to" = "you don't have any friend. Do you want to add some?";
 "you get" = "you get";
 "you have a draft version on your device" = "you have a draft version on your device";

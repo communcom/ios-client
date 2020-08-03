@@ -287,6 +287,8 @@
 "on" = "в";
 "only Latin characters, digits and" = "разрешены только латинские символы, цифры и специальные символы";
 "oops, we couldn’t save your password" = "к сожалению, мы не смогли сохранить пароль в iCloud!";
+"open" = "открыть";
+"open balance" = "открыть баланс";
 "open Settings" = "открыть настройки";
 "open editor" = "открыть редактор";
 "open iOS Settings" = "открыть настройки iOS";
@@ -480,6 +482,7 @@
 "yet" = "пока что";
 "you are currently editing a post" = "сейчас Вы редактируете пост";
 "you are the owner" = "Вы владелец";
+"you do not have balance for this community.\nWould you like to open one?" = "у Вас нет баланса этого сообщества.\nХотите открыть его?";
 "you don't have any friend. Do you want to" = "у Вас нет друзей. Хотите добавить?";
 "you get" = "Вы получаете";
 "you have a draft version on your device" = "у Вас есть черновик";
