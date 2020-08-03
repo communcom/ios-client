@@ -23,6 +23,20 @@ class PasswordsVC: BaseViewController {
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     lazy var stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     lazy var passwordField = secretFieldWithTitle("password".localized().uppercaseFirst)
+    lazy var changePasswordButton: UIView = {
+        let hStack = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+        let icon = UIImageView(width: 30, height: 30, cornerRadius: 15, imageNamed: "change-password-icon")
+        let label = UILabel.with(text: "change".localized().uppercaseFirst, textSize: 15, weight: .semibold)
+        hStack.addArrangedSubviews([icon, label])
+        
+        let view = UIView(height: 50, backgroundColor: .appWhiteColor, cornerRadius: 10)
+        view.addSubview(hStack)
+        hStack.autoCenterInSuperview()
+        
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(changePasswordButtonDidTouch)))
+        return view
+    }()
     lazy var ownerField = secretFieldWithTitle("owner".localized().uppercaseFirst)
     lazy var activeField = secretFieldWithTitle("active".localized().uppercaseFirst)
     
@@ -47,9 +61,13 @@ class PasswordsVC: BaseViewController {
         // password
         stackView.addArrangedSubviews([
             passwordField,
+            changePasswordButton,
             ownerField,
             activeField
         ])
+        
+        stackView.setCustomSpacing(30, after: changePasswordButton)
+        stackView.setCustomSpacing(10, after: ownerField)
     }
     
     override func bind() {
@@ -131,5 +149,9 @@ class PasswordsVC: BaseViewController {
         else {return}
         UIPasteboard.general.string = textToCopy
         showDone("copied to clipboard".localized().uppercaseFirst)
+    }
+    
+    @objc private func changePasswordButtonDidTouch() {
+        
     }
 }
