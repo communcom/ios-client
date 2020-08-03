@@ -37,6 +37,9 @@ class ContentReportVC<T: ResponseAPIContentMessageType>: ReportVC {
         
         showIndetermineHudWithMessage("reporting".localized().uppercaseFirst + "...")
         
+        // modify text
+        let otherReason = self.otherReason?.trimmed.replacingOccurrences(of: "\n", with: " ")
+        
         BlockchainManager.instance.report(communityID: communityId, autorID: authorId, permlink: permlink, reasons: choosedReasons, message: otherReason)
 //            .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { (_) in
