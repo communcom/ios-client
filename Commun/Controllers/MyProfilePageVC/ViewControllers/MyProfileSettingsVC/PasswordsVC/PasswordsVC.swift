@@ -160,11 +160,13 @@ class PasswordsVC: BaseViewController {
         present(confirmPasscodeVC, animated: true, completion: nil)
         
         confirmPasscodeVC.completion = {
-            let vc = ChangePasswordVC()
-            vc.completion = {
-                self.showPassword(false)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                let vc = ChangePasswordVC()
+                vc.completion = {
+                    self.showPassword(false)
+                }
+                self.present(vc, animated: true, completion: nil)
             }
-            self.present(vc, animated: true, completion: nil)
         }
     }
 }
