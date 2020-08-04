@@ -139,6 +139,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     override func handleNewData(_ items: [ResponseAPIContentGetComment]) {
         super.handleNewData(items)
         loadDonations(forComments: items)
+        sendPendingRequest()
     }
     
     // MARK: - Replies
@@ -238,5 +239,28 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                 }
             }
         }
+    }
+    
+    // MARK: - Send pending request
+    private func sendPendingRequest() {
+        RequestsManager.shared.pendingRequests.forEach {request in
+            switch request {
+            case .toggleLikeComment(let comment, let dislike):
+                let operation = dislike ? comment.downVote() : comment.upVote()
+                operation.subscribe().disposed(by: disposeBag)
+            default:
+                return
+            }
+        }
+        
+        RequestsManager.shared.pendingRequests.removeAll(where: {request in
+            switch request {
+            case .toggleLikeComment:
+                return true
+            default:
+                return false
+            }
+        })
+        
     }
 }

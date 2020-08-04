@@ -16,7 +16,7 @@ class RequestsManager {
     private init() {}
     
     // MARK: - Nested type
-    enum Request {
+    enum Request: Equatable {
         case toggleLikePost(post: ResponseAPIContentGetPost, dislike: Bool = false)
         case toggleLikeComment(comment: ResponseAPIContentGetComment, dislike: Bool = false)
     }

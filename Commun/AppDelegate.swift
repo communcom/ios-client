@@ -153,12 +153,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             changeRootVC(self.tabBarVC)
             
-            RequestsManager.shared.sendPendingRequests()
-                .subscribe(onCompleted: {
-                    
-                })
-                .disposed(by: disposeBag)
-            
         case .error(let error):
             switch error {
             case .userNotFound:
