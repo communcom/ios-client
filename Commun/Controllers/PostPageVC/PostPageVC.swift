@@ -26,7 +26,8 @@ class PostPageVC: CommentsViewController {
     lazy var postHeaderView = PostHeaderView(tableView: tableView)
 
     lazy var shadowView = UIView(forAutoLayout: ())
-    lazy var commentForm = CommentForm(backgroundColor: .appWhiteColor)
+    lazy var commentForm = createCommentForm()
+    func createCommentForm() -> CommentForm {CommentForm(backgroundColor: .appWhiteColor)}
     
     // MARK: - Properties
     var startContentOffsetY: CGFloat = 0.0

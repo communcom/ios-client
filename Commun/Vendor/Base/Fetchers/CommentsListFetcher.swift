@@ -145,7 +145,34 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     // MARK: - Replies
     func requestRepliesForComment(_ comment: ResponseAPIContentId, inPost post: ResponseAPIContentId, offset: UInt, limit: UInt) -> Single<[ResponseAPIContentGetComment]>
     {
-        RestAPIManager.instance.getRepliesForComment(
+        RequestsManager.shared.pendingRequests.forEach {request in
+            switch request {
+            case .replyToComment(let comment, let post, let block, let uploadingImage):
+                guard isCurrentPost(post),
+                    let communCode = post.community?.communityId else
+                {return}
+                
+                let authorId = comment.contentId.userId
+                let parentCommentPermlink = comment.contentId.permlink
+                
+                BlockchainManager.instance.createMessage(
+                    isComment: true,
+                    parentPost: post,
+                    isReplying: true,
+                    parentComment: comment,
+                    communCode: communCode,
+                    parentAuthor: authorId,
+                    parentPermlink: parentCommentPermlink,
+                    block: block,
+                    uploadingImage: uploadingImage
+                ).subscribe().disposed(by: disposeBag)
+                RequestsManager.shared.pendingRequests.removeAll(request)
+            default:
+                return
+            }
+        }
+        
+        return RestAPIManager.instance.getRepliesForComment(
             forPost: post,
             parentComment: comment,
             offset: offset,
@@ -243,24 +270,43 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     
     // MARK: - Send pending request
     private func sendPendingRequest() {
+        // like or dislike
+        var completedRequests = [RequestsManager.Request]()
         RequestsManager.shared.pendingRequests.forEach {request in
             switch request {
             case .toggleLikeComment(let comment, let dislike):
                 let operation = dislike ? comment.downVote() : comment.upVote()
                 operation.subscribe().disposed(by: disposeBag)
+                completedRequests.append(request)
+            case .newComment(let post, let block, let uploadingImage):
+                if isCurrentPost(post),
+                    let communCode = post.community?.communityId,
+                    let authorId = post.author?.userId
+                {
+                    let postPermlink = post.contentId.permlink
+                    BlockchainManager.instance.createMessage(
+                        isComment: true,
+                        parentPost: post,
+                        communCode: communCode,
+                        parentAuthor: authorId,
+                        parentPermlink: postPermlink,
+                        block: block,
+                        uploadingImage: uploadingImage
+                    ).subscribe().disposed(by: disposeBag)
+                    completedRequests.append(request)
+                }
+                return
             default:
                 return
             }
         }
         
-        RequestsManager.shared.pendingRequests.removeAll(where: {request in
-            switch request {
-            case .toggleLikeComment:
-                return true
-            default:
-                return false
-            }
-        })
-        
+        completedRequests.forEach {RequestsManager.shared.pendingRequests.removeAll($0)}
+    }
+    
+    private func isCurrentPost(_ post: ResponseAPIContentGetPost) -> Bool {
+        post.contentId.userId == filter.userId &&
+        post.contentId.communityId == filter.communityId &&
+        post.contentId.permlink == filter.permlink
     }
 }

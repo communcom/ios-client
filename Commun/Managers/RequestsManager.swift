@@ -19,22 +19,24 @@ class RequestsManager {
     enum Request: Equatable {
         case toggleLikePost(post: ResponseAPIContentGetPost, dislike: Bool = false)
         case toggleLikeComment(comment: ResponseAPIContentGetComment, dislike: Bool = false)
+        case newComment(post: ResponseAPIContentGetPost, block: ResponseAPIContentBlock, uploadingImage: UIImage?)
+        case replyToComment(_ parentComment: ResponseAPIContentGetComment, post: ResponseAPIContentGetPost, block: ResponseAPIContentBlock, uploadingImage: UIImage?)
     }
     var pendingRequests = [Request]()
     
-    func sendPendingRequests() -> Completable {
-        let requests: [Completable] = pendingRequests.compactMap {
-            switch $0 {
-            case .toggleLikePost(let post, let dislike):
-                return dislike ? post.downVote() : post.upVote()
-            case .toggleLikeComment(let comment, let dislike):
-                return dislike ? comment.downVote() : comment.upVote()
-            }
-        }
-        
-        return Completable.merge(requests)
-            .do(onCompleted: {
-               self.pendingRequests.removeAll()
-            })
-    }
+//    func sendPendingRequests() -> Completable {
+//        let requests: [Completable] = pendingRequests.compactMap {
+//            switch $0 {
+//            case .toggleLikePost(let post, let dislike):
+//                return dislike ? post.downVote() : post.upVote()
+//            case .toggleLikeComment(let comment, let dislike):
+//                return dislike ? comment.downVote() : comment.upVote()
+//            }
+//        }
+//        
+//        return Completable.merge(requests)
+//            .do(onCompleted: {
+//               self.pendingRequests.removeAll()
+//            })
+//    }
 }
