@@ -147,19 +147,20 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     {
         RequestsManager.shared.pendingRequests.forEach {request in
             switch request {
-            case .replyToComment(let comment, let post, let block, let uploadingImage):
+            case .replyToComment(let parentComment, let post, let block, let uploadingImage):
                 guard isCurrentPost(post),
+                    parentComment.contentId == comment,
                     let communCode = post.community?.communityId else
                 {return}
                 
-                let authorId = comment.contentId.userId
-                let parentCommentPermlink = comment.contentId.permlink
+                let authorId = parentComment.contentId.userId
+                let parentCommentPermlink = parentComment.contentId.permlink
                 
                 BlockchainManager.instance.createMessage(
                     isComment: true,
                     parentPost: post,
                     isReplying: true,
-                    parentComment: comment,
+                    parentComment: parentComment,
                     communCode: communCode,
                     parentAuthor: authorId,
                     parentPermlink: parentCommentPermlink,

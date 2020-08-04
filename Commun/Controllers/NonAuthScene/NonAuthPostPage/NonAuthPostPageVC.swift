@@ -18,18 +18,20 @@ class NonAuthPostPageVC: PostPageVC, NonAuthVCType {
     override func replyToComment(_ comment: ResponseAPIContentGetComment) {
         showAuthVC()
     }
-    
-    @objc func commentFormCoverViewDidTouch() {
-        showAuthVC()
-    }
 }
 
 extension NonAuthPostPageVC {
     override func headerViewUpVoteButtonDidTouch(_ headerView: PostHeaderView) {
+        if let post = post {
+            RequestsManager.shared.pendingRequests.append(.toggleLikePost(post: post))
+        }
         showAuthVC()
     }
     
     override func headerViewDownVoteButtonDidTouch(_ headerView: PostHeaderView) {
+        if let post = post {
+            RequestsManager.shared.pendingRequests.append(.toggleLikePost(post: post, dislike: true))
+        }
         showAuthVC()
     }
 }
