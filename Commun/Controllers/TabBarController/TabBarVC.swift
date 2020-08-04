@@ -52,6 +52,23 @@ class TabBarVC: UITabBarController {
         
         // bind view model
         bind()
+        
+        // show post
+        let post = RequestsManager.shared.pendingRequests.compactMap { request -> ResponseAPIContentGetPost? in
+            switch request {
+            case .newComment(let post, _, _):
+                return post
+            case .replyToComment(_, let post, _, _):
+                return post
+            default:
+                return nil
+            }
+        }.first
+        
+        if let post = post {
+            let vc = PostPageVC(post: post)
+            selectedViewController?.show(vc, sender: self)
+        }
     }
     
     func setTabBarHiden(_ hide: Bool) {
