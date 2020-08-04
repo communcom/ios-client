@@ -151,11 +151,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 tabBarVC = TabBarVC()
             }
             
+            changeRootVC(self.tabBarVC)
+            
             RequestsManager.shared.sendPendingRequests()
                 .subscribe(onCompleted: {
-                    self.changeRootVC(self.tabBarVC)
-                }, onError: {_ in
-                    self.changeRootVC(self.tabBarVC)
+                    
                 })
                 .disposed(by: disposeBag)
             
