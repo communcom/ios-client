@@ -105,7 +105,7 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         if (firstNameTextField.text ?? "").trimmed != (self.profile?.personal?.firstName ?? "").trimmed {return true}
         if (lastNameTextField.text ?? "").trimmed != (self.profile?.personal?.lastName ?? "").trimmed {return true}
 //                if username.trimmed != self.profile?.username {return true}
-        if ((websiteTextField.text ?? "").trimmed != (self.profile?.personal?.websiteUrl ?? "").trimmed) && (websiteTextField.text ?? "").isLink {return true}
+        if (websiteTextField.text ?? "").trimmed != (self.profile?.personal?.websiteUrl ?? "").trimmed {return true}
         
         if (bioTextView.text ?? "").trimmed != (self.profile?.personal?.biography ?? "").trimmed {return true}
         return false
@@ -197,12 +197,8 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
 //        }
         
         if let website = websiteTextField.text,
-            website.trimmed != self.profile?.personal?.websiteUrl
+            website.trimmed != (self.profile?.personal?.websiteUrl ?? "")
         {
-            if !website.isLink {
-                showErrorWithMessage("the link to website is invalid".localized().uppercaseFirst)
-                return
-            }
             params["website_url"] = website
             profile?.personal?.websiteUrl = website
         }
