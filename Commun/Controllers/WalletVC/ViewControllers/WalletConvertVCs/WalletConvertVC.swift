@@ -487,6 +487,11 @@ class WalletConvertVC: BaseViewController {
 extension WalletConvertVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         historyItem = nil
+        // if input comma (or dot)
+        if textField.text?.isEmpty == true, string == Locale.current.decimalSeparator {
+            textField.text = "0\(Locale.current.decimalSeparator ?? ".")"
+            return false
+        }
         
         // if deleting
         if string.isEmpty { return true }
