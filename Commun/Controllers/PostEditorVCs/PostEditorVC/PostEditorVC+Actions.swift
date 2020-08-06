@@ -37,6 +37,10 @@ extension PostEditorVC {
     
     // MARK: - Immutable actions
     @objc override func close() {
+        UIView.performWithoutAnimation {
+            self.view.endEditing(true)
+        }
+        
         guard shouldSaveDraft() else {
             removeDraft()
             back()

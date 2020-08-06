@@ -97,7 +97,9 @@ extension BasicEditorVC {
         viewModel.community
             .filter {$0 != nil}
             .subscribe(onNext: { _ in
-                self.contentTextView.becomeFirstResponder()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.contentTextView.becomeFirstResponder()
+                }
             })
             .disposed(by: disposeBag)
     }

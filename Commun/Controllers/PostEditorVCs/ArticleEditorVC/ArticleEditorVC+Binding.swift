@@ -43,7 +43,9 @@ extension ArticleEditorVC {
         viewModel.community
             .filter {$0 != nil}
             .subscribe(onNext: { _ in
-                self.titleTextView.becomeFirstResponder()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.titleTextView.becomeFirstResponder()
+                }
             })
             .disposed(by: disposeBag)
     }
