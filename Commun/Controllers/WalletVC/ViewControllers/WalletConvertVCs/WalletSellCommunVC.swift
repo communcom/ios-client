@@ -219,8 +219,7 @@ class WalletSellCommunVC: WalletConvertVC {
                                               symbol: symbol,
                                               operationDate: Date())
 
-                let completedVC = TransactionCompletedVC(transaction: transaction)
-                self.show(completedVC, sender: nil)
+                self.showCheck(transaction: transaction)
 
                 self.hideHud()
                 
@@ -237,5 +236,10 @@ class WalletSellCommunVC: WalletConvertVC {
                 self?.showError(error)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func showCheck(transaction: Transaction) {
+        let completedVC = TransactionCompletedVC(transaction: transaction)
+        self.show(completedVC, sender: nil)
     }
 }

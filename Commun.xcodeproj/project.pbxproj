@@ -176,6 +176,7 @@
 		BC1E865B242C853500CF202F /* MyProfileDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1E865A242C853500CF202F /* MyProfileDetailVC.swift */; };
 		BC2260B624D8C88400A82D8D /* RequestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260B524D8C88400A82D8D /* RequestsManager.swift */; };
 		BC2260BB24D90E2000A82D8D /* NonAuthCommentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260BA24D90E2000A82D8D /* NonAuthCommentForm.swift */; };
+		BC2260C424DBB8EF00A82D8D /* GetPointsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260C324DBB8EF00A82D8D /* GetPointsVC.swift */; };
 		BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */; };
 		BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */; };
 		BC22BBCC236C0E0300F40658 /* UIStackView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */; };
@@ -735,6 +736,7 @@
 		BC1E865A242C853500CF202F /* MyProfileDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileDetailVC.swift; sourceTree = "<group>"; };
 		BC2260B524D8C88400A82D8D /* RequestsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsManager.swift; sourceTree = "<group>"; };
 		BC2260BA24D90E2000A82D8D /* NonAuthCommentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthCommentForm.swift; sourceTree = "<group>"; };
+		BC2260C324DBB8EF00A82D8D /* GetPointsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPointsVC.swift; sourceTree = "<group>"; };
 		BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileSettingsVC.swift; sourceTree = "<group>"; };
 		BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentHuggingScrollView.swift; sourceTree = "<group>"; };
 		BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+PureLayout.swift"; sourceTree = "<group>"; };
@@ -2553,6 +2555,7 @@
 		BCA971192360339B00AE37E1 /* CommunityPageVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC2260C324DBB8EF00A82D8D /* GetPointsVC.swift */,
 				BC619B192372B5570005BB94 /* CommunityMembersVC */,
 				BCA9712023603C5D00AE37E1 /* Subviews */,
 				BCA9711C2360347D00AE37E1 /* CommunityPageVC.swift */,
@@ -3380,6 +3383,7 @@
 				BC9A1F2324D276BD007BDB3A /* ContactTextField.swift in Sources */,
 				BC4071AA23CF09B2000027A3 /* NotificationsPageViewModel.swift in Sources */,
 				3B6CB732234331830097B2A1 /* Array+Extensions.swift in Sources */,
+				BC2260C424DBB8EF00A82D8D /* GetPointsVC.swift in Sources */,
 				3B289B9E2346EB0400598407 /* UIView+PureLayout.swift in Sources */,
 				3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */,
 				BC4071AD23CF0AFA000027A3 /* NotificationCell.swift in Sources */,
