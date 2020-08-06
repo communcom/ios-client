@@ -22,11 +22,19 @@ extension CommunityCellDelegate where Self: BaseViewController {
             return
         }
         
-        BlockchainManager.instance.triggerFollow(community: community)
-            .subscribe { [weak self] (error) in
-                self?.showError(error)
-            }
-            .disposed(by: disposeBag)
+        // detect if community is in blacklist
+        if community.isInBlacklist == true {
+            self.showAlert(title: "unhide and follow".localized().uppercaseFirst, message: "this community is on your blacklist".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1, completion:
+            { (index) in
+                if index == 0 {
+                    self.sendFollowRequest(community: community)
+                }
+            })
+            return
+        }
+        
+        // if community is not in blacklist
+        sendFollowRequest(community: community)
     }
     
     func forceFollow(_ value: Bool, community: ResponseAPIContentGetCommunity) {
@@ -35,5 +43,13 @@ extension CommunityCellDelegate where Self: BaseViewController {
         community.isSubscribed = !value
         
         buttonFollowDidTouch(community: community)
+    }
+    
+    private func sendFollowRequest(community: ResponseAPIContentGetCommunity) {
+        BlockchainManager.instance.triggerFollow(community: community)
+        .subscribe { [weak self] (error) in
+            self?.showError(error)
+        }
+        .disposed(by: disposeBag)
     }
 }
