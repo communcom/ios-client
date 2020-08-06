@@ -19,7 +19,7 @@ extension CommunityPageVC {
                 self.hideHud()
                 self.showAlert(
                     title: "community hidden".localized().uppercaseFirst,
-                    message: "You've hidden" + " \(self.viewModel.profile.value?.communityId ?? "this community")" + ".\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
+                    message: "you've hidden".localized().uppercaseFirst + " \(self.viewModel.profile.value?.communityId ?? "this community".localized())" + ".\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
                         var profile = self.viewModel.profile.value
                         profile?.isInBlacklist = true
                         profile?.notifyChanged()
