@@ -504,7 +504,7 @@ extension WalletConvertVC: UITextFieldDelegate {
         let formatter = NumberFormatter()
         let isANumber = formatter.number(from: updatedText) != nil
         
-        if updatedText.starts(with: "0") && !updatedText.starts(with: "0.") {
+        if updatedText.starts(with: "0") && !updatedText.starts(with: "0\(Locale.current.decimalSeparator ?? ".")") {
             updatedText = currentText.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
             textField.text = updatedText
         }
