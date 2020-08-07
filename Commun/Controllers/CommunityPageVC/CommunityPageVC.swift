@@ -357,7 +357,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                                      style: .default,
                                      marginTop: 0,
                                      handle: {
-                                        ShareHelper.share(urlString: self.shareWith(name: profile.name, userID: currentUserID, isCommunity: true))
+                                        ShareHelper.share(urlString: self.shareWith(name: profile.alias ?? "", userID: currentUserID, isCommunity: true))
             }),
             CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
                                      icon: UIImage(named: "profile_options_blacklist"),
