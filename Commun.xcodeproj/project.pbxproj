@@ -174,6 +174,8 @@
 		BC18FA2723D56325005DC7E3 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2623D56325005DC7E3 /* UITextField+Extensions.swift */; };
 		BC1DF1AB2499C97D00CCA135 /* WalletDonateCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1DF1AA2499C97D00CCA135 /* WalletDonateCompletedVC.swift */; };
 		BC1E865B242C853500CF202F /* MyProfileDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1E865A242C853500CF202F /* MyProfileDetailVC.swift */; };
+		BC2260AE24D8091E00A82D8D /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260AD24D8091E00A82D8D /* ChangePasswordVC.swift */; };
+		BC2260B224D8093200A82D8D /* ChangePasswordVerifyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260B124D8093200A82D8D /* ChangePasswordVerifyVC.swift */; };
 		BC2260B624D8C88400A82D8D /* RequestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260B524D8C88400A82D8D /* RequestsManager.swift */; };
 		BC2260BB24D90E2000A82D8D /* NonAuthCommentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260BA24D90E2000A82D8D /* NonAuthCommentForm.swift */; };
 		BC2260C424DBB8EF00A82D8D /* GetPointsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260C324DBB8EF00A82D8D /* GetPointsVC.swift */; };
@@ -734,6 +736,8 @@
 		BC18FA2623D56325005DC7E3 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		BC1DF1AA2499C97D00CCA135 /* WalletDonateCompletedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDonateCompletedVC.swift; sourceTree = "<group>"; };
 		BC1E865A242C853500CF202F /* MyProfileDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileDetailVC.swift; sourceTree = "<group>"; };
+		BC2260AD24D8091E00A82D8D /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
+		BC2260B124D8093200A82D8D /* ChangePasswordVerifyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVerifyVC.swift; sourceTree = "<group>"; };
 		BC2260B524D8C88400A82D8D /* RequestsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsManager.swift; sourceTree = "<group>"; };
 		BC2260BA24D90E2000A82D8D /* NonAuthCommentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthCommentForm.swift; sourceTree = "<group>"; };
 		BC2260C324DBB8EF00A82D8D /* GetPointsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPointsVC.swift; sourceTree = "<group>"; };
@@ -2282,6 +2286,8 @@
 			isa = PBXGroup;
 			children = (
 				BC73833124A2F50F006BB60F /* PasswordsVC.swift */,
+				BC2260AD24D8091E00A82D8D /* ChangePasswordVC.swift */,
+				BC2260B124D8093200A82D8D /* ChangePasswordVerifyVC.swift */,
 			);
 			path = PasswordsVC;
 			sourceTree = "<group>";
@@ -3525,6 +3531,7 @@
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */,
 				BC51B48D2407BA8B009DFB48 /* PostStatsView.swift in Sources */,
+				BC2260B224D8093200A82D8D /* ChangePasswordVerifyVC.swift in Sources */,
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
 				BCF74A62236180B900B91089 /* SubscribersViewModel.swift in Sources */,
 				BCAF5B20241B433400C157B5 /* ViewTag.swift in Sources */,
@@ -3739,6 +3746,7 @@
 				BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */,
 				B182FF7F23F5318C00AC18D1 /* Bundle+Extensions.swift in Sources */,
 				BC597A6B238BBDAC00103F4F /* FittingSizePresentationController.swift in Sources */,
+				BC2260AE24D8091E00A82D8D /* ChangePasswordVC.swift in Sources */,
 				3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */,
 				BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */,
 				BCB08D6024B4682B00EA2BDB /* NonAuthFeedPageVC.swift in Sources */,
