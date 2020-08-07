@@ -17,6 +17,8 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             showCommunities()
         }
     }
+    var followingsCount: Int { Int((profile?.subscriptions?.usersCount ?? 0)) }
+    var followersCount: Int { Int((profile?.subscribers?.usersCount ?? 0)) }
 
     // MARK: - Subviews
     lazy var communitiesView: UIView = {
@@ -122,9 +124,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         }
         
         // stats
-        let followingsCount: Int = Int((userProfile.subscriptions?.usersCount ?? 0))
-        let followersCount: Int = Int((userProfile.subscribers?.usersCount ?? 0))
-        
         let aStr = NSMutableAttributedString()
             .bold(followersCount.kmFormatted, font: .boldSystemFont(ofSize: 15))
             .bold(" ")

@@ -19,7 +19,7 @@ extension CommunityPageVC {
                 self.hideHud()
                 self.showAlert(
                     title: "community hidden".localized().uppercaseFirst,
-                    message: "You've hidden" + " \(self.viewModel.profile.value?.communityId ?? "this community")" + ".\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
+                    message: "you've hidden".localized().uppercaseFirst + " \(self.viewModel.profile.value?.communityId ?? "this community".localized())" + ".\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
                         var profile = self.viewModel.profile.value
                         profile?.isInBlacklist = true
                         profile?.notifyChanged()
@@ -64,9 +64,12 @@ extension CommunityPageVC {
         
         let vm = BalancesViewModel.ofCurrentUser
         
-        let showWalletSellCommunVC: (() -> Void) =
+        let showGetPointsVC: (() -> Void) =
             { [weak self] in
-                let vc = WalletSellCommunVC(balances: vm.items.value, symbol: communityCode)
+                let vc = GetPointsVC(balances: vm.items.value, symbol: communityCode)
+                vc.backButtonHandler = {
+                    self?.navigationController?.popToVC(type: Self.self)
+                }
                 self?.show(vc, sender: nil)
             }
         
@@ -82,7 +85,7 @@ extension CommunityPageVC {
                             var items = vm.items.value
                             items.append(balance)
                             vm.items.accept(items)
-                            showWalletSellCommunVC()
+                            showGetPointsVC()
                         }) { (error) in
                             self.hideHud()
                             self.showError(error)
@@ -91,7 +94,7 @@ extension CommunityPageVC {
                 }
             }
         } else {
-            showWalletSellCommunVC()
+            showGetPointsVC()
         }
     }
 }

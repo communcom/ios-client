@@ -48,7 +48,9 @@ class DonationUsersView: CMMessageView {
     func setUp(with donations: [ResponseAPIWalletDonation]) {
         let senders = donations.map {$0.sender}
         userStackView.setUp(with: senders)
-        donationsLabel.text = String(format: NSLocalizedString("donations-count", comment: ""), (donations.count - 3))
+        var count = donations.count
+        if count > userStackView.maxNumberOfAvatars {count -= userStackView.maxNumberOfAvatars}
+        donationsLabel.text = String(format: NSLocalizedString("donations-count", comment: ""), count)
     }
     
     override func closeButtonDidTouch() {

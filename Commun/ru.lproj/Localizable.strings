@@ -81,10 +81,13 @@
 "Cancel" = "Oтмена";
 "cannot use Back Camera" = "не может использовать камеру";
 "change" = "изменить";
+"change avatar" = "изменить аватарку";
+"change cover photo" = "изменить обложку";
 "change to" = "сменить на";
 "change position" = "изменить положение";
 "characters" = "символы";
 "check your Internet connection" = "проверьте свое интернет соединение \nи попробуйте еще раз";
+"choose community" = "выбрать сообщество";
 "choose communities of interest and" = "выбирайте сообщества по интересам и";
 "choose community in which you want" = "выберите сообщество, в котором Вы хотите создать пост";
 "choose from gallery" = "выбрать из галереи";
@@ -305,6 +308,7 @@
 "password must contain at least one lowercase" = "пароль должен содержать хотя бы один символ нижнего регистра";
 "password must contain at least one uppercase" = "пароль должен содержать хотя бы один символ в верхнем регистре";
 "password must contain no more than" = "пароль не должен быть более 52 символов";
+"passwords do not match" = "пароли не совпадают";
 "past 24 hours" = "за последние 24 часа";
 "past month" = "в прошлом месяце";
 "past week" = "на прошлой неделе";
@@ -334,6 +338,8 @@
 "registration error" = "ошибка при регистрации";
 "reload" = "перезагрузить";
 "remove" = "удалить";
+"remove current avatar" = "удалить текущую аватарку";
+"remove current cover photo" = "удалить текущую обложку";
 "repeat" = "повторить";
 "replace content" = "заменить контент";
 "replies" = "ответы";
@@ -364,6 +370,7 @@
 "save to iCloud" = "сохранить в iCloud";
 "scan QR" = "сканировать QR";
 "search" = "поиск";
+"Search" = "Поиск";
 "see" = "показать";
 "select a link to add to text" = "выберите ссылку для добавления в текст";
 "select country placeholder" = "выберите страну";
@@ -413,6 +420,7 @@
 "this comment was deleted" = "этот комментарий был удален";
 "this community is on your blacklist" = "это сообщество находится в Вашем черном списке. Хотите, убрать его из черного списка и подписаться?";
 "this user" = "этот пользователь";
+"This username is already taken" = "Имя пользователя уже занято";
 "this version of the application is out of" = "данная версия приложения устарела.\nПожалуйста, обновите эту версию, чтобы продолжить использование приложения.";
 "title and content must not be empty" = "заголовок и содержание не должны быть пустыми";
 "title placeholder" = "заголовок";
@@ -474,6 +482,7 @@
 "wow, this post will be rewarded!" = "Этот пост получил награду!\nХотите тоже получать награды? Создавайте посты - это самый простой путь к успеху!";
 "write a comment" = "написать комментарий";
 "write text placeholder" = "написать текст";
+"Wrong activation code" = "Неверный проверочный код";
 "wrong code" = "неправильный код";
 "wrong phone number" = "неправильный номер телефона";
 "yes" = "да";
@@ -494,12 +503,14 @@
 "you haven't had any transactions yet" = "у Вас еще не было транзакций";
 "you haven’t created any" = "Вы не создали ни одного";
 "you haven’t written any" = "Вы не написали ни одного";
+"you must sign in to choose community to post in" = "войдите, чтобы выбрать сообщество";
 "you received" = "Вы получили";
 "you want to select the advanced mode" = "Вы хотите выбрать расширенный режим и использовать мастер-пароль";
 "you will post in" = "Отправить в";
 "you've blocked" = "Вы заблокировали";
 "you've got" = "у Вас есть";
 "you've got a new notification" = "есть новое уведомление";
+"you've hidden" = "вы уже скрыли";
 "you've unblocked" = "Вы разблокировали";
 "your email address" = "электронная почта";
 "your referrals" = "Ваши рефералы";

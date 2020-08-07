@@ -63,7 +63,7 @@ class UsersStackView: MyView {
                 avatarsStackView.addArrangedSubview(imageView)
                 imageView.setAvatar(urlString: friend.avatarUrl)
             }
-            text = "\(friends.count)"
+            text = "\(friends.count.kmFormatted)"
         } else {
             for i in 0..<maxNumberOfAvatars {
                 let imageView = MyAvatarImageView(size: 34)
@@ -73,7 +73,7 @@ class UsersStackView: MyView {
                 avatarsStackView.addArrangedSubview(imageView)
                 imageView.setAvatar(urlString: friends[i].avatarUrl)
             }
-            text = "+\((friends.count - 3).kmFormatted)"
+            text = "+\((friends.count - maxNumberOfAvatars).kmFormatted)"
         }
         
         label.text = text

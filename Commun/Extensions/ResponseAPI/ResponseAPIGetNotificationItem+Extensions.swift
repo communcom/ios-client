@@ -18,11 +18,14 @@ extension ResponseAPIGetNotificationItem {
         case "ru-US", "ru-RU", "ru":
             switch eventType {
             case "mention":
+                var entityType = self.entityType
+                if entityType == "post" {entityType = "посте"}
+                if entityType == "comment" {entityType = "комментарии"}
                 aStr.semibold(author?.username ?? "a user".localized().uppercaseFirst)
                     .normal(" ")
                     .normal("упомянул Вас в")
                     .normal(" ")
-                    .normal("\(entityType ?? "комментарии")".localized())
+                    .normal(entityType ?? "")
                     .normal(": \"")
                     .normal(comment?.shortText ?? "")
                     .normal("\"")

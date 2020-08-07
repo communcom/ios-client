@@ -26,8 +26,8 @@ class CommentForm: MyView {
         (parentViewController as? PostPageVC)?.post
     }
     
-    private var parentComment: ResponseAPIContentGetComment?
-    private var mode: Mode = .new
+    var parentComment: ResponseAPIContentGetComment?
+    var mode: Mode = .new
     let localImage = BehaviorRelay<UIImage?>(value: nil)
     var url: String?
     
@@ -298,6 +298,32 @@ class CommentForm: MyView {
             })
             .disposed(by: disposeBag)
     }
+    
+    func createRequest(parsedBlock: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
+        //clean
+        var block = parsedBlock
+        block.maxId = nil
+        
+        // send new comment
+        let request: Single<SendPostCompletion>
+        switch self.mode {
+        case .new:
+            request = self.viewModel.sendNewComment(post: self.post, block: block, uploadingImage: self.localImage.value)
+        case .edit:
+            request = self.viewModel.updateComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
+        case .reply:
+            request = self.viewModel.replyToComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
+        }
+        
+        self.textView.text = ""
+        self.mode = .new
+        self.parentComment = nil
+        self.url = nil
+        self.localImage.accept(nil)
+        self.endEditing(true)
+        
+        return request
+    }
 }
 
 extension CommentForm {
@@ -343,31 +369,7 @@ extension CommentForm {
                 
                 return parsedBlock
             }
-            .flatMap { parsedBlock -> Single<SendPostCompletion> in
-                //clean
-                var block = parsedBlock
-                block.maxId = nil
-                
-                // send new comment
-                let request: Single<SendPostCompletion>
-                switch self.mode {
-                case .new:
-                    request = self.viewModel.sendNewComment(post: self.post, block: block, uploadingImage: self.localImage.value)
-                case .edit:
-                    request = self.viewModel.updateComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
-                case .reply:
-                    request = self.viewModel.replyToComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
-                }
-                
-                self.textView.text = ""
-                self.mode = .new
-                self.parentComment = nil
-                self.url = nil
-                self.localImage.accept(nil)
-                self.endEditing(true)
-                
-                return request
-            }
+            .flatMap {self.createRequest(parsedBlock: $0)}
             .subscribe(onError: { [weak self] error in
 //                self.setLoading(false)
                 self?.parentViewController?.showError(error)

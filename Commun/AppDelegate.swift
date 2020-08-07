@@ -151,7 +151,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 tabBarVC = TabBarVC()
             }
             
-            self.changeRootVC(tabBarVC)
+            changeRootVC(self.tabBarVC)
+            
         case .error(let error):
             switch error {
             case .userNotFound:

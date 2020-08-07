@@ -67,6 +67,8 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         super.setUp(with: profile)
         communitiesLabel.attributedText = NSMutableAttributedString()
             .text("communities".localized().uppercaseFirst  + " " + "(\(profile.subscriptions?.communitiesCount ?? 0))", size: 20, weight: .bold)
+        
+        statsLabel.isHidden = followersCount == 0 && followingsCount == 0
     }
     
     func setUpWalletView(withError: Bool = false) {

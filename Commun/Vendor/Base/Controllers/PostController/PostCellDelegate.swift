@@ -19,8 +19,11 @@ protocol PostCellDelegate: class {
 extension PostCellDelegate where Self: BaseViewController {
     func postCell(_ postCell: PostCell, upvoteButtonDidTouchForPostWithIdentity identity: ResponseAPIContentGetPost.Identity)
     {
+        guard let post = posts.first(where: {$0.identity == identity}) else {return}
         // Prevent upvoting when user is in NonAuthVCType
         if let nonAuthVC = self as? NonAuthVCType {
+//            RequestsManager.shared.pendingRequests.append(.)
+            RequestsManager.shared.pendingRequests.append(.toggleLikePost(post: post))
             nonAuthVC.showAuthVC()
             return
         }
@@ -32,7 +35,6 @@ extension PostCellDelegate where Self: BaseViewController {
         }
         
         // Upvote and show donations buttons
-        guard let post = posts.first(where: {$0.identity == identity}) else {return}
         post.upVote()
             .subscribe { (error) in
                 self.showError(error)
@@ -42,13 +44,15 @@ extension PostCellDelegate where Self: BaseViewController {
     
     func postCell(_ postCell: PostCell, downvoteButtonDidTouchForPostWithIdentity identity: ResponseAPIContentGetPost.Identity)
     {
+        guard let post = posts.first(where: {$0.identity == identity}) else {return}
+        
         // Prevent downvoting when user is in NonAuthVCType
         if let nonAuthVC = self as? NonAuthVCType {
+            RequestsManager.shared.pendingRequests.append(.toggleLikePost(post: post, dislike: true))
             nonAuthVC.showAuthVC()
             return
         }
         
-        guard let post = posts.first(where: {$0.identity == identity}) else {return}
         post.downVote()
             .subscribe { (error) in
                 self.showError(error)

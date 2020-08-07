@@ -149,6 +149,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         super.handleNewData(items)
         loadRewards(fromPosts: items)
         loadDonations(forPosts: items)
+        sendPendingRequest()
     }
 
     // MARK: - Rewards
@@ -269,5 +270,28 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
                 post.notifyChanged()
             }
         }
+    }
+    
+    // MARK: - Send pending request
+    private func sendPendingRequest() {
+        RequestsManager.shared.pendingRequests.forEach {request in
+            switch request {
+            case .toggleLikePost(let post, let dislike):
+                let operation = dislike ? post.downVote() : post.upVote()
+                operation.subscribe().disposed(by: disposeBag)
+            default:
+                return
+            }
+        }
+        
+        RequestsManager.shared.pendingRequests.removeAll(where: {request in
+            switch request {
+            case .toggleLikePost:
+                return true
+            default:
+                return false
+            }
+        })
+        
     }
 }
