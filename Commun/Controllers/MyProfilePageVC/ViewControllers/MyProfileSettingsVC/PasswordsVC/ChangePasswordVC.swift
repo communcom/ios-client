@@ -29,4 +29,8 @@ class ChangePasswordVC: CreatePasswordVC {
             self.show(confirmVC, sender: nil)
         }
     }
+    
+    override func backButtonDidTouch() {
+        back()
+    }
 }
