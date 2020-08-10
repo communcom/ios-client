@@ -283,7 +283,7 @@
 "no subscribers found" = "На Вас еще никто не подписан";
 "no transactions" = "нет транзакций";
 "no users" = "нет пользователей";
-"none" = "никто";
+"noone" = "никто";
 "not found" = "не найдено";
 "notification" = "уведомление";
 "notifications" = "уведомления";
@@ -298,7 +298,7 @@
 "open iOS Settings" = "открыть настройки iOS";
 "optional" = "необязательный";
 "options" = "параметры";
-"outcome" = "результат";
+"outcome" = "траты";
 "override current work and add a new article" = "переопределить текущую работу и добавить новую статью";
 "owned" = "принадлежит";
 "passcode" = "пин-код";

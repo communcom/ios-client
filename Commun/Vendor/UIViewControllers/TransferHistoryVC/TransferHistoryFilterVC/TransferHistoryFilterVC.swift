@@ -18,9 +18,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
     lazy var segmentedControl = TransferHistorySegmentedControl(height: 60 * Config.heightRatio)
     lazy var typeSegmentedControl = TransferHistoryTopTabBar(height: 35, labels: ["transfer".localized().uppercaseFirst, "convert".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
     
-    // TODO: - Uncomment when filter by rewards is ready
-//    lazy var rewardsSegmentedControl = TransferHistoryTopTabBar(height: 50, labels: ["post".localized().uppercaseFirst, "like".localized().uppercaseFirst, "comment".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
-    lazy var rewardsSegmentedControl = CMTopTabBar(height: 35, labels: ["all".localized().uppercaseFirst, "none".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
+    lazy var rewardsSegmentedControl = CMTopTabBar(height: 35, labels: ["all".localized().uppercaseFirst, "noone".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
     
     // MARK: - Initializers
     init(filter: TransferHistoryListFetcher.Filter) {
