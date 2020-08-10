@@ -91,7 +91,7 @@ extension ResponseAPIGetNotificationItem {
                     .normal("\"")
                     .normal(post?.shortText ?? "")
                     .normal("\"")
-                    .normal(" с ")
+                    .normal(" ")
                     .text("\(amount ?? "0") \(community?.name ?? pointType ?? "points")", weight: .medium, color: .appMainColor)
             default:
                 aStr.normal("you've got a new notification".localized().uppercaseFirst)
