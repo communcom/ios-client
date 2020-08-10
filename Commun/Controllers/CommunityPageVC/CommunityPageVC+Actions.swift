@@ -44,7 +44,7 @@ extension CommunityPageVC {
                 self.hideHud()
                 self.showAlert(
                     title: "community unhidden".localized().uppercaseFirst,
-                    message: "You've unhidden" + " \(self.viewModel.profile.value?.communityId ?? "this community")" + ".") { _ in
+                    message: "you've unhidden".localized().uppercaseFirst + " \(self.viewModel.profile.value?.communityId ?? "this community")" + ".") { _ in
                         var profile = self.viewModel.profile.value
                         profile?.isInBlacklist = false
                         profile?.notifyChanged()
