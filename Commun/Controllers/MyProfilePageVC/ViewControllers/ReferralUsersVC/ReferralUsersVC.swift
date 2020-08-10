@@ -78,6 +78,10 @@ class ReferralUsersVC: SubsViewController<ResponseAPIContentGetProfile, Subscrib
                 self.headerView.textField.sendActions(for: .valueChanged)
             }) { (error) in
                 self.hideHud()
+                var error = error.cmError
+                if error.description == "Data should Not have additional properties" {
+                    error = CMError.invalidRequest(message: "Invalid referralId")
+                }
                 self.showError(error)
             }
             .disposed(by: disposeBag)

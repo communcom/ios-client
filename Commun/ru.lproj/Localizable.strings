@@ -210,6 +210,7 @@
 "interface language" = "язык интерфейса";
 "interesting first" = "сначала интересные";
 "invalid email address" = "неправильный адрес электронной почты";
+"Invalid referralId" = "Неправильный реферальный код";
 "invite a friend and get 1 Commun" = "пригласите друга и получите 1 Commun, когда он зарегистрируется";
 "is following you" = "подписался на Вас";
 "is missing" = "отсутствует";
