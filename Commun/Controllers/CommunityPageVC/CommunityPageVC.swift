@@ -508,13 +508,13 @@ extension CommunityPageVC: UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let item = viewModel.items.value[safe: indexPath.row] else {
             return
         }
         
         switch item {
-        case let post as ResponseAPIContentGetPost:
+        case var post as ResponseAPIContentGetPost:
             (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] = cell.bounds.height
             
             // record post view
@@ -525,6 +525,18 @@ extension CommunityPageVC: UITableViewDelegate {
                 {
                     post.markAsViewed().disposed(by: self.disposeBag)
                 }
+            }
+            
+            // hide donation buttons when cell was removed
+            if !tableView.isCellVisible(indexPath: indexPath), post.showDonationButtons == true {
+                post.showDonationButtons = false
+                post.notifyChanged()
+            }
+            
+            // hide donators when cell was removed
+            if !tableView.isCellVisible(indexPath: indexPath), post.showDonator == true {
+                post.showDonator = false
+                post.notifyChanged()
             }
         case let leader as ResponseAPIContentGetLeader:
             (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] = cell.bounds.height

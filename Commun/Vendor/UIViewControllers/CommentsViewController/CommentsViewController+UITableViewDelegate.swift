@@ -31,10 +31,22 @@ extension CommentsViewController: UITableViewDelegate {
         return viewModel.rowHeights[comment.identity] ?? 88
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let comment = commentAtIndexPath(indexPath)
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard var comment = commentAtIndexPath(indexPath)
         else {return}
         viewModel.rowHeights[comment.identity] = cell.bounds.height
+        
+        // hide donation buttons when cell was removed
+        if !tableView.isCellVisible(indexPath: indexPath), comment.showDonationButtons == true {
+            comment.showDonationButtons = false
+            comment.notifyChanged()
+        }
+        
+        // hide donators when cell was removed
+        if !tableView.isCellVisible(indexPath: indexPath), comment.showDonator == true {
+            comment.showDonator = false
+            comment.notifyChanged()
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

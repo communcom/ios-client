@@ -63,9 +63,15 @@ class PostPageVC: CommentsViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if isMovingFromParent, var post = post, post.showDonationButtons == true {
-            post.showDonationButtons = false
-            post.notifyChanged()
+        if isMovingFromParent, var post = post {
+            if post.showDonationButtons == true {
+                post.showDonationButtons = false
+                post.notifyChanged()
+            }
+            if post.showDonator == true {
+                post.showDonator = false
+                post.notifyChanged()
+            }
         }
     }
     

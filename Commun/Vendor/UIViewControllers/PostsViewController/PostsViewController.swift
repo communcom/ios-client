@@ -156,5 +156,11 @@ extension PostsViewController: UITableViewDelegate {
             post.showDonationButtons = false
             post.notifyChanged()
         }
+        
+        // hide donators when cell was removed
+        if !tableView.isCellVisible(indexPath: indexPath), post.showDonator == true {
+            post.showDonator = false
+            post.notifyChanged()
+        }
     }
 }

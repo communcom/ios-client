@@ -39,13 +39,13 @@ extension UserProfilePageVC: UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let item = viewModel.items.value[safe: indexPath.row] else {
             return
         }
         
         switch item {
-        case let post as ResponseAPIContentGetPost:
+        case var post as ResponseAPIContentGetPost:
             (viewModel as! UserProfilePageViewModel).postsVM.rowHeights[post.identity] = cell.bounds.height
             
             // record post view
@@ -56,6 +56,18 @@ extension UserProfilePageVC: UITableViewDelegate {
                 {
                     post.markAsViewed().disposed(by: self.disposeBag)
                 }
+            }
+            
+            // hide donation buttons when cell was removed
+            if !tableView.isCellVisible(indexPath: indexPath), post.showDonationButtons == true {
+                post.showDonationButtons = false
+                post.notifyChanged()
+            }
+            
+            // hide donators when cell was removed
+            if !tableView.isCellVisible(indexPath: indexPath), post.showDonator == true {
+                post.showDonator = false
+                post.notifyChanged()
             }
         case let comment as ResponseAPIContentGetComment:
             (viewModel as! UserProfilePageViewModel).commentsVM.rowHeights[comment.identity] = cell.bounds.height
