@@ -35,8 +35,22 @@ class CMHorizontalTabBar: MyView {
     }
     
     var isMultipleSelectionEnabled: Bool
+    var canChooseNone: Bool = false
     
+    // MARK: - handler
     var selectedIndexesDidChange: (([Int]) -> Void)?
+    
+    // MARK: - Computed properties
+    var selectedIndex: Int? {
+        get { selectedIndexes.first }
+        set {
+            if newValue != nil {
+                selectedIndexes.appendIfNotContains(newValue!)
+            } else {
+                selectedIndexes = []
+            }
+        }
+    }
     
     // MARK: - Subviews
     private lazy var scrollView: ContentHuggingScrollView = {
@@ -103,7 +117,7 @@ class CMHorizontalTabBar: MyView {
         
         // remove selection
         if selectedIndexes.contains(index) {
-            if isMultipleSelectionEnabled || selectedIndexes.count > 1 {
+            if isMultipleSelectionEnabled || selectedIndexes.count > 1 || canChooseNone {
                 selectedIndexes = selectedIndexes.removeAll(index)
             }
             return

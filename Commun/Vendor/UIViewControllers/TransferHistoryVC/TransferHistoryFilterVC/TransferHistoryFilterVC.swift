@@ -20,14 +20,17 @@ class TransferHistoryFilterVC: BottomMenuVC {
         smControl.labels = ["all".localized().uppercaseFirst, "income".localized().uppercaseFirst, "outcome".localized().uppercaseFirst]
         return smControl
     }()
-    lazy var typeSegmentedControl = TransferHistoryTopTabBar(height: 35, labels: ["transfer".localized().uppercaseFirst, "convert".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
     
-    lazy var rewardsSegmentedControl = CMTopTabBar(height: 35, labels: ["all".localized().uppercaseFirst, "noone".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
+    lazy var typeSegmentedControl: CMHorizontalTabBar = {
+        let sc = CMHorizontalTabBar(height: 35)
+        sc.labels = ["transfer".localized().uppercaseFirst, "convert".localized().uppercaseFirst]
+        sc.canChooseNone = true
+        return sc
+    }()
     
-    lazy var testSC: CMHorizontalTabBar = {
-        let sc = CMHorizontalTabBar(height: 35, isMultipleSelectionEnabled: true)
-        sc.labels = ["all".localized().uppercaseFirst, "income".localized().uppercaseFirst, "outcome".localized().uppercaseFirst]
-        sc.selectedIndexes = [0]
+    lazy var rewardsSegmentedControl: CMHorizontalTabBar = {
+        let sc = CMHorizontalTabBar(height: 35)
+        sc.labels = ["all".localized().uppercaseFirst, "noone".localized().uppercaseFirst]
         return sc
     }()
     
@@ -103,7 +106,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
         }
         
         var transferType = "all"
-        switch typeSegmentedControl.selectedIndex.value {
+        switch typeSegmentedControl.selectedIndex {
         case 0:
             transferType = "transfer"
         case 1:
@@ -113,7 +116,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
         }
         
         var rewards: String?
-        switch rewardsSegmentedControl.selectedIndex.value {
+        switch rewardsSegmentedControl.selectedIndex {
         case 0:
             rewards = "all"
         case 1:
@@ -149,27 +152,27 @@ class TransferHistoryFilterVC: BottomMenuVC {
         // filter by transferType
         switch filter.transferType {
         case "all":
-            typeSegmentedControl.selectedIndex.accept(-1)
+            typeSegmentedControl.selectedIndex = nil
         case "transfer":
-            typeSegmentedControl.selectedIndex.accept(0)
+            typeSegmentedControl.selectedIndex = 0
         case "convert":
-            typeSegmentedControl.selectedIndex.accept(1)
+            typeSegmentedControl.selectedIndex = 1
         default:
-            typeSegmentedControl.selectedIndex.accept(-1)
+            typeSegmentedControl.selectedIndex = nil
         }
         
         // filter by rewards
         switch filter.rewards {
         case "all":
-            rewardsSegmentedControl.selectedIndex.accept(0)
+            rewardsSegmentedControl.selectedIndex = 0
         case "none":
-            rewardsSegmentedControl.selectedIndex.accept(1)
+            rewardsSegmentedControl.selectedIndex = 1
 //        case "like":
 //            rewardsSegmentedControl.selectedIndex.accept(1)
 //        case "comment":
 //            rewardsSegmentedControl.selectedIndex.accept(2)
         default:
-            rewardsSegmentedControl.selectedIndex.accept(0)
+            rewardsSegmentedControl.selectedIndex = 0
 //            rewardsSegmentedControl.selectedIndex.accept(-1)
         }
     }
