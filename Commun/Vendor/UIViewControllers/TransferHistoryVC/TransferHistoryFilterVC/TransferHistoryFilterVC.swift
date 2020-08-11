@@ -29,8 +29,15 @@ class TransferHistoryFilterVC: BottomMenuVC {
     }()
     
     lazy var rewardsSegmentedControl: CMHorizontalTabBar = {
+        let sc = CMHorizontalTabBar(height: 35, isMultipleSelectionEnabled: true)
+        sc.labels = ["rewards".localized().uppercaseFirst, "claim".localized().uppercaseFirst, "donations".localized().uppercaseFirst]
+        sc.canChooseNone = true
+        return sc
+    }()
+    
+    lazy var likeDislikeSegmentedControl: CMHorizontalTabBar = {
         let sc = CMHorizontalTabBar(height: 35)
-        sc.labels = ["all".localized().uppercaseFirst, "noone".localized().uppercaseFirst]
+        sc.labels = ["like".localized().uppercaseFirst, "dislike".localized().uppercaseFirst]
         return sc
     }()
     
@@ -60,6 +67,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
         // add subviews
         let typeLabel = UILabel.with(text: "type".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appGrayColor)
         let rewardsLabel = UILabel.with(text: "rewards".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appGrayColor)
+        let likeDislikeLabel = UILabel.with(text: "like".localized().uppercaseFirst + "/" + "dislike".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appGrayColor)
         let saveButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save".localized().uppercaseFirst, isHuggingContent: false)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         
@@ -72,6 +80,8 @@ class TransferHistoryFilterVC: BottomMenuVC {
             typeSegmentedControl,
             rewardsLabel,
             rewardsSegmentedControl,
+            likeDislikeLabel,
+            likeDislikeSegmentedControl,
             saveButton,
             clearAllButton
         ])
@@ -79,6 +89,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
         segmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         typeSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         rewardsSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        likeDislikeSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         saveButton.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         clearAllButton.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
@@ -86,7 +97,9 @@ class TransferHistoryFilterVC: BottomMenuVC {
         stackView.setCustomSpacing(20 * Config.heightRatio, after: typeLabel)
         stackView.setCustomSpacing(30 * Config.heightRatio, after: typeSegmentedControl)
         stackView.setCustomSpacing(20 * Config.heightRatio, after: rewardsLabel)
-        stackView.setCustomSpacing(40 * Config.heightRatio, after: rewardsSegmentedControl)
+        stackView.setCustomSpacing(30 * Config.heightRatio, after: rewardsSegmentedControl)
+        stackView.setCustomSpacing(20 * Config.heightRatio, after: likeDislikeLabel)
+        stackView.setCustomSpacing(40 * Config.heightRatio, after: likeDislikeSegmentedControl)
         stackView.setCustomSpacing(10, after: saveButton)
         
         // assign first value
@@ -115,17 +128,26 @@ class TransferHistoryFilterVC: BottomMenuVC {
             break
         }
         
-        var rewards: String?
-        switch rewardsSegmentedControl.selectedIndex {
-        case 0:
+        var rewards = "none"
+        var claim = "none"
+        var donation = "none"
+        
+        if rewardsSegmentedControl.selectedIndexes.contains(0) {
             rewards = "all"
-        case 1:
-            rewards = "none"
-        default:
-            break
+        }
+        if rewardsSegmentedControl.selectedIndexes.contains(1) {
+            claim = "all"
+        }
+        if rewardsSegmentedControl.selectedIndexes.contains(2) {
+            donation = "all"
         }
         
-        let filter = TransferHistoryListFetcher.Filter(userId: originFilter.userId, direction: direction, transferType: transferType, symbol: originFilter.symbol, rewards: rewards)
+        var holdType = "like"
+        if likeDislikeSegmentedControl.selectedIndex == 1 {
+            holdType = "dislike"
+        }
+        
+        let filter = TransferHistoryListFetcher.Filter(userId: originFilter.userId, direction: direction, transferType: transferType, rewards: rewards, donation: donation, claim: claim, holdType: holdType, symbol: originFilter.symbol)
         
         dismiss(animated: true) {
             self.completion?(filter)
@@ -133,7 +155,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
     }
     
     @objc func reset() {
-        setUp(with: TransferHistoryListFetcher.Filter(userId: originFilter.userId, direction: "all", transferType: nil, symbol: originFilter.symbol, rewards: nil))
+        setUp(with: originFilter)
     }
     
     private func setUp(with filter: TransferHistoryListFetcher.Filter) {
@@ -162,18 +184,20 @@ class TransferHistoryFilterVC: BottomMenuVC {
         }
         
         // filter by rewards
-        switch filter.rewards {
-        case "all":
-            rewardsSegmentedControl.selectedIndex = 0
-        case "none":
-            rewardsSegmentedControl.selectedIndex = 1
-//        case "like":
-//            rewardsSegmentedControl.selectedIndex.accept(1)
-//        case "comment":
-//            rewardsSegmentedControl.selectedIndex.accept(2)
+        var selectedRewards = [Int]()
+        if filter.rewards == "all" {selectedRewards.append(0)}
+        if filter.claim == "all" {selectedRewards.append(1)}
+        if filter.donation == "all" {selectedRewards.append(2)}
+        rewardsSegmentedControl.selectedIndexes = selectedRewards
+        
+        // filter by holdType
+        switch filter.holdType {
+        case "like":
+            likeDislikeSegmentedControl.selectedIndex = 0
+        case "dislike":
+            likeDislikeSegmentedControl.selectedIndex = 1
         default:
-            rewardsSegmentedControl.selectedIndex = 0
-//            rewardsSegmentedControl.selectedIndex.accept(-1)
+            break
         }
     }
 }

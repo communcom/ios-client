@@ -14,7 +14,7 @@ class TransferHistoryViewModel: ListViewModel<ResponseAPIWalletGetTransferHistor
     var filter: BehaviorRelay<TransferHistoryListFetcher.Filter>
     
     init(symbol: String? = nil) {
-        let filter = TransferHistoryListFetcher.Filter(userId: Config.currentUser?.id, direction: "all", transferType: nil, symbol: symbol, rewards: nil)
+        let filter = TransferHistoryListFetcher.Filter(userId: Config.currentUser?.id , symbol: symbol)
         self.filter = BehaviorRelay<TransferHistoryListFetcher.Filter>(value: filter)
         super.init(fetcher: TransferHistoryListFetcher(filter: filter))
         defer {
