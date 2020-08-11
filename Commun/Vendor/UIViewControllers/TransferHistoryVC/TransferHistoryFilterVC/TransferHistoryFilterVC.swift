@@ -172,7 +172,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
 //        case "comment":
 //            rewardsSegmentedControl.selectedIndex.accept(2)
         default:
-            rewardsSegmentedControl.selectedIndex = nil
+            rewardsSegmentedControl.selectedIndex = 0
 //            rewardsSegmentedControl.selectedIndex.accept(-1)
         }
     }
