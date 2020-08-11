@@ -385,6 +385,7 @@
 		BC923E152431A76D00B28413 /* BaseVerifyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E142431A76D00B28413 /* BaseVerifyVC.swift */; };
 		BC923E182431AB2600B28413 /* VerifyEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E172431AB2600B28413 /* VerifyEmailVC.swift */; };
 		BC93656224E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC93656124E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift */; };
+		BC93656624E24FF300438012 /* CMHorizontalTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC93656524E24FF300438012 /* CMHorizontalTabBar.swift */; };
 		BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */; };
 		BC99B65A23E17848004AA74E /* UISearchController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */; };
 		BC9A1EFE24CEB89E007BDB3A /* MyProfileAddContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1EFD24CEB89E007BDB3A /* MyProfileAddContactVC.swift */; };
@@ -948,6 +949,7 @@
 		BC923E142431A76D00B28413 /* BaseVerifyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVerifyVC.swift; sourceTree = "<group>"; };
 		BC923E172431AB2600B28413 /* VerifyEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailVC.swift; sourceTree = "<group>"; };
 		BC93656124E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordUsingMasterPasswordVC.swift; sourceTree = "<group>"; };
+		BC93656524E24FF300438012 /* CMHorizontalTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHorizontalTabBar.swift; sourceTree = "<group>"; };
 		BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorChooseCommunityVC.swift; sourceTree = "<group>"; };
 		BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchController+Extensions.swift"; sourceTree = "<group>"; };
 		BC9A1EFD24CEB89E007BDB3A /* MyProfileAddContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileAddContactVC.swift; sourceTree = "<group>"; };
@@ -2619,6 +2621,7 @@
 				BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */,
 				BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */,
 				BC619B1C2372C1480005BB94 /* CMTopTabBar.swift */,
+				BC93656524E24FF300438012 /* CMHorizontalTabBar.swift */,
 				BC597A7B238CBFE700103F4F /* CMPageControll.swift */,
 				BCCC33E923751A10004E46EF /* VoteContainerView.swift */,
 				BC8481FD245826D40099C7C5 /* CMLabel.swift */,
@@ -3738,6 +3741,7 @@
 				BC8F814523E27ECE0024C04A /* WalletTableHeaderView.swift in Sources */,
 				BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */,
 				BCEFA6422492149900971E77 /* DonationsVC.swift in Sources */,
+				BC93656624E24FF300438012 /* CMHorizontalTabBar.swift in Sources */,
 				BCB64772244ED65600C94B84 /* SwipeBackNavigationController.swift in Sources */,
 				BC9066E723A9D48A000F9A3B /* TransferHistoryVC.swift in Sources */,
 				BC69F7D8236FF6790097F870 /* SubscriptionsCommunityCell.swift in Sources */,
