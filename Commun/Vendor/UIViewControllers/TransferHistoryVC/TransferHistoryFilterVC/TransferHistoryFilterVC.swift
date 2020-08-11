@@ -22,9 +22,8 @@ class TransferHistoryFilterVC: BottomMenuVC {
     }()
     
     lazy var typeSegmentedControl: CMHorizontalTabBar = {
-        let sc = CMHorizontalTabBar(height: 35)
+        let sc = CMHorizontalTabBar(height: 35, isMultipleSelectionEnabled: true)
         sc.labels = ["transfer".localized().uppercaseFirst, "convert".localized().uppercaseFirst]
-        sc.canChooseNone = true
         return sc
     }()
     
@@ -119,14 +118,8 @@ class TransferHistoryFilterVC: BottomMenuVC {
         }
         
         var transferType = "all"
-        switch typeSegmentedControl.selectedIndex {
-        case 0:
-            transferType = "transfer"
-        case 1:
-            transferType = "convert"
-        default:
-            break
-        }
+        if typeSegmentedControl.selectedIndexes == [0] {transferType = "transfer"}
+        if typeSegmentedControl.selectedIndexes == [1] {transferType = "convert"}
         
         var rewards = "none"
         var claim = "none"
@@ -173,14 +166,12 @@ class TransferHistoryFilterVC: BottomMenuVC {
         
         // filter by transferType
         switch filter.transferType {
-        case "all":
-            typeSegmentedControl.selectedIndex = nil
         case "transfer":
-            typeSegmentedControl.selectedIndex = 0
+            typeSegmentedControl.selectedIndexes = [0]
         case "convert":
-            typeSegmentedControl.selectedIndex = 1
+            typeSegmentedControl.selectedIndexes = [1]
         default:
-            typeSegmentedControl.selectedIndex = nil
+            typeSegmentedControl.selectedIndexes = [0, 1]
         }
         
         // filter by rewards
