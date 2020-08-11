@@ -15,7 +15,11 @@ class TransferHistoryFilterVC: BottomMenuVC {
     var completion: ((TransferHistoryListFetcher.Filter) -> Void)?
     
     // MARK: - Subviews
-    lazy var segmentedControl = TransferHistorySegmentedControl(height: 60 * Config.heightRatio)
+    lazy var segmentedControl: TransferHistorySegmentedControl = {
+        let smControl = TransferHistorySegmentedControl(height: 60 * Config.heightRatio)
+        smControl.labels = ["all".localized().uppercaseFirst, "income".localized().uppercaseFirst, "outcome".localized().uppercaseFirst]
+        return smControl
+    }()
     lazy var typeSegmentedControl = TransferHistoryTopTabBar(height: 35, labels: ["transfer".localized().uppercaseFirst, "convert".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
     
     lazy var rewardsSegmentedControl = CMTopTabBar(height: 35, labels: ["all".localized().uppercaseFirst, "noone".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
@@ -34,8 +38,6 @@ class TransferHistoryFilterVC: BottomMenuVC {
     override func setUp() {
         super.setUp()
         title = "filter".localized().uppercaseFirst
-        
-        segmentedControl.labels = ["all".localized().uppercaseFirst, "income".localized().uppercaseFirst, "outcome".localized().uppercaseFirst]
         
         view.addSubview(segmentedControl)
         segmentedControl.autoPinEdge(.top, to: .bottom, of: closeButton, withOffset: 24 * Config.heightRatio)
