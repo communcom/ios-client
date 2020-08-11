@@ -85,6 +85,7 @@
 "change cover photo" = "изменить обложку";
 "change to" = "сменить на";
 "change position" = "изменить положение";
+"changing password" = "cмена пароля";
 "characters" = "символы";
 "check your Internet connection" = "проверьте свое интернет соединение \nи попробуйте еще раз";
 "choose community" = "выбрать сообщество";
@@ -512,7 +513,7 @@
 "you've blocked" = "Вы заблокировали";
 "you've got" = "у Вас есть";
 "you've got a new notification" = "есть новое уведомление";
-"you've hidden" = "вы скырили";
+"you've hidden" = "вы скрыли";
 "you've unblocked" = "Вы разблокировали";
 "you've unhidden" = "Вы раскрыли";
 "your email address" = "электронная почта";
