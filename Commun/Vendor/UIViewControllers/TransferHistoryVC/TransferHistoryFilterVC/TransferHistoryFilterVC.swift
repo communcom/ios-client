@@ -24,6 +24,13 @@ class TransferHistoryFilterVC: BottomMenuVC {
     
     lazy var rewardsSegmentedControl = CMTopTabBar(height: 35, labels: ["all".localized().uppercaseFirst, "noone".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
     
+    lazy var testSC: CMHorizontalTabBar = {
+        let sc = CMHorizontalTabBar(height: 35, isMultipleSelectionEnabled: true)
+        sc.labels = ["all".localized().uppercaseFirst, "income".localized().uppercaseFirst, "outcome".localized().uppercaseFirst]
+        sc.selectedIndexes = [0]
+        return sc
+    }()
+    
     // MARK: - Initializers
     init(filter: TransferHistoryListFetcher.Filter) {
         self.originFilter = filter
@@ -39,50 +46,45 @@ class TransferHistoryFilterVC: BottomMenuVC {
         super.setUp()
         title = "filter".localized().uppercaseFirst
         
-        view.addSubview(segmentedControl)
-        segmentedControl.autoPinEdge(.top, to: .bottom, of: closeButton, withOffset: 24 * Config.heightRatio)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
+        // add stackViews
+        let stackView = UIStackView(axis: .vertical, alignment: .leading, distribution: .fill)
+        view.addSubview(stackView)
+        stackView.autoPinEdge(.top, to: .bottom, of: closeButton, withOffset: 24 * Config.heightRatio)
+        stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
+        stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
+        stackView.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16)
         
-        // type
+        // add subviews
         let typeLabel = UILabel.with(text: "type".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appGrayColor)
-        view.addSubview(typeLabel)
-        typeLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        typeLabel.autoPinEdge(.top, to: .bottom, of: segmentedControl, withOffset: 30 * Config.heightRatio)
-        
-        view.addSubview(typeSegmentedControl)
-        typeSegmentedControl.autoPinEdge(.top, to: .bottom, of: typeLabel, withOffset: 20 * Config.heightRatio)
-        typeSegmentedControl.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        typeSegmentedControl.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
-        
-        // reward
         let rewardsLabel = UILabel.with(text: "rewards".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appGrayColor)
-        view.addSubview(rewardsLabel)
-        rewardsLabel.autoPinEdge(.top, to: .bottom, of: typeSegmentedControl, withOffset: 30 * Config.heightRatio)
-        rewardsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        
-        view.addSubview(rewardsSegmentedControl)
-        rewardsSegmentedControl.autoPinEdge(.top, to: .bottom, of: rewardsLabel, withOffset: 20 * Config.heightRatio)
-        rewardsSegmentedControl.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        rewardsSegmentedControl.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
-        
-        // save
         let saveButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save".localized().uppercaseFirst, isHuggingContent: false)
-        view.addSubview(saveButton)
-        saveButton.autoPinEdge(.top, to: .bottom, of: rewardsSegmentedControl, withOffset: 40 * Config.heightRatio)
-        saveButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        saveButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         
-        let cleanAllButton = UIButton(height: 50 * Config.heightRatio, label: "clean all".localized().uppercaseFirst, labelFont: UIFont.systemFont(ofSize: 15, weight: .semibold), backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 50 * Config.heightRatio / 2)
-        view.addSubview(cleanAllButton)
-        cleanAllButton.autoPinEdge(.top, to: .bottom, of: saveButton, withOffset: 10)
-        cleanAllButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        cleanAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
-        cleanAllButton.addTarget(self, action: #selector(reset), for: .touchUpInside)
+        let clearAllButton = UIButton(height: 50 * Config.heightRatio, label: "clear all".localized().uppercaseFirst, labelFont: UIFont.systemFont(ofSize: 15, weight: .semibold), backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 50 * Config.heightRatio / 2)
+        clearAllButton.addTarget(self, action: #selector(reset), for: .touchUpInside)
         
-        // pin bottom
-        cleanAllButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16)
+        stackView.addArrangedSubviews([
+            segmentedControl,
+            typeLabel,
+            typeSegmentedControl,
+            rewardsLabel,
+            rewardsSegmentedControl,
+            saveButton,
+            clearAllButton
+        ])
+        
+        segmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        typeSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        rewardsSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        saveButton.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        clearAllButton.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        stackView.setCustomSpacing(30 * Config.heightRatio, after: segmentedControl)
+        stackView.setCustomSpacing(20 * Config.heightRatio, after: typeLabel)
+        stackView.setCustomSpacing(30 * Config.heightRatio, after: typeSegmentedControl)
+        stackView.setCustomSpacing(20 * Config.heightRatio, after: rewardsLabel)
+        stackView.setCustomSpacing(40 * Config.heightRatio, after: rewardsSegmentedControl)
+        stackView.setCustomSpacing(10, after: saveButton)
         
         // assign first value
         setUp(with: originFilter)
