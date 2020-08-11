@@ -23,13 +23,13 @@ class TransferHistoryFilterVC: BottomMenuVC {
     
     lazy var typeSegmentedControl: CMHorizontalTabBar = {
         let sc = CMHorizontalTabBar(height: 35, isMultipleSelectionEnabled: true)
-        sc.labels = ["transfer".localized().uppercaseFirst, "convert".localized().uppercaseFirst]
+        sc.labels = ["transfer".localized().uppercaseFirst, "convert type".localized().uppercaseFirst]
         return sc
     }()
     
     lazy var rewardsSegmentedControl: CMHorizontalTabBar = {
         let sc = CMHorizontalTabBar(height: 35, isMultipleSelectionEnabled: true)
-        sc.labels = ["rewards".localized().uppercaseFirst, "claim".localized().uppercaseFirst, "donations".localized().uppercaseFirst]
+        sc.labels = ["rewards".localized().uppercaseFirst, "claim".localized().uppercaseFirst, "donations type".localized().uppercaseFirst]
         sc.canChooseNone = true
         return sc
     }()

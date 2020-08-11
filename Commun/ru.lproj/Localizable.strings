@@ -92,6 +92,7 @@
 "choose communities of interest and" = "выбирайте сообщества по интересам и";
 "choose community in which you want" = "выберите сообщество, в котором Вы хотите создать пост";
 "choose from gallery" = "выбрать из галереи";
+"claim" = "клейм";
 "clear all" = "очистить все";
 "clear formatting" = "очистить форматирование";
 "close" = "закрыть";
@@ -117,6 +118,7 @@
 "continue with" = "Использовать";
 "continue with Master Password" = "Использовать мастер-пароль";
 "convert" = "конвертировать";
+"convert type" = "обмен";
 "copied to clipboard" = "скопировано в буфер обмена";
 "copy" = "копировать";
 "cover photo" = "обложка";
@@ -134,6 +136,7 @@
 "describe the problem" = "опишите проблему";
 "description" = "описание";
 "description not found" = "нет описания";
+"dislike" = "дизлайк";
 "do you really want to" = "Вы действительно хотите";
 "do you really want to delete this post" = "Вы действительно хотите удалить это сообщение?";
 "do you really want to logout?" = "Вы действительно хотите выйти?";
@@ -145,6 +148,7 @@
 "don't have an account?" = "нет аккаунта?";
 "don't show this again" = "больше не показывать";
 "donation" = "пожертвование";
+"donations type" = "донаты";
 "donations" = "пожертвования";
 "done" = "готово";
 "double your points" = "удвойте свои поинты";
@@ -207,7 +211,7 @@
 "identify yourself!" = "идентифицировать себя!";
 "if someone is in immediate danger" = "если кто-то находится в непосредственной опасности, позвоните в местную аварийную службу. Не ждите.";
 "in top" = "в топе";
-"income" = "доход";
+"income" = "входящие";
 "info" = "информация";
 "interface language" = "язык интерфейса";
 "interesting first" = "сначала интересные";
@@ -226,6 +230,7 @@
 "learn more" = "подробнее";
 "left a comment" = "оставил комментарий";
 "let us notify you about receiving rewards" = "Разрешите нам уведомлять Вас о получении вознаграждений, ответов или голосов! Следите за самыми важными и приятными событиями";
+"like" = "лайк";
 "liked" = "понравилось";
 "loading" = "загрузка";
 "loading embed" = "загрузка миниатюры";
@@ -300,7 +305,7 @@
 "open iOS Settings" = "открыть настройки iOS";
 "optional" = "необязательный";
 "options" = "параметры";
-"outcome" = "траты";
+"outcome" = "исходящие";
 "override current work and add a new article" = "переопределить текущую работу и добавить новую статью";
 "owned" = "принадлежит";
 "passcode" = "пин-код";

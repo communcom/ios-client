@@ -93,6 +93,7 @@
 "choose communities of interest and" = "choose communities of interest and";
 "choose community in which you want" = "choose community in which you want to create a post";
 "choose from gallery" = "choose from gallery";
+"claim" = "claim";
 "clear all" = "clear all";
 "clear formatting" = "clear formatting";
 "close" = "close";
@@ -121,6 +122,7 @@
 "continue with" = "continue with";
 "continue with Master Password" = "continue with Master Password";
 "convert" = "convert";
+"convert type" = "convert";
 "copied to clipboard" = "copied to clipboard";
 "copy" = "copy";
 "cover photo" = "cover photo";
@@ -138,6 +140,7 @@
 "describe the problem" = "describe the problem";
 "description" = "description";
 "description not found" = "description not found";
+"dislike" = "dislike";
 "do you really want to" = "do you really want to";
 "do you really want to delete this post" = "do you really want to delete this post";
 "do you really want to logout?" = "Do you really want to logout?";
@@ -150,6 +153,7 @@
 "don't have an account?" = "don't have an account?";
 "don't show this again" = "don't show this again";
 "donation" = "donation";
+"donations type" = "donations";
 "donations" = "donations";
 "done" = "done";
 "double your points" = "double your points";
@@ -233,6 +237,7 @@
 "learn more" = "learn more";
 "left a comment" = "left a comment";
 "let us notify you about receiving rewards" = "let us notify you about receiving rewards, replies, or upvotes! Stay tuned for the most important and pleasant activities on Commun";
+"like" = "like";
 "liked" = "liked";
 "links" = "links";
 "loading" = "loading";
