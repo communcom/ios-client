@@ -33,4 +33,14 @@ class ChangePasswordVC: CreatePasswordVC {
     override func backButtonDidTouch() {
         back()
     }
+    
+    override func openGenerateMasterPasswordVC() {
+        let vc = ChangePasswordUsingMasterPasswordVC()
+        vc.completion = {
+            vc.back()
+            self.completion?()
+            self.back()
+        }
+        show(vc, sender: nil)
+    }
 }

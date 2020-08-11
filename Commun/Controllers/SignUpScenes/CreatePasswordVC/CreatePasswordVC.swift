@@ -149,11 +149,15 @@ class CreatePasswordVC: BaseSignUpVC, SignUpRouter {
             ignoreButtonLabel: "continue with Master Password".localized().uppercaseFirst,
             ignoreAction: {
                 AnalyticsManger.shared.clickContinueMasterPassword()
-                let vc = GenerateMasterPasswordVC()
-                self.show(vc, sender: nil)
+                self.openGenerateMasterPasswordVC()
             }, backAction: {
                 AnalyticsManger.shared.clickBackMasterPassword()
             })
+    }
+    
+    func openGenerateMasterPasswordVC() {
+        let vc = GenerateMasterPasswordVC()
+        show(vc, sender: nil)
     }
     
     @objc override func nextButtonDidTouch() {

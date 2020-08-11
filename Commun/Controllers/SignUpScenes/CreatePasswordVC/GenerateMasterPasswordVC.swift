@@ -110,7 +110,7 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
                       backButtonLabel: "save to iCloud".localized().uppercaseFirst,
                       ignoreButtonLabel: "continue".localized().uppercaseFirst, ignoreAction: {
                             AnalyticsManger.shared.clickISaveItMasterPassword()
-                            self.toBlockchain()
+                            self.handlePassword()
                         }, backAction: {
                             AnalyticsManger.shared.clickBackupMasterPassword()
                             self.backupIcloudDidTouch()
@@ -132,13 +132,13 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
                         self?.backupAlert?.dismiss(animated: true, completion: nil)
                     }
                 } else {
-                    self?.toBlockchain(saveToIcloud: true)
+                    self?.handlePassword(saveToIcloud: true)
                 }
             }
         }
     }
     
-    private func toBlockchain(saveToIcloud: Bool = false) {
+    func handlePassword(saveToIcloud: Bool = false) {
         self.showIndetermineHudWithMessage("saving to blockchain")
         RestAPIManager.instance.toBlockChain(password: masterPassword)
             .subscribe(onCompleted: {

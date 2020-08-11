@@ -384,6 +384,7 @@
 		BC923E132431A29D00B28413 /* SignUpWithEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E122431A29D00B28413 /* SignUpWithEmailViewModel.swift */; };
 		BC923E152431A76D00B28413 /* BaseVerifyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E142431A76D00B28413 /* BaseVerifyVC.swift */; };
 		BC923E182431AB2600B28413 /* VerifyEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E172431AB2600B28413 /* VerifyEmailVC.swift */; };
+		BC93656224E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC93656124E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift */; };
 		BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */; };
 		BC99B65A23E17848004AA74E /* UISearchController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */; };
 		BC9A1EFE24CEB89E007BDB3A /* MyProfileAddContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1EFD24CEB89E007BDB3A /* MyProfileAddContactVC.swift */; };
@@ -946,6 +947,7 @@
 		BC923E122431A29D00B28413 /* SignUpWithEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWithEmailViewModel.swift; sourceTree = "<group>"; };
 		BC923E142431A76D00B28413 /* BaseVerifyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVerifyVC.swift; sourceTree = "<group>"; };
 		BC923E172431AB2600B28413 /* VerifyEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailVC.swift; sourceTree = "<group>"; };
+		BC93656124E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordUsingMasterPasswordVC.swift; sourceTree = "<group>"; };
 		BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorChooseCommunityVC.swift; sourceTree = "<group>"; };
 		BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchController+Extensions.swift"; sourceTree = "<group>"; };
 		BC9A1EFD24CEB89E007BDB3A /* MyProfileAddContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileAddContactVC.swift; sourceTree = "<group>"; };
@@ -2288,6 +2290,7 @@
 				BC73833124A2F50F006BB60F /* PasswordsVC.swift */,
 				BC2260AD24D8091E00A82D8D /* ChangePasswordVC.swift */,
 				BC2260B124D8093200A82D8D /* ChangePasswordVerifyVC.swift */,
+				BC93656124E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift */,
 			);
 			path = PasswordsVC;
 			sourceTree = "<group>";
@@ -3479,6 +3482,7 @@
 				AC8C57BD238C408A00B0D260 /* InstagramView.swift in Sources */,
 				BC34F97424CAC55600BDD816 /* MyProfileEditContactsVC.swift in Sources */,
 				BC31D1C12457D094000F5BE5 /* DonationUsersView.swift in Sources */,
+				BC93656224E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift in Sources */,
 				BC016D49235DA2AC00F1319F /* MyTableViewCell.swift in Sources */,
 				BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */,
 				BC7A88FB23FE73C300B8CF6E /* WalletAddFriendVC.swift in Sources */,
