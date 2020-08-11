@@ -41,15 +41,10 @@ class CMHorizontalTabBar: MyView {
     var selectedIndexesDidChange: (([Int]) -> Void)?
     
     // MARK: - Computed properties
+    /// for single selection
     var selectedIndex: Int? {
         get { selectedIndexes.first }
-        set {
-            if newValue != nil {
-                selectedIndexes.appendIfNotContains(newValue!)
-            } else {
-                selectedIndexes = []
-            }
-        }
+        set { selectedIndexes = newValue == nil ? [] : [newValue!]}
     }
     
     // MARK: - Subviews
