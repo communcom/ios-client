@@ -96,7 +96,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     }()
     
     lazy var manageCommunityBarButton: UIButton = {
-        let button = UIButton.settings()
+        let button = UIButton.settings(tintColor: .white)
         button.addTarget(self, action: #selector(manageCommunityButtonDidTouch), for: .touchUpInside)
         return button
     }()
@@ -360,35 +360,35 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
-        showCommunActionSheet(headerView: headerView, actions: [
-            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
-                                     icon: UIImage(named: "share"),
-                                     style: .default,
-                                     marginTop: 0,
-                                     handle: {
-                                        ShareHelper.share(urlString: self.shareWith(name: profile.alias ?? "", userID: currentUserID, isCommunity: true))
-            }),
-            CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
-                                     icon: UIImage(named: "profile_options_blacklist"),
-                                     tintColor: profile.isInBlacklist == true ? .appBlackColor: .appRedColor,
-                                     marginTop: 10,
-                                     handle: {
-                                        self.showAlert(
-                                            title: (profile.isInBlacklist == true ? "unhide community" : "hide community").localized().uppercaseFirst,
-                                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of" : "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
-                                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
-                                            highlightedButtonIndex: 1) { (index) in
-                                                if index != 0 {return}
-                                                if profile.isInBlacklist == true {
-                                                    self.unhideCommunity()
-                                                } else {
-                                                    self.hideCommunity()
-                                                }
-                                        }
-            })
-        ]) {
-            
-        }
+        showCMActionSheet(
+            headerView: headerView,
+            actions: [
+                CMActionSheet.Action.default(
+                    title: "share".localized().uppercaseFirst,
+                    iconName: "share",
+                    handle: {
+                        ShareHelper.share(urlString: self.shareWith(name: profile.alias ?? "", userID: currentUserID, isCommunity: true))
+                    }, bottomMargin: 10
+                ),
+                CMActionSheet.Action.default(
+                    title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
+                    iconName: "profile_options_blacklist",
+                    handle: {
+                        self.showAlert(
+                            title: (profile.isInBlacklist == true ? "unhide community" : "hide community").localized().uppercaseFirst,
+                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of" : "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
+                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
+                            highlightedButtonIndex: 1) { (index) in
+                                if index != 0 {return}
+                                if profile.isInBlacklist == true {
+                                    self.unhideCommunity()
+                                } else {
+                                    self.hideCommunity()
+                                }
+                        }
+                    })
+            ]
+        )
     }
 }
 

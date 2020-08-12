@@ -69,6 +69,14 @@ extension UIViewController {
         present(actionSheet, animated: true, completion: completion)
     }
     
+    func showCMActionSheet(headerView: UIView? = nil,
+                           title: String? = nil,
+                           actions: [CMActionSheet.Action],
+                           completion: (() -> Void)? = nil) {
+        let actionSheet = CMActionSheet(headerView: headerView, title: title, actions: actions)
+        present(actionSheet, animated: true, completion: completion)
+    }
+    
     func showGeneralError() {
         showErrorWithLocalizedMessage("Something went wrong.\nPlease try again later")
     }

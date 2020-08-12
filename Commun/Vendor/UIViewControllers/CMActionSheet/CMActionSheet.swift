@@ -16,6 +16,22 @@ class CMActionSheet: SwipeDownDismissViewController {
         var view: UIView
         var handle: (() -> Void)?
         var bottomMargin: CGFloat? = 0
+        
+        static func `default`(title: String, iconName: String, tintColor: UIColor = .appBlackColor, handle: (() -> Void)?, bottomMargin: CGFloat? = 10) -> Action {
+            let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+            let label = UILabel.with(text: title, textSize: 15, weight: .medium, textColor: tintColor)
+            let iconImageView = UIImageView(width: 24, height: 24, imageNamed: iconName)
+            stackView.addArrangedSubviews([label, iconImageView])
+            
+            let view = UIView(height: 50, backgroundColor: .appWhiteColor)
+            view.addSubview(stackView)
+            stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+            return Action(view: view, handle: handle, bottomMargin: bottomMargin)
+        }
+    }
+    
+    class TapGesture: UITapGestureRecognizer {
+        var action: Action?
     }
     
     // MARK: - Properties
@@ -25,7 +41,13 @@ class CMActionSheet: SwipeDownDismissViewController {
     
     // MARK: - Subviews
     lazy var headerStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-    lazy var closeButton = UIButton.close()
+    lazy var closeButton: UIButton = {
+        let button = UIButton.close(size: 30, backgroundColor: .appWhiteColor, tintColor: .appGrayColor)
+        button.imageEdgeInsets = UIEdgeInsets(inset: 3)
+        button.touchAreaEdgeInsets = UIEdgeInsets(inset: -7)
+        button.addTarget(self, action: #selector(closeButtonDidTouch(_:)), for: .touchUpInside)
+        return button
+    }()
     var headerView: UIView {
         didSet { configureHeader() }
     }
@@ -39,6 +61,8 @@ class CMActionSheet: SwipeDownDismissViewController {
         self.actions = actions
         self.headerView = headerView ?? UILabel.with(text: title, textSize: 15, weight: .bold, textAlignment: .center)
         super.init(nibName: nil, bundle: nil)
+        transitioningDelegate = self
+        modalPresentationStyle = .custom
     }
     
     required init?(coder: NSCoder) {
@@ -48,9 +72,12 @@ class CMActionSheet: SwipeDownDismissViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
+        view.backgroundColor = backgroundColor
+        
         // set up header
         view.addSubview(headerStackView)
-        headerStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
+        headerStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
         headerStackView.autoSetDimension(.height, toSize: 44)
         
         configureHeader()
@@ -62,21 +89,31 @@ class CMActionSheet: SwipeDownDismissViewController {
         actionStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         actionStackView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard(inset: 16)
         
-        actionStackView.cornerRadius = 10
-        
         setUpActions()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         for (index, action) in actions.enumerated() {
+            var roundingCorners = UIRectCorner()
+            
+            if index == 0 {
+                roundingCorners.insert([.topLeft, .topRight])
+            }
+            
+            if index == actions.count - 1 {
+                roundingCorners.insert([.bottomLeft, .bottomRight])
+            }
+            
             if action.bottomMargin != nil {
-                action.view.roundCorners([.bottomLeft, .bottomRight], radius: 10)
+                roundingCorners.insert([.bottomLeft, .bottomRight])
             }
             
             if let previousAction = actions[safe: index - 1], previousAction.bottomMargin != nil {
-                action.view.roundCorners([.topLeft, .topRight], radius: 10)
+                roundingCorners.insert([.topLeft, .topRight])
             }
+            
+            action.view.roundCorners(roundingCorners, radius: 10)
         }
     }
     
@@ -92,6 +129,25 @@ class CMActionSheet: SwipeDownDismissViewController {
         
         for action in actions {
             actionStackView.setCustomSpacing(action.bottomMargin ?? 2, after: action.view)
+        }
+        
+        actions.forEach { action in
+            action.view.isUserInteractionEnabled = true
+            let tapGesture = TapGesture(target: self, action: #selector(actionDidSelect(_:)))
+            tapGesture.action = action
+            action.view.addGestureRecognizer(tapGesture)
+        }
+    }
+    
+    // MARK: - Actions
+    @objc func closeButtonDidTouch(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func actionDidSelect(_ gesture: TapGesture) {
+        guard let action = gesture.action else {return}
+        dismiss(animated: true) {
+            action.handle?()
         }
     }
 }
