@@ -98,7 +98,7 @@ class GenerateMasterPasswordVC: BaseViewController, SignUpRouter {
     }
     
     @objc func copyButtonDidTouch() {
-        guard let key = Config.currentUser?.masterKey else {return}
+        guard let key = masterPassword else {return}
         UIPasteboard.general.string = key
         showDone("copied to clipboard".localized().uppercaseFirst)
         AnalyticsManger.shared.passwordCopy()
