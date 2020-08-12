@@ -386,6 +386,7 @@
 		BC923E182431AB2600B28413 /* VerifyEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC923E172431AB2600B28413 /* VerifyEmailVC.swift */; };
 		BC93656224E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC93656124E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift */; };
 		BC93656624E24FF300438012 /* CMHorizontalTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC93656524E24FF300438012 /* CMHorizontalTabBar.swift */; };
+		BC93656924E3B93500438012 /* ManageCommunityButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC93656824E3B93500438012 /* ManageCommunityButtonsView.swift */; };
 		BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */; };
 		BC99B65A23E17848004AA74E /* UISearchController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */; };
 		BC9A1EFE24CEB89E007BDB3A /* MyProfileAddContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1EFD24CEB89E007BDB3A /* MyProfileAddContactVC.swift */; };
@@ -950,6 +951,7 @@
 		BC923E172431AB2600B28413 /* VerifyEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailVC.swift; sourceTree = "<group>"; };
 		BC93656124E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordUsingMasterPasswordVC.swift; sourceTree = "<group>"; };
 		BC93656524E24FF300438012 /* CMHorizontalTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHorizontalTabBar.swift; sourceTree = "<group>"; };
+		BC93656824E3B93500438012 /* ManageCommunityButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCommunityButtonsView.swift; sourceTree = "<group>"; };
 		BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorChooseCommunityVC.swift; sourceTree = "<group>"; };
 		BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchController+Extensions.swift"; sourceTree = "<group>"; };
 		BC9A1EFD24CEB89E007BDB3A /* MyProfileAddContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileAddContactVC.swift; sourceTree = "<group>"; };
@@ -2515,6 +2517,15 @@
 			path = VerifyEmailVC;
 			sourceTree = "<group>";
 		};
+		BC93656724E3B91B00438012 /* CommunityHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				BCA9712123603C6C00AE37E1 /* CommunityHeaderView.swift */,
+				BC93656824E3B93500438012 /* ManageCommunityButtonsView.swift */,
+			);
+			path = CommunityHeaderView;
+			sourceTree = "<group>";
+		};
 		BC9765B0237D42DE00FC096B /* EditorChooseCommunityVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -2580,7 +2591,7 @@
 		BCA9712023603C5D00AE37E1 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				BCA9712123603C6C00AE37E1 /* CommunityHeaderView.swift */,
+				BC93656724E3B91B00438012 /* CommunityHeaderView */,
 				BC6B7658236AE14500A7AF2A /* CommunityPageCell.swift */,
 				BC702C8D2362817700D9E88A /* CommunityLeaderCell.swift */,
 				BC702C95236298CC00D9E88A /* CommunityAboutCell.swift */,
@@ -3448,6 +3459,7 @@
 				3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */,
 				3B3C8B7A23472ADA00D8BADB /* PostEditorToolbarItemCell.swift in Sources */,
 				3B3C8B912347876000D8BADB /* ArticleEditorTextView.swift in Sources */,
+				BC93656924E3B93500438012 /* ManageCommunityButtonsView.swift in Sources */,
 				BC8F814623E27ECE0024C04A /* MyPointCollectionCell.swift in Sources */,
 				BCC60E1623A0D02C00D40013 /* FeedPageHeaderView.swift in Sources */,
 				BC65FD4724514606006F0846 /* CommunWalletOptionsVC.swift in Sources */,

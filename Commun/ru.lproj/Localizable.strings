@@ -337,6 +337,7 @@
 "posts not found" = "сообщения не найдены";
 "profile description" = "описание профиля";
 "profile photo" = "аватар";
+"proposals" = "предложения";
 "rate" = "оценка";
 "re-enter your password" = "повторите пароль";
 "read" = "читать";
@@ -355,6 +356,7 @@
 "reply" = "ответ";
 "reply to comment" = "ответить на комментарий";
 "report" = "жалоба";
+"reports" = "жалобы";
 "reporting" = "пожаловаться";
 "request failed with error" = "не удалось выполнить запрос";
 "request is invalid with error" = "не удалось выполнить запрос";

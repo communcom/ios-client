@@ -97,4 +97,8 @@ extension CommunityPageVC {
             showGetPointsVC()
         }
     }
+    
+    @objc func manageCommunityButtonDidTouch() {
+        
+    }
 }

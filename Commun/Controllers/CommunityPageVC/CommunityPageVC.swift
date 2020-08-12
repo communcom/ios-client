@@ -95,6 +95,12 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         return containerView
     }()
     
+    lazy var manageCommunityBarButton: UIButton = {
+        let button = UIButton.settings()
+        button.addTarget(self, action: #selector(manageCommunityButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Initializers
     init(communityId: String) {
         self.communityId = communityId
@@ -134,6 +140,10 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     
     override func setUp(profile: ResponseAPIContentGetCommunity) {
         super.setUp(profile: profile)
+        
+        if profile.isLeader == true {
+            rightBarButtonsStackView.insertArrangedSubview(manageCommunityBarButton, at: 0)
+        }
        
         // Register new cell type
         tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
@@ -322,7 +332,6 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             let postPageVC = PostPageVC(post: post)
             self.show(postPageVC, sender: nil)
         case is CommunityLeaderCell:
-            // TODO: - Tap a leaderCell
             break
         default:
             break
@@ -382,7 +391,6 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         }
     }
 }
-
 
 // MARK: - UITableViewDelegate
 extension CommunityPageVC: UITableViewDelegate {

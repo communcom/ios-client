@@ -347,6 +347,7 @@
 "posts not found" = "posts not found";
 "profile description" = "profile description";
 "profile photo" = "profile photo";
+"proposals" = "proposals";
 "rate" = "rate";
 "re-enter your password" = "re-enter your password";
 "read" = "read";
@@ -365,6 +366,7 @@
 "reply" = "reply";
 "reply to comment" = "reply to comment";
 "report" = "report";
+"reports" = "reports";
 "reporting" = "reporting";
 "request failed with error" = "request failed with error";
 "request is invalid with error" = "request is invalid with error";

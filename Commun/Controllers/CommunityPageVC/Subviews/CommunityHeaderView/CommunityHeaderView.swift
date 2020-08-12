@@ -21,6 +21,12 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     // MARK: - Subviews
     lazy var friendsCountLabel = UILabel.with(textSize: 12, weight: .bold, textColor: .appGrayColor)
     lazy var walletView = CMWalletView(forAutoLayout: ())
+    lazy var manageCommunityButtonsView: ManageCommunityButtonsView = {
+        let view = ManageCommunityButtonsView(forAutoLayout: ())
+        view.manageCommunityButton.isUserInteractionEnabled = true
+        view.manageCommunityButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(manageCommunityButtonDidTouch)))
+        return view
+    }()
     
     // MARK: - Methods
     override func commonInit() {
@@ -30,11 +36,13 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             headerStackView,
             descriptionLabel,
             statsStackView,
+            manageCommunityButtonsView,
             walletView
         ])
         
         stackView.setCustomSpacing(10, after: headerStackView)
         stackView.setCustomSpacing(16, after: statsStackView)
+        stackView.setCustomSpacing(16, after: manageCommunityButtonsView)
         
         segmentedControl.items = [
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
@@ -67,6 +75,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         if self.community?.isInBlacklist == true {
             self.community?.isSubscribed = false
         }
+        
+        manageCommunityButtonsView.isHidden = self.community?.isLeader != true
         
         // avatar
         if let avatarURL = community.avatarUrl {
@@ -141,6 +151,11 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         guard let community = community else {return}
         let vc = CommunityMembersVC(community: community, selectedSegmentedItem: .friends)
         parentViewController?.show(vc, sender: nil)
+    }
+    
+    @objc func manageCommunityButtonDidTouch() {
+        guard let vc = parentViewController as? CommunityPageVC else {return}
+        vc.manageCommunityButtonDidTouch()
     }
     
     override func statsLabelDidTouchAtIndex(_ index: Int) {
