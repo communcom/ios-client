@@ -11,7 +11,7 @@ import Foundation
 class ManageCommunityButtonsView: MyView {
     // MARK: - Subviews
     lazy var stackView: UIStackView = {
-        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .fill, distribution: .equalSpacing)
+        let stackView = UIStackView(axis: .horizontal, spacing: 0, alignment: .fill, distribution: .fill)
         
         let spacer = UIView(forAutoLayout: ())
         stackView.addArrangedSubview(spacer)
@@ -33,6 +33,8 @@ class ManageCommunityButtonsView: MyView {
         addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         stackView.addArrangedSubviews([reportsButton, proposalsButton, manageCommunityButton])
+        stackView.setCustomSpacing(10, after: reportsButton)
+        stackView.setCustomSpacing(16, after: proposalsButton)
     }
     
     private func createButton(title: String, countLabel: UILabel) -> UIView {
