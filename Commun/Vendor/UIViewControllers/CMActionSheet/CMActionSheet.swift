@@ -11,29 +11,24 @@ import Foundation
 class CMActionSheet: SwipeDownDismissViewController {
     // MARK: - Nested type
     struct Action {
-//        var title: String?
-//        var icon: UIImage?
         var view: UIView
         var handle: (() -> Void)?
         var bottomMargin: CGFloat? = 0
         
         static func `default`(title: String, iconName: String, tintColor: UIColor = .appBlackColor, handle: (() -> Void)?, bottomMargin: CGFloat? = 10) -> Action {
-            let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-            let label = UILabel.with(text: title, textSize: 15, weight: .medium, textColor: tintColor)
-            let iconImageView = UIImageView(width: 24, height: 24, imageNamed: iconName)
-            stackView.addArrangedSubviews([label, iconImageView])
-            
-            let view = UIView(height: 50, backgroundColor: .appWhiteColor)
-            view.addSubview(stackView)
-            stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
-            return Action(view: view, handle: handle, bottomMargin: bottomMargin)
+            customLayout(height: 50, title: title, textSize: 15, spacing: 10, iconName: iconName, iconSize: 24, showIconFirst: false, showNextButton: false, bottomMargin: bottomMargin, handle: handle)
         }
         
         static func iconFirst(title: String, iconName: String, handle: (() -> Void)?, bottomMargin: CGFloat? = nil, showNextButton: Bool = false) -> Action {
-            let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-            let label = UILabel.with(text: title, textSize: 15, weight: .medium)
-            let iconImageView = UIImageView(width: 35, height: 35, imageNamed: iconName)
-            stackView.addArrangedSubviews([iconImageView, label])
+            customLayout(height: 65, title: title, textSize: 17, spacing: 10, iconName: iconName, iconSize: 35, showIconFirst: true, showNextButton: showNextButton, bottomMargin: bottomMargin, handle: handle)
+        }
+        
+        static func customLayout(height: CGFloat = 50, padding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), title: String, textSize: CGFloat = 15, spacing: CGFloat = 10, iconName: String, iconSize: CGFloat = 24, showIconFirst: Bool = false, showNextButton: Bool = false, bottomMargin: CGFloat? = nil, handle: (() -> Void)?) -> Action {
+            let stackView = UIStackView(axis: .horizontal, spacing: spacing, alignment: .center, distribution: .fill)
+            let label = UILabel.with(text: title, textSize: textSize, weight: .medium)
+            let iconImageView = UIImageView(width: iconSize, height: iconSize, imageNamed: iconName)
+            if showIconFirst {stackView.addArrangedSubviews([iconImageView, label])}
+            else {stackView.addArrangedSubviews([label, iconImageView])}
             
             if showNextButton {
                 let nextButton = UIButton.circleGray(imageName: "cell-arrow", imageEdgeInsets: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
@@ -41,7 +36,7 @@ class CMActionSheet: SwipeDownDismissViewController {
                 stackView.addArrangedSubview(nextButton)
             }
             
-            let view = UIView(height: 65, backgroundColor: .appWhiteColor)
+            let view = UIView(height: height, backgroundColor: .appWhiteColor)
             view.addSubview(stackView)
             stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
             return Action(view: view, handle: handle, bottomMargin: bottomMargin)
