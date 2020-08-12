@@ -225,6 +225,7 @@
 "just click" = "жми на кнопку и получи поинты Dank Meme!";
 "key placeholder" = "пароль";
 "language" = "язык";
+"leader reward" = "лидерская награда";
 "leaders" = "лидеры";
 "leaders not found" = "лидеры не найдены";
 "learn more" = "подробнее";
@@ -452,6 +453,7 @@
 "unhide and follow" = "показывать и подписаться";
 "unhide community" = "показывать сообщество";
 "unhiding" = "скрывающийся";
+"unhold" = "кураторская награда";
 "update" = "обновить";
 "update the app" = "обновить приложение";
 "uploading" = "загрузка";

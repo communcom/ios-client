@@ -144,7 +144,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         communitiesLabel.attributedText = NSMutableAttributedString()
             .text("communities".localized().uppercaseFirst, size: 20, weight: .bold)
             .text("\n")
-            .text("\(userProfile.subscriptions?.communitiesCount ?? 0) (\(userProfile.highlightCommunitiesCount ?? 0) " + "mutual".localized().uppercaseFirst + ")", size: 15, weight: .semibold, color: .appGrayColor)
+            .text("\(userProfile.subscriptions?.communitiesCount ?? 0)", size: 15, weight: .semibold, color: .appGrayColor)
 
         if userProfile.userId != Config.currentUser?.id {
             isCommunitiesHidden = !(userProfile.highlightCommunitiesCount ?? 0 > 0)
