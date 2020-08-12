@@ -52,6 +52,7 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    @available(*, deprecated, message: "Use showCMActionSheet instead")
     func showCommunActionSheet(headerView: UIView? = nil,
                                title: String? = nil,
                                titleFont: UIFont = .systemFont(ofSize: 15, weight: .semibold),

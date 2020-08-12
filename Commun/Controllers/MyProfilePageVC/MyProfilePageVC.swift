@@ -122,52 +122,60 @@ class MyProfilePageVC: UserProfilePageVC {
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
-        showCommunActionSheet(headerView: headerView, actions: [
-            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
-                                     icon: UIImage(named: "icon-share-circle-white"),
-                                     style: .share,
-                                     marginTop: 0,
-                                     handle: {
-                                        ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
-            }),
-            CommunActionSheet.Action(title: "saved souls".localized().uppercaseFirst,
-                                     icon: UIImage(named: "profile_options_referral"),
-                                     style: .profile,
-                                     marginTop: 15,
-                                     handle: {
-                                        let vc = ReferralUsersVC()
-                                        vc.title = "saved souls".localized().uppercaseFirst
-                                        self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                                        self.show(vc, sender: self)
-            }),
-            CommunActionSheet.Action(title: "liked".localized().uppercaseFirst,
-                                     icon: UIImage(named: "profile_options_liked"),
-                                     style: .profile,
-                                     marginTop: 17,
-                                     handle: {
-                                        let vc = PostsViewController(filter: PostsListFetcher.Filter(type: .voted, sortBy: .time, userId: Config.currentUser?.id))
-                                        vc.title = "liked".localized().uppercaseFirst
-                                        self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                                        self.show(vc, sender: self)
-            }),
-            CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst,
-                                     icon: UIImage(named: "profile_options_blacklist"),
-                                     style: .profile,
-                                     marginTop: 19,
-                                     handle: {
-                                        self.show(MyProfileBlacklistVC(), sender: self)
-            }),
-            CommunActionSheet.Action(title: "settings".localized().uppercaseFirst,
-                                     icon: UIImage(named: "profile_options_settings"),
-                                     style: .profile,
-                                     marginTop: 34,
-                                     handle: {
-                                        let vc = MyProfileSettingsVC()
-                                        self.show(vc, sender: self)
-            })
-        ]) {
-            
-        }
+        showCMActionSheet(
+            headerView: headerView,
+            title: "share".localized().uppercaseFirst,
+            actions: [
+                CMActionSheet.Action.iconFirst(
+                    title: "share".localized().uppercaseFirst,
+                    iconName: "icon-share-circle-white",
+                    handle: {
+                        ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
+                    },
+                    bottomMargin: 15
+                ),
+                CMActionSheet.Action.iconFirst(
+                    title: "saved souls".localized().uppercaseFirst,
+                    iconName: "profile_options_referral",
+                    handle: {
+                        let vc = ReferralUsersVC()
+                        vc.title = "saved souls".localized().uppercaseFirst
+                        self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
+                        self.show(vc, sender: self)
+                    },
+                    showNextButton: true
+                ),
+                CMActionSheet.Action.iconFirst(
+                    title: "liked".localized().uppercaseFirst,
+                    iconName: "profile_options_liked",
+                    handle: {
+                        let vc = PostsViewController(filter: PostsListFetcher.Filter(type: .voted, sortBy: .time, userId: Config.currentUser?.id))
+                        vc.title = "liked".localized().uppercaseFirst
+                        self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
+                        self.show(vc, sender: self)
+                    },
+                    showNextButton: true
+                ),
+                CMActionSheet.Action.iconFirst(
+                    title: "blacklist".localized().uppercaseFirst,
+                    iconName: "profile_options_blacklist",
+                    handle: {
+                        self.show(MyProfileBlacklistVC(), sender: self)
+                    },
+                    bottomMargin: 15,
+                    showNextButton: true
+                ),
+                CMActionSheet.Action.iconFirst(
+                    title: "settings".localized().uppercaseFirst,
+                    iconName: "profile_options_settings",
+                    handle: {
+                        let vc = MyProfileSettingsVC()
+                        self.show(vc, sender: self)
+                    },
+                    showNextButton: true
+                )
+            ]
+        )
     }
     
     override func handleListEmpty() {
