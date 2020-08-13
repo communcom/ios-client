@@ -34,6 +34,14 @@ class CMPostView: MyView {
     }()
     lazy var gridView = GridView(forAutoLayout: ())
     
+    lazy var articleCardViewWrapper: UIView = {
+        let view = UIView(forAutoLayout: ())
+        view.addSubview(articleCardView)
+        articleCardView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+        return view
+    }()
+    lazy var articleCardView = ArticleCardView(forAutoLayout: ())
+    
     override func commonInit() {
         super.commonInit()
         
@@ -56,43 +64,39 @@ class CMPostView: MyView {
         stackView.addArrangedSubviews([
             headerView,
             contentTextViewWrapper,
-            gridView
+            gridView,
+            articleCardViewWrapper
         ])
     }
     
     func setUp(post: ResponseAPIContentGetPost) {
+        
         setUp(with: post.community, author: post.author, creationTime: post.meta.creationTime)
-        setUp(with: post.content ?? [], attachments: post.attachments, isArticle: post.document?.attributes?.type == "article")
+        
+        let isArticle = post.document?.attributes?.type == "article"
+        
+        contentTextViewWrapper.isHidden = isArticle
+        gridView.isHidden = isArticle
+        articleCardViewWrapper.isHidden = !isArticle
+        if isArticle {
+            articleCardView.setUp(with: post)
+        } else {
+            let texts = (post.content ?? []).shortAttributedString
+            
+            if texts.length > 0 {
+                contentTextView.attributedText = texts
+                contentTextView.resolveHashTags()
+                contentTextView.resolveMentions()
+            } else {
+                contentTextView.isHidden = true
+            }
+
+            gridView.setUp(embeds: post.attachments)
+        }
     }
     
     func setUp(with community: ResponseAPIContentGetCommunity?, author: ResponseAPIContentGetProfile?, creationTime: String) {
         metaView.setUp(with: community, author: author, creationTime: creationTime)
-    }
-    
-    func setUp(with content: [ResponseAPIContentBlock], attachments: [ResponseAPIContentBlock], isArticle: Bool = false) {
-        if isArticle {
-            contentTextView.isHidden = true
-            gridView.isHidden = true
-            fatalError("implementing")
-        } else {
-            contentTextView.isHidden = false
-            gridView.isHidden = false
-            layoutForBasicPost(with: content, attachments: attachments)
-        }
-    }
-    
-    func layoutForBasicPost(with content: [ResponseAPIContentBlock], attachments: [ResponseAPIContentBlock]) {
-        let texts = content.shortAttributedString
-        
-        if texts.length > 0 {
-            contentTextView.attributedText = texts
-            contentTextView.resolveHashTags()
-            contentTextView.resolveMentions()
-        } else {
-            contentTextView.isHidden = true
-        }
-
-        gridView.setUp(embeds: attachments)
     }
 }
 
