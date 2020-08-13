@@ -228,6 +228,7 @@
 		BC4071A823CF09A0000027A3 /* NotificationsPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4071A723CF09A0000027A3 /* NotificationsPageVC.swift */; };
 		BC4071AA23CF09B2000027A3 /* NotificationsPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4071A923CF09B2000027A3 /* NotificationsPageViewModel.swift */; };
 		BC4071AD23CF0AFA000027A3 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4071AC23CF0AFA000027A3 /* NotificationCell.swift */; };
+		BC40D02524E531FA00F48243 /* ProposalsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40D02424E531FA00F48243 /* ProposalsVC.swift */; };
 		BC40F7EF23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40F7EE23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift */; };
 		BC422E4423D00B08000AE946 /* ResponseAPIGetNotifications.json in Resources */ = {isa = PBXBuildFile; fileRef = BC422E4323D00B08000AE946 /* ResponseAPIGetNotifications.json */; };
 		BC465927238E563F00AF9C29 /* GenerateMasterPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC465926238E563F00AF9C29 /* GenerateMasterPasswordVC.swift */; };
@@ -437,7 +438,7 @@
 		BCC0690E24E3C91F001419D0 /* CMActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0690D24E3C91F001419D0 /* CMActionSheet.swift */; };
 		BCC0691C24E4F78A001419D0 /* ProposalsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0691B24E4F78A001419D0 /* ProposalsListFetcher.swift */; };
 		BCC0692224E4F8D8001419D0 /* ProposalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692124E4F8D8001419D0 /* ProposalsViewModel.swift */; };
-		BCC0692624E4FA96001419D0 /* ProposalPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692524E4FA96001419D0 /* ProposalPostCell.swift */; };
+		BCC0692624E4FA96001419D0 /* ProposalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692524E4FA96001419D0 /* ProposalCell.swift */; };
 		BCC0692924E50134001419D0 /* CMPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692824E50134001419D0 /* CMPostCell.swift */; };
 		BCC0692B24E50EC7001419D0 /* ReportsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692A24E50EC7001419D0 /* ReportsListFetcher.swift */; };
 		BCC0692D24E510C6001419D0 /* ReportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692C24E510C6001419D0 /* ReportsViewModel.swift */; };
@@ -800,6 +801,7 @@
 		BC4071A723CF09A0000027A3 /* NotificationsPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPageVC.swift; sourceTree = "<group>"; };
 		BC4071A923CF09B2000027A3 /* NotificationsPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPageViewModel.swift; sourceTree = "<group>"; };
 		BC4071AC23CF0AFA000027A3 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		BC40D02424E531FA00F48243 /* ProposalsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalsVC.swift; sourceTree = "<group>"; };
 		BC40F7EE23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePhotoPickerVC.swift; sourceTree = "<group>"; };
 		BC422E4323D00B08000AE946 /* ResponseAPIGetNotifications.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIGetNotifications.json; sourceTree = "<group>"; };
 		BC465926238E563F00AF9C29 /* GenerateMasterPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateMasterPasswordVC.swift; sourceTree = "<group>"; };
@@ -1009,7 +1011,7 @@
 		BCC0690D24E3C91F001419D0 /* CMActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMActionSheet.swift; sourceTree = "<group>"; };
 		BCC0691B24E4F78A001419D0 /* ProposalsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalsListFetcher.swift; sourceTree = "<group>"; };
 		BCC0692124E4F8D8001419D0 /* ProposalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalsViewModel.swift; sourceTree = "<group>"; };
-		BCC0692524E4FA96001419D0 /* ProposalPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalPostCell.swift; sourceTree = "<group>"; };
+		BCC0692524E4FA96001419D0 /* ProposalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalCell.swift; sourceTree = "<group>"; };
 		BCC0692824E50134001419D0 /* CMPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMPostCell.swift; sourceTree = "<group>"; };
 		BCC0692A24E50EC7001419D0 /* ReportsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsListFetcher.swift; sourceTree = "<group>"; };
 		BCC0692C24E510C6001419D0 /* ReportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsViewModel.swift; sourceTree = "<group>"; };
@@ -2780,6 +2782,7 @@
 			children = (
 				BCC0692724E5010C001419D0 /* Cells */,
 				BCC0692124E4F8D8001419D0 /* ProposalsViewModel.swift */,
+				BC40D02424E531FA00F48243 /* ProposalsVC.swift */,
 			);
 			path = ProposalsVC;
 			sourceTree = "<group>";
@@ -2788,7 +2791,7 @@
 			isa = PBXGroup;
 			children = (
 				BCC0692824E50134001419D0 /* CMPostCell.swift */,
-				BCC0692524E4FA96001419D0 /* ProposalPostCell.swift */,
+				BCC0692524E4FA96001419D0 /* ProposalCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -3485,7 +3488,7 @@
 				BC384F1A23862C580021A2A9 /* CommunityPageVC+Actions.swift in Sources */,
 				BCD3BC8B23AB313E0036C947 /* UIStackView+Extensions.swift in Sources */,
 				BC7D608E237BF4E7007D8C1A /* BlacklistFetcher.swift in Sources */,
-				BCC0692624E4FA96001419D0 /* ProposalPostCell.swift in Sources */,
+				BCC0692624E4FA96001419D0 /* ProposalCell.swift in Sources */,
 				BCB2A6E62355536D00B3582B /* UITableViewCell+Extensions.swift in Sources */,
 				BCDD53EF24C6A06A007BE222 /* NonAuthPostEditorVC.swift in Sources */,
 				BCD00FBF2375087C004A3952 /* PostPageVC.swift in Sources */,
@@ -3838,6 +3841,7 @@
 				BC4AD66623B1EBF1008546A4 /* TransferHistoryTopTabBar.swift in Sources */,
 				BCA9712223603C6C00AE37E1 /* CommunityHeaderView.swift in Sources */,
 				3B8DDF61234B1FC200B213F0 /* ArticleEditorVC+Binding.swift in Sources */,
+				BC40D02524E531FA00F48243 /* ProposalsVC.swift in Sources */,
 				B1FA77C7238BBF64006E57D1 /* Bool+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

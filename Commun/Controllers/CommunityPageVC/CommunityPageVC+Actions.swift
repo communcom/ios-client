@@ -129,6 +129,7 @@ extension CommunityPageVC {
     }
     
     func openProposalsVC() {
-        
+        let vc = ProposalsVC(viewModel: (viewModel as! CommunityPageViewModel).proposalsVM)
+        show(vc, sender: nil)
     }
 }
