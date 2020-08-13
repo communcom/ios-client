@@ -30,6 +30,6 @@ struct Transaction {
         
     // MARK: - Custom Functions
     mutating func createFriend(from user: ResponseAPIContentGetProfile) {
-        self.friend = (id: user.userId, name: user.username, avatarURL: user.avatarUrl)
+        self.friend = (id: user.userId, name: user.username ?? "", avatarURL: user.avatarUrl)
     }
 }

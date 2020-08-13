@@ -130,7 +130,7 @@ class MyProfilePageVC: UserProfilePageVC {
                     title: "share".localized().uppercaseFirst,
                     iconName: "icon-share-circle-white",
                     handle: {
-                        ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
+                        ShareHelper.share(urlString: self.shareWith(name: profile.username ?? "", userID: profile.userId))
                     },
                     bottomMargin: 15
                 ),

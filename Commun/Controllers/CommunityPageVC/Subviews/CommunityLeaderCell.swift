@@ -55,7 +55,7 @@ class CommunityLeaderCell: CommunityPageCell {
         let rating = leader.rating / 1000
         
         label.attributedText = NSMutableAttributedString()
-            .text(leader.username, size: 15, weight: .semibold)
+            .text(leader.username ?? "", size: 15, weight: .semibold)
             .text("\n")
             .text((rating > 1 ? String(format: "%.1fk ", rating) : String(format: "%.0f ", leader.rating)).replacingOccurrences(of: ".", with: ",") + "points".localized() + " • ", size: 12, weight: .semibold, color: .appGrayColor)
             .text(String(format: "%.0f%%", leader.ratingPercent * 100), size: 12, weight: .semibold, color: .appMainColor)

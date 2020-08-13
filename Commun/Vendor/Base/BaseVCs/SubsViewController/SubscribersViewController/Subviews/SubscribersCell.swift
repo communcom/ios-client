@@ -26,7 +26,7 @@ class SubscribersCell: SubsItemCell, ListItemCellType {
         avatarImageView.setAvatar(urlString: profile.avatarUrl)
         
         var attributedText = NSMutableAttributedString()
-            .text(profile.username, size: 15, weight: .semibold)
+            .text(profile.username ?? "", size: 15, weight: .semibold)
             
         if showFollowersFollowings {
             attributedText = attributedText
