@@ -17,4 +17,25 @@ class ProposalsListFetcher: ListFetcher<ResponseAPIContentGetProposal> {
             .do(onSuccess: {self.proposalsCount = $0.proposalsCount})
             .map {$0.items}
     }
+    
+    override func handleNewData(_ items: [ResponseAPIContentGetProposal]) {
+        super.handleNewData(items)
+        loadPosts(from: items.filter {$0.contentType == "post"})
+        loadComments(from: items.filter {$0.contentType == "comment"})
+    }
+    
+    private func loadPosts(from proposals: [ResponseAPIContentGetProposal]) {
+        for proposal in proposals where proposal.data?.message_id?.permlink != nil {
+            RestAPIManager.instance.loadPost(userId: proposal.data?.message_id?.author, permlink: proposal.data!.message_id!.permlink!, communityId: proposal.community?.communityId
+            ).subscribe(onSuccess: { (post) in
+                var proposal = proposal
+                proposal.post = post
+                proposal.notifyChanged()
+            }).disposed(by: disposeBag)
+        }
+    }
+    
+    private func loadComments(from proposals: [ResponseAPIContentGetProposal]) {
+        // TODO:
+    }
 }

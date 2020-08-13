@@ -19,6 +19,5 @@ class ProposalPostCell: CMPostCell, ListItemCellType {
     }
     
     func setUp(with item: ResponseAPIContentGetProposal) {
-        
     }
 }
