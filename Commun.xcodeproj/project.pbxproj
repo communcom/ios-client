@@ -439,7 +439,7 @@
 		BCC0691C24E4F78A001419D0 /* ProposalsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0691B24E4F78A001419D0 /* ProposalsListFetcher.swift */; };
 		BCC0692224E4F8D8001419D0 /* ProposalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692124E4F8D8001419D0 /* ProposalsViewModel.swift */; };
 		BCC0692624E4FA96001419D0 /* ProposalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692524E4FA96001419D0 /* ProposalCell.swift */; };
-		BCC0692924E50134001419D0 /* CMPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692824E50134001419D0 /* CMPostCell.swift */; };
+		BCC0692924E50134001419D0 /* CMPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692824E50134001419D0 /* CMPostView.swift */; };
 		BCC0692B24E50EC7001419D0 /* ReportsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692A24E50EC7001419D0 /* ReportsListFetcher.swift */; };
 		BCC0692D24E510C6001419D0 /* ReportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692C24E510C6001419D0 /* ReportsViewModel.swift */; };
 		BCC2FAEA2418E72000A3DD87 /* BaseSignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAE92418E72000A3DD87 /* BaseSignUpVC.swift */; };
@@ -1012,7 +1012,7 @@
 		BCC0691B24E4F78A001419D0 /* ProposalsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalsListFetcher.swift; sourceTree = "<group>"; };
 		BCC0692124E4F8D8001419D0 /* ProposalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalsViewModel.swift; sourceTree = "<group>"; };
 		BCC0692524E4FA96001419D0 /* ProposalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalCell.swift; sourceTree = "<group>"; };
-		BCC0692824E50134001419D0 /* CMPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMPostCell.swift; sourceTree = "<group>"; };
+		BCC0692824E50134001419D0 /* CMPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMPostView.swift; sourceTree = "<group>"; };
 		BCC0692A24E50EC7001419D0 /* ReportsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsListFetcher.swift; sourceTree = "<group>"; };
 		BCC0692C24E510C6001419D0 /* ReportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsViewModel.swift; sourceTree = "<group>"; };
 		BCC2FAE92418E72000A3DD87 /* BaseSignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSignUpVC.swift; sourceTree = "<group>"; };
@@ -2790,7 +2790,7 @@
 		BCC0692724E5010C001419D0 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				BCC0692824E50134001419D0 /* CMPostCell.swift */,
+				BCC0692824E50134001419D0 /* CMPostView.swift */,
 				BCC0692524E4FA96001419D0 /* ProposalCell.swift */,
 			);
 			path = Cells;
@@ -3530,7 +3530,7 @@
 				B1D7AD5C23A10664007D1A13 /* QRScannerViewController.swift in Sources */,
 				BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
-				BCC0692924E50134001419D0 /* CMPostCell.swift in Sources */,
+				BCC0692924E50134001419D0 /* CMPostView.swift in Sources */,
 				AC5B0E1C24B4956800C67786 /* AppleLoginManager.swift in Sources */,
 				AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */,
 				BCCE669C2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift in Sources */,

@@ -17,6 +17,8 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     
+    lazy var mainView = UIView(forAutoLayout: ())
+    
     lazy var spacer = UIView(height: 2, backgroundColor: .appLightGrayColor)
     
     lazy var voteContainerView: UIView = {
@@ -44,12 +46,40 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     
     func setUpStackView() {
         stackView.addArrangedSubviews([
+            mainView,
             spacer,
             voteContainerView
         ])
     }
     
     func setUp(with item: ResponseAPIContentGetProposal) {
+        switch item.action {
+        case "ban":
+            switch item.contentType {
+            case "post":
+                setUp(with: item.post)
+            default:
+                // TODO:
+                break
+            }
+        default:
+            // TODO:
+            break
+        }
+    }
+    
+    private func setUp(with post: ResponseAPIContentGetPost?) {
+        if !(mainView.subviews.first is CMPostView) {
+            addSubviewToMainView(CMPostView(forAutoLayout: ()))
+        }
+        guard let post = post, let postCell = mainView.subviews.first as? CMPostView else {return}
+        postCell.setUp(post: post)
+    }
+    
+    private func addSubviewToMainView(_ subview: UIView) {
+        mainView.removeSubviews()
+        mainView.addSubview(subview)
+        subview.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 16, left: 16, bottom: 6, right: 16))
     }
     
     @objc func acceptButtonDidTouch() {

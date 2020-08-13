@@ -9,7 +9,7 @@
 import UIKit
 import CyberSwift
 
-class GridView: UIView {
+class GridView: MyView {
     // MARK: - Properties
     var padding: CGFloat = 0.5
     var views = [UIView]()
@@ -18,17 +18,8 @@ class GridView: UIView {
     var isPostDetail = false
     
     // MARK: - Initializers
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-    
-    func commonInit() {
+    override func commonInit() {
+        super.commonInit()
         backgroundColor = .appWhiteColor
     }
     
