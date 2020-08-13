@@ -20,7 +20,10 @@ class ProposalsVC: ListViewController<ResponseAPIContentGetProposal, ProposalCel
     
     override func setUp() {
         super.setUp()
+        title = "proposals".localized().uppercaseFirst
+        setLeftNavBarButtonForGoingBack()
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .appLightGrayColor
     }
     
     override func handleListEmpty() {
