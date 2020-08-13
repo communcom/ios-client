@@ -25,7 +25,11 @@ class ManageCommunityButtonsView: MyView {
     lazy var proposalsButton = createButton(title: "proposals".localized().uppercaseFirst, countLabel: proposalsCountLabel)
     lazy var proposalsCountLabel = UILabel.with(textSize: 14, weight: .semibold)
     
-    lazy var manageCommunityButton = UIImageView(width: 44, height: 44, cornerRadius: 10, imageNamed: "settings-square-blue")
+    lazy var manageCommunityButton: UIImageView = {
+        let imageView = UIImageView(width: 44, height: 44, cornerRadius: 10, imageNamed: "settings-square-blue")
+        imageView.isUserInteractionEnabled = true
+        return imageView
+    }()
     
     // MARK: - Methods
     override func commonInit() {
@@ -46,6 +50,7 @@ class ManageCommunityButtonsView: MyView {
         stackView.autoAlignAxis(toSuperviewAxis: .horizontal)
         let label = UILabel.with(text: title, textSize: 14, weight: .semibold, textColor: .appMainColor)
         stackView.addArrangedSubviews([label, countLabel])
+        view.isUserInteractionEnabled = true
         return view
     }
 }

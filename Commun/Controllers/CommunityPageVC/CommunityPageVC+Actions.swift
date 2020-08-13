@@ -101,4 +101,34 @@ extension CommunityPageVC {
     @objc func manageCommunityButtonDidTouch() {
         
     }
+    
+    @objc func proposalsButtonDidTouch() {
+        switch (viewModel as! CommunityPageViewModel).proposalsVM.state.value {
+        case .loading(true):
+            return
+        case .loading(false), .listEnded, .listEmpty:
+            openProposalsVC()
+        case .error:
+            (viewModel as! CommunityPageViewModel).proposalsVM.reload(clearResult: true)
+        }
+    }
+    
+    @objc func reportsButtonDidTouch() {
+        switch (viewModel as! CommunityPageViewModel).reportsVM.state.value {
+        case .loading(true):
+            return
+        case .loading(false), .listEnded, .listEmpty:
+            openReportsVC()
+        case .error:
+            (viewModel as! CommunityPageViewModel).reportsVM.reload(clearResult: true)
+        }
+    }
+    
+    func openReportsVC() {
+        
+    }
+    
+    func openProposalsVC() {
+        
+    }
 }

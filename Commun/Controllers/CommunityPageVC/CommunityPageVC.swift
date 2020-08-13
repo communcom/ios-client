@@ -180,6 +180,13 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                 self.showError(error)
             })
             .disposed(by: disposeBag)
+        
+        // community manager
+        if community?.isLeader == true {
+            headerView.manageCommunityButtonsView.proposalsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(proposalsButtonDidTouch)))
+            headerView.manageCommunityButtonsView.reportsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(reportsButtonDidTouch)))
+            headerView.manageCommunityButtonsView.manageCommunityButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(manageCommunityButtonDidTouch)))
+        }
     }
        
     override func handleListLoading() {
@@ -391,6 +398,11 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                     })
             ]
         )
+    }
+    
+    override func configureNavigationBar() {
+        super.configureNavigationBar()
+        manageCommunityBarButton.tintColor = showNavigationBar ? .appBlackColor: .white
     }
 }
 
