@@ -230,6 +230,7 @@
 		BC4071AD23CF0AFA000027A3 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4071AC23CF0AFA000027A3 /* NotificationCell.swift */; };
 		BC40D02524E531FA00F48243 /* ProposalsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40D02424E531FA00F48243 /* ProposalsVC.swift */; };
 		BC40D02A24E5561A00F48243 /* ArticleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40D02924E5561A00F48243 /* ArticleCardView.swift */; };
+		BC40D02C24E57C8800F48243 /* RuleProposalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40D02B24E57C8800F48243 /* RuleProposalView.swift */; };
 		BC40F7EF23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40F7EE23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift */; };
 		BC422E4423D00B08000AE946 /* ResponseAPIGetNotifications.json in Resources */ = {isa = PBXBuildFile; fileRef = BC422E4323D00B08000AE946 /* ResponseAPIGetNotifications.json */; };
 		BC465927238E563F00AF9C29 /* GenerateMasterPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC465926238E563F00AF9C29 /* GenerateMasterPasswordVC.swift */; };
@@ -804,6 +805,7 @@
 		BC4071AC23CF0AFA000027A3 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		BC40D02424E531FA00F48243 /* ProposalsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalsVC.swift; sourceTree = "<group>"; };
 		BC40D02924E5561A00F48243 /* ArticleCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCardView.swift; sourceTree = "<group>"; };
+		BC40D02B24E57C8800F48243 /* RuleProposalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleProposalView.swift; sourceTree = "<group>"; };
 		BC40F7EE23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePhotoPickerVC.swift; sourceTree = "<group>"; };
 		BC422E4323D00B08000AE946 /* ResponseAPIGetNotifications.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIGetNotifications.json; sourceTree = "<group>"; };
 		BC465926238E563F00AF9C29 /* GenerateMasterPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateMasterPasswordVC.swift; sourceTree = "<group>"; };
@@ -2803,6 +2805,7 @@
 			isa = PBXGroup;
 			children = (
 				BCC0692524E4FA96001419D0 /* ProposalCell.swift */,
+				BC40D02B24E57C8800F48243 /* RuleProposalView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -3476,6 +3479,7 @@
 				BC4071AA23CF09B2000027A3 /* NotificationsPageViewModel.swift in Sources */,
 				3B6CB732234331830097B2A1 /* Array+Extensions.swift in Sources */,
 				BC2260C424DBB8EF00A82D8D /* GetPointsVC.swift in Sources */,
+				BC40D02C24E57C8800F48243 /* RuleProposalView.swift in Sources */,
 				3B289B9E2346EB0400598407 /* UIView+PureLayout.swift in Sources */,
 				3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */,
 				BC4071AD23CF0AFA000027A3 /* NotificationCell.swift in Sources */,

@@ -16,12 +16,12 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
-    
+    lazy var metaView = PostMetaView(height: 40.0)
     lazy var mainView = UIView(forAutoLayout: ())
     
     lazy var voteContainerView: UIView = {
         let view = UIView(forAutoLayout: ())
-        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .fill, distribution: .fill)
+        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         view.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
         let button = CommunButton.default(label: "accept".localized().uppercaseFirst)
@@ -29,7 +29,7 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
         stackView.addArrangedSubviews([voteLabel, button])
         return view
     }()
-    lazy var voteLabel = UILabel.with(textSize: 15)
+    lazy var voteLabel = UILabel.with(textSize: 15, numberOfLines: 2)
     
     override func setUpViews() {
         super.setUpViews()
@@ -44,6 +44,7 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     
     func setUpStackView() {
         stackView.addArrangedSubviews([
+            metaView.wrapping(inset: UIEdgeInsets(inset: 16)),
             mainView,
             UIView.spacer(height: 2, backgroundColor: .appLightGrayColor),
             voteContainerView,
@@ -52,27 +53,69 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     }
     
     func setUp(with item: ResponseAPIContentGetProposal) {
+        // meta view
+        metaView.wrappingView.isHidden = false
+        if item.contentType == "post" {
+            metaView.wrappingView.isHidden = true
+        } else {
+            // TODO: configure metaView
+        }
+        
+        // voteLabel
+        voteLabel.attributedText = NSMutableAttributedString()
+            .text("voted".localized().uppercaseFirst, size: 12, weight: .semibold, color: .appGrayColor)
+            .normal("\n")
+            .text("\(item.approvesCount ?? 0) \("from".localized()) \(item.approvesNeed ?? 0) \("votes".localized())", size: 14, weight: .semibold)
+            .withParagraphStyle(lineSpacing: 4)
+        
         switch item.action {
         case "ban":
             switch item.contentType {
             case "post":
                 setUp(with: item.post)
+                return
             default:
                 // TODO:
                 break
             }
+        case "setinfo":
+            setUp(with: item.change)
+            return
         default:
             // TODO:
             break
         }
+        mainView.removeSubviews()
     }
     
     private func setUp(with post: ResponseAPIContentGetPost?) {
         if !(mainView.subviews.first is CMPostView) {
             addSubviewToMainView(CMPostView(forAutoLayout: ()))
         }
-        guard let post = post, let postCell = mainView.subviews.first as? CMPostView else {return}
+        guard let post = post, let postCell = mainView.subviews.first as? CMPostView else {
+            mainView.removeSubviews()
+            return
+        }
         postCell.setUp(post: post)
+    }
+    
+    private func setUp(with change: ResponseAPIContentGetProposalChange?) {
+        switch change?.type {
+        case "rules":
+            if !(mainView.subviews.first is RuleProposalView) {
+                addSubviewToMainView(RuleProposalView(forAutoLayout: ()), contentInsets: UIEdgeInsets(inset: 16))
+            }
+            guard let rule = change?.new?.rules, let oldRule = change?.old?.rules, let ruleView = mainView.subviews.first as? RuleProposalView
+            else {
+                mainView.removeSubviews()
+                return
+            }
+            ruleView.setUp(with: rule, oldRule: oldRule)
+            return
+        default:
+            // TODO:
+            break
+        }
     }
     
     private func addSubviewToMainView(_ subview: UIView, contentInsets: UIEdgeInsets = .zero) {

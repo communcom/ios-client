@@ -9,6 +9,18 @@
 import Foundation
 
 class MyView: UIView {
+    private var _wrappingView: UIView?
+    var wrappingView: UIView {
+        _wrappingView ?? self
+    }
+    func wrapping(inset: UIEdgeInsets) -> UIView {
+        let view = UIView(forAutoLayout: ())
+        view.addSubview(self)
+        autoPinEdgesToSuperviewEdges(with: inset)
+        _wrappingView = view
+        return view
+    }
+    
     // MARK: - Class Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
