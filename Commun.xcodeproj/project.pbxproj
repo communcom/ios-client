@@ -439,6 +439,8 @@
 		BCC0692224E4F8D8001419D0 /* ProposalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692124E4F8D8001419D0 /* ProposalsViewModel.swift */; };
 		BCC0692624E4FA96001419D0 /* ProposalPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692524E4FA96001419D0 /* ProposalPostCell.swift */; };
 		BCC0692924E50134001419D0 /* CMPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692824E50134001419D0 /* CMPostCell.swift */; };
+		BCC0692B24E50EC7001419D0 /* ReportsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692A24E50EC7001419D0 /* ReportsListFetcher.swift */; };
+		BCC0692D24E510C6001419D0 /* ReportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692C24E510C6001419D0 /* ReportsViewModel.swift */; };
 		BCC2FAEA2418E72000A3DD87 /* BaseSignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAE92418E72000A3DD87 /* BaseSignUpVC.swift */; };
 		BCC2FAEC2418EA0800A3DD87 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */; };
 		BCC60E1623A0D02C00D40013 /* FeedPageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */; };
@@ -1009,6 +1011,8 @@
 		BCC0692124E4F8D8001419D0 /* ProposalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalsViewModel.swift; sourceTree = "<group>"; };
 		BCC0692524E4FA96001419D0 /* ProposalPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalPostCell.swift; sourceTree = "<group>"; };
 		BCC0692824E50134001419D0 /* CMPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMPostCell.swift; sourceTree = "<group>"; };
+		BCC0692A24E50EC7001419D0 /* ReportsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsListFetcher.swift; sourceTree = "<group>"; };
+		BCC0692C24E510C6001419D0 /* ReportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsViewModel.swift; sourceTree = "<group>"; };
 		BCC2FAE92418E72000A3DD87 /* BaseSignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSignUpVC.swift; sourceTree = "<group>"; };
 		BCC2FAEB2418EA0800A3DD87 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		BCC60E1523A0D02C00D40013 /* FeedPageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageHeaderView.swift; sourceTree = "<group>"; };
@@ -2766,6 +2770,7 @@
 			isa = PBXGroup;
 			children = (
 				BCC0692024E4F8C5001419D0 /* ProposalsVC */,
+				BCC0692C24E510C6001419D0 /* ReportsViewModel.swift */,
 			);
 			path = CommunityManager;
 			sourceTree = "<group>";
@@ -2971,6 +2976,7 @@
 				BC06A99E23E7CAEE000B690E /* SearchListFetcher.swift */,
 				BC7445D5242B57A9009915EA /* ReferralUsersListFetcher.swift */,
 				BCC0691B24E4F78A001419D0 /* ProposalsListFetcher.swift */,
+				BCC0692A24E50EC7001419D0 /* ReportsListFetcher.swift */,
 			);
 			path = Fetchers;
 			sourceTree = "<group>";
@@ -3594,6 +3600,7 @@
 				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,
 				BCDEE7A123F4E99300DD3EB3 /* DiscoveryVC.swift in Sources */,
 				BC69F7DA236FFA190097F870 /* SubsItemCell.swift in Sources */,
+				BCC0692D24E510C6001419D0 /* ReportsViewModel.swift in Sources */,
 				BC469306239677E00064A38B /* MyProfilePageVC+Binding.swift in Sources */,
 				BC6908BA240CC0A100A1F7EC /* UISearchBar+Extensions.swift in Sources */,
 				BC06A9A323E7FC03000B690E /* SearchViewModel.swift in Sources */,
@@ -3623,6 +3630,7 @@
 				ACE812D624238215001D9AE2 /* FacebookLoginManager.swift in Sources */,
 				BCABF13D2366EA14006B05F5 /* ProfileHeaderView.swift in Sources */,
 				BCB64760244D5A8800C94B84 /* LanguageCell.swift in Sources */,
+				BCC0692B24E50EC7001419D0 /* ReportsListFetcher.swift in Sources */,
 				BCCC33EE23752C22004E46EF /* CommentsViewController.swift in Sources */,
 				BCCE0AA22367E60A00A183AA /* SubscriptionsViewModel.swift in Sources */,
 				BC7C8CBD23FF7AC70038DF5E /* WalletAddFriendCell.swift in Sources */,

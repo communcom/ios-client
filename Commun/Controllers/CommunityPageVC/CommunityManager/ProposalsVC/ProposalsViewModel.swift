@@ -8,9 +8,10 @@
 
 import Foundation
 class ProposalsViewModel: ListViewModel<ResponseAPIContentGetProposal> {
-    init(communityIds: [String]) {
+    var proposalsCount: UInt64 {(fetcher as! ProposalsListFetcher).proposalsCount}
+    
+    init() {
         let fetcher = ProposalsListFetcher()
-        fetcher.communityIds = communityIds
-        super.init(fetcher: fetcher, prefetch: true)
+        super.init(fetcher: fetcher, prefetch: false)
     }
 }

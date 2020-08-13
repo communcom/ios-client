@@ -133,6 +133,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
        
         bindSelectedIndex()
         
+        bindCommunityManager()
+        
         // forward delegate
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)

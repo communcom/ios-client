@@ -20,10 +20,10 @@ class ManageCommunityButtonsView: MyView {
     }()
     
     lazy var reportsButton = createButton(title: "reports".localized().uppercaseFirst, countLabel: reportsCountLabel)
-    lazy var reportsCountLabel = UILabel.with(textSize: 14, weight: .medium)
+    lazy var reportsCountLabel = UILabel.with(textSize: 14, weight: .semibold)
     
     lazy var proposalsButton = createButton(title: "proposals".localized().uppercaseFirst, countLabel: proposalsCountLabel)
-    lazy var proposalsCountLabel = UILabel.with(textSize: 14, weight: .medium)
+    lazy var proposalsCountLabel = UILabel.with(textSize: 14, weight: .semibold)
     
     lazy var manageCommunityButton = UIImageView(width: 44, height: 44, cornerRadius: 10, imageNamed: "settings-square-blue")
     
