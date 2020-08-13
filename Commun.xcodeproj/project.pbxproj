@@ -2667,6 +2667,7 @@
 				BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */,
 				BC5F2D7224A0A05000F536A7 /* CMTappableLabel.swift */,
 				BC769EEB249B466500BA37E5 /* CMSearchBar.swift */,
+				BCC0692824E50134001419D0 /* CMPostView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -2790,7 +2791,6 @@
 		BCC0692724E5010C001419D0 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				BCC0692824E50134001419D0 /* CMPostView.swift */,
 				BCC0692524E4FA96001419D0 /* ProposalCell.swift */,
 			);
 			path = Cells;
