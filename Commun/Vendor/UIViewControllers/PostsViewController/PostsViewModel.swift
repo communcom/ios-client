@@ -246,7 +246,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
 
     func changeFilter(
         type: FeedTypeMode? = nil,
-        sortBy: FeedSortMode? = nil,
+        sortBy: SortBy? = nil,
         timeframe: FeedTimeFrameMode? = nil,
         searchKey: String? = nil,
         allowedLanguages: [String]? = nil
