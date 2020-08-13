@@ -15,7 +15,7 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     weak var delegate: ProposalCellDelegate?
     
     // MARK: - Subviews
-    lazy var stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
     
     lazy var mainView = UIView(forAutoLayout: ())
     
@@ -39,7 +39,7 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
         selectionStyle = .none
         
         contentView.addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges()
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
         
         setUpStackView()
     }
@@ -76,10 +76,10 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
         postCell.setUp(post: post)
     }
     
-    private func addSubviewToMainView(_ subview: UIView) {
+    private func addSubviewToMainView(_ subview: UIView, contentInsets: UIEdgeInsets = .zero) {
         mainView.removeSubviews()
         mainView.addSubview(subview)
-        subview.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 16, left: 16, bottom: 6, right: 16))
+        subview.autoPinEdgesToSuperviewEdges(with: contentInsets)
     }
     
     @objc func acceptButtonDidTouch() {

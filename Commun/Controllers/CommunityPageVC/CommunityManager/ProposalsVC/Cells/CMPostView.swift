@@ -11,6 +11,8 @@ import SafariServices
 
 class CMPostView: MyView {
     lazy var stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
+    
+    lazy var headerView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
     lazy var metaView = PostMetaView(height: 40.0)
     
     lazy var contentTextView: UITextView = {
@@ -32,12 +34,21 @@ class CMPostView: MyView {
         addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
+        setUpHeaderView()
         setUpStackView()
+    }
+    
+    private func setUpHeaderView() {
+        headerView.addArrangedSubviews([
+            UIView.spacer(),
+            metaView,
+            UIView.spacer()
+        ])
     }
     
     func setUpStackView() {
         stackView.addArrangedSubviews([
-            metaView,
+            headerView,
             contentTextView,
             gridView
         ])
