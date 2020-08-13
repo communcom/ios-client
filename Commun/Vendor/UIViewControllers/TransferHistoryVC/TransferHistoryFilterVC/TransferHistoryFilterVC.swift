@@ -34,8 +34,8 @@ class TransferHistoryFilterVC: BottomMenuVC {
         return sc
     }()
     
-    lazy var likeDislikeSegmentedControl: CMHorizontalTabBar = {
-        let sc = CMHorizontalTabBar(height: 35)
+    lazy var holdTypeSegmentedControl: CMHorizontalTabBar = {
+        let sc = CMHorizontalTabBar(height: 35, isMultipleSelectionEnabled: true)
         sc.labels = ["like".localized().uppercaseFirst, "dislike".localized().uppercaseFirst]
         return sc
     }()
@@ -80,7 +80,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
             rewardsLabel,
             rewardsSegmentedControl,
             likeDislikeLabel,
-            likeDislikeSegmentedControl,
+            holdTypeSegmentedControl,
             saveButton,
             clearAllButton
         ])
@@ -88,7 +88,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
         segmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         typeSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         rewardsSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        likeDislikeSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        holdTypeSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         saveButton.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         clearAllButton.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
@@ -98,7 +98,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
         stackView.setCustomSpacing(20 * Config.heightRatio, after: rewardsLabel)
         stackView.setCustomSpacing(30 * Config.heightRatio, after: rewardsSegmentedControl)
         stackView.setCustomSpacing(20 * Config.heightRatio, after: likeDislikeLabel)
-        stackView.setCustomSpacing(40 * Config.heightRatio, after: likeDislikeSegmentedControl)
+        stackView.setCustomSpacing(40 * Config.heightRatio, after: holdTypeSegmentedControl)
         stackView.setCustomSpacing(10, after: saveButton)
         
         // assign first value
@@ -118,8 +118,9 @@ class TransferHistoryFilterVC: BottomMenuVC {
         }
         
         var transferType = "all"
-        if typeSegmentedControl.selectedIndexes == [0] {transferType = "transfer"}
-        if typeSegmentedControl.selectedIndexes == [1] {transferType = "convert"}
+        if typeSegmentedControl.selectedIndexes.isEmpty { transferType = "none" }
+        else if typeSegmentedControl.selectedIndexes == [0] { transferType = "transfer" }
+        else if typeSegmentedControl.selectedIndexes == [1] { transferType = "convert" }
         
         var rewards = "none"
         var claim = "none"
@@ -135,10 +136,10 @@ class TransferHistoryFilterVC: BottomMenuVC {
             donation = "all"
         }
         
-        var holdType = "like"
-        if likeDislikeSegmentedControl.selectedIndex == 1 {
-            holdType = "dislike"
-        }
+        var holdType = "all"
+        if holdTypeSegmentedControl.selectedIndexes.isEmpty { holdType = "none" }
+        else if holdTypeSegmentedControl.selectedIndexes == [0] { holdType = "like" }
+        else if holdTypeSegmentedControl.selectedIndexes == [1] { holdType = "dislike" }
         
         let filter = TransferHistoryListFetcher.Filter(userId: originFilter.userId, direction: direction, transferType: transferType, rewards: rewards, donation: donation, claim: claim, holdType: holdType, symbol: originFilter.symbol)
         
@@ -148,7 +149,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
     }
     
     @objc func reset() {
-        setUp(with: originFilter)
+        setUp(with: TransferHistoryListFetcher.Filter(userId: originFilter.userId, symbol: originFilter.symbol))
     }
     
     private func setUp(with filter: TransferHistoryListFetcher.Filter) {
@@ -166,6 +167,8 @@ class TransferHistoryFilterVC: BottomMenuVC {
         
         // filter by transferType
         switch filter.transferType {
+        case "none":
+            typeSegmentedControl.selectedIndexes = []
         case "transfer":
             typeSegmentedControl.selectedIndexes = [0]
         case "convert":
@@ -183,12 +186,14 @@ class TransferHistoryFilterVC: BottomMenuVC {
         
         // filter by holdType
         switch filter.holdType {
+        case "none":
+            holdTypeSegmentedControl.selectedIndexes = []
         case "like":
-            likeDislikeSegmentedControl.selectedIndex = 0
+            holdTypeSegmentedControl.selectedIndexes = [0]
         case "dislike":
-            likeDislikeSegmentedControl.selectedIndex = 1
+            holdTypeSegmentedControl.selectedIndexes = [1]
         default:
-            break
+            holdTypeSegmentedControl.selectedIndexes = [0, 1]
         }
     }
 }

@@ -19,7 +19,7 @@ class TransferHistoryListFetcher: ListFetcher<ResponseAPIWalletGetTransferHistor
         var rewards: String? = "all"
         var donation: String? = "all"
         var claim: String? = "all"
-        var holdType: String? = "like"
+        var holdType: String? = "all"
         var symbol: String?
     }
     

@@ -41,10 +41,19 @@ class CMHorizontalTabBar: MyView {
     var selectedIndexesDidChange: (([Int]) -> Void)?
     
     // MARK: - Computed properties
-    /// for single selection
     var selectedIndex: Int? {
-        get { selectedIndexes.first }
-        set { selectedIndexes = newValue == nil ? [] : [newValue!]}
+        get {
+            guard !isMultipleSelectionEnabled else {
+                fatalError("This property must be used on single-selection tabBar only")
+            }
+            return selectedIndexes.first
+        }
+        set {
+            guard !isMultipleSelectionEnabled else {
+                fatalError("This property must be used on single-selection tabBar only")
+            }
+            selectedIndexes = newValue == nil ? [] : [newValue!]
+        }
     }
     
     // MARK: - Subviews
