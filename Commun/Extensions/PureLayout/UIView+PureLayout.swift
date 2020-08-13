@@ -94,7 +94,7 @@ extension UIView {
         superview?.addConstraint(keyboardViewV)
     }
     
-    static func spacer(height: CGFloat = 0, backgroundColor: UIColor = .appGrayColor) -> UIView {
+    static func spacer(height: CGFloat = 0, backgroundColor: UIColor = .clear) -> UIView {
         UIView(height: height, backgroundColor: backgroundColor)
     }
 }

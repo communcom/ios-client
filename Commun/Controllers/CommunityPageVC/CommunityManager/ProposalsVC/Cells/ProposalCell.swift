@@ -19,8 +19,6 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     
     lazy var mainView = UIView(forAutoLayout: ())
     
-    lazy var spacer = UIView(height: 2, backgroundColor: .appLightGrayColor)
-    
     lazy var voteContainerView: UIView = {
         let view = UIView(forAutoLayout: ())
         let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .fill, distribution: .fill)
@@ -47,8 +45,9 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     func setUpStackView() {
         stackView.addArrangedSubviews([
             mainView,
-            spacer,
-            voteContainerView
+            UIView.spacer(height: 2, backgroundColor: .appLightGrayColor),
+            voteContainerView,
+            UIView.spacer(height: 16, backgroundColor: .appLightGrayColor)
         ])
     }
     

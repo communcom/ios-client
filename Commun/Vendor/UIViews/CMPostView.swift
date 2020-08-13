@@ -15,6 +15,12 @@ class CMPostView: MyView {
     lazy var headerView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
     lazy var metaView = PostMetaView(height: 40.0)
     
+    lazy var contentTextViewWrapper: UIView = {
+        let view = UIView(forAutoLayout: ())
+        view.addSubview(contentTextView)
+        contentTextView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+        return view
+    }()
     lazy var contentTextView: UITextView = {
         let textView = UITextView(forExpandable: ())
         textView.textContainerInset = UIEdgeInsets.zero
@@ -49,7 +55,7 @@ class CMPostView: MyView {
     func setUpStackView() {
         stackView.addArrangedSubviews([
             headerView,
-            contentTextView,
+            contentTextViewWrapper,
             gridView
         ])
     }

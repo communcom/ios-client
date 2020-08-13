@@ -18,7 +18,7 @@ class ReportsListFetcher: ListFetcher<ResponseAPIContentGetReport> {
     
     override var request: Single<[ResponseAPIContentGetReport]> {
         RestAPIManager.instance.getReportsList(communityIds: communityIds, contentType: contentType, status: status, sortBy: sortBy, limit: Int(limit), offset: Int(offset))
-            .do(onSuccess: {self.reportsCount = $0.reportsCount})
+            .do(onSuccess: {if $0.reportsCount != nil { self.reportsCount = $0.reportsCount! }})
             .map {$0.items}
     }
 }
