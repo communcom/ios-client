@@ -128,7 +128,7 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             metaView.setUp(comment: comment)
             postView.setUp(comment: comment)
         } else {
-            let label = UILabel.with(text: "Error: \(item?.postLoadingError ?? "could not load post")", textSize: 15, weight: .semibold, numberOfLines: 0)
+            let label = UILabel.with(text: "\(item?.postLoadingError != nil ? "Error: \(item!.postLoadingError)" : "loading".localized().uppercaseFirst + "...")", textSize: 15, weight: .semibold, numberOfLines: 0)
             addSubviewToMainView(label, contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
         }
     }
