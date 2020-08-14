@@ -78,16 +78,21 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
             .withParagraphStyle(lineSpacing: 4)
     }
     
-    @discardableResult
-    override func setMessage(item: ResponseAPIContentGetProposal?) -> CMPostView {
-        let postView = super.setMessage(item: item)
+    func setMessage(item: ResponseAPIContentGetProposal?) {
+        let postView = addViewToMainView(type: CMPostView.self)
         postView.headerView.isHidden = true
         if let post = item?.post {
             metaView.setUp(post: post)
+            postView.setUp(post: post)
         } else if let comment = item?.comment {
             metaView.setUp(comment: comment)
+            postView.setUp(comment: comment)
+        } else {
+            let label = UILabel.with(text: "\(item?.postLoadingError != nil ? "Error: \(item!.postLoadingError!)" : "loading".localized().uppercaseFirst + "...")", textSize: 15, weight: .semibold, numberOfLines: 0)
+            mainView.removeSubviews()
+            mainView.addSubview(label)
+            label.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 32, vertical: 0))
         }
-        return postView
     }
     
     private func setInfo(_ item: ResponseAPIContentGetProposal?) {

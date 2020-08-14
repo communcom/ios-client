@@ -54,23 +54,6 @@ class CommunityManageCell: MyTableViewCell {
     
     // MARK: - Helper
     @discardableResult
-    func setMessage(item: ResponseAPIContentGetProposal?) -> CMPostView {
-        let postView = addViewToMainView(type: CMPostView.self)
-        
-        if let post = item?.post {
-            postView.setUp(post: post)
-        } else if let comment = item?.comment {
-            postView.setUp(comment: comment)
-        } else {
-            let label = UILabel.with(text: "\(item?.postLoadingError != nil ? "Error: \(item!.postLoadingError!)" : "loading".localized().uppercaseFirst + "...")", textSize: 15, weight: .semibold, numberOfLines: 0)
-            mainView.removeSubviews()
-            mainView.addSubview(label)
-            label.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 32, vertical: 0))
-        }
-        return postView
-    }
-    
-    @discardableResult
     func addViewToMainView<T: UIView>(type: T.Type, contentInsets: UIEdgeInsets = .zero) -> T {
         if !(mainView.subviews.first === T.self) {
             let view = T(forAutoLayout: ())
