@@ -15,8 +15,9 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     weak var delegate: ProposalCellDelegate?
     
     // MARK: - Subviews
-    lazy var stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fill)
     lazy var metaView = PostMetaView(height: 40.0)
+    lazy var actionTypeLabel = UILabel.with(textSize: 15, weight: .semibold)
     lazy var mainView = UIView(forAutoLayout: ())
     
     lazy var voteContainerView: UIView = {
@@ -44,7 +45,8 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     
     func setUpStackView() {
         stackView.addArrangedSubviews([
-            metaView.wrapping(inset: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)),
+            metaView.padding(UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)),
+            actionTypeLabel.padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)),
             mainView,
             UIView.spacer(height: 2, backgroundColor: .appLightGrayColor),
             voteContainerView,
@@ -58,33 +60,61 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             metaView.setUp(with: item.community, author: item.proposer, creationTime: item.blockTime!)
         }
         
-        // voteLabel
-        voteLabel.attributedText = NSMutableAttributedString()
-            .text("voted".localized().uppercaseFirst, size: 12, weight: .semibold, color: .appGrayColor)
-            .normal("\n")
-            .text("\(item.approvesCount ?? 0) \("from".localized()) \(item.approvesNeed ?? 0) \("votes".localized())", size: 14, weight: .semibold)
-            .withParagraphStyle(lineSpacing: 4)
+        var actionColor: UIColor = .appBlackColor
+        var typePlainText = ""
         
-        // item type
+        switch item.type {
+        case "setInfo":
+            if item.change?.subType == "remove" { actionColor = .red }
+            typePlainText = "\(item.change?.subType ?? "change") \(item.change?.type ?? "")"
+        case "banPost":
+            typePlainText = "ban post"
+        case "banComment":
+            typePlainText = "ban comment"
+        default:
+            typePlainText = item.type ?? ""
+        }
         
+        // actionTypeLabel
+        let actionText = NSMutableAttributedString()
+            .text(typePlainText.localized().uppercaseFirst, size: 15, weight: .semibold, color: actionColor)
+        
+        let expiringDate = Date.from(string: item.expiration ?? "")
+        if expiringDate < Date() {
+            // expired
+            actionText
+                .text(" (\("expired".localized().uppercaseFirst))", size: 15, weight: .semibold, color: actionColor)
+        } else {
+            // expiring in
+            actionText
+                .text(" (\("expiring in".localized().uppercaseFirst) \(Date().intervalToDate(date: expiringDate)))", size: 15, weight: .medium, color: item.change?.subType == "remove" ? .red: .appGrayColor)
+        }
+        actionTypeLabel.attributedText = actionText
+        
+        // content view
         switch item.action {
         case "ban":
             switch item.contentType {
             case "post":
                 setUp(with: item.post)
-                return
             default:
                 // TODO:
                 break
             }
         case "setinfo":
             setUp(with: item.change)
-            return
         default:
             // TODO:
             break
         }
         mainView.removeSubviews()
+        
+        // voteLabel
+        voteLabel.attributedText = NSMutableAttributedString()
+            .text("voted".localized().uppercaseFirst, size: 12, weight: .semibold, color: .appGrayColor)
+            .normal("\n")
+            .text("\(item.approvesCount ?? 0) \("from".localized()) \(item.approvesNeed ?? 0) \("votes".localized())", size: 14, weight: .semibold)
+            .withParagraphStyle(lineSpacing: 4)
     }
     
     private func setUp(with post: ResponseAPIContentGetPost?) {

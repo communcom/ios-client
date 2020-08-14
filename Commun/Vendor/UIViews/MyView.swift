@@ -8,16 +8,23 @@
 
 import Foundation
 
-class MyView: UIView {
-    private var _wrappingView: UIView?
-    var wrappingView: UIView {
-        _wrappingView ?? self
-    }
-    func wrapping(inset: UIEdgeInsets) -> UIView {
+extension UIView {
+    @objc func padding(_ inset: UIEdgeInsets) -> UIView {
         let view = UIView(forAutoLayout: ())
         view.addSubview(self)
         autoPinEdgesToSuperviewEdges(with: inset)
-        _wrappingView = view
+        return view
+    }
+}
+
+class MyView: UIView {
+    private var _paddingView: UIView?
+    var paddingView: UIView {
+        _paddingView ?? self
+    }
+    override func padding(_ inset: UIEdgeInsets) -> UIView {
+        let view = super.padding(inset)
+        _paddingView = view
         return view
     }
     
