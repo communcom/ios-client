@@ -125,7 +125,8 @@ extension CommunityPageVC {
     }
     
     func openReportsVC() {
-        
+        let vc = ReportsListVC(viewModel: (viewModel as! CommunityPageViewModel).reportsVM)
+        show(vc, sender: nil)
     }
     
     func openProposalsVC() {
