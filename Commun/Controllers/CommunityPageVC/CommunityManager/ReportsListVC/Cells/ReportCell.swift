@@ -8,10 +8,19 @@
 
 protocol ReportCellDelegate: class {}
 
-class ReportCell: MyTableViewCell, ListItemCellType {
+class ReportCell: CommunityManageCell, ListItemCellType {
     // MARK: - Properties
     weak var delegate: ReportCellDelegate?
     
+    override func setUpStackView() {
+        super.setUpStackView()
+    }
+    
     func setUp(with item: ResponseAPIContentGetReport) {
+        
+    }
+    
+    override func actionButtonDidTouch() {
+        // TODO: - Propose to ban
     }
 }

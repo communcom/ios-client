@@ -10,52 +10,18 @@ import Foundation
 
 protocol ProposalCellDelegate: class {}
 
-class ProposalCell: MyTableViewCell, ListItemCellType {
+class ProposalCell: CommunityManageCell, ListItemCellType {
     // MARK: - Properties
     weak var delegate: ProposalCellDelegate?
     
     // MARK: - Subviews
-    lazy var stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fill)
     lazy var metaView = PostMetaView(height: 40.0)
     lazy var actionTypeLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var mainView = UIView(forAutoLayout: ())
     
-    lazy var voteContainerView: UIView = {
-        let view = UIView(forAutoLayout: ())
-        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-        view.addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
-        let button = CommunButton.default(label: "accept".localized().uppercaseFirst)
-        button.addTarget(self, action: #selector(acceptButtonDidTouch), for: .touchUpInside)
-        stackView.addArrangedSubviews([voteLabel, button])
-        return view
-    }()
-    lazy var voteLabel = UILabel.with(textSize: 15, numberOfLines: 2)
-    
-    override func setUpViews() {
-        super.setUpViews()
-        backgroundColor = .appWhiteColor
-        selectionStyle = .none
-        
-        contentView.addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges()
-        
-        setUpStackView()
-    }
-    
-    func setUpStackView() {
-        let spacer = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
-        stackView.addArrangedSubviews([
-            metaView.padding(UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)),
-            actionTypeLabel.padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)),
-            mainView,
-            spacer,
-            voteContainerView,
-            UIView.spacer(height: 16, backgroundColor: .appLightGrayColor)
-        ])
-        
-        stackView.setCustomSpacing(0, after: spacer)
-        stackView.setCustomSpacing(0, after: voteContainerView)
+    override func setUpStackView() {
+        super.setUpStackView()
+        stackView.insertArrangedSubview(actionTypeLabel.padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)), at: 0)
+        stackView.insertArrangedSubview(metaView.padding(UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)), at: 0)
     }
     
     func setUp(with item: ResponseAPIContentGetProposal) {
@@ -99,7 +65,7 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
         case "setInfo":
             setInfo(item)
         case "banPost":
-            setBanPost(item)
+            setMessage(item: item)
         default:
             mainView.isHidden = true
         }
@@ -112,22 +78,16 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             .withParagraphStyle(lineSpacing: 4)
     }
     
-    private func setBanPost(_ item: ResponseAPIContentGetProposal?) {
-        let postView = addViewToMainView(type: CMPostView.self)
+    @discardableResult
+    override func setMessage(item: ResponseAPIContentGetProposal?) -> CMPostView {
+        let postView = super.setMessage(item: item)
         postView.headerView.isHidden = true
-        
         if let post = item?.post {
             metaView.setUp(post: post)
-            postView.setUp(post: post)
         } else if let comment = item?.comment {
             metaView.setUp(comment: comment)
-            postView.setUp(comment: comment)
-        } else {
-            let label = UILabel.with(text: "\(item?.postLoadingError != nil ? "Error: \(item!.postLoadingError!)" : "loading".localized().uppercaseFirst + "...")", textSize: 15, weight: .semibold, numberOfLines: 0)
-            mainView.removeSubviews()
-            mainView.addSubview(label)
-            label.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 32, vertical: 0))
         }
+        return postView
     }
     
     private func setInfo(_ item: ResponseAPIContentGetProposal?) {
@@ -161,21 +121,7 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
         }
     }
     
-    @objc func acceptButtonDidTouch() {
-        
-    }
-    
-    // MARK: - Helper
-    @discardableResult
-    private func addViewToMainView<T: UIView>(type: T.Type, contentInsets: UIEdgeInsets = .zero) -> T {
-        if !(mainView.subviews.first === T.self) {
-            let view = T(forAutoLayout: ())
-            mainView.removeSubviews()
-            mainView.addSubview(view)
-            view.autoPinEdgesToSuperviewEdges(with: contentInsets)
-        }
-        
-        let view = mainView.subviews.first as! T
-        return view
+    override func actionButtonDidTouch() {
+        // TODO: - Accept
     }
 }

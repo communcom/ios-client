@@ -487,6 +487,7 @@
 		BCD812482410A2B80035EE13 /* UINavigationBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD812472410A2B80035EE13 /* UINavigationBar+Extensions.swift */; };
 		BCD845FF24E685F4005404CD /* ReportsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD845FE24E685F4005404CD /* ReportsListVC.swift */; };
 		BCD8460424E6869B005404CD /* ReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8460324E6869B005404CD /* ReportCell.swift */; };
+		BCD8460624E6A0E7005404CD /* CommunityManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8460524E6A0E7005404CD /* CommunityManageCell.swift */; };
 		BCDD53E824C69265007BE222 /* NonAuthCommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53E724C69265007BE222 /* NonAuthCommunitiesVC.swift */; };
 		BCDD53ED24C692F7007BE222 /* NonAuthDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53EC24C692F7007BE222 /* NonAuthDiscoveryVC.swift */; };
 		BCDD53EF24C6A06A007BE222 /* NonAuthPostEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53EE24C6A06A007BE222 /* NonAuthPostEditorVC.swift */; };
@@ -1064,6 +1065,7 @@
 		BCD812472410A2B80035EE13 /* UINavigationBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Extensions.swift"; sourceTree = "<group>"; };
 		BCD845FE24E685F4005404CD /* ReportsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsListVC.swift; sourceTree = "<group>"; };
 		BCD8460324E6869B005404CD /* ReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCell.swift; sourceTree = "<group>"; };
+		BCD8460524E6A0E7005404CD /* CommunityManageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityManageCell.swift; sourceTree = "<group>"; };
 		BCDD53E724C69265007BE222 /* NonAuthCommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthCommunitiesVC.swift; sourceTree = "<group>"; };
 		BCDD53EC24C692F7007BE222 /* NonAuthDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthDiscoveryVC.swift; sourceTree = "<group>"; };
 		BCDD53EE24C6A06A007BE222 /* NonAuthPostEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthPostEditorVC.swift; sourceTree = "<group>"; };
@@ -2789,6 +2791,7 @@
 		BCC0691F24E4F8BE001419D0 /* CommunityManager */ = {
 			isa = PBXGroup;
 			children = (
+				BCD8460524E6A0E7005404CD /* CommunityManageCell.swift */,
 				BCC0692024E4F8C5001419D0 /* ProposalsVC */,
 				BCD845FD24E685E1005404CD /* ReportsListVC */,
 			);
@@ -3746,6 +3749,7 @@
 				BC067E2F2435910900D770AC /* CMTransactionInfoView.swift in Sources */,
 				BC5F2D7324A0A05000F536A7 /* CMTappableLabel.swift in Sources */,
 				B10DB961240F8789001BD0E4 /* CMAppLikeView.swift in Sources */,
+				BCD8460624E6A0E7005404CD /* CommunityManageCell.swift in Sources */,
 				BC619B1D2372C1480005BB94 /* CMTopTabBar.swift in Sources */,
 				BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */,
 				BCB2A6E423546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift in Sources */,
