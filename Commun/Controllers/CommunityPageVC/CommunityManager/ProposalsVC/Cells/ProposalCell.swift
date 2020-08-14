@@ -37,14 +37,14 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
         selectionStyle = .none
         
         contentView.addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+        stackView.autoPinEdgesToSuperviewEdges()
         
         setUpStackView()
     }
     
     func setUpStackView() {
         stackView.addArrangedSubviews([
-            metaView.wrapping(inset: UIEdgeInsets(inset: 16)),
+            metaView.wrapping(inset: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)),
             mainView,
             UIView.spacer(height: 2, backgroundColor: .appLightGrayColor),
             voteContainerView,
@@ -54,11 +54,8 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     
     func setUp(with item: ResponseAPIContentGetProposal) {
         // meta view
-        metaView.wrappingView.isHidden = false
-        if item.contentType == "post" {
-            metaView.wrappingView.isHidden = true
-        } else {
-            // TODO: configure metaView
+        if item.contentType != "post" {
+            metaView.setUp(with: item.community, author: item.proposer, creationTime: item.blockTime!)
         }
         
         // voteLabel
@@ -67,6 +64,8 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             .normal("\n")
             .text("\(item.approvesCount ?? 0) \("from".localized()) \(item.approvesNeed ?? 0) \("votes".localized())", size: 14, weight: .semibold)
             .withParagraphStyle(lineSpacing: 4)
+        
+        // item type
         
         switch item.action {
         case "ban":
@@ -90,13 +89,16 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     
     private func setUp(with post: ResponseAPIContentGetPost?) {
         if !(mainView.subviews.first is CMPostView) {
-            addSubviewToMainView(CMPostView(forAutoLayout: ()))
+            let postView = CMPostView(forAutoLayout: ())
+            postView.metaView.isHidden = true
+            addSubviewToMainView(postView)
         }
-        guard let post = post, let postCell = mainView.subviews.first as? CMPostView else {
+        guard let post = post, let postView = mainView.subviews.first as? CMPostView else {
             mainView.removeSubviews()
             return
         }
-        postCell.setUp(post: post)
+        metaView.setUp(post: post)
+        postView.setUp(post: post)
     }
     
     private func setUp(with change: ResponseAPIContentGetProposalChange?) {
