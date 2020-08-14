@@ -101,7 +101,7 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
         case "setInfo":
             setInfo(item)
         case "banPost":
-            setBanPost(item.post)
+            setBanPost(item)
         case "banComment":
             mainView.isHidden = true
         default:
@@ -116,14 +116,16 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             .withParagraphStyle(lineSpacing: 4)
     }
     
-    private func setBanPost(_ post: ResponseAPIContentGetPost?) {
+    private func setBanPost(_ item: ResponseAPIContentGetProposal?) {
         if !(mainView.subviews.first === CMPostView.self) {
             let postView = CMPostView(forAutoLayout: ())
-            postView.metaView.isHidden = true
+            postView.headerView.isHidden = true
             addSubviewToMainView(postView)
         }
-        guard let post = post, let postView = mainView.subviews.first as? CMPostView else {
+        guard let post = item?.post, let postView = mainView.subviews.first as? CMPostView else {
             mainView.removeSubviews()
+            let label = UILabel.with(text: "Error: \(item?.postLoadingError ?? "could not load post")", textSize: 15, weight: .semibold, numberOfLines: 0)
+            addSubviewToMainView(label, contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
             return
         }
         metaView.setUp(post: post)

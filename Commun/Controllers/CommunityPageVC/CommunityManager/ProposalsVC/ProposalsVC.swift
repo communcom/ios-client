@@ -31,4 +31,10 @@ class ProposalsVC: ListViewController<ResponseAPIContentGetProposal, ProposalCel
         let description = "no proposals found"
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
     }
+    
+    override func modelSelected(_ item: ResponseAPIContentGetProposal) {
+        if item.contentType == "post" {
+            present(PostPageVC(userId: item.data?.message_id?.author, permlink: item.data?.message_id?.permlink ?? "", communityId: item.community?.communityId), animated: true, completion: nil)
+        }
+    }
 }

@@ -19,6 +19,11 @@ class ProposalsListFetcher: ListFetcher<ResponseAPIContentGetProposal> {
     }
     
     override func handleNewData(_ items: [ResponseAPIContentGetProposal]) {
+        let items = items.filter {item in
+            if item.type == "banPost" && item.contentType != "post" {return false}
+            if item.type == "banComment" && item.contentType != "banComment" {return false}
+            return true
+        }
         super.handleNewData(items)
         loadPosts(from: items.filter {$0.contentType == "post"})
         loadComments(from: items.filter {$0.contentType == "comment"})
@@ -30,6 +35,11 @@ class ProposalsListFetcher: ListFetcher<ResponseAPIContentGetProposal> {
             ).subscribe(onSuccess: { (post) in
                 var proposal = proposal
                 proposal.post = post
+                proposal.postLoadingError = nil
+                proposal.notifyChanged()
+            }, onError: {error in
+                var proposal = proposal
+                proposal.postLoadingError = error.localizedDescription
                 proposal.notifyChanged()
             }).disposed(by: disposeBag)
         }

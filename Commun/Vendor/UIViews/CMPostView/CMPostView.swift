@@ -88,7 +88,7 @@ class CMPostView: MyView {
                 contentTextView.resolveHashTags()
                 contentTextView.resolveMentions()
             } else {
-                contentTextView.isHidden = true
+                contentTextViewWrapper.isHidden = true
             }
 
             gridView.setUp(embeds: post.attachments)

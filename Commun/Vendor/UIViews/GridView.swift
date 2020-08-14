@@ -32,7 +32,7 @@ class GridView: MyView {
             embedView = view
             embedView?.layer.masksToBounds = true
             addSubview(view)
-            view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
+            view.autoPinEdgesToSuperviewEdges()
         }
     }
     
