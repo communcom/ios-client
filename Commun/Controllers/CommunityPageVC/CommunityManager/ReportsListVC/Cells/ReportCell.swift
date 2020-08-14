@@ -25,14 +25,24 @@ class ReportCell: CommunityManageCell, ListItemCellType {
     
     func setUp(with item: ResponseAPIContentGetReport) {
         let postView = addViewToMainView(type: CMPostView.self)
+        var membersCount: UInt64?
         switch item.type {
         case "post" where item.post != nil:
             postView.setUp(post: item.post!)
+            membersCount = item.post?.reports?.reportsCount
         case "comment" where item.comment != nil:
             postView.setUp(comment: item.comment!)
+            membersCount = item.comment?.reports?.reportsCount
         default:
             mainView.isHidden = true
         }
+        
+        // voteLabel
+        voteLabel.attributedText = NSMutableAttributedString()
+            .text("reports".localized().uppercaseFirst, size: 12, weight: .semibold, color: .appGrayColor)
+            .normal("\n")
+            .text("\(membersCount ?? 0) " + String(format: NSLocalizedString("members-count", comment: ""), membersCount ?? 0), size: 14, weight: .semibold)
+            .withParagraphStyle(lineSpacing: 4)
     }
     
     override func actionButtonDidTouch() {
