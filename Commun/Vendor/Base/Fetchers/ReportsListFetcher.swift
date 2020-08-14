@@ -21,4 +21,32 @@ class ReportsListFetcher: ListFetcher<ResponseAPIContentGetReport> {
             .do(onSuccess: {if $0.reportsCount != nil { self.reportsCount = $0.reportsCount! }})
             .map {$0.items}
     }
+    
+    override func handleNewData(_ items: [ResponseAPIContentGetReport]) {
+        super.handleNewData(items)
+        loadReports(for: items)
+    }
+    
+    func loadReports(for items: [ResponseAPIContentGetReport]) {
+        for report in items {
+            guard let userId = report.post?.contentId.userId ?? report.comment?.contentId.userId,
+                let communityId = report.post?.contentId.communityId ?? report.comment?.contentId.communityId,
+                let permlink = report.post?.contentId.permlink ?? report.comment?.contentId.permlink
+            else {return}
+            RestAPIManager.instance.getEntityReports(userId: userId, communityId: communityId, permlink: permlink, limit: 3, offset: 0)
+                .map {$0.items}
+                .subscribe(onSuccess: {items in
+                    var report = report
+                    if report.type == "post" {
+                        report.post?.reports?.items = items
+                        report.notifyChanged()
+                    }
+                    if report.type == "comment" {
+                        report.comment?.reports?.items = items
+                        report.notifyChanged()
+                    }
+                })
+                .disposed(by: disposeBag)
+        }
+    }
 }
