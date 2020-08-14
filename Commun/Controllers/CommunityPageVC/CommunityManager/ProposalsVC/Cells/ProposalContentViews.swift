@@ -135,3 +135,58 @@ class AvatarProposalView: MyView {
         return view
     }
 }
+
+class CoverProposalView: MyView {
+    lazy var coverPreviewImageView: UIImageView = {
+        let imageView = UIImageView(cornerRadius: 10)
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 345 / 150).isActive = true
+        return imageView
+    }()
+    lazy var oldCoverImageView: UIImageView = {
+        let imageView = UIImageView(cornerRadius: 10)
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 165 / 75).isActive = true
+        return imageView
+    }()
+    lazy var newCoverImageView: UIImageView = {
+        let imageView = UIImageView(cornerRadius: 10)
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 165 / 75).isActive = true
+        imageView.borderWidth = 2
+        imageView.borderColor = .appMainColor
+        return imageView
+    }()
+    
+    override func commonInit() {
+        super.commonInit()
+        let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fill)
+        addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        
+        let oldCoverContainerView: UIView = createContainerView(title: "old cover", imageView: oldCoverImageView)
+        let newCoverContainerView: UIView = createContainerView(title: "new cover", imageView: newCoverImageView, titleColor: .appMainColor)
+        
+        let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .fill, distribution: .fillEqually)
+        hStack.addArrangedSubviews([oldCoverContainerView, newCoverContainerView])
+        
+        stackView.addArrangedSubviews([
+            coverPreviewImageView,
+            hStack
+        ])
+    }
+    
+    func setUp(newCover: String?, oldCover: String?) {
+        coverPreviewImageView.setCover(urlString: newCover)
+        newCoverImageView.setCover(urlString: newCover)
+        oldCoverImageView.setCover(urlString: oldCover)
+    }
+    
+    private func createContainerView(title: String, imageView: UIImageView, titleColor: UIColor = .appBlackColor) -> UIStackView {
+        
+        let stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .center, distribution: .fill)
+        
+        let titleLabel = UILabel.with(text: title.localized().uppercaseFirst, textSize: 14, weight: .medium, textColor: titleColor)
+        
+        stackView.addArrangedSubviews([titleLabel, imageView])
+        
+        return stackView
+    }
+}

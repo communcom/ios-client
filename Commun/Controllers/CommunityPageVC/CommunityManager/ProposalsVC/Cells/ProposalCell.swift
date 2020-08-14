@@ -172,6 +172,17 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             }
             avatarView.setUp(newAvatar: item?.change?.new?.string, oldAvatar: item?.change?.old?.string)
             return
+        case "coverUrl":
+            if !(mainView.subviews.first === CoverProposalView.self) {
+                addSubviewToMainView(CoverProposalView(forAutoLayout: ()), contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
+            }
+            guard let coverView = mainView.subviews.first as? CoverProposalView
+            else {
+                mainView.isHidden = true
+                return
+            }
+            coverView.setUp(newCover: item?.change?.new?.string, oldCover: item?.change?.old?.string)
+            return
         default:
             mainView.isHidden = true
         }
