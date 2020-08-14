@@ -17,11 +17,12 @@ class CommunityManageCell: MyTableViewCell {
         let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         view.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
-        let button = CommunButton.default(label: "accept".localized().uppercaseFirst)
-        button.addTarget(self, action: #selector(actionButtonDidTouch), for: .touchUpInside)
-        stackView.addArrangedSubviews([voteLabel, button])
+        
+        actionButton.addTarget(self, action: #selector(actionButtonDidTouch), for: .touchUpInside)
+        stackView.addArrangedSubviews([voteLabel, actionButton])
         return view
     }()
+    lazy var actionButton = CommunButton.default()
     lazy var voteLabel = UILabel.with(textSize: 15, numberOfLines: 2)
     
     override func setUpViews() {

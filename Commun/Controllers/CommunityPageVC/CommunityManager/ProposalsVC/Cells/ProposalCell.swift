@@ -18,6 +18,11 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
     lazy var metaView = PostMetaView(height: 40.0)
     lazy var actionTypeLabel = UILabel.with(textSize: 15, weight: .semibold)
     
+    override func setUpViews() {
+        super.setUpViews()
+        actionButton.setTitle("accept".localized().uppercaseFirst, for: .normal)
+    }
+    
     override func setUpStackView() {
         super.setUpStackView()
         stackView.insertArrangedSubview(actionTypeLabel.padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)), at: 0)
