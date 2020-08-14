@@ -113,13 +113,8 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     }
     
     private func setBanPost(_ item: ResponseAPIContentGetProposal?) {
-        if !(mainView.subviews.first === CMPostView.self) {
-            let postView = CMPostView(forAutoLayout: ())
-            postView.headerView.isHidden = true
-            addSubviewToMainView(postView)
-        }
-        
-        let postView = mainView.subviews.first as! CMPostView
+        let postView = addViewToMainView(type: CMPostView.self)
+        postView.headerView.isHidden = true
         
         if let post = item?.post {
             metaView.setUp(post: post)
@@ -128,8 +123,10 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             metaView.setUp(comment: comment)
             postView.setUp(comment: comment)
         } else {
-            let label = UILabel.with(text: "\(item?.postLoadingError != nil ? "Error: \(item!.postLoadingError)" : "loading".localized().uppercaseFirst + "...")", textSize: 15, weight: .semibold, numberOfLines: 0)
-            addSubviewToMainView(label, contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
+            let label = UILabel.with(text: "\(item?.postLoadingError != nil ? "Error: \(item!.postLoadingError!)" : "loading".localized().uppercaseFirst + "...")", textSize: 15, weight: .semibold, numberOfLines: 0)
+            mainView.removeSubviews()
+            mainView.addSubview(label)
+            label.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 32, vertical: 0))
         }
     }
     
@@ -137,14 +134,7 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
         let change = item?.change
         switch change?.type {
         case "rules":
-            if !(mainView.subviews.first === RuleProposalView.self) {
-                addSubviewToMainView(RuleProposalView(forAutoLayout: ()), contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
-            }
-            guard let ruleView = mainView.subviews.first as? RuleProposalView
-            else {
-                mainView.isHidden = true
-                return
-            }
+            let ruleView = addViewToMainView(type: RuleProposalView.self, contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
             ruleView.setUp(with: change?.new?.rules, oldRule: change?.old?.rules, subType: item?.change?.subType, isOldRuleCollapsed: change?.isOldRuleCollapsed ?? true)
             ruleView.collapsingHandler = {
                 var item = item
@@ -154,36 +144,16 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             }
             return
         case "description":
-            if !(mainView.subviews.first === DescriptionProposalView.self) {
-                addSubviewToMainView(DescriptionProposalView(forAutoLayout: ()), contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
-            }
-            guard let descriptionView = mainView.subviews.first as? DescriptionProposalView
-            else {
-                mainView.isHidden = true
-                return
-            }
+            let descriptionView = addViewToMainView(type: DescriptionProposalView.self, contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
+            
             descriptionView.setUp(content: item?.change?.new?.string)
             return
         case "avatarUrl":
-            if !(mainView.subviews.first === AvatarProposalView.self) {
-                addSubviewToMainView(AvatarProposalView(forAutoLayout: ()), contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
-            }
-            guard let avatarView = mainView.subviews.first as? AvatarProposalView
-            else {
-                mainView.isHidden = true
-                return
-            }
+            let avatarView = addViewToMainView(type: AvatarProposalView.self, contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
             avatarView.setUp(newAvatar: item?.change?.new?.string, oldAvatar: item?.change?.old?.string)
             return
         case "coverUrl":
-            if !(mainView.subviews.first === CoverProposalView.self) {
-                addSubviewToMainView(CoverProposalView(forAutoLayout: ()), contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
-            }
-            guard let coverView = mainView.subviews.first as? CoverProposalView
-            else {
-                mainView.isHidden = true
-                return
-            }
+            let coverView = addViewToMainView(type: CoverProposalView.self, contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
             coverView.setUp(newCover: item?.change?.new?.string, oldCover: item?.change?.old?.string)
             return
         default:
@@ -191,13 +161,21 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
         }
     }
     
-    private func addSubviewToMainView(_ subview: UIView, contentInsets: UIEdgeInsets = .zero) {
-        mainView.removeSubviews()
-        mainView.addSubview(subview)
-        subview.autoPinEdgesToSuperviewEdges(with: contentInsets)
-    }
-    
     @objc func acceptButtonDidTouch() {
         
+    }
+    
+    // MARK: - Helper
+    @discardableResult
+    private func addViewToMainView<T: UIView>(type: T.Type, contentInsets: UIEdgeInsets = .zero) -> T {
+        if !(mainView.subviews.first === T.self) {
+            let view = T(forAutoLayout: ())
+            mainView.removeSubviews()
+            mainView.addSubview(view)
+            view.autoPinEdgesToSuperviewEdges(with: contentInsets)
+        }
+        
+        let view = mainView.subviews.first as! T
+        return view
     }
 }

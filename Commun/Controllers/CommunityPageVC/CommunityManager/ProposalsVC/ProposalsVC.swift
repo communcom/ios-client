@@ -74,8 +74,14 @@ class ProposalsVC: ListViewController<ResponseAPIContentGetProposal, ProposalCel
     }
     
     override func modelSelected(_ item: ResponseAPIContentGetProposal) {
-        if item.contentType == "post" {
+        if let post = item.post {
+            present(PostPageVC(post: post), animated: true, completion: nil)
+            return
+        }
+        
+        if item.type == "banPost" && item.contentType != "comment" {
             present(PostPageVC(userId: item.data?.message_id?.author, permlink: item.data?.message_id?.permlink ?? "", communityId: item.community?.communityId), animated: true, completion: nil)
+            return
         }
     }
 }
