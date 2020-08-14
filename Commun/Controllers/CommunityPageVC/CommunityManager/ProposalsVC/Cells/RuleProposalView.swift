@@ -70,23 +70,23 @@ class RuleProposalView: DescriptionProposalView {
         contentLabel.text = subType != "remove" ? rule?.text: oldRule?.text
         
         if !oldRuleSection.isHidden {
-            oldRuleTitleLabel.text = nil
-            oldRuleContentLabel.text = nil
             if isOldRuleCollapsed == true {
                 UIView.transition(with: expandButton, duration: expandButton.transform == .identity ? 0 : 0.3, options: .curveEaseInOut, animations: {
                     self.expandButton.transform = .identity
                 })
-                self.oldRuleTitleLabel.isHidden = true
-                self.oldRuleContentLabel.isHidden = true
+                oldRuleTitleLabel.text = nil
+                oldRuleContentLabel.text = nil
+                oldRuleTitleLabel.isHidden = true
+                oldRuleContentLabel.isHidden = true
             } else {
-                UIView.transition(with: expandButton, duration: expandButton.transform == CGAffineTransform(rotationAngle: .pi) ? 0 : 0.3, options: .curveEaseInOut, animations: {
-                    self.expandButton.transform = CGAffineTransform(rotationAngle: .pi)
+                UIView.transition(with: expandButton, duration: expandButton.transform == CGAffineTransform(rotationAngle: -.pi) ? 0 : 0.3, options: .curveEaseInOut, animations: {
+                    self.expandButton.transform = CGAffineTransform(rotationAngle: -.pi)
                 })
+                oldRuleTitleLabel.text = oldRule?.title
+                oldRuleContentLabel.text = oldRule?.text
                 oldRuleTitleLabel.isHidden = false
                 oldRuleContentLabel.isHidden = false
                 
-                self.oldRuleTitleLabel.text = oldRule?.title
-                self.oldRuleContentLabel.text = oldRule?.text
             }
         }
     }
