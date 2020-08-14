@@ -31,6 +31,7 @@
 "a referral bonus for the registration of" = "a referral bonus for the registration of";
 "a user" = "a user";
 "about" = "about";
+"accept" = "accept";
 "access was previously denied, please grant" = "access was previously denied, please grant access from Settings";
 "add" = "add";
 "add a description for your image" = "add a description for your image";
@@ -38,6 +39,7 @@
 "add article" = "add article";
 "add contact" = "add contact";
 "add link" = "add link";
+"add rules" = "add rule";
 "adding referralId" = "adding referralId";
 "after confirmation, we'll generate for" = "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.";
 "ago" = "ago";
@@ -57,6 +59,7 @@
 "back" = "back";
 "back to wallet" = "back to wallet";
 "balance" = "balance";
+"ban post" = "ban post";
 "be" = "be";
 "binance Exchange provides cryptocurrency" = "Binance Exchange provides cryptocurrency trading for fintech and blockchain enthusiasts";
 "bio" = "bio";
@@ -83,7 +86,10 @@
 "cannot use Back Camera" = "cannot use Back Camera";
 "change" = "change";
 "change avatar" = "change avatar";
+"change avatarUrl" = "change avatar";
 "change cover photo" = "change cover photo";
+"change coverUrl" = "change cover";
+"change description" = "change description";
 "change to" = "change to";
 "change position" = "change position";
 "changing password" = "changing password";
@@ -180,6 +186,8 @@
 "equity Commun Value" = "equity Commun Value";
 "equity USD Value" = "equity USD Value";
 "error" = "error";
+"expired" = "expired";
+"expiring in" = "expiring in";
 "feed" = "feed";
 "feedback" = "feedback";
 "filter" = "filter";
@@ -193,6 +201,7 @@
 "friend" = "friend";
 "friends" = "friends";
 "friends not found" = "friends not found";
+"from" = "from";
 "general info" = "general info";
 "get" = "get";
 "get you first points" = "get you first points";
@@ -305,6 +314,7 @@
 "not found" = "not found";
 "notification" = "notification";
 "notifications" = "notifications";
+"old rule" = "old rule";
 "oldest first" = "oldest first";
 "on" = "on";
 "only Latin characters, digits and" = "only Latin characters, digits and special symbols\nare allowed";
@@ -360,6 +370,7 @@
 "remove" = "remove";
 "remove current avatar" = "remove current avatar";
 "remove current cover photo" = "remove current cover photo";
+"remove rules" = "remove rule";
 "repeat" = "repeat";
 "replace content" = "replace content";
 "replies" = "replies";
@@ -482,6 +493,7 @@
 "unhiding" = "unhiding";
 "unhold" = "unhold";
 "update" = "update";
+"update rules" = "update rule";
 "update the app" = "update the app";
 "uploading" = "uploading";
 "uppercase letters in the username are not allowed" = "uppercase letters in the username are not allowed";
@@ -499,6 +511,7 @@
 "videos" = "videos";
 "vote" = "vote";
 "voted" = "voted";
+"votes" = "votes";
 "wait for transaction" = "wait for transaction";
 "wallet" = "wallet";
 "warning" = "warning";
