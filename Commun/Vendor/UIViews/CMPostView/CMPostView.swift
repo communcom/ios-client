@@ -70,8 +70,7 @@ class CMPostView: MyView {
     }
     
     func setUp(post: ResponseAPIContentGetPost) {
-        
-        setUp(with: post.community, author: post.author, creationTime: post.meta.creationTime)
+        metaView.setUp(post: post)
         
         let isArticle = post.document?.attributes?.type == "article"
         
@@ -95,8 +94,18 @@ class CMPostView: MyView {
         }
     }
     
-    func setUp(with community: ResponseAPIContentGetCommunity?, author: ResponseAPIContentGetProfile?, creationTime: String) {
-        metaView.setUp(with: community, author: author, creationTime: creationTime)
+    func setUp(comment: ResponseAPIContentGetComment) {
+        articleCardViewWrapper.isHidden = true
+        metaView.setUp(comment: comment)
+        let texts = (comment.content ?? []).shortAttributedString
+        if texts.length > 0 {
+            contentTextView.attributedText = texts
+            contentTextView.resolveHashTags()
+            contentTextView.resolveMentions()
+        } else {
+            contentTextViewWrapper.isHidden = true
+        }
+        gridView.setUp(embeds: comment.attachments)
     }
 }
 

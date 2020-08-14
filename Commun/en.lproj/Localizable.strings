@@ -60,6 +60,7 @@
 "back to wallet" = "back to wallet";
 "balance" = "balance";
 "ban post" = "ban post";
+"ban comment" = "ban comment";
 "be" = "be";
 "binance Exchange provides cryptocurrency" = "Binance Exchange provides cryptocurrency trading for fintech and blockchain enthusiasts";
 "bio" = "bio";
@@ -282,6 +283,8 @@
 "my profile" = "my profile";
 "name" = "name";
 "new" = "new";
+"new avatar" = "new avatar";
+"new cover" = "new cover";
 "newest first" = "newest first";
 "next" = "next";
 "no" = "no";
@@ -314,6 +317,8 @@
 "not found" = "not found";
 "notification" = "notification";
 "notifications" = "notifications";
+"old avatar" = "old avatar";
+"old cover" = "old cover";
 "old rule" = "old rule";
 "oldest first" = "oldest first";
 "on" = "on";

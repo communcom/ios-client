@@ -72,9 +72,7 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             if item.change?.subType == "remove" { actionColor = .red }
             typePlainText = "\(item.change?.subType ?? "change") \(item.change?.type ?? "")"
         case "banPost":
-            typePlainText = "ban post"
-        case "banComment":
-            typePlainText = "ban comment"
+            typePlainText = "ban \(item.contentType ?? "post")"
         default:
             typePlainText = item.type ?? ""
         }
@@ -102,8 +100,6 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             setInfo(item)
         case "banPost":
             setBanPost(item)
-        case "banComment":
-            mainView.isHidden = true
         default:
             mainView.isHidden = true
         }
@@ -122,14 +118,19 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             postView.headerView.isHidden = true
             addSubviewToMainView(postView)
         }
-        guard let post = item?.post, let postView = mainView.subviews.first as? CMPostView else {
-            mainView.removeSubviews()
+        
+        let postView = mainView.subviews.first as! CMPostView
+        
+        if let post = item?.post {
+            metaView.setUp(post: post)
+            postView.setUp(post: post)
+        } else if let comment = item?.comment {
+            metaView.setUp(comment: comment)
+            postView.setUp(comment: comment)
+        } else {
             let label = UILabel.with(text: "Error: \(item?.postLoadingError ?? "could not load post")", textSize: 15, weight: .semibold, numberOfLines: 0)
             addSubviewToMainView(label, contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
-            return
         }
-        metaView.setUp(post: post)
-        postView.setUp(post: post)
     }
     
     private func setInfo(_ item: ResponseAPIContentGetProposal?) {

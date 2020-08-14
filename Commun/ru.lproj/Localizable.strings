@@ -59,6 +59,7 @@
 "back to wallet" = "обратно в кошелёк";
 "balance" = "баланс";
 "ban post" = "бан поста";
+"ban comment" = "бан комментария";
 "be" = "получайте";
 "binance Exchange provides cryptocurrency" = "Binance Exchange обеспечивает торговлю криптовалютой для пользователей";
 "bio" = "описание";
@@ -272,6 +273,8 @@
 "my blacklist" = "мой черный список";
 "name" = "имя";
 "new" = "новое";
+"new avatar" = "новая аватарка";
+"new cover" = "новая обложка";
 "newest first" = "от новых к старым";
 "next" = "далее";
 "no" = "нет";
@@ -304,6 +307,8 @@
 "not found" = "не найдено";
 "notification" = "уведомление";
 "notifications" = "уведомления";
+"old avatar" = "старая аватарка";
+"old cover" = "старая обложка";
 "old rule" = "старое правило";
 "oldest first" = "от старых к новым";
 "on" = "в";

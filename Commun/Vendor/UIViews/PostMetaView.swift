@@ -88,6 +88,10 @@ class PostMetaView: MyView {
         setMosaic()
     }
     
+    func setUp(comment: ResponseAPIContentGetComment) {
+        setUp(with: comment.community, author: comment.author, creationTime: comment.meta.creationTime)
+    }
+    
     func setUp(with community: ResponseAPIContentGetCommunity?, author: ResponseAPIContentGetProfile?, creationTime: String) {
         let isMyFeed = community?.communityId == "FEED"
         avatarImageView.setAvatar(urlString: isMyFeed ? author?.avatarUrl : community?.avatarUrl)

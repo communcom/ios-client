@@ -19,13 +19,8 @@ class ProposalsListFetcher: ListFetcher<ResponseAPIContentGetProposal> {
     }
     
     override func handleNewData(_ items: [ResponseAPIContentGetProposal]) {
-        let items = items.filter {item in
-            if item.type == "banPost" && item.contentType != "post" {return false}
-            if item.type == "banComment" && item.contentType != "banComment" {return false}
-            return true
-        }
         super.handleNewData(items)
-        loadPosts(from: items.filter {$0.contentType == "post"})
+        loadPosts(from: items.filter {$0.type == "banPost" || $0.contentType != "comment"})
         loadComments(from: items.filter {$0.contentType == "comment"})
     }
     
@@ -46,6 +41,18 @@ class ProposalsListFetcher: ListFetcher<ResponseAPIContentGetProposal> {
     }
     
     private func loadComments(from proposals: [ResponseAPIContentGetProposal]) {
-        // TODO:
+        for proposal in proposals where proposal.data?.message_id?.permlink != nil {
+            RestAPIManager.instance.loadComment(userId: proposal.data?.message_id?.author ?? "", permlink: proposal.data!.message_id!.permlink!, communityId: proposal.community?.communityId ?? ""
+            ).subscribe(onSuccess: { (comment) in
+                var proposal = proposal
+                proposal.comment = comment
+                proposal.postLoadingError = nil
+                proposal.notifyChanged()
+            }, onError: {error in
+                var proposal = proposal
+                proposal.postLoadingError = error.localizedDescription
+                proposal.notifyChanged()
+            }).disposed(by: disposeBag)
+        }
     }
 }

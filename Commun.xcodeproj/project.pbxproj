@@ -485,6 +485,8 @@
 		BCD6E36924C9823E007653E2 /* MyProfileEditGeneralInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD6E36824C9823E007653E2 /* MyProfileEditGeneralInfoVC.swift */; };
 		BCD6E36D24C987C2007653E2 /* MyProfileEditGeneralInfoVC+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD6E36C24C987C2007653E2 /* MyProfileEditGeneralInfoVC+Layout.swift */; };
 		BCD812482410A2B80035EE13 /* UINavigationBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD812472410A2B80035EE13 /* UINavigationBar+Extensions.swift */; };
+		BCD845FF24E685F4005404CD /* ReportsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD845FE24E685F4005404CD /* ReportsListVC.swift */; };
+		BCD8460424E6869B005404CD /* ReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8460324E6869B005404CD /* ReportCell.swift */; };
 		BCDD53E824C69265007BE222 /* NonAuthCommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53E724C69265007BE222 /* NonAuthCommunitiesVC.swift */; };
 		BCDD53ED24C692F7007BE222 /* NonAuthDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53EC24C692F7007BE222 /* NonAuthDiscoveryVC.swift */; };
 		BCDD53EF24C6A06A007BE222 /* NonAuthPostEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53EE24C6A06A007BE222 /* NonAuthPostEditorVC.swift */; };
@@ -1060,6 +1062,8 @@
 		BCD6E36824C9823E007653E2 /* MyProfileEditGeneralInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditGeneralInfoVC.swift; sourceTree = "<group>"; };
 		BCD6E36C24C987C2007653E2 /* MyProfileEditGeneralInfoVC+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfileEditGeneralInfoVC+Layout.swift"; sourceTree = "<group>"; };
 		BCD812472410A2B80035EE13 /* UINavigationBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Extensions.swift"; sourceTree = "<group>"; };
+		BCD845FE24E685F4005404CD /* ReportsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsListVC.swift; sourceTree = "<group>"; };
+		BCD8460324E6869B005404CD /* ReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCell.swift; sourceTree = "<group>"; };
 		BCDD53E724C69265007BE222 /* NonAuthCommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthCommunitiesVC.swift; sourceTree = "<group>"; };
 		BCDD53EC24C692F7007BE222 /* NonAuthDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthDiscoveryVC.swift; sourceTree = "<group>"; };
 		BCDD53EE24C6A06A007BE222 /* NonAuthPostEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthPostEditorVC.swift; sourceTree = "<group>"; };
@@ -2786,7 +2790,7 @@
 			isa = PBXGroup;
 			children = (
 				BCC0692024E4F8C5001419D0 /* ProposalsVC */,
-				BCC0692C24E510C6001419D0 /* ReportsViewModel.swift */,
+				BCD845FD24E685E1005404CD /* ReportsListVC */,
 			);
 			path = CommunityManager;
 			sourceTree = "<group>";
@@ -2924,6 +2928,24 @@
 				BCD6E36C24C987C2007653E2 /* MyProfileEditGeneralInfoVC+Layout.swift */,
 			);
 			path = MyProfileEditGeneralInfoVC;
+			sourceTree = "<group>";
+		};
+		BCD845FD24E685E1005404CD /* ReportsListVC */ = {
+			isa = PBXGroup;
+			children = (
+				BCD8460224E6868E005404CD /* Cells */,
+				BCC0692C24E510C6001419D0 /* ReportsViewModel.swift */,
+				BCD845FE24E685F4005404CD /* ReportsListVC.swift */,
+			);
+			path = ReportsListVC;
+			sourceTree = "<group>";
+		};
+		BCD8460224E6868E005404CD /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				BCD8460324E6869B005404CD /* ReportCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		BCDD53EB24C692A8007BE222 /* NonAuthDiscovery */ = {
@@ -3446,6 +3468,7 @@
 				576DC921223E42C800EDED41 /* UIViewController+Extensions.swift in Sources */,
 				BCA971242360400200AE37E1 /* MyTableHeaderView.swift in Sources */,
 				BCAFEC9B243F0C03003A1DC4 /* LinkResponsiveTextView.swift in Sources */,
+				BCD8460424E6869B005404CD /* ReportCell.swift in Sources */,
 				BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */,
 				BCDEE7A423F4EDF500DD3EB3 /* DiscoveryAllVC.swift in Sources */,
 				BCABF1332366D4E2006B05F5 /* ProfileVC+Binding.swift in Sources */,
@@ -3595,6 +3618,7 @@
 				BCC0692224E4F8D8001419D0 /* ProposalsViewModel.swift in Sources */,
 				BCCE66902428A9B8004F47DC /* SignUpWithPhoneVC.swift in Sources */,
 				3B3C8B8F2347876000D8BADB /* ArticleEditorTextView+Utilities.swift in Sources */,
+				BCD845FF24E685F4005404CD /* ReportsListVC.swift in Sources */,
 				BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */,
 				BC69F7D1236FD1690097F870 /* NotificationSettingsView.swift in Sources */,
 				BCAB470424332B8900912D20 /* SetUserVC.swift in Sources */,
