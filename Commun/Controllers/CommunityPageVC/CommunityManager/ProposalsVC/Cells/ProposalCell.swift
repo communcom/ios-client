@@ -161,6 +161,17 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             }
             descriptionView.setUp(content: item?.change?.new?.string)
             return
+        case "avatarUrl":
+            if !(mainView.subviews.first === AvatarProposalView.self) {
+                addSubviewToMainView(AvatarProposalView(forAutoLayout: ()), contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
+            }
+            guard let avatarView = mainView.subviews.first as? AvatarProposalView
+            else {
+                mainView.isHidden = true
+                return
+            }
+            avatarView.setUp(newAvatar: item?.change?.new?.string, oldAvatar: item?.change?.old?.string)
+            return
         default:
             mainView.isHidden = true
         }
