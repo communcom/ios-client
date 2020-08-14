@@ -20,6 +20,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     var tableViewMargin: UIEdgeInsets {.zero}
     let refreshControl = UIRefreshControl(forAutoLayout: ())
+    var showShadowWhenScrollUp = true
     
     var isInfiniteScrollingEnabled: Bool {true}
     var listLoadingStateObservable: Observable<ListFetcherState> {viewModel.state.asObservable()}
@@ -107,6 +108,16 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         bindItems()
         bindItemSelected()
         bindScrollView()
+        
+        if showShadowWhenScrollUp {
+            tableView.rx.contentOffset
+                .map {$0.y > 3}
+                .distinctUntilChanged()
+                .subscribe(onNext: { (show) in
+                    self.navigationController?.navigationBar.showShadow(show)
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
     func bindItems() {

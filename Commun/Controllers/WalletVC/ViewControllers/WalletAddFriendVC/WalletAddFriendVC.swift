@@ -29,7 +29,6 @@ class WalletAddFriendVC: SubsViewController<ResponseAPIContentSearchItem, Wallet
         (vm.fetcher as! SearchListFetcher).searchType = .entitySearch
         (vm.fetcher as! SearchListFetcher).entitySearchEntity = .profiles
         super.init(viewModel: vm)
-        showShadowWhenScrollUp = false
         title = String(format: "%@ %@", "add".localized().uppercaseFirst, "friends".localized())
     }
     
@@ -80,6 +79,11 @@ class WalletAddFriendVC: SubsViewController<ResponseAPIContentSearchItem, Wallet
         tableView.showsVerticalScrollIndicator = false
         
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+    }
+    
+    override func setUp() {
+        super.setUp()
+        showShadowWhenScrollUp = false
     }
     
     override func bind() {

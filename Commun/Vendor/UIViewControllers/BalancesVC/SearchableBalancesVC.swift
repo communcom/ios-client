@@ -17,7 +17,6 @@ class SearchableBalancesVC: BalancesVC, SearchableViewControllerType {
     
     override init(userId: String? = nil, canChooseCommun: Bool = true, showEmptyBalances: Bool = true, completion: ((ResponseAPIWalletGetBalance) -> Void)? = nil) {
         super.init(userId: userId, canChooseCommun: canChooseCommun, showEmptyBalances: showEmptyBalances, completion: completion)
-        showShadowWhenScrollUp = false
         searchBar.showsCancelButton = true
     }
     
@@ -39,6 +38,11 @@ class SearchableBalancesVC: BalancesVC, SearchableViewControllerType {
     override func viewWillSetUpTableView() {
         layoutSearchBar()
         super.viewWillSetUpTableView()
+    }
+    
+    override func setUp() {
+        super.setUp()
+        showShadowWhenScrollUp = false
     }
     
     override func bind() {

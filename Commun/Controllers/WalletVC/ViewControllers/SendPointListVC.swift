@@ -27,7 +27,6 @@ class SendPointListVC: SubscriptionsVC {
     // MARK: - Initializers
     init() {
         super.init(title: "send points".localized().uppercaseFirst, type: .user)
-        showShadowWhenScrollUp = false
         searchBar.delegate = self
     }
     
@@ -39,6 +38,11 @@ class SendPointListVC: SubscriptionsVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBarDidCancelSearch()
+    }
+    
+    override func setUp() {
+        super.setUp()
+        showShadowWhenScrollUp = false
     }
     
     override func viewWillSetUpTableView() {

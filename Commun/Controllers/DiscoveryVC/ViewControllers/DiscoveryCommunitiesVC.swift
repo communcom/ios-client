@@ -19,14 +19,12 @@ class DiscoveryCommunitiesVC: CommunitiesVC {
     
     convenience init(prefetch: Bool) {
         self.init(type: .all, prefetch: prefetch)
-        defer {
-            showShadowWhenScrollUp = false
-        }
     }
 
     override func setUp() {
         super.setUp()
         refreshControl.subviews.first?.bounds.origin.y = 15
+        showShadowWhenScrollUp = false
     }
     
     override func bindItems() {

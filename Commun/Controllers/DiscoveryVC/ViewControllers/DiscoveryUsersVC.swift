@@ -22,10 +22,6 @@ class DiscoveryUsersVC: SubscriptionsVC {
     
     init(prefetch: Bool = true) {
         super.init(type: .user, prefetch: prefetch)
-        
-        defer {
-            showShadowWhenScrollUp = false
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -35,6 +31,7 @@ class DiscoveryUsersVC: SubscriptionsVC {
     override func setUp() {
         super.setUp()
         refreshControl.subviews.first?.bounds.origin.y = 15
+        showShadowWhenScrollUp = false
     }
 
     override func bindItems() {
