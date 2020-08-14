@@ -82,6 +82,7 @@
 "can not fetch next items" = "не могу получить следующие данные";
 "can't cancel vote on own publication" = "нельзя голосовать за свой пост";
 "cancel" = "отмена";
+"cancel ban" = "отменить бан";
 "Cancel" = "Oтмена";
 "cannot use Back Camera" = "не может использовать камеру";
 "change" = "изменить";
@@ -353,6 +354,7 @@
 "profile description" = "описание профиля";
 "profile photo" = "аватар";
 "proposals" = "предложения";
+"propose to ban" = "предложить бан";
 "rate" = "оценка";
 "re-enter your password" = "повторите пароль";
 "read" = "читать";

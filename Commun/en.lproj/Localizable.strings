@@ -83,6 +83,7 @@
 "can not fetch next items" = "can not fetch next items";
 "can't cancel vote on own publication" = "can't cancel vote on own publication";
 "cancel" = "cancel";
+"cancel ban" = "cancel ban";
 "Cancel" = "Cancel";
 "cannot use Back Camera" = "cannot use Back Camera";
 "change" = "change";
@@ -363,6 +364,7 @@
 "profile description" = "profile description";
 "profile photo" = "profile photo";
 "proposals" = "proposals";
+"propose to ban" = "propose to ban";
 "rate" = "rate";
 "re-enter your password" = "re-enter your password";
 "read" = "read";
