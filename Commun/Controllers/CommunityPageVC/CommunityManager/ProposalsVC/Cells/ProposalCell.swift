@@ -44,14 +44,18 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
     }
     
     func setUpStackView() {
+        let spacer = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
         stackView.addArrangedSubviews([
             metaView.padding(UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)),
             actionTypeLabel.padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)),
             mainView,
-            UIView.spacer(height: 2, backgroundColor: .appLightGrayColor),
+            spacer,
             voteContainerView,
             UIView.spacer(height: 16, backgroundColor: .appLightGrayColor)
         ])
+        
+        stackView.setCustomSpacing(0, after: spacer)
+        stackView.setCustomSpacing(0, after: voteContainerView)
     }
     
     func setUp(with item: ResponseAPIContentGetProposal) {
@@ -92,22 +96,17 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
         actionTypeLabel.attributedText = actionText
         
         // content view
-        switch item.action {
-        case "ban":
-            switch item.contentType {
-            case "post":
-                setUp(with: item.post)
-            default:
-                // TODO:
-                break
-            }
-        case "setinfo":
-            setUp(with: item.change)
+        mainView.isHidden = false
+        switch item.type {
+        case "setInfo":
+            setInfo(item)
+        case "banPost":
+            setBanPost(item.post)
+        case "banComment":
+            mainView.isHidden = true
         default:
-            // TODO:
-            break
+            mainView.isHidden = true
         }
-        mainView.removeSubviews()
         
         // voteLabel
         voteLabel.attributedText = NSMutableAttributedString()
@@ -117,8 +116,8 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
             .withParagraphStyle(lineSpacing: 4)
     }
     
-    private func setUp(with post: ResponseAPIContentGetPost?) {
-        if !(mainView.subviews.first is CMPostView) {
+    private func setBanPost(_ post: ResponseAPIContentGetPost?) {
+        if !(mainView.subviews.first === CMPostView.self) {
             let postView = CMPostView(forAutoLayout: ())
             postView.metaView.isHidden = true
             addSubviewToMainView(postView)
@@ -131,22 +130,39 @@ class ProposalCell: MyTableViewCell, ListItemCellType {
         postView.setUp(post: post)
     }
     
-    private func setUp(with change: ResponseAPIContentGetProposalChange?) {
+    private func setInfo(_ item: ResponseAPIContentGetProposal?) {
+        let change = item?.change
         switch change?.type {
         case "rules":
-            if !(mainView.subviews.first is RuleProposalView) {
-                addSubviewToMainView(RuleProposalView(forAutoLayout: ()), contentInsets: UIEdgeInsets(inset: 16))
+            if !(mainView.subviews.first === RuleProposalView.self) {
+                addSubviewToMainView(RuleProposalView(forAutoLayout: ()), contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
             }
-            guard let rule = change?.new?.rules, let oldRule = change?.old?.rules, let ruleView = mainView.subviews.first as? RuleProposalView
+            guard let ruleView = mainView.subviews.first as? RuleProposalView
             else {
-                mainView.removeSubviews()
+                mainView.isHidden = true
                 return
             }
-            ruleView.setUp(with: rule, oldRule: oldRule)
+            ruleView.setUp(with: change?.new?.rules, oldRule: change?.old?.rules, subType: item?.change?.subType, isOldRuleCollapsed: change?.isOldRuleCollapsed ?? true)
+            ruleView.collapsingHandler = {
+                var item = item
+                let value = item?.change?.isOldRuleCollapsed ?? true
+                item?.change?.isOldRuleCollapsed = !value
+                item?.notifyChanged()
+            }
+            return
+        case "description":
+            if !(mainView.subviews.first === DescriptionProposalView.self) {
+                addSubviewToMainView(DescriptionProposalView(forAutoLayout: ()), contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
+            }
+            guard let descriptionView = mainView.subviews.first as? DescriptionProposalView
+            else {
+                mainView.isHidden = true
+                return
+            }
+            descriptionView.setUp(content: item?.change?.new?.string)
             return
         default:
-            // TODO:
-            break
+            mainView.isHidden = true
         }
     }
     
