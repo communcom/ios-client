@@ -15,4 +15,12 @@ class ReportsViewModel: ListViewModel<ResponseAPIContentGetReport> {
         let fetcher = ReportsListFetcher()
         super.init(fetcher: fetcher, prefetch: false)
     }
+    
+    override func shouldUpdateHeightForItem(_ item: ResponseAPIContentGetReport?, withUpdatedItem updatedItem: ResponseAPIContentGetReport?) -> Bool {
+        if item?.post?.reports?.items != updatedItem?.post?.reports?.items {
+            return true
+        }
+        
+        return false
+    }
 }

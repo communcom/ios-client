@@ -52,6 +52,12 @@ class ReportsListVC: ListViewController<ResponseAPIContentGetReport, ReportCell>
         }
     }
     
+    override func bind() {
+        super.bind()
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
     override func viewWillSetUpTableView() {
         super.viewWillSetUpTableView()
         view.addSubview(horizontalTabBar.padding(UIEdgeInsets(horizontal: 0, vertical: 16)))
@@ -74,5 +80,52 @@ class ReportsListVC: ListViewController<ResponseAPIContentGetReport, ReportCell>
         if let post = item.post {
             present(PostPageVC(post: post), animated: true, completion: nil)
         }
+    }
+}
+
+extension ReportsListVC: UITableViewDelegate {
+    func reportAtIndexPath(_ indexPath: IndexPath) -> ResponseAPIContentGetReport? {
+        viewModel.items.value[safe: indexPath.row]
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if tableView.isCellVisible(indexPath: indexPath) {
+            guard let report = reportAtIndexPath(indexPath),
+                let userId = report.post?.contentId.userId ?? report.comment?.contentId.userId,
+                let communityId = report.post?.contentId.communityId ?? report.comment?.contentId.communityId,
+                let permlink = report.post?.contentId.permlink ?? report.comment?.contentId.permlink,
+                report.post?.reports?.items == nil && report.comment?.reports?.items == nil
+            else {return}
+    
+            RestAPIManager.instance.getEntityReports(userId: userId, communityId: communityId, permlink: permlink, limit: 3, offset: 0)
+                .map {$0.items}
+                .subscribe(onSuccess: {items in
+                    var report = report
+                    if report.type == "post" {
+                        report.post?.reports?.items = items
+                        report.notifyChanged()
+                    }
+                    if report.type == "comment" {
+                        report.comment?.reports?.items = items
+                        report.notifyChanged()
+                    }
+                })
+                .disposed(by: disposeBag)
+        }
+        print("will display: \(indexPath.row)", tableView.isCellVisible(indexPath: indexPath))
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let report = reportAtIndexPath(indexPath),
+            let height = viewModel.rowHeights[report.identity]
+        else {return UITableView.automaticDimension}
+        return height
+    }
+
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let report = reportAtIndexPath(indexPath) else {return}
+
+        // cache height
+        viewModel.rowHeights[report.identity] = cell.bounds.height
     }
 }
