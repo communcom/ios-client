@@ -55,8 +55,6 @@ class WalletSendPointsVC: BaseViewController {
 
     let pointsToolbar: CMToolbarView = CMToolbarView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 375.0), height: .adaptive(height: 50.0))))
 
-    lazy var communLogoImageView = UIView.transparentCommunLogo(size: carouselHeight)
-
     // Balance
     var sellerNameLabel = UILabel.with(textSize: .adaptive(width: 17.0), weight: .semibold, textColor: .white, textAlignment: .center)
 
@@ -232,16 +230,9 @@ class WalletSendPointsVC: BaseViewController {
         topView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
 
         // add carouselView or commun logo
-        if dataModel.transaction.symbol.sell == Config.defaultSymbol {
-            topView.addSubview(communLogoImageView)
-            communLogoImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
-            communLogoImageView.autoAlignAxis(toSuperviewAxis: .vertical)
-            communLogoImageView.autoPinEdge(.top, to: .top, of: topView, withOffset: 20)
-        } else {
-            view.addSubview(carouselView)
-            carouselView.autoAlignAxis(toSuperviewAxis: .vertical)
-            carouselView.autoPinEdge(.top, to: .top, of: topView, withOffset: 20)
-        }
+        view.addSubview(carouselView)
+        carouselView.autoAlignAxis(toSuperviewAxis: .vertical)
+        carouselView.autoPinEdge(.top, to: .top, of: topView, withOffset: 20)
 
         topView.addSubview(sellerNameLabel)
         sellerNameLabel.autoAlignAxis(toSuperviewAxis: .vertical)
