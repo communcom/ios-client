@@ -67,6 +67,12 @@ class ProposalsVC: ListViewController<ResponseAPIContentGetProposal, ProposalCel
 //        horizontalTabBar.paddingView.autoPinEdge(.bottom, to: .top, of: tableView)
 //    }
     
+    override func bind() {
+        super.bind()
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
     override func handleListEmpty() {
         let title = "no proposals"
         let description = "no proposals found"
@@ -82,6 +88,59 @@ class ProposalsVC: ListViewController<ResponseAPIContentGetProposal, ProposalCel
         if item.type == "banPost" && item.contentType != "comment" {
             present(PostPageVC(userId: item.data?.message_id?.author, permlink: item.data?.message_id?.permlink ?? "", communityId: item.community?.communityId), animated: true, completion: nil)
             return
+        }
+    }
+}
+
+extension ProposalsVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if tableView.isCellVisible(indexPath: indexPath) {
+            loadItemAtIndexPath(indexPath)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let report = itemAtIndexPath(indexPath),
+            let height = viewModel.rowHeights[report.identity]
+            else {return UITableView.automaticDimension}
+        return height
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let report = itemAtIndexPath(indexPath) else {return}
+        
+        // cache height
+        viewModel.rowHeights[report.identity] = cell.bounds.height
+        
+        if tableView.isCellVisible(indexPath: indexPath) {
+            loadItemAtIndexPath(indexPath)
+        }
+    }
+    
+    private func loadItemAtIndexPath(_ indexPath: IndexPath) {
+        guard var item = itemAtIndexPath(indexPath),
+            (item.type == "banPost" && item.post == nil && item.comment == nil)
+        else {return}
+        if item.contentType != "comment" {
+            RestAPIManager.instance.loadPost(userId: item.data?.message_id?.author, permlink: item.data!.message_id!.permlink!, communityId: item.community?.communityId
+            ).subscribe(onSuccess: { (post) in
+                item.post = post
+                item.postLoadingError = nil
+                item.notifyChanged()
+            }, onError: {error in
+                item.postLoadingError = error.localizedDescription
+                item.notifyChanged()
+            }).disposed(by: disposeBag)
+        } else {
+            RestAPIManager.instance.loadComment(userId: item.data?.message_id?.author ?? "", permlink: item.data!.message_id!.permlink!, communityId: item.community?.communityId ?? ""
+            ).subscribe(onSuccess: { (comment) in
+                item.comment = comment
+                item.postLoadingError = nil
+                item.notifyChanged()
+            }, onError: {error in
+                item.postLoadingError = error.localizedDescription
+                item.notifyChanged()
+            }).disposed(by: disposeBag)
         }
     }
 }

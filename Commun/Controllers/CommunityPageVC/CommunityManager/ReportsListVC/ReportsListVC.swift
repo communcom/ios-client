@@ -84,10 +84,6 @@ class ReportsListVC: ListViewController<ResponseAPIContentGetReport, ReportCell>
 }
 
 extension ReportsListVC: UITableViewDelegate {
-    func reportAtIndexPath(_ indexPath: IndexPath) -> ResponseAPIContentGetReport? {
-        viewModel.items.value[safe: indexPath.row]
-    }
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if tableView.isCellVisible(indexPath: indexPath) {
             loadReportsAtIndexPath(indexPath)
@@ -95,14 +91,14 @@ extension ReportsListVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let report = reportAtIndexPath(indexPath),
+        guard let report = itemAtIndexPath(indexPath),
             let height = viewModel.rowHeights[report.identity]
         else {return UITableView.automaticDimension}
         return height
     }
 
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let report = reportAtIndexPath(indexPath) else {return}
+        guard let report = itemAtIndexPath(indexPath) else {return}
 
         // cache height
         viewModel.rowHeights[report.identity] = cell.bounds.height
@@ -113,7 +109,7 @@ extension ReportsListVC: UITableViewDelegate {
     }
     
     private func loadReportsAtIndexPath(_ indexPath: IndexPath) {
-        guard var report = reportAtIndexPath(indexPath),
+        guard var report = itemAtIndexPath(indexPath),
             report.downloadingReports != true,
             let userId = report.post?.contentId.userId ?? report.comment?.contentId.userId,
             let communityId = report.post?.contentId.communityId ?? report.comment?.contentId.communityId,

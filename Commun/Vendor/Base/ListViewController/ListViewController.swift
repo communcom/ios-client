@@ -254,4 +254,8 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     @objc func refresh() {
         viewModel.reload(clearResult: false)
     }
+    
+    func itemAtIndexPath(_ indexPath: IndexPath) -> T? {
+        viewModel.items.value[safe: indexPath.row]
+    }
 }
