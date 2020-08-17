@@ -20,7 +20,7 @@ class ReportDetailView: MyView {
     override func commonInit() {
         super.commonInit()
         cornerRadius = 10
-        backgroundColor = UIColor(hexString: "#F9A468")!.inDarkMode(#colorLiteral(red: 0.1215686275, green: 0.1294117647, blue: 0.1568627451, alpha: 1)).withAlphaComponent(0.1)
+        backgroundColor = UIColor(hexString: "#F9A468")!.withAlphaComponent(0.1).inDarkMode(#colorLiteral(red: 0.1215686275, green: 0.1294117647, blue: 0.1568627451, alpha: 1))
         let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .top, distribution: .fill)
         addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))

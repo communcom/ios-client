@@ -90,29 +90,8 @@ extension ReportsListVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if tableView.isCellVisible(indexPath: indexPath) {
-            guard let report = reportAtIndexPath(indexPath),
-                let userId = report.post?.contentId.userId ?? report.comment?.contentId.userId,
-                let communityId = report.post?.contentId.communityId ?? report.comment?.contentId.communityId,
-                let permlink = report.post?.contentId.permlink ?? report.comment?.contentId.permlink,
-                report.post?.reports?.items == nil && report.comment?.reports?.items == nil
-            else {return}
-    
-            RestAPIManager.instance.getEntityReports(userId: userId, communityId: communityId, permlink: permlink, limit: 3, offset: 0)
-                .map {$0.items}
-                .subscribe(onSuccess: {items in
-                    var report = report
-                    if report.type == "post" {
-                        report.post?.reports?.items = items
-                        report.notifyChanged()
-                    }
-                    if report.type == "comment" {
-                        report.comment?.reports?.items = items
-                        report.notifyChanged()
-                    }
-                })
-                .disposed(by: disposeBag)
+            loadReportsAtIndexPath(indexPath)
         }
-        print("will display: \(indexPath.row)", tableView.isCellVisible(indexPath: indexPath))
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -127,5 +106,41 @@ extension ReportsListVC: UITableViewDelegate {
 
         // cache height
         viewModel.rowHeights[report.identity] = cell.bounds.height
+        
+        if tableView.isCellVisible(indexPath: indexPath) {
+            loadReportsAtIndexPath(indexPath)
+        }
+    }
+    
+    private func loadReportsAtIndexPath(_ indexPath: IndexPath) {
+        guard var report = reportAtIndexPath(indexPath),
+            report.downloadingReports != true,
+            let userId = report.post?.contentId.userId ?? report.comment?.contentId.userId,
+            let communityId = report.post?.contentId.communityId ?? report.comment?.contentId.communityId,
+            let permlink = report.post?.contentId.permlink ?? report.comment?.contentId.permlink,
+            report.post?.reports?.items == nil && report.comment?.reports?.items == nil
+        else {return}
+        
+        report.downloadingReports = true
+        report.notifyChanged()
+
+        RestAPIManager.instance.getEntityReports(userId: userId, communityId: communityId, permlink: permlink, limit: 3, offset: 0)
+            .map {$0.items}
+            .subscribe(onSuccess: {items in
+                report.downloadingReports = false
+                if report.type == "post" {
+                    report.post?.reports?.items = items
+                    report.notifyChanged()
+                }
+                if report.type == "comment" {
+                    report.comment?.reports?.items = items
+                    report.notifyChanged()
+                }
+            }, onError: {error in
+                report.downloadingReports = false
+                report.notifyChanged()
+                // TODO: - Handle error
+            })
+            .disposed(by: disposeBag)
     }
 }
