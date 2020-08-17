@@ -41,30 +41,36 @@ class ReportCell: CommunityManageCell, ListItemCellType {
         default:
             mainView.isHidden = true
         }
-
-        reportsStackView.arrangedSubviews.forEach {$0.removeFromSuperview()}
-        reportsStackViewWrapper.isHidden = true
-        if !reports.isEmpty {
+        
+        if reports.isEmpty {
+            reportsStackViewWrapper.isHidden = true
+        } else {
+            reports = Array(reports.prefix(3))
             reportsStackViewWrapper.isHidden = false
-            let reportViews = reports.map { report -> UIView in
-                let view = UIView(backgroundColor: UIColor(hexString: "#F9A468")!.inDarkMode(#colorLiteral(red: 0.1215686275, green: 0.1294117647, blue: 0.1568627451, alpha: 1)).withAlphaComponent(0.1), cornerRadius: 10)
-                let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .top, distribution: .fill)
-                view.addSubview(stackView)
-                stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
-                let leftView = UIView(width: 2, height: 15, backgroundColor: UIColor(hexString: "#F9A568")!).padding(UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0))
-                let avatarImageView = MyAvatarImageView(size: 30)
-                avatarImageView.setAvatar(urlString: report.author.avatarUrl)
-                let label = UILabel.with(textSize: 15, numberOfLines: 0)
-                label.attributedText = NSMutableAttributedString()
-                    .text(report.author.username ?? report.author.userId, weight: .bold)
-                    .text(" ")
-                    .text(report.reason)
-                stackView.addArrangedSubviews([leftView, avatarImageView, label])
+            
+            // remove unrelated subviews
+            var addedReports = [ResponseAPIContentGetEntityReport]()
+            reportsStackView.arrangedSubviews.forEach {subview in
+                let reportDetailView = subview as! ReportDetailView
+                guard let report = reportDetailView.report else {
+                    subview.removeFromSuperview()
+                    return
+                }
+                if !reports.contains(report) {
+                    subview.removeFromSuperview()
+                }
+                addedReports.append(report)
+            }
+            
+            // add subviews
+            let views = reports.filter {!addedReports.contains($0)}.map {report -> ReportDetailView in
+                let view = ReportDetailView(forAutoLayout: ())
+                view.setUp(with: report)
                 return view
             }
-            reportsStackView.addArrangedSubviews(reportViews)
+            reportsStackView.addArrangedSubviews(views)
         }
-        
+
         // voteLabel
         voteLabel.attributedText = NSMutableAttributedString()
             .text("reports".localized().uppercaseFirst, size: 12, weight: .semibold, color: .appGrayColor)

@@ -488,6 +488,7 @@
 		BCD845FF24E685F4005404CD /* ReportsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD845FE24E685F4005404CD /* ReportsListVC.swift */; };
 		BCD8460424E6869B005404CD /* ReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8460324E6869B005404CD /* ReportCell.swift */; };
 		BCD8460624E6A0E7005404CD /* CommunityManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8460524E6A0E7005404CD /* CommunityManageCell.swift */; };
+		BCD8460924EA2515005404CD /* ReportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8460824EA2515005404CD /* ReportDetailView.swift */; };
 		BCDD53E824C69265007BE222 /* NonAuthCommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53E724C69265007BE222 /* NonAuthCommunitiesVC.swift */; };
 		BCDD53ED24C692F7007BE222 /* NonAuthDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53EC24C692F7007BE222 /* NonAuthDiscoveryVC.swift */; };
 		BCDD53EF24C6A06A007BE222 /* NonAuthPostEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53EE24C6A06A007BE222 /* NonAuthPostEditorVC.swift */; };
@@ -1066,6 +1067,7 @@
 		BCD845FE24E685F4005404CD /* ReportsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsListVC.swift; sourceTree = "<group>"; };
 		BCD8460324E6869B005404CD /* ReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCell.swift; sourceTree = "<group>"; };
 		BCD8460524E6A0E7005404CD /* CommunityManageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityManageCell.swift; sourceTree = "<group>"; };
+		BCD8460824EA2515005404CD /* ReportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDetailView.swift; sourceTree = "<group>"; };
 		BCDD53E724C69265007BE222 /* NonAuthCommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthCommunitiesVC.swift; sourceTree = "<group>"; };
 		BCDD53EC24C692F7007BE222 /* NonAuthDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthDiscoveryVC.swift; sourceTree = "<group>"; };
 		BCDD53EE24C6A06A007BE222 /* NonAuthPostEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthPostEditorVC.swift; sourceTree = "<group>"; };
@@ -2947,6 +2949,7 @@
 			isa = PBXGroup;
 			children = (
 				BCD8460324E6869B005404CD /* ReportCell.swift */,
+				BCD8460824EA2515005404CD /* ReportDetailView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -3451,6 +3454,7 @@
 				AC2CCB792412962D00C2DFD4 /* BoardingVC.swift in Sources */,
 				BC18FA2123D54E26005DC7E3 /* CurrencyCell.swift in Sources */,
 				BC4692EF239615160064A38B /* FriendsViewModel.swift in Sources */,
+				BCD8460924EA2515005404CD /* ReportDetailView.swift in Sources */,
 				ACD76C9823B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift in Sources */,
 				BCCB993623756375005252CF /* PostHeaderView.swift in Sources */,
 				B1D7AD5823A10650007D1A13 /* SignInVC.swift in Sources */,
