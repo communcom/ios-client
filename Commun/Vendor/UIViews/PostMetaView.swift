@@ -57,6 +57,7 @@ class PostMetaView: CMMetaView {
         
         stackView.addArrangedSubview(stateButton)
         stackView.setCustomSpacing(4, after: labelStackView)
+        stateButton.isHidden = true
         
         // currency changed
         UserDefaults.standard.rx.observe(String.self, Config.currentRewardShownSymbol)

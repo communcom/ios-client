@@ -99,12 +99,47 @@ extension CommunityPageVC {
     }
     
     @objc func manageCommunityButtonDidTouch() {
-        guard let profile = viewModel.profile.value, let currentUserID = Config.currentUser?.id else {return}
+        guard let profile = viewModel.profile.value else {return}
         
         let headerView = CMMetaView(forAutoLayout: ())
         headerView.avatarImageView.setAvatar(urlString: profile.avatarUrl)
         headerView.titleLabel.text = profile.name
         headerView.subtitleLabel.text = profile.communityId
+        
+        // report action
+        let reportAction: CMActionSheet.Action = {
+            let action = CMActionSheet.Action.iconFirst(
+                title: "reports".localized().uppercaseFirst,
+                iconName: "manage-community-reports",
+                handle: {
+                    self.openReportsVC()
+                },
+                showNextButton: true
+            )
+            let stackView = action.view.subviews.first as! UIStackView
+            let countLabel = UILabel.with(text: "+\((viewModel as! CommunityPageViewModel).reportsVM.reportsCount)", textSize: 15, weight: .semibold, textColor: .appMainColor)
+            
+            stackView.insertArrangedSubview(countLabel, at: stackView.arrangedSubviews.count - 1)
+            return action
+        }()
+        
+        // proposal action
+        let proposalAction: CMActionSheet.Action = {
+            let action = CMActionSheet.Action.iconFirst(
+                title: "proposals".localized().uppercaseFirst,
+                iconName: "manage-community-proposals",
+                handle: {
+                    self.openProposalsVC()
+                },
+                showNextButton: true
+            )
+            let stackView = action.view.subviews.first as! UIStackView
+            let countLabel = UILabel.with(text: "+\((viewModel as! CommunityPageViewModel).proposalsVM.proposalsCount)", textSize: 15, weight: .semibold, textColor: .appMainColor)
+            stackView.insertArrangedSubview(countLabel, at: stackView.arrangedSubviews.count - 1)
+            return action
+        }()
+        
+        showCMActionSheet(headerView: headerView, actions: [reportAction, proposalAction])
     }
     
     @objc func proposalsButtonDidTouch() {
