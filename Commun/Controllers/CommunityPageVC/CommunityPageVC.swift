@@ -350,24 +350,10 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
         guard let profile = viewModel.profile.value, let currentUserID = Config.currentUser?.id else {return}
         
-        let headerView = UIView(height: 40)
-        
-        let avatarImageView = MyAvatarImageView(size: 40)
-        avatarImageView.setAvatar(urlString: profile.avatarUrl)
-        headerView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-                
-        let userNameLabel = UILabel.with(text: profile.name, textSize: 15, weight: .semibold)
-        headerView.addSubview(userNameLabel)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .top)
-        userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
-
-        let userIdLabel = UILabel.with(text: profile.communityId, textSize: 12, textColor: .appMainColor)
-        headerView.addSubview(userIdLabel)
-        userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
-        userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
+        let headerView = CMMetaView(forAutoLayout: ())
+        headerView.avatarImageView.setAvatar(urlString: profile.avatarUrl)
+        headerView.titleLabel.text = profile.name
+        headerView.subtitleLabel.text = profile.communityId
         
         showCMActionSheet(
             headerView: headerView,

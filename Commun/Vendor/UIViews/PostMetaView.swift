@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class PostMetaView: MyView {
+class PostMetaView: CMMetaView {
     // MARK: - Enums
     class TapGesture: UITapGestureRecognizer {
         var community: ResponseAPIContentGetCommunity?
@@ -18,15 +18,9 @@ class PostMetaView: MyView {
     
     // MARK: - Properties
     private let disposeBag = DisposeBag()
-    var stackViewTrailingConstraint: NSLayoutConstraint?
-    var trailingConstraint: NSLayoutConstraint?
     private var mosaic: ResponseAPIRewardsGetStateBulkMosaic?
 
     // MARK: - Subviews
-    lazy var avatarImageView = MyAvatarImageView(size: 40)
-    lazy var stackView = UIStackView(axis: .vertical, spacing: 3, alignment: .leading)
-    lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var subtitleLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor)
     lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .white)
 
     lazy var stateButton: UIView = {
@@ -61,16 +55,8 @@ class PostMetaView: MyView {
     override func commonInit() {
         super.commonInit()
         
-        // avatar
-        addSubview(avatarImageView)
-        avatarImageView.autoPinTopAndLeadingToSuperView()
-        
-        addSubview(stackView)
-        stackView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        stackView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        stackView.addArrangedSubview(comunityNameLabel)
-        stackView.addArrangedSubview(subtitleLabel)
+        stackView.addArrangedSubview(stateButton)
+        stackView.setCustomSpacing(4, after: labelStackView)
         
         // currency changed
         UserDefaults.standard.rx.observe(String.self, Config.currentRewardShownSymbol)
@@ -95,7 +81,7 @@ class PostMetaView: MyView {
     func setUp(with community: ResponseAPIContentGetCommunity?, author: ResponseAPIContentGetProfile?, creationTime: String) {
         let isMyFeed = community?.communityId == "FEED"
         avatarImageView.setAvatar(urlString: isMyFeed ? author?.avatarUrl : community?.avatarUrl)
-        comunityNameLabel.text = isMyFeed ? author?.username : community?.name
+        titleLabel.text = isMyFeed ? author?.username : community?.name
         
         subtitleLabel.attributedText = NSMutableAttributedString()
             .text(Date.timeAgo(string: creationTime) + " • ", size: 12, weight: .semibold, color: .appGrayColor)
@@ -119,31 +105,18 @@ class PostMetaView: MyView {
 
             avatarImageView.isUserInteractionEnabled = true
             avatarImageView.addGestureRecognizer(tapAvatar)
-            comunityNameLabel.isUserInteractionEnabled = true
-            comunityNameLabel.addGestureRecognizer(tapLabel)
+            titleLabel.isUserInteractionEnabled = true
+            titleLabel.addGestureRecognizer(tapLabel)
         }
     }
     
     private func setMosaic() {
-        // clean
-        stateButton.removeFromSuperview()
-        stackViewTrailingConstraint?.isActive = false
-        trailingConstraint?.isActive = false
-        trailingConstraint = nil
-        
         guard let mosaicItem = mosaic, mosaicItem.isRewarded else {
-            stackViewTrailingConstraint = stackView.autoPinEdge(toSuperviewEdge: .trailing)
-            stackViewTrailingConstraint?.isActive = true
+            stateButton.isHidden = true
             return
         }
         
-        addSubview(stateButton)
-        stateButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        stackViewTrailingConstraint = stackView.autoPinEdge(.trailing, to: .leading, of: stateButton, withOffset: -4)
-        stackViewTrailingConstraint?.isActive = true
-        
-        trailingConstraint = stateButton.autoPinEdge(toSuperviewEdge: .trailing)
-        trailingConstraint?.isActive = true
+        stateButton.isHidden = false
         
         let isRewardState = mosaicItem.isClosed
         

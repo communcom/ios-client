@@ -99,7 +99,12 @@ extension CommunityPageVC {
     }
     
     @objc func manageCommunityButtonDidTouch() {
+        guard let profile = viewModel.profile.value, let currentUserID = Config.currentUser?.id else {return}
         
+        let headerView = CMMetaView(forAutoLayout: ())
+        headerView.avatarImageView.setAvatar(urlString: profile.avatarUrl)
+        headerView.titleLabel.text = profile.name
+        headerView.subtitleLabel.text = profile.communityId
     }
     
     @objc func proposalsButtonDidTouch() {

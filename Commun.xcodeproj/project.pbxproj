@@ -489,6 +489,7 @@
 		BCD8460424E6869B005404CD /* ReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8460324E6869B005404CD /* ReportCell.swift */; };
 		BCD8460624E6A0E7005404CD /* CommunityManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8460524E6A0E7005404CD /* CommunityManageCell.swift */; };
 		BCD8460924EA2515005404CD /* ReportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8460824EA2515005404CD /* ReportDetailView.swift */; };
+		BCD8461124EA68B5005404CD /* CMMetaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8461024EA68B5005404CD /* CMMetaView.swift */; };
 		BCDD53E824C69265007BE222 /* NonAuthCommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53E724C69265007BE222 /* NonAuthCommunitiesVC.swift */; };
 		BCDD53ED24C692F7007BE222 /* NonAuthDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53EC24C692F7007BE222 /* NonAuthDiscoveryVC.swift */; };
 		BCDD53EF24C6A06A007BE222 /* NonAuthPostEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDD53EE24C6A06A007BE222 /* NonAuthPostEditorVC.swift */; };
@@ -1068,6 +1069,7 @@
 		BCD8460324E6869B005404CD /* ReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCell.swift; sourceTree = "<group>"; };
 		BCD8460524E6A0E7005404CD /* CommunityManageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityManageCell.swift; sourceTree = "<group>"; };
 		BCD8460824EA2515005404CD /* ReportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDetailView.swift; sourceTree = "<group>"; };
+		BCD8461024EA68B5005404CD /* CMMetaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMetaView.swift; sourceTree = "<group>"; };
 		BCDD53E724C69265007BE222 /* NonAuthCommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthCommunitiesVC.swift; sourceTree = "<group>"; };
 		BCDD53EC24C692F7007BE222 /* NonAuthDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthDiscoveryVC.swift; sourceTree = "<group>"; };
 		BCDD53EE24C6A06A007BE222 /* NonAuthPostEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAuthPostEditorVC.swift; sourceTree = "<group>"; };
@@ -2689,6 +2691,7 @@
 				BC5F2D7224A0A05000F536A7 /* CMTappableLabel.swift */,
 				BC769EEB249B466500BA37E5 /* CMSearchBar.swift */,
 				BC40D02824E5560C00F48243 /* CMPostView */,
+				BCD8461024EA68B5005404CD /* CMMetaView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -3603,6 +3606,7 @@
 				BC34F97424CAC55600BDD816 /* MyProfileEditContactsVC.swift in Sources */,
 				BC31D1C12457D094000F5BE5 /* DonationUsersView.swift in Sources */,
 				BC93656224E245EE00438012 /* ChangePasswordUsingMasterPasswordVC.swift in Sources */,
+				BCD8461124EA68B5005404CD /* CMMetaView.swift in Sources */,
 				BC016D49235DA2AC00F1319F /* MyTableViewCell.swift in Sources */,
 				BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */,
 				BC7A88FB23FE73C300B8CF6E /* WalletAddFriendVC.swift in Sources */,
