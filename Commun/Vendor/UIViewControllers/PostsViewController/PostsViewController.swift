@@ -110,28 +110,24 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     func filterChanged(filter: PostsListFetcher.Filter) {
         
     }
-    
-    func postAtIndexPath(_ indexPath: IndexPath) -> ResponseAPIContentGetPost? {
-        viewModel.items.value[safe: indexPath.row]
-    }
 }
 
 extension PostsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let post = postAtIndexPath(indexPath),
+        guard let post = itemAtIndexPath(indexPath),
             let height = viewModel.rowHeights[post.identity]
         else {return UITableView.automaticDimension}
         return height
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let post = postAtIndexPath(indexPath)
+        guard let post = itemAtIndexPath(indexPath)
         else {return}
         
         // record post view
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             if tableView.isCellVisible(indexPath: indexPath) &&
-                self.postAtIndexPath(indexPath)?.identity == post.identity &&
+                self.itemAtIndexPath(indexPath)?.identity == post.identity &&
                 !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity)
             {
                 post.markAsViewed().disposed(by: self.disposeBag)
@@ -140,7 +136,7 @@ extension PostsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard var post = postAtIndexPath(indexPath) else {return}
+        guard var post = itemAtIndexPath(indexPath) else {return}
         
         // cache height
         viewModel.rowHeights[post.identity] = cell.bounds.height
