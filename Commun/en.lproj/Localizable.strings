@@ -14,9 +14,12 @@
 "number" = "number";
 "min length" = "min length";
 "Abuse" = "Attempt to abuse";
+"Breakscommunityrules" = "It breaks community rules";
 "Breaks Community rules" = "It breaks community rules";
+"Falsenews" = "False News";
 "False News" = "False News";
 "Harassment" = "Harassment";
+"Hatespeech" = "Hate Speech";
 "Hate Speech" = "Hate Speech";
 "Nudity" = "Nudity";
 "OK" = "OK";
@@ -25,6 +28,7 @@
 "Spam" = "Spam";
 "Terrorism" = "Terrorism";
 "URL" = "URL";
+"Unauthorizedsales" = "Unauthorized Sales";
 "Unauthorized Sales" = "Unauthorized Sales";
 "Violence" = "Violence";
 "You need to enable Keychain, then" = "You need to enable Keychain, then your password will be safe and sound.\nGo to your phone Settings\nthen to Passwords & Accounts > AutoFill Passwords > Enable Keychain";
@@ -473,6 +477,7 @@
 "share"                                         =   "share";
 "this comment was deleted" = "this comment was deleted";
 "this community is on your blacklist" = "this community is on your blacklist. Do you really want to unhide and follow it anyway?";
+"this is" = "this is";
 "this user" = "this user";
 "This username is already taken" = "This username is already taken";
 "this version of the application is out of" = "this version of the application is out of date.\nPlease update to continue using the app.";

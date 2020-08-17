@@ -32,9 +32,17 @@ class ReportDetailView: MyView {
     func setUp(with report: ResponseAPIContentGetEntityReport) {
         avatarImageView.setAvatar(urlString: report.author.avatarUrl)
         
+        var reasonString = report.reason
+        if let data = reasonString.data(using: .utf8),
+            let rules = try? JSONDecoder().decode([String].self, from: data)
+        {
+            reasonString = rules.reduce("this is".localized() + ": ", {$0 + "\($1.starts(with: "other-") ? $1.removingPrefix("other-") : $1.uppercaseFirst.localized()), "})
+        }
+        reasonString.removeLast(2)
+        
         label.attributedText = NSMutableAttributedString()
             .text(report.author.username ?? report.author.userId, weight: .bold)
             .text(" ")
-            .text(report.reason)
+            .text(reasonString)
     }
 }
