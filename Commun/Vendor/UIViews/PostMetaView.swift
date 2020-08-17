@@ -92,6 +92,7 @@ class PostMetaView: CMMetaView {
         if isUserNameTappable {
             let tap = TapGesture(target: self, action: isMyFeed ? #selector(communityNameTapped(_:)) : #selector(userNameTapped(_:)))
             tap.community = community
+            tap.author = author
             subtitleLabel.isUserInteractionEnabled = true
             subtitleLabel.addGestureRecognizer(tap)
         }
