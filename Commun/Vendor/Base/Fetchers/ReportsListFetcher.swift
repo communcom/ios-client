@@ -16,9 +16,18 @@ class ReportsListFetcher: ListFetcher<ResponseAPIContentGetReport> {
     var status: String = "open"
     var sortBy: SortBy = .timeDesc
     
+    private var countedContentTypes = [String]()
     override var request: Single<[ResponseAPIContentGetReport]> {
         RestAPIManager.instance.getReportsList(communityIds: communityIds, contentType: contentType, status: status, sortBy: sortBy, limit: Int(limit), offset: Int(offset))
-            .do(onSuccess: {if $0.reportsCount != nil { self.reportsCount = $0.reportsCount! }})
+            .do(onSuccess: {
+                if $0.reportsCount != nil {
+                    if self.countedContentTypes.contains(self.contentType) {
+                        return
+                    }
+                    self.reportsCount += $0.reportsCount!
+                    self.countedContentTypes.append(self.contentType)
+                }
+            })
             .map {$0.items}
     }
 }
