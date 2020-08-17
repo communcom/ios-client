@@ -43,7 +43,7 @@ class ManageCommunityButtonsView: MyView {
     
     private func createButton(title: String, countLabel: UILabel) -> UIView {
         let view = UIView(height: 44, backgroundColor: .appLightGrayColor, cornerRadius: 10)
-        let stackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .fill, distribution: .fill)
+        let stackView = UIStackView(axis: .horizontal, spacing: 6, alignment: .fill, distribution: .fill)
         view.addSubview(stackView)
         stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)

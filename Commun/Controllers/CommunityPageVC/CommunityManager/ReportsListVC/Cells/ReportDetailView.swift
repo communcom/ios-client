@@ -37,8 +37,8 @@ class ReportDetailView: MyView {
             let rules = try? JSONDecoder().decode([String].self, from: data)
         {
             reasonString = rules.reduce("this is".localized() + ": ", {$0 + "\($1.starts(with: "other-") ? $1.removingPrefix("other-") : $1.uppercaseFirst.localized()), "})
+            reasonString.removeLast(2)
         }
-        reasonString.removeLast(2)
         
         label.attributedText = NSMutableAttributedString()
             .text(report.author.username ?? report.author.userId, weight: .bold)
