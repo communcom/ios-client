@@ -111,6 +111,7 @@ extension ReportsListVC: UITableViewDelegate {
     private func loadReportsAtIndexPath(_ indexPath: IndexPath) {
         guard var report = itemAtIndexPath(indexPath),
             report.downloadingReports != true,
+            (report.post?.reports?.reportsCount ?? report.comment?.reports?.reportsCount ?? 0) > 0,
             let userId = report.post?.contentId.userId ?? report.comment?.contentId.userId,
             let communityId = report.post?.contentId.communityId ?? report.comment?.contentId.communityId,
             let permlink = report.post?.contentId.permlink ?? report.comment?.contentId.permlink,
