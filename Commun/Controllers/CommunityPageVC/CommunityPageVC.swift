@@ -95,6 +95,12 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         return containerView
     }()
     
+    lazy var manageCommunityBarButton: UIButton = {
+        let button = UIButton.settings(tintColor: .white)
+        button.addTarget(self, action: #selector(manageCommunityButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Initializers
     init(communityId: String) {
         self.communityId = communityId
@@ -127,6 +133,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
        
         bindSelectedIndex()
         
+        bindCommunityManager()
+        
         // forward delegate
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
@@ -134,6 +142,10 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     
     override func setUp(profile: ResponseAPIContentGetCommunity) {
         super.setUp(profile: profile)
+        
+        if profile.isLeader == true {
+            rightBarButtonsStackView.insertArrangedSubview(manageCommunityBarButton, at: 0)
+        }
        
         // Register new cell type
         tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
@@ -168,6 +180,13 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                 self.showError(error)
             })
             .disposed(by: disposeBag)
+        
+        // community manager
+        if community?.isLeader == true {
+            headerView.manageCommunityButtonsView.proposalsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(proposalsButtonDidTouch)))
+            headerView.manageCommunityButtonsView.reportsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(reportsButtonDidTouch)))
+            headerView.manageCommunityButtonsView.manageCommunityButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(manageCommunityButtonDidTouch)))
+        }
     }
        
     override func handleListLoading() {
@@ -322,7 +341,6 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             let postPageVC = PostPageVC(post: post)
             self.show(postPageVC, sender: nil)
         case is CommunityLeaderCell:
-            // TODO: - Tap a leaderCell
             break
         default:
             break
@@ -332,57 +350,47 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
         guard let profile = viewModel.profile.value, let currentUserID = Config.currentUser?.id else {return}
         
-        let headerView = UIView(height: 40)
+        let headerView = CMMetaView(forAutoLayout: ())
+        headerView.avatarImageView.setAvatar(urlString: profile.avatarUrl)
+        headerView.titleLabel.text = profile.name
+        headerView.subtitleLabel.text = profile.communityId
         
-        let avatarImageView = MyAvatarImageView(size: 40)
-        avatarImageView.setAvatar(urlString: profile.avatarUrl)
-        headerView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-                
-        let userNameLabel = UILabel.with(text: profile.name, textSize: 15, weight: .semibold)
-        headerView.addSubview(userNameLabel)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .top)
-        userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
-
-        let userIdLabel = UILabel.with(text: profile.communityId, textSize: 12, textColor: .appMainColor)
-        headerView.addSubview(userIdLabel)
-        userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
-        userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        showCommunActionSheet(headerView: headerView, actions: [
-            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
-                                     icon: UIImage(named: "share"),
-                                     style: .default,
-                                     marginTop: 0,
-                                     handle: {
-                                        ShareHelper.share(urlString: self.shareWith(name: profile.alias ?? "", userID: currentUserID, isCommunity: true))
-            }),
-            CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
-                                     icon: UIImage(named: "profile_options_blacklist"),
-                                     tintColor: profile.isInBlacklist == true ? .appBlackColor: .appRedColor,
-                                     marginTop: 10,
-                                     handle: {
-                                        self.showAlert(
-                                            title: (profile.isInBlacklist == true ? "unhide community" : "hide community").localized().uppercaseFirst,
-                                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of" : "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
-                                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
-                                            highlightedButtonIndex: 1) { (index) in
-                                                if index != 0 {return}
-                                                if profile.isInBlacklist == true {
-                                                    self.unhideCommunity()
-                                                } else {
-                                                    self.hideCommunity()
-                                                }
-                                        }
-            })
-        ]) {
-            
-        }
+        showCMActionSheet(
+            headerView: headerView,
+            actions: [
+                CMActionSheet.Action.default(
+                    title: "share".localized().uppercaseFirst,
+                    iconName: "share",
+                    handle: {
+                        ShareHelper.share(urlString: self.shareWith(name: profile.alias ?? "", userID: currentUserID, isCommunity: true))
+                    }, bottomMargin: 10
+                ),
+                CMActionSheet.Action.default(
+                    title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
+                    iconName: "profile_options_blacklist",
+                    handle: {
+                        self.showAlert(
+                            title: (profile.isInBlacklist == true ? "unhide community" : "hide community").localized().uppercaseFirst,
+                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of" : "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
+                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
+                            highlightedButtonIndex: 1) { (index) in
+                                if index != 0 {return}
+                                if profile.isInBlacklist == true {
+                                    self.unhideCommunity()
+                                } else {
+                                    self.hideCommunity()
+                                }
+                        }
+                    })
+            ]
+        )
+    }
+    
+    override func configureNavigationBar() {
+        super.configureNavigationBar()
+        manageCommunityBarButton.tintColor = showNavigationBar ? .appBlackColor: .white
     }
 }
-
 
 // MARK: - UITableViewDelegate
 extension CommunityPageVC: UITableViewDelegate {

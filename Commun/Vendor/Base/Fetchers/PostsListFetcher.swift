@@ -40,7 +40,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         var authorizationRequired = true
         
         var type: FeedTypeMode
-        var sortBy: FeedSortMode?
+        var sortBy: SortBy?
         var timeframe: FeedTimeFrameMode?
         var searchKey: String?
         var userId: String?
@@ -68,7 +68,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         
         func newFilter(
             type: FeedTypeMode? = nil,
-            sortBy: FeedSortMode? = nil,
+            sortBy: SortBy? = nil,
             timeframe: FeedTimeFrameMode? = nil,
             searchKey: String? = nil,
             userId: String? = nil,

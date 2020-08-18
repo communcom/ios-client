@@ -144,4 +144,12 @@ extension UIButton {
         button.contentEdgeInsets = contentInsets
         return button
     }
+    
+    static func settings(tintColor: UIColor = .appBlackColor, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)) -> UIButton {
+        let button = UIButton(width: 40, height: 40, contentInsets: contentInsets)
+        button.tintColor = tintColor
+        button.setImage(UIImage(named: "settings-button"), for: .normal)
+        button.contentEdgeInsets = contentInsets
+        return button
+    }
 }

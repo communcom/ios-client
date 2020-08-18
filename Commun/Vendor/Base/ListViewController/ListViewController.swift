@@ -20,9 +20,14 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     var tableViewMargin: UIEdgeInsets {.zero}
     let refreshControl = UIRefreshControl(forAutoLayout: ())
+    var showShadowWhenScrollUp = true
     
     var isInfiniteScrollingEnabled: Bool {true}
     var listLoadingStateObservable: Observable<ListFetcherState> {viewModel.state.asObservable()}
+    
+    var items: [T] {
+        viewModel.items.value
+    }
     
     // MARK: - Subviews
     lazy var tableView = UITableView(forAutoLayout: ())
@@ -107,6 +112,16 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         bindItems()
         bindItemSelected()
         bindScrollView()
+        
+        if showShadowWhenScrollUp {
+            tableView.rx.contentOffset
+                .map {$0.y > 3}
+                .distinctUntilChanged()
+                .subscribe(onNext: { (show) in
+                    self.navigationController?.navigationBar.showShadow(show)
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
     func bindItems() {
@@ -242,5 +257,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     @objc func refresh() {
         viewModel.reload(clearResult: false)
+    }
+    
+    func itemAtIndexPath(_ indexPath: IndexPath) -> T? {
+        viewModel.items.value[safe: indexPath.row]
     }
 }

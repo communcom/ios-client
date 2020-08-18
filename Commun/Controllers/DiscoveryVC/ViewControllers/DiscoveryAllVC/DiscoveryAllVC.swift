@@ -29,10 +29,6 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         self.seeAllHandler = seeAllHandler
         let vm = DiscoveryAllViewModel()
         super.init(viewModel: vm)
-        
-        defer {
-            showShadowWhenScrollUp = false
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +39,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     override func setUp() {
         super.setUp()
         refreshControl.subviews.first?.bounds.origin.y = -15
+        showShadowWhenScrollUp = false
     }
 
     override func setUpTableView() {

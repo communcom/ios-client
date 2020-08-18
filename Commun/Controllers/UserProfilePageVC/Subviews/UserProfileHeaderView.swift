@@ -107,7 +107,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         // name
         let attributedText = NSMutableAttributedString()
-            .text(userProfile.username, size: 20, weight: .bold)
+            .text(userProfile.username ?? "", size: 20, weight: .bold)
             .text("\n")
             .text(Formatter.joinedText(with: userProfile.registration?.time), size: 12, weight: .semibold, color: .appGrayColor)
         headerLabel.attributedText = attributedText

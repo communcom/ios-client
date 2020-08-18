@@ -9,23 +9,18 @@
 import Foundation
 import RxSwift
 
-class PostMetaView: MyView {
+class PostMetaView: CMMetaView {
     // MARK: - Enums
     class TapGesture: UITapGestureRecognizer {
-        var post: ResponseAPIContentGetPost!
+        var community: ResponseAPIContentGetCommunity?
+        var author: ResponseAPIContentGetProfile?
     }
     
     // MARK: - Properties
     private let disposeBag = DisposeBag()
-    var stackViewTrailingConstraint: NSLayoutConstraint?
-    var trailingConstraint: NSLayoutConstraint?
     private var mosaic: ResponseAPIRewardsGetStateBulkMosaic?
 
     // MARK: - Subviews
-    lazy var avatarImageView = MyAvatarImageView(size: 40)
-    lazy var stackView = UIStackView(axis: .vertical, spacing: 3, alignment: .leading)
-    lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var subtitleLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor)
     lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .white)
 
     lazy var stateButton: UIView = {
@@ -60,16 +55,9 @@ class PostMetaView: MyView {
     override func commonInit() {
         super.commonInit()
         
-        // avatar
-        addSubview(avatarImageView)
-        avatarImageView.autoPinTopAndLeadingToSuperView()
-        
-        addSubview(stackView)
-        stackView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        stackView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        stackView.addArrangedSubview(comunityNameLabel)
-        stackView.addArrangedSubview(subtitleLabel)
+        stackView.addArrangedSubview(stateButton)
+        stackView.setCustomSpacing(4, after: labelStackView)
+        stateButton.isHidden = true
         
         // currency changed
         UserDefaults.standard.rx.observe(String.self, Config.currentRewardShownSymbol)
@@ -82,18 +70,29 @@ class PostMetaView: MyView {
     }
     
     func setUp(post: ResponseAPIContentGetPost) {
-        let isMyFeed = post.community?.communityId == "FEED"
+        setUp(with: post.community, author: post.author, creationTime: post.meta.creationTime)
+        self.mosaic = post.mosaic
+        setMosaic()
+    }
+    
+    func setUp(comment: ResponseAPIContentGetComment) {
+        setUp(with: comment.community, author: comment.author, creationTime: comment.meta.creationTime)
+    }
+    
+    func setUp(with community: ResponseAPIContentGetCommunity?, author: ResponseAPIContentGetProfile?, creationTime: String) {
+        let isMyFeed = community?.communityId == "FEED"
+        avatarImageView.setAvatar(urlString: isMyFeed ? author?.avatarUrl : community?.avatarUrl)
+        titleLabel.text = isMyFeed ? author?.username : community?.name
         
-        avatarImageView.setAvatar(urlString: isMyFeed ? post.author?.avatarUrl : post.community?.avatarUrl)
-        comunityNameLabel.text = isMyFeed ? post.author?.username : post.community?.name
         subtitleLabel.attributedText = NSMutableAttributedString()
-            .text(Date.timeAgo(string: post.meta.creationTime) + " • ", size: 12, weight: .semibold, color: .appGrayColor)
-            .text(isMyFeed ? (post.community?.name ?? post.community?.communityId ?? "") : (post.author?.username ?? post.author?.userId ?? ""), size: 12, weight: .semibold, color: .appMainColor)
+            .text(Date.timeAgo(string: creationTime) + " • ", size: 12, weight: .semibold, color: .appGrayColor)
+            .text(isMyFeed ? (community?.name ?? community?.communityId ?? "") : (author?.username ?? author?.userId ?? ""), size: 12, weight: .semibold, color: .appMainColor)
         
         // add gesture
         if isUserNameTappable {
             let tap = TapGesture(target: self, action: isMyFeed ? #selector(communityNameTapped(_:)) : #selector(userNameTapped(_:)))
-            tap.post = post
+            tap.community = community
+            tap.author = author
             subtitleLabel.isUserInteractionEnabled = true
             subtitleLabel.addGestureRecognizer(tap)
         }
@@ -101,39 +100,25 @@ class PostMetaView: MyView {
         if isCommunityNameTappable {
             let tapLabel = TapGesture(target: self, action: isMyFeed ? #selector(userNameTapped(_:)) : #selector(communityNameTapped(_:)))
             let tapAvatar = TapGesture(target: self, action: isMyFeed ? #selector(userNameTapped(_:)) : #selector(communityNameTapped(_:)))
-            tapLabel.post = post
-            tapAvatar.post = post
+            tapLabel.author = author
+            tapLabel.community = community
+            tapAvatar.author = author
+            tapAvatar.community = community
 
             avatarImageView.isUserInteractionEnabled = true
             avatarImageView.addGestureRecognizer(tapAvatar)
-            comunityNameLabel.isUserInteractionEnabled = true
-            comunityNameLabel.addGestureRecognizer(tapLabel)
+            titleLabel.isUserInteractionEnabled = true
+            titleLabel.addGestureRecognizer(tapLabel)
         }
-        
-        self.mosaic = post.mosaic
-        setMosaic()
     }
     
     private func setMosaic() {
-        // clean
-        stateButton.removeFromSuperview()
-        stackViewTrailingConstraint?.isActive = false
-        trailingConstraint?.isActive = false
-        trailingConstraint = nil
-        
         guard let mosaicItem = mosaic, mosaicItem.isRewarded else {
-            stackViewTrailingConstraint = stackView.autoPinEdge(toSuperviewEdge: .trailing)
-            stackViewTrailingConstraint?.isActive = true
+            stateButton.isHidden = true
             return
         }
         
-        addSubview(stateButton)
-        stateButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        stackViewTrailingConstraint = stackView.autoPinEdge(.trailing, to: .leading, of: stateButton, withOffset: -4)
-        stackViewTrailingConstraint?.isActive = true
-        
-        trailingConstraint = stateButton.autoPinEdge(toSuperviewEdge: .trailing)
-        trailingConstraint?.isActive = true
+        stateButton.isHidden = false
         
         let isRewardState = mosaicItem.isClosed
         
@@ -159,7 +144,7 @@ class PostMetaView: MyView {
     
     // MARK: - Actions
     @objc func userNameTapped(_ sender: TapGesture) {
-        guard let userId = sender.post.author?.userId else {return}
+        guard let userId = sender.author?.userId else {return}
         if parentViewController?.isModal == true,
             let parentVC = parentViewController?.presentingViewController
         {
@@ -176,7 +161,7 @@ class PostMetaView: MyView {
     }
     
     @objc func communityNameTapped(_ sender: TapGesture) {
-        guard let communityId = sender.post.community?.communityId else {return}
+        guard let communityId = sender.community?.communityId else {return}
         if parentViewController?.isModal == true,
             let parentVC = parentViewController?.presentingViewController
         {

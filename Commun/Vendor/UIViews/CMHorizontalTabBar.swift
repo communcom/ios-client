@@ -113,7 +113,7 @@ class CMHorizontalTabBar: MyView {
                 self.buttons[i].setTitleColor(self.selectedIndexes.contains(i) ? .white : .appBlackColor, for: .normal)
             }
         }
-        
+        selectedIndexesDidChange?(selectedIndexes)
     }
     
     @objc private func selectionDidChange(_ button: CommunButton) {

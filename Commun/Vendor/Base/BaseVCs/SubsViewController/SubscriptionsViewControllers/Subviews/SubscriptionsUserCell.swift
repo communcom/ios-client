@@ -25,7 +25,7 @@ class SubscriptionsUserCell: SubsItemCell, ListItemCellType {
         self.profile = profile
         avatarImageView.setAvatar(urlString: profile.avatarUrl)
         let attributedText = NSMutableAttributedString()
-            .text(profile.username, size: 15, weight: .semibold)
+            .text(profile.username ?? "", size: 15, weight: .semibold)
             .text("\n")
             .text(String(format: NSLocalizedString("%d followers", comment: ""), (profile.subscribersCount ?? 0)) + " • " + String(format: NSLocalizedString("%d posts", comment: ""), (profile.postsCount ?? 0)), size: 12, weight: .semibold, color: .appGrayColor)
             .withParagraphStyle(lineSpacing: 3)

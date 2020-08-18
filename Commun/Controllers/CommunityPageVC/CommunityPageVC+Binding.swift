@@ -37,4 +37,61 @@ extension CommunityPageVC {
             })
             .disposed(by: disposeBag)
     }
+    
+    func bindCommunityManager() {
+        let vm = (viewModel as! CommunityPageViewModel)
+        
+        vm.proposalsVM.items
+            .filter {_ in vm.profile.value?.isLeader == true}
+            .map {_ in vm.proposalsVM.proposalsCount}
+            .map {"\($0)"}
+            .bind(to: headerView.manageCommunityButtonsView.proposalsCountLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        vm.reportsVM.items
+            .filter {_ in vm.profile.value?.isLeader == true}
+            .map {_ in vm.reportsVM.reportsCount}
+            .map {"\($0)"}
+            .bind(to: headerView.manageCommunityButtonsView.reportsCountLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        // manage view
+        let manageCommunityButtonsView = self.headerView.manageCommunityButtonsView
+        let originalColor = UIColor.appBlackColor
+        vm.proposalsVM.state
+            .filter {_ in vm.profile.value?.isLeader == true}
+            .subscribe(onNext: { state in
+                switch state {
+                case .loading(true):
+                    manageCommunityButtonsView.proposalsButton.showLoader()
+                    manageCommunityButtonsView.proposalsCountLabel.textColor = originalColor
+                case .loading(false), .listEnded, .listEmpty:
+                    manageCommunityButtonsView.proposalsButton.hideLoader()
+                    manageCommunityButtonsView.proposalsCountLabel.textColor = originalColor
+                case .error:
+                    manageCommunityButtonsView.proposalsButton.hideLoader()
+                    manageCommunityButtonsView.proposalsCountLabel.textColor = .red
+                    manageCommunityButtonsView.proposalsCountLabel.text = "error".localized().uppercaseFirst
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        vm.reportsVM.state
+            .filter {_ in vm.profile.value?.isLeader == true}
+            .subscribe(onNext: { state in
+                switch state {
+                case .loading(true):
+                    manageCommunityButtonsView.reportsButton.showLoader()
+                    manageCommunityButtonsView.reportsCountLabel.textColor = originalColor
+                case .loading(false), .listEnded, .listEmpty:
+                    manageCommunityButtonsView.reportsButton.hideLoader()
+                    manageCommunityButtonsView.reportsCountLabel.textColor = originalColor
+                case .error:
+                    manageCommunityButtonsView.reportsButton.hideLoader()
+                    manageCommunityButtonsView.reportsCountLabel.textColor = .red
+                    manageCommunityButtonsView.reportsCountLabel.text = "error".localized().uppercaseFirst
+                }
+            })
+            .disposed(by: disposeBag)
+    }
 }

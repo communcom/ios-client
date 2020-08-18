@@ -14,9 +14,12 @@
 "number" = "number";
 "min length" = "min length";
 "Abuse" = "Attempt to abuse";
+"Breakscommunityrules" = "It breaks community rules";
 "Breaks Community rules" = "It breaks community rules";
+"Falsenews" = "False News";
 "False News" = "False News";
 "Harassment" = "Harassment";
+"Hatespeech" = "Hate Speech";
 "Hate Speech" = "Hate Speech";
 "Nudity" = "Nudity";
 "OK" = "OK";
@@ -25,12 +28,14 @@
 "Spam" = "Spam";
 "Terrorism" = "Terrorism";
 "URL" = "URL";
+"Unauthorizedsales" = "Unauthorized Sales";
 "Unauthorized Sales" = "Unauthorized Sales";
 "Violence" = "Violence";
 "You need to enable Keychain, then" = "You need to enable Keychain, then your password will be safe and sound.\nGo to your phone Settings\nthen to Passwords & Accounts > AutoFill Passwords > Enable Keychain";
 "a referral bonus for the registration of" = "a referral bonus for the registration of";
 "a user" = "a user";
 "about" = "about";
+"accept" = "accept";
 "access was previously denied, please grant" = "access was previously denied, please grant access from Settings";
 "add" = "add";
 "add a description for your image" = "add a description for your image";
@@ -38,6 +43,7 @@
 "add article" = "add article";
 "add contact" = "add contact";
 "add link" = "add link";
+"add rules" = "add rule";
 "adding referralId" = "adding referralId";
 "after confirmation, we'll generate for" = "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.";
 "ago" = "ago";
@@ -57,6 +63,8 @@
 "back" = "back";
 "back to wallet" = "back to wallet";
 "balance" = "balance";
+"ban post" = "ban post";
+"ban comment" = "ban comment";
 "be" = "be";
 "binance Exchange provides cryptocurrency" = "Binance Exchange provides cryptocurrency trading for fintech and blockchain enthusiasts";
 "bio" = "bio";
@@ -79,11 +87,15 @@
 "can not fetch next items" = "can not fetch next items";
 "can't cancel vote on own publication" = "can't cancel vote on own publication";
 "cancel" = "cancel";
+"cancel ban" = "cancel ban";
 "Cancel" = "Cancel";
 "cannot use Back Camera" = "cannot use Back Camera";
 "change" = "change";
 "change avatar" = "change avatar";
+"change avatarUrl" = "change avatar";
 "change cover photo" = "change cover photo";
+"change coverUrl" = "change cover";
+"change description" = "change description";
 "change to" = "change to";
 "change position" = "change position";
 "changing password" = "changing password";
@@ -180,6 +192,8 @@
 "equity Commun Value" = "equity Commun Value";
 "equity USD Value" = "equity USD Value";
 "error" = "error";
+"expired" = "expired";
+"expiring in" = "expiring in";
 "feed" = "feed";
 "feedback" = "feedback";
 "filter" = "filter";
@@ -193,6 +207,7 @@
 "friend" = "friend";
 "friends" = "friends";
 "friends not found" = "friends not found";
+"from" = "from";
 "general info" = "general info";
 "get" = "get";
 "get you first points" = "get you first points";
@@ -273,6 +288,8 @@
 "my profile" = "my profile";
 "name" = "name";
 "new" = "new";
+"new avatar" = "new avatar";
+"new cover" = "new cover";
 "newest first" = "newest first";
 "next" = "next";
 "no" = "no";
@@ -305,6 +322,9 @@
 "not found" = "not found";
 "notification" = "notification";
 "notifications" = "notifications";
+"old avatar" = "old avatar";
+"old cover" = "old cover";
+"old rule" = "old rule";
 "oldest first" = "oldest first";
 "on" = "on";
 "only Latin characters, digits and" = "only Latin characters, digits and special symbols\nare allowed";
@@ -347,6 +367,8 @@
 "posts not found" = "posts not found";
 "profile description" = "profile description";
 "profile photo" = "profile photo";
+"proposals" = "proposals";
+"propose to ban" = "propose to ban";
 "rate" = "rate";
 "re-enter your password" = "re-enter your password";
 "read" = "read";
@@ -359,12 +381,14 @@
 "remove" = "remove";
 "remove current avatar" = "remove current avatar";
 "remove current cover photo" = "remove current cover photo";
+"remove rules" = "remove rule";
 "repeat" = "repeat";
 "replace content" = "replace content";
 "replies" = "replies";
 "reply" = "reply";
 "reply to comment" = "reply to comment";
 "report" = "report";
+"reports" = "reports";
 "reporting" = "reporting";
 "request failed with error" = "request failed with error";
 "request is invalid with error" = "request is invalid with error";
@@ -453,6 +477,7 @@
 "share"                                         =   "share";
 "this comment was deleted" = "this comment was deleted";
 "this community is on your blacklist" = "this community is on your blacklist. Do you really want to unhide and follow it anyway?";
+"this is" = "this is";
 "this user" = "this user";
 "This username is already taken" = "This username is already taken";
 "this version of the application is out of" = "this version of the application is out of date.\nPlease update to continue using the app.";
@@ -480,6 +505,7 @@
 "unhiding" = "unhiding";
 "unhold" = "unhold";
 "update" = "update";
+"update rules" = "update rule";
 "update the app" = "update the app";
 "uploading" = "uploading";
 "uppercase letters in the username are not allowed" = "uppercase letters in the username are not allowed";
@@ -497,6 +523,7 @@
 "videos" = "videos";
 "vote" = "vote";
 "voted" = "voted";
+"votes" = "votes";
 "wait for transaction" = "wait for transaction";
 "wallet" = "wallet";
 "warning" = "warning";

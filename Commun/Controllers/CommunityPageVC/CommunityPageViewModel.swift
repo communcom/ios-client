@@ -44,6 +44,9 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     lazy var aboutSubject = PublishSubject<String?>()
     lazy var rules = BehaviorRelay<[ResponseAPIContentGetCommunityRule]>(value: [])
     
+    lazy var proposalsVM = ProposalsViewModel()
+    lazy var reportsVM = ReportsViewModel()
+    
     // MARK: - Initializers
     init(communityId: String?, authorizationRequired: Bool = true) {
         super.init(profileId: communityId, authorizationRequired: authorizationRequired)
@@ -131,6 +134,17 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
         profile
             .map {$0?.rules ?? []}
             .bind(to: rules)
+            .disposed(by: disposeBag)
+        
+        profile
+            .filter {$0?.isLeader ?? false}
+            .subscribe(onNext: { community in
+                (self.proposalsVM.fetcher as! ProposalsListFetcher).communityIds = [community!.communityId]
+                (self.reportsVM.fetcher as! ReportsListFetcher).communityIds = [community!.communityId]
+                
+                self.proposalsVM.reload(clearResult: true)
+                self.reportsVM.reload(clearResult: true)
+            })
             .disposed(by: disposeBag)
         
         // Rule changed (ex: isExpanded)

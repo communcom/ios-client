@@ -43,7 +43,7 @@ final class BasicPostCell: PostCell {
         gridView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
         gridView.autoPinEdge(toSuperviewEdge: .left)
         gridView.autoPinEdge(toSuperviewEdge: .right)
-        gridView.autoPinEdge(.bottom, to: .top, of: postStatsView)
+        gridView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -10)
     }
     
     override func setUp(with post: ResponseAPIContentGetPost) {
