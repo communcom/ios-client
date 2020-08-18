@@ -71,17 +71,13 @@ class RuleProposalView: DescriptionProposalView {
         
         if !oldRuleSection.isHidden {
             if isOldRuleCollapsed == true {
-                UIView.transition(with: expandButton, duration: expandButton.transform == .identity ? 0 : 0.3, options: .curveEaseInOut, animations: {
-                    self.expandButton.transform = .identity
-                })
+                expandButton.transform = .identity
                 oldRuleTitleLabel.text = nil
                 oldRuleContentLabel.text = nil
                 oldRuleTitleLabel.isHidden = true
                 oldRuleContentLabel.isHidden = true
             } else {
-                UIView.transition(with: expandButton, duration: expandButton.transform == CGAffineTransform(rotationAngle: -.pi) ? 0 : 0.3, options: .curveEaseInOut, animations: {
-                    self.expandButton.transform = CGAffineTransform(rotationAngle: -.pi)
-                })
+                expandButton.transform = CGAffineTransform(rotationAngle: -.pi)
                 oldRuleTitleLabel.text = oldRule?.title
                 oldRuleContentLabel.text = oldRule?.text
                 oldRuleTitleLabel.isHidden = false

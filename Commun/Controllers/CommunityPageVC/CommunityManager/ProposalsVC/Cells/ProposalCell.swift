@@ -66,6 +66,13 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
         stackView.insertArrangedSubview(metaView.padding(UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)), at: 0)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard let identity = itemIdentity else {return}
+//        print("ProposalCellHeight: \(itemIdentity ?? "") \(bounds.height)")
+        ResponseAPIContentGetProposal.height(of: identity, didChangeTo: bounds.height)
+    }
+    
     func setUp(with item: ResponseAPIContentGetProposal) {
         itemIdentity = item.identity
         

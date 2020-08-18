@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 class ProposalsVC: ListViewController<ResponseAPIContentGetProposal, ProposalCell>, ProposalCellDelegate {
 //    lazy var horizontalTabBar: CMHorizontalTabBar = {
@@ -37,6 +38,8 @@ class ProposalsVC: ListViewController<ResponseAPIContentGetProposal, ProposalCel
         setLeftNavBarButtonForGoingBack()
         tableView.separatorStyle = .none
         tableView.backgroundColor = .appLightGrayColor
+        
+        dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .automatic, reloadAnimation: .none, deleteAnimation: .automatic)
 //        showShadowWhenScrollUp = false
 //
 //        horizontalTabBar.selectedIndexesDidChange = {index in
@@ -100,9 +103,11 @@ extension ProposalsVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let report = itemAtIndexPath(indexPath),
-            let height = viewModel.rowHeights[report.identity]
-            else {return UITableView.automaticDimension}
+        guard let proposal = itemAtIndexPath(indexPath),
+            let height = proposal.height
+        else {
+            return UITableView.automaticDimension
+        }
         return height
     }
     

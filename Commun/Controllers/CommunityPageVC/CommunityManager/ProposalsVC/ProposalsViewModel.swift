@@ -13,5 +13,23 @@ class ProposalsViewModel: ListViewModel<ResponseAPIContentGetProposal> {
     init() {
         let fetcher = ProposalsListFetcher()
         super.init(fetcher: fetcher, prefetch: false)
+        
+        defer {
+            observeItemHeight()
+        }
+    }
+    
+    func observeItemHeight() {
+        ResponseAPIContentGetProposal.observeItemHeightChanged()
+            .subscribe(onNext: { dict in
+                for (key, value) in dict {
+                    guard var item = self.fetcher.items.value.first(where: {$0.identity == key}) else {return}
+                    if item.height != value {
+                        item.height = value
+                        item.notifyChanged()
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }

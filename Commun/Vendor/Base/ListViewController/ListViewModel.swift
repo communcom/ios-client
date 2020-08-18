@@ -88,6 +88,7 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
     
     func observeItemChange() {
         T.observeItemChanged()
+            .debounce(0.3, scheduler: MainScheduler.instance)
             .subscribe(onNext: { (changedItem) in
                 self.updateItem(changedItem)
             })
