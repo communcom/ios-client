@@ -19,7 +19,7 @@ extension CommunityPageVC {
                 self.hideHud()
                 self.showAlert(
                     title: "community hidden".localized().uppercaseFirst,
-                    message: "you've hidden".localized().uppercaseFirst + " \(self.viewModel.profile.value?.communityId ?? "this community".localized())" + ".\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
+                    message: "you've hidden".localized().uppercaseFirst + " \(self.viewModel.profile.value?.name ?? self.viewModel.profile.value?.communityId ?? "this community".localized())" + ".\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
                         var profile = self.viewModel.profile.value
                         profile?.isInBlacklist = true
                         profile?.notifyChanged()
@@ -44,7 +44,7 @@ extension CommunityPageVC {
                 self.hideHud()
                 self.showAlert(
                     title: "community unhidden".localized().uppercaseFirst,
-                    message: "you've unhidden".localized().uppercaseFirst + " \(self.viewModel.profile.value?.communityId ?? "this community")" + ".") { _ in
+                    message: "you've unhidden".localized().uppercaseFirst + " \(self.viewModel.profile.value?.name ?? self.viewModel.profile.value?.communityId ?? "this community")" + ".") { _ in
                         var profile = self.viewModel.profile.value
                         profile?.isInBlacklist = false
                         profile?.notifyChanged()
