@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ProposalsVC: ListViewController<ResponseAPIContentGetProposal, ProposalCell> {
+class ProposalsVC: ListViewController<ResponseAPIContentGetProposal, ProposalCell>, ProposalCellDelegate {
 //    lazy var horizontalTabBar: CMHorizontalTabBar = {
 //        let sc = CMHorizontalTabBar(height: 35)
 //        sc.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)

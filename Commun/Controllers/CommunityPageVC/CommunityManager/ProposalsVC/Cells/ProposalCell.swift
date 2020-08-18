@@ -7,12 +7,49 @@
 //
 
 import Foundation
+import RxSwift
 
-protocol ProposalCellDelegate: class {}
+protocol ProposalCellDelegate: class {
+    var items: [ResponseAPIContentGetProposal] {get}
+    func buttonApproveDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity)
+}
+
+extension ProposalCellDelegate where Self: BaseViewController {
+    func buttonApproveDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity) {
+        guard var proposal = items.first(where: {$0.identity == identity}) else {return}
+        let originIsApproved = proposal.isApproved ?? false
+        
+        // change state
+        proposal.isBeingApproved = true
+        proposal.isApproved = !originIsApproved
+        proposal.notifyChanged()
+        
+        let request: Single<String>
+        if originIsApproved {
+            request = BlockchainManager.instance.unapproveProposal(proposal.proposalId)
+        } else {
+            request = BlockchainManager.instance.approveProposal(proposal.proposalId)
+        }
+        
+        request
+            .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
+            .subscribe(onCompleted: {
+                proposal.isBeingApproved = false
+                proposal.notifyChanged()
+            }) { (error) in
+                self.showError(error)
+                proposal.isBeingApproved = false
+                proposal.isApproved = originIsApproved
+                proposal.notifyChanged()
+            }
+            .disposed(by: disposeBag)
+    }
+}
 
 class ProposalCell: CommunityManageCell, ListItemCellType {
     // MARK: - Properties
     weak var delegate: ProposalCellDelegate?
+    var itemIdentity: ResponseAPIContentGetProposal.Identity?
     
     // MARK: - Subviews
     lazy var metaView = PostMetaView(height: 40.0)
@@ -30,6 +67,8 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
     }
     
     func setUp(with item: ResponseAPIContentGetProposal) {
+        itemIdentity = item.identity
+        
         // meta view
         if item.contentType != "post" {
             metaView.setUp(with: item.community, author: item.proposer, creationTime: item.blockTime!)
@@ -81,6 +120,11 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
             .normal("\n")
             .text("\(item.approvesCount ?? 0) \("from".localized()) \(item.approvesNeed ?? 0) \("votes".localized())", size: 14, weight: .semibold)
             .withParagraphStyle(lineSpacing: 4)
+        
+        // button
+        let joined = item.isApproved ?? false
+        actionButton.setHightLight(joined, highlightedLabel: "approved", unHighlightedLabel: "approve")
+        actionButton.isEnabled = !(item.isBeingApproved ?? false)
     }
     
     func setMessage(item: ResponseAPIContentGetProposal?) {
@@ -132,6 +176,9 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
     }
     
     override func actionButtonDidTouch() {
-        // TODO: - Accept
+        guard let identity = itemIdentity else {return}
+        actionButton.animate {
+            self.delegate?.buttonApproveDidTouch(forItemWithIdentity: identity)
+        }
     }
 }

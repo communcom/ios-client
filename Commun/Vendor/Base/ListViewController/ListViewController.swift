@@ -25,6 +25,10 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var isInfiniteScrollingEnabled: Bool {true}
     var listLoadingStateObservable: Observable<ListFetcherState> {viewModel.state.asObservable()}
     
+    var items: [T] {
+        viewModel.items.value
+    }
+    
     // MARK: - Subviews
     lazy var tableView = UITableView(forAutoLayout: ())
     
