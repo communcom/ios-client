@@ -22,6 +22,7 @@ extension ProposalCellDelegate where Self: BaseViewController {
         // change state
         proposal.isBeingApproved = true
         proposal.isApproved = !originIsApproved
+        proposal.approvesCount = originIsApproved ? (proposal.approvesCount ?? 1) - 1 : (proposal.approvesCount ?? 0) + 1
         proposal.notifyChanged()
         
         let request: Single<String>
@@ -40,6 +41,7 @@ extension ProposalCellDelegate where Self: BaseViewController {
                 self.showError(error)
                 proposal.isBeingApproved = false
                 proposal.isApproved = originIsApproved
+                proposal.approvesCount = originIsApproved ? proposal.approvesCount! + 1 : proposal.approvesCount! - 1
                 proposal.notifyChanged()
             }
             .disposed(by: disposeBag)
