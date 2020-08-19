@@ -23,11 +23,12 @@ class CMActionSheet: SwipeDownDismissViewController {
             customLayout(height: 65, title: title, textSize: 17, spacing: 10, iconName: iconName, iconSize: 35, showIconFirst: true, showNextButton: showNextButton, bottomMargin: bottomMargin, handle: handle)
         }
         
-        static func customLayout(height: CGFloat = 50, padding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), title: String, textSize: CGFloat = 15, spacing: CGFloat = 10, iconName: String, iconSize: CGFloat = 24, showIconFirst: Bool = false, showNextButton: Bool = false, bottomMargin: CGFloat? = nil, handle: (() -> Void)?) -> Action {
+        static func customLayout(height: CGFloat = 50, padding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), title: String, textSize: CGFloat = 15, textColor: UIColor = .appBlackColor, spacing: CGFloat = 10, showIcon: Bool = true, iconName: String? = nil, iconSize: CGFloat = 24, showIconFirst: Bool = false, showNextButton: Bool = false, bottomMargin: CGFloat? = nil, handle: (() -> Void)?) -> Action {
             let stackView = UIStackView(axis: .horizontal, spacing: spacing, alignment: .center, distribution: .fill)
-            let label = UILabel.with(text: title, textSize: textSize, weight: .medium)
+            let label = UILabel.with(text: title, textSize: textSize, weight: .medium, textColor: textColor)
             let iconImageView = UIImageView(width: iconSize, height: iconSize, imageNamed: iconName)
-            if showIconFirst {stackView.addArrangedSubviews([iconImageView, label])}
+            if !showIcon {stackView.addArrangedSubviews([label])}
+            else if showIconFirst {stackView.addArrangedSubviews([iconImageView, label])}
             else {stackView.addArrangedSubviews([label, iconImageView])}
             
             if showNextButton {
@@ -72,7 +73,7 @@ class CMActionSheet: SwipeDownDismissViewController {
     // MARK: - Initializer
     init(headerView: UIView?, title: String?, actions: [Action]) {
         self.actions = actions
-        self.headerView = headerView ?? UILabel.with(text: title, textSize: 15, weight: .bold, textAlignment: .center)
+        self.headerView = headerView ?? UILabel.with(text: title ?? "options".localized().uppercaseFirst, textSize: 15, weight: .bold, textAlignment: .center)
         super.init(nibName: nil, bundle: nil)
         transitioningDelegate = self
         modalPresentationStyle = .custom

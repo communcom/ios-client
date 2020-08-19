@@ -201,11 +201,14 @@ class PostsFilterVC: BaseViewController {
     
     @objc func languageViewDidTouch() {
         self.dismiss(animated: true) {
-            UIApplication.topViewController()?.showCommunActionSheet(actions: PostsListFetcher.Filter.Language.allCases.map({ language -> CommunActionSheet.Action in
-                CommunActionSheet.Action(title: language.localizedName.uppercaseFirst, style: .default, tintColor: .appBlackColor) {
+            let actions: [CMActionSheet.Action] = PostsListFetcher.Filter.Language.allCases.map({ language -> CMActionSheet.Action in
+                
+                CMActionSheet.Action.customLayout(height: 50, title: language.localizedName.uppercaseFirst, showIcon: false) {
                     UserDefaults.standard.set(language.rawValue, forKey: Config.currentUserFeedLanguage)
                 }
-            }))
+                
+            })
+            UIApplication.topViewController()?.showCMActionSheet(actions: actions)
         }
     }
 }
