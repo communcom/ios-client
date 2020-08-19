@@ -15,7 +15,7 @@ protocol LinkCellDelegate: class {
 class LinkCell: MyView {
     let linkType: ResponseAPIContentGetProfilePersonalLinks.LinkType
     lazy var label = UILabel.with(text: linkType.rawValue.uppercaseFirst, textSize: 15, weight: .semibold)
-    lazy var icon = UIImageView(width: 20, height: 20, imageNamed: linkType.rawValue + "-icon")
+    lazy var icon = UIImageView(width: 20, height: 20, imageNamed: linkType.rawValue.lowercased() + "-icon")
     lazy var textField = LinkTextField(linkType: linkType)
     weak var delegate: LinkCellDelegate?
     

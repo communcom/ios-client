@@ -119,22 +119,23 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     
     // MARK: - Actions
     @objc func addLinkButtonDidTouch() {
-        let actions: [CommunActionSheet.Action] = draftLinks.value.unfilledLinks.map { contact in
-            var imageNamed = contact.rawValue + "-icon"
-            if contact == .instagram {imageNamed = "sign-up-with-instagram"}
-            return CommunActionSheet.Action(
-                title: contact.rawValue.uppercaseFirst,
-                icon: UIImage(named: imageNamed),
-                style: .default,
-                marginTop: 0,
-                defaultIconOnTheRight: false,
-                handle: {
-                    self.addLinkToService(contact)
-                }
-            )
+        let actions: [CMActionSheet.Action] = draftLinks.value.unfilledLinks.map { link in
+            var imageNamed = link.rawValue.lowercased() + "-icon"
+            if link == .instagram {imageNamed = "sign-up-with-instagram"}
+            
+            return CMActionSheet.Action.customLayout(
+                height: 50,
+                title: link.rawValue.uppercaseFirst,
+                textSize: 15,
+                spacing: 10,
+                iconName: imageNamed,
+                iconSize: 24,
+                showIconFirst: true) {
+                    self.addLinkToService(link)
+            }
         }
         
-        showCommunActionSheet(title: "add link".localized().uppercaseFirst, actions: actions)
+        showCMActionSheet(title: "add link".localized().uppercaseFirst, actions: actions)
     }
     
     @objc func saveButtonDidTouch() {
