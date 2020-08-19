@@ -227,6 +227,7 @@
 "if someone is in immediate danger" = "если кто-то находится в непосредственной опасности, позвоните в местную аварийную службу. Не ждите.";
 "in top" = "в топе";
 "income" = "входящие";
+"incorrect username or password" = "неверный логин или пароль";
 "info" = "информация";
 "interface language" = "язык интерфейса";
 "interesting first" = "сначала интересные";
@@ -451,7 +452,7 @@
 "there is no currency available" = "нет доступной валюты";
 "this app is not authorized to use Back Camera" = "приложение не имеет права использовать камеру.\nПожалуйста, включите камеру в настройках";
 "this comment was deleted" = "этот комментарий был удален";
-"this community is on your blacklist" = "это сообщество находится в Вашем черном списке. Хотите, убрать его из черного списка и подписаться?";
+"this community is on your blacklist" = "это сообщество находится в Вашем черном списке. Хотите убрать его из черного списка и подписаться?";
 "this is" = "это";
 "this user" = "этот пользователь";
 "This username is already taken" = "Имя пользователя уже занято";
