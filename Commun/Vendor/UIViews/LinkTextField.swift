@@ -9,12 +9,12 @@
 import Foundation
 import RxSwift
 
-class ContactTextField: UITextField {
-    let contactType: ContactType
+class LinkTextField: UITextField {
+    let linkType: ResponseAPIContentGetProfilePersonalLinks.LinkType
     var isValid = false
     
-    init(contactType: ContactType) {
-        self.contactType = contactType
+    init(linkType: ResponseAPIContentGetProfilePersonalLinks.LinkType) {
+        self.linkType = linkType
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         setUp()
@@ -24,17 +24,12 @@ class ContactTextField: UITextField {
         borderStyle = .none
         font = .systemFont(ofSize: 17, weight: .semibold)
         
-        switch contactType.identifiedBy {
-        case .username:
-            leftView = UILabel.with(text: "@", textSize: 17, weight: .semibold)
-            leftViewMode = .always
-        default:
-            break
-        }
+        leftView = UILabel.with(text: "@", textSize: 17, weight: .semibold)
+        leftViewMode = .always
         
         autocorrectionType = .no
         autocapitalizationType = .none
-        placeholder = ("your " + contactType.identifiedBy.rawValue).localized().uppercaseFirst
+        placeholder = "your username".localized().uppercaseFirst
     }
     
     @discardableResult
@@ -43,16 +38,7 @@ class ContactTextField: UITextField {
             isValid = false
             return false
         }
-        switch contactType.identifiedBy {
-        case .username:
-            isValid = text.count >= 3
-            // verify username
-        case .phoneNumber:
-            fatalError("TODO: Choose region, phone number")
-            // verify phone number
-        case .link:
-            isValid = text.isLink
-        }
+        isValid = text.count >= 3
         return isValid
     }
     
@@ -61,7 +47,7 @@ class ContactTextField: UITextField {
     }
 }
 
-extension Reactive where Base: ContactTextField {
+extension Reactive where Base: LinkTextField {
     var isValid: Observable<Bool> {
         text.orEmpty.map {_ in self.base.verify()}
     }

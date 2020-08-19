@@ -13,14 +13,14 @@ protocol LinkCellDelegate: class {
 }
 
 class LinkCell: MyView {
-    let contactType: ResponseAPIContentGetProfilePersonal.LinkType
-    lazy var label = UILabel.with(text: contactType.rawValue.uppercaseFirst, textSize: 15, weight: .semibold)
-    lazy var icon = UIImageView(width: 20, height: 20, imageNamed: contactType.rawValue + "-icon")
-    lazy var textField = ContactTextField(contactType: contactType)
+    let linkType: ResponseAPIContentGetProfilePersonalLinks.LinkType
+    lazy var label = UILabel.with(text: linkType.rawValue.uppercaseFirst, textSize: 15, weight: .semibold)
+    lazy var icon = UIImageView(width: 20, height: 20, imageNamed: linkType.rawValue + "-icon")
+    lazy var textField = LinkTextField(linkType: linkType)
     weak var delegate: LinkCellDelegate?
     
-    init(contactType: ResponseAPIContentGetProfilePersonal.LinkType) {
-        self.contactType = contactType
+    init(linkType: ResponseAPIContentGetProfilePersonalLinks.LinkType) {
+        self.linkType = linkType
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
     }
@@ -45,7 +45,7 @@ class LinkCell: MyView {
         
         let textFieldWrapper: UIStackView = {
             let vStack = UIStackView(axis: .vertical, spacing: 6, alignment: .fill, distribution: .fill)
-            let label = UILabel.with(text: contactType.identifiedBy.rawValue.localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
+            let label = UILabel.with(text: "username".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
             vStack.addArrangedSubviews([label, textField])
             return vStack
         }()

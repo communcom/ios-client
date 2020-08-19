@@ -86,13 +86,13 @@ extension MyProfileDetailVC {
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // whatsapp
-        addContactField(icon: "whatsapp-icon", serviceName: "Whatsapp", username: profile?.personal?.contacts?.whatsApp?.value, to: stackView)
+        addContactField(icon: "whatsapp-icon", serviceName: "Whatsapp", username: profile?.personal?.messengers?.whatsApp?.value, to: stackView)
         
         // telegram
-        addContactField(icon: "telegram-icon", serviceName: "Telegram", username: profile?.personal?.contacts?.telegram?.value, to: stackView)
+        addContactField(icon: "telegram-icon", serviceName: "Telegram", username: profile?.personal?.messengers?.telegram?.value, to: stackView)
         
         // wechat
-        addContactField(icon: "wechat-icon", serviceName: "WeChat", username: profile?.personal?.contacts?.weChat?.value, to: stackView)
+        addContactField(icon: "wechat-icon", serviceName: "WeChat", username: profile?.personal?.messengers?.weChat?.value, to: stackView)
     }
     
     func updateLinks() {
@@ -106,19 +106,19 @@ extension MyProfileDetailVC {
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // twitter
-        addContactField(icon: "twitter-icon", serviceName: "Twitter", username: profile?.personal?.twitter?.value, to: stackView)
+        addContactField(icon: "twitter-icon", serviceName: "Twitter", username: profile?.personal?.links?.twitter?.value, to: stackView)
         
         // facebook
-        addContactField(icon: "facebook-icon", serviceName: "Facebook", username: profile?.personal?.facebook?.value, to: stackView)
+        addContactField(icon: "facebook-icon", serviceName: "Facebook", username: profile?.personal?.links?.facebook?.value, to: stackView)
         
         // instagram
-        addContactField(icon: "instagram-icon", serviceName: "Instagram", username: profile?.personal?.instagram?.value, to: stackView)
+        addContactField(icon: "instagram-icon", serviceName: "Instagram", username: profile?.personal?.links?.instagram?.value, to: stackView)
         
         // github
-        addContactField(icon: "github-icon", serviceName: "Github", username: profile?.personal?.gitHub?.value, to: stackView)
+        addContactField(icon: "github-icon", serviceName: "Github", username: profile?.personal?.links?.gitHub?.value, to: stackView)
         
         // linkedin
-        addContactField(icon: "linkedin-icon", serviceName: "Linkedin", username: profile?.personal?.linkedin?.value, to: stackView)
+        addContactField(icon: "linkedin-icon", serviceName: "Linkedin", username: profile?.personal?.links?.linkedin?.value, to: stackView)
     }
     
     // MARK: - View builders

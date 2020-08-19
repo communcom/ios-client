@@ -233,6 +233,7 @@
 		BC40D02C24E57C8800F48243 /* ProposalContentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40D02B24E57C8800F48243 /* ProposalContentViews.swift */; };
 		BC40F7EF23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40F7EE23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift */; };
 		BC422E4423D00B08000AE946 /* ResponseAPIGetNotifications.json in Resources */ = {isa = PBXBuildFile; fileRef = BC422E4323D00B08000AE946 /* ResponseAPIGetNotifications.json */; };
+		BC44810124ED0B8500A5400B /* ContactTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC44810024ED0B8500A5400B /* ContactTextField.swift */; };
 		BC465927238E563F00AF9C29 /* GenerateMasterPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC465926238E563F00AF9C29 /* GenerateMasterPasswordVC.swift */; };
 		BC46592D238E681500AF9C29 /* BoardingSetPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46592C238E681500AF9C29 /* BoardingSetPasscodeVC.swift */; };
 		BC4692BD2390C3B20064A38B /* FeedPageFloatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692BC2390C3B20064A38B /* FeedPageFloatView.swift */; };
@@ -396,7 +397,7 @@
 		BC9A1F0624CECCC0007BDB3A /* MyProfileVerifyContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1F0524CECCC0007BDB3A /* MyProfileVerifyContactVC.swift */; };
 		BC9A1F0B24CFD317007BDB3A /* MyProfileEditLinksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1F0A24CFD317007BDB3A /* MyProfileEditLinksVC.swift */; };
 		BC9A1F1824D1225D007BDB3A /* MyProfileDetailFlowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1F1724D1225D007BDB3A /* MyProfileDetailFlowVC.swift */; };
-		BC9A1F2324D276BD007BDB3A /* ContactTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1F2224D276BD007BDB3A /* ContactTextField.swift */; };
+		BC9A1F2324D276BD007BDB3A /* LinkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1F2224D276BD007BDB3A /* LinkTextField.swift */; };
 		BC9A1F2524D29FC1007BDB3A /* LinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9A1F2424D29FC1007BDB3A /* LinkCell.swift */; };
 		BC9FD2F724909A26001AAF2C /* SearchableBalancesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9FD2F624909A26001AAF2C /* SearchableBalancesVC.swift */; };
 		BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */ = {isa = PBXBuildFile; fileRef = BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */; };
@@ -813,6 +814,7 @@
 		BC40D02B24E57C8800F48243 /* ProposalContentViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalContentViews.swift; sourceTree = "<group>"; };
 		BC40F7EE23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePhotoPickerVC.swift; sourceTree = "<group>"; };
 		BC422E4323D00B08000AE946 /* ResponseAPIGetNotifications.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIGetNotifications.json; sourceTree = "<group>"; };
+		BC44810024ED0B8500A5400B /* ContactTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTextField.swift; sourceTree = "<group>"; };
 		BC465926238E563F00AF9C29 /* GenerateMasterPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateMasterPasswordVC.swift; sourceTree = "<group>"; };
 		BC46592C238E681500AF9C29 /* BoardingSetPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardingSetPasscodeVC.swift; sourceTree = "<group>"; };
 		BC4692BC2390C3B20064A38B /* FeedPageFloatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageFloatView.swift; sourceTree = "<group>"; };
@@ -976,7 +978,7 @@
 		BC9A1F0524CECCC0007BDB3A /* MyProfileVerifyContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVerifyContactVC.swift; sourceTree = "<group>"; };
 		BC9A1F0A24CFD317007BDB3A /* MyProfileEditLinksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditLinksVC.swift; sourceTree = "<group>"; };
 		BC9A1F1724D1225D007BDB3A /* MyProfileDetailFlowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileDetailFlowVC.swift; sourceTree = "<group>"; };
-		BC9A1F2224D276BD007BDB3A /* ContactTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTextField.swift; sourceTree = "<group>"; };
+		BC9A1F2224D276BD007BDB3A /* LinkTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTextField.swift; sourceTree = "<group>"; };
 		BC9A1F2424D29FC1007BDB3A /* LinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
 		BC9FD2F624909A26001AAF2C /* SearchableBalancesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableBalancesVC.swift; sourceTree = "<group>"; };
 		BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetLeaders.json; sourceTree = "<group>"; };
@@ -2644,7 +2646,8 @@
 		BCA971292361304800AE37E1 /* UIViews */ = {
 			isa = PBXGroup;
 			children = (
-				BC9A1F2224D276BD007BDB3A /* ContactTextField.swift */,
+				BC9A1F2224D276BD007BDB3A /* LinkTextField.swift */,
+				BC44810024ED0B8500A5400B /* ContactTextField.swift */,
 				BC84820524595CEE0099C7C5 /* CMWalletView.swift */,
 				BC067E2E2435910900D770AC /* CMTransactionInfoView.swift */,
 				BCB2A6E12354512D00B3582B /* AttachmentView.swift */,
@@ -3508,7 +3511,7 @@
 				BC5395E7244950F200B5176D /* PostPageVC+Actions.swift in Sources */,
 				BC22BBD6236C26EF00F40658 /* NotificationsSettingsVC.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
-				BC9A1F2324D276BD007BDB3A /* ContactTextField.swift in Sources */,
+				BC9A1F2324D276BD007BDB3A /* LinkTextField.swift in Sources */,
 				BC4071AA23CF09B2000027A3 /* NotificationsPageViewModel.swift in Sources */,
 				3B6CB732234331830097B2A1 /* Array+Extensions.swift in Sources */,
 				BC2260C424DBB8EF00A82D8D /* GetPointsVC.swift in Sources */,
@@ -3848,6 +3851,7 @@
 				BC1E865B242C853500CF202F /* MyProfileDetailVC.swift in Sources */,
 				3B3C8B982347911D00D8BADB /* PostEditorViewModel.swift in Sources */,
 				BC4692FB239645C70064A38B /* CommunityLeaderFollowCell.swift in Sources */,
+				BC44810124ED0B8500A5400B /* ContactTextField.swift in Sources */,
 				BC8F814423E27ECE0024C04A /* CommunWalletHeaderView.swift in Sources */,
 				3BB32F1623438C44006572F3 /* CommunActionSheet+TransitioningDelegate.swift in Sources */,
 				3B25E5C6234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed+Extensions.swift in Sources */,

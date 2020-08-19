@@ -12,8 +12,8 @@ import RxSwift
 
 class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     // MARK: - Properties
-    var originalLinks: ResponseAPIContentGetProfilePersonal {profile?.personal ?? ResponseAPIContentGetProfilePersonal()}
-    lazy var draftLinks = BehaviorRelay<ResponseAPIContentGetProfilePersonal>(value: ResponseAPIContentGetProfilePersonal())
+    var originalLinks: ResponseAPIContentGetProfilePersonalLinks {profile?.personal?.links ?? ResponseAPIContentGetProfilePersonalLinks()}
+    lazy var draftLinks = BehaviorRelay<ResponseAPIContentGetProfilePersonalLinks>(value: ResponseAPIContentGetProfilePersonalLinks())
     var linkCells: [LinkCell] {stackView.arrangedSubviews.compactMap {$0 as? LinkCell}}
     
     // MARK: - Subviews
@@ -42,8 +42,8 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     
     override func profileDidUpdate() {
         stackView.removeArrangedSubviews()
-        var subviews = originalLinks.filledLinks.compactMap {self.addLinkField(contactType: $0.key, value: $0.value.value)}
-        subviews.append(contentsOf: originalLinks.unfilledLinks.compactMap{self.addLinkField(contactType: $0, value: "")})
+        var subviews = originalLinks.filledLinks.compactMap {self.addLinkField($0.key, value: $0.value.value)}
+        subviews.append(contentsOf: originalLinks.unfilledLinks.compactMap{self.addLinkField($0, value: "")})
         subviews.forEach {
             $0.isHidden = true
         }
@@ -82,11 +82,11 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
             
             if cell.isHidden {
                 // for hidden cell, the old data is about to be deleted
-                let oldValue = originalLinks.getContact(contactType: cell.contactType)?.value?.trimmed ?? ""
+                let oldValue = originalLinks.getLink(linkType: cell.linkType)?.value?.trimmed ?? ""
                 if !oldValue.isEmpty {flag = true}
             } else {
                 // for visible cell, compare new data with the old one
-                let newValue = self.draftLinks.value.getContact(contactType: cell.contactType)?.value?.trimmed ?? ""
+                let newValue = self.draftLinks.value.getLink(linkType: cell.linkType)?.value?.trimmed ?? ""
                 if textFieldText != newValue {flag = true}
             }
             
@@ -99,19 +99,19 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
         super.reloadData()
         
         for (key, _) in draftLinks.value.filledLinks  {
-            linkCells.first(where: {$0.contactType == key})?.isHidden = false
+            linkCells.first(where: {$0.linkType == key})?.isHidden = false
         }
         
         for link in draftLinks.value.unfilledLinks {
-            linkCells.first(where: {$0.contactType == link})?.isHidden = true
+            linkCells.first(where: {$0.linkType == link})?.isHidden = true
         }
         
         addLinkButton.isHidden = draftLinks.value.unfilledLinks.isEmpty
     }
     
     // MARK: - View builders
-    private func addLinkField(contactType: ResponseAPIContentGetProfilePersonal.LinkType, value: String?) -> LinkCell {
-        let linkCell = LinkCell(contactType: contactType)
+    private func addLinkField(_ linkType: ResponseAPIContentGetProfilePersonalLinks.LinkType, value: String?) -> LinkCell {
+        let linkCell = LinkCell(linkType: linkType)
         linkCell.textField.changeTextNotify(value)
         linkCell.delegate = self
         return linkCell
@@ -142,28 +142,26 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
         var params = [String: String]()
         
         var profile = ResponseAPIContentGetProfile.current
-        var personal = profile?.personal ?? ResponseAPIContentGetProfilePersonal()
+        var links = profile?.personal?.links ?? ResponseAPIContentGetProfilePersonalLinks()
         linkCells.forEach { cell in
-            var contact: ResponseAPIContentGetProfileContact?
+            var link: ResponseAPIContentGetProfilePersonalLink?
             var string = ""
             if !cell.isHidden && cell.textField.text?.isEmpty == false {
-                contact = ResponseAPIContentGetProfileContact(value: cell.textField.text, default: false)
-                string = contact!.encodedString
+                link = ResponseAPIContentGetProfilePersonalLink(value: cell.textField.text, defaultValue: false)
+                string = link!.encodedString
             }
-            params[cell.contactType.rawValue] = string
-            switch cell.contactType {
+            params[cell.linkType.rawValue] = string
+            switch cell.linkType {
             case .twitter:
-                personal.twitter = contact
+                links.twitter = link
             case .facebook:
-                personal.facebook = contact
+                links.facebook = link
             case .instagram:
-                personal.instagram = contact
+                links.instagram = link
             case .linkedin:
-                personal.linkedin = contact
-            case .github:
-                personal.gitHub = contact
-            default:
-                return
+                links.linkedin = link
+            case .gitHub:
+                links.gitHub = link
             }
         }
         
@@ -175,7 +173,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
         showIndetermineHudWithMessage("saving".localized().uppercaseFirst + "...")
         BlockchainManager.instance.updateProfile(params: params, waitForTransaction: false)
             .subscribe(onCompleted: {
-                profile?.personal = personal
+                profile?.personal?.links = links
                 UserDefaults.standard.set(object: profile, forKey: Config.currentUserGetProfileKey)
                 self.hideHud()
                 self.showDone("saved".localized().uppercaseFirst)
@@ -202,14 +200,14 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     }
     
     // MARK: - Helpers
-    private func addLinkToService(_ contactType: ResponseAPIContentGetProfilePersonal.LinkType, value: String = "") {
-        let value = ResponseAPIContentGetProfileContact(value: value, default: false)
-        addContactType(contactType, value: value)
+    private func addLinkToService(_ linkType: ResponseAPIContentGetProfilePersonalLinks.LinkType, value: String = "") {
+        let value = ResponseAPIContentGetProfilePersonalLink(value: value, defaultValue: false)
+        addLinkType(linkType, value: value)
     }
     
-    private func addContactType(_ contactType: ResponseAPIContentGetProfilePersonal.LinkType, value: ResponseAPIContentGetProfileContact?) {
+    private func addLinkType(_ linkType: ResponseAPIContentGetProfilePersonalLinks.LinkType, value: ResponseAPIContentGetProfilePersonalLink?) {
         var links = self.draftLinks.value
-        switch contactType {
+        switch linkType {
         case .twitter:
             links.twitter = value
         case .facebook:
@@ -218,17 +216,15 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
             links.instagram = value
         case .linkedin:
             links.linkedin = value
-        case .github:
+        case .gitHub:
             links.gitHub = value
-        default:
-            return
         }
         self.draftLinks.accept(links)
     }
     
     func linkCellOptionButtonDidTouch(_ linkCell: LinkCell) {
         showCommunActionSheet(
-            title: linkCell.contactType.rawValue.uppercaseFirst,
+            title: linkCell.linkType.rawValue.uppercaseFirst,
             actions: [
 //                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
 //                                         icon: UIImage(named: "edit"),
@@ -239,7 +235,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
                                          icon: UIImage(named: "delete"),
                                          tintColor: .red,
                                          handle: {[unowned self] in
-                                             self.addContactType(linkCell.contactType, value: nil)
+                                             self.addLinkType(linkCell.linkType, value: nil)
                                             linkCell.textField.sendActions(for: .valueChanged)
                     }
                 )

@@ -36,21 +36,21 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC {
     
     override func reloadData() {
         super.reloadData()
-        let contacts = profile?.personal?.contacts
-        
         stackView.removeArrangedSubviews()
         
-        if let whatsApp = contacts?.whatsApp {
-            
-        }
-        
-        if let telegram = contacts?.telegram {
-            
-        }
-        
-        if let wechat = contacts?.weChat {
-            
-        }
+        // MARK: - TODO: Contacts / Messengers
+//        let contacts = profile?.personal?.contacts
+//        if let whatsApp = contacts?.whatsApp {
+//
+//        }
+//
+//        if let telegram = contacts?.telegram {
+//
+//        }
+//
+//        if let wechat = contacts?.weChat {
+//
+//        }
         
         stackView.addArrangedSubview(addContactButton)
     }
