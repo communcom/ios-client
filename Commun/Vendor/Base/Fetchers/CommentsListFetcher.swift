@@ -78,6 +78,8 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     init(filter: Filter, shouldGroupComments: Bool) {
         self.filter = filter
         self.shouldGroupComments = shouldGroupComments
+        super.init()
+        self.limit = 30
     }
         
     override var request: Single<[ResponseAPIContentGetComment]> {
@@ -93,7 +95,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
             result = RestAPIManager.instance.loadPostComments(
                 sortBy: filter.sortBy,
                 offset: offset,
-                limit: 30,
+                limit: limit,
                 userId: filter.userId,
                 permlink: filter.permlink ?? "",
                 communityId: filter.communityId,
@@ -104,7 +106,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
             result = RestAPIManager.instance.loadUserComments(
                 sortBy: filter.sortBy,
                 offset: offset,
-                limit: 30,
+                limit: limit,
                 userId: filter.userId,
                 authorizationRequired: filter.authorizationRequired
             )
@@ -114,7 +116,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
             result = RestAPIManager.instance.loadPostComments(
                 sortBy: filter.sortBy,
                 offset: offset,
-                limit: 30,
+                limit: limit,
                 permlink: filter.permlink ?? "",
                 communityId: filter.communityId,
                 parentCommentUserId: filter.parentComment?.userId,
