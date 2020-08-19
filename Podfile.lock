@@ -332,7 +332,7 @@ CHECKOUT OPTIONS:
     :commit: dad6a37be372a3f61068d516348157794d58d857
     :git: https://github.com/communcom/SwiftyGif.git
   THPinViewController:
-    :commit: f992867b067b696f31e06196fe458b41f8878a1c
+    :commit: 32005e34b20a9da65d43527bce4a9e4a1f9b6a4c
     :git: https://github.com/communcom/THPinViewController.git
 
 SPEC CHECKSUMS:
