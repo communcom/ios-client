@@ -430,6 +430,7 @@
 "send points" = "send points";
 "send post" = "post";
 "send report" = "report";
+"sending" = "sending";
 "sending post" = "sending post";
 "sent you" = "sent you";
 "setting username" = "setting username";
@@ -481,6 +482,7 @@
 "this is" = "this is";
 "this user" = "this user";
 "This username is already taken" = "This username is already taken";
+"this user is on your blacklist" = "this user is on your blacklist";
 "this version of the application is out of" = "this version of the application is out of date.\nPlease update to continue using the app.";
 "title and content must not be empty" = "title and content must not be empty";
 "title placeholder" = "title";
@@ -497,6 +499,7 @@
 "type" = "type";
 "unauthorized" = "unauthorized";
 "unblock" = "unblock";
+"unblock and follow" = "unblock and follow";
 "unblock user" = "unblock user";
 "unblocking" = "unblocking";
 "unfortunately, blockchain doesn’t allow us" = "unfortunately, blockchain doesn’t allow us to restore passwords. It means that it is a user’s responsibility to keep the password in a safe place to be able to access it anytime.\nWe strongly recommend you to save your password and make its copy.";

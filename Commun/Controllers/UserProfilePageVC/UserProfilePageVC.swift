@@ -237,9 +237,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         
         let avatarImageView = MyAvatarImageView(size: 40)
         
-        avatarImageView
-            .observeCurrentUserAvatar()
-            .disposed(by: disposeBag)
+        avatarImageView.setAvatar(urlString: profile.avatarUrl)
        
         headerView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
