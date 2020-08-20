@@ -47,9 +47,9 @@ extension CommunityCellDelegate where Self: BaseViewController {
     
     private func sendFollowRequest(community: ResponseAPIContentGetCommunity) {
         BlockchainManager.instance.triggerFollow(community: community)
-        .subscribe { [weak self] (error) in
-            self?.showError(error)
-        }
-        .disposed(by: disposeBag)
+            .subscribe { [weak self] (error) in
+                self?.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }
