@@ -97,85 +97,58 @@ class MyProfilePageVC: UserProfilePageVC {
         return headerView
     }
     
-    override func moreActionsButtonDidTouch(_ sender: CommunButton) {
-        guard let profile = viewModel.profile.value else { return }
-
-        let headerView = UIView(height: 40)
-        let avatarImageView = MyAvatarImageView(size: 40)
-        
-        avatarImageView
-            .observeCurrentUserAvatar()
-            .disposed(by: disposeBag)
-        
-        headerView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-        
-        let userNameLabel = UILabel.with(text: profile.username, textSize: 15, weight: .semibold)
-        headerView.addSubview(userNameLabel)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .top)
-        userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
-
-        let userIdLabel = UILabel.with(text: "@\(profile.userId)", textSize: 12, weight: .semibold, textColor: .appMainColor)
-        headerView.addSubview(userIdLabel)
-        userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
-        userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        showCMActionSheet(
-            headerView: headerView,
-            title: "share".localized().uppercaseFirst,
-            actions: [
-                CMActionSheet.Action.iconFirst(
-                    title: "share".localized().uppercaseFirst,
-                    iconName: "icon-share-circle-white",
-                    handle: {
-                        ShareHelper.share(urlString: self.shareWith(name: profile.username ?? "", userID: profile.userId))
-                    },
-                    bottomMargin: 15
-                ),
-                CMActionSheet.Action.iconFirst(
-                    title: "saved souls".localized().uppercaseFirst,
-                    iconName: "profile_options_referral",
-                    handle: {
-                        let vc = ReferralUsersVC()
-                        vc.title = "saved souls".localized().uppercaseFirst
-                        self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                        self.show(vc, sender: self)
-                    },
-                    showNextButton: true
-                ),
-                CMActionSheet.Action.iconFirst(
-                    title: "liked".localized().uppercaseFirst,
-                    iconName: "profile_options_liked",
-                    handle: {
-                        let vc = PostsViewController(filter: PostsListFetcher.Filter(type: .voted, sortBy: .time, userId: Config.currentUser?.id))
-                        vc.title = "liked".localized().uppercaseFirst
-                        self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
-                        self.show(vc, sender: self)
-                    },
-                    showNextButton: true
-                ),
-                CMActionSheet.Action.iconFirst(
-                    title: "blacklist".localized().uppercaseFirst,
-                    iconName: "profile_options_blacklist",
-                    handle: {
-                        self.show(MyProfileBlacklistVC(), sender: self)
-                    },
-                    bottomMargin: 15,
-                    showNextButton: true
-                ),
-                CMActionSheet.Action.iconFirst(
-                    title: "settings".localized().uppercaseFirst,
-                    iconName: "profile_options_settings",
-                    handle: {
-                        let vc = MyProfileSettingsVC()
-                        self.show(vc, sender: self)
-                    },
-                    showNextButton: true
-                )
-            ]
-        )
+    override func actionsForMoreButton() -> [CMActionSheet.Action] {
+        guard let profile = viewModel.profile.value else { return []}
+        return [
+            CMActionSheet.Action.iconFirst(
+                title: "share".localized().uppercaseFirst,
+                iconName: "icon-share-circle-white",
+                handle: {
+                    ShareHelper.share(urlString: self.shareWith(name: profile.username ?? "", userID: profile.userId))
+            },
+                bottomMargin: 15
+            ),
+            CMActionSheet.Action.iconFirst(
+                title: "saved souls".localized().uppercaseFirst,
+                iconName: "profile_options_referral",
+                handle: {
+                    let vc = ReferralUsersVC()
+                    vc.title = "saved souls".localized().uppercaseFirst
+                    self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
+                    self.show(vc, sender: self)
+            },
+                showNextButton: true
+            ),
+            CMActionSheet.Action.iconFirst(
+                title: "liked".localized().uppercaseFirst,
+                iconName: "profile_options_liked",
+                handle: {
+                    let vc = PostsViewController(filter: PostsListFetcher.Filter(type: .voted, sortBy: .time, userId: Config.currentUser?.id))
+                    vc.title = "liked".localized().uppercaseFirst
+                    self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
+                    self.show(vc, sender: self)
+            },
+                showNextButton: true
+            ),
+            CMActionSheet.Action.iconFirst(
+                title: "blacklist".localized().uppercaseFirst,
+                iconName: "profile_options_blacklist",
+                handle: {
+                    self.show(MyProfileBlacklistVC(), sender: self)
+            },
+                bottomMargin: 15,
+                showNextButton: true
+            ),
+            CMActionSheet.Action.iconFirst(
+                title: "settings".localized().uppercaseFirst,
+                iconName: "profile_options_settings",
+                handle: {
+                    let vc = MyProfileSettingsVC()
+                    self.show(vc, sender: self)
+            },
+                showNextButton: true
+            )
+        ]
     }
     
     override func handleListEmpty() {

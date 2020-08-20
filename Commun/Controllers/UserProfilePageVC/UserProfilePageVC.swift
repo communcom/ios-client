@@ -233,45 +233,35 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
         guard let profile = viewModel.profile.value else { return }
         
-        let headerView = UIView(height: 40)
+        let headerView = CMMetaView(forAutoLayout: ())
+        headerView.avatarImageView.setAvatar(urlString: profile.avatarUrl)
+        headerView.titleLabel.text = profile.username
+        headerView.subtitleLabel.text = "@\(profile.userId)"
+        headerView.subtitleLabel.textColor = .appMainColor
         
-        let avatarImageView = MyAvatarImageView(size: 40)
-        
-        avatarImageView.setAvatar(urlString: profile.avatarUrl)
-       
-        headerView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-        
-        let userNameLabel = UILabel.with(text: profile.username, textSize: 15, weight: .semibold)
-        headerView.addSubview(userNameLabel)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .top)
-        userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
-
-        let userIdLabel = UILabel.with(text: "@\(profile.userId)", textSize: 12, weight: .medium, textColor: .appMainColor)
-        headerView.addSubview(userIdLabel)
-        userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
-        userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        showCommunActionSheet(headerView: headerView, actions: [
-            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
-                                     icon: UIImage(named: "icon-share-circle-white"),
-                                     style: .share,
-                                     marginTop: 0,
-                                     handle: {
-                                        ShareHelper.share(urlString: self.shareWith(name: profile.username ?? "", userID: profile.userId))
-            }),
-            CommunActionSheet.Action(title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst,
-                                     icon: UIImage(named: "profile_options_blacklist"),
-                                     style: .profile,
-                                     marginTop: 15,
-                                     handle: {
-                                        self.confirmBlock()
-            })
-        ]) {
-            
-        }
+        showCMActionSheet(headerView: headerView, actions: actionsForMoreButton())
+    }
+    
+    func actionsForMoreButton() -> [CMActionSheet.Action] {
+        guard let profile = viewModel.profile.value else { return []}
+        return [
+            CMActionSheet.Action.iconFirst(
+                title: "share".localized().uppercaseFirst,
+                iconName: "icon-share-circle-white",
+                handle: {
+                    ShareHelper.share(urlString: self.shareWith(name: profile.username ?? "", userID: profile.userId))
+                },
+                bottomMargin: 15
+            ),
+            CMActionSheet.Action.iconFirst(
+                title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst,
+                iconName: "profile_options_blacklist",
+                handle: {
+                    self.confirmBlock()
+                },
+                showNextButton: true
+            ),
+        ]
     }
     
     func confirmBlock() {
