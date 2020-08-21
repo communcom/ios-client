@@ -15,8 +15,8 @@ class CMActionSheet: SwipeDownDismissViewController {
         var handle: (() -> Void)?
         var bottomMargin: CGFloat? = 0
         
-        static func `default`(title: String, iconName: String, tintColor: UIColor = .appBlackColor, handle: (() -> Void)?, bottomMargin: CGFloat? = 10) -> Action {
-            customLayout(height: 50, title: title, textSize: 15, textColor: tintColor, spacing: 10, iconName: iconName, iconSize: 24, iconTintColor: tintColor, showIconFirst: false, showNextButton: false, bottomMargin: bottomMargin, handle: handle)
+        static func `default`(title: String, showIcon: Bool = true, iconName: String? = nil, tintColor: UIColor = .appBlackColor, handle: (() -> Void)?, bottomMargin: CGFloat? = 10) -> Action {
+            customLayout(height: 50, title: title, textSize: 15, textColor: tintColor, spacing: 10, showIcon: showIcon, iconName: iconName, iconSize: 24, iconTintColor: tintColor, showIconFirst: false, showNextButton: false, bottomMargin: bottomMargin, handle: handle)
         }
         
         static func iconFirst(title: String, iconName: String, handle: (() -> Void)?, bottomMargin: CGFloat? = nil, showNextButton: Bool = false) -> Action {

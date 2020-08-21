@@ -16,23 +16,26 @@ extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
     }
     
     @objc func sortButtonDidTouch() {
-        showCommunActionSheet(
+        showCMActionSheet(
             title: "sort by".localized().uppercaseFirst,
             actions: [
-                CommunActionSheet.Action(
+                CMActionSheet.Action.default(
                     title: "interesting first".localized().uppercaseFirst,
+                    showIcon: false,
                     handle: {
                         let vm = self.viewModel as! CommentsViewModel
                         vm.changeFilter(sortBy: .popularity)
                     }),
-                CommunActionSheet.Action(
+                CMActionSheet.Action.default(
                     title: "newest first".localized().uppercaseFirst,
+                    showIcon: false,
                     handle: {
                         let vm = self.viewModel as! CommentsViewModel
                         vm.changeFilter(sortBy: .timeDesc)
                     }),
-                CommunActionSheet.Action(
+                CMActionSheet.Action.default(
                     title: "oldest first".localized().uppercaseFirst,
+                    showIcon: false,
                     handle: {
                         let vm = self.viewModel as! CommentsViewModel
                         vm.changeFilter(sortBy: .time)
