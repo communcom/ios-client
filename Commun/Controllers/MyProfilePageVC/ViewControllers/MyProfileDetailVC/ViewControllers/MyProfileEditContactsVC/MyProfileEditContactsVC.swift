@@ -57,48 +57,56 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC {
     
     // MARK: - Actions
     @objc func addContactButtonDidTouch() {
-        showCommunActionSheet(title: "add contact".localized().uppercaseFirst, actions: [
-            CommunActionSheet.Action(
+        showCMActionSheet(title: "add contact".localized().uppercaseFirst, actions: [
+            .customLayout(
+                height: 50,
                 title: "WeChat",
-                icon: UIImage(named: "wechat-icon"),
-                style: .default,
-                marginTop: 0,
-                defaultIconOnTheRight: false,
+                spacing: 16,
+                iconName: "wechat-icon",
+                iconSize: 20,
+                showIconFirst: true,
+                bottomMargin: 10,
                 handle: {
                     let vc = MyProfileAddContactVC(contactType: .wechat)
                     self.show(vc, sender: nil)
                 }
             ),
-            CommunActionSheet.Action(
-                title: "email".localized().uppercaseFirst,
-                icon: UIImage(named: "email-icon"),
-                style: .default,
-                marginTop: 0,
-                defaultIconOnTheRight: false,
+            .customLayout(
+                height: 50,
+                title: "email",
+                spacing: 16,
+                iconName: "email-icon",
+                iconSize: 20,
+                showIconFirst: true,
+                bottomMargin: 10,
                 handle: {
                     
                 }
             ),
-            CommunActionSheet.Action(
+            .customLayout(
+                height: 50,
                 title: "Facetime",
-                icon: UIImage(named: "facetime-icon"),
-                style: .default,
-                marginTop: 0,
-                defaultIconOnTheRight: false,
+                spacing: 16,
+                iconName: "facetime-icon",
+                iconSize: 20,
+                showIconFirst: true,
+                bottomMargin: 10,
                 handle: {
                     
                 }
             ),
-            CommunActionSheet.Action(
+            .customLayout(
+                height: 50,
                 title: "Facebook messenger",
-                icon: UIImage(named: "facebook-messenger-icon"),
-                style: .default,
-                marginTop: 0,
-                defaultIconOnTheRight: false,
+                spacing: 16,
+                iconName: "facebook-messenger-icon",
+                iconSize: 20,
+                showIconFirst: true,
+                bottomMargin: 10,
                 handle: {
                     
                 }
-            )
+            ),
         ])
     }
 }

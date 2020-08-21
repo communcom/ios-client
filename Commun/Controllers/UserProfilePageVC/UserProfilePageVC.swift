@@ -245,7 +245,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     func actionsForMoreButton() -> [CMActionSheet.Action] {
         guard let profile = viewModel.profile.value else { return []}
         return [
-            CMActionSheet.Action.iconFirst(
+            .iconFirst(
                 title: "share".localized().uppercaseFirst,
                 iconName: "icon-share-circle-white",
                 handle: {
@@ -253,7 +253,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                 },
                 bottomMargin: 15
             ),
-            CMActionSheet.Action.iconFirst(
+            .iconFirst(
                 title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst,
                 iconName: "profile_options_blacklist",
                 handle: {

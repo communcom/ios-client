@@ -76,7 +76,7 @@ class CMActionSheet: SwipeDownDismissViewController {
     // MARK: - Initializer
     init(headerView: UIView?, title: String?, actions: [Action]) {
         self.actions = actions
-        self.headerView = headerView ?? UILabel.with(text: title ?? "options".localized().uppercaseFirst, textSize: 15, weight: .bold, textAlignment: .center)
+        self.headerView = headerView ?? UILabel.with(text: title ?? "options".localized().uppercaseFirst, textSize: 15, weight: .bold)
         super.init(nibName: nil, bundle: nil)
         transitioningDelegate = self
         modalPresentationStyle = .custom

@@ -123,7 +123,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
             var imageNamed = link.rawValue.lowercased() + "-icon"
             if link == .instagram {imageNamed = "sign-up-with-instagram"}
             
-            return CMActionSheet.Action.customLayout(
+            return .customLayout(
                 height: 50,
                 title: link.rawValue.uppercaseFirst,
                 textSize: 15,
@@ -224,7 +224,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
     }
     
     func linkCellOptionButtonDidTouch(_ linkCell: LinkCell) {
-        showCommunActionSheet(
+        showCMActionSheet(
             title: linkCell.linkType.rawValue.uppercaseFirst,
             actions: [
 //                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
@@ -232,12 +232,13 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
 //                                         handle: {[unowned self] in
 //                                            self.onUpdateBio()
 //                }),
-                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
-                                         icon: UIImage(named: "delete"),
-                                         tintColor: .red,
-                                         handle: {[unowned self] in
-                                             self.addLinkType(linkCell.linkType, value: nil)
-                                            linkCell.textField.sendActions(for: .valueChanged)
+                .default(
+                    title: "delete".localized().uppercaseFirst,
+                    iconName: "delete",
+                    tintColor: .appRedColor,
+                    handle: {[unowned self] in
+                        self.addLinkType(linkCell.linkType, value: nil)
+                        linkCell.textField.sendActions(for: .valueChanged)
                     }
                 )
         ])

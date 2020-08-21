@@ -36,21 +36,19 @@ extension MyProfilePageVC {
     
     // MARK: - Covers + Avatar
     func openActionSheet(cover: Bool) {
-        showCommunActionSheet(
+        showCMActionSheet(
             title: "change \(cover ? "cover photo": "avatar")".localized().uppercaseFirst,
-            titleFont: .systemFont(ofSize: 15, weight: .semibold),
-            titleAlignment: .left,
             actions: [
-                CommunActionSheet.Action(
+                .default(
                     title: "choose from gallery".localized().uppercaseFirst,
-                    icon: UIImage(named: "photo_solid"),
+                    iconName: "photo_solid",
                     handle: {[unowned self] in
                         cover ? self.onUpdateCover() : self.onUpdateAvatar()
                 }),
-                CommunActionSheet.Action(
+                .default(
                     title: "remove current \(cover ? "cover photo" : "avatar")".localized().uppercaseFirst,
-                    icon: UIImage(named: "delete"),
-                    tintColor: .red,
+                    iconName: "delete",
+                    tintColor: .appRedColor,
                     handle: {[unowned self] in
                         cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
                     }
@@ -60,22 +58,15 @@ extension MyProfilePageVC {
     
     func onUpdateCover(delete: Bool = false) {
         // Save originalImage for reverse when update failed
-        let originalImage = coverImageView.image
-        let originGif = headerView.avatarImageView.gifImage
+        let originImageUrl = ResponseAPIContentGetProfile.current?.coverUrl
         
         // If deleting
         if delete {
             coverImageView.image = .placeholder
+            ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: "")
             BlockchainManager.instance.updateProfile(params: ["cover_url": ""])
-                .subscribe(onCompleted: {
-                    ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: "")
-                }, onError: {[weak self] (error) in
-                    if let gif = originGif {
-                        self?.coverImageView.setGifImage(gif)
-                    } else {
-                        self?.coverImageView.image = originalImage
-                    }
-                    
+                .subscribe(onError: {[weak self] (error) in
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: originImageUrl)
                     self?.showError(error)
                 })
                 .disposed(by: disposeBag)
@@ -107,7 +98,7 @@ extension MyProfilePageVC {
                         ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: url)
                     }, onError: { [weak self] (error) in
                         self?.coverImageView.hideLoading()
-                        self?.coverImageView.image = originalImage
+                        ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: originImageUrl)
                         self?.showError(error)
                     })
                     .disposed(by: self.disposeBag)
@@ -123,22 +114,15 @@ extension MyProfilePageVC {
     
     func onUpdateAvatar(delete: Bool = false) {
         // Save image for reversing when update failed
-        let originalImage = headerView.avatarImageView.image
-        let originGif = headerView.avatarImageView.gifImage
+        let originImageUrl = ResponseAPIContentGetProfile.current?.avatarUrl
         
         // On deleting
         if delete {
             headerView.avatarImageView.image = UIImage(named: "empty-avatar")
+            ResponseAPIContentGetProfile.updateCurrentUserProfile(avatarUrl: "")
             BlockchainManager.instance.updateProfile(params: ["avatar_url": ""])
-                .subscribe(onCompleted: {
-                    ResponseAPIContentGetProfile.updateCurrentUserProfile(avatarUrl: "")
-                }, onError: {[weak self] error in
-                    if let gif = originGif {
-                        self?.headerView.avatarImageView.setGifImage(gif)
-                    } else {
-                        self?.headerView.avatarImageView.image = originalImage
-                    }
-                    
+                .subscribe(onError: {[weak self] error in
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(avatarUrl: originImageUrl)
                     self?.showError(error)
                 })
                 .disposed(by: disposeBag)
@@ -166,7 +150,7 @@ extension MyProfilePageVC {
                 ResponseAPIContentGetProfile.updateCurrentUserProfile(avatarUrl: url)
             }, onError: { [weak self] (error) in
                 self?.headerView.avatarImageView.hideLoading()
-                self?.coverImageView.image = originalImage
+                ResponseAPIContentGetProfile.updateCurrentUserProfile(avatarUrl: originImageUrl)
                 self?.showError(error)
             })
             .disposed(by: disposeBag)
@@ -181,14 +165,14 @@ extension MyProfilePageVC {
         showCMActionSheet(
             title: "\("change".localized().uppercaseFirst) \("profile description".localized())",
             actions: [
-                CMActionSheet.Action.default(
+                .default(
                     title: "edit".localized().uppercaseFirst,
                     iconName: "edit",
                     handle: {
                         self.onUpdateBio()
                     }
                 ),
-                CMActionSheet.Action.default(
+                .default(
                     title: "delete".localized().uppercaseFirst,
                     iconName: "delete",
                     tintColor: .appRedColor,

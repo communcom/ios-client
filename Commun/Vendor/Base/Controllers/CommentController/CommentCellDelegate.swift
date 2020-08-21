@@ -58,67 +58,78 @@ extension CommentCellDelegate where Self: BaseViewController {
         nameLabel.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
         nameLabel.autoPinEdge(toSuperviewEdge: .trailing)
 
-        var actions: [CommunActionSheet.Action] = []
+        var actions: [CMActionSheet.Action] = []
         // parsing all paragraph
         var texts: [String] = []
        
-        for documentContent in comment.document?.content.arrayValue ?? [] where documentContent.type == "paragraph" {
-            if documentContent.content.arrayValue?.count ?? 0 > 0 {
-                let paragraphContent = documentContent.content.arrayValue?.first
-                
-                if let text = paragraphContent?.content.stringValue {
-                    texts.append(text)
-                }
+        for documentContent in comment.document?.content.arrayValue ?? [] where documentContent.type == "paragraph" && documentContent.content.arrayValue?.count ?? 0 > 0 {
+            let paragraphContent = documentContent.content.arrayValue?.first
+            
+            if let text = paragraphContent?.content.stringValue {
+                texts.append(text)
             }
         }
 
         // Add action `View in Explorer`
         if let trxID = comment.meta.trxId {
-            actions.append(CommunActionSheet.Action(title: "view in Explorer".localized().uppercaseFirst,
-                                                    handle: {
-                                                        self.load(url: "https://explorer.cyberway.io/trx/\(trxID)")
-            })
+            actions.append(
+                .default(
+                    title: "view in Explorer".localized().uppercaseFirst,
+                    showIcon: false,
+                    handle: {
+                        self.load(url: "https://explorer.cyberway.io/trx/\(trxID)")
+                    }
+                )
             )
         }
         
         if texts.count > 0 {
-            actions.append(CommunActionSheet.Action(title: "copy".localized().uppercaseFirst,
-                                                    icon: UIImage(named: "copy"),
-                                                    tintColor: .appBlackColor,
-                                                    handle: {
-                                                        UIPasteboard.general.string = texts.joined(separator: "\n")
-                                                        self.showDone("copied to clipboard".localized().uppercaseFirst)
-                                                    })
+            actions.append(
+                .default(
+                    title: "copy".localized().uppercaseFirst,
+                    iconName: "copy",
+                    handle: {
+                        UIPasteboard.general.string = texts.joined(separator: "\n")
+                        self.showDone("copied to clipboard".localized().uppercaseFirst)
+                    }
+                )
             )
         }
         
         if comment.author?.userId == Config.currentUser?.id {
-            actions.append(CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
-                                                    icon: UIImage(named: "edit"),
-                                                    tintColor: .appBlackColor,
-                                                    handle: {
-                                                        self.cell(cell, didTapEditForComment: comment)
-                                                    })
+            actions.append(
+                .default(
+                    title: "edit".localized().uppercaseFirst,
+                    iconName: "edit",
+                    handle: {
+                        self.cell(cell, didTapEditForComment: comment)
+                    }
+                )
             )
             
-            actions.append(CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
-                                                    icon: UIImage(named: "delete"),
-                                                    tintColor: .appRedColor,
-                                                    handle: {
-                                                        self.deleteComment(comment)
-                                                    })
+            actions.append(
+                .default(
+                    title: "delete".localized().uppercaseFirst,
+                    iconName: "delete",
+                    tintColor: .appRedColor,
+                    handle: {
+                        self.deleteComment(comment)
+                    })
             )
         } else {
-            actions.append(CommunActionSheet.Action(title: "report".localized().uppercaseFirst,
-                                                    icon: UIImage(named: "report"),
-                                                    tintColor: .appRedColor,
-                                                    handle: {
-                                                        self.reportComment(comment)
-                                                    })
+            actions.append(
+                .default(
+                    title: "report".localized().uppercaseFirst,
+                    iconName: "report",
+                    tintColor: .appRedColor,
+                    handle: {
+                        self.reportComment(comment)
+                    }
+                )
             )
         }
         
-        showCommunActionSheet(
+        showCMActionSheet(
             headerView: headerView,
             actions: actions,
             completion: {

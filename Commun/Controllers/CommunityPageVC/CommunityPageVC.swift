@@ -358,14 +358,14 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         showCMActionSheet(
             headerView: headerView,
             actions: [
-                CMActionSheet.Action.default(
+                .default(
                     title: "share".localized().uppercaseFirst,
                     iconName: "share",
                     handle: {
                         ShareHelper.share(urlString: self.shareWith(name: profile.alias ?? "", userID: currentUserID, isCommunity: true))
                     }, bottomMargin: 10
                 ),
-                CMActionSheet.Action.default(
+                .default(
                     title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
                     iconName: "profile_options_blacklist",
                     handle: {

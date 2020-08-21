@@ -100,7 +100,7 @@ class MyProfilePageVC: UserProfilePageVC {
     override func actionsForMoreButton() -> [CMActionSheet.Action] {
         guard let profile = viewModel.profile.value else { return []}
         return [
-            CMActionSheet.Action.iconFirst(
+            .iconFirst(
                 title: "share".localized().uppercaseFirst,
                 iconName: "icon-share-circle-white",
                 handle: {
@@ -108,7 +108,7 @@ class MyProfilePageVC: UserProfilePageVC {
             },
                 bottomMargin: 15
             ),
-            CMActionSheet.Action.iconFirst(
+            .iconFirst(
                 title: "saved souls".localized().uppercaseFirst,
                 iconName: "profile_options_referral",
                 handle: {
@@ -119,7 +119,7 @@ class MyProfilePageVC: UserProfilePageVC {
             },
                 showNextButton: true
             ),
-            CMActionSheet.Action.iconFirst(
+            .iconFirst(
                 title: "liked".localized().uppercaseFirst,
                 iconName: "profile_options_liked",
                 handle: {
@@ -130,7 +130,7 @@ class MyProfilePageVC: UserProfilePageVC {
             },
                 showNextButton: true
             ),
-            CMActionSheet.Action.iconFirst(
+            .iconFirst(
                 title: "blacklist".localized().uppercaseFirst,
                 iconName: "profile_options_blacklist",
                 handle: {
@@ -139,7 +139,7 @@ class MyProfilePageVC: UserProfilePageVC {
                 bottomMargin: 15,
                 showNextButton: true
             ),
-            CMActionSheet.Action.iconFirst(
+            .iconFirst(
                 title: "settings".localized().uppercaseFirst,
                 iconName: "profile_options_settings",
                 handle: {

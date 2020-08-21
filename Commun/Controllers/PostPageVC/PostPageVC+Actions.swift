@@ -19,21 +19,21 @@ extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
         showCMActionSheet(
             title: "sort by".localized().uppercaseFirst,
             actions: [
-                CMActionSheet.Action.default(
+                .default(
                     title: "interesting first".localized().uppercaseFirst,
                     showIcon: false,
                     handle: {
                         let vm = self.viewModel as! CommentsViewModel
                         vm.changeFilter(sortBy: .popularity)
                     }),
-                CMActionSheet.Action.default(
+                .default(
                     title: "newest first".localized().uppercaseFirst,
                     showIcon: false,
                     handle: {
                         let vm = self.viewModel as! CommentsViewModel
                         vm.changeFilter(sortBy: .timeDesc)
                     }),
-                CMActionSheet.Action.default(
+                .default(
                     title: "oldest first".localized().uppercaseFirst,
                     showIcon: false,
                     handle: {

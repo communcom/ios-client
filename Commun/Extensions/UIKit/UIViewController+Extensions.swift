@@ -72,9 +72,15 @@ extension UIViewController {
     
     func showCMActionSheet(headerView: UIView? = nil,
                            title: String? = nil,
+                           titleFont: UIFont? = nil,
+                           titleAlignment: NSTextAlignment? = nil,
                            actions: [CMActionSheet.Action],
                            completion: (() -> Void)? = nil) {
         let actionSheet = CMActionSheet(headerView: headerView, title: title, actions: actions)
+        if let label = actionSheet.headerView as? UILabel {
+            if let font = titleFont { label.font = font }
+            if let alignment = titleAlignment { label.textAlignment = alignment }
+        }
         present(actionSheet, animated: true, completion: completion)
     }
     
