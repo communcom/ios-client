@@ -87,8 +87,6 @@ class BaseViewController: UIViewController {
         case .embeded:
             break
         }
-        
-        view.superview?.layoutIfNeeded()
     }
     
     // MARK: - Custom Functions
