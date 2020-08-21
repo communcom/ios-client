@@ -178,22 +178,26 @@ extension MyProfilePageVC {
     }
     
     @objc func bioLabelDidTouch(_ sender: Any) {
-        showCommunActionSheet(
-            title: String(format: "%@ %@", "change".localized().uppercaseFirst, "profile description".localized()),
+        showCMActionSheet(
+            title: "\("change".localized().uppercaseFirst) \("profile description".localized())",
             actions: [
-                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
-                                         icon: UIImage(named: "edit"),
-                                         handle: {[unowned self] in
-                                            self.onUpdateBio()
-                }),
-                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
-                                         icon: UIImage(named: "delete"),
-                                         tintColor: .red,
-                                         handle: {[unowned self] in
-                                            self.onUpdateBio(delete: true)
+                CMActionSheet.Action.default(
+                    title: "edit".localized().uppercaseFirst,
+                    iconName: "edit",
+                    handle: {
+                        self.onUpdateBio()
+                    }
+                ),
+                CMActionSheet.Action.default(
+                    title: "delete".localized().uppercaseFirst,
+                    iconName: "delete",
+                    tintColor: .appRedColor,
+                    handle: {
+                        self.onUpdateBio(delete: true)
                     }
                 )
-        ])
+            ]
+        )
     }
     
     func onUpdateBio(new: Bool = false, delete: Bool = false) {
