@@ -100,9 +100,13 @@ extension ResponseAPIContentBlock {
             }
         case "text":
             var attr = currentAttributes
-            if let textColor = attributes?.textColor {
-                attr[.foregroundColor] = UIColor(hexString: textColor)
-            }
+            // TODO: - Enable textColor later in Article Post
+//            if let hexString = attributes?.textColor,
+//                let textColor = UIColor(hexString: hexString),
+//                textColor != .appWhiteColor
+//            {
+//                attr[.foregroundColor] = textColor
+//            }
     
             var symbolicTraits: UIFontDescriptor.SymbolicTraits = []
             if attributes?.style?.contains("bold") == true {
