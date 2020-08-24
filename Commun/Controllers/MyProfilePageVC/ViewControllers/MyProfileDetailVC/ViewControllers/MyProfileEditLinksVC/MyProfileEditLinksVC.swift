@@ -227,11 +227,6 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
         showCMActionSheet(
             title: linkCell.linkType.rawValue.uppercaseFirst,
             actions: [
-//                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
-//                                         icon: UIImage(named: "edit"),
-//                                         handle: {[unowned self] in
-//                                            self.onUpdateBio()
-//                }),
                 .default(
                     title: "delete".localized().uppercaseFirst,
                     iconName: "delete",
