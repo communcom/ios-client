@@ -9,7 +9,7 @@
 import Foundation
 
 extension MyProfileSettingsVC {
-    @objc func actionViewDidTouch(_ tap: CommunActionSheet.Action.TapGesture) {
+    @objc func actionViewDidTouch(_ tap: CMActionSheet.TapGesture) {
         guard let action = tap.action else {return}
         action.handle?()
     }

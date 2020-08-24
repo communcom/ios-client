@@ -52,36 +52,20 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    @available(*, deprecated, message: "Use showCMActionSheet instead")
-    func showCommunActionSheet(headerView: UIView? = nil,
-                               title: String? = nil,
-                               titleFont: UIFont = .systemFont(ofSize: 15, weight: .semibold),
-                               titleAlignment: NSTextAlignment = .left,
-                               actions: [CommunActionSheet.Action],
-                               completion: (() -> Void)? = nil) {
-
-        let actionSheet = CommunActionSheet()
-        actionSheet.title = title
-        actionSheet.headerView = headerView
-        actionSheet.actions = actions
-        actionSheet.titleFont = titleFont
-        actionSheet.textAlignment = titleAlignment
-        
-        present(actionSheet, animated: true, completion: completion)
-    }
-    
+    @discardableResult
     func showCMActionSheet(headerView: UIView? = nil,
                            title: String? = nil,
                            titleFont: UIFont? = nil,
                            titleAlignment: NSTextAlignment? = nil,
                            actions: [CMActionSheet.Action],
-                           completion: (() -> Void)? = nil) {
+                           completion: (() -> Void)? = nil) -> CMActionSheet {
         let actionSheet = CMActionSheet(headerView: headerView, title: title, actions: actions)
         if let label = actionSheet.headerView as? UILabel {
             if let font = titleFont { label.font = font }
             if let alignment = titleAlignment { label.textAlignment = alignment }
         }
         present(actionSheet, animated: true, completion: completion)
+        return actionSheet
     }
     
     func showGeneralError() {
