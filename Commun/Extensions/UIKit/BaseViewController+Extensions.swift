@@ -11,60 +11,84 @@ import SafariServices
 
 extension BaseViewController {
     func showPostMenu(post: ResponseAPIContentGetPost) {
-        var actions = [CommunActionSheet.Action]()
-        
+        var actions = [CMActionSheet.Action]()
         actions.append(
-            CommunActionSheet.Action(
+            .default(
                 title: "view in Explorer".localized().uppercaseFirst,
-                handle: { self.load(url: "https://explorer.cyberway.io/trx/\(post.meta.trxId ?? "")") }
+                showIcon: false,
+                handle: {
+                    self.load(url: "https://explorer.cyberway.io/trx/\(post.meta.trxId ?? "")")
+                }
             )
         )
         
         if let community = post.community, let isSubscribed = community.isSubscribed,
             !(self is NonAuthVCType)
         {
-            let actionProperties = self.setupAction(isSubscribed: isSubscribed)
+            let actionProperties = self.actionInfo(isSubscribed: isSubscribed)
             
-            let action = CommunActionSheet.Action(title: actionProperties.title, icon: actionProperties.icon, style: .follow, post: post, handle: {
-                self.followButtonDidTouch()
-                self.observeCommunity()
-            })
+            var action = CMActionSheet.Action.default(
+                title: actionProperties.title,
+                iconName: actionProperties.icon,
+                handle: {
+                    self.followButtonDidTouch()
+                    self.observeCommunity()
+                }
+            )
+            
+            action.id = "follow"
+            action.dismissActionSheetOnCompleted = false
             
             actions.append(action)
         }
         
         if post.author?.userId != Config.currentUser?.id {
-            actions.append(CommunActionSheet.Action(title: "send report".localized().uppercaseFirst,
-                                                    icon: UIImage(named: "report"),
-                                                    tintColor: .appRedColor,
-                                                    handle: { self.reportPost(post) }))
+            actions.append(
+                .default(
+                    title: "send report".localized().uppercaseFirst,
+                    iconName: "report",
+                    tintColor: .appRedColor,
+                    handle: { self.reportPost(post) }
+                )
+            )
         } else {
-            actions.append(CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
-                                                    icon: UIImage(named: "edit"),
-                                                    handle: { self.editPost(post) }))
+            actions.append(
+                .default(
+                    title: "edit".localized().uppercaseFirst,
+                    iconName: "edit",
+                    handle: { self.editPost(post) }
+                )
+            )
         }
         
-        actions.append(CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
-                                                icon: UIImage(named: "share"),
-                                                handle: { ShareHelper.share(post: post) }))
+        actions.append(
+            .default(
+                title: "share".localized().uppercaseFirst,
+                iconName: "share",
+                handle: { ShareHelper.share(post: post) }
+            )
+        )
 
         if post.author?.userId == Config.currentUser?.id {
-            actions.append(CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
-                                                    icon: UIImage(named: "delete"),
-                                                    tintColor: .appRedColor,
-                                                    handle: { self.deletePost(post) }))
+            actions.append(
+                .default(
+                    title: "delete".localized().uppercaseFirst,
+                    iconName: "delete",
+                    tintColor: .appRedColor,
+                    handle: { self.deletePost(post) }
+                )
+            )
         }
 
         // headerView for actionSheet
         let headerView = PostMetaView(frame: .zero)
+        headerView.setUp(post: post)
         
-        showCommunActionSheet(headerView: headerView, actions: actions) {
-            headerView.setUp(post: post)
-        }
+        showCMActionSheet(headerView: headerView, actions: actions)
     }
     
-    private func setupAction(isSubscribed: Bool) -> (title: String, icon: UIImage) {
-        return (title: (isSubscribed ? "following" : "follow").localized().uppercaseFirst, icon: UIImage(named: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")!)
+    private func actionInfo(isSubscribed: Bool) -> (title: String, icon: String) {
+        return (title: (isSubscribed ? "following" : "follow").localized().uppercaseFirst, icon: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")
     }
     
     func followButtonDidTouch() {
