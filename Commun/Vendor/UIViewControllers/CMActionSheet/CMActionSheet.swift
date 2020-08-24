@@ -16,6 +16,14 @@ class CMActionSheet: SwipeDownDismissViewController {
         var view: UIView
         var handle: (() -> Void)?
         var bottomMargin: CGFloat? = 0
+        var associatedValue: Any?
+        
+        var iconImageView: UIImageView? {
+            (view.subviews.first(where: {$0 is UIStackView}) as? UIStackView)?.arrangedSubviews.first(where: {$0 is UIImageView}) as? UIImageView
+        }
+        var titleLabel: UILabel? {
+            (view.subviews.first(where: {$0 is UIStackView}) as? UIStackView)?.arrangedSubviews.first(where: {$0 is UILabel}) as? UILabel
+        }
     }
     
     class TapGesture: UITapGestureRecognizer {
@@ -141,6 +149,11 @@ class CMActionSheet: SwipeDownDismissViewController {
         } else {
             action.handle?()
         }
+    }
+    
+    // MARK: - Helper
+    func actionWithId(_ id: String) -> Action? {
+        actions.first(where: {$0.id == id})
     }
 }
 

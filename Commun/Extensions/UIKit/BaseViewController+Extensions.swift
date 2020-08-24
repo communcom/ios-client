@@ -16,9 +16,7 @@ extension BaseViewController {
             .default(
                 title: "view in Explorer".localized().uppercaseFirst,
                 showIcon: false,
-                handle: {
-                    self.load(url: "https://explorer.cyberway.io/trx/\(post.meta.trxId ?? "")")
-                }
+                handle: { self.load(url: "https://explorer.cyberway.io/trx/\(post.meta.trxId ?? "")") }
             )
         )
         
@@ -30,14 +28,12 @@ extension BaseViewController {
             var action = CMActionSheet.Action.default(
                 title: actionProperties.title,
                 iconName: actionProperties.icon,
-                handle: {
-                    self.followButtonDidTouch()
-                    self.observeCommunity()
-                }
+                handle: { self.handleFollowAction() }
             )
             
             action.id = "follow"
             action.dismissActionSheetOnCompleted = false
+            action.associatedValue = community
             
             actions.append(action)
         }
@@ -84,25 +80,63 @@ extension BaseViewController {
         let headerView = PostMetaView(frame: .zero)
         headerView.setUp(post: post)
         
-        showCMActionSheet(headerView: headerView, actions: actions)
-    }
-    
-    private func actionInfo(isSubscribed: Bool) -> (title: String, icon: String) {
-        return (title: (isSubscribed ? "following" : "follow").localized().uppercaseFirst, icon: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")
-    }
-    
-    func followButtonDidTouch() {
-        guard   let communActionSheet = UIApplication.topViewController() as? CommunActionSheet,
-                let index = communActionSheet.actions?.firstIndex(where: { $0.style == .follow }),
-                let community = communActionSheet.actions?[index].post?.community else { return }
-       
-        communActionSheet.loaderDidStart(withTitle: (community.isSubscribed ?? false ? "follow" : "following").localized().uppercaseFirst)
+        let actionSheet = showCMActionSheet(headerView: headerView, actions: actions)
         
+        if let community = post.community, !(self is NonAuthVCType)
+        {
+            ResponseAPIContentGetCommunity.observeItemChanged()
+                .filter { $0.identity == community.identity }
+                .subscribe(onNext: { newCommunity in
+                    // assign new value
+                    var actions = actionSheet.actions
+                    if let index = actionSheet.actions.firstIndex(where: {$0.id == "follow"}) {
+                        actions[index].associatedValue = newCommunity
+                    }
+                    actionSheet.actions = actions
+                    
+                    // modify view
+                    guard let isSubscribed = newCommunity.isSubscribed, let action = actionSheet.actions.first(where: {$0.id == "follow"}) else { return }
+                    
+                    let isBeingJoined = newCommunity.isBeingJoined ?? false
+                    
+                    let info = self.actionInfo(isSubscribed: isSubscribed)
+                    action.titleLabel?.text = info.title
+                    action.iconImageView?.image = UIImage(named: info.icon)
+                    
+                    if isBeingJoined {
+                        let activityIndicator = UIActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 24.0), height: .adaptive(height: 24.0))))
+                        activityIndicator.hidesWhenStopped = false
+                        activityIndicator.style = .white
+                        activityIndicator.color = .appBlackColor
+                        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+                
+                        action.iconImageView?.image = nil
+                        action.iconImageView?.addSubview(activityIndicator)
+                        activityIndicator.autoPinEdgesToSuperviewEdges()
+                        activityIndicator.startAnimating()
+                    } else {
+                        action.iconImageView?.subviews.first(where: {$0 is UIActivityIndicatorView})?.removeFromSuperview()
+                    }
+                })
+                .disposed(by: actionSheet.disposeBag)
+        }
+    }
+    
+    private func handleFollowAction() {
+        guard let community = (UIApplication.topViewController() as? CMActionSheet)?.actionWithId("follow")?.associatedValue as? ResponseAPIContentGetCommunity,
+            community.isBeingJoined != true
+        else {
+            return
+        }
         BlockchainManager.instance.triggerFollow(community: community)
             .subscribe { [weak self] (error) in
                 self?.showError(error)
         }
-        .disposed(by: disposeBag)
+        .disposed(by: self.disposeBag)
+    }
+    
+    private func actionInfo(isSubscribed: Bool) -> (title: String, icon: String) {
+        return (title: (isSubscribed ? "following" : "follow").localized().uppercaseFirst, icon: isSubscribed ? "icon-following-black-cyrcle-default" : "icon-follow-black-plus-default")
     }
     
     func load(url: String) {
@@ -115,31 +149,6 @@ extension BaseViewController {
 
             present(safariVC, animated: true)
         }
-    }
-    
-    private func observeCommunity() {
-        guard   let communActionSheet = UIApplication.topViewController() as? CommunActionSheet,
-                let index = communActionSheet.actions?.firstIndex(where: { $0.style == .follow }),
-                let post = communActionSheet.actions?[index].post else { return }
-
-        ResponseAPIContentGetCommunity.observeItemChanged()
-            .filter { $0.identity == post.community?.identity }
-            .subscribe(onNext: { newCommunity in
-                guard let isSubscribed = newCommunity.isSubscribed, let community = post.community, isSubscribed != community.isSubscribed else { return }
-                communActionSheet.updateFollowAction(withCommunity: newCommunity)
-                
-                var postTemp = post
-                postTemp.community = newCommunity
-                
-                self.update(post: postTemp)
-                NotificationCenter.default.removeObserver(self)
-            })
-            .disposed(by: disposeBag)
-    }
-        
-    private func update(post: ResponseAPIContentGetPost) {
-        guard let postsVC = self as? PostsViewController else { return }
-        postsVC.viewModel.updateItem(post)
     }
     
     private func deletePost(_ post: ResponseAPIContentGetPost) {

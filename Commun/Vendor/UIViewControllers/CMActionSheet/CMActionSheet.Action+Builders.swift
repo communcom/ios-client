@@ -9,7 +9,7 @@
 import Foundation
 
 extension CMActionSheet.Action {
-    static func `default`(title: String, showIcon: Bool = true, iconName: String? = nil, tintColor: UIColor = .appBlackColor, handle: (() -> Void)?, bottomMargin: CGFloat? = 10) -> CMActionSheet.Action {
+    static func `default`(title: String, showIcon: Bool = true, iconName: String? = nil, tintColor: UIColor = .appBlackColor, handle: (() -> Void)? = nil, bottomMargin: CGFloat? = 10) -> CMActionSheet.Action {
         customLayout(height: 50, title: title, textSize: 15, textColor: tintColor, spacing: 10, showIcon: showIcon, iconName: iconName, iconSize: 24, iconTintColor: tintColor, showIconFirst: false, showNextButton: false, bottomMargin: bottomMargin, handle: handle)
     }
     
