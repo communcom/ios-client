@@ -91,6 +91,7 @@ class ReportCell: CommunityManageCell, ListItemCellType {
             .withParagraphStyle(lineSpacing: 4)
         
         // actionButton buttons
+        actionButton.isHidden = false
         let isApproved = item.proposal?.isApproved ?? false
         actionButton.setHightLight(isApproved, highlightedLabel: "refuse Ban", unHighlightedLabel: item.proposal == nil ? "create Ban Proposal" : "approve Ban")
         actionButton.isEnabled = !(item.isPerformingAction ?? false)
@@ -105,10 +106,9 @@ class ReportCell: CommunityManageCell, ListItemCellType {
             approvesCountLabel.isHidden = false
             approvesCountLabel.text = "\("approves count".localized().uppercaseFirst): \(approvesCount)/\(approvesNeed)"
             
-            if approvesCount == approvesNeed {
-                if !isApproved {
-                    banButton.isEnabled = false
-                }
+            if approvesCount == approvesNeed && !isApproved {
+                banButton.isEnabled = false
+                actionButton.isHidden = true
             }
         } else {
             banButton.isHidden = true
