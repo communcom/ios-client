@@ -48,6 +48,9 @@ class ReportCell: CommunityManageCell, ListItemCellType {
         bottomStackView.insertArrangedSubview(approvesCountLabel, at: 1)
         banButton.addTarget(self, action: #selector(banButtonDidTouch), for: .touchUpInside)
         
+        // bottomStackView fix
+        voteLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        approvesCountLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         banButton.setContentHuggingPriority(.required, for: .horizontal)
         actionButton.setContentHuggingPriority(.required, for: .horizontal)
     }

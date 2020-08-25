@@ -21,7 +21,7 @@ class CommunityManageCell: MyTableViewCell {
         bottomStackView.addArrangedSubviews([voteLabel, actionButton])
         return view
     }()
-    lazy var bottomStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+    lazy var bottomStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .equalSpacing)
     lazy var actionButton = CommunButton.default()
     lazy var voteLabel = UILabel.with(textSize: 15, numberOfLines: 2)
     
