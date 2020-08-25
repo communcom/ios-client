@@ -81,6 +81,10 @@ class ReportsListVC: ListViewController<ResponseAPIContentGetReport, ReportCell>
             present(PostPageVC(post: post), animated: true, completion: nil)
         }
     }
+    
+    func communityIssuer(forCommunityId id: String) -> String? {
+        (viewModel as? ReportsViewModel)?.issuers[id]
+    }
 }
 
 extension ReportsListVC: UITableViewDelegate {

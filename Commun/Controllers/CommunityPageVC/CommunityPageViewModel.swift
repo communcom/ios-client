@@ -141,7 +141,9 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
             .subscribe(onNext: { community in
                 (self.proposalsVM.fetcher as! ProposalsListFetcher).communityIds = [community!.communityId]
                 (self.reportsVM.fetcher as! ReportsListFetcher).communityIds = [community!.communityId]
-                
+                if let id = community?.communityId, let issuer = community?.issuer {
+                    self.reportsVM.issuers[id] = issuer
+                }
                 self.proposalsVM.reload(clearResult: true)
                 self.reportsVM.reload(clearResult: true)
             })

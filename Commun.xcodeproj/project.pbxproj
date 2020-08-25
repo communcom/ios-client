@@ -206,6 +206,7 @@
 		BC3694FB23699C0F00B2E078 /* BasicEditorVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3694FA23699C0F00B2E078 /* BasicEditorVC+Actions.swift */; };
 		BC3824F624F3A58200DF80DB /* CMActionSheet.Action+Builders.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3824F524F3A58200DF80DB /* CMActionSheet.Action+Builders.swift */; };
 		BC3824FD24F504CC00DF80DB /* ResponseAPIContentGetProposal+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3824FC24F504CC00DF80DB /* ResponseAPIContentGetProposal+Extensions.swift */; };
+		BC38250124F5107C00DF80DB /* ReportCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC38250024F5107C00DF80DB /* ReportCellDelegate.swift */; };
 		BC384F1A23862C580021A2A9 /* CommunityPageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC384F1923862C580021A2A9 /* CommunityPageVC+Actions.swift */; };
 		BC384F1E23862FBC0021A2A9 /* CommunityPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC384F1D23862FBC0021A2A9 /* CommunityPageVC+Binding.swift */; };
 		BC3AAF1923E0223F005E8DAB /* CurrenciesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AAF1823E0223F005E8DAB /* CurrenciesViewModel.swift */; };
@@ -787,6 +788,7 @@
 		BC3694FA23699C0F00B2E078 /* BasicEditorVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Actions.swift"; sourceTree = "<group>"; };
 		BC3824F524F3A58200DF80DB /* CMActionSheet.Action+Builders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CMActionSheet.Action+Builders.swift"; sourceTree = "<group>"; };
 		BC3824FC24F504CC00DF80DB /* ResponseAPIContentGetProposal+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResponseAPIContentGetProposal+Extensions.swift"; sourceTree = "<group>"; };
+		BC38250024F5107C00DF80DB /* ReportCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCellDelegate.swift; sourceTree = "<group>"; };
 		BC384F1923862C580021A2A9 /* CommunityPageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityPageVC+Actions.swift"; sourceTree = "<group>"; };
 		BC384F1D23862FBC0021A2A9 /* CommunityPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityPageVC+Binding.swift"; sourceTree = "<group>"; };
 		BC3AAF1823E0223F005E8DAB /* CurrenciesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesViewModel.swift; sourceTree = "<group>"; };
@@ -2947,6 +2949,7 @@
 			isa = PBXGroup;
 			children = (
 				BCD8460324E6869B005404CD /* ReportCell.swift */,
+				BC38250024F5107C00DF80DB /* ReportCellDelegate.swift */,
 				BCD8460824EA2515005404CD /* ReportDetailView.swift */,
 			);
 			path = Cells;
@@ -3696,6 +3699,7 @@
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
 				BC8481FA24581FB20099C7C5 /* DonationView.swift in Sources */,
 				BC9A1F1824D1225D007BDB3A /* MyProfileDetailFlowVC.swift in Sources */,
+				BC38250124F5107C00DF80DB /* ReportCellDelegate.swift in Sources */,
 				BC3E0D3624B4913900C5F368 /* NonAuthPostPageVC.swift in Sources */,
 				BC923E152431A76D00B28413 /* BaseVerifyVC.swift in Sources */,
 				BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift in Sources */,
