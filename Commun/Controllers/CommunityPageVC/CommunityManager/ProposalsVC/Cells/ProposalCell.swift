@@ -132,7 +132,7 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
         
         // button
         let joined = item.isApproved ?? false
-        actionButton.setHightLight(joined, highlightedLabel: "refuse", unHighlightedLabel: "approve")
+        actionButton.setHightLight(joined, highlightedLabel: "refuse", unHighlightedLabel: "accept")
         actionButton.isEnabled = !(item.isBeingApproved ?? false)
     }
     
