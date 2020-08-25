@@ -458,6 +458,7 @@
 "this user" = "этот пользователь";
 "This username is already taken" = "Имя пользователя уже занято";
 "this user is on your blacklist" = "пользователь находится в Вашем черном списке";
+"This user is not allowed to require bandwidth" = "Вы заблокированы пользователем";
 "this version of the application is out of" = "данная версия приложения устарела.\nПожалуйста, обновите эту версию, чтобы продолжить использование приложения.";
 "title and content must not be empty" = "заголовок и содержание не должны быть пустыми";
 "title placeholder" = "заголовок";

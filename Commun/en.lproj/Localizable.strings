@@ -483,6 +483,7 @@
 "this user" = "this user";
 "This username is already taken" = "This username is already taken";
 "this user is on your blacklist" = "this user is on your blacklist";
+"This user is not allowed to require bandwidth" = "You was blocked by this user";
 "this version of the application is out of" = "this version of the application is out of date.\nPlease update to continue using the app.";
 "title and content must not be empty" = "title and content must not be empty";
 "title placeholder" = "title";
