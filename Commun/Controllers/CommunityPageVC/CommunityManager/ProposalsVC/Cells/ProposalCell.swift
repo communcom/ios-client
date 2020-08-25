@@ -16,34 +16,11 @@ protocol ProposalCellDelegate: class {
 
 extension ProposalCellDelegate where Self: BaseViewController {
     func buttonAcceptDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity) {
-        guard var proposal = items.first(where: {$0.identity == identity}) else {return}
-        let originIsApproved = proposal.isApproved ?? false
-        
-        // change state
-        proposal.isBeingApproved = true
-        proposal.isApproved = !originIsApproved
-        proposal.approvesCount = originIsApproved ? (proposal.approvesCount ?? 1) - 1 : (proposal.approvesCount ?? 0) + 1
-        proposal.notifyChanged()
-        
-        let request: Single<String>
-        if originIsApproved {
-            request = BlockchainManager.instance.unapproveProposal(proposal.proposalId)
-        } else {
-            request = BlockchainManager.instance.approveProposal(proposal.proposalId)
-        }
-        
-        request
-            .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
-            .subscribe(onCompleted: {
-                proposal.isBeingApproved = false
-                proposal.notifyChanged()
-            }) { (error) in
+        guard let proposal = items.first(where: {$0.identity == identity}) else {return}
+        proposal.toggleAccept().flatMapToCompletable()
+            .subscribe(onError: { (error) in
                 self.showError(error)
-                proposal.isBeingApproved = false
-                proposal.isApproved = originIsApproved
-                proposal.approvesCount = originIsApproved ? proposal.approvesCount! + 1 : proposal.approvesCount! - 1
-                proposal.notifyChanged()
-            }
+            })
             .disposed(by: disposeBag)
     }
 }

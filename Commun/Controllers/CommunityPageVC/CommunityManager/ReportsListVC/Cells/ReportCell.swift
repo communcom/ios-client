@@ -14,15 +14,30 @@ protocol ReportCellDelegate: class {
 
 extension ReportCellDelegate where Self: BaseViewController {
     func buttonProposalDidTouch(forItemWithIdentity identity: ResponseAPIContentGetReport.Identity) {
-        guard let report = items.first(where: {$0.identity == identity}) else {return}
+        guard var report = items.first(where: {$0.identity == identity}) else {return}
         
         if let proposal = report.proposal {
-            let isApproved = proposal.isApproved ?? false
-            if isApproved {
-                // TODO: - refuse Ban
-            } else {
-                // TODO: - approve Ban
-            }
+            let originIsApproved = proposal.isApproved ?? false
+            // change state
+            report.isPerformingAction = true
+            report.proposal?.isApproved = !originIsApproved
+            report.proposal?.approvesCount = originIsApproved ? (proposal.approvesCount ?? 1) - 1 : (proposal.approvesCount ?? 0)
+            report.notifyChanged()
+            
+            proposal.toggleAccept()
+                .subscribe(onSuccess: { (proposal) in
+                    report.proposal = proposal
+                    report.isPerformingAction = false
+                    report.notifyChanged()
+                }) { (error) in
+                    self.showError(error)
+                    
+                    report.proposal?.isApproved = originIsApproved
+                    report.proposal?.approvesCount = originIsApproved ? proposal.approvesCount! + 1 : proposal.approvesCount! - 1
+                    report.isPerformingAction = false
+                    report.notifyChanged()
+                }
+                .disposed(by: disposeBag)
         } else {
             // TODO: - create ban proposal
         }
