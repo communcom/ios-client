@@ -136,7 +136,8 @@ class ReportCell: CommunityManageCell, ListItemCellType {
             .text("\(membersCount ?? 0) " + String(format: NSLocalizedString("members-count", comment: ""), membersCount ?? 0), size: 14, weight: .semibold)
             .withParagraphStyle(lineSpacing: 4)
         
-        // proposal buttons
+        // actionButton buttons
+        actionButton.isHidden = false
         let isApproved = item.proposal?.isApproved ?? false
         actionButton.setHightLight(isApproved, highlightedLabel: "refuse Ban", unHighlightedLabel: item.proposal == nil ? "create Ban Proposal" : "approve Ban")
         actionButton.isEnabled = !(item.isPerformingAction ?? false)
@@ -150,6 +151,10 @@ class ReportCell: CommunityManageCell, ListItemCellType {
             banButton.isHidden = approvesCount < approvesNeed
             approvesCountLabel.isHidden = false
             approvesCountLabel.text = "\("approves count".localized().uppercaseFirst): \(approvesCount)/\(approvesNeed)"
+            
+            if approvesCount == approvesNeed {
+                actionButton.isHidden = true
+            }
         } else {
             banButton.isHidden = true
             approvesCountLabel.isHidden = true
