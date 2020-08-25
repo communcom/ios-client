@@ -25,7 +25,13 @@ extension ReportCellDelegate where Self: BaseViewController {
             // change state
             report.isPerformingAction = true
             report.proposal?.isApproved = !originIsApproved
-            report.proposal?.approvesCount = originIsApproved ? (proposal.approvesCount ?? 1) - 1 : (proposal.approvesCount ?? 0)
+            var currentProposalCount = report.proposal?.approvesCount ?? 0
+            if currentProposalCount == 0 && originIsApproved {
+                // prevent negative value
+                currentProposalCount = 1
+            }
+            
+            report.proposal?.approvesCount = originIsApproved ? currentProposalCount - 1 : currentProposalCount + 1
             report.notifyChanged()
             
             proposal.toggleAccept()
@@ -37,7 +43,12 @@ extension ReportCellDelegate where Self: BaseViewController {
                     self.showError(error)
                     
                     report.proposal?.isApproved = originIsApproved
-                    report.proposal?.approvesCount = originIsApproved ? proposal.approvesCount! + 1 : proposal.approvesCount! - 1
+                    var currentProposalCount = report.proposal?.approvesCount ?? 0
+                    if currentProposalCount == 0 && originIsApproved {
+                        // prevent negative value
+                        currentProposalCount = 1
+                    }
+                    report.proposal?.approvesCount = originIsApproved ? currentProposalCount + 1 : currentProposalCount - 1
                     report.isPerformingAction = false
                     report.notifyChanged()
                 }

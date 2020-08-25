@@ -17,7 +17,13 @@ extension ResponseAPIContentGetProposal {
         // change state
         proposal.isBeingApproved = true
         proposal.isApproved = !originIsApproved
-        proposal.approvesCount = originIsApproved ? (proposal.approvesCount ?? 1) - 1 : (proposal.approvesCount ?? 0) + 1
+        var currentProposalCount = proposal.approvesCount ?? 0
+        if currentProposalCount == 0 && originIsApproved {
+            // prevent negative value
+            currentProposalCount = 1
+        }
+        
+        proposal.approvesCount = originIsApproved ? currentProposalCount - 1 : currentProposalCount + 1
         proposal.notifyChanged()
         
         let request: Single<String>
@@ -32,7 +38,12 @@ extension ResponseAPIContentGetProposal {
             .do(onError: { _ in
                 proposal.isBeingApproved = false
                 proposal.isApproved = originIsApproved
-                proposal.approvesCount = originIsApproved ? proposal.approvesCount! + 1 : proposal.approvesCount! - 1
+                var currentProposalCount = proposal.approvesCount ?? 0
+                if currentProposalCount == 0 && originIsApproved {
+                    // prevent negative value
+                    currentProposalCount = 1
+                }
+                proposal.approvesCount = originIsApproved ? currentProposalCount + 1 : currentProposalCount - 1
                 proposal.notifyChanged()
             }, onCompleted: {
                 proposal.isBeingApproved = false
