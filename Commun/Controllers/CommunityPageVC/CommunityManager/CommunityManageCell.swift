@@ -14,14 +14,14 @@ class CommunityManageCell: MyTableViewCell {
     lazy var mainView = UIView(forAutoLayout: ())
     lazy var bottomView: UIView = {
         let view = UIView(forAutoLayout: ())
-        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-        view.addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
+        view.addSubview(bottomStackView)
+        bottomStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
         
         actionButton.addTarget(self, action: #selector(actionButtonDidTouch), for: .touchUpInside)
-        stackView.addArrangedSubviews([voteLabel, actionButton])
+        bottomStackView.addArrangedSubviews([voteLabel, actionButton])
         return view
     }()
+    lazy var bottomStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
     lazy var actionButton = CommunButton.default()
     lazy var voteLabel = UILabel.with(textSize: 15, numberOfLines: 2)
     

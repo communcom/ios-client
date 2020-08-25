@@ -63,6 +63,7 @@
 "back" = "back";
 "back to wallet" = "back to wallet";
 "balance" = "balance";
+"ban action" = "ban";
 "ban post" = "ban post";
 "ban comment" = "ban comment";
 "be" = "be";
@@ -139,6 +140,7 @@
 "copy" = "copy";
 "cover photo" = "cover photo";
 "create" = "create";
+"create Ban Proposal" = "create Ban Proposal";
 "create your passcode" = "create your passcode";
 "create your username" = "create your username";
 "days ago" = "days ago";
@@ -377,6 +379,8 @@
 "referral" = "referral";
 "referralId added" = "referralId added";
 "refill" = "refill";
+"refuse" = "refuse";
+"refuse Ban" = "refuse Ban";
 "registration error" = "registration error";
 "reload" = "reload";
 "remove" = "remove";
@@ -590,6 +594,8 @@
 "my Feed" = "my Feed";
 "facebook" = "facebook";
 "apple" = "apple";
+"approve Ban" = "approve Ban";
+"approves count" = "approves";
 "google" = "google";
 "phone" = "phone";
 "email" = "email";

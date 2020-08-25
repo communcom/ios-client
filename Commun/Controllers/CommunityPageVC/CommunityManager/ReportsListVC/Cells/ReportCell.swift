@@ -6,17 +6,50 @@
 //  Copyright © 2020 Commun Limited. All rights reserved.
 //
 
-protocol ReportCellDelegate: class {}
+protocol ReportCellDelegate: class {
+    var items: [ResponseAPIContentGetReport] {get}
+    func buttonProposalDidTouch(forItemWithIdentity identity: ResponseAPIContentGetReport.Identity)
+    func buttonBanDidTouch(forItemWithIdentity identity: ResponseAPIContentGetReport.Identity)
+}
+
+extension ReportCellDelegate where Self: BaseViewController {
+    func buttonProposalDidTouch(forItemWithIdentity identity: ResponseAPIContentGetReport.Identity) {
+        guard let report = items.first(where: {$0.identity == identity}) else {return}
+        
+        if let proposal = report.proposal {
+            let isApproved = proposal.isApproved ?? false
+            if isApproved {
+                // TODO: - refuse Ban
+            } else {
+                // TODO: - approve Ban
+            }
+        } else {
+            // TODO: - create ban proposal
+        }
+    }
+    
+    func buttonBanDidTouch(forItemWithIdentity identity: ResponseAPIContentGetReport.Identity) {
+        // TODO: - Ban content
+    }
+}
 
 class ReportCell: CommunityManageCell, ListItemCellType {
     // MARK: - Properties
+    var itemIdentity: ResponseAPIContentGetReport.Identity?
     weak var delegate: ReportCellDelegate?
     lazy var reportsStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     lazy var reportsStackViewWrapper = reportsStackView.padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+    lazy var banButton = UIButton(height: 35, label: "ban action".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .red, textColor: .white, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0))
+    lazy var approvesCountLabel = UILabel.with(textSize: 15, numberOfLines: 2)
     
     override func setUpViews() {
         super.setUpViews()
-        actionButton.setTitle("propose to ban".localized().uppercaseFirst, for: .normal)
+        bottomStackView.addArrangedSubview(banButton)
+        bottomStackView.insertArrangedSubview(approvesCountLabel, at: 1)
+        banButton.addTarget(self, action: #selector(banButtonDidTouch), for: .touchUpInside)
+        
+        banButton.setContentHuggingPriority(.required, for: .horizontal)
+        actionButton.setContentHuggingPriority(.required, for: .horizontal)
     }
     
     override func setUpStackView() {
@@ -26,6 +59,7 @@ class ReportCell: CommunityManageCell, ListItemCellType {
     }
     
     func setUp(with item: ResponseAPIContentGetReport) {
+        self.itemIdentity = item.identity
         let postView = addViewToMainView(type: CMPostView.self)
         var membersCount: UInt64?
         var reports = [ResponseAPIContentGetEntityReport]()
@@ -77,9 +111,33 @@ class ReportCell: CommunityManageCell, ListItemCellType {
             .normal("\n")
             .text("\(membersCount ?? 0) " + String(format: NSLocalizedString("members-count", comment: ""), membersCount ?? 0), size: 14, weight: .semibold)
             .withParagraphStyle(lineSpacing: 4)
+        
+        // proposal buttons
+        let isApproved = item.proposal?.isApproved ?? false
+        actionButton.setHightLight(isApproved, highlightedLabel: "refuse Ban", unHighlightedLabel: item.proposal == nil ? "create Ban Proposal" : "approve Ban")
+        actionButton.isEnabled = !(item.isPerformingAction ?? false)
+        
+        // ban buttons
+        if let approvesCount = item.proposal?.approvesCount,
+            let approvesNeed = item.proposal?.approvesNeed,
+            approvesNeed > 0
+        {
+            banButton.isHidden = approvesCount < approvesNeed
+            approvesCountLabel.isHidden = false
+            approvesCountLabel.text = "\("approves count".localized().uppercaseFirst): \(approvesCount)/\(approvesNeed)"
+        } else {
+            banButton.isHidden = true
+            approvesCountLabel.isHidden = true
+        }
     }
     
     override func actionButtonDidTouch() {
-        // TODO: - Propose to ban
+        guard let identity = itemIdentity else {return}
+        delegate?.buttonProposalDidTouch(forItemWithIdentity: identity)
+    }
+    
+    @objc func banButtonDidTouch() {
+        guard let identity = itemIdentity else {return}
+        delegate?.buttonBanDidTouch(forItemWithIdentity: identity)
     }
 }

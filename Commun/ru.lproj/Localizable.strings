@@ -62,6 +62,7 @@
 "back" = "назад";
 "back to wallet" = "обратно в кошелёк";
 "balance" = "баланс";
+"ban action" = "забанить";
 "ban post" = "бан поста";
 "ban comment" = "бан комментария";
 "be" = "получайте";
@@ -137,6 +138,7 @@
 "create" = "создать";
 "create your passcode" = "создайте свой пин-код";
 "create your username" = "создать имя пользователя";
+"create Ban Proposal" = "предложить бан";
 "days ago" = "дней назад";
 "debited from" = "списано с";
 "delete" = "удалить";
@@ -367,6 +369,8 @@
 "referral" = "рефералы";
 "referralId added" = "код реферала добавлен";
 "refill" = "пополнить счёт";
+"refuse" = "отказаться";
+"refuse Ban" = "отменить бан";
 "registration error" = "ошибка при регистрации";
 "reload" = "перезагрузить";
 "remove" = "удалить";
@@ -561,6 +565,8 @@
 "my Feed" = "моя лента";
 "facebook" = "facebook";
 "apple" = "apple";
+"approve Ban" = "подтвердить бан";
+"approves count" = "подтверждения";
 "google" = "google";
 "phone" = "телефон";
 "email" = "почту";
