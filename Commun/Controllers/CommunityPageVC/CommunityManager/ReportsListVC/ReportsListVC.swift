@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ReportsListVC: ListViewController<ResponseAPIContentGetReport, ReportCell> {
+class ReportsListVC: ListViewController<ResponseAPIContentGetReport, ReportCell>, ReportCellDelegate {
     lazy var horizontalTabBar: CMHorizontalTabBar = {
         let sc = CMHorizontalTabBar(height: 35)
         sc.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
