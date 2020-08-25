@@ -11,11 +11,11 @@ import RxSwift
 
 protocol ProposalCellDelegate: class {
     var items: [ResponseAPIContentGetProposal] {get}
-    func buttonApproveDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity)
+    func buttonAcceptDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity)
 }
 
 extension ProposalCellDelegate where Self: BaseViewController {
-    func buttonApproveDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity) {
+    func buttonAcceptDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity) {
         guard var proposal = items.first(where: {$0.identity == identity}) else {return}
         let originIsApproved = proposal.isApproved ?? false
         
@@ -61,11 +61,17 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
     override func setUpViews() {
         super.setUpViews()
         actionButton.setTitle("accept".localized().uppercaseFirst, for: .normal)
-        bottomStackView.addArrangedSubview(applyButton)
+        actionButton.removeFromSuperview()
+        
+        let buttonStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .fill, distribution: .fill)
+        buttonStackView.addArrangedSubviews([actionButton, applyButton])
+        bottomStackView.addArrangedSubview(buttonStackView)
+        
         applyButton.isHidden = true
         
         // bottomStackView fix
         voteLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        buttonStackView.setContentHuggingPriority(.required, for: .horizontal)
         applyButton.setContentHuggingPriority(.required, for: .horizontal)
         actionButton.setContentHuggingPriority(.required, for: .horizontal)
     }
@@ -151,10 +157,10 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
             approvesNeed > 0
         {
             if (approvesCount >= approvesNeed - 1) && !joined {
-                applyButton.setTitle("accept and apply".localized().uppercaseFirst, for: .normal)
+                applyButton.setTitle("\("accept".localized().uppercaseFirst) \("and".localized()) \("apply".localized())", for: .normal)
                 applyButton.isHidden = false
                 actionButton.isHidden = true
-            } else if (approvesCount == approvesNeed) {
+            } else if approvesCount == approvesNeed {
                 applyButton.isHidden = false
             }
         }
@@ -211,7 +217,7 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
     override func actionButtonDidTouch() {
         guard let identity = itemIdentity else {return}
         actionButton.animate {
-            self.delegate?.buttonApproveDidTouch(forItemWithIdentity: identity)
+            self.delegate?.buttonAcceptDidTouch(forItemWithIdentity: identity)
         }
     }
 }

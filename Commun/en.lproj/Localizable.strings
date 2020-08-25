@@ -54,6 +54,7 @@
 "amount" = "amount";
 "an email has been sent with" = "an email has been sent with the verification code. Please enter it here";
 "an error has occured" = "an error has occured";
+"and" = "and";
 "archiving" = "archiving";
 "are you sure you want to take the vote back?" = "are you sure you want to take the vote back?";
 "attachments" = "attachments";
@@ -595,6 +596,7 @@
 "my Feed" = "my Feed";
 "facebook" = "facebook";
 "apple" = "apple";
+"apply" = "apply";
 "approve Ban" = "approve Ban";
 "approves count" = "approves";
 "google" = "google";

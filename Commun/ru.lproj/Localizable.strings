@@ -53,6 +53,7 @@
 "amount" = "количество";
 "an email has been sent with" = "было отправлено письмо с проверочным кодом. Пожалуйста, введите код здесь";
 "an error has occured" = "произошла ошибка";
+"and" = "и";
 "archiving" = "архивирование";
 "are you sure you want to take the vote back?" = "Вы уверены, что хотите вернуть голос?";
 "attachments" = "вложения";
@@ -566,6 +567,7 @@
 "my Feed" = "моя лента";
 "facebook" = "facebook";
 "apple" = "apple";
+"apply" = "применить";
 "approve Ban" = "подтвердить бан";
 "approves count" = "подтверждения";
 "google" = "google";
