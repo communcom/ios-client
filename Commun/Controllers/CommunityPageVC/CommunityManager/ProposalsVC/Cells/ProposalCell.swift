@@ -56,10 +56,18 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
     // MARK: - Subviews
     lazy var metaView = PostMetaView(height: 40.0)
     lazy var actionTypeLabel = UILabel.with(textSize: 15, weight: .semibold)
+    lazy var applyButton = CommunButton.default()
     
     override func setUpViews() {
         super.setUpViews()
         actionButton.setTitle("accept".localized().uppercaseFirst, for: .normal)
+        bottomStackView.addArrangedSubview(applyButton)
+        applyButton.isHidden = true
+        
+        // bottomStackView fix
+        voteLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        applyButton.setContentHuggingPriority(.required, for: .horizontal)
+        actionButton.setContentHuggingPriority(.required, for: .horizontal)
     }
     
     override func setUpStackView() {
@@ -131,9 +139,25 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
             .withParagraphStyle(lineSpacing: 4)
         
         // button
+        actionButton.isHidden = false
         let joined = item.isApproved ?? false
         actionButton.setHightLight(joined, highlightedLabel: "refuse", unHighlightedLabel: "accept")
         actionButton.isEnabled = !(item.isBeingApproved ?? false)
+        
+        applyButton.isHidden = true
+        applyButton.setTitle("apply".localized().uppercaseFirst, for: .normal)
+        if let approvesCount = item.approvesCount,
+            let approvesNeed = item.approvesNeed,
+            approvesNeed > 0
+        {
+            if (approvesCount >= approvesNeed - 1) && !joined {
+                applyButton.setTitle("accept and apply".localized().uppercaseFirst, for: .normal)
+                applyButton.isHidden = false
+                actionButton.isHidden = true
+            } else if (approvesCount == approvesNeed) {
+                applyButton.isHidden = false
+            }
+        }
     }
     
     func setMessage(item: ResponseAPIContentGetProposal?) {
