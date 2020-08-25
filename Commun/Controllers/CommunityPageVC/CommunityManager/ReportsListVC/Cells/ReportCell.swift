@@ -29,7 +29,28 @@ extension ReportCellDelegate where Self: BaseViewController {
     }
     
     func buttonBanDidTouch(forItemWithIdentity identity: ResponseAPIContentGetReport.Identity) {
-        // TODO: - Ban content
+        guard var report = items.first(where: {$0.identity == identity}),
+            let proposal = report.proposal
+        else {return}
+        
+        showAlert(title: "ban action".localized().uppercaseFirst, message: "do you really want to ban this content?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
+            if index == 0 {
+                report.isPerformingAction = true
+                report.notifyChanged()
+                
+                BlockchainManager.instance.banContent(proposal.proposalId, communityCode: proposal.community?.communityId ?? "", commnityIssuer: report.proposal?.proposer?.userId ?? "", permlink: proposal.data?.message_id?.permlink ?? "")
+                    .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
+                    .subscribe(onCompleted: {
+                        report.isPerformingAction = false
+                        report.notifyChanged()
+                    }) { (error) in
+                        self.showError(error)
+                        report.isPerformingAction = false
+                        report.notifyChanged()
+                    }
+                    .disposed(by: self.disposeBag)
+            }
+        }
     }
 }
 
@@ -39,7 +60,7 @@ class ReportCell: CommunityManageCell, ListItemCellType {
     weak var delegate: ReportCellDelegate?
     lazy var reportsStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     lazy var reportsStackViewWrapper = reportsStackView.padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
-    lazy var banButton = UIButton(height: 35, label: "ban action".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .red, textColor: .white, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0))
+    lazy var banButton = CommunButton(height: 35, label: "ban action".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .red, textColor: .white, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0))
     lazy var approvesCountLabel = UILabel.with(textSize: 15, numberOfLines: 2)
     
     override func setUpViews() {
@@ -119,6 +140,7 @@ class ReportCell: CommunityManageCell, ListItemCellType {
         let isApproved = item.proposal?.isApproved ?? false
         actionButton.setHightLight(isApproved, highlightedLabel: "refuse Ban", unHighlightedLabel: item.proposal == nil ? "create Ban Proposal" : "approve Ban")
         actionButton.isEnabled = !(item.isPerformingAction ?? false)
+        banButton.isEnabled = !(item.isPerformingAction ?? false)
         
         // ban buttons
         if let approvesCount = item.proposal?.approvesCount,
