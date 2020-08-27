@@ -7,23 +7,6 @@
 //
 
 import Foundation
-import RxSwift
-
-protocol ProposalCellDelegate: class {
-    var items: [ResponseAPIContentGetProposal] {get}
-    func buttonAcceptDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity)
-}
-
-extension ProposalCellDelegate where Self: BaseViewController {
-    func buttonAcceptDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity) {
-        guard let proposal = items.first(where: {$0.identity == identity}) else {return}
-        proposal.toggleAccept().flatMapToCompletable()
-            .subscribe(onError: { (error) in
-                self.showError(error)
-            })
-            .disposed(by: disposeBag)
-    }
-}
 
 class ProposalCell: CommunityManageCell, ListItemCellType {
     // MARK: - Properties
@@ -33,7 +16,11 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
     // MARK: - Subviews
     lazy var metaView = PostMetaView(height: 40.0)
     lazy var actionTypeLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var applyButton = CommunButton.default()
+    lazy var applyButton: CommunButton = {
+        let button = CommunButton.default()
+        button.addTarget(self, action: #selector(applyButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
     
     override func setUpViews() {
         super.setUpViews()
@@ -195,6 +182,13 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
         guard let identity = itemIdentity else {return}
         actionButton.animate {
             self.delegate?.buttonAcceptDidTouch(forItemWithIdentity: identity)
+        }
+    }
+    
+    @objc func applyButtonDidTouch() {
+        guard let identity = itemIdentity else {return}
+        applyButton.animate {
+            self.delegate?.buttonApplyDidTouch(forItemWithIdentity: identity)
         }
     }
 }
