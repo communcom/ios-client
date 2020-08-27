@@ -153,6 +153,8 @@
 "description not found" = "нет описания";
 "dislike" = "дизлайк";
 "do you really want to" = "Вы действительно хотите";
+"do you really want to apply this proposal?" = "вы действительно хотите применить это предложение?";
+"do you really want to accept and apply this proposal?" = "вы действительно хотите принять и применить это предложение?";
 "do you really want to ban this content?" = "вы действительно хотите забанить это сообщение?";
 "do you really want to delete this post" = "Вы действительно хотите удалить это сообщение?";
 "do you really want to logout?" = "Вы действительно хотите выйти?";
