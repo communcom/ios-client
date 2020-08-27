@@ -21,6 +21,8 @@ extension ReportCellDelegate where Self: BaseViewController {
         guard var report = items.first(where: {$0.identity == identity}) else {return}
         
         if let proposal = report.proposal {
+            // accept / refuse proposal
+            
             let originIsApproved = proposal.isApproved ?? false
             // change state
             report.isPerformingAction = true
@@ -54,35 +56,53 @@ extension ReportCellDelegate where Self: BaseViewController {
                 }
                 .disposed(by: disposeBag)
         } else {
-            // TODO: - create ban proposal
+            // create ban proposal
+            
+            guard let communityId = report.post?.contentId.communityId,
+                let permlink = report.post?.contentId.permlink
+            else {return}
+            report.isPerformingAction = true
+            report.notifyChanged()
+            
+            var request: Single<String>
+            if let issuer = self.communityIssuer(forCommunityId: communityId) {
+                request = .just(issuer)
+            } else {
+                request = RestAPIManager.instance.getCommunity(id: communityId)
+                    .map {$0.issuer ?? ""}
+            }
+            
+            request.flatMap {BlockchainManager.instance.createBanProposal(communityCode: communityId, commnityIssuer: $0, permlink: permlink)}
+                .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
+                .subscribe(onCompleted: {
+                    report.isPerformingAction = false
+                    report.notifyChanged()
+                }) { (error) in
+                    self.showError(error)
+                    report.isPerformingAction = false
+                    report.notifyChanged()
+                }
+                .disposed(by: self.disposeBag)
         }
     }
     
     func buttonBanDidTouch(forItemWithIdentity identity: ResponseAPIContentGetReport.Identity) {
         guard var report = items.first(where: {$0.identity == identity}),
             let proposal = report.proposal,
-            let communityId = proposal.community?.communityId,
-            let permlink = proposal.data?.message_id?.permlink
+            let proposer = proposal.proposer?.userId
         else {return}
+        
+        // exec proposal
         
         showAlert(title: "ban action".localized().uppercaseFirst, message: "do you really want to ban this content?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
             if index == 0 {
                 report.isPerformingAction = true
                 report.notifyChanged()
                 
-                var request: Single<String>
-                if let issuer = self.communityIssuer(forCommunityId: communityId) {
-                    request = .just(issuer)
-                } else {
-                    request = RestAPIManager.instance.getCommunity(id: communityId)
-                        .map {$0.issuer ?? ""}
-                }
-                
-                request.flatMap {BlockchainManager.instance.banContent(proposal.proposalId, communityCode: communityId, commnityIssuer: $0, permlink: permlink)}
+                BlockchainManager.instance.execProposal(proposalName: proposal.proposalId, proposer: proposer)
                     .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
                     .subscribe(onCompleted: {
-                        report.isPerformingAction = false
-                        report.notifyChanged()
+                        report.notifyDeleted()
                     }) { (error) in
                         self.showError(error)
                         report.isPerformingAction = false
