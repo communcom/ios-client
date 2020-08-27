@@ -61,7 +61,12 @@ extension ReportCellDelegate where Self: BaseViewController {
             guard let communityId = report.post?.contentId.communityId,
                 let permlink = report.post?.contentId.permlink
             else {return}
+            let proposalId = BlockchainManager.instance.generateRandomProposalId()
+            
+            // change state immediately, reverse if fall
             report.isPerformingAction = true
+            let proposal = ResponseAPIContentGetProposal.placeholder(proposalId: proposalId, isApproved: true, approvesCount: 1, approvesNeed: 3)
+            report.proposal = proposal
             report.notifyChanged()
             
             var request: Single<String>
@@ -72,7 +77,7 @@ extension ReportCellDelegate where Self: BaseViewController {
                     .map {$0.issuer ?? ""}
             }
             
-            request.flatMap {BlockchainManager.instance.createBanProposal(communityCode: communityId, commnityIssuer: $0, permlink: permlink)}
+            request.flatMap {BlockchainManager.instance.createBanProposal(proposalId: proposalId, communityCode: communityId, commnityIssuer: $0, permlink: permlink)}
                 .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
                 .subscribe(onCompleted: {
                     report.isPerformingAction = false
@@ -80,6 +85,8 @@ extension ReportCellDelegate where Self: BaseViewController {
                 }) { (error) in
                     self.showError(error)
                     report.isPerformingAction = false
+                    // reverse
+                    report.proposal = nil
                     report.notifyChanged()
                 }
                 .disposed(by: self.disposeBag)
