@@ -207,11 +207,7 @@ class CommunWalletVC: TransferHistoryVC {
         
         Observable.combineLatest(balancesVM.items, (viewModel as! WalletViewModel).hideEmptyPointsRelay)
             .map { (items, shouldHideEmpty) -> [ResponseAPIWalletGetBalance] in
-                var items = items
-                if shouldHideEmpty {
-                    items = items.filter {$0.symbol == "CMN" || $0.balanceValue > 0}
-                }
-                return items
+                return items.hidenEmptyBalances(hide: shouldHideEmpty).sortedByBalanceValue()
             }
             .do(onNext: {self.tableHeaderView.setMyPointHidden($0.count == 0)})
             .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in

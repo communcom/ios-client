@@ -8,6 +8,29 @@
 
 import Foundation
 
+extension RangeReplaceableCollection where Element == ResponseAPIWalletGetBalance {
+    func hidenEmptyBalances(hide: Bool = true) -> [ResponseAPIWalletGetBalance] {
+        if hide {
+            return filter {$0.symbol == "CMN" || $0.balanceValue > 0}
+        }
+        return self as! [ResponseAPIWalletGetBalance]
+    }
+    
+    func sortedByBalanceValue(isDecreasingValue: Bool = true) -> [ResponseAPIWalletGetBalance] {
+        var items = self
+        
+        var result = [ResponseAPIWalletGetBalance]()
+        if let cmnBalance = first(where: {$0.symbol == "CMN"}) {
+            result.append(cmnBalance)
+            items.removeAll(where: {$0.symbol == "CMN"})
+        }
+        
+        result.append(contentsOf: items.sorted(by: {$0.balanceValue > $1.balanceValue}))
+        
+        return result
+    }
+}
+
 extension RangeReplaceableCollection where Element: Equatable {
     @discardableResult
     mutating func appendIfNotContains(_ element: Element) -> (appended: Bool, memberAfterAppend: Element) {

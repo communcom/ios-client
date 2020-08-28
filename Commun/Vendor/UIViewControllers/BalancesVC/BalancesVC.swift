@@ -50,12 +50,7 @@ class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     }
     
     override func mapItems(items: [ResponseAPIWalletGetBalance]) -> [AnimatableSectionModel<String, ResponseAPIWalletGetBalance>] {
-        var items = items
-        if !showEmptyBalances {
-            items = items.filter {$0.balanceValue > 0}
-        }
-        items = items.sorted(by: {$0.balanceValue > $1.balanceValue})
-        return super.mapItems(items: items)
+        return super.mapItems(items: items.hidenEmptyBalances(hide: !showEmptyBalances).sortedByBalanceValue())
     }
     
     override func handleListEmpty() {
