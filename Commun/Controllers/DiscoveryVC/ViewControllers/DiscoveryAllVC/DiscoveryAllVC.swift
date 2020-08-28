@@ -131,8 +131,8 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
             viewModel.items.filter {_ in !viewModel.isQueryEmpty}.asObservable()
         )
             .map {items -> [ListSection] in
-                let communities = items.filter {$0.communityValue != nil && $0.communityValue?.isSubscribed == true}
-                let followers = items.filter {$0.profileValue != nil && $0.profileValue?.isSubscribed == true}
+                let communities = items.filter {$0.communityValue != nil}
+                let followers = items.filter {$0.profileValue != nil}
                 let posts = items.filter {$0.postValue != nil}
                 var sections = [ListSection]()
                 if !communities.isEmpty {
