@@ -37,15 +37,23 @@ extension ProposalCellDelegate where Self: BaseViewController {
         
         var request = BlockchainManager.instance.execProposal(proposalName: proposal.proposalId, proposer: proposer)
         .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
-        var alertTitle = "apply".localized().uppercaseFirst
+        var alertTitle = "apply"
         
         if (approvesCount >= approvesNeed - 1) && !isApproved {
             // accept and apply
-            request = proposal.toggleAccept().flatMapCompletable {_ in request}
-            alertTitle = "accept".localized().uppercaseFirst + "and".localized() + alertTitle
+            request = proposal.toggleAccept().flatMapCompletable {proposal in
+                // edited proposal came, modification needed
+                var proposal = proposal
+                proposal.isBeingApproved = true
+                proposal.notifyChanged()
+                
+                return BlockchainManager.instance.execProposal(proposalName: proposal.proposalId, proposer: proposal.proposer!.userId)
+                    .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
+            }
+            alertTitle = "accept and apply"
         }
         
-        showAlert(title: alertTitle, message: "do you really want to \(alertTitle) this proposal?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
+        showAlert(title: alertTitle.localized().uppercaseFirst, message: "do you really want to \(alertTitle) this proposal?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
             if index == 0 {
                 proposal.isBeingApproved = true
                 proposal.notifyChanged()
