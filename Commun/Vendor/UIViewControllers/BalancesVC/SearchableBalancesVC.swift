@@ -9,30 +9,16 @@
 import Foundation
 import RxSwift
 
-class SearchableBalancesVC: BalancesVC, SearchableViewControllerType {
+class SearchableBalancesVC: BalancesVC {
     var tableViewTopConstraint: NSLayoutConstraint?
     
     lazy var searchContainerView = UIView(backgroundColor: .appWhiteColor)
-    var searchBar = UISearchBar.default()
-    
-    override init(userId: String? = nil, canChooseCommun: Bool = true, showEmptyBalances: Bool = true, completion: ((ResponseAPIWalletGetBalance) -> Void)? = nil) {
-        super.init(userId: userId, canChooseCommun: canChooseCommun, showEmptyBalances: showEmptyBalances, completion: completion)
-        searchBar.showsCancelButton = true
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var searchBar = CMSearchBar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // reset search result
-        viewModel.items.accept(viewModel.items.value)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        searchBar.roundCorner()
+        searchBarDidCancelSearch()
     }
     
     override func viewWillSetUpTableView() {
@@ -40,14 +26,19 @@ class SearchableBalancesVC: BalancesVC, SearchableViewControllerType {
         super.viewWillSetUpTableView()
     }
     
+    override func viewDidSetUpTableView() {
+        super.viewDidSetUpTableView()
+        tableView.removeConstraintToSuperView(withAttribute: .top)
+        
+        view.addSubview(searchContainerView)
+        searchContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        tableView.autoPinEdge(.top, to: .bottom, of: searchContainerView)
+    }
+    
     override func setUp() {
         super.setUp()
         showShadowWhenScrollUp = false
-    }
-    
-    override func bind() {
-        super.bind()
-        bindSearchBar()
+        searchBar.delegate = self
     }
     
     override func bindItems() {
@@ -66,18 +57,24 @@ class SearchableBalancesVC: BalancesVC, SearchableViewControllerType {
     
     // MARK: - Search manager
     func layoutSearchBar() {
-        fatalError("Must override")
+        searchContainerView.addSubview(searchBar)
+        searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
     }
     
-    func searchBarIsSearchingWithQuery(_ query: String) {
+    func searchBarDidCancelSearch() {
+        viewModel.items.accept(viewModel.items.value)
+    }
+}
+
+extension SearchableBalancesVC: CMSearchBarDelegate {
+    func cmSearchBar(_ searchBar: CMSearchBar, searchWithKeyword keyword: String) {
+        if keyword.isEmpty {
+            searchBarDidCancelSearch()
+            return
+        }
         let viewModel = self.viewModel as! BalancesViewModel
         viewModel.searchResult.accept(
-            viewModel.items.value.filter {($0.name?.lowercased().contains(query.lowercased()) ?? false) || $0.symbol.lowercased().contains(query.lowercased())}
+            viewModel.items.value.filter {($0.name?.lowercased().contains(keyword.lowercased()) ?? false) || $0.symbol.lowercased().contains(keyword.lowercased())}
         )
-    }
-    
-    func searchBarDidCancelSearching() {
-        searchBar.text = nil
-        viewModel.items.accept(viewModel.items.value)
     }
 }

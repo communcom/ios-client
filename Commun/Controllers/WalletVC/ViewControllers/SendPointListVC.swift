@@ -112,16 +112,4 @@ extension SendPointListVC: CMSearchBarDelegate {
         (viewModel as! SubscriptionsViewModel).searchVM.query = keyword
         (viewModel as! SubscriptionsViewModel).searchVM.reload(clearResult: false)
     }
-    
-    func cmSearchBarDidBeginSearching(_ searchBar: CMSearchBar) {
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-    
-    func cmSearchBarDidEndSearching(_ searchBar: CMSearchBar) {
-        navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
-    func cmSearchBarDidCancelSearching(_ searchBar: CMSearchBar) {
-        searchBar.clear()
-    }
 }

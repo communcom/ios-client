@@ -334,7 +334,6 @@
 		BC7445D9242B58A0009915EA /* ReferralUsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7445D8242B58A0009915EA /* ReferralUsersViewModel.swift */; };
 		BC7445DB242B58FA009915EA /* ReferralUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7445DA242B58FA009915EA /* ReferralUsersVC.swift */; };
 		BC7445DE242BB131009915EA /* ReferralHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7445DD242BB131009915EA /* ReferralHeaderView.swift */; };
-		BC7470B02410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7470AF2410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift */; };
 		BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74A18123643C6400D94EF2 /* CommunityController.swift */; };
 		BC74F503237957790018DB8E /* CommentsVC+CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74F502237957790018DB8E /* CommentsVC+CommentCellDelegate.swift */; };
 		BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */; };
@@ -917,7 +916,6 @@
 		BC7445D8242B58A0009915EA /* ReferralUsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralUsersViewModel.swift; sourceTree = "<group>"; };
 		BC7445DA242B58FA009915EA /* ReferralUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralUsersVC.swift; sourceTree = "<group>"; };
 		BC7445DD242BB131009915EA /* ReferralHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralHeaderView.swift; sourceTree = "<group>"; };
-		BC7470AF2410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPointsSeeAllBalancesVC.swift; sourceTree = "<group>"; };
 		BC74A18123643C6400D94EF2 /* CommunityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityController.swift; sourceTree = "<group>"; };
 		BC74F502237957790018DB8E /* CommentsVC+CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsVC+CommentCellDelegate.swift"; sourceTree = "<group>"; };
 		BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+CommentCellDelegate.swift"; sourceTree = "<group>"; };
@@ -2445,7 +2443,6 @@
 				BC8F813423E27ECE0024C04A /* SendPointListVC.swift */,
 				BC8F813523E27ECE0024C04A /* BuyCommunVC */,
 				BC8F813A23E27ECE0024C04A /* WalletConvertVCs */,
-				BC7470AF2410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3502,7 +3499,6 @@
 				BC923E0C24319DB700B28413 /* BaseSignUpMethodVC.swift in Sources */,
 				BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */,
 				5721E87122650AC0003BE04B /* String+Extensions.swift in Sources */,
-				BC7470B02410F10000BD4CB3 /* MyPointsSeeAllBalancesVC.swift in Sources */,
 				3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
 				BC3E0D3D24B4ED6100C5F368 /* NonAuthCommunityPageVC.swift in Sources */,
 				BC84820624595CEE0099C7C5 /* CMWalletView.swift in Sources */,

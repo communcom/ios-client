@@ -15,6 +15,22 @@ protocol CMSearchBarDelegate: class {
     func cmSearchBarDidCancelSearching(_ searchBar: CMSearchBar)
 }
 
+extension CMSearchBarDelegate where Self: BaseViewController {
+    func cmSearchBarDidBeginSearching(_ searchBar: CMSearchBar) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        view.layoutIfNeeded()
+    }
+    
+    func cmSearchBarDidEndSearching(_ searchBar: CMSearchBar) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        view.layoutIfNeeded()
+    }
+    
+    func cmSearchBarDidCancelSearching(_ searchBar: CMSearchBar) {
+        searchBar.clear()
+    }
+}
+
 class CMSearchBar: MyView {
     // MARK: - Properties
     var placeholder = "search".localized().uppercaseFirst {
