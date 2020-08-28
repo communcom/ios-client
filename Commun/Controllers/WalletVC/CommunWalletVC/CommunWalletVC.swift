@@ -387,7 +387,7 @@ class CommunWalletVC: TransferHistoryVC {
     }
     
     @objc func myPointsSeeAllDidTouch() {
-        let vc = MyPointsSeeAllBalancesVC { balance in
+        let vc = MyPointsSeeAllBalancesVC(showEmptyBalances: !UserDefaults.standard.bool(forKey: CommunWalletOptionsVC.hideEmptyPointsKey)) { balance in
             self.openOtherBalancesWalletVC(withSelectedBalance: balance)
         }
         
