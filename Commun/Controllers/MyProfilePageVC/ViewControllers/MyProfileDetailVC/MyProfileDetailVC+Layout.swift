@@ -24,7 +24,7 @@ extension MyProfileDetailVC {
         }()
         
         let coverImageView: UIImageView = {
-            let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleToFill)
+            let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleAspectFill)
             imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 335 / 150).isActive = true
             imageView.setCover(urlString: profile?.coverUrl, namePlaceHolder: "cover-placeholder")
             return imageView
@@ -86,13 +86,21 @@ extension MyProfileDetailVC {
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // whatsapp
-        addContactField(icon: "whatsapp-icon", serviceName: "Whatsapp", username: profile?.personal?.messengers?.whatsApp?.value, to: stackView)
+        if let username = profile?.personal?.messengers?.whatsApp?.value {
+            addContactField(icon: "whatsapp-icon", serviceName: "Whatsapp", username: username, to: stackView)
+        }
         
         // telegram
-        addContactField(icon: "telegram-icon", serviceName: "Telegram", username: profile?.personal?.messengers?.telegram?.value, to: stackView)
+        if let username = profile?.personal?.messengers?.telegram?.value {
+            addContactField(icon: "telegram-icon", serviceName: "Telegram", username: username, to: stackView)
+        }
+        
         
         // wechat
-        addContactField(icon: "wechat-icon", serviceName: "WeChat", username: profile?.personal?.messengers?.weChat?.value, to: stackView)
+        if let username = profile?.personal?.messengers?.weChat?.value {
+            addContactField(icon: "wechat-icon", serviceName: "WeChat", username: username, to: stackView)
+        }
+        
     }
     
     func updateLinks() {
@@ -106,19 +114,29 @@ extension MyProfileDetailVC {
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // twitter
-        addContactField(icon: "twitter-icon", serviceName: "Twitter", username: profile?.personal?.links?.twitter?.value, to: stackView)
+        if let username = profile?.personal?.links?.twitter?.value {
+            addContactField(icon: "twitter-icon", serviceName: "Twitter", username: username, to: stackView)
+        }
         
         // facebook
-        addContactField(icon: "facebook-icon", serviceName: "Facebook", username: profile?.personal?.links?.facebook?.value, to: stackView)
+        if let username = profile?.personal?.links?.facebook?.value {
+            addContactField(icon: "facebook-icon", serviceName: "Facebook", username: username, to: stackView)
+        }
         
         // instagram
-        addContactField(icon: "instagram-icon", serviceName: "Instagram", username: profile?.personal?.links?.instagram?.value, to: stackView)
+        if let username = profile?.personal?.links?.instagram?.value {
+            addContactField(icon: "instagram-icon", serviceName: "Instagram", username: username, to: stackView)
+        }
         
         // github
-        addContactField(icon: "github-icon", serviceName: "Github", username: profile?.personal?.links?.gitHub?.value, to: stackView)
+        if let username = profile?.personal?.links?.gitHub?.value {
+            addContactField(icon: "github-icon", serviceName: "Github", username: username, to: stackView)
+        }
         
         // linkedin
-        addContactField(icon: "linkedin-icon", serviceName: "Linkedin", username: profile?.personal?.links?.linkedin?.value, to: stackView)
+        if let username = profile?.personal?.links?.linkedin?.value {
+            addContactField(icon: "linkedin-icon", serviceName: "Linkedin", username: username, to: stackView)
+        }
     }
     
     // MARK: - View builders
@@ -138,7 +156,7 @@ extension MyProfileDetailVC {
     private func infoField(title: String, content: String?) -> UIStackView {
         let stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .leading, distribution: .fill)
         let titleLabel = UILabel.with(text: title, textSize: 12, weight: .medium, textColor: .appGrayColor)
-        let contentLabel = UILabel.with(text: content ?? "", textSize: 17, weight: .semibold, textColor: .appBlackColor, numberOfLines: 0)
+        let contentLabel = UILabel.with(text: content ?? " ", textSize: 17, weight: .semibold, textColor: .appBlackColor, numberOfLines: 0)
         stackView.addArrangedSubviews([titleLabel, contentLabel])
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 7, trailing: 16)
