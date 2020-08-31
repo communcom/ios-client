@@ -37,7 +37,7 @@ class LinkCell: MyView {
         
         let titleView: UIStackView = {
             let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
-            let optionButton = UIButton.option(tintColor: .appBlackColor, contentInsets: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 0))
+            let optionButton = UIButton.option(tintColor: .appGrayColor, contentInsets: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 0))
             optionButton.addTarget(self, action: #selector(optionButtonDidTouch), for: .touchUpInside)
             hStack.addArrangedSubviews([icon, label, optionButton])
             return hStack
