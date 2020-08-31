@@ -51,8 +51,8 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     }
     
     override func setUpStackView() {
-        followButton.removeFromSuperview()
         super.setUpStackView()
+        buttonStackView.isHidden = true
         
         setUpWalletView()
         
