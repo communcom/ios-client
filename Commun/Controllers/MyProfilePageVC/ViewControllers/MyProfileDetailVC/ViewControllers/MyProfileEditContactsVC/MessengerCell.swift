@@ -34,7 +34,9 @@ class MessengerCell: GeneralLinkCell<ContactTextField> {
         
         let switchWrapper: UIStackView = {
             let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
-            let label = UILabel.with(text: "add to default contacts".localized().uppercaseFirst, textSize: 15, weight: .semibold)
+            let label = UILabel.with(text: "add to default contacts".localized().uppercaseFirst, textSize: 15, weight: .semibold, numberOfLines: 0)
+            label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            switcher.setContentHuggingPriority(.required, for: .horizontal)
             hStack.addArrangedSubviews([label, switcher])
             return hStack
         }()

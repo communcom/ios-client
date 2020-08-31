@@ -42,8 +42,8 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
     
     override func profileDidUpdate() {
         stackView.removeArrangedSubviews()
-        var subviews = originalContacts.filledContacts.compactMap {self.addContactField($0.key, value: $0.value.value)}
-        subviews.append(contentsOf: originalContacts.unfilledContacts.compactMap{self.addContactField($0, value: "")})
+        var subviews = originalContacts.filledContacts.compactMap {self.addContactField($0.key, value: $0.value.value, isDefault: $0.value.default ?? false)}
+        subviews.append(contentsOf: originalContacts.unfilledContacts.compactMap{self.addContactField($0, value: "", isDefault: true)})
         subviews.forEach {
             $0.isHidden = true
         }
@@ -61,9 +61,9 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
             })
             .disposed(by: disposeBag)
         
-        Observable<Void>.combineLatest(
-            messengerCells.map {$0.textField.rx.text.map {_ in ()}}
-        )
+        var observables = messengerCells.map {$0.textField.rx.text.map {_ in ()}}
+            observables.append(contentsOf: messengerCells.map {$0.switcher.rx.isOn.map {_ in ()}})
+        Observable<Void>.combineLatest(observables)
             .map {_ in self.dataHasChanged()}
             .bind(to: saveButton.rx.isEnabled)
             .disposed(by: disposeBag)
@@ -86,8 +86,10 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
                 if !oldValue.isEmpty {flag = true}
             } else {
                 // for visible cell, compare new data with the old one
-                let newValue = draftContacts.value.getContact(messengerType: cell.messengerType)?.value?.trimmed ?? ""
+                let contact = draftContacts.value.getContact(messengerType: cell.messengerType)
+                let newValue = contact?.value?.trimmed ?? ""
                 if textFieldText != newValue {flag = true}
+                if cell.switcher.isOn != (contact?.default ?? false) {flag = true}
             }
             
             if flag == true {break}
@@ -109,8 +111,9 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
     }
     
     // MARK: - View builders
-    private func addContactField(_ messengerType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType, value: String?) -> MessengerCell {
+    private func addContactField(_ messengerType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType, value: String?, isDefault: Bool) -> MessengerCell {
         let linkCell = MessengerCell(messengerType: messengerType)
+        linkCell.switcher.isOn = isDefault
         linkCell.textField.changeTextNotify(value)
         linkCell.delegate = self
         return linkCell
@@ -144,7 +147,7 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
             var link: ResponseAPIContentGetProfilePersonalLink?
             var string = ""
             if !cell.isHidden && cell.textField.text?.isEmpty == false {
-                link = ResponseAPIContentGetProfilePersonalLink(value: cell.textField.text, defaultValue: false)
+                link = ResponseAPIContentGetProfilePersonalLink(value: cell.textField.text, defaultValue: cell.switcher.isOn)
                 string = link!.encodedString
             }
             params[cell.messengerType.rawValue] = string
