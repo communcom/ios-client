@@ -16,7 +16,12 @@ class ReportsListVC: ListViewController<ResponseAPIContentGetReport, ReportCell>
             "posts".localized().uppercaseFirst,
             "comments".localized().uppercaseFirst
         ]
-        sc.selectedIndex = 0
+        if (viewModel.fetcher as! ReportsListFetcher).contentType == "comment" {
+            sc.selectedIndex = 1
+        } else {
+            sc.selectedIndex = 0
+        }
+        
         return sc
     }()
     
