@@ -26,7 +26,15 @@ extension ProposalCellDelegate where Self: BaseViewController {
     }
     
     func buttonApplyDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity) {
-        guard var proposal = items.first(where: {$0.identity == identity}),
+        showAlert(title: "apply".localized().uppercaseFirst, message: "do you really want to apply this proposal?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
+            if index == 0 {
+                self.acceptAndApply(proposalIdentity: identity)
+            }
+        }
+    }
+    
+    private func acceptAndApply(proposalIdentity: ResponseAPIContentGetProposal.Identity) {
+        guard var proposal = items.first(where: {$0.identity == proposalIdentity}),
             let proposer = proposal.proposer?.userId,
             let approvesCount = proposal.approvesCount,
             let approvesNeed = proposal.approvesNeed,
@@ -34,41 +42,49 @@ extension ProposalCellDelegate where Self: BaseViewController {
         else {return}
         
         let isApproved = proposal.isApproved ?? false
-        
-        var request = BlockchainManager.instance.execProposal(proposalName: proposal.proposalId, proposer: proposer)
-        .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
-        var alertTitle = "apply"
+        proposal.isBeingApproved = true
         
         if (approvesCount >= approvesNeed - 1) && !isApproved {
+            let currentProposalCount = proposal.approvesCount ?? 0
+            proposal.approvesCount = currentProposalCount + 1
+            proposal.notifyChanged()
+            
             // accept and apply
-            request = proposal.toggleAccept().flatMapCompletable {proposal in
-                // edited proposal came, modification needed
-                var proposal = proposal
-                proposal.isBeingApproved = true
-                proposal.notifyChanged()
-                
-                return BlockchainManager.instance.execProposal(proposalName: proposal.proposalId, proposer: proposal.proposer!.userId)
-                    .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
-            }
-            alertTitle = "accept and apply"
-        }
-        
-        showAlert(title: alertTitle.localized().uppercaseFirst, message: "do you really want to \(alertTitle) this proposal?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
-            if index == 0 {
-                proposal.isBeingApproved = true
-                proposal.notifyChanged()
-                
-                request
-                    .subscribe(onCompleted: {
-                        self.showDone("applied".localized().uppercaseFirst)
-                        proposal.notifyDeleted()
-                    }) { (error) in
-                        self.showError(error)
-                        proposal.isBeingApproved = false
-                        proposal.notifyChanged()
-                    }
-                    .disposed(by: self.disposeBag)
-            }
+            BlockchainManager.instance.approveProposal(proposal.proposalId)
+                .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
+                .do(onError: { (_) in
+                    proposal.approvesCount = currentProposalCount
+                }, onCompleted: {
+                    proposal.isApproved = true
+                    proposal.notifyChanged()
+                })
+                .andThen(
+                    BlockchainManager.instance.execProposal(proposalName: proposal.proposalId, proposer: proposer)
+                        .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
+                )
+                .subscribe(onCompleted: {
+                    self.showDone("applied".localized().uppercaseFirst)
+                    proposal.notifyDeleted()
+                }) { (error) in
+                    self.showError(error)
+                    proposal.isBeingApproved = false
+                    proposal.notifyChanged()
+                }
+                .disposed(by: self.disposeBag)
+        } else {
+            // just apply
+            proposal.notifyChanged()
+            BlockchainManager.instance.execProposal(proposalName: proposal.proposalId, proposer: proposer)
+                .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
+                .subscribe(onCompleted: {
+                    self.showDone("applied".localized().uppercaseFirst)
+                    proposal.notifyDeleted()
+                }) { (error) in
+                    self.showError(error)
+                    proposal.isBeingApproved = false
+                    proposal.notifyChanged()
+                }
+                .disposed(by: self.disposeBag)
         }
     }
 }

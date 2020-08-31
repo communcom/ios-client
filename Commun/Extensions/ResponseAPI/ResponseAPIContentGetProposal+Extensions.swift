@@ -14,6 +14,18 @@ extension ResponseAPIContentGetProposal {
         var proposal = self
         let originIsApproved = proposal.isApproved ?? false
         
+        // change state
+        proposal.isBeingApproved = true
+        proposal.isApproved = !originIsApproved
+        var currentProposalCount = proposal.approvesCount ?? 0
+        if currentProposalCount == 0 && originIsApproved {
+            // prevent negative value
+            currentProposalCount = 1
+        }
+        
+        proposal.approvesCount = originIsApproved ? currentProposalCount - 1 : currentProposalCount + 1
+        proposal.notifyChanged()
+        
         let request: Single<String>
         if originIsApproved {
             request = BlockchainManager.instance.unapproveProposal(proposal.proposalId)
@@ -35,18 +47,6 @@ extension ResponseAPIContentGetProposal {
                 proposal.notifyChanged()
             }, onCompleted: {
                 proposal.isBeingApproved = false
-                proposal.notifyChanged()
-            }, onSubscribe: {
-                // change state
-                proposal.isBeingApproved = true
-                proposal.isApproved = !originIsApproved
-                var currentProposalCount = proposal.approvesCount ?? 0
-                if currentProposalCount == 0 && originIsApproved {
-                    // prevent negative value
-                    currentProposalCount = 1
-                }
-                
-                proposal.approvesCount = originIsApproved ? currentProposalCount - 1 : currentProposalCount + 1
                 proposal.notifyChanged()
             })
             .andThen(Single<ResponseAPIContentGetProposal>.just(proposal))

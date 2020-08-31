@@ -128,6 +128,7 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
                 applyButton.isHidden = false
             }
         }
+        applyButton.isEnabled = !(item.isBeingApproved ?? false)
     }
     
     func setMessage(item: ResponseAPIContentGetProposal?) {
