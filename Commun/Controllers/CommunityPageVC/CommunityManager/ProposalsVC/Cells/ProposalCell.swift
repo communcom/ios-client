@@ -134,6 +134,7 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
             let expirationDate = Date.from(string: expirationString)
             if Date() > expirationDate {
                 actionButton.isEnabled = false
+                applyButton.isEnabled = false
             }
         }
     }
