@@ -10,6 +10,7 @@ import Foundation
 
 class MessengerCell: GeneralLinkCell<ContactTextField> {
     let messengerType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType
+    lazy var switcher = UISwitch()
     
     init(messengerType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType) {
         self.messengerType = messengerType
@@ -30,5 +31,20 @@ class MessengerCell: GeneralLinkCell<ContactTextField> {
         textField = ContactTextField(contactType: messengerType)
         super.commonInit()
         // add switch
+        
+        let switchWrapper: UIStackView = {
+            let hStack = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
+            let label = UILabel.with(text: "add to default contacts".localized().uppercaseFirst, textSize: 15, weight: .semibold)
+            hStack.addArrangedSubviews([label, switcher])
+            return hStack
+        }()
+        
+        stackView.addArrangedSubview(switchWrapper)
+        
+        let spacer = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
+        addSubview(spacer)
+        spacer.autoPinEdge(toSuperviewEdge: .leading)
+        spacer.autoPinEdge(toSuperviewEdge: .trailing)
+        spacer.autoPinEdge(.bottom, to: .top, of: switchWrapper, withOffset: -7)
     }
 }

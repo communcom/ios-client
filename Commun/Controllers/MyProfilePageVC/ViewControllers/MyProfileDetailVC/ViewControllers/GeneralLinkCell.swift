@@ -35,7 +35,7 @@ class GeneralLinkCell<T: UITextField>: MyView {
         let textFieldWrapper: UIStackView = {
             let vStack = UIStackView(axis: .vertical, spacing: 6, alignment: .fill, distribution: .fill)
             let label = UILabel.with(text: "username".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .appGrayColor)
-            vStack.addArrangedSubviews([.spacer(height: 2, backgroundColor: .appLightGrayColor), label, textField])
+            vStack.addArrangedSubviews([label, textField])
             return vStack
         }()
         
@@ -43,6 +43,12 @@ class GeneralLinkCell<T: UITextField>: MyView {
         
         addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 6, left: 16, bottom: 10, right: 16))
+        
+        let spacer = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
+        addSubview(spacer)
+        spacer.autoPinEdge(toSuperviewEdge: .leading)
+        spacer.autoPinEdge(toSuperviewEdge: .trailing)
+        spacer.autoPinEdge(.top, to: .bottom, of: titleView, withOffset: 7)
     }
     
     @objc func optionButtonDidTouch() {

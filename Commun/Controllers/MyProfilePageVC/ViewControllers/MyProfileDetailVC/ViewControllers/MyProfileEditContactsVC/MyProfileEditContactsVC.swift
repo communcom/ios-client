@@ -194,7 +194,7 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
     
     // MARK: - Helpers
     private func addContactToService(_ messengerType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType, value: String = "") {
-        let value = ResponseAPIContentGetProfilePersonalLink(value: value, defaultValue: false)
+        let value = ResponseAPIContentGetProfilePersonalLink(value: value, defaultValue: true)
         addContactType(messengerType, value: value)
     }
     
