@@ -8,12 +8,16 @@
 
 import Foundation
 import RxCocoa
+import RxSwift
 
-class MyProfileEditContactsVC: MyProfileDetailFlowVC {
+class MyProfileEditContactsVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
     // MARK: - Properties
-    var originalContacts: ResponseAPIContentGetProfilePersonalLinks {profile?.personal?.links ?? ResponseAPIContentGetProfilePersonalLinks()}
-    lazy var draftContacts = BehaviorRelay<ResponseAPIContentGetProfilePersonalLinks>(value: ResponseAPIContentGetProfilePersonalLinks())
+    var originalContacts: ResponseAPIContentGetProfilePersonalMessengers {profile?.personal?.messengers ?? ResponseAPIContentGetProfilePersonalMessengers()}
+    lazy var draftContacts = BehaviorRelay<ResponseAPIContentGetProfilePersonalMessengers>(value: ResponseAPIContentGetProfilePersonalMessengers())
+    var messengerCells: [MessengerCell] {stackView.arrangedSubviews.compactMap {$0 as? MessengerCell}}
+    
     // MARK: - Subviews
+    lazy var saveButton = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
     lazy var addContactButton: UIView = {
         let view = UIView(height: 57, backgroundColor: .white, cornerRadius: 10)
         let label = UILabel.with(text: "+ " + "add contact".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .appMainColor)
@@ -30,7 +34,39 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC {
         super.setUp()
         title = "contacts".localized().uppercaseFirst
         
-        reloadData()
+        setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
+        
+        saveButton.tintColor = .appBlackColor
+        navigationItem.rightBarButtonItem = saveButton
+    }
+    
+    override func profileDidUpdate() {
+        stackView.removeArrangedSubviews()
+        var subviews = originalContacts.filledContacts.compactMap {self.addContactField($0.key, value: $0.value.value)}
+        subviews.append(contentsOf: originalContacts.unfilledContacts.compactMap{self.addContactField($0, value: "")})
+        subviews.forEach {
+            $0.isHidden = true
+        }
+        stackView.addArrangedSubviews(subviews)
+        stackView.addArrangedSubview(addContactButton)
+        draftContacts.accept(originalContacts)
+    }
+    
+    override func bind() {
+        super.bind()
+        
+        draftContacts
+            .subscribe(onNext: { (_) in
+                self.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        Observable<Void>.combineLatest(
+            messengerCells.map {$0.textField.rx.text.map {_ in ()}}
+        )
+            .map {_ in self.dataHasChanged()}
+            .bind(to: saveButton.rx.isEnabled)
+            .disposed(by: disposeBag)
     }
     
     override func viewDidSetUpStackView() {
@@ -38,79 +74,157 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC {
         stackView.spacing = 20
     }
     
+    // MARK: - Data handler
+    func dataHasChanged() -> Bool {
+        var flag = false
+        for cell in messengerCells {
+            let textFieldText = cell.textField.text?.trimmed ?? ""
+            
+            if cell.isHidden {
+                // for hidden cell, the old data is about to be deleted
+                let oldValue = originalContacts.getContact(messengerType: cell.messengerType)?.value?.trimmed ?? ""
+                if !oldValue.isEmpty {flag = true}
+            } else {
+                // for visible cell, compare new data with the old one
+                let newValue = draftContacts.value.getContact(messengerType: cell.messengerType)?.value?.trimmed ?? ""
+                if textFieldText != newValue {flag = true}
+            }
+            
+            if flag == true {break}
+        }
+        return flag
+    }
+    
     override func reloadData() {
         super.reloadData()
-        stackView.removeArrangedSubviews()
+        for (key, _) in draftContacts.value.filledContacts  {
+            messengerCells.first(where: {$0.messengerType == key})?.isHidden = false
+        }
         
-        // MARK: - TODO: Contacts / Messengers
-//        let contacts = profile?.personal?.contacts
-//        if let whatsApp = contacts?.whatsApp {
-//
-//        }
-//
-//        if let telegram = contacts?.telegram {
-//
-//        }
-//
-//        if let wechat = contacts?.weChat {
-//
-//        }
+        for link in draftContacts.value.unfilledContacts {
+            messengerCells.first(where: {$0.messengerType == link})?.isHidden = true
+        }
         
-        stackView.addArrangedSubview(addContactButton)
+        addContactButton.isHidden = draftContacts.value.unfilledContacts.isEmpty
+    }
+    
+    // MARK: - View builders
+    private func addContactField(_ messengerType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType, value: String?) -> MessengerCell {
+        let linkCell = MessengerCell(messengerType: messengerType)
+        linkCell.textField.changeTextNotify(value)
+        linkCell.delegate = self
+        return linkCell
     }
     
     // MARK: - Actions
     @objc func addContactButtonDidTouch() {
-        showCMActionSheet(title: "add contact".localized().uppercaseFirst, actions: [
-            .customLayout(
+        let actions: [CMActionSheet.Action] = draftContacts.value.unfilledContacts.map { link in
+            return .customLayout(
                 height: 50,
-                title: "WeChat",
-                spacing: 16,
-                iconName: "wechat-icon",
-                iconSize: 20,
-                showIconFirst: true,
-                bottomMargin: 10,
-                handle: {
-                    let vc = MyProfileAddContactVC(contactType: .weChat)
-                    self.show(vc, sender: nil)
+                title: link.rawValue.uppercaseFirst,
+                textSize: 15,
+                spacing: 10,
+                iconName: link.rawValue.lowercased() + "-icon",
+                iconSize: 24,
+                showIconFirst: true) {
+                    self.addContactToService(link)
+            }
+        }
+        
+        showCMActionSheet(title: "add link".localized().uppercaseFirst, actions: actions)
+    }
+    
+    @objc func saveButtonDidTouch() {
+        view.endEditing(true)
+        var params = [String: String]()
+        
+        var profile = ResponseAPIContentGetProfile.current
+        var messengers = profile?.personal?.messengers ?? ResponseAPIContentGetProfilePersonalMessengers()
+        messengerCells.forEach { cell in
+            var link: ResponseAPIContentGetProfilePersonalLink?
+            var string = ""
+            if !cell.isHidden && cell.textField.text?.isEmpty == false {
+                link = ResponseAPIContentGetProfilePersonalLink(value: cell.textField.text, defaultValue: false)
+                string = link!.encodedString
+            }
+            params[cell.messengerType.rawValue] = string
+            switch cell.messengerType {
+            case .weChat:
+                messengers.weChat = link
+            case .telegram:
+                messengers.telegram = link
+            case .whatsApp:
+                messengers.whatsApp = link
+            }
+        }
+        
+        if params.isEmpty {
+            showErrorWithMessage("nothing to save".localized().uppercaseFirst)
+            return
+        }
+        
+        showIndetermineHudWithMessage("saving".localized().uppercaseFirst + "...")
+        BlockchainManager.instance.updateProfile(params: params, waitForTransaction: false)
+            .subscribe(onCompleted: {
+                profile?.personal?.messengers = messengers
+                UserDefaults.standard.set(object: profile, forKey: Config.currentUserGetProfileKey)
+                self.hideHud()
+                self.showDone("saved".localized().uppercaseFirst)
+                self.back()
+            }) { (error) in
+                self.hideHud()
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    @objc func askForSavingAndGoBack() {
+        if dataHasChanged() {
+            showAlert(title: "save".localized().uppercaseFirst, message: "do you want to save the changes you've made?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                if index == 0 {
+                    self.saveButtonDidTouch()
+                    return
                 }
-            ),
-            .customLayout(
-                height: 50,
-                title: "email",
-                spacing: 16,
-                iconName: "email-icon",
-                iconSize: 20,
-                showIconFirst: true,
-                bottomMargin: 10,
-                handle: {
-                    
-                }
-            ),
-            .customLayout(
-                height: 50,
-                title: "Facetime",
-                spacing: 16,
-                iconName: "facetime-icon",
-                iconSize: 20,
-                showIconFirst: true,
-                bottomMargin: 10,
-                handle: {
-                    
-                }
-            ),
-            .customLayout(
-                height: 50,
-                title: "Facebook messenger",
-                spacing: 16,
-                iconName: "facebook-messenger-icon",
-                iconSize: 20,
-                showIconFirst: true,
-                bottomMargin: 10,
-                handle: {
-                    
-                }
-            ),
+                self.back()
+            }
+        } else {
+            back()
+        }
+    }
+    
+    // MARK: - Helpers
+    private func addContactToService(_ messengerType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType, value: String = "") {
+        let value = ResponseAPIContentGetProfilePersonalLink(value: value, defaultValue: false)
+        addContactType(messengerType, value: value)
+    }
+    
+    private func addContactType(_ messengerType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType, value: ResponseAPIContentGetProfilePersonalLink?) {
+        var links = draftContacts.value
+        switch messengerType {
+        case .weChat:
+            links.weChat = value
+        case .telegram:
+            links.telegram = value
+        case .whatsApp:
+            links.whatsApp = value
+        }
+        draftContacts.accept(links)
+    }
+    
+    func linkCellOptionButtonDidTouch<T: UITextField>(_ linkCell: GeneralLinkCell<T>) {
+        let linkCell = linkCell as! MessengerCell
+        showCMActionSheet(
+            title: linkCell.messengerType.rawValue.uppercaseFirst,
+            actions: [
+                .default(
+                    title: "delete".localized().uppercaseFirst,
+                    iconName: "delete",
+                    tintColor: .appRedColor,
+                    handle: {[unowned self] in
+                        self.addContactType(linkCell.messengerType, value: nil)
+                        linkCell.textField.sendActions(for: .valueChanged)
+                    }
+                )
         ])
     }
 }

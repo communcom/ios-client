@@ -224,7 +224,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
         self.draftLinks.accept(links)
     }
     
-    func linkCellOptionButtonDidTouch<T>(_ linkCell: GeneralLinkCell<T>) where T : UITextField {
+    func linkCellOptionButtonDidTouch<T: UITextField>(_ linkCell: GeneralLinkCell<T>) {
         let linkCell = linkCell as! LinkCell
         showCMActionSheet(
             title: linkCell.linkType.rawValue.uppercaseFirst,

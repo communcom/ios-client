@@ -18,11 +18,15 @@ class LinkCell: GeneralLinkCell<LinkTextField> {
         defer {
             label.text = linkType.rawValue.uppercaseFirst
             icon.image = UIImage(named: linkType.rawValue.lowercased() + "-icon")
-            textField = LinkTextField(linkType: linkType)
         }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func commonInit() {
+        textField = LinkTextField(linkType: linkType)
+        super.commonInit()
     }
 }
