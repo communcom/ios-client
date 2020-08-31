@@ -235,8 +235,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         
         let headerView = CMMetaView(forAutoLayout: ())
         headerView.avatarImageView.setAvatar(urlString: profile.avatarUrl)
-        headerView.titleLabel.text = profile.username
-        headerView.subtitleLabel.text = "@\(profile.userId)"
+        headerView.titleLabel.text = profile.personal?.fullName ?? profile.username
+        headerView.subtitleLabel.text = "@\(profile.username ?? profile.userId)"
         headerView.subtitleLabel.textColor = .appMainColor
         
         showCMActionSheet(headerView: headerView, actions: actionsForMoreButton())

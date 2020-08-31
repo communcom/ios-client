@@ -82,11 +82,11 @@ class PostMetaView: CMMetaView {
     func setUp(with community: ResponseAPIContentGetCommunity?, author: ResponseAPIContentGetProfile?, creationTime: String) {
         let isMyFeed = community?.communityId == "FEED"
         avatarImageView.setAvatar(urlString: isMyFeed ? author?.avatarUrl : community?.avatarUrl)
-        titleLabel.text = isMyFeed ? author?.username : community?.name
+        titleLabel.text = isMyFeed ? (author?.personal?.fullName ?? author?.username) : community?.name
         
         subtitleLabel.attributedText = NSMutableAttributedString()
             .text(Date.timeAgo(string: creationTime) + " • ", size: 12, weight: .semibold, color: .appGrayColor)
-            .text(isMyFeed ? (community?.name ?? community?.communityId ?? "") : (author?.username ?? author?.userId ?? ""), size: 12, weight: .semibold, color: .appMainColor)
+            .text(isMyFeed ? (community?.name ?? community?.communityId ?? "") : (author?.personal?.fullName ?? author?.username ?? author?.userId ?? ""), size: 12, weight: .semibold, color: .appMainColor)
         
         // add gesture
         if isUserNameTappable {
