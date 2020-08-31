@@ -10,10 +10,10 @@ import Foundation
 import RxSwift
 
 class ContactTextField: UITextField {
-    let contactType: ContactType
+    let contactType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType
     var isValid = false
     
-    init(contactType: ContactType) {
+    init(contactType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType) {
         self.contactType = contactType
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false

@@ -504,6 +504,7 @@
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
 		BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift */; };
 		BCED3FC024FCAE3100187CF4 /* GeneralLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCED3FBF24FCAE3100187CF4 /* GeneralLinkCell.swift */; };
+		BCED3FC424FCB1D200187CF4 /* MessengerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCED3FC324FCB1D200187CF4 /* MessengerCell.swift */; };
 		BCEFA63E2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json in Resources */ = {isa = PBXBuildFile; fileRef = BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */; };
 		BCEFA6422492149900971E77 /* DonationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA6412492149900971E77 /* DonationsVC.swift */; };
 		BCEFA645249217F700971E77 /* DonatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA644249217F700971E77 /* DonatorCell.swift */; };
@@ -1087,6 +1088,7 @@
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResponseAPIContentBlock+Extensions.swift"; sourceTree = "<group>"; };
 		BCED3FBF24FCAE3100187CF4 /* GeneralLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralLinkCell.swift; sourceTree = "<group>"; };
+		BCED3FC324FCB1D200187CF4 /* MessengerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerCell.swift; sourceTree = "<group>"; };
 		BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIWalletGetDonationsBulk.json; sourceTree = "<group>"; };
 		BCEFA6412492149900971E77 /* DonationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationsVC.swift; sourceTree = "<group>"; };
 		BCEFA644249217F700971E77 /* DonatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonatorCell.swift; sourceTree = "<group>"; };
@@ -2576,6 +2578,7 @@
 				BC34F97324CAC55600BDD816 /* MyProfileEditContactsVC.swift */,
 				BC9A1EFD24CEB89E007BDB3A /* MyProfileAddContactVC.swift */,
 				BC9A1F0524CECCC0007BDB3A /* MyProfileVerifyContactVC.swift */,
+				BCED3FC324FCB1D200187CF4 /* MessengerCell.swift */,
 			);
 			path = MyProfileEditContactsVC;
 			sourceTree = "<group>";
@@ -3577,6 +3580,7 @@
 				BC9066FA23A9E34C000F9A3B /* TransferHistoryItemCell.swift in Sources */,
 				BC5A34932429EF8C001C5054 /* VerifyPhoneVC.swift in Sources */,
 				BC6B7657236A9D4600A7AF2A /* CommunityRuleCell.swift in Sources */,
+				BCED3FC424FCB1D200187CF4 /* MessengerCell.swift in Sources */,
 				BCF74A6723618D9000B91089 /* CMSegmentedControl.swift in Sources */,
 				B1D7AD5C23A10664007D1A13 /* QRScannerViewController.swift in Sources */,
 				BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */,

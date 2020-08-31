@@ -7,8 +7,12 @@
 //
 
 import Foundation
+import RxCocoa
 
 class MyProfileEditContactsVC: MyProfileDetailFlowVC {
+    // MARK: - Properties
+    var originalContacts: ResponseAPIContentGetProfilePersonalLinks {profile?.personal?.links ?? ResponseAPIContentGetProfilePersonalLinks()}
+    lazy var draftContacts = BehaviorRelay<ResponseAPIContentGetProfilePersonalLinks>(value: ResponseAPIContentGetProfilePersonalLinks())
     // MARK: - Subviews
     lazy var addContactButton: UIView = {
         let view = UIView(height: 57, backgroundColor: .white, cornerRadius: 10)
@@ -67,7 +71,7 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC {
                 showIconFirst: true,
                 bottomMargin: 10,
                 handle: {
-                    let vc = MyProfileAddContactVC(contactType: .wechat)
+                    let vc = MyProfileAddContactVC(contactType: .weChat)
                     self.show(vc, sender: nil)
                 }
             ),

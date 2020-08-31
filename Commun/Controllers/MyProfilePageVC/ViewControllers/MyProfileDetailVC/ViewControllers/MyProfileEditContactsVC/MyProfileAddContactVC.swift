@@ -8,28 +8,9 @@
 
 import Foundation
 
-enum ContactType: String {
-    enum IdentifyType: String {
-        case phoneNumber = "phone number"
-        case username = "username"
-        case link = "link"
-    }
-
-    case wechat, telegram, whatsapp
-    var identifiedBy: IdentifyType {
-        switch self {
-        case .wechat:
-            return .username
-        case .telegram, .whatsapp:
-            return .phoneNumber
-        }
-    }
-
-}
-
 class MyProfileAddContactVC: BaseVerticalStackVC {
     // MARK: - Properties
-    let contactType: ContactType
+    let contactType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType
     
     // MARK: - Subviews
     lazy var textField = ContactTextField(contactType: contactType)
@@ -41,7 +22,7 @@ class MyProfileAddContactVC: BaseVerticalStackVC {
     }()
     
     // MARK: - Initializers
-    init(contactType: ContactType) {
+    init(contactType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType) {
         self.contactType = contactType
         super.init(nibName: nil, bundle: nil)
     }
