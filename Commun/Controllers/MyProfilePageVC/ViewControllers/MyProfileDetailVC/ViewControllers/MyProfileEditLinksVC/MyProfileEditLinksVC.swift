@@ -10,7 +10,8 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
+class MyProfileEditLinksVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
+    
     // MARK: - Properties
     var originalLinks: ResponseAPIContentGetProfilePersonalLinks {profile?.personal?.links ?? ResponseAPIContentGetProfilePersonalLinks()}
     lazy var draftLinks = BehaviorRelay<ResponseAPIContentGetProfilePersonalLinks>(value: ResponseAPIContentGetProfilePersonalLinks())
@@ -223,7 +224,8 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, LinkCellDelegate {
         self.draftLinks.accept(links)
     }
     
-    func linkCellOptionButtonDidTouch(_ linkCell: LinkCell) {
+    func linkCellOptionButtonDidTouch<T>(_ linkCell: GeneralLinkCell<T>) where T : UITextField {
+        let linkCell = linkCell as! LinkCell
         showCMActionSheet(
             title: linkCell.linkType.rawValue.uppercaseFirst,
             actions: [

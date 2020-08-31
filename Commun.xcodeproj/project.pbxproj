@@ -503,6 +503,7 @@
 		BCE0AE1A241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE0AE19241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift */; };
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
 		BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift */; };
+		BCED3FC024FCAE3100187CF4 /* GeneralLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCED3FBF24FCAE3100187CF4 /* GeneralLinkCell.swift */; };
 		BCEFA63E2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json in Resources */ = {isa = PBXBuildFile; fileRef = BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */; };
 		BCEFA6422492149900971E77 /* DonationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA6412492149900971E77 /* DonationsVC.swift */; };
 		BCEFA645249217F700971E77 /* DonatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA644249217F700971E77 /* DonatorCell.swift */; };
@@ -1085,6 +1086,7 @@
 		BCE0AE19241A33FF009CE0F8 /* BasicEditorVC+ShareExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+ShareExtension.swift"; sourceTree = "<group>"; };
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResponseAPIContentBlock+Extensions.swift"; sourceTree = "<group>"; };
+		BCED3FBF24FCAE3100187CF4 /* GeneralLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralLinkCell.swift; sourceTree = "<group>"; };
 		BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIWalletGetDonationsBulk.json; sourceTree = "<group>"; };
 		BCEFA6412492149900971E77 /* DonationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationsVC.swift; sourceTree = "<group>"; };
 		BCEFA644249217F700971E77 /* DonatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonatorCell.swift; sourceTree = "<group>"; };
@@ -2919,6 +2921,7 @@
 		BCD6E36A24C98245007653E2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				BCED3FBF24FCAE3100187CF4 /* GeneralLinkCell.swift */,
 				BCD6E36B24C987B7007653E2 /* MyProfileEditGeneralInfoVC */,
 				BC9A1F0424CECCA7007BDB3A /* MyProfileEditContactsVC */,
 				BC9A1F0924CFD2DA007BDB3A /* MyProfileEditLinksVC */,
@@ -3852,6 +3855,7 @@
 				BC8F814423E27ECE0024C04A /* CommunWalletHeaderView.swift in Sources */,
 				3B25E5C6234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed+Extensions.swift in Sources */,
 				BCCE0A9C2367D47400A183AA /* SubscriptionsListFetcher.swift in Sources */,
+				BCED3FC024FCAE3100187CF4 /* GeneralLinkCell.swift in Sources */,
 				BCCC33EA23751A10004E46EF /* VoteContainerView.swift in Sources */,
 				AC3386A12371D1B6009DB3BB /* EmbedView.swift in Sources */,
 				BC8F815623E27ECE0024C04A /* WalletSellCommunVC.swift in Sources */,
