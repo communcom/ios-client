@@ -114,6 +114,14 @@ class ReportCell: CommunityManageCell, ListItemCellType {
             banButton.isHidden = true
             approvesCountLabel.isHidden = true
         }
+        
+        if let expirationString = item.proposal?.expiration {
+            let expirationDate = Date.from(string: expirationString)
+            if Date() > expirationDate {
+                actionButton.isEnabled = false
+                banButton.isEnabled = false
+            }
+        }
     }
     
     override func actionButtonDidTouch() {

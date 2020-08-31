@@ -129,6 +129,13 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
             }
         }
         applyButton.isEnabled = !(item.isBeingApproved ?? false)
+        
+        if let expirationString = item.expiration {
+            let expirationDate = Date.from(string: expirationString)
+            if Date() > expirationDate {
+                actionButton.isEnabled = false
+            }
+        }
     }
     
     func setMessage(item: ResponseAPIContentGetProposal?) {
