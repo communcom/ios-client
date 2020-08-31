@@ -11,21 +11,21 @@ import RxSwift
 
 class ReportsListFetcher: ListFetcher<ResponseAPIContentGetReport> {
     var communityIds = [String]()
-    var reportsCount: UInt64 = 0
+    var reportsCount: UInt64 {commentsReportsCount + postsReportsCount}
     var contentType: String = "post"
     var status: String = "open"
     var sortBy: SortBy = .timeDesc
     
-    private var countedContentTypes = [String]()
+    var commentsReportsCount: UInt64 = 0
+    var postsReportsCount: UInt64 = 0
     override var request: Single<[ResponseAPIContentGetReport]> {
         RestAPIManager.instance.getReportsList(communityIds: communityIds, contentType: contentType, status: status, sortBy: sortBy, limit: Int(limit), offset: Int(offset))
             .do(onSuccess: {
-                if $0.reportsCount != nil {
-                    if self.countedContentTypes.contains(self.contentType) {
-                        return
-                    }
-                    self.reportsCount += $0.reportsCount!
-                    self.countedContentTypes.append(self.contentType)
+                guard let count = $0.reportsCount else {return}
+                if self.contentType == "post" {
+                    self.postsReportsCount = count
+                } else if self.contentType == "comment" {
+                    self.commentsReportsCount = count
                 }
             })
             .map {$0.items}
