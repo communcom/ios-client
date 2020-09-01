@@ -93,5 +93,18 @@ extension CommunityPageVC {
                 }
             })
             .disposed(by: disposeBag)
+        
+        let isLeader = vm.leadsVM.items.filter {!$0.isEmpty}.map {$0.filter {$0.inTop}}.map {$0.contains(where: {$0.userId == Config.currentUser?.id})}
+            .asDriver(onErrorJustReturn: false)
+        
+        isLeader.map {!$0}
+            .distinctUntilChanged()
+            .drive(manageCommunityButtonsView.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        isLeader.map {!$0}
+            .distinctUntilChanged()
+            .drive(manageCommunityBarButton.rx.isHidden)
+            .disposed(by: disposeBag)
     }
 }

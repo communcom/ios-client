@@ -105,15 +105,21 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     init(communityId: String) {
         self.communityId = communityId
         super.init(nibName: nil, bundle: nil)
+        commonInit()
     }
     
     init(communityAlias: String) {
         self.communityAlias = communityAlias
         super.init(nibName: nil, bundle: nil)
+        commonInit()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func commonInit() {
+        leadersVM.fetchNext()
     }
     
     // MARK: - Methods

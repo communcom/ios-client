@@ -62,6 +62,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         friendsCountLabel.isUserInteractionEnabled = true
         friendsCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(friendsLabelDidTouch)))
+        
+        manageCommunityButtonsView.isHidden = true
     }
     
     // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))
@@ -75,8 +77,6 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         if self.community?.isInBlacklist == true {
             self.community?.isSubscribed = false
         }
-        
-        manageCommunityButtonsView.isHidden = self.community?.isLeader != true
         
         // avatar
         if let avatarURL = community.avatarUrl {
