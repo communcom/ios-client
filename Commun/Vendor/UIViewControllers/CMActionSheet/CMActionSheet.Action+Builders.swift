@@ -24,8 +24,8 @@ extension CMActionSheet.Action {
         if let iconTintColor = iconTintColor {
             iconImageView.tintColor = iconTintColor
         }
-        if !showIcon { stackView.addArrangedSubviews([label]) }
-        else if showIconFirst { stackView.addArrangedSubviews([iconImageView, label]) }
+        if !showIcon { stackView.addArrangedSubviews( [label]) }
+        else if showIconFirst { stackView.addArrangedSubviews( [iconImageView, label]) }
         else {stackView.addArrangedSubviews([label, iconImageView])}
         
         if showNextButton {

@@ -28,7 +28,7 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
         return button
     }()
     lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleToFill)
+        let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleAspectFill)
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 335 / 150).isActive = true
         imageView.setCover(urlString: profile?.coverUrl, namePlaceHolder: "cover-placeholder")
         originalCoverImage = imageView.image
