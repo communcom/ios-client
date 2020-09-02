@@ -31,8 +31,17 @@ MATCH_GIT_BRANCH_RELEASE = "release"
 # -- User
 APPLE_ID = "shilinartem@gmail.com"
 SLACK_WEBHOOK = "https://hooks.slack.com/services/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"
-SLACK_API_TOKEN = "xoxb-131522248727-1311954498439-x7KFAVFfrFo4iAyBg9BWLiRR"
+SLACK_API_TOKEN ="xoxp-131522248727-816480031911-1352230322113-1518641245bcaef3dd112377cba8a75e"
 
+
+lane :test do |options|
+	slack_upload(
+        slack_api_token: SLACK_API_TOKEN,
+        title: "Commun-test",
+        channel: "#commun-mobile-builds",
+        file_path: "/Users/artem/Downloads/message\ \(1\).txt"
+    ) 
+end
 
 lane :beta do |options|
 	isCI = options[:ci]
