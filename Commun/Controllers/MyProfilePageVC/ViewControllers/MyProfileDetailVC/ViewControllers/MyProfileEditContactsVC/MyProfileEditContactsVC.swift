@@ -19,7 +19,7 @@ class MyProfileEditContactsVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
     // MARK: - Subviews
     lazy var saveButton = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
     lazy var addContactButton: UIView = {
-        let view = UIView(height: 57, backgroundColor: .white, cornerRadius: 10)
+        let view = UIView(height: 57, backgroundColor: .appWhiteColor, cornerRadius: 10)
         let label = UILabel.with(text: "+ " + "add contact".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .appMainColor)
         view.addSubview(label)
         label.autoCenterInSuperview()

@@ -20,7 +20,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
     // MARK: - Subviews
     lazy var saveButton = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
     lazy var addLinkButton: UIView = {
-        let view = UIView(height: 57, backgroundColor: .white, cornerRadius: 10)
+        let view = UIView(height: 57, backgroundColor: .appWhiteColor, cornerRadius: 10)
         let label = UILabel.with(text: "+ " + "add link".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .appMainColor)
         view.addSubview(label)
         label.autoCenterInSuperview()
@@ -115,6 +115,9 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
         let linkCell = LinkCell(linkType: linkType)
         linkCell.textField.changeTextNotify(value)
         linkCell.delegate = self
+        if linkType == .gitHub {
+            linkCell.icon.tintColor = .appBlackColor
+        }
         return linkCell
     }
     
@@ -124,6 +127,11 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
             var imageNamed = link.rawValue.lowercased() + "-icon"
             if link == .instagram {imageNamed = "sign-up-with-instagram"}
             
+            var iconTintColor: UIColor?
+            if link == .gitHub {
+                iconTintColor = .appBlackColor
+            }
+            
             return .customLayout(
                 height: 50,
                 title: link.rawValue.uppercaseFirst,
@@ -131,6 +139,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
                 spacing: 10,
                 iconName: imageNamed,
                 iconSize: 24,
+                iconTintColor: iconTintColor,
                 showIconFirst: true) {
                     self.addLinkToService(link)
             }

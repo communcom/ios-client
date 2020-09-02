@@ -95,7 +95,6 @@ extension MyProfileDetailVC {
             addContactField(icon: "telegram-icon", serviceName: "Telegram", username: username, to: stackView)
         }
         
-        
         // wechat
         if let username = profile?.personal?.messengers?.weChat?.value {
             addContactField(icon: "wechat-icon", serviceName: "WeChat", username: username, to: stackView)
@@ -130,7 +129,7 @@ extension MyProfileDetailVC {
         
         // github
         if let username = profile?.personal?.links?.gitHub?.value {
-            addContactField(icon: "github-icon", serviceName: "Github", username: username, to: stackView)
+            addContactField(icon: "github-icon", iconTintColor: .appBlackColor, serviceName: "Github", username: username, to: stackView)
         }
         
         // linkedin
@@ -163,9 +162,12 @@ extension MyProfileDetailVC {
         return stackView
     }
     
-    private func addContactField(icon: String?, serviceName: String, username: String?, to parentStackView: UIStackView) {
+    private func addContactField(icon: String?, iconTintColor: UIColor? = nil, serviceName: String, username: String?, to parentStackView: UIStackView) {
         let stackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
         let icon = UIImageView(width: 20, height: 20, imageNamed: icon)
+        if let tintColor = iconTintColor {
+            icon.tintColor = tintColor
+        }
         let label = UILabel.with(textSize: 14, numberOfLines: 2)
         label.attributedText = NSMutableAttributedString()
             .text(serviceName, size: 14, weight: .semibold, color: .appGrayColor)
