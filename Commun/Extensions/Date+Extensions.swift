@@ -65,7 +65,7 @@ extension Date {
         }
         
         let intervalString = intervalToDate()
-        if intervalString == "a moment" {
+        if intervalString == "a moment".localized() {
             return "a moment ago".localized()
         }
         return intervalString + " " + "ago".localized()
