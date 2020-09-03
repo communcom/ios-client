@@ -187,6 +187,7 @@
 		BC247D0523823B650062C979 /* ResponseAPIContentGetProfile.json in Resources */ = {isa = PBXBuildFile; fileRef = BC247D0423823B650062C979 /* ResponseAPIContentGetProfile.json */; };
 		BC247D0C23827C810062C979 /* ResponseAPIContentGetPost.json in Resources */ = {isa = PBXBuildFile; fileRef = BC247D0B23827C810062C979 /* ResponseAPIContentGetPost.json */; };
 		BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC247D1123827F460062C979 /* PostHeaderView+UITextViewDelegate.swift */; };
+		BC2704062500C4660042A29B /* BasicPostCellTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2704052500C4660042A29B /* BasicPostCellTextView.swift */; };
 		BC27F0DF241F200900050AF6 /* CreatePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC27F0DE241F200900050AF6 /* CreatePasswordViewModel.swift */; };
 		BC27F0E3241F594A00050AF6 /* ConfirmPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC27F0E2241F594A00050AF6 /* ConfirmPasswordVC.swift */; };
 		BC286C3523A2187100801A26 /* MyImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC286C3423A2187100801A26 /* MyImageView.swift */; };
@@ -769,6 +770,7 @@
 		BC247D0423823B650062C979 /* ResponseAPIContentGetProfile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetProfile.json; sourceTree = "<group>"; };
 		BC247D0B23827C810062C979 /* ResponseAPIContentGetPost.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPost.json; sourceTree = "<group>"; };
 		BC247D1123827F460062C979 /* PostHeaderView+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostHeaderView+UITextViewDelegate.swift"; sourceTree = "<group>"; };
+		BC2704052500C4660042A29B /* BasicPostCellTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicPostCellTextView.swift; sourceTree = "<group>"; };
 		BC27F0DE241F200900050AF6 /* CreatePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordViewModel.swift; sourceTree = "<group>"; };
 		BC27F0E2241F594A00050AF6 /* ConfirmPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasswordVC.swift; sourceTree = "<group>"; };
 		BC286C3423A2187100801A26 /* MyImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImageView.swift; sourceTree = "<group>"; };
@@ -1770,6 +1772,7 @@
 		BC016D3D235DA0D400F1319F /* BasicPostCell */ = {
 			isa = PBXGroup;
 			children = (
+				BC2704052500C4660042A29B /* BasicPostCellTextView.swift */,
 				BC016D3E235DA0D400F1319F /* BasicPostCell.swift */,
 			);
 			path = BasicPostCell;
@@ -3874,6 +3877,7 @@
 				BCB64772244ED65600C94B84 /* SwipeBackNavigationController.swift in Sources */,
 				BC9066E723A9D48A000F9A3B /* TransferHistoryVC.swift in Sources */,
 				BC69F7D8236FF6790097F870 /* SubscriptionsCommunityCell.swift in Sources */,
+				BC2704062500C4660042A29B /* BasicPostCellTextView.swift in Sources */,
 				BCCE668B2428A64B004F47DC /* PasswordConstraintView.swift in Sources */,
 				BC1DF1AB2499C97D00CCA135 /* WalletDonateCompletedVC.swift in Sources */,
 				BC4692BD2390C3B20064A38B /* FeedPageFloatView.swift in Sources */,

@@ -26,12 +26,12 @@ extension CommentCell {
         if characterIndex < myTextView.textStorage.length {
 
             // print the character index
-            print("character index: \(characterIndex)")
+//            print("character index: \(characterIndex)")
 
             // print the character at the index
-            let myRange = NSRange(location: characterIndex, length: 1)
-            let substring = (myTextView.attributedText.string as NSString).substring(with: myRange)
-            print("character at index: \(substring)")
+//            let myRange = NSRange(location: characterIndex, length: 1)
+//            let substring = (myTextView.attributedText.string as NSString).substring(with: myRange)
+//            print("character at index: \(substring)")
 
             // check if the tap location has a certain attribute
             let attributeName = NSAttributedString.Key.link

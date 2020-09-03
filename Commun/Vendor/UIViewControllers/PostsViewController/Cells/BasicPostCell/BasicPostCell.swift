@@ -7,30 +7,17 @@
 //
 
 import UIKit
-import SafariServices
 
 final class BasicPostCell: PostCell {
     // MARK: - Subviews
     lazy var contentStackView       = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     lazy var textStackView          = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     lazy var titleLabel             = UILabel.with(textSize: 18, weight: .semibold, numberOfLines: 0)
-    lazy var contentTextView        = UITextView(forExpandable: ())
+    lazy var contentTextView        = BasicPostCellTextView(forExpandable: ())
     lazy var gridView               = GridView(forAutoLayout: ())
-    
-    // MARK: - Custom Functions
-    private func configureTextView() {
-        contentTextView.textContainerInset = UIEdgeInsets.zero
-        contentTextView.textContainer.lineFragmentPadding = 0
-        contentTextView.font = .systemFont(ofSize: 14)
-        contentTextView.dataDetectorTypes = .link
-        contentTextView.isUserInteractionEnabled = false
-        contentTextView.delegate = self
-        contentTextView.backgroundColor = .clear
-    }
     
     // MARK: - Layout
     override func layoutContent() {
-        configureTextView()
         textStackView.addArrangedSubviews([
             titleLabel,
             contentTextView
@@ -148,15 +135,5 @@ final class BasicPostCell: PostCell {
         contentTextView.resolveMentions()
 
         gridView.setUp(embeds: post.attachments)
-    }
-}
-
-// MARK: - UITextViewDelegate
-extension BasicPostCell: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        let safariVC = SFSafariViewController(url: URL)
-        parentViewController?.present(safariVC, animated: true, completion: nil)
-        
-        return false
     }
 }
