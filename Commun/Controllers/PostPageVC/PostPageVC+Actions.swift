@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
+extension PostPageVC: PostHeaderViewDelegate {
     // MARK: - Actions
     @objc func openMorePostActions() {
         guard let post = post else {return}
@@ -82,11 +82,6 @@ extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
     
     func headerViewDonationViewCloseButtonDidTouch(_ donationView: CMMessageView) {
         var post = self.post
-        if donationView is DonationUsersView {
-            post?.showDonator = false
-            post?.notifyChanged()
-        }
-        
         if donationView is DonationView {
             post?.showDonationButtons = false
             post?.notifyChanged()
@@ -107,12 +102,5 @@ extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
         navigation.modalPresentationStyle = .custom
         navigation.transitioningDelegate = vc
         present(navigation, animated: true, completion: nil)
-    }
-    
-    func postStatsView(_ postStatsView: PostStatsView, didTapOnDonationCountLabel donationCountLabel: UIView) {
-        var post = self.post
-        if post?.showDonator == nil {post?.showDonator = false}
-        post?.showDonator?.toggle()
-        post?.notifyChanged()
     }
 }

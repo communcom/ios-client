@@ -34,8 +34,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
 
     lazy var bottomView = UIView(backgroundColor: .appLightGrayColor)
     
-    lazy var donationUsersView = DonationUsersView()
-    
     lazy var donationView = DonationView()
     
     // MARK: - Layout
@@ -85,17 +83,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
         postStatsView.voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
         postStatsView.voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
         postStatsView.commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
-        postStatsView.delegate = self
-        
-        // donation
-        contentView.addSubview(donationUsersView)
-        donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
-        donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
-        donationUsersView.senderView = postStatsView.donationCountLabel
-        donationUsersView.delegate = self
-        
-        donationUsersView.isUserInteractionEnabled = true
-        donationUsersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationUsersViewDidTouch)))
         
         // donation buttons
         contentView.addSubview(donationView)
@@ -125,15 +112,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
         
         setTopViewWithExplanation(post.topExplanation)
         setBottomViewWithExplanation(post.bottomExplanation)
-        
-        donationUsersView.isHidden = true
-        if post.showDonator == true,
-            post.showDonationButtons != true,
-            let donations = post.donations?.donations
-        {
-            donationUsersView.isHidden = false
-            donationUsersView.setUp(with: donations)
-        }
         
         donationView.isHidden = true
         if post.showDonationButtons == true,
@@ -270,23 +248,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
         
         let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: post, amount: amount)
         parentViewController?.show(donateVC, sender: nil)
-    }
-}
-
-extension PostCell: PostStatsViewDelegate {
-    func postStatsView(_ postStatsView: PostStatsView, didTapOnDonationCountLabel donationCountLabel: UIView) {
-        var post = self.post
-        if post?.showDonator == nil {post?.showDonator = false}
-        post?.showDonator?.toggle()
-        post?.notifyChanged()
-    }
-}
-
-extension PostCell: DonationUsersViewDelegate {
-    func donationUsersViewCloseButtonDidTouch(_ donationUserView: DonationUsersView) {
-        var post = self.post
-        post?.showDonator = false
-        post?.notifyChanged()
     }
 }
 

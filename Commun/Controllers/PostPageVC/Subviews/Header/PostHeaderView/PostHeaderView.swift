@@ -16,7 +16,6 @@ protocol PostHeaderViewDelegate: class {
     func headerViewCommentButtonDidTouch(_ headerView: PostHeaderView)
     func headerViewDonationButtonDidTouch(_ headerView: PostHeaderView, amount: Double?)
     func headerViewDonationViewCloseButtonDidTouch(_ donationView: CMMessageView)
-    func headerView(_ headerView: PostHeaderView, donationUsersViewDidTouch donationUsersView: DonationUsersView)
 }
 
 class PostHeaderView: MyTableHeaderView {
@@ -36,8 +35,6 @@ class PostHeaderView: MyTableHeaderView {
     lazy var contentTextView = PostHeaderTextView(forExpandable: ())
     
     lazy var postStatsView = PostStatsView(forAutoLayout: ())
-    
-    lazy var donationUsersView = DonationUsersView()
     
     lazy var donationView = DonationView()
     
@@ -73,16 +70,6 @@ class PostHeaderView: MyTableHeaderView {
         postStatsView.shareButton.addTarget(self, action: #selector(shareButtonDidTouch(_:)), for: .touchUpInside)
         
         postStatsView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
-        
-        // donation
-        addSubview(donationUsersView)
-        donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
-        donationUsersView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
-        donationUsersView.senderView = postStatsView.donationCountLabel
-        donationUsersView.delegate = self
-        
-        donationUsersView.isUserInteractionEnabled = true
-        donationUsersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationUsersViewDidTouch)))
         
         // donation buttons
         addSubview(donationView)
@@ -124,16 +111,6 @@ class PostHeaderView: MyTableHeaderView {
             contentTextView.attributedText = nil
         }
         
-        // donations
-        donationUsersView.isHidden = true
-        if post.showDonator == true,
-            post.showDonationButtons != true,
-            let donations = post.donations?.donations
-        {
-            donationUsersView.isHidden = false
-            donationUsersView.setUp(with: donations)
-        }
-        
         donationView.isHidden = true
         if post.showDonationButtons == true,
             post.author?.userId != Config.currentUser?.id
@@ -167,10 +144,6 @@ class PostHeaderView: MyTableHeaderView {
 }
 
 extension PostHeaderView: DonationUsersViewDelegate, DonationViewDelegate {
-    @objc func donationUsersViewDidTouch() {
-        delegate?.headerView(self, donationUsersViewDidTouch: donationUsersView)
-    }
-    
     @objc func donationAmountDidTouch(sender: UIButton) {
         let amount = donationView.amounts[safe: sender.tag]?.double
         delegate?.headerViewDonationButtonDidTouch(self, amount: amount)
