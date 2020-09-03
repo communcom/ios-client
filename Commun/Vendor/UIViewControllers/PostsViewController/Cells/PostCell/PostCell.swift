@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class PostCell: MyTableViewCell, ListItemCellType {
+class PostCell: MyTableViewCell, ListItemCellType, PostStatsViewDelegate {
     // MARK: - Properties
     weak var delegate: PostCellDelegate?
     var topViewHeightConstraint: NSLayoutConstraint?
@@ -241,29 +241,5 @@ extension PostCell: DonationViewDelegate {
         var post = self.post
         post?.showDonationButtons = false
         post?.notifyChanged()
-    }
-}
-
-extension PostCell: PostStatsViewDelegate {
-    func postStatsViewDonationButtonDidTouch(_ postStatsView: PostStatsView) {
-        var post = self.post
-        post?.showDonationButtons = true
-        post?.notifyChanged()
-    }
-    
-    func postStatsViewDonatorsDidTouch(_ postStatsView: PostStatsView) {
-        guard let donations = post?.donations else {return}
-        let vc = DonationsVC(donations: donations)
-        vc.modelSelected = {donation in
-            vc.dismiss(animated: true) {
-                self.parentViewController?.showProfileWithUserId(donation.sender.userId)
-            }
-        }
-        
-        let navigation = SwipeNavigationController(rootViewController: vc)
-        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-        navigation.modalPresentationStyle = .custom
-        navigation.transitioningDelegate = vc
-        parentViewController?.present(navigation, animated: true, completion: nil)
     }
 }

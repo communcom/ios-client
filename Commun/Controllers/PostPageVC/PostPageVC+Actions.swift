@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension PostPageVC: PostHeaderViewDelegate {
+extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
     // MARK: - Actions
     @objc func openMorePostActions() {
         guard let post = post else {return}
