@@ -68,10 +68,6 @@ class PostPageVC: CommentsViewController {
                 post.showDonationButtons = false
                 post.notifyChanged()
             }
-            if post.showDonator == true {
-                post.showDonator = false
-                post.notifyChanged()
-            }
         }
     }
     
@@ -96,7 +92,6 @@ class PostPageVC: CommentsViewController {
         
         // postView
         postHeaderView.delegate = self
-        postHeaderView.postStatsView.delegate = self
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form

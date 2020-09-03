@@ -9,7 +9,8 @@
 import Foundation
 
 protocol PostStatsViewDelegate: class {
-    func postStatsView(_ postStatsView: PostStatsView, didTapOnDonationCountLabel donationCountLabel: UIView)
+    func postStatsViewDonationButtonDidTouch(_ postStatsView: PostStatsView)
+    func postStatsViewDonatorsDidTouch(_ postStatsView: PostStatsView)
 }
 
 class PostStatsView: MyView {
@@ -22,9 +23,6 @@ class PostStatsView: MyView {
     // MARK: - Subviews
     lazy var voteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     
-    lazy var plusLabel = UILabel.with(text: "+", textSize: 17, weight: .semibold, textColor: .appMainColor)
-    lazy var donationCountLabel = UILabel.with(numberOfLines: 2)
-    
     lazy var sharesCountLabel = self.createDescriptionLabel()
     
     lazy var shareButton: UIButton = {
@@ -33,6 +31,33 @@ class PostStatsView: MyView {
         button.touchAreaEdgeInsets = UIEdgeInsets(top: -11, left: -13, bottom: -11, right: -13)
         
         return button
+    }()
+    lazy var thumbUpLabel = UILabel(width: 30, height: 30, backgroundColor: .appLightGrayColor, cornerRadius: 15)
+    lazy var donatorsLabel = UILabel.with(textSize: 14, weight: .medium, textColor: .appGrayColor, numberOfLines: 0)
+    lazy var donateButton = UIButton(label: "donate".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 14), textColor: .appMainColor)
+    
+    lazy var donationsView: UIStackView = {
+        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+        thumbUpLabel.textAlignment = .center
+        thumbUpLabel.font = .systemFont(ofSize: 12)
+        thumbUpLabel.text = "👍"
+        thumbUpLabel.setContentHuggingPriority(.required, for: .horizontal)
+        
+        thumbUpLabel.isUserInteractionEnabled = true
+        thumbUpLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donatorsLabelDidTouch)))
+        
+        donatorsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donatorsLabelDidTouch)))
+        
+        donateButton.addTarget(self, action: #selector(donateButtonDidTouch), for: .touchUpInside)
+        donateButton.setContentHuggingPriority(.required, for: .horizontal)
+        
+        stackView.addArrangedSubviews([
+            thumbUpLabel,
+            donatorsLabel,
+            donateButton
+        ])
+        
+        return stackView
     }()
     
     // Number of views
@@ -64,64 +89,51 @@ class PostStatsView: MyView {
     
     override func commonInit() {
         super.commonInit()
-        addSubview(voteContainerView)
-        voteContainerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
+        let actionsViewWrapper: UIView = {
+            let view = UIView(forAutoLayout: ())
+            view.addSubview(voteContainerView)
+            voteContainerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
+            
+            // Shares
+            view.addSubview(shareButton)
+            shareButton.autoPinEdge(toSuperviewEdge: .trailing)
+            shareButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+            
+            // Comments
+            view.addSubview(commentsCountLabel)
+            commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: shareButton, withOffset: .adaptive(width: -23.0))
+            commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+            
+            view.addSubview(commentsCountButton)
+            commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: .adaptive(width: -8.0))
+            commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+            
+            // Views
+            view.addSubview(viewsCountLabel)
+            viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: .adaptive(width: -23))
+            viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+            
+            view.addSubview(viewsCountButton)
+            viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: .adaptive(width: -8))
+            viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+            return view
+        }()
         
-        addSubview(plusLabel)
-        plusLabel.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 6)
-        plusLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
+        addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
         
-        addSubview(donationCountLabel)
-        donationCountLabel.autoPinEdge(.leading, to: .trailing, of: plusLabel, withOffset: 4)
-        donationCountLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        // Shares
-        addSubview(shareButton)
-        shareButton.autoPinEdge(toSuperviewEdge: .trailing)
-        shareButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        
-        // Comments
-        addSubview(commentsCountLabel)
-        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: shareButton, withOffset: .adaptive(width: -23.0))
-        commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        
-        addSubview(commentsCountButton)
-        commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: .adaptive(width: -8.0))
-        commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        
-        // Views
-        addSubview(viewsCountLabel)
-        viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: .adaptive(width: -23))
-        viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        
-        addSubview(viewsCountButton)
-        viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: .adaptive(width: -8))
-        viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        stackView.addArrangedSubviews([
+            donationsView.padding(UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)),
+            .spacer(height: 2, backgroundColor: .appLightGrayColor),
+            actionsViewWrapper.padding(UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16))
+        ])
         
         viewsCountButton.isUserInteractionEnabled = false
-        
-        donationCountLabel.isUserInteractionEnabled = true
-        plusLabel.isUserInteractionEnabled = true
-        donationCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationCountLabelDidTouch)))
-        plusLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationCountLabelDidTouch)))
     }
     
     func setUp(with post: ResponseAPIContentGetPost) {
         voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
-        
-        // Donation
-        if post.donationsCount > 0 {
-            donationCountLabel.isHidden = false
-            plusLabel.isHidden = false
-            donationCountLabel.attributedText = NSMutableAttributedString()
-                .text("\(post.donationsCount.kmFormatted(maximumFractionDigit: 2))", size: 14, weight: .bold, color: .appMainColor)
-                .text("\n")
-                .text("points".localized(), size: 14, weight: .medium, color: .appMainColor)
-                .withParagraphStyle(minimumLineHeight: 12)
-        } else {
-            donationCountLabel.isHidden = true
-            plusLabel.isHidden = true
-        }
         
         // Comments count
         self.commentsCountLabel.text = "\(post.stats?.commentsCount ?? 0)"
@@ -131,6 +143,27 @@ class PostStatsView: MyView {
         
         // Shares count
         //        self.sharesCountLabel.text = "\(post.viewsCount ?? 0)"
+        
+        // donations
+        var donatorsText: String?
+        if let donations = post.donations?.donations {
+            let donators = Array(Set(donations.compactMap {$0.sender.representationName}))
+            
+            if donators.count <= 2 {
+                donatorsText = donators.joined(separator: ", ")
+            } else {
+                donatorsText = Array(donators.prefix(2)).joined(separator: ", ") + "and".localized() + "\(donators.count - 2)" + " " + "others".localized()
+            }
+            thumbUpLabel.isUserInteractionEnabled = true
+            donatorsLabel.isUserInteractionEnabled = true
+        } else {
+            donatorsText = "0"
+            thumbUpLabel.isUserInteractionEnabled = false
+            donatorsLabel.isUserInteractionEnabled = false
+        }
+        donatorsLabel.text = donatorsText
+        
+        donateButton.isHidden = post.author?.userId == Config.currentUser?.id
     }
     
     func fillShareCountButton(_ fill: Bool = true) {
@@ -142,7 +175,11 @@ class PostStatsView: MyView {
         commentsCountLabel.textColor = fill ? .appMainColor : .appGrayColor
     }
     
-    @objc func donationCountLabelDidTouch() {
-        delegate?.postStatsView(self, didTapOnDonationCountLabel: donationCountLabel)
+    @objc func donateButtonDidTouch() {
+        delegate?.postStatsViewDonationButtonDidTouch(self)
+    }
+    
+    @objc func donatorsLabelDidTouch() {
+        delegate?.postStatsViewDonatorsDidTouch(self)
     }
 }
