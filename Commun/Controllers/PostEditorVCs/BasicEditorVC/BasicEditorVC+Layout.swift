@@ -9,10 +9,6 @@
 import Foundation
 
 extension BasicEditorVC {
-    override func layoutTopContentTextView() {
-        contentTextView.autoPinEdge(.top, to: .bottom, of: communityView, withOffset: 5)
-    }
-    
     override func layoutBottomContentTextView() {
         contentView.addSubview(attachmentView)
         attachmentView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)

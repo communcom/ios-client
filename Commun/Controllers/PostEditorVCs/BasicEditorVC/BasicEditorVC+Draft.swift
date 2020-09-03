@@ -11,7 +11,7 @@ import Foundation
 extension BasicEditorVC {
     // MARK: - Draft
     override func shouldSaveDraft() -> Bool {
-        viewModel.postForEdit == nil && (!contentTextView.text.trimmed.isEmpty || _viewModel.attachment.value != nil)
+        viewModel.postForEdit == nil && (!contentTextView.text.trimmed.isEmpty || !titleTextView.text.trimmed.isEmpty || _viewModel.attachment.value != nil)
     }
     
     override var hasDraft: Bool {

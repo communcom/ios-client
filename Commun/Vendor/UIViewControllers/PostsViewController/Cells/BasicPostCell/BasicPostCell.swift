@@ -10,10 +10,10 @@ import UIKit
 import SafariServices
 
 final class BasicPostCell: PostCell {
-    // MARK: - Properties
-    private var centerConstraint: NSLayoutConstraint!
-    
     // MARK: - Subviews
+    lazy var contentStackView       = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
+    lazy var textStackView          = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
+    lazy var titleLabel             = UILabel.with(textSize: 18, weight: .semibold, numberOfLines: 0)
     lazy var contentTextView        = UITextView(forExpandable: ())
     lazy var gridView               = GridView(forAutoLayout: ())
     
@@ -31,19 +31,21 @@ final class BasicPostCell: PostCell {
     // MARK: - Layout
     override func layoutContent() {
         configureTextView()
-
-        contentView.addSubview(contentTextView)
-        contentTextView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 8)
-        contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-
-        contentView.addSubview(gridView)
-        centerConstraint = gridView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 10)
-        centerConstraint.isActive = false
-        gridView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
-        gridView.autoPinEdge(toSuperviewEdge: .left)
-        gridView.autoPinEdge(toSuperviewEdge: .right)
-        gridView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -10)
+        textStackView.addArrangedSubviews([
+            titleLabel,
+            contentTextView
+        ])
+        
+        contentView.addSubview(contentStackView)
+        contentStackView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 8)
+        contentStackView.autoPinEdge(toSuperviewEdge: .left)
+        contentStackView.autoPinEdge(toSuperviewEdge: .right)
+        contentStackView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -10)
+        
+        contentStackView.addArrangedSubviews([
+            textStackView.padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)),
+            gridView
+        ])
     }
     
     override func setUp(with post: ResponseAPIContentGetPost) {
@@ -51,7 +53,14 @@ final class BasicPostCell: PostCell {
         backgroundColor = .appWhiteColor
        
         self.accessibilityLabel = "PostCardCell"
-        centerConstraint.isActive = false
+        
+        // title
+        if let title = post.title, !title.isEmpty {
+            titleLabel.isHidden = false
+            titleLabel.text = title
+        } else {
+            titleLabel.isHidden = true
+        }
 
         let paragraph = NSMutableParagraphStyle()
         paragraph.minimumLineHeight = 21
@@ -100,9 +109,10 @@ final class BasicPostCell: PostCell {
         }
 
         if texts.length > 0 {
+            contentTextView.isHidden = false
             contentTextView.attributedText = texts
         } else {
-            centerConstraint.isActive = true
+            contentTextView.isHidden = true
         }
 
 //        if let content = post.content,

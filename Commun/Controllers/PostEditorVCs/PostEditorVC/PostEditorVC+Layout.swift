@@ -10,11 +10,22 @@ import Foundation
 
 extension PostEditorVC {
     @objc func layoutTopContentTextView() {
-        fatalError("Must override")
+        // title
+        contentView.addSubview(titleTextView)
+        titleTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        titleTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        titleTextView.autoPinEdge(.top, to: .bottom, of: communityView, withOffset: 5)
+        
+        // countLabel
+        contentView.addSubview(titleTextViewCountLabel)
+        titleTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: titleTextView, withOffset: 8)
+        titleTextViewCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        
+        contentTextView.autoPinEdge(.top, to: .bottom, of: titleTextView, withOffset: 28)
     }
     
     @objc func layoutBottomContentTextView() {
-        fatalError("Must override this method")
+        contentTextView.autoPinEdge(toSuperviewEdge: .bottom)
     }
     
     override func layoutContentView() {
