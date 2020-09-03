@@ -220,7 +220,7 @@ extension PostEditorVC {
             self.hintView?.display(inPosition: actionButtonFrame.origin, withType: hintType, andButtonHeight: actionButton.height, completion: {})
         }
         
-        return isContentValid
+        return canSendPost
     }
     
     @objc override func send() {

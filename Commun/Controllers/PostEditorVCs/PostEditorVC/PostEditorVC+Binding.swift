@@ -26,7 +26,7 @@ extension PostEditorVC {
     func bindSendPostButton() {
         // Verification
         contentCombined
-            .map {_ in self.isContentValid}
+            .map {_ in self.canSendPost}
             .bind(to: actionButton.rx.isDisabled)
             .disposed(by: disposeBag)
     }
