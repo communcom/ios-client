@@ -355,14 +355,18 @@ extension PostEditorVC {
                         return
                     }
                     
-                    if let viewModel = (UIApplication.topViewController() as? FeedPageVC)?.viewModel,
+                    if let vc = UIApplication.topViewController() as? FeedPageVC,
                         post.community?.communityId != "FEED"
                     {
-                        if viewModel.state.value == .listEmpty {
-                            viewModel.state.accept(.listEnded)
+                        if vc.viewModel.state.value == .listEmpty {
+                            vc.viewModel.state.accept(.listEnded)
                         }
-                        viewModel.items.accept([post] + viewModel.items.value)
-                        (UIApplication.topViewController() as! FeedPageVC).appLiked()
+                        vc.viewModel.items.accept([post] + vc.viewModel.items.value)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            vc.tableView.scrollToTop()
+                            vc.appLiked()
+                        }
+                        
                         return
                     }
                     
