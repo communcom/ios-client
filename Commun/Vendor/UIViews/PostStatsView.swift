@@ -8,9 +8,17 @@
 
 import Foundation
 
+protocol PostStatsViewDelegate: class {
+    func postStatsViewDonationButtonDidTouch(_ postStatsView: PostStatsView)
+    func postStatsViewDonatorsDidTouch(_ postStatsView: PostStatsView)
+}
+
 class PostStatsView: MyView {
     // MARK: - Constants
     let voteActionsContainerViewHeight: CGFloat = 35
+    
+    // MARK: - Properties
+    weak var delegate: PostStatsViewDelegate?
     
     // MARK: - Subviews
     lazy var voteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
@@ -24,18 +32,23 @@ class PostStatsView: MyView {
         
         return button
     }()
+    lazy var thumbUpLabel = UILabel(width: 30, height: 30, backgroundColor: .appLightGrayColor, cornerRadius: 15)
+    lazy var donatorsLabel = UILabel.with(textSize: 14, weight: .medium, textColor: .appGrayColor, numberOfLines: 0)
+    lazy var donateButton = UIButton(label: "donate".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 14), textColor: .appMainColor)
     
     lazy var donationsView: UIStackView = {
-        let stackView = UIStackView(axis: .horizontal, spacing: 21, alignment: .center, distribution: .fill)
-        let thumbUpLabel = UILabel(width: 30, height: 30, backgroundColor: .appLightGrayColor, cornerRadius: 15)
+        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         thumbUpLabel.textAlignment = .center
-        thumbUpLabel.font = .systemFont(ofSize: 15)
+        thumbUpLabel.font = .systemFont(ofSize: 12)
         thumbUpLabel.text = "👍"
         thumbUpLabel.setContentHuggingPriority(.required, for: .horizontal)
         
-        let donatorsLabel = UILabel.with(text: "Joseph, larich and others", textSize: 14, weight: .medium, textColor: .appGrayColor, numberOfLines: 0)
+        thumbUpLabel.isUserInteractionEnabled = true
+        thumbUpLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donatorsLabelDidTouch)))
         
-        let donateButton = UIButton(label: "donate".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 14), textColor: .appMainColor)
+        donatorsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donatorsLabelDidTouch)))
+        
+        donateButton.addTarget(self, action: #selector(donateButtonDidTouch), for: .touchUpInside)
         donateButton.setContentHuggingPriority(.required, for: .horizontal)
         
         stackView.addArrangedSubviews([
@@ -130,6 +143,27 @@ class PostStatsView: MyView {
         
         // Shares count
         //        self.sharesCountLabel.text = "\(post.viewsCount ?? 0)"
+        
+        // donations
+        var donatorsText: String?
+        if let donations = post.donations?.donations {
+            let donators = Array(Set(donations.compactMap {$0.sender.representationName}))
+            
+            if donators.count <= 2 {
+                donatorsText = donators.joined(separator: ", ")
+            } else {
+                donatorsText = Array(donators.prefix(2)).joined(separator: ", ") + "and".localized() + "\(donators.count - 2)" + " " + "others".localized()
+            }
+            thumbUpLabel.isUserInteractionEnabled = true
+            donatorsLabel.isUserInteractionEnabled = true
+        } else {
+            donatorsText = "0"
+            thumbUpLabel.isUserInteractionEnabled = false
+            donatorsLabel.isUserInteractionEnabled = false
+        }
+        donatorsLabel.text = donatorsText
+        
+        donateButton.isHidden = post.author?.userId == Config.currentUser?.id
     }
     
     func fillShareCountButton(_ fill: Bool = true) {
@@ -139,5 +173,13 @@ class PostStatsView: MyView {
     func fillCommentCountButton(_ fill: Bool = true) {
         commentsCountButton.setImage(UIImage(named: fill ? "comment-count-fill" : "comment-count"), for: .normal)
         commentsCountLabel.textColor = fill ? .appMainColor : .appGrayColor
+    }
+    
+    @objc func donateButtonDidTouch() {
+        delegate?.postStatsViewDonationButtonDidTouch(self)
+    }
+    
+    @objc func donatorsLabelDidTouch() {
+        delegate?.postStatsViewDonatorsDidTouch(self)
     }
 }

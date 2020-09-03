@@ -47,20 +47,24 @@ class PostHeaderView: MyTableHeaderView {
         addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
         
+        let spacer = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
         let commentsLabel = UILabel.with(text: "comments".localized().uppercaseFirst, textSize: 21, weight: .bold)
         stackView.addArrangedSubviews([
             titleLabel,
             contentTextView,
             postStatsView,
+            spacer,
             commentsLabel
         ])
         
         stackView.setCustomSpacing(10, after: contentTextView)
-        stackView.setCustomSpacing(16, after: postStatsView)
+        stackView.setCustomSpacing(10, after: postStatsView)
+        stackView.setCustomSpacing(16, after: spacer)
         
         titleLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
         contentTextView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         postStatsView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        spacer.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         commentsLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
         
         contentTextView.delegate = self

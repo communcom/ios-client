@@ -83,6 +83,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         postStatsView.voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
         postStatsView.voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
         postStatsView.commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
+        postStatsView.delegate = self
         
         // donation buttons
         contentView.addSubview(donationView)
@@ -223,22 +224,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
         }
     }
     
-    @objc func donationUsersViewDidTouch() {
-        guard let donations = post?.donations else {return}
-        let vc = DonationsVC(donations: donations)
-        vc.modelSelected = {donation in
-            vc.dismiss(animated: true) {
-                self.parentViewController?.showProfileWithUserId(donation.sender.userId)
-            }
-        }
-        
-        let navigation = SwipeNavigationController(rootViewController: vc)
-        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-        navigation.modalPresentationStyle = .custom
-        navigation.transitioningDelegate = vc
-        parentViewController?.present(navigation, animated: true, completion: nil)
-    }
-    
     @objc func donationAmountDidTouch(sender: UIButton) {
         guard let symbol = post?.community?.communityId,
             let post = post,
@@ -256,5 +241,29 @@ extension PostCell: DonationViewDelegate {
         var post = self.post
         post?.showDonationButtons = false
         post?.notifyChanged()
+    }
+}
+
+extension PostCell: PostStatsViewDelegate {
+    func postStatsViewDonationButtonDidTouch(_ postStatsView: PostStatsView) {
+        var post = self.post
+        post?.showDonationButtons = true
+        post?.notifyChanged()
+    }
+    
+    func postStatsViewDonatorsDidTouch(_ postStatsView: PostStatsView) {
+        guard let donations = post?.donations else {return}
+        let vc = DonationsVC(donations: donations)
+        vc.modelSelected = {donation in
+            vc.dismiss(animated: true) {
+                self.parentViewController?.showProfileWithUserId(donation.sender.userId)
+            }
+        }
+        
+        let navigation = SwipeNavigationController(rootViewController: vc)
+        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        navigation.modalPresentationStyle = .custom
+        navigation.transitioningDelegate = vc
+        parentViewController?.present(navigation, animated: true, completion: nil)
     }
 }
