@@ -25,6 +25,28 @@ class PostStatsView: MyView {
         return button
     }()
     
+    lazy var donationsView: UIStackView = {
+        let stackView = UIStackView(axis: .horizontal, spacing: 21, alignment: .center, distribution: .fill)
+        let thumbUpLabel = UILabel(width: 30, height: 30, backgroundColor: .appLightGrayColor, cornerRadius: 15)
+        thumbUpLabel.textAlignment = .center
+        thumbUpLabel.font = .systemFont(ofSize: 15)
+        thumbUpLabel.text = "👍"
+        thumbUpLabel.setContentHuggingPriority(.required, for: .horizontal)
+        
+        let donatorsLabel = UILabel.with(text: "Joseph, larich and others", textSize: 14, weight: .medium, textColor: .appGrayColor, numberOfLines: 0)
+        
+        let donateButton = UIButton(label: "donate".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 14), textColor: .appMainColor)
+        donateButton.setContentHuggingPriority(.required, for: .horizontal)
+        
+        stackView.addArrangedSubviews([
+            thumbUpLabel,
+            donatorsLabel,
+            donateButton
+        ])
+        
+        return stackView
+    }()
+    
     // Number of views
     lazy var viewsCountLabel = self.createDescriptionLabel()
     
@@ -54,31 +76,45 @@ class PostStatsView: MyView {
     
     override func commonInit() {
         super.commonInit()
-        addSubview(voteContainerView)
-        voteContainerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
+        let actionsViewWrapper: UIView = {
+            let view = UIView(forAutoLayout: ())
+            view.addSubview(voteContainerView)
+            voteContainerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
+            
+            // Shares
+            view.addSubview(shareButton)
+            shareButton.autoPinEdge(toSuperviewEdge: .trailing)
+            shareButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+            
+            // Comments
+            view.addSubview(commentsCountLabel)
+            commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: shareButton, withOffset: .adaptive(width: -23.0))
+            commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+            
+            view.addSubview(commentsCountButton)
+            commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: .adaptive(width: -8.0))
+            commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+            
+            // Views
+            view.addSubview(viewsCountLabel)
+            viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: .adaptive(width: -23))
+            viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+            
+            view.addSubview(viewsCountButton)
+            viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: .adaptive(width: -8))
+            viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+            return view
+        }()
         
-        // Shares
-        addSubview(shareButton)
-        shareButton.autoPinEdge(toSuperviewEdge: .trailing)
-        shareButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
+        addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
         
-        // Comments
-        addSubview(commentsCountLabel)
-        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: shareButton, withOffset: .adaptive(width: -23.0))
-        commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        
-        addSubview(commentsCountButton)
-        commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: .adaptive(width: -8.0))
-        commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        
-        // Views
-        addSubview(viewsCountLabel)
-        viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: .adaptive(width: -23))
-        viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        
-        addSubview(viewsCountButton)
-        viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: .adaptive(width: -8))
-        viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        stackView.addArrangedSubviews([
+            donationsView.padding(UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)),
+            .spacer(height: 2, backgroundColor: .appLightGrayColor),
+            actionsViewWrapper.padding(UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16))
+        ])
         
         viewsCountButton.isUserInteractionEnabled = false
     }

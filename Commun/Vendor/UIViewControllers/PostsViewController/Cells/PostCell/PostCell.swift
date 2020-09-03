@@ -65,8 +65,8 @@ class PostCell: MyTableViewCell, ListItemCellType {
         
         // postStatsView
         contentView.addSubview(postStatsView)
-        postStatsView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16))
-        postStatsView.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 16))
+        postStatsView.autoPinEdge(toSuperviewEdge: .leading)
+        postStatsView.autoPinEdge(toSuperviewEdge: .trailing)
 
         // separator
         contentView.addSubview(bottomView)

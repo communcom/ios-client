@@ -60,7 +60,7 @@ class PostHeaderView: MyTableHeaderView {
         
         titleLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
         contentTextView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        postStatsView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
+        postStatsView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         commentsLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
         
         contentTextView.delegate = self
