@@ -55,7 +55,9 @@ class BasicEditorVC: PostEditorVC {
     override var isContentValid: Bool {
         let isTextValid = super.isContentValid
         // text empty, but attachment exists
-        let attachmentWithEmptyText = contentTextView.text.trimmed.isEmpty && ((viewModel as! BasicEditorViewModel).attachment.value != nil)
+        let title = titleTextView.text.trimmed
+        let attachmentWithEmptyText = contentTextView.text.trimmed.isEmpty && ((viewModel as! BasicEditorViewModel).attachment.value != nil) && (!title.isEmpty && title.count >= self.titleMinLettersLimit && title.utf8.count <= self.titleBytesLimit)
+        
         if !isTextValid && attachmentWithEmptyText && hintType != .chooseCommunity {hintType = nil}
         return isTextValid || attachmentWithEmptyText
     }

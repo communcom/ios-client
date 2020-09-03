@@ -66,7 +66,15 @@ extension PostEditorVC {
         }
         
         // save title
-        UserDefaults.standard.set(titleTextView.text, forKey: titleDraft)
+        var aText: String?
+        if Thread.isMainThread {
+            aText = titleTextView.text
+        } else {
+            DispatchQueue.main.sync {
+                aText = titleTextView.text
+            }
+        }
+        UserDefaults.standard.set(aText, forKey: titleDraft)
         
         // save content
         contentTextView.saveDraft()

@@ -15,6 +15,8 @@ class PostEditorVC: EditorVC {
     // MARK: - Constants
     let communityDraftKey = "PostEditorVC.communityDraftKey"
     let titleDraft = "EditorPageVC.titleDraft"
+    let titleMinLettersLimit = 2
+    let titleBytesLimit = 240
     
     // MARK: - Properties
     var chooseCommunityAfterLoading: Bool
@@ -84,16 +86,16 @@ class PostEditorVC: EditorVC {
     lazy var youWillPostInLabel = UILabel.descriptionLabel("you will post in".localized().uppercaseFirst)
     lazy var communityAvatarImage = MyAvatarImageView(size: 40)
     lazy var communityNameLabel = UILabel.with(text: "hint type choose community".localized().uppercaseFirst, textSize: 15, weight: .semibold, numberOfLines: 0)
-//    lazy var titleTextView: UITextView = {
-//        let titleTextView = UITextView(forExpandable: ())
-//        titleTextView.textContainerInset = UIEdgeInsets.zero
-//        titleTextView.textContainer.lineFragmentPadding = 0
-//        titleTextView.typingAttributes = [.font: UIFont.systemFont(ofSize: 21, weight: .bold)]
-//        titleTextView.placeholder = "title placeholder".localized().uppercaseFirst
-//        titleTextView.delegate = self
-//        return titleTextView
-//    }() 
-//    lazy var titleTextViewCountLabel = UILabel.descriptionLabel("0/240")
+    lazy var titleTextView: UITextView = {
+        let titleTextView = UITextView(forExpandable: ())
+        titleTextView.textContainerInset = UIEdgeInsets.zero
+        titleTextView.textContainer.lineFragmentPadding = 0
+        titleTextView.typingAttributes = [.font: UIFont.systemFont(ofSize: 21, weight: .bold)]
+        titleTextView.placeholder = "title placeholder".localized().uppercaseFirst
+        titleTextView.delegate = self
+        return titleTextView
+    }() 
+    lazy var titleTextViewCountLabel = UILabel.descriptionLabel("0/240")
     lazy var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     var contentTextView: ContentTextView {
@@ -169,8 +171,6 @@ class PostEditorVC: EditorVC {
         // add default tool
 //        appendTool(EditorToolbarItem.ageLimit)
         appendTool(EditorToolbarItem.addPhoto)
-        
-        
     }
     
     override func bind() {
@@ -182,6 +182,8 @@ class PostEditorVC: EditorVC {
         bindContentTextView()
         
         bindCommunity()
+        
+        bindTitleTextView()
     }
     
     override func didSelectTool(_ item: EditorToolbarItem) {

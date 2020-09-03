@@ -10,10 +10,6 @@ import Foundation
 import RxSwift
 
 class ArticleEditorVC: PostEditorVC {
-    // MARK: - Constant
-    let titleMinLettersLimit = 2
-    let titleBytesLimit = 240
-    
     // MARK: - Subviews
     var _contentTextView = ArticleEditorTextView(forExpandable: ())
     override var contentTextView: ContentTextView {
@@ -31,11 +27,5 @@ class ArticleEditorVC: PostEditorVC {
         super.setUp()
         contentTextView.layoutManager
             .ensureLayout(for: contentTextView.textContainer)
-    }
-    
-    override func bind() {
-        super.bind()
-        // textViews
-        bindTitleTextView()
     }
 }
