@@ -171,13 +171,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
 
-        if let currentVC = window?.rootViewController as? SplashVC {
-            currentVC.animateSplash {
-                self.window?.rootViewController = rootVC
-            }
-        } else {
-            self.window?.rootViewController = rootVC
-        }
+        // window?.rootViewController
+        ChangingRootVCAnimator.shared.changeRootVC(to: rootVC, from: window?.rootViewController)
 
         getConfig { (error) in
             if let error = error {

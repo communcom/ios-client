@@ -22,7 +22,7 @@ class PostRewardsVC: DonationsVC {
     }()
     lazy var rewardsLabel = UILabel.with(textSize: 14, numberOfLines: 2)
     lazy var donationsLabel = UILabel.with(textSize: 14, numberOfLines: 2)
-    lazy var donateButton = UIButton(height: 35, label: "donate".localized().uppercaseFirst, backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+    lazy var donateButton = UIButton(height: 35, label: "donate".localized().uppercaseFirst, backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
     
     // MARK: - Initializers
     init?(post: ResponseAPIContentGetPost) {
