@@ -48,7 +48,7 @@ class DonationsVC: BaseViewController {
         view.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewSafeArea()
         
-        stackView.addArrangedSubview(tableView)
+        stackView.addArrangedSubview(tableView.padding(UIEdgeInsets(top: 16, left: 10, bottom: 0, right: 10)))
     }
     
     override func bind() {

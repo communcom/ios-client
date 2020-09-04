@@ -21,7 +21,7 @@ class PostMetaView: CMMetaView {
     private var mosaic: ResponseAPIRewardsGetStateBulkMosaic?
     var showMosaic: Bool = true {
         didSet {
-            stateButton.isHidden = showMosaic
+            stateButton.isHidden = !showMosaic
         }
     }
 
@@ -131,19 +131,11 @@ class PostMetaView: CMMetaView {
         
         var value = ""
         
-        let symbol = UserDefaults.standard.string(forKey: Config.currentRewardShownSymbol)
-        
         if !isRewardState {
             value = "in top".localized().uppercaseFirst + ": "
         }
         
-        if symbol == "USD" {
-            value += ((mosaicItem.convertedReward?.usd ?? "") + " $")
-        } else if symbol == "CMN" {
-            value += ((mosaicItem.convertedReward?.cmn ?? "") + " CMN")
-        } else {
-            value += mosaicItem.rewardDouble.currencyValueFormatted
-        }
+        value += mosaicItem.formatedRewardsValue
         
         stateButtonLabel.text = value
         stateButton.tag = Int(isRewardState.int)

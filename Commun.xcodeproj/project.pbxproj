@@ -1633,6 +1633,7 @@
 				3B5CB30F22A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift */,
 				3BEC38EB230FED2B00662374 /* TextAttachment.swift */,
 				BCAF5B1F241B433400C157B5 /* ViewTag.swift */,
+				BC2704162501DE260042A29B /* PostRewardsVC.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -3007,7 +3008,6 @@
 		BCEFA643249217DF00971E77 /* DonationsVC */ = {
 			isa = PBXGroup;
 			children = (
-				BC2704162501DE260042A29B /* PostRewardsVC.swift */,
 				BCEFA6412492149900971E77 /* DonationsVC.swift */,
 				BC2704182501DED00042A29B /* CommentRewardsVC.swift */,
 				BCEFA644249217F700971E77 /* DonatorCell.swift */,
