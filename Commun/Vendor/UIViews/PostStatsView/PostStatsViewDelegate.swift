@@ -25,18 +25,19 @@ extension PostStatsViewDelegate {
         guard let viewController = (self as? UIViewController) ?? (self as? UIView)?.parentViewController
         else {return}
         
-        guard let donations = post?.donations else {return}
-        let vc = DonationsVC(donations: donations)
+        guard let post = post,
+            let vc = PostRewardsVC(post: post)
+        else {return}
+        
         vc.modelSelected = {donation in
             vc.dismiss(animated: true) {
                 viewController.showProfileWithUserId(donation.sender.userId)
             }
         }
         
-        let navigation = SwipeNavigationController(rootViewController: vc)
-        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-        navigation.modalPresentationStyle = .custom
-        navigation.transitioningDelegate = vc
-        viewController.present(navigation, animated: true, completion: nil)
+        vc.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = vc
+        viewController.present(vc, animated: true, completion: nil)
     }
 }

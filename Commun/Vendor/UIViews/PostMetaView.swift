@@ -19,6 +19,11 @@ class PostMetaView: CMMetaView {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private var mosaic: ResponseAPIRewardsGetStateBulkMosaic?
+    var showMosaic: Bool = true {
+        didSet {
+            stateButton.isHidden = showMosaic
+        }
+    }
 
     // MARK: - Subviews
     lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .white)
@@ -72,7 +77,9 @@ class PostMetaView: CMMetaView {
     func setUp(post: ResponseAPIContentGetPost) {
         setUp(with: post.community, author: post.author, creationTime: post.meta.creationTime)
         self.mosaic = post.mosaic
-        setMosaic()
+        if showMosaic {
+            setMosaic()
+        }
     }
     
     func setUp(comment: ResponseAPIContentGetComment) {

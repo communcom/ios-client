@@ -15,8 +15,20 @@ class DonationsVC: BaseViewController {
     var modelSelected: ((ResponseAPIWalletDonation) -> Void)?
     
     // MARK: - Subviews
-    lazy var tableView = UITableView(forAutoLayout: ())
-    lazy var closeButton = UIButton.close()
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(forAutoLayout: ())
+        tableView.register(DonatorCell.self, forCellReuseIdentifier: "DonatorCell")
+        tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        return tableView
+    }()
+    lazy var closeButton: UIButton = {
+        let button = UIButton.close(size: 30)
+        button.addTarget(self, action: #selector(back), for: .touchUpInside)
+        return button
+    }()
     
     // MARK: - Initializers
     init(donations: ResponseAPIWalletGetDonationsBulkItem) {
@@ -29,25 +41,14 @@ class DonationsVC: BaseViewController {
     }
     
     // MARK: - Methods
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .appLightGrayColor
-        
-        title = "donations".localized().uppercaseFirst
-        setRightNavBarButton(with: closeButton)
-        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-    }
-    
     override func setUp() {
         super.setUp()
+        view.backgroundColor = .appLightGrayColor
         
-        tableView.backgroundColor = .clear
-        view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(inset: 16))
+        view.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewSafeArea()
         
-        tableView.register(DonatorCell.self, forCellReuseIdentifier: "DonatorCell")
-        tableView.tableFooterView = UIView()
-        tableView.separatorStyle = .none
+        stackView.addArrangedSubview(tableView)
     }
     
     override func bind() {

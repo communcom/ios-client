@@ -189,6 +189,8 @@
 		BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC247D1123827F460062C979 /* PostHeaderView+UITextViewDelegate.swift */; };
 		BC2704062500C4660042A29B /* BasicPostCellTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2704052500C4660042A29B /* BasicPostCellTextView.swift */; };
 		BC2704152501D92D0042A29B /* PostStatsViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2704142501D92D0042A29B /* PostStatsViewDelegate.swift */; };
+		BC2704172501DE260042A29B /* PostRewardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2704162501DE260042A29B /* PostRewardsVC.swift */; };
+		BC2704192501DED00042A29B /* CommentRewardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2704182501DED00042A29B /* CommentRewardsVC.swift */; };
 		BC27F0DF241F200900050AF6 /* CreatePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC27F0DE241F200900050AF6 /* CreatePasswordViewModel.swift */; };
 		BC27F0E3241F594A00050AF6 /* ConfirmPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC27F0E2241F594A00050AF6 /* ConfirmPasswordVC.swift */; };
 		BC286C3523A2187100801A26 /* MyImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC286C3423A2187100801A26 /* MyImageView.swift */; };
@@ -773,6 +775,8 @@
 		BC247D1123827F460062C979 /* PostHeaderView+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostHeaderView+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		BC2704052500C4660042A29B /* BasicPostCellTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicPostCellTextView.swift; sourceTree = "<group>"; };
 		BC2704142501D92D0042A29B /* PostStatsViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatsViewDelegate.swift; sourceTree = "<group>"; };
+		BC2704162501DE260042A29B /* PostRewardsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRewardsVC.swift; sourceTree = "<group>"; };
+		BC2704182501DED00042A29B /* CommentRewardsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRewardsVC.swift; sourceTree = "<group>"; };
 		BC27F0DE241F200900050AF6 /* CreatePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordViewModel.swift; sourceTree = "<group>"; };
 		BC27F0E2241F594A00050AF6 /* ConfirmPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasswordVC.swift; sourceTree = "<group>"; };
 		BC286C3423A2187100801A26 /* MyImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImageView.swift; sourceTree = "<group>"; };
@@ -3003,7 +3007,9 @@
 		BCEFA643249217DF00971E77 /* DonationsVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC2704162501DE260042A29B /* PostRewardsVC.swift */,
 				BCEFA6412492149900971E77 /* DonationsVC.swift */,
+				BC2704182501DED00042A29B /* CommentRewardsVC.swift */,
 				BCEFA644249217F700971E77 /* DonatorCell.swift */,
 			);
 			path = DonationsVC;
@@ -3476,6 +3482,7 @@
 				B1D7AD5823A10650007D1A13 /* SignInVC.swift in Sources */,
 				BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */,
 				BCC0690E24E3C91F001419D0 /* CMActionSheet.swift in Sources */,
+				BC2704192501DED00042A29B /* CommentRewardsVC.swift in Sources */,
 				BCCE669A2429AF9F004F47DC /* SignUpWithPhoneVC+Binding.swift in Sources */,
 				BC7D6090237BF764007D8C1A /* BlacklistViewModel.swift in Sources */,
 				BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */,
@@ -3855,6 +3862,7 @@
 				BCA9712823608ABD00AE37E1 /* UsersStackView.swift in Sources */,
 				BC016D46235DA0D400F1319F /* PlaceholderPostCell.swift in Sources */,
 				3B289B9A2346E6D800598407 /* UILabel+PureLayout.swift in Sources */,
+				BC2704172501DE260042A29B /* PostRewardsVC.swift in Sources */,
 				BCF0D261249877420094B6EB /* BaseViewController+Extensions.swift in Sources */,
 				BC529142237941920022EC7F /* CommentTextView.swift in Sources */,
 				BC3694F523698FEE00B2E078 /* EditorVC+Actions.swift in Sources */,

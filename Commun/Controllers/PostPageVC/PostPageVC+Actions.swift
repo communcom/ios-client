@@ -90,7 +90,7 @@ extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
     
     func headerView(_ headerView: PostHeaderView, donationUsersViewDidTouch donationUsersView: DonationUsersView) {
         guard let donations = post?.donations else {return}
-        let vc = DonationsVC(donations: donations)
+        let vc = CommentRewardsVC(donations: donations)
         vc.modelSelected = {donation in
             vc.dismiss(animated: true) {
                 self.showProfileWithUserId(donation.sender.userId)
