@@ -12,6 +12,7 @@ import RxSwift
 class PostRewardsVC: DonationsVC {
     // MARK: - Properties
     let post: ResponseAPIContentGetPost
+    var donateButtonHandler: (() -> Void)?
     
     // MARK: - Subviews
     lazy var postMetaView: PostMetaView = {
@@ -60,6 +61,8 @@ class PostRewardsVC: DonationsVC {
             .text(post.donationsCount.currencyValueFormatted, size: 15, weight: .semibold)
             .text("\n")
             .text("donations".localized().uppercaseFirst, size: 12, weight: .medium, color: .appGrayColor)
+        
+        donateButton.addTarget(self, action: #selector(donateButtonDidTouch), for: .touchUpInside)
     }
     
     private func setUpHeaderView() -> UIView {
@@ -96,5 +99,9 @@ class PostRewardsVC: DonationsVC {
         
         rewardsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
         return view
+    }
+    
+    @objc func donateButtonDidTouch() {
+        donateButtonHandler?()
     }
 }

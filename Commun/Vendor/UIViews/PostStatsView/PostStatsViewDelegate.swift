@@ -35,6 +35,12 @@ extension PostStatsViewDelegate {
             }
         }
         
+        vc.donateButtonHandler = {
+            vc.dismiss(animated: true) {
+                self.postStatsViewDonationButtonDidTouch(postStatsView)
+            }
+        }
+        
         vc.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = vc
