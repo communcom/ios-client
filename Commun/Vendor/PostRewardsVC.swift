@@ -40,6 +40,16 @@ class PostRewardsVC: DonationsVC {
         let headerView = setUpHeaderView()
         stackView.insertArrangedSubview(headerView, at: 0)
         
+        let donatersLabel = UILabel.with(textSize: 20, weight: .bold)
+        donatersLabel.attributedText = NSMutableAttributedString()
+            .text("donators".localized().uppercaseFirst, size: 20, weight: .bold)
+            .text(" ")
+            .text("\(post.donations?.donators.count ?? 0)", size: 20, weight: .bold, color: .appGrayColor)
+        stackView.insertArrangedSubview(donatersLabel.padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)), at: 1)
+        
+        stackView.setCustomSpacing(20, after: headerView)
+        stackView.setCustomSpacing(0, after: donatersLabel)
+        
         postMetaView.setUp(post: post)
         rewardsLabel.attributedText = NSMutableAttributedString()
             .text(post.mosaic?.formatedRewardsValue ?? "0", size: 15, weight: .semibold)
@@ -68,12 +78,16 @@ class PostRewardsVC: DonationsVC {
         separator.autoPinEdge(toSuperviewEdge: .leading)
         separator.autoPinEdge(toSuperviewEdge: .trailing)
         
-        let rewardsStackView = UIStackView(axis: .horizontal, spacing: 2, alignment: .center, distribution: .equalSpacing)
-        let rewardWrapper = createRewardsWrapper(iconNamed: "rewards-cup", label: rewardsLabel)
-        let donationWrapper = createRewardsWrapper(iconNamed: "rewards-coin", label: donationsLabel)
+        let rewardsStackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
+        let rewardsImageView = UIImageView(width: 35, height: 35, imageNamed: "rewards-cup")
+        let donationImageView = UIImageView(width: 35, height: 35, imageNamed: "rewards-coin")
         
+        rewardsImageView.setContentHuggingPriority(.required, for: .horizontal)
+        rewardsLabel.setContentHuggingPriority(.required, for: .horizontal)
+        donationImageView.setContentHuggingPriority(.required, for: .horizontal)
+        donationsLabel.setContentHuggingPriority(.required, for: .horizontal)
         donateButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        rewardsStackView.addArrangedSubviews([rewardWrapper, donationWrapper, donateButton])
+        rewardsStackView.addArrangedSubviews([rewardsImageView, rewardsLabel, donationImageView, donationsLabel, donateButton])
         
         view.addSubview(rewardsStackView)
         rewardsStackView.autoPinEdge(.top, to: .bottom, of: separator, withOffset: 16)
@@ -81,15 +95,6 @@ class PostRewardsVC: DonationsVC {
         rewardsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         rewardsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
-        return view
-    }
-    
-    private func createRewardsWrapper(iconNamed: String, label: UILabel) -> UIStackView {
-        let view = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
-        let imageView = UIImageView(width: 35, height: 35, imageNamed: iconNamed)
-        imageView.setContentHuggingPriority(.required, for: .horizontal)
-        label.setContentHuggingPriority(.required, for: .horizontal)
-        view.addArrangedSubviews([imageView, label])
         return view
     }
 }

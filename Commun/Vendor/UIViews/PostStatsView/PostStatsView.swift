@@ -141,8 +141,7 @@ class PostStatsView: MyView {
         
         // donations
         var donatorsText: String?
-        if let donations = post.donations?.donations {
-            let donators = Array(Set(donations.compactMap {$0.sender.representationName}))
+        if let donators = post.donations?.donators {
             
             if donators.count <= 2 {
                 donatorsText = donators.joined(separator: ", ")
