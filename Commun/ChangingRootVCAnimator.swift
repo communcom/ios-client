@@ -48,38 +48,13 @@ class ChangingRootVCAnimator: NSObject, CAAnimationDelegate {
             return
         }
         
-        if let toVC = toVC as? SplashVC,
-            let toView = toVC.view.snapshotView(afterScreenUpdates: true),
-            let slashImageSnapshotView = toVC.slashImageView.snapshotView(afterScreenUpdates: true)
-        {
-            fromVC.view.insertSubview(toView, at: 0)
-            toView.transform = CGAffineTransform(scaleX: 30, y: 30)
-            
-            let maskLayer = slashImageSnapshotView.layer
-            maskLayer.position = toVC.slashImageView.layer.position
-            maskLayer.transform = CATransform3DMakeScale(30, 30, 1)
-            fromVC.view.layer.mask = maskLayer
-            
-            // animate maskLayer
-            UIView.animate(withDuration: 0.3, animations: {
-                toView.transform = .identity
-                maskLayer.transform = CATransform3DIdentity
-            }) { (_) in
-                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = toVC
-                self.fromVC = nil
-                self.toVC = nil
-            }
-            return
-        }
-        
         (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = toVC
+        self.fromVC = nil
+        self.toVC = nil
     }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        guard let vc = toVC else {return}
-        vc.view.layer.mask = nil
         (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = toVC
-        
         fromVC = nil
         toVC = nil
     }
