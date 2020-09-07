@@ -9,12 +9,83 @@
 import Foundation
 
 class CreateCommunityVC: CreateCommunityFlowVC {
+    lazy var avatarImageView: MyAvatarImageView = {
+        let imageView = MyAvatarImageView(size: 120)
+        return imageView
+    }()
+    lazy var changeAvatarButton: UIButton = {
+        let button = UIButton.circle(size: 44, backgroundColor: .clear, imageName: "profile-edit-change-image")
+        button.addTarget(self, action: #selector(chooseAvatarButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
+    lazy var communityNameTextField: UITextField = {
+        let tf = UITextField()
+        tf.borderStyle = .none
+        tf.font = .systemFont(ofSize: 17, weight: .semibold)
+        return tf
+    }()
+    lazy var descriptionTextView: UITextView = {
+        let tv = UITextView(forExpandable: ())
+        tv.backgroundColor = .clear
+        tv.font = .systemFont(ofSize: 17, weight: .semibold)
+        tv.textContainerInset = .zero
+        tv.textContainer.lineFragmentPadding = 0
+        return tv
+    }()
+    
     override func setUp() {
         super.setUp()
         continueButton.setTitle("create community".localized().uppercaseFirst, for: .normal)
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        
+        // image wrappers
+        let avatarWrapper = UIView(forAutoLayout: ())
+        avatarWrapper.addSubview(avatarImageView)
+        avatarImageView.autoPinEdgesToSuperviewEdges()
+        avatarWrapper.addSubview(changeAvatarButton)
+        changeAvatarButton.autoPinEdge(.trailing, to: .trailing, of: avatarImageView)
+        changeAvatarButton.autoPinEdge(.bottom, to: .bottom, of: avatarImageView)
+        
+        // name
+        let communityNameField = infoField(title: "community name".localized().uppercaseFirst, editor: communityNameTextField)
+        
+        // bio
+        let descriptionField = infoField(title: "description".localized().uppercaseFirst + " (" + "optional".localized().uppercaseFirst + ")", editor: descriptionTextView)
+        
+        stackView.addArrangedSubview(avatarWrapper)
+        stackView.addArrangedSubview(communityNameField)
+        stackView.addArrangedSubview(descriptionField)
+        
+        communityNameField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        descriptionField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+    }
+    
+    private func infoField(title: String, editor: UITextEditor) -> UIView {
+        let stackView = UIStackView(axis: .vertical, spacing: 8, alignment: .leading, distribution: .fill)
+        let titleLabel = UILabel.with(text: title, textSize: 12, weight: .medium, textColor: .appGrayColor)
+        
+        stackView.addArrangedSubviews([titleLabel, editor])
+        editor.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32)
+            .isActive = true
+        
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 7, trailing: 16)
+        
+        let field = UIView(cornerRadius: 10)
+        field.backgroundColor = .appWhiteColor
+        field.borderColor = .appLightGrayColor
+        field.borderWidth = 1
+        field.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        return field
     }
     
     override func continueButtonDidTouch() {
         // TODO: - Create community
+    }
+    
+    @objc func chooseAvatarButtonDidTouch() {
+        
     }
 }
