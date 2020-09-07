@@ -68,6 +68,10 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             
             view.addSubview(stackView)
             stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+            
+            view.isUserInteractionEnabled = true
+            view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(languageFieldDidTouch)))
+            
             return view
         }()
         
@@ -111,5 +115,22 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     
     @objc func chooseAvatarButtonDidTouch() {
         
+    }
+    
+    @objc func languageFieldDidTouch() {
+        let vc = CountriesVC()
+        let nav = UINavigationController(rootViewController: vc)
+        
+        vc.selectionHandler = {country in
+            AnalyticsManger.shared.countrySelected(phoneCode: country.code, available: country.available)
+            if country.available {
+                nav.dismiss(animated: true, completion: nil)
+                
+            } else {
+                self.showAlert(title: "sorry".uppercaseFirst.localized(), message: "but we don’t support your region yet".uppercaseFirst.localized())
+            }
+        }
+        
+        present(nav, animated: true, completion: nil)
     }
 }
