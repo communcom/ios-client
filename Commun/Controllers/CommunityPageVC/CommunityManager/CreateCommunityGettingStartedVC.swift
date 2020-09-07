@@ -17,6 +17,14 @@ class CreateCommunityFlowVC: BottomFlexibleHeightVC {
         return button
     }()
     
+    override var headerStackViewEdgeInsets: UIEdgeInsets {
+        var insets = super.headerStackViewEdgeInsets
+        insets.top = 30
+        insets.left = 16
+        insets.right = 16
+        return insets
+    }
+    
     override func setUp() {
         super.setUp()
         view.backgroundColor = .appLightGrayColor
@@ -41,14 +49,6 @@ class CreateCommunityGettingStartedVC: CreateCommunityFlowVC {
         button.setContentHuggingPriority(.required, for: .horizontal)
         return button
     }()
-    
-    override var headerStackViewEdgeInsets: UIEdgeInsets {
-        var insets = super.headerStackViewEdgeInsets
-        insets.top = 30
-        insets.left = 16
-        insets.right = 16
-        return insets
-    }
     
     override func setUp() {
         super.setUp()
