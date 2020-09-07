@@ -13,10 +13,18 @@ class CreateCommunityGettingStartedVC: BottomFlexibleHeightVC {
     lazy var continueButton = CommunButton.default(height: 50, label: "continue".localized().uppercaseFirst, cornerRadius: 25, isHuggingContent: false, isDisableGrayColor: true, isDisabled: true)
     lazy var communValueLabel = UILabel.with(textSize: 13, numberOfLines: 2)
     lazy var buyButton: UIButton = {
-        let button = UIButton(height: 35, label: "+ \("buy".localized().uppercaseFirst)", backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2)
+        let button = UIButton(height: 35, label: "+ \("buy".localized().uppercaseFirst)", backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
         button.setContentHuggingPriority(.required, for: .horizontal)
         return button
     }()
+    
+    override var headerStackViewEdgeInsets: UIEdgeInsets {
+        var insets = super.headerStackViewEdgeInsets
+        insets.top = 30
+        insets.left = 16
+        insets.right = 16
+        return insets
+    }
     
     override func setUp() {
         super.setUp()
@@ -26,9 +34,7 @@ class CreateCommunityGettingStartedVC: BottomFlexibleHeightVC {
         
         let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill)
         scrollView.contentView.addSubview(stackView)
-        stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        stackView.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 16)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10), excludingEdge: .bottom)
         
         stackView.addArrangedSubviews([
             createFirstSection(),
