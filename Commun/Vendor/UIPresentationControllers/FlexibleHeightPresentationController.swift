@@ -37,9 +37,16 @@ class FlexibleHeightPresentationController: DimmingPresentationController {
             width: targetWidth,
             height: UIView.layoutFittingCompressedSize.height
         )
-        let targetHeight = presentedView.systemLayoutSizeFitting(
+        var targetHeight = presentedView.systemLayoutSizeFitting(
             fittingSize, withHorizontalFittingPriority: .required,
             verticalFittingPriority: .defaultLow).height
+        
+        if let scrollView = presentedView.subviews.first(where: {$0 is ContentHuggingScrollView}) as? ContentHuggingScrollView
+        {
+            targetHeight = scrollView.contentView.systemLayoutSizeFitting(
+                fittingSize, withHorizontalFittingPriority: .required,
+                verticalFittingPriority: .defaultLow).height
+        }
         
         var frame = safeAreaFrame
         

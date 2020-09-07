@@ -36,7 +36,6 @@ class CMActionSheet: BottomFlexibleHeightVC {
     }
     
     // MARK: - Subviews
-    lazy var headerStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
     lazy var closeButton: UIButton = {
         let button = UIButton.close(size: 30, backgroundColor: .appWhiteColor, tintColor: .appGrayColor)
         button.imageEdgeInsets = UIEdgeInsets(inset: 3)
@@ -70,14 +69,14 @@ class CMActionSheet: BottomFlexibleHeightVC {
         view.backgroundColor = backgroundColor
         
         // set up header
-        view.addSubview(headerStackView)
+        scrollView.contentView.addSubview(headerStackView)
         headerStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
         headerStackView.autoSetDimension(.height, toSize: 44)
         
         configureHeader()
         
         // set up action
-        view.addSubview(actionStackView)
+        scrollView.contentView.addSubview(actionStackView)
         actionStackView.autoPinEdge(.top, to: .bottom, of: headerStackView, withOffset: 10)
         actionStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         actionStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)

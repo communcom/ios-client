@@ -24,11 +24,17 @@ class BottomFlexibleHeightVC: BaseViewController {
     var panGestureRecognizer: UIPanGestureRecognizer?
     var interactor: SwipeDownInteractor?
     
+    lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
+    lazy var headerStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         interactor = SwipeDownInteractor()
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         view.addGestureRecognizer(panGestureRecognizer!)
+        
+        view.addSubview(scrollView)
+        scrollView.autoPinEdgesToSuperviewEdges()
     }
     
     @objc func panGestureAction(_ sender: UIPanGestureRecognizer) {
