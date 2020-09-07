@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CMActionSheet: SwipeDownDismissViewController {
+class CMActionSheet: BottomFlexibleHeightVC {
     // MARK: - Nested type
     struct Action {
         var id: String?
@@ -56,9 +56,7 @@ class CMActionSheet: SwipeDownDismissViewController {
     init(headerView: UIView?, title: String?, actions: [Action]) {
         self.actions = actions
         self.headerView = headerView ?? UILabel.with(text: title ?? "options".localized().uppercaseFirst, textSize: 15, weight: .bold)
-        super.init(nibName: nil, bundle: nil)
-        transitioningDelegate = self
-        modalPresentationStyle = .custom
+        super.init()
     }
     
     required init?(coder: NSCoder) {
@@ -154,16 +152,5 @@ class CMActionSheet: SwipeDownDismissViewController {
     // MARK: - Helper
     func actionWithId(_ id: String) -> Action? {
         actions.first(where: {$0.id == id})
-    }
-}
-
-// MARK: - UIViewControllerTransitioningDelegate
-extension CMActionSheet: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return FlexibleHeightPresentationController(presentedViewController: presented, presenting: presenting)
-    }
-    
-    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactor?.hasStarted == true ? interactor : nil
     }
 }

@@ -1,5 +1,5 @@
 //
-//  SwipeDownDismissViewController.swift
+//  BottomFlexibleHeightVC.swift
 //  Commun
 //
 //  Created by Chung Tran on 9/30/19.
@@ -9,7 +9,18 @@
 import Foundation
 import UIKit
 
-class SwipeDownDismissViewController: BaseViewController {
+class BottomFlexibleHeightVC: BaseViewController {
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        transitioningDelegate = self
+        modalPresentationStyle = .custom
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var panGestureRecognizer: UIPanGestureRecognizer?
     var interactor: SwipeDownInteractor?
     
@@ -50,5 +61,16 @@ class SwipeDownDismissViewController: BaseViewController {
         default:
             break
         }
+    }
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+extension BottomFlexibleHeightVC: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return FlexibleHeightPresentationController(presentedViewController: presented, presenting: presenting)
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor?.hasStarted == true ? interactor : nil
     }
 }

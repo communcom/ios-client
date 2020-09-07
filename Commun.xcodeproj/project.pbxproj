@@ -76,7 +76,7 @@
 		3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC6139D23419EFC00075570 /* HalfSizePresentationController.swift */; };
 		3BC613A52341AAAF00075570 /* CMCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC613A42341AAAF00075570 /* CMCheckbox.swift */; };
 		3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC613B02342140000075570 /* SwipeDownInteractor.swift */; };
-		3BC613B32342162700075570 /* SwipeDownDismissViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC613B22342162700075570 /* SwipeDownDismissViewController.swift */; };
+		3BC613B32342162700075570 /* BottomFlexibleHeightVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC613B22342162700075570 /* BottomFlexibleHeightVC.swift */; };
 		3BDD9A0F228F07EF00B2A1DA /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0E228F07EF00B2A1DA /* UIApplication+Extensions.swift */; };
 		3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AB122EEA7C300033B81 /* LocalAuthVC.swift */; };
 		3BE85D262327A50200C7E7F6 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE85D252327A50200C7E7F6 /* GridView.swift */; };
@@ -652,7 +652,7 @@
 		3BC6139D23419EFC00075570 /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
 		3BC613A42341AAAF00075570 /* CMCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMCheckbox.swift; sourceTree = "<group>"; };
 		3BC613B02342140000075570 /* SwipeDownInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeDownInteractor.swift; sourceTree = "<group>"; };
-		3BC613B22342162700075570 /* SwipeDownDismissViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeDownDismissViewController.swift; sourceTree = "<group>"; };
+		3BC613B22342162700075570 /* BottomFlexibleHeightVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomFlexibleHeightVC.swift; sourceTree = "<group>"; };
 		3BDD9A0E228F07EF00B2A1DA /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
 		3BE68AB122EEA7C300033B81 /* LocalAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthVC.swift; sourceTree = "<group>"; };
 		3BE85D252327A50200C7E7F6 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
@@ -1436,7 +1436,7 @@
 				BC5A34832429BD90001C5054 /* CountriesVC */,
 				3BE68AB022EEA79B00033B81 /* LocalAuthVC */,
 				3BB48ACF22D5F84D00F11B6A /* SetPasscodeVC.swift */,
-				3BC613AB23420FFC00075570 /* SwipeDownToDismissViewController */,
+				3BC613AB23420FFC00075570 /* BottomFlexibleHeightVC */,
 				B10DB96A240FB99B001BD0E4 /* CMFeedbackViewController.swift */,
 				BC067E592436EAE900D770AC /* TransactionInfoVC.swift */,
 				BCAFEC94243EC237003A1DC4 /* TransactionCompletedVC.swift */,
@@ -1445,13 +1445,13 @@
 			path = UIViewControllers;
 			sourceTree = "<group>";
 		};
-		3BC613AB23420FFC00075570 /* SwipeDownToDismissViewController */ = {
+		3BC613AB23420FFC00075570 /* BottomFlexibleHeightVC */ = {
 			isa = PBXGroup;
 			children = (
-				3BC613B22342162700075570 /* SwipeDownDismissViewController.swift */,
+				3BC613B22342162700075570 /* BottomFlexibleHeightVC.swift */,
 				3BC613B02342140000075570 /* SwipeDownInteractor.swift */,
 			);
-			path = SwipeDownToDismissViewController;
+			path = BottomFlexibleHeightVC;
 			sourceTree = "<group>";
 		};
 		3BDD9A09228EDA5700B2A1DA /* Controllers */ = {
@@ -3568,7 +3568,7 @@
 				BC597A89238CF20500103F4F /* FTUECommunityCell.swift in Sources */,
 				BC4AD65423B09CB4008546A4 /* BalanceCell.swift in Sources */,
 				BCD6E36924C9823E007653E2 /* MyProfileEditGeneralInfoVC.swift in Sources */,
-				3BC613B32342162700075570 /* SwipeDownDismissViewController.swift in Sources */,
+				3BC613B32342162700075570 /* BottomFlexibleHeightVC.swift in Sources */,
 				BC5A34A4242B0DA3001C5054 /* WelcomeItemVC.swift in Sources */,
 				BC6B7653236A74F000A7AF2A /* MyProfileEditBioVC.swift in Sources */,
 				BCAFEC95243EC237003A1DC4 /* TransactionCompletedVC.swift in Sources */,
