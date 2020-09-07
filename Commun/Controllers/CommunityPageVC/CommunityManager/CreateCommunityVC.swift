@@ -111,6 +111,9 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     
     override func continueButtonDidTouch() {
         // TODO: - Create community
+        dismiss(animated: true) {
+            UIApplication.topViewController()?.present(CreateCommunityCompletedVC(), animated: true, completion: nil)
+        }
     }
     
     @objc func chooseAvatarButtonDidTouch() {
