@@ -10,40 +10,57 @@ import Foundation
 
 class CreateCommunityGettingStartedVC: BottomFlexibleHeightVC {
     lazy var titleLabel = UILabel.with(text: "create community".localized().uppercaseFirst, textSize: 17, weight: .semibold)
-    lazy var closeButton = UIButton.close(size: 30, backgroundColor: .appWhiteColor)
-    lazy var continueButton = CommunButton.default(height: 50, label: "continue".localized().uppercaseFirst, cornerRadius: 25, isHuggingContent: false, isDisableGrayColor: true, isDisabled: true)
-    lazy var communValueLabel = UILabel.with(textSize: 13, numberOfLines: 2)
+    lazy var continueButton = CommunButton.default(height: 50, label: "continue".localized().uppercaseFirst, cornerRadius: 25, isHuggingContent: false)
+    lazy var communValueLabel = UILabel.with(textSize: 13, numberOfLines: 0)
     lazy var buyButton: UIButton = {
-        let button = UIButton(height: 35, label: "+ \("buy".localized().uppercaseFirst)", backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2)
+        let button = UIButton(height: 35, label: "+ \("buy".localized().uppercaseFirst)", backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
         button.setContentHuggingPriority(.required, for: .horizontal)
         return button
     }()
+    
+    override var headerStackViewEdgeInsets: UIEdgeInsets {
+        var insets = super.headerStackViewEdgeInsets
+        insets.top = 30
+        insets.left = 16
+        insets.right = 16
+        return insets
+    }
     
     override func setUp() {
         super.setUp()
         view.backgroundColor = .appLightGrayColor
         
-        view.addSubview(titleLabel)
-        titleLabel.autoPinTopAndLeadingToSuperView(inset: 32, xInset: 16)
-        
-        view.addSubview(closeButton)
-        closeButton.autoAlignAxis(.horizontal, toSameAxisOf: titleLabel)
-        closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        headerStackView.insertArrangedSubview(titleLabel, at: 0)
         
         let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill)
-        view.addSubview(stackView)
-        stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        stackView.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 16)
+        scrollView.contentView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10), excludingEdge: .bottom)
         
         stackView.addArrangedSubviews([
             createFirstSection(),
             createSecondSection()
         ])
         
-        view.addSubview(continueButton)
+        scrollView.contentView.addSubview(continueButton)
         continueButton.autoPinEdge(.top, to: .bottom, of: stackView, withOffset: 16)
         continueButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
+    }
+    
+    override func bind() {
+        super.bind()
+        BalancesViewModel.ofCurrentUser
+            .items.map {$0.first(where: {$0.symbol == Config.defaultSymbol})}
+            .filter {$0 != nil}.map {$0!}
+            .map {$0.communValue}
+            .subscribe(onNext: { (value) in
+                self.communValueLabel.attributedText = NSMutableAttributedString()
+                    .text("total balance Commun".localized().uppercaseFirst, size: 13, weight: .semibold, color: .appGrayColor)
+                    .text("\n")
+                    .text(value.formattedWithSeparator, size: 15, weight: .medium)
+                
+                self.continueButton.isEnabled = value > 10000
+            })
+            .disposed(by: disposeBag)
     }
     
     private func createFirstSection() -> UIView {

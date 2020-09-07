@@ -25,21 +25,14 @@ class FlexibleHeightPresentationController: DimmingPresentationController {
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
-        guard let containerView = containerView,
-            let presentedView = presentedView else { return .zero }
-        
-        // Make sure to account for the safe area insets
-        let safeAreaFrame = containerView.bounds
-            .inset(by: containerView.safeAreaInsets)
+        guard let safeAreaFrame = safeAreaFrame else { return .zero }
         
         let targetWidth = safeAreaFrame.width
         let fittingSize = CGSize(
             width: targetWidth,
             height: UIView.layoutFittingCompressedSize.height
         )
-        let targetHeight = presentedView.systemLayoutSizeFitting(
-            fittingSize, withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .defaultLow).height
+        let targetHeight = calculateFittingHeightOfPresentedView(fittingSize: fittingSize)
         
         var frame = safeAreaFrame
         
@@ -51,6 +44,21 @@ class FlexibleHeightPresentationController: DimmingPresentationController {
         frame.size.width = targetWidth
         frame.size.height = targetHeight
         return frame
+    }
+    
+    var safeAreaFrame: CGRect? {
+        guard let containerView = containerView else { return nil }
+        return containerView.bounds.inset(by: containerView.safeAreaInsets)
+    }
+    
+    func calculateFittingHeightOfPresentedView(fittingSize: CGSize) -> CGFloat {
+        calculateFittingHeight(of: presentedView!, fittingSize: fittingSize)
+    }
+    
+    final func calculateFittingHeight(of view: UIView, fittingSize: CGSize) -> CGFloat {
+        view.systemLayoutSizeFitting(
+            fittingSize, withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .defaultLow).height
     }
     
     override func containerViewDidLayoutSubviews() {
