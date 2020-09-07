@@ -169,6 +169,7 @@
 		BC18FA2123D54E26005DC7E3 /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */; };
 		BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */; };
 		BC18FA2723D56325005DC7E3 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2623D56325005DC7E3 /* UITextField+Extensions.swift */; };
+		BC1CF9062505E18500A247E9 /* CreateCommunityGettingStartedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1CF9052505E18500A247E9 /* CreateCommunityGettingStartedVC.swift */; };
 		BC1DF1AB2499C97D00CCA135 /* WalletDonateCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1DF1AA2499C97D00CCA135 /* WalletDonateCompletedVC.swift */; };
 		BC1E865B242C853500CF202F /* MyProfileDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1E865A242C853500CF202F /* MyProfileDetailVC.swift */; };
 		BC2260AE24D8091E00A82D8D /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2260AD24D8091E00A82D8D /* ChangePasswordVC.swift */; };
@@ -756,6 +757,7 @@
 		BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
 		BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesVC.swift; sourceTree = "<group>"; };
 		BC18FA2623D56325005DC7E3 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
+		BC1CF9052505E18500A247E9 /* CreateCommunityGettingStartedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityGettingStartedVC.swift; sourceTree = "<group>"; };
 		BC1DF1AA2499C97D00CCA135 /* WalletDonateCompletedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDonateCompletedVC.swift; sourceTree = "<group>"; };
 		BC1E865A242C853500CF202F /* MyProfileDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileDetailVC.swift; sourceTree = "<group>"; };
 		BC2260AD24D8091E00A82D8D /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
@@ -2815,6 +2817,7 @@
 				BCD8460524E6A0E7005404CD /* CommunityManageCell.swift */,
 				BCC0692024E4F8C5001419D0 /* ProposalsVC */,
 				BCD845FD24E685E1005404CD /* ReportsListVC */,
+				BC1CF9052505E18500A247E9 /* CreateCommunityGettingStartedVC.swift */,
 			);
 			path = CommunityManager;
 			sourceTree = "<group>";
@@ -3673,6 +3676,7 @@
 				B1D7AD5A23A1065A007D1A13 /* SignInViewModel.swift in Sources */,
 				BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */,
 				3B3C8B9E234796D900D8BADB /* PostEditorVC+Binding.swift in Sources */,
+				BC1CF9062505E18500A247E9 /* CreateCommunityGettingStartedVC.swift in Sources */,
 				BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */,
 				BC597A8C238D09C400103F4F /* FTUECommunitiesViewModel.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashVC.swift in Sources */,

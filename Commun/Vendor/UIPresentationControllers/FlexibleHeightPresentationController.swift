@@ -42,9 +42,14 @@ class FlexibleHeightPresentationController: DimmingPresentationController {
             verticalFittingPriority: .defaultLow).height
         
         var frame = safeAreaFrame
+        
+        if targetHeight > frame.size.height {
+            return frame
+        }
+        
         frame.origin.y += frame.size.height - targetHeight
         frame.size.width = targetWidth
-        frame.size.height = min(targetHeight, containerView.size.height)
+        frame.size.height = targetHeight
         return frame
     }
     

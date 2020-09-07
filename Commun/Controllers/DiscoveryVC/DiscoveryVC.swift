@@ -329,7 +329,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     }
     
     @objc func plusButtonDidTouch() {
-        
+        present(CreateCommunityGettingStartedVC(), animated: true, completion: nil)
     }
 }
 
