@@ -33,6 +33,9 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         return tv
     }()
     
+    lazy var languageFlagImageView = UIImageView.circle(size: 32)
+    lazy var languageDetailLabel = UILabel.with(textSize: 15, numberOfLines: 2)
+    
     override func setUp() {
         super.setUp()
         continueButton.setTitle("create community".localized().uppercaseFirst, for: .normal)
@@ -53,12 +56,29 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         // bio
         let descriptionField = infoField(title: "description".localized().uppercaseFirst + " (" + "optional".localized().uppercaseFirst + ")", editor: descriptionTextView)
         
+        let languageField: UIView = {
+            let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+            let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+            let nextButton = UIButton.circleGray(imageName: "cell-arrow", imageEdgeInsets: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
+            nextButton.isUserInteractionEnabled = false
+            
+            stackView.addArrangedSubview(languageFlagImageView)
+            stackView.addArrangedSubview(languageDetailLabel)
+            stackView.addArrangedSubview(nextButton)
+            
+            view.addSubview(stackView)
+            stackView.autoPinEdgesToSuperviewEdges()
+            return view
+        }()
+        
         stackView.addArrangedSubview(avatarWrapper)
         stackView.addArrangedSubview(communityNameField)
         stackView.addArrangedSubview(descriptionField)
+        stackView.addArrangedSubview(languageField)
         
         communityNameField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         descriptionField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        languageField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
     }
     
     private func infoField(title: String, editor: UITextEditor) -> UIView {
