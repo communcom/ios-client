@@ -9,6 +9,11 @@
 import Foundation
 import RxSwift
 
+class DiscoverySearchBarStackView: UIStackView {
+    override var intrinsicContentSize: CGSize {
+        return UIView.layoutFittingExpandedSize
+    }
+}
 class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     
     // MARK: - Properties
@@ -63,7 +68,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
             "posts".localized().uppercaseFirst
         ],
         selectedIndex: 0,
-        contentInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        contentInset: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     )
     
     lazy var contentView = UIView(forAutoLayout: ())
@@ -72,6 +77,15 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         get {searchController.searchBar}
         set {}
     }
+    
+    lazy var searchBarContainerView: DiscoverySearchBarStackView = {
+        let stackView = DiscoverySearchBarStackView(axis: .horizontal, spacing: 8, alignment: .fill, distribution: .fill)
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubviews([searchBar, plusButton])
+        return stackView
+    }()
+    
+    lazy var plusButton = UIButton.circle(size: 35, backgroundColor: .clear, imageName: "add-community")
     
     // MARK: - Methods
     override func viewWillAppear(_ animated: Bool) {
@@ -104,11 +118,13 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         contentView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
         setTopBarHidden(false)
+        
+        plusButton.isHidden = true
     }
     
     func layoutSearchBar() {
         self.definesPresentationContext = true
-        self.navigationItem.titleView = searchBar
+        self.navigationItem.titleView = searchBarContainerView
     }
     
     private func setTopBarHidden(_ hidden: Bool, animated: Bool = false) {
@@ -124,7 +140,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
                 // top tabBar
                 view.addSubview(topBarContainerView)
                 topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
-                topTabBar.scrollView.contentOffset.x = -16
+                topTabBar.scrollView.contentOffset.x = -10
                 
                 contentViewTopConstraint?.isActive = false
                 contentViewTopConstraint = contentView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
@@ -148,12 +164,16 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
                 if self.currentChildVC != self.suggestionsVC {
                     self.activeSearch()
                 }
+                self.plusButton.isHidden = true
+                self.searchBarContainerView.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
         
         searchController.searchBar.rx.cancelButtonClicked
             .subscribe(onNext: { (_) in
                 self.searchWasCancelled = true
+                self.plusButton.isHidden = self.topTabBar.selectedIndex.value != 1
+                self.searchBarContainerView.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
         
@@ -162,6 +182,8 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
                 if self.searchWasCancelled {
                     self.cancelSearch()
                 }
+                self.plusButton.isHidden = self.topTabBar.selectedIndex.value != 1
+                self.searchBarContainerView.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
         
@@ -170,6 +192,11 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
             .distinctUntilChanged()
             .subscribe(onNext: { (index) in
                 self.showChildVCWithIndex(index)
+                UIView.animate(withDuration: 0.3) {
+                    self.searchBarContainerView.layoutIfNeeded()
+                    self.plusButton.isHidden = index != 1
+                    self.searchBarContainerView.layoutIfNeeded()
+                }
             })
             .disposed(by: disposeBag)
         
