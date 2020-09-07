@@ -8,9 +8,33 @@
 
 import Foundation
 
-class CreateCommunityGettingStartedVC: BottomFlexibleHeightVC {
+class CreateCommunityFlowVC: BottomFlexibleHeightVC {
     lazy var titleLabel = UILabel.with(text: "create community".localized().uppercaseFirst, textSize: 17, weight: .semibold)
-    lazy var continueButton = CommunButton.default(height: 50, label: "continue".localized().uppercaseFirst, cornerRadius: 25, isHuggingContent: false)
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill)
+    lazy var continueButton: CommunButton = {
+        let button = CommunButton.default(height: 50, label: "continue".localized().uppercaseFirst, cornerRadius: 25, isHuggingContent: false)
+        button.addTarget(self, action: #selector(continueButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
+    
+    override func setUp() {
+        super.setUp()
+        view.backgroundColor = .appLightGrayColor
+        headerStackView.insertArrangedSubview(titleLabel, at: 0)
+        scrollView.contentView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10), excludingEdge: .bottom)
+        
+        scrollView.contentView.addSubview(continueButton)
+        continueButton.autoPinEdge(.top, to: .bottom, of: stackView, withOffset: 16)
+        continueButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
+    }
+    
+    @objc func continueButtonDidTouch() {
+        
+    }
+}
+
+class CreateCommunityGettingStartedVC: CreateCommunityFlowVC {
     lazy var communValueLabel = UILabel.with(textSize: 13, numberOfLines: 0)
     lazy var buyButton: UIButton = {
         let button = UIButton(height: 35, label: "+ \("buy".localized().uppercaseFirst)", backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
@@ -28,22 +52,10 @@ class CreateCommunityGettingStartedVC: BottomFlexibleHeightVC {
     
     override func setUp() {
         super.setUp()
-        view.backgroundColor = .appLightGrayColor
-        
-        headerStackView.insertArrangedSubview(titleLabel, at: 0)
-        
-        let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill)
-        scrollView.contentView.addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10), excludingEdge: .bottom)
-        
         stackView.addArrangedSubviews([
             createFirstSection(),
             createSecondSection()
         ])
-        
-        scrollView.contentView.addSubview(continueButton)
-        continueButton.autoPinEdge(.top, to: .bottom, of: stackView, withOffset: 16)
-        continueButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
     }
     
     override func bind() {
@@ -155,5 +167,11 @@ class CreateCommunityGettingStartedVC: BottomFlexibleHeightVC {
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10))
         
         return view
+    }
+    
+    override func continueButtonDidTouch() {
+        dismiss(animated: true) {
+            UIApplication.topViewController()?.present(CreateCommunityVC(), animated: true, completion: nil)
+        }
     }
 }
