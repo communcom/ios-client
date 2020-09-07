@@ -11,7 +11,7 @@ import Foundation
 class CreateCommunityCompletedVC: BottomFlexibleHeightVC {
     lazy var manageCommunityButton = CommunButton.default(height: 50, label: "manage community".localized().uppercaseFirst, cornerRadius: 25)
     lazy var laterButton: UIButton = {
-        let button = UIButton(height: 50, label: "later".localized().uppercaseFirst, backgroundColor: .appWhiteColor, textColor: .black, cornerRadius: 25)
+        let button = UIButton(height: 50, label: "later".localized().uppercaseFirst, backgroundColor: .appWhiteColor, textColor: .appBlackColor, cornerRadius: 25)
         button.addTarget(self, action: #selector(closeButtonDidTouch(_:)), for: .touchUpInside)
         return button
     }()
