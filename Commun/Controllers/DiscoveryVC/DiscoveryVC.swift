@@ -55,7 +55,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     lazy var topBarContainerView: UIView = {
         let view = UIView(backgroundColor: .appWhiteColor)
         view.addSubview(topTabBar)
-        topTabBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
+        topTabBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 5, left: 0, bottom: 10, right: 0))
         return view
     }()
     
@@ -85,7 +85,11 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         return stackView
     }()
     
-    lazy var plusButton = UIButton.circle(size: 35, backgroundColor: .clear, imageName: "add-community")
+    lazy var plusButton: UIButton = {
+        let button = UIButton.circle(size: 35, backgroundColor: .clear, imageName: "add-community")
+        button.addTarget(self, action: #selector(plusButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
     
     // MARK: - Methods
     override func viewWillAppear(_ animated: Bool) {
@@ -119,6 +123,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         
         setTopBarHidden(false)
         
+        searchBarContainerView.layoutIfNeeded()
         plusButton.isHidden = true
     }
     
@@ -321,6 +326,10 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
             self.usersVC.searchBarDidCancelSearching()
             self.postsVC.searchBarDidCancelSearching()
 //        }
+    }
+    
+    @objc func plusButtonDidTouch() {
+        
     }
 }
 
