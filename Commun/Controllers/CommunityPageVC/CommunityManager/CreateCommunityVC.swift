@@ -67,7 +67,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             stackView.addArrangedSubview(nextButton)
             
             view.addSubview(stackView)
-            stackView.autoPinEdgesToSuperviewEdges()
+            stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
             return view
         }()
         
@@ -79,6 +79,10 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         communityNameField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         descriptionField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         languageField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        
+        stackView.setCustomSpacing(56, after: avatarWrapper)
+        stackView.setCustomSpacing(16, after: communityNameField)
+        stackView.setCustomSpacing(16, after: descriptionField)
     }
     
     private func infoField(title: String, editor: UITextEditor) -> UIView {
