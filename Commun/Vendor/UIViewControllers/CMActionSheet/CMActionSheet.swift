@@ -36,13 +36,6 @@ class CMActionSheet: BottomFlexibleHeightVC {
     }
     
     // MARK: - Subviews
-    lazy var closeButton: UIButton = {
-        let button = UIButton.close(size: 30, backgroundColor: .appWhiteColor, tintColor: .appGrayColor)
-        button.imageEdgeInsets = UIEdgeInsets(inset: 3)
-        button.touchAreaEdgeInsets = UIEdgeInsets(inset: -7)
-        button.addTarget(self, action: #selector(closeButtonDidTouch(_:)), for: .touchUpInside)
-        return button
-    }()
     var headerView: UIView {
         didSet { configureHeader() }
     }
@@ -68,18 +61,11 @@ class CMActionSheet: BottomFlexibleHeightVC {
         
         view.backgroundColor = backgroundColor
         
-        // set up header
-        scrollView.contentView.addSubview(headerStackView)
-        headerStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
-        headerStackView.autoSetDimension(.height, toSize: 44)
-        
         configureHeader()
         
         // set up action
         scrollView.contentView.addSubview(actionStackView)
-        actionStackView.autoPinEdge(.top, to: .bottom, of: headerStackView, withOffset: 10)
-        actionStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-        actionStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+        actionStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
         actionStackView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard(inset: 16)
         
         setUpActions()
@@ -133,9 +119,6 @@ class CMActionSheet: BottomFlexibleHeightVC {
     }
     
     // MARK: - Actions
-    @objc func closeButtonDidTouch(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
     
     @objc func actionDidSelect(_ gesture: TapGesture) {
         guard let action = gesture.action else {return}

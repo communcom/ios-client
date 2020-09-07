@@ -10,7 +10,6 @@ import Foundation
 
 class CreateCommunityGettingStartedVC: BottomFlexibleHeightVC {
     lazy var titleLabel = UILabel.with(text: "create community".localized().uppercaseFirst, textSize: 17, weight: .semibold)
-    lazy var closeButton = UIButton.close(size: 30, backgroundColor: .appWhiteColor)
     lazy var continueButton = CommunButton.default(height: 50, label: "continue".localized().uppercaseFirst, cornerRadius: 25, isHuggingContent: false, isDisableGrayColor: true, isDisabled: true)
     lazy var communValueLabel = UILabel.with(textSize: 13, numberOfLines: 2)
     lazy var buyButton: UIButton = {
@@ -23,15 +22,10 @@ class CreateCommunityGettingStartedVC: BottomFlexibleHeightVC {
         super.setUp()
         view.backgroundColor = .appLightGrayColor
         
-        view.addSubview(titleLabel)
-        titleLabel.autoPinTopAndLeadingToSuperView(inset: 32, xInset: 16)
-        
-        view.addSubview(closeButton)
-        closeButton.autoAlignAxis(.horizontal, toSameAxisOf: titleLabel)
-        closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        headerStackView.insertArrangedSubview(titleLabel, at: 0)
         
         let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill)
-        view.addSubview(stackView)
+        scrollView.contentView.addSubview(stackView)
         stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         stackView.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 16)
@@ -41,7 +35,7 @@ class CreateCommunityGettingStartedVC: BottomFlexibleHeightVC {
             createSecondSection()
         ])
         
-        view.addSubview(continueButton)
+        scrollView.contentView.addSubview(continueButton)
         continueButton.autoPinEdge(.top, to: .bottom, of: stackView, withOffset: 16)
         continueButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
     }

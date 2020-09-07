@@ -9,6 +9,30 @@
 import Foundation
 import UIKit
 
+class BottomFlexibleHeightPresentationController: FlexibleHeightPresentationController {
+    override func calculateFittingHeightOfPresentedView(fittingSize: CGSize) -> CGFloat {
+        let vc = presentedViewController as! BottomFlexibleHeightVC
+        var height: CGFloat = 0
+        
+        // calculate header
+        height += vc.headerStackViewEdgeInsets.top + vc.headerStackViewEdgeInsets.bottom
+        
+        let targetWidth = safeAreaFrame!.width
+        let fittingSize = CGSize(
+            width: targetWidth - vc.headerStackViewEdgeInsets.left - vc.headerStackViewEdgeInsets.right,
+            height: UIView.layoutFittingCompressedSize.height
+        )
+        
+        height += calculateFittingHeight(of: vc.headerStackView, fittingSize: fittingSize)
+        
+        height += vc.scrollView.contentView.systemLayoutSizeFitting(
+            fittingSize, withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .defaultLow).height
+
+        return height
+    }
+}
+
 class BottomFlexibleHeightVC: BaseViewController {
     
     init() {
@@ -26,6 +50,15 @@ class BottomFlexibleHeightVC: BaseViewController {
     
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     lazy var headerStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+    lazy var closeButton: UIButton = {
+        let button = UIButton.close(size: 30, backgroundColor: .appWhiteColor, tintColor: .appGrayColor)
+        button.imageEdgeInsets = UIEdgeInsets(inset: 3)
+        button.touchAreaEdgeInsets = UIEdgeInsets(inset: -7)
+        button.addTarget(self, action: #selector(closeButtonDidTouch(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    var headerStackViewEdgeInsets: UIEdgeInsets { UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +66,14 @@ class BottomFlexibleHeightVC: BaseViewController {
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         view.addGestureRecognizer(panGestureRecognizer!)
         
+        // set up header
+        headerStackView.addArrangedSubviews([.spacer(), closeButton])
+        view.addSubview(headerStackView)
+        headerStackView.autoPinEdgesToSuperviewEdges(with: headerStackViewEdgeInsets, excludingEdge: .bottom)
+        
         view.addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewEdges()
+        scrollView.autoPinEdge(.top, to: .bottom, of: headerStackView, withOffset: headerStackViewEdgeInsets.bottom)
+        scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     }
     
     @objc func panGestureAction(_ sender: UIPanGestureRecognizer) {
@@ -68,12 +107,16 @@ class BottomFlexibleHeightVC: BaseViewController {
             break
         }
     }
+    
+    @objc func closeButtonDidTouch(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 // MARK: - UIViewControllerTransitioningDelegate
 extension BottomFlexibleHeightVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return FlexibleHeightPresentationController(presentedViewController: presented, presenting: presenting)
+        return BottomFlexibleHeightPresentationController(presentedViewController: presented, presenting: presenting)
     }
     
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
