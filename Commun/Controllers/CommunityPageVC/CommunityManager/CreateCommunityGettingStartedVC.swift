@@ -70,7 +70,7 @@ class CreateCommunityGettingStartedVC: CreateCommunityFlowVC {
                     .text("\n")
                     .text(value.formattedWithSeparator, size: 15, weight: .medium)
                 
-//                self.continueButton.isEnabled = value > 10000
+                self.continueButton.isEnabled = value > 10000
             })
             .disposed(by: disposeBag)
     }
