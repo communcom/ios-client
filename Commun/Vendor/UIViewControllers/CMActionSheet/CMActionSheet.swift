@@ -160,7 +160,7 @@ class CMActionSheet: SwipeDownDismissViewController {
 // MARK: - UIViewControllerTransitioningDelegate
 extension CMActionSheet: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return CMActionSheetPresentationController(presentedViewController: presented, presenting: presenting)
+        return FlexibleHeightPresentationController(presentedViewController: presented, presenting: presenting)
     }
     
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {

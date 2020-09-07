@@ -115,6 +115,6 @@ class CommunWalletOptionsVC: BaseViewController {
 
 extension CommunWalletOptionsVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return CMActionSheetPresentationController(presentedViewController: presented, presenting: presenting)
+        return FlexibleHeightPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }

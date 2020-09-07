@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class CMActionSheetPresentationController: DimmingPresentationController {
+class FlexibleHeightPresentationController: DimmingPresentationController {
     lazy var backingView = UIView(backgroundColor: .appLightGrayColor)
     
     override func presentationTransitionWillBegin() {
@@ -44,7 +44,7 @@ class CMActionSheetPresentationController: DimmingPresentationController {
         var frame = safeAreaFrame
         frame.origin.y += frame.size.height - targetHeight
         frame.size.width = targetWidth
-        frame.size.height = targetHeight
+        frame.size.height = min(targetHeight, containerView.size.height)
         return frame
     }
     

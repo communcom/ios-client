@@ -316,7 +316,7 @@
 		BC62BAAD2408C62A007783A6 /* DiscoveryAllViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC62BAAC2408C62A007783A6 /* DiscoveryAllViewModel.swift */; };
 		BC65FD4224514514006F0846 /* CommunWalletVC+Delegates+Datasources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC65FD4124514514006F0846 /* CommunWalletVC+Delegates+Datasources.swift */; };
 		BC65FD4724514606006F0846 /* CommunWalletOptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC65FD4624514606006F0846 /* CommunWalletOptionsVC.swift */; };
-		BC65FD4924514AD4006F0846 /* CMActionSheetPresentionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC65FD4824514AD4006F0846 /* CMActionSheetPresentionController.swift */; };
+		BC65FD4924514AD4006F0846 /* FlexibleHeightPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC65FD4824514AD4006F0846 /* FlexibleHeightPresentationController.swift */; };
 		BC65FD4D24517D98006F0846 /* CMWalletTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC65FD4C24517D98006F0846 /* CMWalletTitleView.swift */; };
 		BC6908BA240CC0A100A1F7EC /* UISearchBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6908B9240CC0A100A1F7EC /* UISearchBar+Extensions.swift */; };
 		BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7CC236FC5D00097F870 /* LoadingState.swift */; };
@@ -903,7 +903,7 @@
 		BC62BAAC2408C62A007783A6 /* DiscoveryAllViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryAllViewModel.swift; sourceTree = "<group>"; };
 		BC65FD4124514514006F0846 /* CommunWalletVC+Delegates+Datasources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunWalletVC+Delegates+Datasources.swift"; sourceTree = "<group>"; };
 		BC65FD4624514606006F0846 /* CommunWalletOptionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunWalletOptionsVC.swift; sourceTree = "<group>"; };
-		BC65FD4824514AD4006F0846 /* CMActionSheetPresentionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMActionSheetPresentionController.swift; sourceTree = "<group>"; };
+		BC65FD4824514AD4006F0846 /* FlexibleHeightPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightPresentationController.swift; sourceTree = "<group>"; };
 		BC65FD4C24517D98006F0846 /* CMWalletTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMWalletTitleView.swift; sourceTree = "<group>"; };
 		BC6908B9240CC0A100A1F7EC /* UISearchBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extensions.swift"; sourceTree = "<group>"; };
 		BC69F7CC236FC5D00097F870 /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
@@ -1403,7 +1403,7 @@
 				BC597A66238B9C2600103F4F /* CustomHeightPresentationController.swift */,
 				3BC6139D23419EFC00075570 /* HalfSizePresentationController.swift */,
 				BC597A6A238BBDAC00103F4F /* FittingSizePresentationController.swift */,
-				BC65FD4824514AD4006F0846 /* CMActionSheetPresentionController.swift */,
+				BC65FD4824514AD4006F0846 /* FlexibleHeightPresentationController.swift */,
 				BC4AD65823B1B8C7008546A4 /* BottomMenuPresentationController */,
 				BC472D9923A376B700822371 /* CardPresentationController */,
 			);
@@ -3719,7 +3719,7 @@
 				BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */,
 				BCC2FAEA2418E72000A3DD87 /* BaseSignUpVC.swift in Sources */,
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
-				BC65FD4924514AD4006F0846 /* CMActionSheetPresentionController.swift in Sources */,
+				BC65FD4924514AD4006F0846 /* FlexibleHeightPresentationController.swift in Sources */,
 				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
