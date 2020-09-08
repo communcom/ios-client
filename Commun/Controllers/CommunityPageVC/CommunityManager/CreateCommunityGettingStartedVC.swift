@@ -10,7 +10,7 @@ import Foundation
 
 class CreateCommunityFlowVC: BottomFlexibleHeightVC {
     lazy var titleLabel = UILabel.with(text: "create community".localized().uppercaseFirst, textSize: 17, weight: .semibold)
-    lazy var stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill)
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fill)
     lazy var continueButton: CommunButton = {
         let button = CommunButton.default(height: 50, label: "continue".localized().uppercaseFirst, cornerRadius: 25, isHuggingContent: false)
         button.addTarget(self, action: #selector(continueButtonDidTouch), for: .touchUpInside)

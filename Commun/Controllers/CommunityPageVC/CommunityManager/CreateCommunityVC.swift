@@ -40,7 +40,6 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         super.setUp()
         continueButton.setTitle("create community".localized().uppercaseFirst, for: .normal)
         stackView.alignment = .center
-        stackView.distribution = .fill
         
         // image wrappers
         let avatarWrapper = UIView(forAutoLayout: ())

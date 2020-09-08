@@ -179,10 +179,10 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             followButton.setContentHuggingPriority(.required, for: .horizontal)
             contactButton.isHidden = false
             
-            var text = "message".localized().uppercaseFirst
-            if defaultContacts.count > 0 {
-                text += "..."
-            }
+            let text = "message".localized().uppercaseFirst
+//            if defaultContacts.count > 0 {
+//                text += "..."
+//            }
             contactButton.setTitle(text, for: .normal)
         } else {
             followButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
