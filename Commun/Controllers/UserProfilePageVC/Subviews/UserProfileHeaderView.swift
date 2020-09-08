@@ -73,7 +73,8 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         segmentedControl.items = [
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
-            CMSegmentedControl.Item(name: "comments".localized().uppercaseFirst)
+            CMSegmentedControl.Item(name: "comments".localized().uppercaseFirst),
+            CMSegmentedControl.Item(name: "about".localized().uppercaseFirst)
         ]
     }
     
@@ -280,8 +281,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             if UIApplication.shared.canOpenURL(appURL as URL) {
                 if #available(iOS 10.0, *) {
                     UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
-                }
-                else {
+                } else {
                     UIApplication.shared.openURL(appURL as URL)
                 }
             }
@@ -289,8 +289,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
                 //redirect to safari because the user doesn't have Telegram
                 if #available(iOS 10.0, *) {
                     UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
-                }
-                else {
+                } else {
                     UIApplication.shared.openURL(webURL as URL)
                 }
             }

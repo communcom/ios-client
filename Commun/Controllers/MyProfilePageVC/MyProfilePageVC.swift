@@ -171,6 +171,12 @@ class MyProfilePageVC: UserProfilePageVC {
             description = "you haven't created any comments yet".localized().uppercaseFirst
 
             tableView.addEmptyPlaceholderFooterView(title: title, description: description)
+            
+        case .about:
+            title = "no info".localized().uppercaseFirst
+            description = "you haven't added any information about your self yet".localized().uppercaseFirst
+
+            tableView.addEmptyPlaceholderFooterView(title: title, description: description)
         }
     }
 }

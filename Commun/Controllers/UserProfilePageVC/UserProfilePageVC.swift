@@ -15,6 +15,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     enum CustomElementType: IdentifiableType, Equatable {
         case post(ResponseAPIContentGetPost)
         case comment(ResponseAPIContentGetComment)
+        case about(ResponseAPIContentGetProfile)
         
         var identity: String {
             switch self {
@@ -22,6 +23,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                 return post.identity
             case .comment(let comment):
                 return comment.identity
+            case .about(let profile):
+                return profile.identity
             }
         }
     }
@@ -128,6 +131,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         
         case .comments:
             tableView.addNotificationsLoadingFooterView()
+            
+        case .about:
+            break
         }
     }
     
@@ -145,6 +151,10 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
 
         case .comments:
             title = "no comments".localized().uppercaseFirst
+            tableView.addEmptyPlaceholderFooterView(title: title)
+            
+        case .about:
+            title = "no info".localized().uppercaseFirst
             tableView.addEmptyPlaceholderFooterView(title: title)
         }
     }
@@ -175,6 +185,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                     cell.setUp(with: comment)
                     cell.delegate = self
                     return cell
+                case .about:
+                    // TODO:
+                    return UITableViewCell()
                 }
                 return UITableViewCell()
             }
@@ -190,6 +203,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                     }
                     if let item = item as? ResponseAPIContentGetComment {
                         return .comment(item)
+                    }
+                    if let item = item as? ResponseAPIContentGetProfile {
+                        return .about(item)
                     }
                     return nil
                 }

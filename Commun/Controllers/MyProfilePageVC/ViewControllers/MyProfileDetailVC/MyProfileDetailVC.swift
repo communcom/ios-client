@@ -8,24 +8,19 @@
 
 import Foundation
 
-class MyProfileDetailVC: MyProfileDetailFlowVC {
+class MyProfileDetailVC: MyProfileDetailFlowVC, UserProfileInfoViewDelegate {
     // MARK: - Sections
-    lazy var generalInfoView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
-    lazy var contactsView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
-    lazy var linksView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+    lazy var userProfileInfoView = UserProfileInfoView(forAutoLayout: ())
     
     // MARK: - Methods
     override func setUp() {
         super.setUp()
         title = "my profile".localized().uppercaseFirst
+        userProfileInfoView.delegate = self
     }
     
     override func setUpArrangedSubviews() {
-        stackView.addArrangedSubviews([
-            generalInfoView,
-            contactsView,
-            linksView
-        ])
+        stackView.addArrangedSubview(userProfileInfoView)
     }
     
     override func viewDidSetUpStackView() {
@@ -36,22 +31,21 @@ class MyProfileDetailVC: MyProfileDetailFlowVC {
     // MARK: - Actions
     override func reloadData() {
         super.reloadData()
-        updateGeneralInfo()
-        updateContacts()
-        updateLinks()
+        guard let profile = profile else {return}
+        userProfileInfoView.setUp(with: profile)
     }
     
-    @objc func editGeneralInfoButtonDidTouch() {
+    func editGeneralInfo() {
         let vc = MyProfileEditGeneralInfoVC()
         show(vc, sender: nil)
     }
     
-    @objc func editContactsButtonDidTouch() {
+    func editContacts() {
         let vc = MyProfileEditContactsVC()
         show(vc, sender: nil)
     }
     
-    @objc func editLinksButtonDidTouch() {
+    func editLinks() {
         let vc = MyProfileEditLinksVC()
         show(vc, sender: nil)
     }

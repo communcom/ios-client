@@ -1,21 +1,61 @@
 //
-//  MyProfileDetailVC+Layout.swift
+//  UserProfileInfoView.swift
 //  Commun
 //
-//  Created by Chung Tran on 7/23/20.
+//  Created by Chung Tran on 9/8/20.
 //  Copyright © 2020 Commun Limited. All rights reserved.
 //
 
 import Foundation
+protocol UserProfileInfoViewDelegate: class {
+    func userProfileInfoViewGeneralInfoTitleDidTouch(_ userProfileInfoView: UserProfileInfoView)
+    func userProfileInfoViewLinksTitleDidTouch(_ userProfileInfoView: UserProfileInfoView)
+    func userProfileInfoViewContactsTitleDidTouch(_ userProfileInfoView: UserProfileInfoView)
+}
 
-extension MyProfileDetailVC {
-    func updateGeneralInfo() {
+extension UserProfileInfoViewDelegate where Self: MyProfileDetailVC {
+    func userProfileInfoViewGeneralInfoTitleDidTouch(_ userProfileInfoView: UserProfileInfoView) {
+        editGeneralInfo()
+    }
+    func userProfileInfoViewLinksTitleDidTouch(_ userProfileInfoView: UserProfileInfoView) {
+        editLinks()
+    }
+    func userProfileInfoViewContactsTitleDidTouch(_ userProfileInfoView: UserProfileInfoView) {
+        editContacts()
+    }
+}
+
+class UserProfileInfoView: MyView {
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 20, alignment: .fill, distribution: .fill)
+    lazy var generalInfoView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+    lazy var contactsView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+    lazy var linksView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+    weak var delegate: UserProfileInfoViewDelegate?
+    
+    override func commonInit() {
+        super.commonInit()
+        addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        stackView.addArrangedSubviews([
+            generalInfoView,
+            contactsView,
+            linksView
+        ])
+    }
+    
+    func setUp(with profile: ResponseAPIContentGetProfile) {
+        updateGeneralInfo(profile: profile)
+        updateLinks(profile: profile)
+        updateContacts(profile: profile)
+    }
+    
+    func updateGeneralInfo(profile: ResponseAPIContentGetProfile) {
         generalInfoView.removeSubviews()
         let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
         generalInfoView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
-        let headerView = sectionHeaderView(title: "general info".localized().uppercaseFirst, action: #selector(editGeneralInfoButtonDidTouch))
+        let headerView = sectionHeaderView(title: "general info".localized().uppercaseFirst, action: #selector(generalInfoTitleDidTouch))
         
         let avatarImageView: MyAvatarImageView = {
             let imageView = MyAvatarImageView(size: 120)
@@ -26,7 +66,7 @@ extension MyProfileDetailVC {
         let coverImageView: UIImageView = {
             let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleAspectFill)
             imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 335 / 150).isActive = true
-            imageView.setCover(urlString: profile?.coverUrl, namePlaceHolder: "cover-placeholder")
+            imageView.setCover(urlString: profile.coverUrl, namePlaceHolder: "cover-placeholder")
             return imageView
         }()
         
@@ -40,7 +80,7 @@ extension MyProfileDetailVC {
         
         // name
         let spacer1 = separator()
-        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, content: profile?.personal?.fullName)
+        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, content: profile.personal?.fullName)
         
         stackView.addArrangedSubviews([spacer1, nameInfoField])
         spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
@@ -55,14 +95,14 @@ extension MyProfileDetailVC {
         
         // bio
         let spacer3 = separator()
-        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile?.personal?.websiteUrl)
+        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile.personal?.websiteUrl)
         stackView.addArrangedSubviews([spacer3, websiteField])
         spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // bio
         let spacer4 = separator()
-        let bioField = infoField(title: "bio".localized().uppercaseFirst, content: profile?.personal?.biography)
+        let bioField = infoField(title: "bio".localized().uppercaseFirst, content: profile.personal?.biography)
         stackView.addArrangedSubviews([spacer4, bioField])
         spacer4.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         bioField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
@@ -75,65 +115,65 @@ extension MyProfileDetailVC {
         stackView.setCustomSpacing(0, after: spacer1)
     }
     
-    func updateContacts() {
+    func updateContacts(profile: ResponseAPIContentGetProfile) {
         contactsView.removeSubviews()
         let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
         contactsView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
-        let headerView = sectionHeaderView(title: "contacts".localized().uppercaseFirst, action: #selector(editContactsButtonDidTouch))
+        let headerView = sectionHeaderView(title: "contacts".localized().uppercaseFirst, action: #selector(contactsInfoTitleDidTouch))
         stackView.addArrangedSubview(headerView)
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // whatsapp
-        if let username = profile?.personal?.messengers?.whatsApp?.value {
+        if let username = profile.personal?.messengers?.whatsApp?.value {
             addContactField(icon: "whatsapp-icon", serviceName: "Whatsapp", username: username, to: stackView)
         }
         
         // telegram
-        if let username = profile?.personal?.messengers?.telegram?.value {
+        if let username = profile.personal?.messengers?.telegram?.value {
             addContactField(icon: "telegram-icon", serviceName: "Telegram", username: username, to: stackView)
         }
         
         // wechat
-        if let username = profile?.personal?.messengers?.weChat?.value {
+        if let username = profile.personal?.messengers?.weChat?.value {
             addContactField(icon: "wechat-icon", serviceName: "WeChat", username: username, to: stackView)
         }
         
     }
     
-    func updateLinks() {
+    func updateLinks(profile: ResponseAPIContentGetProfile) {
         linksView.removeSubviews()
         let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
         linksView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
-        let headerView = sectionHeaderView(title: "links".localized().uppercaseFirst, action: #selector(editLinksButtonDidTouch))
+        let headerView = sectionHeaderView(title: "links".localized().uppercaseFirst, action: #selector(linkInfoTitleDidTouch))
         stackView.addArrangedSubview(headerView)
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // twitter
-        if let username = profile?.personal?.links?.twitter?.value {
+        if let username = profile.personal?.links?.twitter?.value {
             addContactField(icon: "twitter-icon", serviceName: "Twitter", username: username, to: stackView)
         }
         
         // facebook
-        if let username = profile?.personal?.links?.facebook?.value {
+        if let username = profile.personal?.links?.facebook?.value {
             addContactField(icon: "facebook-icon", serviceName: "Facebook", username: username, to: stackView)
         }
         
         // instagram
-        if let username = profile?.personal?.links?.instagram?.value {
+        if let username = profile.personal?.links?.instagram?.value {
             addContactField(icon: "instagram-icon", serviceName: "Instagram", username: username, to: stackView)
         }
         
         // github
-        if let username = profile?.personal?.links?.gitHub?.value {
+        if let username = profile.personal?.links?.gitHub?.value {
             addContactField(icon: "github-icon", iconTintColor: .appBlackColor, serviceName: "Github", username: username, to: stackView)
         }
         
         // linkedin
-        if let username = profile?.personal?.links?.linkedin?.value {
+        if let username = profile.personal?.links?.linkedin?.value {
             addContactField(icon: "linkedin-icon", serviceName: "Linkedin", username: username, to: stackView)
         }
     }
@@ -182,5 +222,20 @@ extension MyProfileDetailVC {
         parentStackView.addArrangedSubviews([spacer1, stackView])
         spacer1.widthAnchor.constraint(equalTo: parentStackView.widthAnchor).isActive = true
         stackView.widthAnchor.constraint(equalTo: parentStackView.widthAnchor).isActive = true
+    }
+    
+    func separator() -> UIView { UIView(height: 2, backgroundColor: .appLightGrayColor)}
+    
+    // MARK: - Actions
+    @objc func generalInfoTitleDidTouch() {
+        delegate?.userProfileInfoViewGeneralInfoTitleDidTouch(self)
+    }
+    
+    @objc func linkInfoTitleDidTouch() {
+        delegate?.userProfileInfoViewLinksTitleDidTouch(self)
+    }
+    
+    @objc func contactsInfoTitleDidTouch() {
+        delegate?.userProfileInfoViewContactsTitleDidTouch(self)
     }
 }
