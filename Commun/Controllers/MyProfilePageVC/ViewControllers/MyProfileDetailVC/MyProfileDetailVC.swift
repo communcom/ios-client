@@ -10,17 +10,17 @@ import Foundation
 
 class MyProfileDetailVC: MyProfileDetailFlowVC, UserProfileInfoViewDelegate {
     // MARK: - Sections
-    lazy var userProfileInfoView = UserProfileInfoView(forAutoLayout: ())
+    lazy var myProfileInfoView = MyProfileInfoView(forAutoLayout: ())
     
     // MARK: - Methods
     override func setUp() {
         super.setUp()
         title = "my profile".localized().uppercaseFirst
-        userProfileInfoView.delegate = self
+        myProfileInfoView.delegate = self
     }
     
     override func setUpArrangedSubviews() {
-        stackView.addArrangedSubview(userProfileInfoView)
+        stackView.addArrangedSubview(myProfileInfoView)
     }
     
     override func viewDidSetUpStackView() {
@@ -32,7 +32,7 @@ class MyProfileDetailVC: MyProfileDetailFlowVC, UserProfileInfoViewDelegate {
     override func reloadData() {
         super.reloadData()
         guard let profile = profile else {return}
-        userProfileInfoView.setUp(with: profile)
+        myProfileInfoView.setUp(with: profile)
     }
     
     func editGeneralInfo() {

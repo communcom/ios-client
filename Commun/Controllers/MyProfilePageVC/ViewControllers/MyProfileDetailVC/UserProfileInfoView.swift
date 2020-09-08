@@ -55,63 +55,26 @@ class UserProfileInfoView: MyView {
         generalInfoView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
-        let headerView = sectionHeaderView(title: "general info".localized().uppercaseFirst, action: #selector(generalInfoTitleDidTouch))
+        let headerView = sectionHeaderView(title: "about".localized().uppercaseFirst, action: #selector(generalInfoTitleDidTouch), showArrow: false)
         
-        let avatarImageView: MyAvatarImageView = {
-            let imageView = MyAvatarImageView(size: 120)
-            imageView.setToCurrentUserAvatar()
-            return imageView
-        }()
-        
-        let coverImageView: UIImageView = {
-            let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleAspectFill)
-            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 335 / 150).isActive = true
-            imageView.setCover(urlString: profile.coverUrl, namePlaceHolder: "cover-placeholder")
-            return imageView
-        }()
-        
-        stackView.addArrangedSubviews([
-            headerView,
-            avatarImageView,
-            coverImageView
-        ])
+        stackView.addArrangedSubview(headerView)
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        coverImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
         
-        // name
+        // bio
         let spacer1 = separator()
-        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, content: profile.personal?.fullName)
-        
-        stackView.addArrangedSubviews([spacer1, nameInfoField])
-        spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        nameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        
-        // username
-        let spacer2 = separator()
-        let usernameInfoField = infoField(title: "username".localized().uppercaseFirst, content: "@" + (Config.currentUser?.name ?? ""))
-        stackView.addArrangedSubviews([spacer2, usernameInfoField])
-        spacer2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        usernameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        
-        // bio
-        let spacer3 = separator()
-        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile.personal?.websiteUrl)
-        stackView.addArrangedSubviews([spacer3, websiteField])
-        spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        
-        // bio
-        let spacer4 = separator()
         let bioField = infoField(title: "bio".localized().uppercaseFirst, content: profile.personal?.biography)
-        stackView.addArrangedSubviews([spacer4, bioField])
-        spacer4.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        stackView.addArrangedSubviews([spacer1, bioField])
+        spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         bioField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
+        // website
+        let spacer2 = separator()
+        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile.personal?.websiteUrl)
+        stackView.addArrangedSubviews([spacer2, websiteField])
+        spacer2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
-        stackView.setCustomSpacing(29, after: avatarImageView)
-        stackView.setCustomSpacing(12, after: coverImageView)
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
         stackView.setCustomSpacing(0, after: spacer1)
     }
     
@@ -179,7 +142,7 @@ class UserProfileInfoView: MyView {
     }
     
     // MARK: - View builders
-    private func sectionHeaderView(title: String, action: Selector) -> UIStackView {
+    fileprivate func sectionHeaderView(title: String, action: Selector, showArrow: Bool = true) -> UIStackView {
         let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         stackView.autoSetDimension(.height, toSize: 55)
         let label = UILabel.with(text: title, textSize: 17, weight: .semibold)
@@ -189,10 +152,11 @@ class UserProfileInfoView: MyView {
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
         
         arrow.addTarget(self, action: action, for: .touchUpInside)
+        arrow.isHidden = !showArrow
         return stackView
     }
     
-    private func infoField(title: String, content: String?) -> UIStackView {
+    fileprivate func infoField(title: String, content: String?) -> UIStackView {
         let stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .leading, distribution: .fill)
         let titleLabel = UILabel.with(text: title, textSize: 12, weight: .medium, textColor: .appGrayColor)
         let contentLabel = UILabel.with(text: content ?? " ", textSize: 17, weight: .semibold, textColor: .appBlackColor, numberOfLines: 0)
@@ -202,7 +166,7 @@ class UserProfileInfoView: MyView {
         return stackView
     }
     
-    private func addContactField(icon: String?, iconTintColor: UIColor? = nil, serviceName: String, username: String?, to parentStackView: UIStackView) {
+    fileprivate func addContactField(icon: String?, iconTintColor: UIColor? = nil, serviceName: String, username: String?, to parentStackView: UIStackView) {
         let stackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
         let icon = UIImageView(width: 20, height: 20, imageNamed: icon)
         if let tintColor = iconTintColor {
@@ -237,5 +201,73 @@ class UserProfileInfoView: MyView {
     
     @objc func contactsInfoTitleDidTouch() {
         delegate?.userProfileInfoViewContactsTitleDidTouch(self)
+    }
+}
+
+class MyProfileInfoView: UserProfileInfoView {
+    override func updateGeneralInfo(profile: ResponseAPIContentGetProfile) {
+        generalInfoView.removeSubviews()
+        let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
+        generalInfoView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        
+        let headerView = sectionHeaderView(title: "general info".localized().uppercaseFirst, action: #selector(generalInfoTitleDidTouch))
+        
+        let avatarImageView: MyAvatarImageView = {
+            let imageView = MyAvatarImageView(size: 120)
+            imageView.setToCurrentUserAvatar()
+            return imageView
+        }()
+        
+        let coverImageView: UIImageView = {
+            let imageView = UIImageView(cornerRadius: 7, contentMode: .scaleAspectFill)
+            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 335 / 150).isActive = true
+            imageView.setCover(urlString: profile.coverUrl, namePlaceHolder: "cover-placeholder")
+            return imageView
+        }()
+        
+        stackView.addArrangedSubviews([
+            headerView,
+            avatarImageView,
+            coverImageView
+        ])
+        headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        coverImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
+        
+        // name
+        let spacer1 = separator()
+        let nameInfoField = infoField(title: "name".localized().uppercaseFirst, content: profile.personal?.fullName)
+        
+        stackView.addArrangedSubviews([spacer1, nameInfoField])
+        spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        nameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // username
+        let spacer2 = separator()
+        let usernameInfoField = infoField(title: "username".localized().uppercaseFirst, content: "@" + (Config.currentUser?.name ?? ""))
+        stackView.addArrangedSubviews([spacer2, usernameInfoField])
+        spacer2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        usernameInfoField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // bio
+        let spacer3 = separator()
+        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile.personal?.websiteUrl)
+        stackView.addArrangedSubviews([spacer3, websiteField])
+        spacer3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // bio
+        let spacer4 = separator()
+        let bioField = infoField(title: "bio".localized().uppercaseFirst, content: profile.personal?.biography)
+        stackView.addArrangedSubviews([spacer4, bioField])
+        spacer4.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        bioField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
+        
+        stackView.setCustomSpacing(29, after: avatarImageView)
+        stackView.setCustomSpacing(12, after: coverImageView)
+        stackView.setCustomSpacing(0, after: spacer1)
     }
 }
