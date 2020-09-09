@@ -18,7 +18,7 @@ class UserProfileAboutCell: MyTableViewCell, ListItemCellType {
         super.setUpViews()
         backgroundColor = .appLightGrayColor
         addSubview(userProfileInfoView)
-        userProfileInfoView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10))
+        userProfileInfoView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10))
     }
     
     func setUp(with profile: ResponseAPIContentGetProfile) {
