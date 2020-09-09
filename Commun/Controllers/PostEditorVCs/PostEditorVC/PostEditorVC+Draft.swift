@@ -57,11 +57,10 @@ extension PostEditorVC {
         DispatchQueue.main.sync {
             shouldSave = self.shouldSaveDraft()
         }
-        guard let community = viewModel.community.value,
-            shouldSave else {return}
+        guard shouldSave else {return}
         
         // save community
-        if let encoded = try? JSONEncoder().encode(community) {
+        if let community = viewModel.community.value, let encoded = try? JSONEncoder().encode(community) {
             UserDefaults.standard.set(encoded, forKey: communityDraftKey)
         }
         

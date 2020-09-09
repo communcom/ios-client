@@ -88,6 +88,7 @@ class PostEditorVC: EditorVC {
     lazy var communityNameLabel = UILabel.with(text: "hint type choose community".localized().uppercaseFirst, textSize: 15, weight: .semibold, numberOfLines: 0)
     lazy var titleTextView: UITextView = {
         let titleTextView = UITextView(forExpandable: ())
+        titleTextView.backgroundColor = .clear
         titleTextView.textContainerInset = UIEdgeInsets.zero
         titleTextView.textContainer.lineFragmentPadding = 0
         titleTextView.typingAttributes = [.font: UIFont.systemFont(ofSize: 21, weight: .bold)]
