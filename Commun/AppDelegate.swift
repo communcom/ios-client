@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let notificationTappedRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
     let shareExtensionDataRelay = BehaviorRelay<ShareExtensionData?>(value: nil)
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
-    private var disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
 
     // MARK: - RootVCs
     var splashVC: SplashVC { SplashVC() }

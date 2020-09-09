@@ -157,10 +157,46 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     }
     
     override func continueButtonDidTouch() {
-        // TODO: - Create community
-        dismiss(animated: true) {
-            UIApplication.topViewController()?.present(CreateCommunityCompletedVC(), animated: true, completion: nil)
-        }
+        view.endEditing(true)
+        
+        guard let name = communityNameTextField.text,
+            let language = countryRelay.value?.language?.code
+        else {return}
+            
+        RestAPIManager.instance.createNewCommunity(name: name)
+            .flatMap { result in
+                let single: Single<String>
+                if !self.didSetAvatar || self.avatarImageView.image == nil {single = .just("")}
+                else { single = RestAPIManager.instance.uploadImage(self.avatarImageView.image!) }
+                return single
+                    .flatMap {RestAPIManager.instance.commmunitySetSettings(name: name, description: self.descriptionTextView.text, language: language, communityId: result.community.communityId, avatarUrl: $0)}
+                    .map {_ in result.community.communityId}
+            }
+            .flatMap {communityId in
+                BlockchainManager.instance.transferPoints(to: "communcreate", number: 10000, currency: "CMN", memo: "for community: \(communityId)")
+                    .flatMap {RestAPIManager.instance.waitForTransactionWith(id: $0).andThen(Single<(String, String)>.just((communityId, $0)))}
+            }
+            .flatMap { (communityId, trxId) in
+                RestAPIManager.instance.startCommunityCreation(communityId: communityId, transferTrxId: trxId)
+                    .map {_ in communityId}
+            }
+            .subscribe(onSuccess: { communityId in
+                self.dismiss(animated: true) {
+                    UIApplication.topViewController()?.present(CreateCommunityCompletedVC(), animated: true, completion: nil)
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let disposeBag = appDelegate.disposeBag
+                    BlockchainManager.instance.followCommunity(communityId).subscribe().disposed(by: disposeBag)
+                    BlockchainManager.instance.regLeader(communityId: communityId)
+                        .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                        .andThen(
+                            BlockchainManager.instance.voteLeader(communityId: communityId, leader: Config.currentUser?.id ?? "")
+                                .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                        ).subscribe().disposed(by: disposeBag)
+                }
+            }) { (error) in
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
     
     @objc func chooseAvatarButtonDidTouch() {
