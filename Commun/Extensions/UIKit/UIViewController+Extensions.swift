@@ -92,7 +92,7 @@ extension UIViewController {
     func hideHud() {
         let vc = tabBarController ?? navigationController ?? parent ?? self
         
-        MBProgressHUD.hide(for: vc.view, animated: false)
+        MBProgressHUD.hide(for: UIApplication.shared.keyWindow ?? vc.view, animated: false)
     }
     
     func showIndetermineHudWithMessage(_ message: String?) {
@@ -102,7 +102,7 @@ extension UIViewController {
         hideHud()
         
         // show new hud
-        let hud = MBProgressHUD.showAdded(to: vc.view, animated: false)
+        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow ?? vc.view, animated: false)
         hud.mode = MBProgressHUDMode.indeterminate
         hud.isUserInteractionEnabled = true
         hud.label.text = message
@@ -115,7 +115,7 @@ extension UIViewController {
         hideHud()
         
         // show new hud
-        let hud = MBProgressHUD.showAdded(to: vc.view, animated: false)
+        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow ?? vc.view, animated: false)
         hud.mode = .customView
         let image = UIImage(named: "checkmark-large")
         let imageView = UIImageView(image: image)

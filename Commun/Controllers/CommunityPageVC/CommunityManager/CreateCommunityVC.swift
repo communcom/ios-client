@@ -162,12 +162,14 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         guard let name = communityNameTextField.text,
             let language = countryRelay.value?.language?.code
         else {return}
+        
+        showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
             
         RestAPIManager.instance.createNewCommunity(name: name)
             .flatMap { result in
                 let description = self.descriptionTextView.text ?? ""
                 let single: Single<String>
-                if !self.didSetAvatar || self.avatarImageView.image == nil {single = .just("")}
+                if !self.didSetAvatar || self.avatarImageView.image == nil { single = .just("") }
                 else { single = RestAPIManager.instance.uploadImage(self.avatarImageView.image!) }
                 return single
                     .flatMap {RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: $0)}
@@ -182,6 +184,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
                     .map {_ in communityId}
             }
             .subscribe(onSuccess: { communityId in
+                self.hideHud()
                 self.dismiss(animated: true) {
                     UIApplication.topViewController()?.present(CreateCommunityCompletedVC(), animated: true, completion: nil)
                     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -195,6 +198,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
                         ).subscribe().disposed(by: disposeBag)
                 }
             }) { (error) in
+                self.hideHud()
                 self.showError(error)
             }
             .disposed(by: disposeBag)
