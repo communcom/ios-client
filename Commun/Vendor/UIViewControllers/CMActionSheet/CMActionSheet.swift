@@ -65,8 +65,7 @@ class CMActionSheet: BottomFlexibleHeightVC {
         
         // set up action
         scrollView.contentView.addSubview(actionStackView)
-        actionStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
-        actionStackView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard(inset: 16)
+        actionStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 16, right: 10))
         
         setUpActions()
     }

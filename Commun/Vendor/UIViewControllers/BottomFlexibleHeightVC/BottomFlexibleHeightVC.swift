@@ -73,7 +73,9 @@ class BottomFlexibleHeightVC: BaseViewController {
         
         view.addSubview(scrollView)
         scrollView.autoPinEdge(.top, to: .bottom, of: headerStackView, withOffset: headerStackViewEdgeInsets.bottom)
-        scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        scrollView.autoPinEdge(toSuperviewEdge: .leading)
+        scrollView.autoPinEdge(toSuperviewEdge: .trailing)
+        scrollView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard()
     }
     
     @objc func panGestureAction(_ sender: UIPanGestureRecognizer) {
