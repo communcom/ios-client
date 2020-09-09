@@ -86,6 +86,9 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         stackView.setCustomSpacing(56, after: avatarWrapper)
         stackView.setCustomSpacing(16, after: communityNameField)
         stackView.setCustomSpacing(16, after: descriptionField)
+        
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
     }
     
     private func infoField(title: String, editor: UITextEditor) -> UIView {
@@ -138,5 +141,9 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         }
         
         present(nav, animated: true, completion: nil)
+    }
+    
+    @objc func endEditing() {
+        view.endEditing(true)
     }
 }
