@@ -1215,7 +1215,11 @@
         "name": "Russia",
         "code": "7",
         "available": true,
-        "emoji": "🇷🇺"
+        "emoji": "🇷🇺",
+        "language": {
+            "code": "ru",
+            "name": "Русский язык"
+        }
     },
     {
         "countryCode": "RW",
@@ -1600,7 +1604,11 @@
         "name": "United States",
         "code": "1",
         "available": true,
-        "emoji": "🇺🇸"
+        "emoji": "🇺🇸",
+        "language": {
+            "code": "en",
+            "name": "English"
+        }
     },
     {
         "countryCode": "UY",

@@ -9,12 +9,18 @@
 import Foundation
 
 // MARK: - Nested type
+struct Language: Decodable {
+    let code: String
+    let name: String?
+}
+
 struct Country: Decodable {
     let code: String
     let name: String
     let countryCode: String
     let available: Bool
     let emoji: String
+    let language: Language?
     
     static func getAll() -> [Country] {
         let data = try! Data(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "countries", ofType: "json")!), options: .mappedIfSafe)

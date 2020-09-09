@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 class CreateCommunityVC: CreateCommunityFlowVC {
     lazy var avatarImageView: MyAvatarImageView = {
@@ -35,6 +37,8 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     
     lazy var languageFlagImageView = UIImageView.circle(size: 32)
     lazy var languageDetailLabel = UILabel.with(textSize: 15, numberOfLines: 2)
+    
+    let countryRelay = BehaviorRelay<Country?>(value: nil)
     
     override func setUp() {
         super.setUp()
@@ -91,6 +95,46 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
     }
     
+    override func bind() {
+        super.bind()
+        Observable.combineLatest(
+            communityNameTextField.rx.text.orEmpty,
+            countryRelay
+        )
+            .map({ (name, country) -> Bool in
+                !name.isEmpty && (country?.language?.code != nil)
+            })
+            .bind(to: continueButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        countryRelay
+            .subscribe(onNext: { (country) in
+                guard let country = country else {
+                    self.languageFlagImageView.isHidden = true
+                    self.languageDetailLabel.text = "language".localized().uppercaseFirst
+                    self.languageDetailLabel.textColor = .appGrayColor
+                    return
+                }
+                self.languageFlagImageView.isHidden = false
+                var flagImageNamed = ""
+                switch country.language?.code {
+                case "en":
+                    flagImageNamed = "american-flag"
+                case "ru":
+                    flagImageNamed = "russian-flag"
+                default:
+                    return
+                }
+                self.languageFlagImageView.image = UIImage(named: flagImageNamed)
+                self.languageDetailLabel.attributedText = NSMutableAttributedString()
+                    .text(country.name, size: 15, weight: .medium)
+                    .text("\n")
+                    .text(country.language?.name ?? country.language?.code ?? "", size: 12, weight: .medium, color: .appGrayColor)
+                    
+            })
+            .disposed(by: disposeBag)
+    }
+    
     private func infoField(title: String, editor: UITextEditor) -> UIView {
         let stackView = UIStackView(axis: .vertical, spacing: 8, alignment: .leading, distribution: .fill)
         let titleLabel = UILabel.with(text: title, textSize: 12, weight: .medium, textColor: .appGrayColor)
@@ -127,14 +171,13 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             self.view.endEditing(true)
         }
         
-        let vc = CountriesVC()
+        let vc = LanguagesVC()
         let nav = UINavigationController(rootViewController: vc)
         
         vc.selectionHandler = {country in
-            AnalyticsManger.shared.countrySelected(phoneCode: country.code, available: country.available)
             if country.available {
                 nav.dismiss(animated: true, completion: nil)
-                
+                self.countryRelay.accept(country)
             } else {
                 self.showAlert(title: "sorry".uppercaseFirst.localized(), message: "but we don’t support your region yet".uppercaseFirst.localized())
             }
