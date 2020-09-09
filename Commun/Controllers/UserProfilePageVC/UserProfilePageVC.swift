@@ -104,6 +104,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         
         // Register new cell type
         tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
+        tableView.register(UserProfileAboutCell.self, forCellReuseIdentifier: "AboutCell")
         
         // title
         username = profile.username
@@ -133,7 +134,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
             tableView.addNotificationsLoadingFooterView()
             
         case .about:
-            break
+            tableView.tableFooterView = UIView()
         }
     }
     
@@ -185,9 +186,11 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                     cell.setUp(with: comment)
                     cell.delegate = self
                     return cell
-                case .about:
-                    // TODO:
-                    return UITableViewCell()
+                case .about(let profile):
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "AboutCell") as! UserProfileAboutCell
+                    cell.setUp(with: profile)
+//                    cell.delegate = self
+                    return cell
                 }
                 return UITableViewCell()
             }

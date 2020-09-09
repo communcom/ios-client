@@ -46,12 +46,13 @@ extension UserProfilePageVC: UITableViewDelegate {
         
         switch item {
         case var post as ResponseAPIContentGetPost:
+            guard let cell = cell as? PostCell, cell.postIdentity == post.identity else {return}
             (viewModel as! UserProfilePageViewModel).postsVM.rowHeights[post.identity] = cell.bounds.height
             
             // record post view
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 if tableView.isCellVisible(indexPath: indexPath) &&
-                    (cell as! PostCell).post?.identity == post.identity &&
+                    cell.postIdentity == post.identity &&
                     !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity)
                 {
                     post.markAsViewed().disposed(by: self.disposeBag)
@@ -64,6 +65,7 @@ extension UserProfilePageVC: UITableViewDelegate {
                 post.notifyChanged()
             }
         case let comment as ResponseAPIContentGetComment:
+            guard let cell = cell as? CommentCell, cell.comment?.identity == comment.identity else {return}
             (viewModel as! UserProfilePageViewModel).commentsVM.rowHeights[comment.identity] = cell.bounds.height
         default:
             break

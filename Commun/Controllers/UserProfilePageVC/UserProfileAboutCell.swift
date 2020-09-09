@@ -12,8 +12,16 @@ protocol UserProfileAboutCellProtocol: class {}
 class UserProfileAboutCell: MyTableViewCell, ListItemCellType {
     weak var delegate: UserProfileAboutCellProtocol?
     lazy var userProfileDetailVC = MyProfileDetailVC()
+    lazy var userProfileInfoView = UserProfileInfoView(forAutoLayout: ())
     
-    func setUp(with post: ResponseAPIContentGetProfile) {
-        
+    override func setUpViews() {
+        super.setUpViews()
+        backgroundColor = .appLightGrayColor
+        addSubview(userProfileInfoView)
+        userProfileInfoView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10))
+    }
+    
+    func setUp(with profile: ResponseAPIContentGetProfile) {
+        userProfileInfoView.setUp(with: profile)
     }
 }
