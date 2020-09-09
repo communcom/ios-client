@@ -165,11 +165,12 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             
         RestAPIManager.instance.createNewCommunity(name: name)
             .flatMap { result in
+                let description = self.descriptionTextView.text ?? ""
                 let single: Single<String>
                 if !self.didSetAvatar || self.avatarImageView.image == nil {single = .just("")}
                 else { single = RestAPIManager.instance.uploadImage(self.avatarImageView.image!) }
                 return single
-                    .flatMap {RestAPIManager.instance.commmunitySetSettings(name: name, description: self.descriptionTextView.text, language: language, communityId: result.community.communityId, avatarUrl: $0)}
+                    .flatMap {RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: $0)}
                     .map {_ in result.community.communityId}
             }
             .flatMap {communityId in
