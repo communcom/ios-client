@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CMActionSheet: BottomFlexibleHeightVC {
+class CMActionSheet: CMBottomSheet {
     // MARK: - Nested type
     struct Action {
         var id: String?

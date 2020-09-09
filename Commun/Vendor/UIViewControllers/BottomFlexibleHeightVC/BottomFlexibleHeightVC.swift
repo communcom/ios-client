@@ -45,9 +45,6 @@ class BottomFlexibleHeightVC: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var panGestureRecognizer: UIPanGestureRecognizer?
-    var interactor: SwipeDownInteractor?
-    
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     lazy var headerStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
     lazy var closeButton: UIButton = {
@@ -62,10 +59,6 @@ class BottomFlexibleHeightVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        interactor = SwipeDownInteractor()
-        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
-        view.addGestureRecognizer(panGestureRecognizer!)
-        
         // set up header
         headerStackView.addArrangedSubviews([.spacer(), closeButton])
         view.addSubview(headerStackView)
@@ -76,6 +69,29 @@ class BottomFlexibleHeightVC: BaseViewController {
         scrollView.autoPinEdge(toSuperviewEdge: .leading)
         scrollView.autoPinEdge(toSuperviewEdge: .trailing)
         scrollView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard()
+    }
+    
+    @objc func closeButtonDidTouch(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+extension BottomFlexibleHeightVC: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return BottomFlexibleHeightPresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
+class CMBottomSheet: BottomFlexibleHeightVC {
+    var panGestureRecognizer: UIPanGestureRecognizer?
+    var interactor: SwipeDownInteractor?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        interactor = SwipeDownInteractor()
+        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
+        view.addGestureRecognizer(panGestureRecognizer!)
     }
     
     @objc func panGestureAction(_ sender: UIPanGestureRecognizer) {
@@ -109,18 +125,9 @@ class BottomFlexibleHeightVC: BaseViewController {
             break
         }
     }
-    
-    @objc func closeButtonDidTouch(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
 }
 
-// MARK: - UIViewControllerTransitioningDelegate
-extension BottomFlexibleHeightVC: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return BottomFlexibleHeightPresentationController(presentedViewController: presented, presenting: presenting)
-    }
-    
+extension CMBottomSheet {
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return interactor?.hasStarted == true ? interactor : nil
     }

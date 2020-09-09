@@ -120,6 +120,10 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     }
     
     @objc func languageFieldDidTouch() {
+        UIView.performWithoutAnimation {
+            self.view.endEditing(true)
+        }
+        
         let vc = CountriesVC()
         let nav = UINavigationController(rootViewController: vc)
         
