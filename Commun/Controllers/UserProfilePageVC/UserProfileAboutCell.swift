@@ -16,6 +16,7 @@ class UserProfileAboutCell: MyTableViewCell, ListItemCellType {
     
     override func setUpViews() {
         super.setUpViews()
+        selectionStyle = .none
         backgroundColor = .appLightGrayColor
         addSubview(userProfileInfoView)
         userProfileInfoView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10))

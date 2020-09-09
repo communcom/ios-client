@@ -30,6 +30,7 @@ class UserProfileInfoView: MyView {
     lazy var generalInfoView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     lazy var contactsView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     lazy var linksView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+    lazy var joinedDateView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     weak var delegate: UserProfileInfoViewDelegate?
     
     var isInfoEmpty = true
@@ -41,7 +42,8 @@ class UserProfileInfoView: MyView {
         stackView.addArrangedSubviews([
             generalInfoView,
             contactsView,
-            linksView
+            linksView,
+            joinedDateView
         ])
     }
     
@@ -50,10 +52,12 @@ class UserProfileInfoView: MyView {
         updateGeneralInfo(profile: profile)
         updateLinks(profile: profile)
         updateContacts(profile: profile)
+        updateJoinedDate(profile: profile)
     }
     
     func updateGeneralInfo(profile: ResponseAPIContentGetProfile) {
         var isGeneralInfoEmpty = true
+        generalInfoView.isHidden = false
         
         generalInfoView.removeSubviews()
         let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
@@ -87,6 +91,14 @@ class UserProfileInfoView: MyView {
         }
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
         isInfoEmpty = isInfoEmpty && isGeneralInfoEmpty
+        
+        if isGeneralInfoEmpty {
+            handleGeneralInfoEmpty()
+        }
+    }
+    
+    func handleGeneralInfoEmpty() {
+        generalInfoView.isHidden = true
     }
     
     func updateContacts(profile: ResponseAPIContentGetProfile) {
@@ -121,7 +133,9 @@ class UserProfileInfoView: MyView {
         
         isInfoEmpty = isInfoEmpty && isContactsEmpty
         
-        handleContactEmpty()
+        if isContactsEmpty {
+            handleContactEmpty()
+        }
     }
     
     func handleContactEmpty() {
@@ -172,11 +186,26 @@ class UserProfileInfoView: MyView {
         
         isInfoEmpty = isInfoEmpty && isLinkEmpty
         
-        handleLinksEmpty()
+        if isLinkEmpty {
+            handleLinksEmpty()
+        }
     }
     
     func handleLinksEmpty() {
         linksView.isHidden = true
+    }
+    
+    fileprivate func updateJoinedDate(profile: ResponseAPIContentGetProfile) {
+        var joinedDateLabel: UILabel
+        if let label = joinedDateView.viewWithTag(1) as? UILabel {
+            joinedDateLabel = label
+        } else {
+            joinedDateLabel = UILabel.with(textSize: 15, weight: .medium, textColor: .appGrayColor)
+            joinedDateLabel.tag = 1
+            joinedDateView.addSubview(joinedDateLabel)
+            joinedDateLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16))
+        }
+        joinedDateLabel.text = Formatter.joinedText(with: profile.registration?.time)
     }
     
     // MARK: - View builders
@@ -243,6 +272,11 @@ class UserProfileInfoView: MyView {
 }
 
 class MyProfileInfoView: UserProfileInfoView {
+    override func commonInit() {
+        super.commonInit()
+        joinedDateView.isHidden = true
+    }
+    
     override func updateGeneralInfo(profile: ResponseAPIContentGetProfile) {
         generalInfoView.removeSubviews()
         let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
@@ -307,6 +341,10 @@ class MyProfileInfoView: UserProfileInfoView {
         stackView.setCustomSpacing(29, after: avatarImageView)
         stackView.setCustomSpacing(12, after: coverImageView)
         stackView.setCustomSpacing(0, after: spacer1)
+    }
+    
+    override func handleGeneralInfoEmpty() {
+        // do nothing
     }
     
     override func handleContactEmpty() {

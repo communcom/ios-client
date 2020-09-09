@@ -39,7 +39,11 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     }
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {
-        Observable.merge(postsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .posts}, commentsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .comments})
+        Observable.merge(
+            postsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .posts},
+            commentsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .comments},
+            showAboutSubject.filter {[weak self] _ in self?.segmentedItem.value == .about}.map {_ in .listEnded}
+        )
     }
     
     override func loadProfile() {
