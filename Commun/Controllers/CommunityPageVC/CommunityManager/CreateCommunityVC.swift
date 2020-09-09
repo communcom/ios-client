@@ -183,6 +183,16 @@ class CreateCommunityVC: CreateCommunityFlowVC {
                 RestAPIManager.instance.startCommunityCreation(communityId: communityId, transferTrxId: trxId)
                     .map {_ in communityId}
             }
+            .flatMap {communityId in
+                BlockchainManager.instance.regLeader(communityId: communityId)
+                    .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                    .andThen(Single<String>.just(communityId))
+            }
+            .flatMap {communityId in
+                BlockchainManager.instance.voteLeader(communityId: communityId, leader: Config.currentUser?.id ?? "")
+                    .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                    .andThen(Single<String>.just(communityId))
+            }
             .subscribe(onSuccess: { communityId in
                 self.hideHud()
                 self.dismiss(animated: true) {
@@ -190,12 +200,6 @@ class CreateCommunityVC: CreateCommunityFlowVC {
                     let appDelegate = UIApplication.shared.delegate as! AppDelegate
                     let disposeBag = appDelegate.disposeBag
                     BlockchainManager.instance.followCommunity(communityId).subscribe().disposed(by: disposeBag)
-                    BlockchainManager.instance.regLeader(communityId: communityId)
-                        .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
-                        .andThen(
-                            BlockchainManager.instance.voteLeader(communityId: communityId, leader: Config.currentUser?.id ?? "")
-                                .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
-                        ).subscribe().disposed(by: disposeBag)
                 }
             }) { (error) in
                 self.hideHud()
