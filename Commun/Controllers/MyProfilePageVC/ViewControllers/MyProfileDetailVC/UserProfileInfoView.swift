@@ -26,6 +26,10 @@ extension UserProfileInfoViewDelegate where Self: MyProfileDetailVC {
 }
 
 class UserProfileInfoView: MyView {
+    class NextButton: UIButton {
+        var serviceName: String?
+        var username: String?
+    }
     lazy var stackView = UIStackView(axis: .vertical, spacing: 20, alignment: .fill, distribution: .fill)
     lazy var generalInfoView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     lazy var contactsView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
@@ -253,7 +257,13 @@ class UserProfileInfoView: MyView {
             .text("@" + (username ?? ""), size: 14, weight: .semibold, color: .appMainColor)
             .withParagraphStyle(lineSpacing: 5)
         stackView.addArrangedSubviews([icon, label])
-        let arrow = UIButton.nextArrow()
+        let arrow = NextButton(width: 24, height: 24, backgroundColor: .appLightGrayColor, cornerRadius: 24 / 2)
+        arrow.setImage(UIImage(named: "next-arrow"), for: .normal)
+        arrow.imageEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8)
+        arrow.tintColor = .appGrayColor
+        arrow.serviceName = serviceName
+        arrow.username = username
+        arrow.addTarget(self, action: #selector(contactFieldDidTouch(_:)), for: .touchUpInside)
         stackView.addArrangedSubview(arrow)
         
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -280,6 +290,48 @@ class UserProfileInfoView: MyView {
     
     @objc func contactsInfoTitleDidTouch() {
         delegate?.userProfileInfoViewContactsTitleDidTouch(self)
+    }
+    
+    @objc func contactFieldDidTouch(_ button: NextButton) {
+        guard let serviceName = button.serviceName,
+            let username = button.username
+            else {
+                return
+        }
+        let appPrefix: String?
+        let webPrefix: String
+        
+        switch serviceName {
+        case "Telegram":
+            appPrefix = "tg://resolve?domain="
+            webPrefix = "https://t.me/"
+        case "Facebook":
+            appPrefix = "fb://profile/"
+            webPrefix = "https://fb.com/"
+        case "Twitter":
+            appPrefix = "twitter://user?screen_name="
+            webPrefix = "https://twitter.com/"
+        case "Instagram":
+            appPrefix = "instagram://user?username="
+            webPrefix = "http://instagram.com/"
+        case "Github":
+            appPrefix = nil
+            webPrefix = "http://github.com/"
+        case "Linkedin":
+            appPrefix = "linkedin://profile/"
+            webPrefix = "https://www.linkedin.com/in/"
+        default:
+            return
+        }
+        
+        let appURL = NSURL(string: "\(appPrefix ?? "")\(username)")!
+        let webURL = NSURL(string: "\(webPrefix)\(username)")!
+        if UIApplication.shared.canOpenURL(appURL as URL) {
+            UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+        }
+        return
     }
 }
 
