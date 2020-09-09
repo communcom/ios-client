@@ -33,6 +33,8 @@ class UserProfileInfoView: MyView {
     lazy var joinedDateView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     weak var delegate: UserProfileInfoViewDelegate?
     
+    var shouldAddArrowToHeader: Bool {false}
+    
     var isInfoEmpty = true
     
     override func commonInit() {
@@ -64,7 +66,7 @@ class UserProfileInfoView: MyView {
         generalInfoView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
-        let headerView = sectionHeaderView(title: "about".localized().uppercaseFirst, action: #selector(generalInfoTitleDidTouch), showArrow: false)
+        let headerView = sectionHeaderView(title: "about".localized().uppercaseFirst, action: #selector(generalInfoTitleDidTouch))
         
         stackView.addArrangedSubview(headerView)
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
@@ -209,7 +211,7 @@ class UserProfileInfoView: MyView {
     }
     
     // MARK: - View builders
-    fileprivate func sectionHeaderView(title: String, action: Selector, showArrow: Bool = true) -> UIStackView {
+    fileprivate func sectionHeaderView(title: String, action: Selector) -> UIStackView {
         let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         stackView.autoSetDimension(.height, toSize: 55)
         let label = UILabel.with(text: title, textSize: 17, weight: .semibold)
@@ -219,21 +221,26 @@ class UserProfileInfoView: MyView {
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
         
         arrow.addTarget(self, action: action, for: .touchUpInside)
-        arrow.isHidden = !showArrow
+        arrow.isHidden = !shouldAddArrowToHeader
         return stackView
     }
     
-    fileprivate func infoField(title: String, content: String?) -> UIStackView {
+    fileprivate func infoField(title: String, content: String?, showArrow: Bool = false) -> UIStackView {
+        let hStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         let stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .leading, distribution: .fill)
         let titleLabel = UILabel.with(text: title, textSize: 12, weight: .medium, textColor: .appGrayColor)
         let contentLabel = UILabel.with(text: content ?? " ", textSize: 17, weight: .semibold, textColor: .appBlackColor, numberOfLines: 0)
         stackView.addArrangedSubviews([titleLabel, contentLabel])
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 7, trailing: 16)
-        return stackView
+        let arrow = UIButton.nextArrow()
+        hStackView.addArrangedSubviews([stackView, arrow])
+        arrow.isHidden = !showArrow
+        return hStackView
     }
     
-    fileprivate func addContactField(icon: String?, iconTintColor: UIColor? = nil, serviceName: String, username: String?, to parentStackView: UIStackView) {
+    @discardableResult
+    fileprivate func addContactField(icon: String?, iconTintColor: UIColor? = nil, serviceName: String, username: String?, to parentStackView: UIStackView) -> UIStackView {
         let stackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
         let icon = UIImageView(width: 20, height: 20, imageNamed: icon)
         if let tintColor = iconTintColor {
@@ -246,6 +253,9 @@ class UserProfileInfoView: MyView {
             .text("@" + (username ?? ""), size: 14, weight: .semibold, color: .appMainColor)
             .withParagraphStyle(lineSpacing: 5)
         stackView.addArrangedSubviews([icon, label])
+        let arrow = UIButton.nextArrow()
+        stackView.addArrangedSubview(arrow)
+        
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         
@@ -253,6 +263,8 @@ class UserProfileInfoView: MyView {
         parentStackView.addArrangedSubviews([spacer1, stackView])
         spacer1.widthAnchor.constraint(equalTo: parentStackView.widthAnchor).isActive = true
         stackView.widthAnchor.constraint(equalTo: parentStackView.widthAnchor).isActive = true
+        
+        return stackView
     }
     
     func separator() -> UIView { UIView(height: 2, backgroundColor: .appLightGrayColor)}
@@ -272,6 +284,8 @@ class UserProfileInfoView: MyView {
 }
 
 class MyProfileInfoView: UserProfileInfoView {
+    override var shouldAddArrowToHeader: Bool {true}
+    
     override func commonInit() {
         super.commonInit()
         joinedDateView.isHidden = true
@@ -341,6 +355,13 @@ class MyProfileInfoView: UserProfileInfoView {
         stackView.setCustomSpacing(29, after: avatarImageView)
         stackView.setCustomSpacing(12, after: coverImageView)
         stackView.setCustomSpacing(0, after: spacer1)
+    }
+    
+    override func addContactField(icon: String?, iconTintColor: UIColor? = nil, serviceName: String, username: String?, to parentStackView: UIStackView) -> UIStackView {
+        let contactField = super.addContactField(icon: icon, iconTintColor: iconTintColor, serviceName: serviceName, username: username, to: parentStackView)
+        // hide arrow
+        contactField.arrangedSubviews.last?.isHidden = true
+        return contactField
     }
     
     override func handleGeneralInfoEmpty() {
