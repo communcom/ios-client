@@ -32,6 +32,8 @@ class UserProfileInfoView: MyView {
     lazy var linksView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     weak var delegate: UserProfileInfoViewDelegate?
     
+    var isInfoEmpty = true
+    
     override func commonInit() {
         super.commonInit()
         addSubview(stackView)
@@ -44,12 +46,15 @@ class UserProfileInfoView: MyView {
     }
     
     func setUp(with profile: ResponseAPIContentGetProfile) {
+        isInfoEmpty = true
         updateGeneralInfo(profile: profile)
         updateLinks(profile: profile)
         updateContacts(profile: profile)
     }
     
     func updateGeneralInfo(profile: ResponseAPIContentGetProfile) {
+        var isGeneralInfoEmpty = true
+        
         generalInfoView.removeSubviews()
         let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
         generalInfoView.addSubview(stackView)
@@ -61,24 +66,32 @@ class UserProfileInfoView: MyView {
         headerView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // bio
-        let spacer1 = separator()
-        let bioField = infoField(title: "bio".localized().uppercaseFirst, content: profile.personal?.biography)
-        stackView.addArrangedSubviews([spacer1, bioField])
-        spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        bioField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        if let biography = profile.personal?.biography, !biography.trimmed.isEmpty {
+            isGeneralInfoEmpty = false
+            let spacer1 = separator()
+            let bioField = infoField(title: "bio".localized().uppercaseFirst, content: profile.personal?.biography)
+            stackView.addArrangedSubviews([spacer1, bioField])
+            spacer1.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+            bioField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+            stackView.setCustomSpacing(0, after: spacer1)
+        }
         
         // website
-        let spacer2 = separator()
-        let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile.personal?.websiteUrl)
-        stackView.addArrangedSubviews([spacer2, websiteField])
-        spacer2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        
+        if let website = profile.personal?.websiteUrl, !website.trimmed.isEmpty {
+            isGeneralInfoEmpty = false
+            let spacer2 = separator()
+            let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile.personal?.websiteUrl)
+            stackView.addArrangedSubviews([spacer2, websiteField])
+            spacer2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+            websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        }
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
-        stackView.setCustomSpacing(0, after: spacer1)
+        isInfoEmpty = isInfoEmpty && isGeneralInfoEmpty
     }
     
     func updateContacts(profile: ResponseAPIContentGetProfile) {
+        var isContactsEmpty = true
+        contactsView.isHidden = false
         contactsView.removeSubviews()
         let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
         contactsView.addSubview(stackView)
@@ -90,22 +103,34 @@ class UserProfileInfoView: MyView {
         
         // whatsapp
         if let username = profile.personal?.messengers?.whatsApp?.value {
+            isContactsEmpty = false
             addContactField(icon: "whatsapp-icon", serviceName: "Whatsapp", username: username, to: stackView)
         }
         
         // telegram
         if let username = profile.personal?.messengers?.telegram?.value {
+            isContactsEmpty = false
             addContactField(icon: "telegram-icon", serviceName: "Telegram", username: username, to: stackView)
         }
         
         // wechat
         if let username = profile.personal?.messengers?.weChat?.value {
+            isContactsEmpty = false
             addContactField(icon: "wechat-icon", serviceName: "WeChat", username: username, to: stackView)
         }
         
+        isInfoEmpty = isInfoEmpty && isContactsEmpty
+        
+        handleContactEmpty()
+    }
+    
+    func handleContactEmpty() {
+        contactsView.isHidden = true
     }
     
     func updateLinks(profile: ResponseAPIContentGetProfile) {
+        var isLinkEmpty = true
+        linksView.isHidden = false
         linksView.removeSubviews()
         let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .center, distribution: .fill)
         linksView.addSubview(stackView)
@@ -117,28 +142,41 @@ class UserProfileInfoView: MyView {
         
         // twitter
         if let username = profile.personal?.links?.twitter?.value {
+            isLinkEmpty = false
             addContactField(icon: "twitter-icon", serviceName: "Twitter", username: username, to: stackView)
         }
         
         // facebook
         if let username = profile.personal?.links?.facebook?.value {
+            isLinkEmpty = false
             addContactField(icon: "facebook-icon", serviceName: "Facebook", username: username, to: stackView)
         }
         
         // instagram
         if let username = profile.personal?.links?.instagram?.value {
+            isLinkEmpty = false
             addContactField(icon: "instagram-icon", serviceName: "Instagram", username: username, to: stackView)
         }
         
         // github
         if let username = profile.personal?.links?.gitHub?.value {
+            isLinkEmpty = false
             addContactField(icon: "github-icon", iconTintColor: .appBlackColor, serviceName: "Github", username: username, to: stackView)
         }
         
         // linkedin
         if let username = profile.personal?.links?.linkedin?.value {
+            isLinkEmpty = false
             addContactField(icon: "linkedin-icon", serviceName: "Linkedin", username: username, to: stackView)
         }
+        
+        isInfoEmpty = isInfoEmpty && isLinkEmpty
+        
+        handleLinksEmpty()
+    }
+    
+    func handleLinksEmpty() {
+        linksView.isHidden = true
     }
     
     // MARK: - View builders
@@ -269,5 +307,13 @@ class MyProfileInfoView: UserProfileInfoView {
         stackView.setCustomSpacing(29, after: avatarImageView)
         stackView.setCustomSpacing(12, after: coverImageView)
         stackView.setCustomSpacing(0, after: spacer1)
+    }
+    
+    override func handleContactEmpty() {
+        // do nothing
+    }
+    
+    override func handleLinksEmpty() {
+        // do nothing
     }
 }
