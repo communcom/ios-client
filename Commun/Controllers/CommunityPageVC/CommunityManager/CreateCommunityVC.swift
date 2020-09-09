@@ -41,6 +41,36 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     let countryRelay = BehaviorRelay<Country?>(value: nil)
     var didSetAvatar = false
     
+//    var isContinueProccessing = false
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // retrieving undone community
+//        RestAPIManager.instance.getCreatedCommunities()
+//            .subscribe(onSuccess: { (result) in
+//                if let community = result.communities?.last(where: {$0.isDone == false || $0.currentStep != "done"})
+//                {
+//                    self.showAlert(title: "continue".localized().uppercaseFirst + "?", message: "you haven't finished creating community" + " \"" + community.name + "\".\n" + "would you like to continue creating it?".localized().uppercaseFirst, buttonTitles: ["OK", "create a new one".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
+//                        if index == 0 {
+//                            self.isContinueProccessing = true
+//                            self.communityNameTextField.text = community.name
+//                            self.avatarImageView.setAvatar(urlString: community.avatarUrl)
+//                            self.showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
+//                            self.startCommunityCreation(communityId: community.communityId, trxId: nil)
+//                                .subscribe(onSuccess: { (communityId) in
+//                                    self.handleCommunityCreated(communityId: communityId)
+//                                }) { (error) in
+//                                    self.handleCommunityCreationError(error: error)
+//                                }
+//                                .disposed(by: self.disposeBag)
+//                        }
+//                    }
+//                }
+//            })
+//            .disposed(by: disposeBag)
+    }
+    
     override func setUp() {
         super.setUp()
         continueButton.setTitle("create community".localized().uppercaseFirst, for: .normal)
@@ -181,9 +211,19 @@ class CreateCommunityVC: CreateCommunityFlowVC {
                     .flatMap {RestAPIManager.instance.waitForTransactionWith(id: $0).andThen(Single<(String, String)>.just((communityId, $0)))}
             }
             .flatMap { (communityId, trxId) in
-                RestAPIManager.instance.startCommunityCreation(communityId: communityId, transferTrxId: trxId)
-                    .map {_ in communityId}
+                self.startCommunityCreation(communityId: communityId, trxId: trxId)
             }
+            .subscribe(onSuccess: { communityId in
+                self.handleCommunityCreated(communityId: communityId)
+            }) { (error) in
+                self.handleCommunityCreationError(error: error)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func startCommunityCreation(communityId: String, trxId: String?) -> Single<String> {
+        RestAPIManager.instance.startCommunityCreation(communityId: communityId, transferTrxId: trxId)
+            .map {_ in communityId}
             .flatMap {communityId in
                 BlockchainManager.instance.regLeader(communityId: communityId)
                     .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
@@ -194,19 +234,21 @@ class CreateCommunityVC: CreateCommunityFlowVC {
                     .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
                     .andThen(Single<String>.just(communityId))
             }
-            .subscribe(onSuccess: { communityId in
-                self.hideHud()
-                self.dismiss(animated: true) {
-                    UIApplication.topViewController()?.present(CreateCommunityCompletedVC(), animated: true, completion: nil)
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    let disposeBag = appDelegate.disposeBag
-                    BlockchainManager.instance.followCommunity(communityId).subscribe().disposed(by: disposeBag)
-                }
-            }) { (error) in
-                self.hideHud()
-                self.showError(error)
-            }
-            .disposed(by: disposeBag)
+    }
+    
+    func handleCommunityCreated(communityId: String) {
+        self.hideHud()
+        self.dismiss(animated: true) {
+            UIApplication.topViewController()?.present(CreateCommunityCompletedVC(), animated: true, completion: nil)
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let disposeBag = appDelegate.disposeBag
+            BlockchainManager.instance.followCommunity(communityId).subscribe().disposed(by: disposeBag)
+        }
+    }
+    
+    func handleCommunityCreationError(error: Error) {
+        self.hideHud()
+        self.showError(error)
     }
     
     @objc func chooseAvatarButtonDidTouch() {
