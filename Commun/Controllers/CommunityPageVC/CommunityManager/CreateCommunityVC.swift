@@ -39,6 +39,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     lazy var languageDetailLabel = UILabel.with(textSize: 15, numberOfLines: 2)
     
     let countryRelay = BehaviorRelay<Country?>(value: nil)
+    var didSetAvatar = false
     
     override func setUp() {
         super.setUp()
@@ -163,7 +164,18 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     }
     
     @objc func chooseAvatarButtonDidTouch() {
+        // On updating
+        let chooseAvatarVC = ProfileChooseAvatarVC.fromStoryboard("ProfileChooseAvatarVC", withIdentifier: "ProfileChooseAvatarVC")
+        self.present(chooseAvatarVC, animated: true, completion: nil)
         
+        chooseAvatarVC.viewModel.didSelectImage
+            .filter {$0 != nil}
+            .map {$0!}
+            .subscribe(onNext: { (image) in
+                self.avatarImageView.image = image
+                self.didSetAvatar = true
+            })
+            .disposed(by: disposeBag)
     }
     
     @objc func languageFieldDidTouch() {
