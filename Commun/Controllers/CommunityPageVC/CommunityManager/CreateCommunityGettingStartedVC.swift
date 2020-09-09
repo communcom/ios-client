@@ -45,7 +45,7 @@ class CreateCommunityFlowVC: BottomFlexibleHeightVC {
 class CreateCommunityGettingStartedVC: CreateCommunityFlowVC {
     lazy var communValueLabel = UILabel.with(textSize: 13, numberOfLines: 0)
     lazy var buyButton: UIButton = {
-        let button = UIButton(height: 35, label: "+ \("buy".localized().uppercaseFirst)", backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+        let button = UIButton(height: 35, label: "+ \("buy".localized().uppercaseFirst)", backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16))
         button.setContentHuggingPriority(.required, for: .horizontal)
         return button
     }()
@@ -143,14 +143,14 @@ class CreateCommunityGettingStartedVC: CreateCommunityFlowVC {
                 NSMutableAttributedString()
                     .text("367 961.112 " + "points".localized(), size: 15, weight: .semibold, color: .appMainColor)
                     .text("\n")
-                    .text("will be sent to the bounty service".localized().uppercaseFirst + " 🔥", size: 15, color: .appGrayColor)
+                    .text("will be sent to the bounty service".localized().uppercaseFirst, size: 15, color: .appGrayColor)
             )
             
             let thirdPoint = createContent(
                 NSMutableAttributedString()
                     .text("3 415 329.619 " + "points".localized(), size: 15, weight: .semibold, color: .appMainColor)
                     .text("\n")
-                    .text("will be transferred to your wallet".localized().uppercaseFirst + " 🔥", size: 15, color: .appGrayColor)
+                    .text("will be transferred to your wallet".localized().uppercaseFirst, size: 15, color: .appGrayColor)
             )
             
             stackView.addArrangedSubviews([

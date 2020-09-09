@@ -292,6 +292,7 @@ class TabBarVC: UITabBarController {
         appDelegate.notificationTappedRelay
             .skipWhile {$0 == .empty}
             .subscribe(onNext: { (item) in
+                if UIApplication.topViewController() is CreateCommunityVC {return}
                 self.selectedViewController?.navigateWithNotificationItem(item)
             })
             .disposed(by: disposeBag)

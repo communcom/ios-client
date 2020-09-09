@@ -239,7 +239,9 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     func handleCommunityCreated(communityId: String) {
         self.hideHud()
         self.dismiss(animated: true) {
-            UIApplication.topViewController()?.present(CreateCommunityCompletedVC(), animated: true, completion: nil)
+            let vc = CreateCommunityCompletedVC()
+            vc.communityId = communityId
+            UIApplication.topViewController()?.present(vc, animated: true, completion: nil)
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let disposeBag = appDelegate.disposeBag
             BlockchainManager.instance.followCommunity(communityId).subscribe().disposed(by: disposeBag)

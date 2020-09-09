@@ -9,7 +9,12 @@
 import Foundation
 
 class CreateCommunityCompletedVC: BottomFlexibleHeightVC {
-    lazy var manageCommunityButton = CommunButton.default(height: 50, label: "manage community".localized().uppercaseFirst, cornerRadius: 25)
+    var communityId: String?
+    lazy var manageCommunityButton: CommunButton = {
+        let button = CommunButton.default(height: 50, label: "manage community".localized().uppercaseFirst, cornerRadius: 25)
+        button.addTarget(self, action: #selector(manageCommunityButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
     lazy var laterButton: UIButton = {
         let button = UIButton(height: 50, label: "later".localized().uppercaseFirst, backgroundColor: .appWhiteColor, textColor: .appBlackColor, cornerRadius: 25)
         button.addTarget(self, action: #selector(closeButtonDidTouch(_:)), for: .touchUpInside)
@@ -42,5 +47,12 @@ class CreateCommunityCompletedVC: BottomFlexibleHeightVC {
         stackView.addArrangedSubviews([label, manageCommunityButton, laterButton])
         
         stackView.setCustomSpacing(10, after: manageCommunityButton)
+    }
+    
+    @objc func manageCommunityButtonDidTouch() {
+        dismiss(animated: true) {
+            guard let communityId = self.communityId else {return}
+            UIApplication.topViewController()?.showCommunityWithCommunityId(communityId)
+        }
     }
 }
