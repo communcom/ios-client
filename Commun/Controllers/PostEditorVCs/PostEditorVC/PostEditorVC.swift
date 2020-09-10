@@ -96,7 +96,7 @@ class PostEditorVC: EditorVC {
         titleTextView.delegate = self
         return titleTextView
     }() 
-    lazy var titleTextViewCountLabel = UILabel.descriptionLabel("0/240")
+    lazy var titleTextViewCountLabel = UILabel.descriptionLabel("0/256")
     lazy var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     var contentTextView: ContentTextView {
@@ -158,7 +158,7 @@ class PostEditorVC: EditorVC {
         actionButton.setTitle("send post".localized().uppercaseFirst, for: .normal)
         
         // titleTextView
-        titleTextViewCountLabel.isHidden = true
+//        titleTextViewCountLabel.isHidden = true
         
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."

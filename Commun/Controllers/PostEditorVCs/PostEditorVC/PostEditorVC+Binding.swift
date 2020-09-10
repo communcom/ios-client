@@ -52,7 +52,7 @@ extension PostEditorVC {
             .disposed(by: disposeBag)
         
         titleTextView.rx.text.orEmpty
-            .map {$0.utf8.count > self.titleBytesLimit ? UIColor.red : UIColor.appLightGrayColor}
+            .map {$0.utf8.count > self.titleBytesLimit ? UIColor.red : UIColor.appGrayColor}
             .distinctUntilChanged()
             .subscribe(onNext: {color in
                 self.titleTextViewCountLabel.textColor = color
