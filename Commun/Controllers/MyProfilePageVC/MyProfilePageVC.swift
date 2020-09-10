@@ -85,6 +85,15 @@ class MyProfilePageVC: UserProfilePageVC {
         super.setUp(profile: profile)
         ResponseAPIContentGetProfile.current = profile
         
+        if profile.createdCommunities == nil {
+            RestAPIManager.instance.getCreatedCommunities()
+                .subscribe(onSuccess: { (result) in
+                    var profile = ResponseAPIContentGetProfile.current
+                    profile?.createdCommunities = result.communities
+                    ResponseAPIContentGetProfile.current = profile
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
     override func createHeaderView() -> UserProfileHeaderView {
