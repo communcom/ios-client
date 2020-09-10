@@ -50,11 +50,13 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     // MARK: - Initializers
     init(communityId: String?, authorizationRequired: Bool = true) {
         super.init(profileId: communityId, authorizationRequired: authorizationRequired)
+        leadsVM.fetchNext()
     }
     
     init(communityAlias: String, authorizationRequired: Bool = true) {
         self.communityAlias = communityAlias
         super.init(profileId: nil, authorizationRequired: authorizationRequired)
+        leadsVM.fetchNext()
     }
     
     // MARK: - Methods
@@ -146,6 +148,31 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                 }
                 self.proposalsVM.reload(clearResult: true)
                 self.reportsVM.reload(clearResult: true)
+            })
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(
+            profile,
+            leadsVM.items
+        )
+            .subscribe(onNext: { (community, leaders) in
+                // if regLeader was not called
+                if let communityId = community?.communityId,
+                    ResponseAPIContentGetProfile.current?.createdCommunities?.contains(where: {$0.communityId == communityId}) == true,
+                    !leaders.contains(where: {$0.userId == Config.currentUser?.id})
+                {
+                    BlockchainManager.instance.regLeader(communityId: communityId)
+                        .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                        .andThen(BlockchainManager.instance.voteLeader(communityId: communityId, leader: Config.currentUser?.id ?? ""))
+                        .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                        .subscribe(onCompleted: {
+                            self.reload()
+                            if self.segmentedItem.value != .leads {
+                                self.leadsVM.reload(clearResult: true)
+                            }
+                        })
+                        .disposed(by: self.disposeBag)
+                }
             })
             .disposed(by: disposeBag)
         
