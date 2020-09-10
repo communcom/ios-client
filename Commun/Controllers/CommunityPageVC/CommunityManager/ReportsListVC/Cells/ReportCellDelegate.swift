@@ -59,7 +59,7 @@ extension ReportCellDelegate where Self: BaseViewController {
             // create ban proposal
             
             guard let communityId = report.post?.contentId.communityId,
-                let permlink = report.post?.contentId.permlink
+                let permlink = report.post?.contentId.permlink, let autor = report.post?.author?.userId
             else {return}
             let proposalId = BlockchainManager.instance.generateRandomProposalId()
             
@@ -77,7 +77,7 @@ extension ReportCellDelegate where Self: BaseViewController {
                     .map {$0.issuer ?? ""}
             }
             
-            request.flatMap {BlockchainManager.instance.createBanProposal(proposalId: proposalId, communityCode: communityId, commnityIssuer: $0, permlink: permlink)}
+            request.flatMap {BlockchainManager.instance.createBanProposal(proposalId: proposalId, communityCode: communityId, commnityIssuer: $0, permlink: permlink, author: autor)}
                 .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
                 .subscribe(onCompleted: {
                     report.isPerformingAction = false
