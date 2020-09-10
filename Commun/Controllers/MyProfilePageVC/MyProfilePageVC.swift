@@ -83,7 +83,8 @@ class MyProfilePageVC: UserProfilePageVC {
     
     override func setUp(profile: ResponseAPIContentGetProfile) {
         super.setUp(profile: profile)
-        UserDefaults.standard.set(object: profile, forKey: Config.currentUserGetProfileKey)
+        ResponseAPIContentGetProfile.current = profile
+        
     }
     
     override func createHeaderView() -> UserProfileHeaderView {

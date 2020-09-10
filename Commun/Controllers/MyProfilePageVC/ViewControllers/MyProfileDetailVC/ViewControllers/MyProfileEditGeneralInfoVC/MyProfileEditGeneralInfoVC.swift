@@ -225,7 +225,7 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
             }
             .flatMapCompletable {BlockchainManager.instance.updateProfile(params: $0, waitForTransaction: false)}
             .subscribe(onCompleted: {
-                UserDefaults.standard.set(object: profile, forKey: Config.currentUserGetProfileKey)
+                ResponseAPIContentGetProfile.current = profile
                 self.hideHud()
                 self.showDone("saved".localized().uppercaseFirst)
                 self.saveButton.isEnabled = false

@@ -185,7 +185,7 @@ class MyProfileEditLinksVC: MyProfileDetailFlowVC, GeneralLinkCellDelegate {
         BlockchainManager.instance.updateProfile(params: params, waitForTransaction: false)
             .subscribe(onCompleted: {
                 profile?.personal?.links = links
-                UserDefaults.standard.set(object: profile, forKey: Config.currentUserGetProfileKey)
+                ResponseAPIContentGetProfile.current = profile
                 self.hideHud()
                 self.showDone("saved".localized().uppercaseFirst)
                 self.back()
