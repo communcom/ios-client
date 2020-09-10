@@ -131,6 +131,7 @@ extension CommunityPageVC {
                 handle: {
                     self.openProposalsVC()
                 },
+                bottomMargin: 16,
                 showNextButton: true
             )
             let stackView = action.view.subviews.first as! UIStackView
@@ -139,7 +140,16 @@ extension CommunityPageVC {
             return action
         }()
         
-        showCMActionSheet(headerView: headerView, actions: [reportAction, proposalAction])
+        let settingAction = CMActionSheet.Action.iconFirst(
+            title: "settings".localized().uppercaseFirst,
+            iconName: "profile_options_settings",
+            handle: {
+            
+            },
+            showNextButton: true
+        )
+        
+        showCMActionSheet(headerView: headerView, actions: [reportAction, proposalAction, settingAction])
     }
     
     @objc func proposalsButtonDidTouch() {
