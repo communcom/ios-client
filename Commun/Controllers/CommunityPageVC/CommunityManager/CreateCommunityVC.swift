@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 class CreateCommunityVC: CreateCommunityFlowVC {
+    let descriptionLimit = 500
     // save transaction id in case of non-completed creating community process
     var savedTransactionId: [String: String]? {
         get {
@@ -40,10 +41,12 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         let tv = UITextView(forExpandable: ())
         tv.backgroundColor = .clear
         tv.font = .systemFont(ofSize: 17, weight: .semibold)
-        tv.textContainerInset = .zero
+        tv.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
         tv.textContainer.lineFragmentPadding = 0
         return tv
     }()
+    
+    lazy var textCountLabel = UILabel.with(textSize: 12, textColor: .appWhiteColor, textAlignment: .center)
     
     lazy var languageFlagImageView = UIImageView.circle(size: 32)
     lazy var languageDetailLabel = UILabel.with(textSize: 15, numberOfLines: 2)
@@ -104,6 +107,18 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         // bio
         let descriptionField = infoField(title: "description".localized().uppercaseFirst + " (" + "optional".localized().uppercaseFirst + ")", editor: descriptionTextView)
         
+        let textCountLabelWrapper: UIView = {
+            let view = UIView(height: 24, backgroundColor: .appBlackColor, cornerRadius: 12)
+            view.addSubview(textCountLabel)
+            textCountLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+            textCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 8)
+            textCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 8)
+            return view
+        }()
+        
+        descriptionField.addSubview(textCountLabelWrapper)
+        textCountLabelWrapper.autoPinBottomAndTrailingToSuperView(inset: 10, xInset: 16)
+        
         let languageField: UIView = {
             let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
             let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
@@ -142,12 +157,23 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     
     override func bind() {
         super.bind()
+        // description count
+        descriptionTextView.rx.text.orEmpty
+            .map {$0.count}
+            .subscribe(onNext: { (count) in
+                self.textCountLabel.text = "\(count)/\(self.descriptionLimit)"
+                self.textCountLabel.superview?.backgroundColor = count > self.descriptionLimit ? .appRedColor : .appBlackColor
+                self.textCountLabel.textColor = count > self.descriptionLimit ? .white : .appWhiteColor
+            })
+            .disposed(by: disposeBag)
+        
         Observable.combineLatest(
             communityNameTextField.rx.text.orEmpty,
+            descriptionTextView.rx.text.orEmpty,
             countryRelay
         )
-            .map({ (name, country) -> Bool in
-                !name.isEmpty && (country?.language?.code != nil)
+            .map({ (name, description, country) -> Bool in
+                (!name.isEmpty) && (description.count <= self.descriptionLimit) && (country?.language?.code != nil)
             })
             .bind(to: continueButton.rx.isEnabled)
             .disposed(by: disposeBag)
