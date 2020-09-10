@@ -206,6 +206,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         guard let name = communityNameTextField.text,
             let language = countryRelay.value?.language?.code
         else {return}
+        let description = self.descriptionTextView.text ?? ""
         
         showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
         
@@ -222,7 +223,6 @@ class CreateCommunityVC: CreateCommunityFlowVC {
                         .map {(result, $0)}
                 }
                 .flatMap { (result, imageUrl) in
-                    let description = self.descriptionTextView.text ?? ""
                     return RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: imageUrl)
                         .map {_ in result.community.communityId}
                 }
