@@ -34,7 +34,7 @@ class CreateCommunityCompletedVC: BottomFlexibleHeightVC {
             .text("Woahhh!", size: 21, weight: .bold)
             .text("\n")
             .text("\n")
-            .text("now you have a leaders in your community to make some changes and vote for them!".localized().uppercaseFirst, size: 15, weight: .bold, color: .appGrayColor)
+            .text("now you became a leader in your community to make some changes and vote for them!".localized().uppercaseFirst, size: 15, weight: .bold, color: .appGrayColor)
             .text("\n")
             .text("\n")
             .text("read more about".localized().uppercaseFirst, size: 15, weight: .bold, color: .appGrayColor)

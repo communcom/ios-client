@@ -47,6 +47,7 @@
 "adding referralId" = "добавление реферального кода";
 "add to default contacts" = "добавить в список предпочтительных способов связи";
 "after confirmation, we'll generate for" = "после подтверждения мы сгенерируем для Вас криптографический пароль из 52 символов. Мы предлагаем Вам скопировать пароль или скачать файл PDF с ним. Мы не храним мастер-пароли и не имеем возможности их восстановить. \n\nМы настоятельно рекомендуем сохранить пароль и сделать его копию.";
+"after creating a community" = "после создания сообщества";
 "ago" = "назад";
 "all" = "все";
 "all-in-one" = "Весь контент";
@@ -123,6 +124,8 @@
 "commun doesn't have access to your password" = "Commun не имеет доступа к паролю, а также в случае утери мы не сможем его восстановить";
 "communities" = "сообщества";
 "community hidden" = "сообщество скрыто";
+"community management" = "управлении сообщества";
+"community name" = "имя сообщества";
 "community unhidden" = "сообщество раскрыто";
 "confirm it's you" = "подтвердить, что это Вы";
 "confirm password" = "подтвердить пароль";
@@ -142,6 +145,8 @@
 "create your passcode" = "создайте свой пин-код";
 "create your username" = "создать имя пользователя";
 "create Ban Proposal" = "предложить бан";
+"create community" = "создать сообщество";
+"creating community" = "создание сообщества";
 "days ago" = "дней назад";
 "debited from" = "списано с";
 "delete" = "удалить";
@@ -251,6 +256,7 @@
 "just click" = "жми на кнопку и получи поинты Dank Meme!";
 "key placeholder" = "пароль";
 "language" = "язык";
+"later" = "позже";
 "leader reward" = "лидерская награда";
 "leaders" = "лидеры";
 "leaders not found" = "лидеры не найдены";
@@ -265,6 +271,7 @@
 "loading post" = "загрузка сообщения";
 "login placeholder" = "имя пользователя";
 "logout" = "выйти";
+"manage community" = "управлять сообщество";
 "master password" = "мастер-пароль";
 "master password attention note" = "мы не храним мастер-пароли и не имеем возможности их восстановить.";
 "members" = "участников";
@@ -323,6 +330,7 @@
 "not found" = "не найдено";
 "notification" = "уведомление";
 "notifications" = "уведомления";
+"now you became a leader in your community to make some changes and vote for them!" = "Вы стали лидером в Вашем сообществе чтобы сделать изменения и голосовать за них!";
 "old avatar" = "старая аватарка";
 "old cover" = "старая обложка";
 "old rule" = "старое правило";
@@ -374,6 +382,7 @@
 "rate" = "оценка";
 "re-enter your password" = "повторите пароль";
 "read" = "читать";
+"read more about" = "читать дальше о";
 "reblock" = "заблокировать";
 "referral" = "рефералы";
 "referralId added" = "код реферала добавлен";
@@ -476,10 +485,12 @@
 "title and content must not be empty" = "заголовок и содержание не должны быть пустыми";
 "title placeholder" = "заголовок";
 "to" = "на";
+"to create a community" = "чтобы создать сообщество";
 "to secure your transactions" = "чтобы обезопасить транзакции";
 "today" = "сегодня";
 "token" = "токен";
 "tokens" = "токены";
+"total balance Commun" = "общий остаток Commun";
 "transaction completed" = "транзакция завершена";
 "transfer" = "перевод";
 "trending" = "в тренде";
@@ -533,6 +544,9 @@
 "what does it mean?" = "что бы это значило?";
 "what's new" = "что нового";
 "where you get" = "Вы получите";
+"will be burned for public goods" = "будет сожжен для общественных благ";
+"will be sent to the bounty service" = "будет переведено в сервис наград";
+"will be transferred to your wallet" = "будет переведено в Ваш кошелек";
 "would you like to change the application's language to" = "хотите сменить язык интерфейса приложения на";
 "would you like to replace this content" = "хотите заменить этот контент";
 "wow, this post will be rewarded!" = "Этот пост получил награду!\nХотите тоже получать награды? Создавайте посты - это самый простой путь к успеху!";
@@ -560,6 +574,7 @@
 "you haven’t created any" = "Вы не создали ни одного";
 "you haven’t written any" = "Вы не написали ни одного";
 "you must sign in to choose community to post in" = "войдите, чтобы выбрать сообщество";
+"you need" = "вам нужны";
 "you received" = "Вы получили";
 "you want to select the advanced mode" = "Вы хотите выбрать расширенный режим и использовать мастер-пароль";
 "you will post in" = "Отправить в";

@@ -48,6 +48,7 @@
 "adding referralId" = "adding referralId";
 "add to default contacts" = "add to default contacts";
 "after confirmation, we'll generate for" = "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.";
+"after creating a community" = "after creating a community";
 "ago" = "ago";
 "all" = "all";
 "all-in-one" = "All-in-One";
@@ -125,6 +126,8 @@
 "commun doesn't have access to your password" = "commun doesn't have access to your password, and also in case of loss will not be able to recover it";
 "communities" = "communities";
 "community hidden" = "community hidden";
+"community management" = "community management";
+"community name" = "community name";
 "community unhidden" = "community unhidden";
 "confirm it's you" = "confirm it's you";
 "confirm password" = "confirm password";
@@ -146,6 +149,8 @@
 "create Ban Proposal" = "create Ban Proposal";
 "create your passcode" = "create your passcode";
 "create your username" = "create your username";
+"create community" = "create community";
+"creating community" = "creating community";
 "days ago" = "days ago";
 "debited from" = "debited from";
 "delete" = "delete";
@@ -258,6 +263,7 @@
 "just click" = "just click the button and get Dank Meme points!";
 "key placeholder" = "password";
 "language" = "language";
+"later" = "later";
 "leader reward" = "leader reward";
 "leaders" = "leaders";
 "leaders not found" = "leaders not found";
@@ -273,6 +279,7 @@
 "loading post" = "loading post";
 "login placeholder" = "login";
 "logout" = "logout";
+"manage community" = "manage community";
 "master password" = "master password";
 "master password attention note" = "we do not keep master passwords and have no opportunity to restore them.";
 "members" = "members";
@@ -333,6 +340,7 @@
 "not found" = "not found";
 "notification" = "notification";
 "notifications" = "notifications";
+"now you became a leader in your community to make some changes and vote for them!" = "now you became a leader in your community to make some changes and vote for them!";
 "old avatar" = "old avatar";
 "old cover" = "old cover";
 "old rule" = "old rule";
@@ -384,6 +392,7 @@
 "rate" = "rate";
 "re-enter your password" = "re-enter your password";
 "read" = "read";
+"read more about" = "read more about";
 "reblock" = "reblock";
 "referral" = "referral";
 "referralId added" = "referralId added";
@@ -501,10 +510,12 @@
 "title and content must not be empty" = "title and content must not be empty";
 "title placeholder" = "title";
 "to" = "to";
+"to create a community" = "to create a community";
 "to secure your transactions" = "to secure your transactions";
 "today" = "today";
 "token" = "token";
 "tokens" = "tokens";
+"total balance Commun" = "total balance Commun";
 "transaction completed" = "transaction completed";
 "transfer" = "transfer";
 "trending" = "trending";
@@ -559,6 +570,9 @@
 "what does it mean?" = "what does it mean?";
 "what's new" = "what's new";
 "where you get" = "where you get";
+"will be burned for public goods" = "will be burned for public goods";
+"will be sent to the bounty service" = "will be sent to the bounty service";
+"will be transferred to your wallet" = "will be transferred to your wallet";
 "would you like to change the application's language to" = "would you like to change the application's language to";
 "would you like to replace this content" = "would you like to replace this content";
 "wow, this post will be rewarded!" = "wow, this post will be rewarded!\nDo you want to get rewards too? Create a post - it’s the best way to get them!";
@@ -587,6 +601,7 @@
 "you haven't had any transactions yet" = "you haven't had any transactions yet";
 "you haven’t written any" = "you haven’t written any";
 "you must sign in to choose community to post in" = "you must sign in to choose community to post in";
+"you need" = "you need";
 "you received" = "you received";
 "you want to select the advanced mode" = "you want to select the advanced mode and continue with the Master Password";
 "you will post in" = "you will post in";
