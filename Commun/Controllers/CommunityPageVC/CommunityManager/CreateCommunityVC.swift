@@ -11,6 +11,16 @@ import RxSwift
 import RxCocoa
 
 class CreateCommunityVC: CreateCommunityFlowVC {
+    // save transaction id in case of non-completed creating community process
+    var savedTransactionId: [String: String]? {
+        get {
+            UserDefaults.standard.value(forKey: "CreateCommunityVC.savedTransactionId") as? [String: String]
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "CreateCommunityVC.savedTransactionId")
+        }
+    }
+    
     lazy var avatarImageView: MyAvatarImageView = {
         let imageView = MyAvatarImageView(size: 120)
         return imageView
@@ -40,35 +50,39 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     
     let countryRelay = BehaviorRelay<Country?>(value: nil)
     var didSetAvatar = false
-    
-//    var isContinueProccessing = false
+    var createdCommunities: [ResponseAPIContentGetCommunity]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // retrieving undone community
-//        RestAPIManager.instance.getCreatedCommunities()
-//            .subscribe(onSuccess: { (result) in
-//                if let community = result.communities?.last(where: {$0.isDone == false || $0.currentStep != "done"})
-//                {
-//                    self.showAlert(title: "continue".localized().uppercaseFirst + "?", message: "you haven't finished creating community" + " \"" + community.name + "\".\n" + "would you like to continue creating it?".localized().uppercaseFirst, buttonTitles: ["OK", "create a new one".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
-//                        if index == 0 {
-//                            self.isContinueProccessing = true
-//                            self.communityNameTextField.text = community.name
-//                            self.avatarImageView.setAvatar(urlString: community.avatarUrl)
-//                            self.showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
-//                            self.startCommunityCreation(communityId: community.communityId, trxId: nil)
-//                                .subscribe(onSuccess: { (communityId) in
-//                                    self.handleCommunityCreated(communityId: communityId)
-//                                }) { (error) in
-//                                    self.handleCommunityCreationError(error: error)
-//                                }
-//                                .disposed(by: self.disposeBag)
-//                        }
-//                    }
-//                }
-//            })
-//            .disposed(by: disposeBag)
+        showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+        RestAPIManager.instance.getCreatedCommunities()
+            .subscribe(onSuccess: { (result) in
+                self.hideHud()
+                self.createdCommunities = result.communities
+                if let community = result.communities?.last(where: {$0.isDone == false || $0.currentStep != "done"}),
+                    let transactionId = self.savedTransactionId?[community.communityId]
+                {
+                    self.showAlert(title: "continue".localized().uppercaseFirst + "?", message: "you haven't finished creating community" + " \"" + community.name + "\".\n" + "would you like to continue creating it?".localized().uppercaseFirst, buttonTitles: ["OK", "create a new one".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
+                        if index == 0 {
+                            self.communityNameTextField.text = community.name
+                            self.avatarImageView.setAvatar(urlString: community.avatarUrl)
+                            self.showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
+                            self.startCommunityCreation(communityId: community.communityId, trxId: transactionId)
+                                .subscribe(onSuccess: { (communityId) in
+                                    self.handleCommunityCreated(communityId: communityId)
+                                }) { (error) in
+                                    self.handleCommunityCreationError(error: error)
+                                }
+                                .disposed(by: self.disposeBag)
+                        }
+                    }
+                }
+            }, onError: {_ in
+                self.hideHud()
+            })
+            .disposed(by: disposeBag)
     }
     
     override func setUp() {
@@ -194,25 +208,38 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         else {return}
         
         showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
+        
+        let single: Single<String>
+        if let uncompletedCreatingCommunity = createdCommunities?.first(where: {$0.name == name}),
+            uncompletedCreatingCommunity.currentStep != "done"
+        {
+            single = startCommunityCreation(communityId: uncompletedCreatingCommunity.communityId)
+        } else {
+            single = RestAPIManager.instance.createNewCommunity(name: name)
+                .flatMap { result -> Single<(ResponseAPICommunityCreateNewCommunity, String)> in
+                    if !self.didSetAvatar || self.avatarImageView.image == nil { return .just((result, "")) }
+                    return RestAPIManager.instance.uploadImage(self.avatarImageView.image!)
+                        .map {(result, $0)}
+                }
+                .flatMap { (result, imageUrl) in
+                    let description = self.descriptionTextView.text ?? ""
+                    return RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: imageUrl)
+                        .map {_ in result.community.communityId}
+                }
+                .flatMap {communityId in
+                    BlockchainManager.instance.transferPoints(to: "communcreate", number: 10000, currency: "CMN", memo: "for community: \(communityId)")
+                        .do(onSuccess: {
+                            if self.savedTransactionId == nil {self.savedTransactionId = [String: String]()}
+                            self.savedTransactionId?[communityId] = $0
+                        })
+                        .flatMap {RestAPIManager.instance.waitForTransactionWith(id: $0).andThen(Single<(String, String)>.just((communityId, $0)))}
+                }
+                .flatMap { (communityId, trxId) in
+                    self.startCommunityCreation(communityId: communityId, trxId: trxId)
+                }
+        }
             
-        RestAPIManager.instance.createNewCommunity(name: name)
-            .flatMap { result -> Single<(ResponseAPICommunityCreateNewCommunity, String)> in
-                if !self.didSetAvatar || self.avatarImageView.image == nil { return .just((result, "")) }
-                return RestAPIManager.instance.uploadImage(self.avatarImageView.image!)
-                    .map {(result, $0)}
-            }
-            .flatMap { (result, imageUrl) in
-                let description = self.descriptionTextView.text ?? ""
-                return RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: imageUrl)
-                    .map {_ in result.community.communityId}
-            }
-            .flatMap {communityId in
-                BlockchainManager.instance.transferPoints(to: "communcreate", number: 10000, currency: "CMN", memo: "for community: \(communityId)")
-                    .flatMap {RestAPIManager.instance.waitForTransactionWith(id: $0).andThen(Single<(String, String)>.just((communityId, $0)))}
-            }
-            .flatMap { (communityId, trxId) in
-                self.startCommunityCreation(communityId: communityId, trxId: trxId)
-            }
+        single
             .subscribe(onSuccess: { communityId in
                 self.handleCommunityCreated(communityId: communityId)
             }) { (error) in
@@ -221,8 +248,10 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             .disposed(by: disposeBag)
     }
     
-    func startCommunityCreation(communityId: String, trxId: String?) -> Single<String> {
-        RestAPIManager.instance.startCommunityCreation(communityId: communityId, transferTrxId: trxId)
+    func startCommunityCreation(communityId: String, trxId: String? = nil) -> Single<String> {
+        let trxId = trxId ?? savedTransactionId?[communityId]
+        return RestAPIManager.instance.startCommunityCreation(communityId: communityId, transferTrxId: trxId)
+            .do(onSuccess: {_ in self.savedTransactionId?[communityId] = nil})
             .map {_ in communityId}
             .flatMap {communityId in
                 BlockchainManager.instance.regLeader(communityId: communityId)
