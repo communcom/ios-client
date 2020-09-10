@@ -66,7 +66,7 @@ class PostRewardsVC: DonationsVC {
     }
     
     private func setUpHeaderView() -> UIView {
-        let view = UIView(backgroundColor: .white)
+        let view = UIView(backgroundColor: .appWhiteColor)
         view.addSubview(closeButton)
         closeButton.autoPinTopAndTrailingToSuperView(inset: 16)
         

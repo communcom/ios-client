@@ -17,7 +17,7 @@ class SplashVC: BaseViewController {
     
     override func setUp() {
         super.setUp()
-        view.backgroundColor = .appMainColor
+        view.backgroundColor = UIColor.appMainColor.inDarkMode(.black)
         
         view.addSubview(slashImageView)
         slashImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
