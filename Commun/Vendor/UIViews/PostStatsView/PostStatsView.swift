@@ -151,7 +151,7 @@ class PostStatsView: MyView {
             thumbUpLabel.isUserInteractionEnabled = true
             donatorsLabel.isUserInteractionEnabled = true
         } else {
-            donatorsText = "0"
+            donatorsText = "Be the first donater ever!"
             thumbUpLabel.isUserInteractionEnabled = false
             donatorsLabel.isUserInteractionEnabled = false
         }
