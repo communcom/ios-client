@@ -76,6 +76,8 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
         return RestAPIManager.instance.getBuyPrice(symbol: communityId ?? communityAlias?.uppercased() ?? "CMN", quantity: "1 CMN", authorizationRequired: authorizationRequired)
     }
 
+    
+    
     override func bind() {
         super.bind()
         
@@ -161,16 +163,8 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                     ResponseAPIContentGetProfile.current?.createdCommunities?.contains(where: {$0.communityId == communityId}) == true,
                     !leaders.contains(where: {$0.userId == Config.currentUser?.id})
                 {
-                    BlockchainManager.instance.regLeader(communityId: communityId)
-                        .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
-                        .andThen(BlockchainManager.instance.voteLeader(communityId: communityId, leader: Config.currentUser?.id ?? ""))
-                        .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
-                        .subscribe(onCompleted: {
-                            self.reload()
-                            if self.segmentedItem.value != .leads {
-                                self.leadsVM.reload(clearResult: true)
-                            }
-                        })
+                    self.regLeader(communityId: communityId)
+                        .subscribe()
                         .disposed(by: self.disposeBag)
                 }
             })
@@ -230,4 +224,28 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
             return
         }
     }
+    
+    func regLeader(communityId: String) -> Completable {
+        BlockchainManager.instance.regLeader(communityId: communityId)
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+            .do(onCompleted: {
+                self.reload()
+                if self.segmentedItem.value != .leads {
+                    self.leadsVM.reload(clearResult: true)
+                }
+                
+                BlockchainManager.instance.voteLeader(communityId: communityId, leader: Config.currentUser?.id ?? "")
+                    .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                    .subscribe(onCompleted: {
+                        if var leader = self.leadsVM.items.value.first(where: {$0.userId == Config.currentUser?.id})
+                        {
+                            leader.isVoted = true
+                            leader.notifyChanged()
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
+            })
+    }
+    
+    
 }
