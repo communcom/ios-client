@@ -123,12 +123,8 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             .text(userProfile.personal?.fullName ?? userProfile.username ?? "", size: 20, weight: .bold)
             .text("\n")
         
-        var subtitle = "@"
-        if userProfile.personal?.fullName != nil {
-            subtitle += (userProfile.username ?? userProfile.userId)
-        } else {
-            subtitle += userProfile.userId
-        }
+        let subtitle = "@\(userProfile.username ?? userProfile.userId)"
+
         attributedText
             .text(subtitle, size: 12, weight: .semibold, color: .appMainColor)
         
