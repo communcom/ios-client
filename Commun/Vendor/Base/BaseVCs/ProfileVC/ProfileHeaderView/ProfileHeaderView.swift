@@ -30,6 +30,8 @@ class ProfileHeaderView: MyTableHeaderView {
     lazy var statsLabel = CMTappableLabel.with(text: "followers and following", numberOfLines: 0)
     lazy var usersStackView = UsersStackView(height: 34)
     
+    lazy var bottomStackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
+    
     lazy var segmentedControl: CMSegmentedControl = {
         let segmentedControl = CMSegmentedControl(height: 46, backgroundColor: .clear)
         segmentedControl.backgroundColor = .clear
@@ -55,14 +57,14 @@ class ProfileHeaderView: MyTableHeaderView {
         headerStackView.setCustomSpacing(4, after: headerLabel)
         statsStackView.addArrangedSubviews([statsLabel, usersStackView])
         
-        addSubview(segmentedControl)
-        segmentedControl.autoPinEdge(.top, to: .bottom, of: stackView)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
+        addSubview(bottomStackView)
+        bottomStackView.autoPinEdge(.top, to: .bottom, of: stackView)
+        bottomStackView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
-        addSubview(bottomSeparator)
-        bottomSeparator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        bottomSeparator.autoPinEdge(.top, to: .bottom, of: segmentedControl)
+        bottomStackView.addArrangedSubviews([
+            segmentedControl,
+            bottomSeparator
+        ])
         
         followButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
         

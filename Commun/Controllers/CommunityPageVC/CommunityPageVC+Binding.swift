@@ -7,10 +7,15 @@
 //
 
 import Foundation
+import RxSwift
 
 extension CommunityPageVC {
     func bindSelectedIndex() {
         headerView.selectedIndex
+            .do(onNext: { (index) in
+                let show = (index == 1) && self.viewModel.profile.value?.isLeader != true
+                self.headerView.becomeALeaderView.isHidden = !show
+            })
             .map { index -> CommunityPageViewModel.SegmentioItem in
                 switch index {
                 case 0:
@@ -26,6 +31,16 @@ extension CommunityPageVC {
                 }
             }
             .bind(to: (viewModel as! CommunityPageViewModel).segmentedItem)
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(
+            (viewModel as! CommunityPageViewModel).segmentedItem,
+            viewModel.profile
+        )
+            .subscribe(onNext: { (selectedItem, profile) in
+                let show = (selectedItem == .leads) && profile?.isLeader != true
+                self.headerView.becomeALeaderView.isHidden = !show
+            })
             .disposed(by: disposeBag)
     }
     

@@ -164,6 +164,10 @@ extension CommunityPageVC {
         }
     }
     
+    @objc func becomeALeaderButtonDidTouch() {
+        
+    }
+    
     func openReportsVC() {
         let vc = ReportsListVC(viewModel: (viewModel as! CommunityPageViewModel).reportsVM)
         show(vc, sender: nil)
