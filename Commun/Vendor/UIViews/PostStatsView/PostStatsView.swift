@@ -157,7 +157,7 @@ class PostStatsView: MyView {
             if donators.count <= 2 {
                 donatorsText = donators.joined(separator: ", ")
             } else {
-                donatorsText = Array(donators.prefix(2)).joined(separator: ", ") + "and".localized() + "\(donators.count - 2)" + " " + "others".localized()
+                donatorsText = Array(donators.prefix(2)).joined(separator: ", ") + ", " + "and".localized() + " \(donators.count - 2)" + " " + "others".localized()
             }
             donationIcon.image = UIImage(named: "coin-reward")
         } else {
