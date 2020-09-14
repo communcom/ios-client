@@ -41,6 +41,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     lazy var donationImageView: UIImageView = {
         let imageView = UIImageView(width: 12.83, height: 12.22, imageNamed: "coin-reward")
         imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationImageViewDidTouch)))
         return imageView
     }()
 

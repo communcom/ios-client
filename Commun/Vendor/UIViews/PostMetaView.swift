@@ -96,6 +96,10 @@ class PostMetaView: CMMetaView {
             .disposed(by: disposeBag)
     }
     
+    func setUp<T: ResponseAPIContentMessageType>(content: T) {
+        setUp(with: content.community, author: content.author, creationTime: content.meta.creationTime)
+    }
+    
     func setUp(post: ResponseAPIContentGetPost) {
         setUp(with: post.community, author: post.author, creationTime: post.meta.creationTime)
         self.mosaic = post.mosaic

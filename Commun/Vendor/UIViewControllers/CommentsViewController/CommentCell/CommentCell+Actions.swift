@@ -94,6 +94,30 @@ extension CommentCell {
         comment.notifyChanged()
     }
     
+    @objc func donationImageViewDidTouch() {
+        guard let comment = comment else {return}
+        
+        let vc = ContentRewardsVC(content: comment)
+        vc.modelSelected = {donation in
+            vc.dismiss(animated: true) {
+                self.parentViewController?.showProfileWithUserId(donation.sender.userId)
+            }
+        }
+        
+        vc.donateButtonHandler = {
+            vc.dismiss(animated: true) {
+                var comment = comment
+                comment.showDonationButtons = true
+                comment.notifyChanged()
+            }
+        }
+        
+        vc.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = vc
+        parentViewController?.present(vc, animated: true, completion: nil)
+    }
+    
     @objc func retrySendingCommentDidTouch(gestureRecognizer: UITapGestureRecognizer) {
         guard let comment = comment else {return}
         delegate?.cell(self, didTapRetryForComment: comment)
