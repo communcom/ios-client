@@ -41,12 +41,6 @@ extension CommentsViewController: UITableViewDelegate {
             comment.showDonationButtons = false
             comment.notifyChanged()
         }
-        
-        // hide donators when cell was removed
-        if !tableView.isCellVisible(indexPath: indexPath), comment.showDonator == true {
-            comment.showDonator = false
-            comment.notifyChanged()
-        }
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
