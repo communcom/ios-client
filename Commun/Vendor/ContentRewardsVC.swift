@@ -64,7 +64,6 @@ class ContentRewardsVC<T: ResponseAPIContentMessageType>: DonationsVC {
             rewardsImageView.isHidden = true
         }
         
-            
         donationsLabel.attributedText = NSMutableAttributedString()
             .text(content.donationsCount.currencyValueFormatted, size: 15, weight: .semibold)
             .text("\n")
@@ -89,7 +88,7 @@ class ContentRewardsVC<T: ResponseAPIContentMessageType>: DonationsVC {
         separator.autoPinEdge(toSuperviewEdge: .leading)
         separator.autoPinEdge(toSuperviewEdge: .trailing)
         
-        let rewardsStackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
+        let rewardsStackView = UIStackView(axis: .horizontal, spacing: 4, alignment: .center, distribution: .equalSpacing)
         let donationImageView = UIImageView(width: 35, height: 35, imageNamed: "rewards-coin")
         
         rewardsImageView.setContentHuggingPriority(.required, for: .horizontal)
