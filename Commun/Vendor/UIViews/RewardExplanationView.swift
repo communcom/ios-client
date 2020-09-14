@@ -70,7 +70,7 @@ class StateButtonRewardsVC: BaseViewController {
         showInLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0), excludingEdge: .trailing)
         showInView.addSubview(showingOptionButton)
         showingOptionButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20), excludingEdge: .leading)
-        showInLabel.autoPinEdge(.trailing, to: .leading, of: showingOptionButton, withOffset: 10)
+        showInLabel.autoPinEdge(.trailing, to: .leading, of: showingOptionButton, withOffset: -10)
         
         stackView.addArrangedSubviews([swipeDownButton, showInView, rewardsVC.view])
         rewardsVC.didMove(toParent: self)
