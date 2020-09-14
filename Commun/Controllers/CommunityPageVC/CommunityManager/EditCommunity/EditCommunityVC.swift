@@ -12,6 +12,7 @@ class EditCommunityVC: BaseVerticalStackVC {
     var originalCommunity: ResponseAPIContentGetCommunity
     
     override var padding: UIEdgeInsets {UIEdgeInsets(top: 16, left: 10, bottom: 16, right: 10)}
+    override var stackViewPadding: UIEdgeInsets {.zero}
     
     init(community: ResponseAPIContentGetCommunity) {
         self.originalCommunity = community
@@ -26,11 +27,18 @@ class EditCommunityVC: BaseVerticalStackVC {
         super.setUp()
         scrollView.contentView.backgroundColor = .appWhiteColor
         scrollView.contentView.cornerRadius = 10
+        
+        title = originalCommunity.name
     }
     
     override func viewWillSetUpStackView() {
         stackView.spacing = 0
         stackView.alignment = .center
+    }
+    
+    override func viewDidSetUpStackView() {
+        stackViewTopConstraint?.isActive = false
+        stackViewTopConstraint = stackView.autoPinEdge(toSuperviewEdge: .top)
     }
     
     override func setUpArrangedSubviews() {
@@ -51,7 +59,7 @@ class EditCommunityVC: BaseVerticalStackVC {
         
         stackView.setCustomSpacing(5, after: coverSectionHeaderView)
         
-        let coverImageView = UIImageView(cornerRadius: 7, imageNamed: "cover-placeholder")
+        let coverImageView = UIImageView(cornerRadius: 7, imageNamed: "cover-placeholder", contentMode: .scaleAspectFill)
         coverImageView.widthAnchor.constraint(equalTo: coverImageView.heightAnchor, multiplier: 335 / 150).isActive = true
         stackView.addArrangedSubview(coverImageView)
         coverImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -10).isActive = true
