@@ -144,7 +144,9 @@ extension CommunityPageVC {
             title: "settings".localized().uppercaseFirst,
             iconName: "profile_options_settings",
             handle: {
-            
+                guard let community = self.viewModel.profile else {return}
+                let vc = EditCommunityVC(community: community)
+                self.show(vc, sender: nil)
             },
             showNextButton: true
         )

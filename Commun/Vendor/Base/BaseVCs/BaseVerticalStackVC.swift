@@ -10,6 +10,7 @@ import Foundation
 
 class BaseVerticalStackVC: BaseViewController {
     // MARK: - Properties
+    var padding: UIEdgeInsets {.zero}
     var scrollViewTopConstraint: NSLayoutConstraint?
     var stackViewTopConstraint: NSLayoutConstraint?
     
@@ -37,10 +38,10 @@ class BaseVerticalStackVC: BaseViewController {
     
     func setUpScrollView() {
         view.addSubview(scrollView)
-        scrollViewTopConstraint = scrollView.autoPinEdge(toSuperviewEdge: .top)
-        scrollView.autoPinEdge(toSuperviewEdge: .leading)
-        scrollView.autoPinEdge(toSuperviewEdge: .trailing)
-        scrollView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard()
+        scrollViewTopConstraint = scrollView.autoPinEdge(toSuperviewEdge: .top, withInset: padding.top)
+        scrollView.autoPinEdge(toSuperviewEdge: .leading, withInset: padding.left)
+        scrollView.autoPinEdge(toSuperviewEdge: .trailing, withInset: padding.right)
+        scrollView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard(inset: padding.bottom)
     }
     
     func viewDidSetUpScrollView() {}
