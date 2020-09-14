@@ -124,11 +124,40 @@ class EditCommunityVC: BaseVerticalStackVC {
     
     // MARK: - Action
     @objc func avatarButtonDidTouch() {
+        // On updating
+        let chooseAvatarVC = ProfileChooseAvatarVC.fromStoryboard("ProfileChooseAvatarVC", withIdentifier: "ProfileChooseAvatarVC")
+        self.present(chooseAvatarVC, animated: true, completion: nil)
         
+        chooseAvatarVC.viewModel.didSelectImage
+            .filter {$0 != nil}
+            .map {$0!}
+            .subscribe(onNext: { (image) in
+                self.avatarImageView.image = image
+            })
+            .disposed(by: disposeBag)
     }
     
     @objc func coverButtonDidTouch() {
+        let pickerVC = SinglePhotoPickerVC()
         
+        pickerVC.completion = { image in
+            let coverEditVC = MyProfileEditCoverVC()
+            coverEditVC.modalPresentationStyle = .fullScreen
+            coverEditVC.joinedDateString = self.originalCommunity.registrationTime
+            coverEditVC.updateWithImage(image)
+            coverEditVC.completion = {image in
+                coverEditVC.dismiss(animated: true, completion: {
+                    pickerVC.dismiss(animated: true, completion: nil)
+                })
+                self.coverImageView.image = image
+            }
+            
+            let nc = SwipeNavigationController(rootViewController: coverEditVC)
+            pickerVC.present(nc, animated: true, completion: nil)
+        }
+        
+        pickerVC.modalPresentationStyle = .fullScreen
+        self.present(pickerVC, animated: true, completion: nil)
     }
     
     @objc func descriptionButtonDidTouch() {
