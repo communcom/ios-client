@@ -12,7 +12,6 @@ import RxSwift
 class PostRewardsVC: DonationsVC {
     // MARK: - Properties
     let post: ResponseAPIContentGetPost
-    var donateButtonHandler: (() -> Void)?
     
     // MARK: - Subviews
     lazy var postMetaView: PostMetaView = {
@@ -25,9 +24,9 @@ class PostRewardsVC: DonationsVC {
     lazy var donateButton = UIButton(height: 35, label: "donate".localized().uppercaseFirst, backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
     
     // MARK: - Initializers
-    init?(post: ResponseAPIContentGetPost) {
+    init(post: ResponseAPIContentGetPost) {
         self.post = post
-        guard let donations = post.donations else {return nil}
+        let donations = post.donations ?? ResponseAPIWalletGetDonationsBulkItem(contentId: post.contentId, donations: [], totalAmount: 0)
         super.init(donations: donations)
     }
     

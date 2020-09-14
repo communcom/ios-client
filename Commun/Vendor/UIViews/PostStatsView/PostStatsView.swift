@@ -27,27 +27,38 @@ class PostStatsView: MyView {
         
         return button
     }()
-    lazy var thumbUpLabel = UILabel(width: 30, height: 30, backgroundColor: .appLightGrayColor, cornerRadius: 15)
-    lazy var donatorsLabel = UILabel.with(textSize: 14, weight: .medium, textColor: .appGrayColor, numberOfLines: 0)
-    lazy var donateButton = UIButton(label: "donate".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 14), textColor: .appMainColor)
+    lazy var donationIcon: UIImageView = {
+        let imageView = UIImageView(width: 18, height: 18, imageNamed: "coin-reward")
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donatorsLabelDidTouch)))
+        imageView.setContentHuggingPriority(.required, for: .horizontal)
+        return imageView
+    }()
+    lazy var donatorsLabel: UILabel = {
+        let label = UILabel.with(textSize: 14, weight: .medium, textColor: .appGrayColor, numberOfLines: 0)
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donatorsLabelDidTouch)))
+        return label
+    }()
+    lazy var donateButton: UIButton = {
+        let button = UIButton(label: "donate".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 14), textColor: .appMainColor)
+        button.addTarget(self, action: #selector(donateButtonDidTouch), for: .touchUpInside)
+        button.setContentHuggingPriority(.required, for: .horizontal)
+        return button
+    }()
     
     lazy var donationsView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-        thumbUpLabel.textAlignment = .center
-        thumbUpLabel.font = .systemFont(ofSize: 12)
-        thumbUpLabel.text = "👍"
-        thumbUpLabel.setContentHuggingPriority(.required, for: .horizontal)
         
-        thumbUpLabel.isUserInteractionEnabled = true
-        thumbUpLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donatorsLabelDidTouch)))
-        
-        donatorsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donatorsLabelDidTouch)))
-        
-        donateButton.addTarget(self, action: #selector(donateButtonDidTouch), for: .touchUpInside)
-        donateButton.setContentHuggingPriority(.required, for: .horizontal)
+        let leftImageView: UIView = {
+            let view = UIView(width: 30, height: 30, backgroundColor: .appLightGrayColor, cornerRadius: 15)
+            view.addSubview(donationIcon)
+            donationIcon.autoCenterInSuperview()
+            return view
+        }()
         
         stackView.addArrangedSubviews([
-            thumbUpLabel,
+            leftImageView,
             donatorsLabel,
             donateButton
         ])
@@ -148,12 +159,10 @@ class PostStatsView: MyView {
             } else {
                 donatorsText = Array(donators.prefix(2)).joined(separator: ", ") + "and".localized() + "\(donators.count - 2)" + " " + "others".localized()
             }
-            thumbUpLabel.isUserInteractionEnabled = true
-            donatorsLabel.isUserInteractionEnabled = true
+            donationIcon.image = UIImage(named: "coin-reward")
         } else {
             donatorsText = "Be the first donater ever!"
-            thumbUpLabel.isUserInteractionEnabled = false
-            donatorsLabel.isUserInteractionEnabled = false
+            donationIcon.image = UIImage(named: "cool-emoji")
         }
         donatorsLabel.text = donatorsText
         

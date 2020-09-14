@@ -25,10 +25,9 @@ extension PostStatsViewDelegate {
         guard let viewController = (self as? UIViewController) ?? (self as? UIView)?.parentViewController
         else {return}
         
-        guard let post = post,
-            let vc = PostRewardsVC(post: post)
-        else {return}
+        guard let post = post else {return}
         
+        let vc = PostRewardsVC(post: post)
         vc.modelSelected = {donation in
             vc.dismiss(animated: true) {
                 viewController.showProfileWithUserId(donation.sender.userId)
