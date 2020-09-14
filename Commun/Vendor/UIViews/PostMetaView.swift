@@ -17,8 +17,16 @@ protocol PostMetaViewDelegate: class {
 extension PostMetaViewDelegate where Self: PostCell {
     func postMetaViewRewardButtonDidTouch() {
         guard let post = post else {return}
-        let vc = StateButtonRewardsVC(post: post)
+        let vc = RewardsExplanationVC(post: post)
         parentViewController?.present(vc, animated: true, completion: nil)
+    }
+}
+
+extension PostMetaViewDelegate where Self: BaseViewController {
+    func postMetaViewRewardButtonDidTouch() {
+        guard let post = post else {return}
+        let vc = RewardsExplanationVC(post: post)
+        present(vc, animated: true, completion: nil)
     }
 }
 

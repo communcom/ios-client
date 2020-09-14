@@ -11,7 +11,7 @@ import RxSwift
 import CyberSwift
 import RxDataSources
 
-class PostPageVC: CommentsViewController {
+class PostPageVC: CommentsViewController, PostMetaViewDelegate {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     override var shouldHideTabBar: Bool {true}
     
@@ -79,6 +79,7 @@ class PostPageVC: CommentsViewController {
         view.addSubview(navigationBar)
         navigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
+        navigationBar.postMetaView.delegate = self
         
         // top white view
         let topView = UIView(backgroundColor: .appWhiteColor)
