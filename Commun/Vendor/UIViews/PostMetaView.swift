@@ -9,6 +9,19 @@
 import Foundation
 import RxSwift
 
+protocol PostMetaViewDelegate: class {
+    var post: ResponseAPIContentGetPost? {get}
+    func postMetaViewRewardButtonDidTouch()
+}
+
+extension PostMetaViewDelegate where Self: PostCell {
+    func postMetaViewRewardButtonDidTouch() {
+        guard let post = post else {return}
+        let vc = StateButtonRewardsVC(post: post)
+        parentViewController?.present(vc, animated: true, completion: nil)
+    }
+}
+
 class PostMetaView: CMMetaView {
     // MARK: - Enums
     class TapGesture: UITapGestureRecognizer {
@@ -24,6 +37,7 @@ class PostMetaView: CMMetaView {
             stateButton.isHidden = !showMosaic
         }
     }
+    weak var delegate: PostMetaViewDelegate?
 
     // MARK: - Subviews
     lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .white)
@@ -177,34 +191,6 @@ class PostMetaView: CMMetaView {
     }
     
     @objc func stateButtonTapped(_ gesture: UITapGestureRecognizer) {
-        let rewardExplanationView = RewardExplanationView(params: gesture.view?.tag == 0 ? .topState : .rewardState)
-        rewardExplanationView.delegate = self
-        let postLink = "https://commun.com/faq?#What%20else%20can%20you%20do%20with%20the%20points?"
-        rewardExplanationView.explanationView.completionDismissWithAction = { value in
-            self.parentViewController?.dismiss(animated: true, completion: {
-                if value, let baseVC = self.parentViewController as? BaseViewController {
-                    baseVC.load(url: postLink)
-                }
-            })
-        }
-        parentViewController?.showCardWithView(rewardExplanationView, backgroundColor: .clear)
-    }
-}
-
-extension PostMetaView: RewardExplanationViewDelegate {
-    func rewardExplanationViewDidTapOnShowInDropdown(_ rewardExplanationView: RewardExplanationView) {
-        self.parentViewController?.dismiss(animated: true, completion: {
-            UIApplication.topViewController()?.showActionSheet(title: "show rewards in".localized().uppercaseFirst, actions: [
-                UIAlertAction(title: "USD", style: .default, handler: { (_) in
-                    UserDefaults.standard.set("USD", forKey: Config.currentRewardShownSymbol)
-                }),
-                UIAlertAction(title: "CMN", style: .default, handler: { (_) in
-                    UserDefaults.standard.set("CMN", forKey: Config.currentRewardShownSymbol)
-                }),
-                UIAlertAction(title: "community points".localized().uppercaseFirst, style: .default, handler: { (_) in
-                    UserDefaults.standard.set("community points", forKey: Config.currentRewardShownSymbol)
-                })
-            ])
-        })
+        delegate?.postMetaViewRewardButtonDidTouch()
     }
 }
