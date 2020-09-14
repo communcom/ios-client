@@ -11,8 +11,7 @@ import Foundation
 class EditCommunityVC: BaseVerticalStackVC {
     var originalCommunity: ResponseAPIContentGetCommunity
     
-    override var padding: UIEdgeInsets {UIEdgeInsets(top: 16, left: 10, bottom: 16, right: 10)}
-    override var stackViewPadding: UIEdgeInsets {.zero}
+    override var stackViewPadding: UIEdgeInsets {UIEdgeInsets(top: 16, left: 10, bottom: 16, right: 10)}
     
     lazy var avatarImageView = MyAvatarImageView(size: 120)
     lazy var coverImageView = UIImageView(cornerRadius: 7, imageNamed: "cover-placeholder", contentMode: .scaleAspectFill)
@@ -29,8 +28,6 @@ class EditCommunityVC: BaseVerticalStackVC {
     
     override func setUp() {
         super.setUp()
-        scrollView.contentView.backgroundColor = .appWhiteColor
-        scrollView.contentView.cornerRadius = 10
         
         title = originalCommunity.name
         
@@ -43,8 +40,15 @@ class EditCommunityVC: BaseVerticalStackVC {
     }
     
     override func viewDidSetUpStackView() {
-        stackViewTopConstraint?.isActive = false
-        stackViewTopConstraint = stackView.autoPinEdge(toSuperviewEdge: .top)
+        super.viewDidSetUpStackView()
+        let wrapperView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+        scrollView.contentView.addSubview(wrapperView)
+        wrapperView.autoPinEdge(.leading, to: .leading, of: stackView)
+        wrapperView.autoPinEdge(.trailing, to: .trailing, of: stackView)
+        wrapperView.autoPinEdge(.top, to: .top, of: stackView)
+        wrapperView.autoPinEdge(.bottom, to: .bottom, of: stackView)
+        
+        scrollView.contentView.bringSubviewToFront(stackView)
     }
     
     override func setUpArrangedSubviews() {
