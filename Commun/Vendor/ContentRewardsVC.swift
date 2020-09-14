@@ -88,7 +88,7 @@ class ContentRewardsVC<T: ResponseAPIContentMessageType>: DonationsVC {
         separator.autoPinEdge(toSuperviewEdge: .leading)
         separator.autoPinEdge(toSuperviewEdge: .trailing)
         
-        let rewardsStackView = UIStackView(axis: .horizontal, spacing: 4, alignment: .center, distribution: .equalSpacing)
+        let rewardsStackView = UIStackView(axis: .horizontal, spacing: 4, alignment: .center, distribution: .fill)
         let donationImageView = UIImageView(width: 35, height: 35, imageNamed: "rewards-coin")
         
         rewardsImageView.setContentHuggingPriority(.required, for: .horizontal)
