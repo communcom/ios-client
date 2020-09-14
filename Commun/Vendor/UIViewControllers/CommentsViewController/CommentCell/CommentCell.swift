@@ -23,8 +23,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     weak var delegate: CommentCellDelegate?
     var textViewToEmbedConstraint: NSLayoutConstraint?
     var showIndentForChildComment = true
-    var timeLabelLeadingConstraint: NSLayoutConstraint?
-    var donationUsersViewTopConstraint: NSLayoutConstraint?
     var donationViewTopConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
@@ -41,13 +39,25 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         return textView
     }()
     lazy var gridView = GridView(width: embedSize.width, height: embedSize.height, cornerRadius: 12)
-    lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
-    lazy var plusLabel = UILabel.with(text: "+", textSize: 17, weight: .semibold, textColor: .appMainColor)
-    lazy var donationCountLabel = UILabel.with(numberOfLines: 2, textAlignment: .center)
-    lazy var timeLabel = UILabel.with(text: " • 3h", textSize: 13, weight: .bold, textColor: .appGrayColor)
-    lazy var replyButton = UIButton(label: "reply".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
+    lazy var voteContainerView: VoteContainerView = {
+        let voteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
+        voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonDidTouch), for: .touchUpInside)
+        voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch), for: .touchUpInside)
+        return voteContainerView
+    }()
+    lazy var timeLabel: UILabel = {
+        let timeLabel = UILabel.with(text: " • 3h", textSize: 13, weight: .bold, textColor: .appGrayColor)
+        timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        return timeLabel
+    }()
+    lazy var replyButton: UIButton = {
+        let replyButton = UIButton(label: "reply".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
+        replyButton.addTarget(self, action: #selector(replyButtonDidTouch), for: .touchUpInside)
+        replyButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        return replyButton
+    }()
+    lazy var donateButton = UIButton(label: "donate".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
     lazy var statusImageView = UIImageView(width: 16, height: 16, cornerRadius: 8)
-    lazy var donationUsersView = DonationUsersView()
     lazy var donationView = DonationView()
     
     // MARK: - Methods
@@ -74,11 +84,30 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         gridView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16)
             .isActive = true
         
-        contentView.addSubview(voteContainerView)
-        voteContainerView.autoPinEdge(.top, to: .bottom, of: gridView, withOffset: 5)
-        voteContainerView.autoPinEdge(.leading, to: .leading, of: contentTextView)
-        voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonDidTouch), for: .touchUpInside)
-        voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch), for: .touchUpInside)
+        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+        contentView.addSubview(stackView)
+        stackView.autoPinEdge(.top, to: .bottom, of: gridView, withOffset: 5)
+        stackView.autoPinEdge(.leading, to: .leading, of: contentTextView)
+        stackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        
+        let separator = UILabel.with(text: " • ", textSize: 13, weight: .bold, textColor: .appGrayColor)
+        stackView.addArrangedSubviews([
+            voteContainerView,
+            timeLabel,
+            replyButton,
+            separator,
+            donateButton,
+            statusImageView]
+        )
+        
+        let constraint = statusImageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -4)
+        constraint.priority = .defaultLow
+        constraint.isActive = true
+        
+        stackView.setCustomSpacing(0, after: timeLabel)
+        stackView.setCustomSpacing(0, after: replyButton)
+        stackView.setCustomSpacing(0, after: separator)
+        stackView.setCustomSpacing(10, after: donateButton)
         
         // donation buttons
         contentView.addSubview(donationView)
@@ -95,48 +124,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         }
         donationView.otherButton.tag = donationView.amountButtons.count
         donationView.otherButton.addTarget(self, action: #selector(donationAmountDidTouch(sender:)), for: .touchUpInside)
-        
-        // donationsCount
-        contentView.addSubview(plusLabel)
-        plusLabel.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 6)
-        plusLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        plusLabel.isUserInteractionEnabled = true
-        plusLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationCountLabelDidTouch)))
-        
-        contentView.addSubview(donationCountLabel)
-        donationCountLabel.autoPinEdge(.leading, to: .trailing, of: plusLabel, withOffset: 4)
-        donationCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        donationCountLabel.isUserInteractionEnabled = true
-        donationCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationCountLabelDidTouch)))
-        
-        contentView.addSubview(timeLabel)
-        timeLabelLeadingConstraint = timeLabel.autoPinEdge(.leading, to: .trailing, of: donationCountLabel, withOffset: 10)
-        timeLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
-        contentView.addSubview(replyButton)
-        replyButton.autoPinEdge(.leading, to: .trailing, of: timeLabel)
-        replyButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        replyButton.addTarget(self, action: #selector(replyButtonDidTouch), for: .touchUpInside)
-        replyButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
-        contentView.addSubview(statusImageView)
-        statusImageView.autoPinEdge(.leading, to: .trailing, of: replyButton, withOffset: 10)
-        statusImageView.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        let constraint = statusImageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -4)
-        constraint.priority = .defaultLow
-        constraint.isActive = true
-        
-        contentView.addSubview(donationUsersView)
-        donationUsersViewTopConstraint = donationUsersView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 0)
-        donationUsersView.autoAlignAxis(toSuperviewAxis: .vertical)
-        donationUsersView.autoPinEdge(.bottom, to: .top, of: voteContainerView, withOffset: -4)
-        donationUsersView.senderView = donationCountLabel
-        donationUsersView.delegate = self
-        donationUsersView.isUserInteractionEnabled = true
-        donationUsersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(donationUsersViewDidTouch)))
-
-        voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
         
         // handle tap on see more
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapTextView(sender:)))
@@ -183,6 +170,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             spinnerView.autoPinEdgesToSuperviewEdges()
             
             replyButton.isEnabled = false
+            donateButton.isEnabled = false
         case .error:
             statusImageView.widthConstraint?.constant = 16
             statusImageView.isHidden = false
@@ -194,15 +182,18 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             statusImageView.addGestureRecognizer(tap)
             
             replyButton.isEnabled = false
+            donateButton.isEnabled = false
         default:
             statusImageView.widthConstraint?.constant = 0
             
             replyButton.isEnabled = true
+            donateButton.isEnabled = true
         }
         
         // if comment was deleted
         if comment.document == nil {
             replyButton.isEnabled = false
+            donateButton.isEnabled = false
         }
         
         // Show media
@@ -236,41 +227,8 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         }
         voteContainerView.setUp(with: self.comment!.votes, userID: comment.author?.userId)
         
-        // Donation
-        if comment.donationsCount > 0 {
-            donationCountLabel.isHidden = false
-            plusLabel.isHidden = false
-            plusLabel.text = "+"
-            donationCountLabel.attributedText = NSMutableAttributedString()
-                .text("\(comment.donationsCount.kmFormatted(maximumFractionDigit: 2))", size: 14, weight: .bold, color: .appMainColor)
-                .text("\n")
-                .text("points".localized(), size: 14, weight: .medium, color: .appMainColor)
-                .withParagraphStyle(minimumLineHeight: 12, alignment: .center)
-
-            timeLabelLeadingConstraint?.constant = 10
-        } else {
-            donationCountLabel.isHidden = true
-            plusLabel.isHidden = true
-            donationCountLabel.text = nil
-            plusLabel.text = nil
-
-            timeLabelLeadingConstraint?.constant = 0
-        }
-        
-        donationUsersViewTopConstraint?.isActive = false
-        donationViewTopConstraint?.isActive = false
-        
-        donationUsersView.isHidden = true
-        if comment.showDonator == true,
-            comment.showDonationButtons != true,
-            let donations = comment.donations?.donations
-        {
-            donationUsersView.isHidden = false
-            donationUsersViewTopConstraint?.isActive = true
-            donationUsersView.setUp(with: donations)
-        }
-        
         donationView.isHidden = true
+        donationViewTopConstraint?.isActive = false
         if comment.showDonationButtons == true,
             comment.author?.userId != Config.currentUser?.id
         {
@@ -361,30 +319,6 @@ extension CommentCell: DonationViewDelegate {
     func donationViewCloseButtonDidTouch(_ donationView: DonationView) {
         var comment = self.comment
         comment?.showDonationButtons = false
-        comment?.notifyChanged()
-    }
-}
-
-extension CommentCell: DonationUsersViewDelegate {
-    @objc func donationUsersViewDidTouch() {
-        guard let donations = comment?.donations else {return}
-        let vc = DonationsVC(donations: donations)
-        vc.modelSelected = {donation in
-            vc.dismiss(animated: true) {
-                self.parentViewController?.showProfileWithUserId(donation.sender.userId)
-            }
-        }
-        
-        let navigation = SwipeNavigationController(rootViewController: vc)
-        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-        navigation.modalPresentationStyle = .custom
-        navigation.transitioningDelegate = vc
-        parentViewController?.present(navigation, animated: true, completion: nil)
-    }
-    
-    func donationUsersViewCloseButtonDidTouch(_ donationUserView: DonationUsersView) {
-        var comment = self.comment
-        comment?.showDonator = false
         comment?.notifyChanged()
     }
 }
