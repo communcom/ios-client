@@ -14,6 +14,10 @@ class EditCommunityVC: BaseVerticalStackVC {
     override var padding: UIEdgeInsets {UIEdgeInsets(top: 16, left: 10, bottom: 16, right: 10)}
     override var stackViewPadding: UIEdgeInsets {.zero}
     
+    lazy var avatarImageView = MyAvatarImageView(size: 120)
+    lazy var coverImageView = UIImageView(cornerRadius: 7, imageNamed: "cover-placeholder", contentMode: .scaleAspectFill)
+    lazy var descriptionLabel = UILabel.with(textSize: 17, numberOfLines: 0)
+    
     init(community: ResponseAPIContentGetCommunity) {
         self.originalCommunity = community
         super.init(nibName: nil, bundle: nil)
@@ -29,6 +33,8 @@ class EditCommunityVC: BaseVerticalStackVC {
         scrollView.contentView.cornerRadius = 10
         
         title = originalCommunity.name
+        
+        reloadData()
     }
     
     override func viewWillSetUpStackView() {
@@ -47,7 +53,6 @@ class EditCommunityVC: BaseVerticalStackVC {
         stackView.addArrangedSubview(avatarSectionHeaderView)
         avatarSectionHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
-        let avatarImageView = MyAvatarImageView(size: 120)
         stackView.addArrangedSubview(avatarImageView)
         
         stackView.setCustomSpacing(16, after: avatarImageView)
@@ -59,10 +64,40 @@ class EditCommunityVC: BaseVerticalStackVC {
         
         stackView.setCustomSpacing(5, after: coverSectionHeaderView)
         
-        let coverImageView = UIImageView(cornerRadius: 7, imageNamed: "cover-placeholder", contentMode: .scaleAspectFill)
         coverImageView.widthAnchor.constraint(equalTo: coverImageView.heightAnchor, multiplier: 335 / 150).isActive = true
         stackView.addArrangedSubview(coverImageView)
         coverImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -10).isActive = true
+        
+        stackView.setCustomSpacing(10, after: coverImageView)
+        
+        // separator
+        let separator = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
+        stackView.addArrangedSubview(separator)
+        separator.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // description
+        let descriptionHeaderView = sectionHeaderView(title: "description".localized().uppercaseFirst, action: #selector(descriptionButtonDidTouch))
+        stackView.addArrangedSubview(descriptionHeaderView)
+        descriptionHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        stackView.addArrangedSubview(descriptionLabel)
+        descriptionLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
+        
+        // separator
+        let separator2 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
+        stackView.addArrangedSubview(separator2)
+        separator2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // rules
+        let rulesHeaderView = sectionHeaderView(title: "rules".localized().uppercaseFirst, action: #selector(rulesButtonDidTouch))
+        stackView.addArrangedSubview(rulesHeaderView)
+        rulesHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+    }
+    
+    func reloadData() {
+        avatarImageView.setAvatar(urlString: originalCommunity.avatarUrl)
+        coverImageView.setCover(urlString: originalCommunity.coverUrl)
+        descriptionLabel.text = originalCommunity.description
     }
     
     fileprivate func sectionHeaderView(title: String, action: Selector? = nil) -> UIStackView {
@@ -89,6 +124,14 @@ class EditCommunityVC: BaseVerticalStackVC {
     }
     
     @objc func coverButtonDidTouch() {
+        
+    }
+    
+    @objc func descriptionButtonDidTouch() {
+        
+    }
+    
+    @objc func rulesButtonDidTouch() {
         
     }
 }
