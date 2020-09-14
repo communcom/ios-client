@@ -123,14 +123,11 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             .text(userProfile.personal?.fullName ?? userProfile.username ?? "", size: 20, weight: .bold)
             .text("\n")
         
-        if userProfile.personal?.fullName != nil {
-            attributedText
-                .text("@" + (userProfile.username ?? userProfile.userId), size: 12, weight: .semibold, color: .appMainColor)
-                .text(statsSeparator, size: 12, weight: .semibold, color: .appGrayColor)
-        }
-            
+        let subtitle = "@\(userProfile.username ?? userProfile.userId)"
+
         attributedText
-            .text(Formatter.joinedText(with: userProfile.registration?.time), size: 12, weight: .semibold, color: .appGrayColor)
+            .text(subtitle, size: 12, weight: .semibold, color: .appMainColor)
+        
         headerLabel.attributedText = attributedText
         
         // bio

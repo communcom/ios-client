@@ -193,6 +193,9 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             headerView.manageCommunityButtonsView.reportsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(reportsButtonDidTouch)))
             headerView.manageCommunityButtonsView.manageCommunityButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(manageCommunityButtonDidTouch)))
         }
+        
+        // become a leader
+        headerView.becomeALeaderButton.addTarget(self, action: #selector(becomeALeaderButtonDidTouch), for: .touchUpInside)
     }
        
     override func handleListLoading() {

@@ -13,6 +13,7 @@ class DonationsVC: BaseViewController {
     // MARK: - Properties
     let donations: ResponseAPIWalletGetDonationsBulkItem
     var modelSelected: ((ResponseAPIWalletDonation) -> Void)?
+    var donateButtonHandler: (() -> Void)?
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
@@ -69,6 +70,19 @@ class DonationsVC: BaseViewController {
                         cell.roundedCorner.insert([.bottomLeft, .bottomRight])
                     }
                 }
+            .disposed(by: disposeBag)
+        
+        Observable.just(donations.donations)
+            .map {$0.count == 0}
+            .subscribe(onNext: { (isEmpty) in
+                if isEmpty {
+                    self.tableView.addEmptyPlaceholderFooterView(emoji: "🎁", title: "no donations".localized().uppercaseFirst, description: "That post haven’t had any donations yet".localized().uppercaseFirst, buttonLabel: "donate".localized().uppercaseFirst) {
+                        self.donateButtonHandler?()
+                    }
+                } else {
+                    self.tableView.tableFooterView = UIView()
+                }
+            })
             .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(ResponseAPIWalletDonation.self)

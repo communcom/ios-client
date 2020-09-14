@@ -29,6 +29,7 @@ class UserProfileInfoView: MyView {
     class NextButton: UIButton {
         var serviceName: String?
         var username: String?
+        var urlString: String?
     }
     lazy var stackView = UIStackView(axis: .vertical, spacing: 20, alignment: .fill, distribution: .fill)
     lazy var generalInfoView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
@@ -90,7 +91,7 @@ class UserProfileInfoView: MyView {
         if let website = profile.personal?.websiteUrl, !website.trimmed.isEmpty {
             isGeneralInfoEmpty = false
             let spacer2 = separator()
-            let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile.personal?.websiteUrl)
+            let websiteField = infoField(title: "website".localized().uppercaseFirst, content: profile.personal?.websiteUrl, showArrow: true, arrowAction: #selector(websiteDidTouch(_:)), urlString: website)
             stackView.addArrangedSubviews([spacer2, websiteField])
             spacer2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
             websiteField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
@@ -229,17 +230,23 @@ class UserProfileInfoView: MyView {
         return stackView
     }
     
-    fileprivate func infoField(title: String, content: String?, showArrow: Bool = false) -> UIStackView {
+    fileprivate func infoField(title: String, content: String?, showArrow: Bool = false, arrowAction: Selector? = nil, urlString: String? = nil) -> UIStackView {
         let hStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+        hStackView.isLayoutMarginsRelativeArrangement = true
+        hStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16)
         let stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .leading, distribution: .fill)
         let titleLabel = UILabel.with(text: title, textSize: 12, weight: .medium, textColor: .appGrayColor)
         let contentLabel = UILabel.with(text: content ?? " ", textSize: 17, weight: .semibold, textColor: .appBlackColor, numberOfLines: 0)
         stackView.addArrangedSubviews([titleLabel, contentLabel])
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 7, trailing: 16)
-        let arrow = UIButton.nextArrow()
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 7, trailing: 0)
+        let arrow = nextButton()
         hStackView.addArrangedSubviews([stackView, arrow])
         arrow.isHidden = !showArrow
+        if let selector = arrowAction {
+            arrow.urlString = urlString
+            arrow.addTarget(self, action: selector, for: .touchUpInside)
+        }
         return hStackView
     }
     
@@ -257,10 +264,7 @@ class UserProfileInfoView: MyView {
             .text("@" + (username ?? ""), size: 14, weight: .semibold, color: .appMainColor)
             .withParagraphStyle(lineSpacing: 5)
         stackView.addArrangedSubviews([icon, label])
-        let arrow = NextButton(width: 24, height: 24, backgroundColor: .appLightGrayColor, cornerRadius: 24 / 2)
-        arrow.setImage(UIImage(named: "next-arrow"), for: .normal)
-        arrow.imageEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8)
-        arrow.tintColor = .appGrayColor
+        let arrow = nextButton()
         arrow.serviceName = serviceName
         arrow.username = username
         arrow.addTarget(self, action: #selector(contactFieldDidTouch(_:)), for: .touchUpInside)
@@ -275,6 +279,14 @@ class UserProfileInfoView: MyView {
         stackView.widthAnchor.constraint(equalTo: parentStackView.widthAnchor).isActive = true
         
         return stackView
+    }
+    
+    fileprivate func nextButton() -> NextButton {
+        let arrow = NextButton(width: 24, height: 24, backgroundColor: .appLightGrayColor, cornerRadius: 24 / 2)
+        arrow.setImage(UIImage(named: "next-arrow"), for: .normal)
+        arrow.imageEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8)
+        arrow.tintColor = .appGrayColor
+        return arrow
     }
     
     func separator() -> UIView { UIView(height: 2, backgroundColor: .appLightGrayColor)}
@@ -332,6 +344,13 @@ class UserProfileInfoView: MyView {
             UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
         }
         return
+    }
+    
+    @objc func websiteDidTouch(_ button: NextButton) {
+        guard let urlString = button.urlString,
+            let url = URL(string: urlString)
+            else {return}
+        parentViewController?.handleUrl(url: url)
     }
 }
 

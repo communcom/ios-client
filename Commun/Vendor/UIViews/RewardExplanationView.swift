@@ -9,17 +9,38 @@
 import Foundation
 import RxSwift
 
-protocol RewardExplanationViewDelegate: class {
-    func rewardExplanationViewDidTapOnShowInDropdown(_ rewardExplanationView: RewardExplanationView)
-}
-
-class RewardExplanationView: MyView {
-    let params: CMCardViewParameters
-    let disposeBag = DisposeBag()
-    weak var delegate: RewardExplanationViewDelegate?
+class RewardsExplanationVC: BaseViewController {
+    let post: ResponseAPIContentGetPost
     
     lazy var swipeDownButton = UIView(width: 50, height: 5, backgroundColor: .appWhiteColor, cornerRadius: 2.5)
-    lazy var showingOptionButtonLabel = UILabel.with(text: "community points".localized().uppercaseFirst, textColor: .appGrayColor)
+    lazy var showingOptionButtonLabel = UILabel.with(text: "community points".localized().uppercaseFirst, textColor: .appGrayColor, textAlignment: .right)
+    lazy var rewardsVC: ContentRewardsVC<ResponseAPIContentGetPost> = {
+        let vc = ContentRewardsVC(content: post)
+        vc.modelSelected = {donation in
+            self.dismiss(animated: true) {
+                UIApplication.topViewController()?.showProfileWithUserId(donation.sender.userId)
+            }
+        }
+        
+        vc.donateButtonHandler = {
+            vc.dismiss(animated: true) {
+                var post = self.post
+                post.showDonationButtons = true
+                post.notifyChanged()
+            }
+        }
+        return vc
+    }()
+    
+    init(post: ResponseAPIContentGetPost) {
+        self.post = post
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     lazy var showingOptionButton: UIStackView = {
         let view = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
         let dropdownButton = UIButton.circleGray(imageName: "drop-down")
@@ -27,25 +48,20 @@ class RewardExplanationView: MyView {
         view.addArrangedSubviews([showingOptionButtonLabel, dropdownButton])
         return view
     }()
-    lazy var explanationView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 193.0))), andParameters: params)
     
-    init(params: CMCardViewParameters) {
-        self.params = params
-        super.init(frame: .zero)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        rewardsVC.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func commonInit() {
-        super.commonInit()
-        backgroundColor = .clear
-        explanationView.backgroundColor = .appWhiteColor
-        explanationView.cornerRadius = 25
+    override func setUp() {
+        super.setUp()
+        view.backgroundColor = .clear
+        
+        addChild(rewardsVC)
         
         let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .center, distribution: .fill)
-        addSubview(stackView)
+        view.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
         let showInView = UIView(height: 50, backgroundColor: .appWhiteColor, cornerRadius: 25)
@@ -54,12 +70,13 @@ class RewardExplanationView: MyView {
         showInLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0), excludingEdge: .trailing)
         showInView.addSubview(showingOptionButton)
         showingOptionButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20), excludingEdge: .leading)
-        showInLabel.autoPinEdge(.trailing, to: .leading, of: showingOptionButton, withOffset: 10)
+        showInLabel.autoPinEdge(.trailing, to: .leading, of: showingOptionButton, withOffset: -10)
         
-        stackView.addArrangedSubviews([swipeDownButton, showInView, explanationView])
+        stackView.addArrangedSubviews([swipeDownButton, showInView, rewardsVC.view])
+        rewardsVC.didMove(toParent: self)
         
         showInView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        explanationView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        rewardsVC.view.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         swipeDownButton.isUserInteractionEnabled = true
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownButtonDidTouch(_:)))
@@ -68,7 +85,10 @@ class RewardExplanationView: MyView {
         
         showingOptionButton.isUserInteractionEnabled = true
         showingOptionButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showInDropdownDidTouch)))
-        
+    }
+    
+    override func bind() {
+        super.bind()
         UserDefaults.standard.rx.observe(String.self, Config.currentRewardShownSymbol)
             .subscribe(onNext: { (symbol) in
                 let symbol = symbol ?? "community points"
@@ -79,11 +99,23 @@ class RewardExplanationView: MyView {
     
     @objc func swipeDownButtonDidTouch(_ gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .down {
-            parentViewController?.dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
     }
     
     @objc func showInDropdownDidTouch() {
-        delegate?.rewardExplanationViewDidTapOnShowInDropdown(self)
+        self.dismiss(animated: true, completion: {
+            UIApplication.topViewController()?.showActionSheet(title: "show rewards in".localized().uppercaseFirst, actions: [
+                UIAlertAction(title: "USD", style: .default, handler: { (_) in
+                    UserDefaults.standard.set("USD", forKey: Config.currentRewardShownSymbol)
+                }),
+                UIAlertAction(title: "CMN", style: .default, handler: { (_) in
+                    UserDefaults.standard.set("CMN", forKey: Config.currentRewardShownSymbol)
+                }),
+                UIAlertAction(title: "community points".localized().uppercaseFirst, style: .default, handler: { (_) in
+                    UserDefaults.standard.set("community points", forKey: Config.currentRewardShownSymbol)
+                })
+            ])
+        })
     }
 }

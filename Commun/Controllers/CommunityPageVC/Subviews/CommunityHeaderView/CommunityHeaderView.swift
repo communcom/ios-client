@@ -27,6 +27,33 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         view.manageCommunityButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(manageCommunityButtonDidTouch)))
         return view
     }()
+    lazy var becomeALeaderButton: CommunButton = {
+        let button = CommunButton.default(height: 35, label: "become a leader".localized().uppercaseFirst, cornerRadius: 35 / 2)
+        return button
+    }()
+    lazy var becomeALeaderView: UIView = {
+        let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 25)
+        let stackView: UIStackView = {
+            let stackView = UIStackView(axis: .vertical, spacing: 23, alignment: .center, distribution: .fill)
+            let emojiLabel = UILabel.with(text: "😎", textSize: 32)
+            let titleLabel = UILabel.with(text: "become a leader".localized().uppercaseFirst, textSize: 14, weight: .semibold, textAlignment: .center)
+            let subtitleLabel = UILabel.with(text: "get more community point as a leader".localized().uppercaseFirst, textSize: 13, weight: .medium, textColor: .appGrayColor, numberOfLines: 0, textAlignment: .center)
+            stackView.addArrangedSubviews([
+                emojiLabel,
+                titleLabel,
+                subtitleLabel,
+                becomeALeaderButton
+            ])
+            stackView.setCustomSpacing(5, after: titleLabel)
+            stackView.setCustomSpacing(16, after: subtitleLabel)
+            return stackView
+        }()
+        view.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 20, bottom: 30, right: 20))
+        let paddingView = view.padding(UIEdgeInsets(inset: 10))
+        paddingView.backgroundColor = bottomSeparator.backgroundColor
+        return paddingView
+    }()
     
     // MARK: - Methods
     override func commonInit() {
@@ -64,6 +91,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         friendsCountLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(friendsLabelDidTouch)))
         
         manageCommunityButtonsView.isHidden = true
+        
+        bottomStackView.addArrangedSubview(becomeALeaderView)
+        becomeALeaderView.isHidden = true
     }
     
     // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))

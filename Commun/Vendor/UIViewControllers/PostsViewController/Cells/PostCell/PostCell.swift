@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class PostCell: MyTableViewCell, ListItemCellType, PostStatsViewDelegate {
+class PostCell: MyTableViewCell, ListItemCellType, PostStatsViewDelegate, PostMetaViewDelegate {
     // MARK: - Properties
     weak var delegate: PostCellDelegate?
     var topViewHeightConstraint: NSLayoutConstraint?
@@ -55,6 +55,7 @@ class PostCell: MyTableViewCell, ListItemCellType, PostStatsViewDelegate {
         contentView.addSubview(metaView)
         metaView.autoPinEdge(.top, to: .bottom, of: topView, withOffset: .adaptive(height: 16))
         metaView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16))
+        metaView.delegate = self
 
         // moreAction buttons
         contentView.addSubview(moreActionButton)

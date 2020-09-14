@@ -174,6 +174,20 @@ extension CommunityPageVC {
         }
     }
     
+    @objc func becomeALeaderButtonDidTouch() {
+        guard let communityId = viewModel.profile.value?.communityId else {return}
+        showIndetermineHudWithMessage("vote yourself as a leader".localized().uppercaseFirst)
+        (viewModel as! CommunityPageViewModel).regLeader(communityId: communityId)
+            .subscribe(onCompleted: {
+                self.hideHud()
+                self.showDone("you voted yourself as a leader".localized().uppercaseFirst)
+            }) { (error) in
+                self.hideHud()
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
+    }
+    
     func openReportsVC() {
         let vc = ReportsListVC(viewModel: (viewModel as! CommunityPageViewModel).reportsVM)
         show(vc, sender: nil)

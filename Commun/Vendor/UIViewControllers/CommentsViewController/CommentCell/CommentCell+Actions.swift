@@ -50,14 +50,6 @@ extension CommentCell {
                 return
             }
             
-            // username handler
-            let detectedRange = NSRange(location: 0, length: characterIndex + 1)
-            let posibleUsername = (myTextView.attributedText.string as NSString).substring(with: detectedRange)
-            if !posibleUsername.contains(" ") {
-                openProfile()
-                return
-            }
-            
             // tap on comment in UserProfileVC
             if let comment = comment,
                 let userId = comment.parents.post?.userId,
@@ -96,11 +88,34 @@ extension CommentCell {
         delegate?.cell(self, didTapReplyButtonForComment: comment)
     }
     
-    @objc func donationCountLabelDidTouch() {
+    @objc func donateButtonDidTouch() {
         guard var comment = comment else {return}
-        if comment.showDonator == nil {comment.showDonator = false}
-        comment.showDonator?.toggle()
+        comment.showDonationButtons = true
         comment.notifyChanged()
+    }
+    
+    @objc func donationImageViewDidTouch() {
+        guard let comment = comment else {return}
+        
+        let vc = ContentRewardsVC(content: comment)
+        vc.modelSelected = {donation in
+            vc.dismiss(animated: true) {
+                self.parentViewController?.showProfileWithUserId(donation.sender.userId)
+            }
+        }
+        
+        vc.donateButtonHandler = {
+            vc.dismiss(animated: true) {
+                var comment = comment
+                comment.showDonationButtons = true
+                comment.notifyChanged()
+            }
+        }
+        
+        vc.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = vc
+        parentViewController?.present(vc, animated: true, completion: nil)
     }
     
     @objc func retrySendingCommentDidTouch(gestureRecognizer: UITapGestureRecognizer) {

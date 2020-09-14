@@ -16,7 +16,7 @@ class PostEditorVC: EditorVC {
     let communityDraftKey = "PostEditorVC.communityDraftKey"
     let titleDraft = "EditorPageVC.titleDraft"
     let titleMinLettersLimit = 2
-    let titleBytesLimit = 240
+    let titleBytesLimit = 256
     
     // MARK: - Properties
     var chooseCommunityAfterLoading: Bool
@@ -58,7 +58,7 @@ class PostEditorVC: EditorVC {
         let titleIsInsideLimit =
             (title.count >= self.titleMinLettersLimit) &&
                 (title.utf8.count <= self.titleBytesLimit)
-        if !titleIsInsideLimit && hintType == nil {hintType = .error("title must less than \(titleMinLettersLimit) characters".localized().uppercaseFirst)}
+        if !titleIsInsideLimit && hintType == nil {hintType = .error("title must less than \(titleBytesLimit) characters".localized().uppercaseFirst)}
         
         // content inside limit
         let contentInsideLimit = (content.count <= contentLettersLimit)
@@ -96,7 +96,7 @@ class PostEditorVC: EditorVC {
         titleTextView.delegate = self
         return titleTextView
     }() 
-    lazy var titleTextViewCountLabel = UILabel.descriptionLabel("0/240")
+    lazy var titleTextViewCountLabel = UILabel.descriptionLabel("0/256")
     lazy var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     var contentTextView: ContentTextView {
@@ -158,7 +158,7 @@ class PostEditorVC: EditorVC {
         actionButton.setTitle("send post".localized().uppercaseFirst, for: .normal)
         
         // titleTextView
-        titleTextViewCountLabel.isHidden = true
+//        titleTextViewCountLabel.isHidden = true
         
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."

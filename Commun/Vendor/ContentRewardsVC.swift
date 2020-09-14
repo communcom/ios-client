@@ -1,5 +1,5 @@
 //
-//  PostRewardsVC.swift
+//  ContentRewardsVC.swift
 //  Commun
 //
 //  Created by Chung Tran on 9/4/20.
@@ -9,10 +9,9 @@
 import Foundation
 import RxSwift
 
-class PostRewardsVC: DonationsVC {
+class ContentRewardsVC<T: ResponseAPIContentMessageType>: DonationsVC {
     // MARK: - Properties
-    let post: ResponseAPIContentGetPost
-    var donateButtonHandler: (() -> Void)?
+    let content: T
     
     // MARK: - Subviews
     lazy var postMetaView: PostMetaView = {
@@ -23,11 +22,12 @@ class PostRewardsVC: DonationsVC {
     lazy var rewardsLabel = UILabel.with(textSize: 14, numberOfLines: 2)
     lazy var donationsLabel = UILabel.with(textSize: 14, numberOfLines: 2)
     lazy var donateButton = UIButton(height: 35, label: "donate".localized().uppercaseFirst, backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
+    let rewardsImageView = UIImageView(width: 35, height: 35, imageNamed: "rewards-cup")
     
     // MARK: - Initializers
-    init?(post: ResponseAPIContentGetPost) {
-        self.post = post
-        guard let donations = post.donations else {return nil}
+    init(content: T) {
+        self.content = content
+        let donations = content.donations ?? ResponseAPIWalletGetDonationsBulkItem(contentId: content.contentId, donations: [], totalAmount: 0)
         super.init(donations: donations)
     }
     
@@ -45,20 +45,27 @@ class PostRewardsVC: DonationsVC {
         donatersLabel.attributedText = NSMutableAttributedString()
             .text("donators".localized().uppercaseFirst, size: 20, weight: .bold)
             .text(" ")
-            .text("\(post.donations?.donators.count ?? 0)", size: 20, weight: .bold, color: .appGrayColor)
+            .text("\(content.donations?.donators.count ?? 0)", size: 20, weight: .bold, color: .appGrayColor)
         stackView.insertArrangedSubview(donatersLabel.padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)), at: 1)
         
         stackView.setCustomSpacing(20, after: headerView)
         stackView.setCustomSpacing(0, after: donatersLabel)
         
-        postMetaView.setUp(post: post)
-        rewardsLabel.attributedText = NSMutableAttributedString()
-            .text(post.mosaic?.formatedRewardsValue ?? "0", size: 15, weight: .semibold)
-            .text("\n")
-            .text("rewards".localized().uppercaseFirst, size: 12, weight: .medium, color: .appGrayColor)
-            
+        postMetaView.setUp(content: content)
+        if let post = content as? ResponseAPIContentGetPost {
+            rewardsLabel.isHidden = false
+            rewardsImageView.isHidden = false
+            rewardsLabel.attributedText = NSMutableAttributedString()
+                .text(post.mosaic?.formatedRewardsValue ?? "0", size: 15, weight: .semibold)
+                .text("\n")
+                .text("rewards".localized().uppercaseFirst, size: 12, weight: .medium, color: .appGrayColor)
+        } else {
+            rewardsLabel.isHidden = true
+            rewardsImageView.isHidden = true
+        }
+        
         donationsLabel.attributedText = NSMutableAttributedString()
-            .text(post.donationsCount.currencyValueFormatted, size: 15, weight: .semibold)
+            .text(content.donationsCount.currencyValueFormatted, size: 15, weight: .semibold)
             .text("\n")
             .text("donations".localized().uppercaseFirst, size: 12, weight: .medium, color: .appGrayColor)
         
@@ -81,8 +88,7 @@ class PostRewardsVC: DonationsVC {
         separator.autoPinEdge(toSuperviewEdge: .leading)
         separator.autoPinEdge(toSuperviewEdge: .trailing)
         
-        let rewardsStackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
-        let rewardsImageView = UIImageView(width: 35, height: 35, imageNamed: "rewards-cup")
+        let rewardsStackView = UIStackView(axis: .horizontal, spacing: 4, alignment: .center, distribution: .fill)
         let donationImageView = UIImageView(width: 35, height: 35, imageNamed: "rewards-coin")
         
         rewardsImageView.setContentHuggingPriority(.required, for: .horizontal)
