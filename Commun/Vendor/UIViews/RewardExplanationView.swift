@@ -14,8 +14,8 @@ class RewardsExplanationVC: BaseViewController {
     
     lazy var swipeDownButton = UIView(width: 50, height: 5, backgroundColor: .appWhiteColor, cornerRadius: 2.5)
     lazy var showingOptionButtonLabel = UILabel.with(text: "community points".localized().uppercaseFirst, textColor: .appGrayColor, textAlignment: .right)
-    lazy var rewardsVC: PostRewardsVC = {
-        let vc = PostRewardsVC(post: post)
+    lazy var rewardsVC: ContentRewardsVC = {
+        let vc = ContentRewardsVC(content: post)
         vc.modelSelected = {donation in
             self.dismiss(animated: true) {
                 UIApplication.topViewController()?.showProfileWithUserId(donation.sender.userId)

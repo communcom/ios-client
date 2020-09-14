@@ -26,14 +26,28 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     var donationViewTopConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
-    lazy var avatarImageView = MyAvatarImageView(size: 35)
+    lazy var avatarImageView: MyAvatarImageView = {
+        let avatarImageView = MyAvatarImageView(size: 35)
+        avatarImageView.isUserInteractionEnabled = true
+        avatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openProfile)))
+        return avatarImageView
+    }()
+    lazy var usernameLabel: UILabel = {
+        let label = UILabel.with(textSize: defaultContentFontSize, weight: .bold, textColor: .appBlackColor)
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openProfile)))
+        return label
+    }()
+    lazy var donationImageView: UIImageView = {
+        let imageView = UIImageView(width: 12.83, height: 12.22, imageNamed: "coin-reward")
+        imageView.isUserInteractionEnabled = true
+        return imageView
+    }()
 
     lazy var contentTextView: UITextView = {
         let textView = UITextView(forExpandable: ())
         textView.isEditable = false
         textView.isSelectable = false
-        textView.backgroundColor = contentTextViewBackgroundColor
-        textView.cornerRadius = 12
         textView.textContainerInset = UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 10)
         textView.backgroundColor = .clear
         return textView
@@ -56,7 +70,11 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         replyButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return replyButton
     }()
-    lazy var donateButton = UIButton(label: "donate".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
+    lazy var donateButton: UIButton = {
+        let button = UIButton(label: "donate".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
+        button.addTarget(self, action: #selector(donateButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
     lazy var statusImageView = UIImageView(width: 16, height: 16, cornerRadius: 8)
     lazy var donationView = DonationView()
     
@@ -70,13 +88,28 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         avatarImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 8).isActive = true
         avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         
-        avatarImageView.isUserInteractionEnabled = true
-        avatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openProfile)))
+        let headerStackView: UIStackView = {
+            let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+            stackView.addArrangedSubviews([usernameLabel, donationImageView])
+            return stackView
+        }()
         
-        contentView.addSubview(contentTextView)
-        contentTextView.autoPinEdge(.top, to: .top, of: avatarImageView)
-        contentTextView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        contentTextView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16).isActive = true
+        let contentStackView: UIView = {
+            let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .leading, distribution: .fill)
+            stackView.addArrangedSubviews([
+                headerStackView.padding(UIEdgeInsets(top: 7, left: 15, bottom: 0, right: 10)),
+                contentTextView
+            ])
+            
+            let view = UIView(backgroundColor: contentTextViewBackgroundColor, cornerRadius: 12)
+            view.addSubview(stackView)
+            stackView.autoPinEdgesToSuperviewEdges()
+            return view
+        }()
+        contentView.addSubview(contentStackView)
+        contentStackView.autoPinEdge(.top, to: .top, of: avatarImageView)
+        contentStackView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        contentStackView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16).isActive = true
         
         contentView.addSubview(gridView)
         gridView.autoPinEdge(.leading, to: .leading, of: contentTextView)
@@ -144,6 +177,9 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         
         // avatar
         avatarImageView.setAvatar(urlString: comment.author?.avatarUrl)
+        
+        let userId = comment.author?.username ?? comment.author?.userId ?? "Unknown user"
+        usernameLabel.text = userId
         
         // setContent
         setText()
@@ -237,14 +273,13 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         }
         
         timeLabel.text = Date.timeAgo(string: comment.meta.creationTime) + " • "
+        
+        // Donation
+        donationImageView.isHidden = comment.donationsCount == 0
     }
     
     func setText() {
-        let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
-        let mutableAS = NSMutableAttributedString(string: userId, attributes: [
-            .font: UIFont.boldSystemFont(ofSize: defaultContentFontSize),
-            .foregroundColor: UIColor.appBlackColor
-        ])
+        let mutableAS = NSMutableAttributedString()
         
         guard var content = comment?.document?.toAttributedString(
             currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize),
@@ -269,8 +304,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         } else {
             contentTextView.backgroundColor = .appLightGrayColor
         }
-        
-        mutableAS.append(NSAttributedString(string: " "))
         
         // If text is not so long or expanded
         if content.string.count < maxCharactersForReduction || expanded {

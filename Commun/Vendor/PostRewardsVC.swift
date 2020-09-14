@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class PostRewardsVC: DonationsVC {
+class ContentRewardsVC: DonationsVC {
     // MARK: - Properties
     let post: ResponseAPIContentGetPost
     
@@ -24,9 +24,9 @@ class PostRewardsVC: DonationsVC {
     lazy var donateButton = UIButton(height: 35, label: "donate".localized().uppercaseFirst, backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
     
     // MARK: - Initializers
-    init(post: ResponseAPIContentGetPost) {
-        self.post = post
-        let donations = post.donations ?? ResponseAPIWalletGetDonationsBulkItem(contentId: post.contentId, donations: [], totalAmount: 0)
+    init(content: ResponseAPIContentGetPost) {
+        self.post = content
+        let donations = content.donations ?? ResponseAPIWalletGetDonationsBulkItem(contentId: content.contentId, donations: [], totalAmount: 0)
         super.init(donations: donations)
     }
     
