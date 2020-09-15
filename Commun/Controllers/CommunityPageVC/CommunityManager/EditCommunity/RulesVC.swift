@@ -19,6 +19,7 @@ class RulesVC: BaseViewController {
     var dataSource: RxTableViewSectionedAnimatedDataSource<RuleListSectionModel>!
     
     // MARK: - Subviews
+    lazy var saveButton = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
     lazy var tableView: UITableView = {
         let tableView = UITableView(backgroundColor: .clear)
         tableView.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
@@ -46,6 +47,11 @@ class RulesVC: BaseViewController {
         super.setUp()
         title = "rules".localized().uppercaseFirst
         view.backgroundColor = .appLightGrayColor
+        
+        saveButton.tintColor = .appBlackColor
+        navigationItem.rightBarButtonItem = saveButton
+        
+        setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
         
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
@@ -94,5 +100,40 @@ class RulesVC: BaseViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        rules.map {_ in self.contentHasChanged()}
+            .asDriver(onErrorJustReturn: false)
+            .drive(saveButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Helpers
+    private func contentHasChanged() -> Bool {
+        if originalRules.count != rules.value.count {return true}
+        for i in 0..<originalRules.count {
+            // compare
+            if originalRules[i].title != rules.value[i].title {return true}
+            if originalRules[i].text != rules.value[i].text {return true}
+        }
+        return false
+    }
+    
+    // MARK: - Actions
+    @objc func saveButtonDidTouch() {
+        
+    }
+    
+    @objc func askForSavingAndGoBack() {
+        if contentHasChanged() {
+            showAlert(title: "save".localized().uppercaseFirst, message: "do you want to save the changes you've made?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                if index == 0 {
+                    self.saveButtonDidTouch()
+                    return
+                }
+                self.back()
+            }
+        } else {
+            back()
+        }
     }
 }
