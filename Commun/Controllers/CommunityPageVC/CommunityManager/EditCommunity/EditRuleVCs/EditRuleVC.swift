@@ -7,17 +7,24 @@
 //
 
 import Foundation
+import RxSwift
 
 class EditRuleVC: BaseVerticalStackVC {
+    let descriptionLimit = 250
     let originalRule: ResponseAPIContentGetCommunityRule?
     var isEditMode: Bool { originalRule != nil }
+    var newRuleHandler: ((ResponseAPIContentGetCommunityRule) -> Void)?
     
-    lazy var ruleNameTextField: UITextField = {
-        let tf = UITextField()
-        tf.borderStyle = .none
-        tf.font = .systemFont(ofSize: 17, weight: .semibold)
-        tf.textColor = .appMainColor
-        return tf
+    lazy var saveButton = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
+    
+    lazy var ruleNameTextField: UITextView = {
+        let tv = UITextView(forExpandable: ())
+        tv.backgroundColor = .clear
+        tv.font = .systemFont(ofSize: 17, weight: .semibold)
+        tv.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
+        tv.textContainer.lineFragmentPadding = 0
+        tv.textColor = .appMainColor
+        return tv
     }()
     
     lazy var descriptionTextView: UITextView = {
@@ -43,9 +50,20 @@ class EditRuleVC: BaseVerticalStackVC {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        ruleNameTextField.text = originalRule?.title
+        descriptionTextView.text = originalRule?.text
+    }
+    
     override func setUp() {
         super.setUp()
         view.backgroundColor = .appLightGrayColor
+        
+        saveButton.tintColor = .appBlackColor
+        navigationItem.rightBarButtonItem = saveButton
+        
+        setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
         
         title = isEditMode ? "edit rule".localized().uppercaseFirst : "add new rule".localized().uppercaseFirst
         
@@ -60,15 +78,33 @@ class EditRuleVC: BaseVerticalStackVC {
         
         descriptionField.addSubview(descriptionCountLabel)
         descriptionCountLabel.autoPinBottomAndTrailingToSuperView(inset: 16)
-        
-        ruleNameTextField.text = originalRule?.title
-        ruleNameTextField.sendActions(for: .valueChanged)
-        descriptionTextView.text = originalRule?.text
     }
     
     override func bind() {
         super.bind()
         
+        let descriptionCount = descriptionTextView.rx.text.orEmpty.map {$0.count}.share()
+            
+        descriptionCount
+            .map {"\($0)/\(self.descriptionLimit)"}
+            .asDriver(onErrorJustReturn: "")
+            .drive(descriptionCountLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        descriptionCount
+            .map {$0 > self.descriptionLimit}
+            .map {$0 ? UIColor.appRedColor: UIColor.appGrayColor}
+            .asDriver(onErrorJustReturn: .appGrayColor)
+            .drive(onNext: { (color) in
+                self.descriptionCountLabel.textColor = color
+            })
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(descriptionCount, ruleNameTextField.rx.text)
+            .map {_ in self.contentHasChanged()}
+            .asDriver(onErrorJustReturn: false)
+            .drive(saveButton.rx.isEnabled)
+            .disposed(by: disposeBag)
     }
     
     private func field(title: String, editor: UITextEditor) -> UIView {
@@ -86,5 +122,46 @@ class EditRuleVC: BaseVerticalStackVC {
         field.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         return field
+    }
+    
+    // MARK: - Helpers
+    private func contentHasChanged() -> Bool {
+        if ruleNameTextField.text?.isEmpty == false {
+            if descriptionTextView.text.count > descriptionLimit {return false}
+            if !isEditMode {return true}
+            return (ruleNameTextField.text != originalRule?.title) || (descriptionTextView.text != originalRule?.text)
+        } else {
+            return false
+        }
+    }
+    
+    // MARK: - Actions
+    @objc func saveButtonDidTouch() {
+        if isEditMode {
+            var rule = originalRule
+            rule?.title = ruleNameTextField.text
+            rule?.text = descriptionTextView.text
+            rule?.notifyChanged()
+            back()
+            return
+        }
+        
+        backCompletion {
+            self.newRuleHandler?(ResponseAPIContentGetCommunityRule.with(title: self.ruleNameTextField.text ?? "", text: self.descriptionTextView.text))
+        }
+    }
+    
+    @objc func askForSavingAndGoBack() {
+        if contentHasChanged() {
+            showAlert(title: "save".localized().uppercaseFirst, message: "do you want to save the changes you've made?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                if index == 0 {
+                    self.saveButtonDidTouch()
+                    return
+                }
+                self.back()
+            }
+        } else {
+            back()
+        }
     }
 }
