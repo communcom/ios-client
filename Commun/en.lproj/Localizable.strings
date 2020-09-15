@@ -65,6 +65,7 @@
 "attention" = "attention";
 "authorize on web" = "authorize on web";
 "available" = "available";
+"avatar" = "avatar";
 "back" = "back";
 "back to wallet" = "back to wallet";
 "balance" = "balance";
@@ -152,6 +153,7 @@
 "create your username" = "create your username";
 "create community" = "create community";
 "creating community" = "creating community";
+"creating proposal" = "creating proposal";
 "days ago" = "days ago";
 "debited from" = "debited from";
 "delete" = "delete";
@@ -189,6 +191,7 @@
 "draft let you save your edits, so you can" = "draft let you save your edits, so you can come back later";
 "drag to move cover photo" = "drag to move cover photo";
 "edit" = "edit";
+"edit description" = "edit description";
 "empty" = "empty";
 "empty subscriptions button title" = "find Communities";
 "empty subscriptions description" = "you haven’t subscribed to any community yet";
@@ -387,6 +390,11 @@
 "posts not found" = "posts not found";
 "profile description" = "profile description";
 "profile photo" = "profile photo";
+"proposal created" = "proposal created";
+"proposal for avatar changing has been created" = "proposal for avatar changing has been created";
+"proposal for cover changing has been created" = "proposal for cover changing has been created";
+"proposal for description changing has been created" = "proposal for description changing has been created";
+"proposal for rules changing has been created" = "proposal for rules changing has been created";
 "proposals" = "proposals";
 "propose to ban" = "propose to ban";
 "preferrable" = "preferrable";

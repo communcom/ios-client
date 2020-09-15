@@ -64,6 +64,7 @@
 "attention" = "внимание";
 "authorize on web" = "авторизуйтесь на сайте";
 "available" = "доступны";
+"avatar" = "аватарка";
 "back" = "назад";
 "back to wallet" = "обратно в кошелёк";
 "balance" = "баланс";
@@ -148,6 +149,7 @@
 "create Ban Proposal" = "предложить бан";
 "create community" = "создать сообщество";
 "creating community" = "создание сообщества";
+"creating proposal" = "создание предложения";
 "days ago" = "дней назад";
 "debited from" = "списано с";
 "delete" = "удалить";
@@ -184,6 +186,7 @@
 "draft let you save your edits, so you can" = "черновик позволяет сохранить изменения, чтобы продолжить позже";
 "drag to move cover photo" = "перетащите, чтобы переместить обложку";
 "edit" = "редактировать";
+"edit description" = "редактировать описание";
 "empty" = "пустой";
 "empty subscriptions button title" = "найти сообщества";
 "empty subscriptions description" = "Вы еще не подписались ни на одно сообщество";
@@ -377,6 +380,11 @@
 "posts not found" = "сообщения не найдены";
 "profile description" = "описание профиля";
 "profile photo" = "аватар";
+"proposal created" = "предложение создано";
+"proposal for avatar changing has been created" = "предложение по смене аватарки создано";
+"proposal for cover changing has been created" = "предложение по смене обложки создано";
+"proposal for description changing has been created" = "предложение по смене описания создано";
+"proposal for rules changing has been created" = "предложение по смене правил создано";
 "proposals" = "предложения";
 "propose to ban" = "предложить бан";
 "preferrable" = "предпочтительный";

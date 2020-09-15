@@ -63,7 +63,7 @@ class EditCommunityVC: BaseVerticalStackVC {
         stackView.setCustomSpacing(16, after: avatarImageView)
         
         // cover
-        let coverSectionHeaderView = sectionHeaderView(title: "cover".localized().uppercaseFirst, action: #selector(coverButtonDidTouch))
+        let coverSectionHeaderView = sectionHeaderView(title: "cover photo".localized().uppercaseFirst, action: #selector(coverButtonDidTouch))
         stackView.addArrangedSubview(coverSectionHeaderView)
         coverSectionHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
@@ -172,6 +172,7 @@ class EditCommunityVC: BaseVerticalStackVC {
         editBioVC.bio = originalCommunity.description
         
         present(editBioVC, animated: true, completion: nil)
+        editBioVC.headerLabel.text = "edit description".localized().uppercaseFirst
         
         editBioVC.didConfirm
             .take(1)
