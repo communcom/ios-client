@@ -15,7 +15,12 @@ class EditRuleVC: BaseVerticalStackVC {
     var isEditMode: Bool { originalRule != nil }
     var newRuleHandler: ((ResponseAPIContentGetCommunityRule) -> Void)?
     
-    lazy var saveButton = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
+    lazy var saveButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
+        button.isEnabled = false
+        button.tintColor = .appBlackColor
+        return button
+    }()
     
     lazy var ruleNameTextField: UITextView = {
         let tv = UITextView(forExpandable: ())
@@ -59,7 +64,6 @@ class EditRuleVC: BaseVerticalStackVC {
         super.setUp()
         view.backgroundColor = .appLightGrayColor
         
-        saveButton.tintColor = .appBlackColor
         navigationItem.rightBarButtonItem = saveButton
         
         setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
@@ -99,7 +103,7 @@ class EditRuleVC: BaseVerticalStackVC {
             })
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(descriptionCount, ruleNameTextField.rx.text)
+        Observable.merge(descriptionCount.map {_ in ()}, ruleNameTextField.rx.text.map {_ in ()})
             .map {_ in self.contentHasChanged()}
             .asDriver(onErrorJustReturn: false)
             .drive(saveButton.rx.isEnabled)
