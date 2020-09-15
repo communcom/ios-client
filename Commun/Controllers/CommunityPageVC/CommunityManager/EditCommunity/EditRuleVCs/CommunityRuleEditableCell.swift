@@ -40,7 +40,7 @@ class CommunityRuleEditableCell: CommunityRuleCell {
     }
     
     @objc func buttonRemoveDidTouch() {
-        parentViewController?.showAlert(title: "remove rule".localized().uppercaseFirst, message: "do you really want to remove this rule?".localized().uppercaseFirst, buttonTitles: ["yes".localized(), "no".localized()], highlightedButtonIndex: 1, completion: { (index) in
+        parentViewController?.showAlert(title: "remove rule".localized().uppercaseFirst, message: "do you really want to remove this rule?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1, completion: { (index) in
             if index == 0 {
                 self.rule?.notifyDeleted()
             }

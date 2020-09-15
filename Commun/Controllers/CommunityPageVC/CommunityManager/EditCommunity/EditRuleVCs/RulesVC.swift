@@ -25,6 +25,20 @@ class RulesVC: BaseViewController {
         tableView.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
         tableView.separatorStyle = .none
         tableView.register(CommunityRuleEditableCell.self, forCellReuseIdentifier: "CommunityRuleEditableCell")
+        let footerView: UIView = {
+            let view = UIView(height: 57, backgroundColor: .appWhiteColor, cornerRadius: 10)
+            let label = UILabel.with(text: "+ " + "add new rule".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .appMainColor)
+            view.addSubview(label)
+            label.autoCenterInSuperview()
+            
+            view.isUserInteractionEnabled = true
+            view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addRuleButtonDidTouch)))
+            return view
+        }()
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 67))
+        view.addSubview(footerView)
+        footerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10))
+        tableView.tableFooterView = view
         return tableView
     }()
     
@@ -119,8 +133,18 @@ class RulesVC: BaseViewController {
     }
     
     // MARK: - Actions
+    @objc func addRuleButtonDidTouch() {
+        let vc = EditRuleVC()
+        vc.newRuleHandler = {rule in
+            var rules = self.rules.value
+            rules.append(rule)
+            self.rules.accept(rules)
+        }
+        show(vc, sender: nil)
+    }
+    
     @objc func saveButtonDidTouch() {
-        
+        // TODO: - Encode and save
     }
     
     @objc func askForSavingAndGoBack() {

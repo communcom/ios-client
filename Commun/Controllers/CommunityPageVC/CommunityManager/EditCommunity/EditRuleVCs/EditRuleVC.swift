@@ -21,7 +21,6 @@ class EditRuleVC: BaseVerticalStackVC {
         let tv = UITextView(forExpandable: ())
         tv.backgroundColor = .clear
         tv.font = .systemFont(ofSize: 17, weight: .semibold)
-        tv.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
         tv.textContainer.lineFragmentPadding = 0
         tv.textColor = .appMainColor
         return tv
