@@ -54,8 +54,9 @@ class RulesVC: BaseViewController {
     override func bind() {
         super.bind()
         dataSource = RxTableViewSectionedAnimatedDataSource<RuleListSectionModel>(
-            configureCell: { (_, table, _, rule) in
+            configureCell: { (_, table, indexPath, rule) in
                 let cell = table.dequeueReusableCell(withIdentifier: "CommunityRuleEditableCell") as! CommunityRuleEditableCell
+                cell.rowIndex = indexPath.row
                 cell.setUp(with: rule)
                 return cell
             }
@@ -78,6 +79,18 @@ class RulesVC: BaseViewController {
 //                    }
                     rules[index] = rule
                     self.rules.accept(rules)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetCommunityRule
+            .observeItemDeleted()
+            .subscribe(onNext: { (rule) in
+                var rules = self.rules.value
+                rules.removeAll(where: {$0.identity == rule.identity})
+                self.rules.accept(rules)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.tableView.reloadData()
                 }
             })
             .disposed(by: disposeBag)

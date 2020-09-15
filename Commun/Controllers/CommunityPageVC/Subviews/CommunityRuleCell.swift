@@ -17,12 +17,12 @@ class CommunityRuleCell: CommunityPageCell {
     lazy var containerView = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     lazy var stackView = UIStackView(axis: .vertical, spacing: 14, alignment: .fill, distribution: .fill)
     lazy var titleLabel: UILabel = {
-        let label = UILabel.with(text: "2. Content should be Safe for Work", textSize: 15.0, weight: .bold, numberOfLines: 0)
+        let label = UILabel.with(textSize: 15.0, weight: .bold, numberOfLines: 0)
         label.setContentHuggingPriority(.required, for: .vertical)
         label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         return label
     }()
-    lazy var contentLabel: UILabel = UILabel.with(text: "All content (title, articles, video, image, website, etc.) must be SFW: Safe For Work. Content that is NSFW: Not Safe For Work, is banned. This rule applies to all posts and comments.", textSize: 15.0, numberOfLines: 0)
+    lazy var contentLabel: UILabel = UILabel.with(textSize: 15.0, numberOfLines: 0)
     lazy var expandButton: UIButton = {
         let expandButton = UIButton.circleGray(imageName: "rule_expand")
         expandButton.addTarget(self, action: #selector(expandButtonDidTouch(_:)), for: .touchUpInside)
@@ -55,9 +55,15 @@ class CommunityRuleCell: CommunityPageCell {
     
     func setUp(with newRule: ResponseAPIContentGetCommunityRule?) {
         rule = newRule
-        titleLabel.text = "\((rowIndex ?? 0) + 1). " + (rule?.title ?? "")
+        var titleText = ""
+        if let index = rowIndex {
+            titleText += "\(index + 1). "
+        }
+        titleText += (rule?.title ?? "")
+        titleLabel.text = titleText
         expandButton.isHidden = (newRule?.text == nil) || (newRule?.text?.isEmpty ?? false)
         let isExpanded = (rule?.isExpanded ?? false)
+        contentLabel.text = rule?.text
         contentLabel.isHidden = !isExpanded
         expandButton.transform = isExpanded ? .init(rotationAngle: -.pi) : .identity
     }
