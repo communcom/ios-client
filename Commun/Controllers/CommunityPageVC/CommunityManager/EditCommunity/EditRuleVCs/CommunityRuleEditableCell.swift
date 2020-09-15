@@ -48,6 +48,8 @@ class CommunityRuleEditableCell: CommunityRuleCell {
     }
     
     @objc func buttonEditDidTouch() {
-        
+        guard let rule = rule else {return}
+        let vc = EditRuleVC(rule: rule)
+        parentViewController?.show(vc, sender: nil)
     }
 }
