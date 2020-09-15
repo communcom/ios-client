@@ -192,6 +192,8 @@ class EditCommunityVC: BaseVerticalStackVC {
     }
     
     @objc func rulesButtonDidTouch() {
-        
+        guard let rules = originalCommunity.rules else {return}
+        let vc = RulesVC(rules: rules)
+        show(vc, sender: nil)
     }
 }

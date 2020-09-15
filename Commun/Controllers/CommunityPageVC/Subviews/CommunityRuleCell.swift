@@ -31,6 +31,7 @@ class CommunityRuleCell: CommunityPageCell {
     
     override func setUpViews() {
         super.setUpViews()
+        backgroundColor = .clear
         // background color
         contentView.backgroundColor = .clear
         
