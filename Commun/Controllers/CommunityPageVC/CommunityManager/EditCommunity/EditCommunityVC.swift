@@ -167,7 +167,27 @@ class EditCommunityVC: BaseVerticalStackVC {
     }
     
     @objc func descriptionButtonDidTouch() {
+        let editBioVC = MyProfileEditBioVC()
         
+        editBioVC.bio = originalCommunity.description
+        
+        present(editBioVC, animated: true, completion: nil)
+        
+        editBioVC.didConfirm
+            .take(1)
+            .asSingle()
+            .do(onSuccess: { (_) in
+                self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
+            })
+            .flatMap {BlockchainManager.instance.editCommunnity(communityCode: self.originalCommunity.communityId, commnityIssuer: self.originalCommunity.issuer ?? "", description: $0)}
+            .subscribe(onSuccess: { (_) in
+                self.hideHud()
+                self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for description changing has been created".localized().uppercaseFirst)
+            }, onError: {(error) in
+                self.hideHud()
+                self.showError(error)
+            })
+            .disposed(by: disposeBag)
     }
     
     @objc func rulesButtonDidTouch() {
