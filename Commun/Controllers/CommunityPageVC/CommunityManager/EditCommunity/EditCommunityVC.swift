@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class EditCommunityVC: BaseVerticalStackVC {
     var originalCommunity: ResponseAPIContentGetCommunity
@@ -126,38 +127,43 @@ class EditCommunityVC: BaseVerticalStackVC {
     @objc func avatarButtonDidTouch() {
         // On updating
         let chooseAvatarVC = ProfileChooseAvatarVC.fromStoryboard("ProfileChooseAvatarVC", withIdentifier: "ProfileChooseAvatarVC")
-        self.present(chooseAvatarVC, animated: true, completion: nil)
+        present(chooseAvatarVC, animated: true, completion: nil)
         
         chooseAvatarVC.viewModel.didSelectImage
             .filter {$0 != nil}
             .map {$0!}
-            .subscribe(onNext: { (image) in
-                self.avatarImageView.image = image
+            .take(1)
+            .asSingle()
+            .do(onSuccess: { (_) in
+                self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
             })
+            .flatMap {RestAPIManager.instance.uploadImage($0)}
+            .flatMap {BlockchainManager.instance.editCommunnity(communityCode: self.originalCommunity.communityId, commnityIssuer: self.originalCommunity.issuer ?? "", avatarImage: $0)}
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+            .subscribe(onCompleted: {
+                self.hideHud()
+                self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for avatar changing has been created".localized().uppercaseFirst)
+            }) { (error) in
+                self.hideHud()
+                self.showError(error)
+            }
             .disposed(by: disposeBag)
     }
     
     @objc func coverButtonDidTouch() {
-        let pickerVC = SinglePhotoPickerVC()
-        
-        pickerVC.completion = { image in
-            let coverEditVC = MyProfileEditCoverVC()
-            coverEditVC.modalPresentationStyle = .fullScreen
-            coverEditVC.joinedDateString = self.originalCommunity.registrationTime
-            coverEditVC.updateWithImage(image)
-            coverEditVC.completion = {image in
-                coverEditVC.dismiss(animated: true, completion: {
-                    pickerVC.dismiss(animated: true, completion: nil)
+        showCoverImagePicker(joinedDateString: self.originalCommunity.registrationTime) { (image) in
+            self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
+            RestAPIManager.instance.uploadImage(image)
+                .flatMap {BlockchainManager.instance.editCommunnity(communityCode: self.originalCommunity.communityId, commnityIssuer: self.originalCommunity.issuer ?? "", coverImage: $0)}
+                .subscribe(onSuccess: { (_) in
+                    self.hideHud()
+                    self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for cover changing has been created".localized().uppercaseFirst)
+                }, onError: { (error) in
+                    self.hideHud()
+                    self.showError(error)
                 })
-                self.coverImageView.image = image
-            }
-            
-            let nc = SwipeNavigationController(rootViewController: coverEditVC)
-            pickerVC.present(nc, animated: true, completion: nil)
+                .disposed(by: self.disposeBag)
         }
-        
-        pickerVC.modalPresentationStyle = .fullScreen
-        self.present(pickerVC, animated: true, completion: nil)
     }
     
     @objc func descriptionButtonDidTouch() {
