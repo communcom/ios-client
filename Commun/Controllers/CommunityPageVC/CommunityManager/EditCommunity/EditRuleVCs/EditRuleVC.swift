@@ -13,6 +13,7 @@ class EditRuleVC: BaseVerticalStackVC {
     let descriptionLimit = 250
     let originalRule: ResponseAPIContentGetCommunityRule?
     var isEditMode: Bool { originalRule != nil }
+    var updateRuleHandler: ((ResponseAPIContentGetCommunityRule) -> Void)?
     var newRuleHandler: ((ResponseAPIContentGetCommunityRule) -> Void)?
     
     lazy var saveButton: UIBarButtonItem = {
@@ -140,17 +141,15 @@ class EditRuleVC: BaseVerticalStackVC {
     
     // MARK: - Actions
     @objc func saveButtonDidTouch() {
-        if isEditMode {
-            var rule = originalRule
-            rule?.title = ruleNameTextField.text
-            rule?.text = descriptionTextView.text
-            rule?.notifyChanged()
-            back()
-            return
-        }
-        
         backCompletion {
-            self.newRuleHandler?(ResponseAPIContentGetCommunityRule.with(title: self.ruleNameTextField.text ?? "", text: self.descriptionTextView.text))
+            if self.isEditMode {
+                guard var rule = self.originalRule else {return}
+                rule.text = self.ruleNameTextField.text ?? ""
+                rule.title = self.descriptionTextView.text
+                self.updateRuleHandler?(rule)
+            } else {
+                self.newRuleHandler?(ResponseAPIContentGetCommunityRule.with(title: self.ruleNameTextField.text ?? "", text: self.descriptionTextView.text))
+            }
         }
     }
     

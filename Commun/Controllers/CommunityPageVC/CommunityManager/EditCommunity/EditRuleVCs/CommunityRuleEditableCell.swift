@@ -8,7 +8,14 @@
 
 import Foundation
 
+protocol CommunityRuleEditableCellDelegate: class {
+    func communityRuleEditableCellButtonRemoveDidTouch(_ cell: CommunityRuleEditableCell)
+    func communityRuleEditableCellButtonEditDidTouch(_ cell: CommunityRuleEditableCell)
+}
+
 class CommunityRuleEditableCell: CommunityRuleCell {
+    weak var delegate: CommunityRuleEditableCellDelegate?
+    
     lazy var editButton: CommunButton = {
         let button = CommunButton.default(height: 30, label: "edit".localized().uppercaseFirst)
         button.addTarget(self, action: #selector(buttonEditDidTouch), for: .touchUpInside)
@@ -40,16 +47,10 @@ class CommunityRuleEditableCell: CommunityRuleCell {
     }
     
     @objc func buttonRemoveDidTouch() {
-        parentViewController?.showAlert(title: "remove rule".localized().uppercaseFirst, message: "do you really want to remove this rule?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1, completion: { (index) in
-            if index == 0 {
-                self.rule?.notifyDeleted()
-            }
-        })
+        delegate?.communityRuleEditableCellButtonRemoveDidTouch(self)
     }
     
     @objc func buttonEditDidTouch() {
-        guard let rule = rule else {return}
-        let vc = EditRuleVC(rule: rule)
-        parentViewController?.show(vc, sender: nil)
+        delegate?.communityRuleEditableCellButtonEditDidTouch(self)
     }
 }

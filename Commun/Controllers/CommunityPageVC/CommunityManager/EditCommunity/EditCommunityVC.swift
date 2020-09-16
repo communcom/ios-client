@@ -155,7 +155,8 @@ class EditCommunityVC: BaseVerticalStackVC {
             self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
             RestAPIManager.instance.uploadImage(image)
                 .flatMap {BlockchainManager.instance.editCommunnity(communityCode: self.originalCommunity.communityId, commnityIssuer: self.originalCommunity.issuer ?? "", coverImage: $0)}
-                .subscribe(onSuccess: { (_) in
+                .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                .subscribe(onCompleted: {
                     self.hideHud()
                     self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for cover changing has been created".localized().uppercaseFirst)
                 }, onError: { (error) in
@@ -181,7 +182,8 @@ class EditCommunityVC: BaseVerticalStackVC {
                 self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
             })
             .flatMap {BlockchainManager.instance.editCommunnity(communityCode: self.originalCommunity.communityId, commnityIssuer: self.originalCommunity.issuer ?? "", description: $0)}
-            .subscribe(onSuccess: { (_) in
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+            .subscribe(onCompleted: {
                 self.hideHud()
                 self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for description changing has been created".localized().uppercaseFirst)
             }, onError: {(error) in
@@ -192,8 +194,8 @@ class EditCommunityVC: BaseVerticalStackVC {
     }
     
     @objc func rulesButtonDidTouch() {
-        guard let rules = originalCommunity.rules else {return}
-        let vc = RulesVC(rules: rules)
+        guard let rules = originalCommunity.rules, let issuer = originalCommunity.issuer else {return}
+        let vc = RulesVC(communityCode: originalCommunity.communityId, communityIssuer: issuer, rules: rules)
         show(vc, sender: nil)
     }
 }

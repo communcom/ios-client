@@ -14,12 +14,13 @@ class RulesVC: BaseViewController {
     typealias RuleListSectionModel = AnimatableSectionModel<String, ResponseAPIContentGetCommunityRule>
     
     // MARK: - Properties
+    let communityCode: String
+    let communityIssuer: String
     let originalRules: [ResponseAPIContentGetCommunityRule]
     lazy var rules = BehaviorRelay<[ResponseAPIContentGetCommunityRule]>(value: originalRules)
     var dataSource: RxTableViewSectionedAnimatedDataSource<RuleListSectionModel>!
     
     // MARK: - Subviews
-    lazy var saveButton = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
     lazy var tableView: UITableView = {
         let tableView = UITableView(backgroundColor: .clear)
         tableView.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
@@ -43,7 +44,9 @@ class RulesVC: BaseViewController {
     }()
     
     // MARK: - Initializers
-    init(rules: [ResponseAPIContentGetCommunityRule]) {
+    init(communityCode: String, communityIssuer: String, rules: [ResponseAPIContentGetCommunityRule]) {
+        self.communityCode = communityCode
+        self.communityIssuer = communityIssuer
         originalRules = rules.compactMap {rule in
             var rule = rule
             rule.isExpanded = false
@@ -62,11 +65,6 @@ class RulesVC: BaseViewController {
         title = "rules".localized().uppercaseFirst
         view.backgroundColor = .appLightGrayColor
         
-        saveButton.tintColor = .appBlackColor
-        navigationItem.rightBarButtonItem = saveButton
-        
-        setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
-        
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
     }
@@ -78,6 +76,7 @@ class RulesVC: BaseViewController {
                 let cell = table.dequeueReusableCell(withIdentifier: "CommunityRuleEditableCell") as! CommunityRuleEditableCell
                 cell.rowIndex = indexPath.row
                 cell.setUp(with: rule)
+                cell.delegate = self
                 return cell
             }
         )
@@ -114,50 +113,90 @@ class RulesVC: BaseViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
-        rules.map {_ in self.contentHasChanged()}
-            .asDriver(onErrorJustReturn: false)
-            .drive(saveButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-    }
-    
-    // MARK: - Helpers
-    private func contentHasChanged() -> Bool {
-        if originalRules.count != rules.value.count {return true}
-        for i in 0..<originalRules.count {
-            // compare
-            if originalRules[i].title != rules.value[i].title {return true}
-            if originalRules[i].text != rules.value[i].text {return true}
-        }
-        return false
     }
     
     // MARK: - Actions
     @objc func addRuleButtonDidTouch() {
         let vc = EditRuleVC()
         vc.newRuleHandler = {rule in
-            var rules = self.rules.value
-            rules.append(rule)
-            self.rules.accept(rules)
+            self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
+            let addRequest = RequestAPIRule.add(title: rule.title ?? "", text: rule.text).convertToJSON()
+            BlockchainManager.instance.editCommunnity(
+                communityCode: self.communityCode,
+                commnityIssuer: self.communityIssuer,
+                rules: addRequest
+            )
+                .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                .subscribe(onCompleted: {
+                    self.hideHud()
+                    self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for rule adding has been created".localized().uppercaseFirst)
+                }) { (error) in
+                    self.hideHud()
+                    self.showError(error)
+                }
+                .disposed(by: self.disposeBag)
         }
         show(vc, sender: nil)
     }
-    
-    @objc func saveButtonDidTouch() {
-        // TODO: - Encode and save
+}
+
+extension RulesVC: CommunityRuleEditableCellDelegate {
+    func communityRuleEditableCellButtonRemoveDidTouch(_ cell: CommunityRuleEditableCell) {
+        guard let row = tableView.indexPath(for: cell)?.row,
+            let id = rules.value[safe: row]?.id
+        else {
+            return
+        }
+        
+        showAlert(title: "remove rule".localized().uppercaseFirst, message: "do you really want to remove this rule?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1, completion: { (index) in
+            if index == 0 {
+                self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
+                let removeRequest = RequestAPIRule.remove(id: id).convertToJSON()
+                BlockchainManager.instance.editCommunnity(
+                    communityCode: self.communityCode,
+                    commnityIssuer: self.communityIssuer,
+                    rules: removeRequest
+                )
+                    .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                    .subscribe(onCompleted: {
+                        self.hideHud()
+                        self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for rule removing has been created".localized().uppercaseFirst)
+                    }) { (error) in
+                        self.hideHud()
+                        self.showError(error)
+                    }
+                    .disposed(by: self.disposeBag)
+                    
+            }
+        })
     }
     
-    @objc func askForSavingAndGoBack() {
-        if contentHasChanged() {
-            showAlert(title: "save".localized().uppercaseFirst, message: "do you want to save the changes you've made?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
-                if index == 0 {
-                    self.saveButtonDidTouch()
-                    return
-                }
-                self.back()
-            }
-        } else {
-            back()
+    func communityRuleEditableCellButtonEditDidTouch(_ cell: CommunityRuleEditableCell) {
+        guard let row = tableView.indexPath(for: cell)?.row,
+            let rule = rules.value[safe: row]
+        else {
+            return
         }
+        
+        let vc = EditRuleVC(rule: rule)
+        vc.updateRuleHandler = {rule in
+            self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
+            let updateRequest = RequestAPIRule.update(rule: rule).convertToJSON()
+            BlockchainManager.instance.editCommunnity(
+                communityCode: self.communityCode,
+                commnityIssuer: self.communityIssuer,
+                rules: updateRequest
+            )
+                .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                .subscribe(onCompleted: {
+                    self.hideHud()
+                    self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for rule updating has been created".localized().uppercaseFirst)
+                }) { (error) in
+                    self.hideHud()
+                    self.showError(error)
+                }
+                .disposed(by: self.disposeBag)
+        }
+        show(vc, sender: nil)
     }
 }
