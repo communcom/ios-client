@@ -220,7 +220,7 @@ class EditCommunityVC: BaseVerticalStackVC {
         
         vc.selectionHandler = {country in
             if country.available {
-                if country.language?.code == self.originalCommunity.code {return}
+                if country.language?.code == self.originalCommunity.language {return}
                 nav.dismiss(animated: true, completion: nil)
                 self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
                 BlockchainManager.instance.editCommunnity(communityCode: self.originalCommunity.communityId, commnityIssuer: self.originalCommunity.issuer ?? "", language: country.language!.code)
