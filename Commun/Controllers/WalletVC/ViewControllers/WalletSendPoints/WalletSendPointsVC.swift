@@ -119,6 +119,11 @@ class WalletSendPointsVC: BaseViewController {
     var navigationBarTitleView = UIView(forAutoLayout: ())
 
     var amountBorderView = UIView(forAutoLayout: ())
+    lazy var alertView: UIStackView = {
+        let stackView = UIStackView(axis: .horizontal, spacing: 5, alignment: .center, distribution: .fill)
+        stackView.addArrangedSubview(alertLabel)
+        return stackView
+    }()
     var alertLabel = UILabel(text: "", font: UIFont.systemFont(ofSize: 12, weight: .bold), numberOfLines: 2, color: .appRedColor)
 
     // MARK: - Class Initialization
@@ -243,7 +248,7 @@ class WalletSendPointsVC: BaseViewController {
         sellerAmountLabel.autoPinEdge(.top, to: .bottom, of: sellerNameLabel, withOffset: 5)
     }
 
-    private func configureBottomView() {
+    func configureBottomView() {
         whiteView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         scrollView.addSubview(whiteView)
 
@@ -297,10 +302,10 @@ class WalletSendPointsVC: BaseViewController {
         amountView.addSubview(clearPointsButton)
         clearPointsButton.autoPinTopAndTrailingToSuperView(inset: 33, xInset: 15)
 
-        whiteView.addSubview(alertLabel)
-        alertLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 15)
-        alertLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 15)
-        alertLabel.autoPinEdge(.top, to: .bottom, of: amountView, withOffset: 10)
+        whiteView.addSubview(alertView)
+        alertView.autoPinEdge(toSuperviewEdge: .left, withInset: 15)
+        alertView.autoPinEdge(toSuperviewEdge: .right, withInset: 15)
+        alertView.autoPinEdge(.top, to: .bottom, of: amountView, withOffset: 10)
 
         view.addSubview(sendPointsButton)
 
@@ -459,6 +464,31 @@ class WalletSendPointsVC: BaseViewController {
         
         return false
     }
+    
+    func updateAlertView(amount: CGFloat) {
+        if amount <= dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount {
+            handleAmountValid()
+        } else {
+            handleInsufficientFunds()
+        }
+    }
+    
+    func handleAmountValid() {
+        amountBorderView.layer.borderColor = UIColor.appLightGrayColor.cgColor
+        alertLabel.isHidden = true
+    }
+    
+    func handleInsufficientFunds() {
+        amountBorderView.layer.borderColor = UIColor.appRedColor.cgColor
+        alertLabel.isHidden = false
+        alertLabel.text = "Insufficient funds: \(dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount) \(dataModel.transaction.symbol.sell)"
+    }
+    
+    func programmaticallyChangeAmount(to amount: CGFloat) {
+        pointsTextField.text = "\(amount)"
+        pointsTextField.sendActions(for: .editingChanged)
+        updateAlertView(amount: amount)
+    }
 
     // MARK: - Actions
     @objc func pointsListButtonDidTouch() {
@@ -577,13 +607,7 @@ extension WalletSendPointsVC: UITextFieldDelegate {
         guard countDots + countCommas <= 1 else { return false }
         guard !updatedText.hasSuffix(".") || !updatedText.hasSuffix(",") else { return false }
 
-        if CGFloat(updatedText.float() ?? 0.0) <= dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount {
-            amountBorderView.layer.borderColor = UIColor.appLightGrayColor.cgColor
-            alertLabel.text = nil
-        } else {
-            amountBorderView.layer.borderColor = UIColor.appRedColor.cgColor
-            alertLabel.text = "Insufficient funds: \(dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount) \(dataModel.transaction.symbol.sell)"
-        }
+        updateAlertView(amount: CGFloat(updatedText.float() ?? 0.0))
         
         if updatedText.count > 1 && updatedText.starts(with: "0") && !(updatedText.contains(",") || updatedText.contains(".")) {
             textField.text = nil
@@ -628,6 +652,10 @@ extension WalletSendPointsVC: CircularCarouselDataSource {
 
         updateSellerInfo()
         updateSendInfoByEnteredPoints()
+        if let text = pointsTextField.text {
+            let amountEntered = CGFloat(text.toDouble())
+            updateAlertView(amount: amountEntered)
+        }
         
         return view!
     }
