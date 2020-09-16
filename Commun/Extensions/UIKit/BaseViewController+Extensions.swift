@@ -76,7 +76,8 @@ extension BaseViewController {
             )
         }
         
-        if let community = post.community,
+        if post.author?.userId != Config.currentUser?.id,
+            let community = post.community,
             ResponseAPIContentGetProfile.current?.leaderIn?.contains(community.communityId) == true
         {
             actions.append(
