@@ -9,6 +9,11 @@
 import Foundation
 
 class LanguagesVC: CountriesVC {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "choose language".localized().uppercaseFirst
+    }
+    
     override func mapItems(_ countries: [Country]) -> [Country] {
         countries.filter {$0.language != nil}
     }
