@@ -142,5 +142,7 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
         suggestedAmountButtons.forEach {$0.isHidden = true}
         buyButton.isHidden = false
         spacer.isHidden = true
+        
+        alertLabel.text = "you don't have enough points for donation".localized().uppercaseFirst
     }
 }

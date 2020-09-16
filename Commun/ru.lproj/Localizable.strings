@@ -565,6 +565,7 @@
 "you are the owner" = "Вы владелец";
 "you do not have balance for this community.\nWould you like to open one?" = "у Вас нет баланса этого сообщества.\nХотите открыть его?";
 "you don't have any friend. Do you want to" = "у Вас нет друзей. Хотите добавить?";
+"you don't have enough points for donation" = "y Вас не хватает поинтов для пожертвования";
 "you get" = "Вы получаете";
 "you have a draft version on your device" = "у Вас есть черновик";
 "you have a new notification" = "Есть новое уведомление";
