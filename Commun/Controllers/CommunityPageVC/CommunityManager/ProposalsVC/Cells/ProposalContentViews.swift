@@ -186,3 +186,39 @@ class CoverProposalView: MyView {
         return stackView
     }
 }
+
+class LanguageProposalView: MyView {
+    lazy var newLanguageView = CMLanguageView(forAutoLayout: ())
+    lazy var oldLanguageView = CMLanguageView(forAutoLayout: ())
+    
+    override func commonInit() {
+        super.commonInit()
+        let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fill)
+        addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        
+        let newLanguageLabel = UILabel.with(text: "new language".localized().uppercaseFirst, textSize: 15, weight: .semibold)
+        let oldLanguageLabel = UILabel.with(text: "old language".localized().uppercaseFirst, textSize: 15, weight: .semibold)
+        
+        stackView.addArrangedSubviews([
+            newLanguageLabel,
+            newLanguageView,
+            oldLanguageLabel,
+            oldLanguageView
+        ])
+    }
+    
+    func setUp(newLanguageCode: String?, oldLanguageCode: String?) {
+        guard let newLanguage = Language.supported.first(where: {$0.code == newLanguageCode}),
+            let oldLanguage = Language.supported.first(where: {$0.code == oldLanguageCode})
+        else {
+            newLanguageView.languageName.text = newLanguageCode
+            oldLanguageView.languageName.text = oldLanguageCode
+            return
+        }
+        newLanguageView.setUp(with: newLanguage)
+        oldLanguageView.setUp(with: oldLanguage)
+    }
+}
+
+

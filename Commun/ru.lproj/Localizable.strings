@@ -102,6 +102,7 @@
 "change cover photo" = "изменить обложку";
 "change coverUrl" = "изменить обложку";
 "change description" = "изменить описание";
+"change language" = "изменить язык";
 "change to" = "сменить на";
 "change position" = "изменить положение";
 "changing password" = "cмена пароля";
@@ -302,6 +303,7 @@
 "new" = "новое";
 "new avatar" = "новая аватарка";
 "new cover" = "новая обложка";
+"new language" = "новый язык";
 "newest first" = "от новых к старым";
 "next" = "далее";
 "no" = "нет";
@@ -337,6 +339,7 @@
 "now you became a leader in your community to make some changes and vote for them!" = "Вы стали лидером в Вашем сообществе чтобы сделать изменения и голосовать за них!";
 "old avatar" = "старая аватарка";
 "old cover" = "старая обложка";
+"old language" = "старый язык";
 "old rule" = "старое правило";
 "oldest first" = "от старых к новым";
 "on" = "в";

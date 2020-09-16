@@ -103,6 +103,7 @@
 "change cover photo" = "change cover photo";
 "change coverUrl" = "change cover";
 "change description" = "change description";
+"change language" = "change language";
 "change to" = "change to";
 "change position" = "change position";
 "changing password" = "changing password";
@@ -312,6 +313,7 @@
 "new" = "new";
 "new avatar" = "new avatar";
 "new cover" = "new cover";
+"new language" = "new language";
 "newest first" = "newest first";
 "next" = "next";
 "no" = "no";
@@ -347,6 +349,7 @@
 "now you became a leader in your community to make some changes and vote for them!" = "now you became a leader in your community to make some changes and vote for them!";
 "old avatar" = "old avatar";
 "old cover" = "old cover";
+"old language" = "old language";
 "old rule" = "old rule";
 "oldest first" = "oldest first";
 "on" = "on";

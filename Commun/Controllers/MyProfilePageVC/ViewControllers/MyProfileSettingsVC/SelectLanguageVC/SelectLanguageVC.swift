@@ -23,8 +23,8 @@ class SelectLanguageVC: BaseViewController {
     
     // MARK: - Properties
     let supportedLanguages: [Language] = [
-        Language(code: "en", name: "english", imageName: "american-flag"),
-        Language(code: "ru", name: "russian", imageName: "russian-flag")
+        Language(code: "en", name: "english", imageName: "flag.en"),
+        Language(code: "ru", name: "russian", imageName: "flag.ru")
     ]
     
     // MARK: - Subviews

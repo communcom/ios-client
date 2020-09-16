@@ -199,6 +199,7 @@
 		BC2F4C5625109C37009B1971 /* RulesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5525109C37009B1971 /* RulesVC.swift */; };
 		BC2F4C5A25109E23009B1971 /* CommunityRuleEditableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */; };
 		BC2F4C5D2510B32E009B1971 /* EditRuleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */; };
+		BC2F4C672511CBCC009B1971 /* CMLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC31D1C12457D094000F5BE5 /* DonationUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */; };
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
@@ -795,6 +796,7 @@
 		BC2F4C5525109C37009B1971 /* RulesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesVC.swift; sourceTree = "<group>"; };
 		BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRuleEditableCell.swift; sourceTree = "<group>"; };
 		BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRuleVC.swift; sourceTree = "<group>"; };
+		BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguageView.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationUsersView.swift; sourceTree = "<group>"; };
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
@@ -2756,6 +2758,7 @@
 				BC769EEB249B466500BA37E5 /* CMSearchBar.swift */,
 				BC40D02824E5560C00F48243 /* CMPostView */,
 				BCD8461024EA68B5005404CD /* CMMetaView.swift */,
+				BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -3718,6 +3721,7 @@
 				BCAB470424332B8900912D20 /* SetUserVC.swift in Sources */,
 				BC7D608A237BF3F1007D8C1A /* MyProfileBlacklistVC.swift in Sources */,
 				BC5A34852429BDB5001C5054 /* CountriesVC.swift in Sources */,
+				BC2F4C672511CBCC009B1971 /* CMLanguageView.swift in Sources */,
 				BC8F815723E27ECE0024C04A /* WalletConvertViewModel.swift in Sources */,
 				BC923E132431A29D00B28413 /* SignUpWithEmailViewModel.swift in Sources */,
 				BC40719E23CF0137000027A3 /* NotificationsListFetcher.swift in Sources */,

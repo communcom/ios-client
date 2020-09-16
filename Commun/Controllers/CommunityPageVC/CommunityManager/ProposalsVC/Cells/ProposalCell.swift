@@ -182,6 +182,10 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
             let coverView = addViewToMainView(type: CoverProposalView.self, contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
             coverView.setUp(newCover: item?.change?.new?.string, oldCover: item?.change?.old?.string)
             return
+        case "language":
+            let languageView = addViewToMainView(type: LanguageProposalView.self, contentInsets: UIEdgeInsets(horizontal: 32, vertical: 0))
+            languageView.setUp(newLanguageCode: item?.change?.new?.string, oldLanguageCode: item?.change?.old?.string)
+            return
         default:
             mainView.isHidden = true
         }
