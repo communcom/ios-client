@@ -87,6 +87,7 @@ class EditCommunityVC: BaseVerticalStackVC {
         
         stackView.addArrangedSubview(descriptionLabel)
         descriptionLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
+        stackView.setCustomSpacing(16, after: descriptionLabel)
         
         // separator
         let separator2 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
@@ -120,7 +121,9 @@ class EditCommunityVC: BaseVerticalStackVC {
     func reloadData() {
         avatarImageView.setAvatar(urlString: originalCommunity.avatarUrl)
         coverImageView.setCover(urlString: originalCommunity.coverUrl)
-        descriptionLabel.text = originalCommunity.description
+        let description = originalCommunity.description ?? ""
+        descriptionLabel.text = description.isEmpty ? "no description".localized().uppercaseFirst: description
+        descriptionLabel.textColor = description.isEmpty ? .appGrayColor: .appBlackColor
     }
     
     fileprivate func sectionHeaderView(title: String, action: Selector? = nil) -> UIStackView {
