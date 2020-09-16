@@ -286,6 +286,11 @@ class WalletConvertVC: BaseViewController {
         whiteView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
     }
     
+    func showCheck(transaction: Transaction) {
+        let completedVC = TransactionCompletedVC(transaction: transaction)
+        self.show(completedVC, sender: nil)
+    }
+    
     // MARK: - Layout
     func layoutCarousel() {
         balanceNameLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)

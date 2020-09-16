@@ -15,7 +15,7 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
     }
     
     // MARK: - Properties
-    let initialAmount: Double?
+    var initialAmount: Double?
     override var actionName: String {"donate"}
     var message: T
     
@@ -78,6 +78,7 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
         dataModel.balances = dataModel.balances.filter {$0.balanceValue > 0}
         super.balancesDidFinishLoading()
         if let amount = initialAmount {
+            initialAmount = nil
             programmaticallyChangeAmount(to: CGFloat(amount))
         }
     }
@@ -127,6 +128,33 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
     }
     
     @objc func buyButtonDidTouch() {
+        if dataModel.transaction.symbol.sell != "CMN" {
+            // Sell CMN
+            let vc = GetPointsVC(balances: dataModel.balances, symbol: dataModel.transaction.symbol.sell)
+            vc.backButtonHandler = {
+                self.dataModel.loadBalances { [weak self] success in
+                    if success {
+                        self?.balancesDidFinishLoading()
+                        self?.pointsTextField.sendActions(for: .editingChanged)
+                    }
+                }
+                self.navigationController?.popToVC(type: Self.self)
+            }
+            self.show(vc, sender: nil)
+        } else {
+            // Buy CMN
+            let vc = GetCMNVC(balances: dataModel.balances, symbol: dataModel.balances.first(where: {$0.balanceValue > 0 && $0.symbol != "CMN"})?.symbol)
+            vc.backButtonHandler = {
+                self.dataModel.loadBalances { [weak self] success in
+                    if success {
+                        self?.balancesDidFinishLoading()
+                        self?.pointsTextField.sendActions(for: .editingChanged)
+                    }
+                }
+                self.navigationController?.popToVC(type: Self.self)
+            }
+            self.show(vc, sender: nil)
+        }
         
     }
     

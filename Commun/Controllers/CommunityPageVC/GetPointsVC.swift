@@ -21,6 +21,19 @@ class GetPointsVC: WalletSellCommunVC {
     }
 }
 
+class GetCMNVC: WalletBuyCommunVC {
+    var backButtonHandler: (() -> Void)?
+    override func showCheck(transaction: Transaction) {
+        let completedVC = GetPointsCompletedVC(transaction: transaction)
+        completedVC.backButtonHandler = backButtonHandler
+        self.show(completedVC, sender: nil)
+    }
+    
+    override func changeMode() {
+        // do nothing
+    }
+}
+
 class GetPointsCompletedVC: TransactionCompletedVC {
     var backButtonHandler: (() -> Void)?
     override func setUp() {

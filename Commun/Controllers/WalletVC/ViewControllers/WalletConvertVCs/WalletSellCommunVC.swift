@@ -237,9 +237,4 @@ class WalletSellCommunVC: WalletConvertVC {
             }
             .disposed(by: disposeBag)
     }
-    
-    func showCheck(transaction: Transaction) {
-        let completedVC = TransactionCompletedVC(transaction: transaction)
-        self.show(completedVC, sender: nil)
-    }
 }
