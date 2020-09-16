@@ -75,6 +75,31 @@ extension BaseViewController {
                 )
             )
         }
+        
+        if let community = post.community,
+            ResponseAPIContentGetProfile.current?.leaderIn?.contains(community.communityId) == true
+        {
+            actions.append(
+                .default(
+                    title: "propose to ban".localized().uppercaseFirst,
+                    showIcon: false,
+                    handle: {
+                        self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
+                        RestAPIManager.instance.getCommunity(id: community.communityId)
+                            .map {$0.issuer}
+                            .flatMap {BlockchainManager.instance.createBanProposal(communityCode: community.communityId, commnityIssuer: $0 ?? "", permlink: post.contentId.permlink, author: post.author!.userId)}
+                            .subscribe(onSuccess: {_ in
+                                self.hideHud()
+                                self.showDone("proposal for post banning has been created".localized().uppercaseFirst)
+                            }, onError: {error in
+                                self.hideHud()
+                                self.showError(error)
+                            })
+                            .disposed(by: self.disposeBag)
+                    }
+                )
+            )
+        }
 
         // headerView for actionSheet
         let headerView = PostMetaView(frame: .zero)
