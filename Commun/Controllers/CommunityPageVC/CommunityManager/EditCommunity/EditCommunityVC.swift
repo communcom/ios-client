@@ -93,6 +93,24 @@ class EditCommunityVC: BaseVerticalStackVC {
         stackView.addArrangedSubview(separator2)
         separator2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
+        // description
+        let languageHeaderView = sectionHeaderView(title: "language".localized().uppercaseFirst, action: #selector(languageButtonDidTouch))
+        stackView.addArrangedSubview(languageHeaderView)
+        languageHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        let languageView = CMLanguageView(forAutoLayout: ())
+        languageView.setUp(code: originalCommunity.language)
+        
+        stackView.addArrangedSubview(languageView)
+        languageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
+        
+        stackView.setCustomSpacing(16, after: languageView)
+        
+        // separator
+        let separator3 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
+        stackView.addArrangedSubview(separator3)
+        separator3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
         // rules
         let rulesHeaderView = sectionHeaderView(title: "rules".localized().uppercaseFirst, action: #selector(rulesButtonDidTouch))
         stackView.addArrangedSubview(rulesHeaderView)
@@ -191,6 +209,33 @@ class EditCommunityVC: BaseVerticalStackVC {
                 self.showError(error)
             })
             .disposed(by: disposeBag)
+    }
+    
+    @objc func languageButtonDidTouch() {
+        let vc = LanguagesVC()
+        let nav = UINavigationController(rootViewController: vc)
+        
+        vc.selectionHandler = {country in
+            if country.available {
+                if country.language?.code == self.originalCommunity.code {return}
+                nav.dismiss(animated: true, completion: nil)
+                self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
+                BlockchainManager.instance.editCommunnity(communityCode: self.originalCommunity.communityId, commnityIssuer: self.originalCommunity.issuer ?? "", language: country.language!.code)
+                    .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                    .subscribe(onCompleted: {
+                        self.hideHud()
+                        self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for language changing has been created".localized().uppercaseFirst)
+                    }, onError: {(error) in
+                        self.hideHud()
+                        self.showError(error)
+                    })
+                    .disposed(by: self.disposeBag)
+            } else {
+                self.showAlert(title: "sorry".uppercaseFirst.localized(), message: "but we don’t support your region yet".uppercaseFirst.localized())
+            }
+        }
+        
+        present(nav, animated: true, completion: nil)
     }
     
     @objc func rulesButtonDidTouch() {

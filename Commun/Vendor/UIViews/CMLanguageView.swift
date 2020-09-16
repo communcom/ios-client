@@ -25,8 +25,12 @@ class CMLanguageView: MyView {
         languageName.text = language.name
     }
     
-    func setUp(code: String, name: String?) {
-        flagImageView.image = UIImage.init(named: "flag.\(code)")
-        languageName.text = name
+    func setUp(code: String?) {
+        if let language = Language.supported.first(where: {$0.code == code}) {
+            setUp(with: language)
+            return
+        }
+        flagImageView.image = UIImage.init(named: "flag.\(code ?? "")")
+        languageName.text = code
     }
 }
