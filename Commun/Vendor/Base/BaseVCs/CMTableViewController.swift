@@ -40,16 +40,16 @@ class CMTableViewController<T: ListItemType, Cell: UITableViewCell>: BaseViewCon
         
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
-    }
-    
-    override func bind() {
-        super.bind()
+        
         dataSource = RxTableViewSectionedAnimatedDataSource<SectionModel>(
             configureCell: { (_, _, indexPath, item) in
                 self.configureCell(item: item, indexPath: indexPath)
             }
         )
-        
+    }
+    
+    override func bind() {
+        super.bind()
         itemsRelay.asDriver()
             .map {self.mapItemsToSections($0)}
             .drive(tableView.rx.items(dataSource: dataSource))

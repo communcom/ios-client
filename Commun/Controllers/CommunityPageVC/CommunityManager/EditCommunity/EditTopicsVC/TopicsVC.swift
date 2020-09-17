@@ -13,8 +13,7 @@ extension String: ListItemType {
     public func newUpdatedItem(from item: String) -> String? {item}
 }
 
-
-class TopicsVC: CMTableViewController<String, UITableViewCell> {
+class TopicsVC: CMTableViewController<String, TopicCell> {
     // MARK: - Properties
     let communityCode: String
     let communityIssuer: String
@@ -55,8 +54,8 @@ class TopicsVC: CMTableViewController<String, UITableViewCell> {
     }
     
     override func configureCell(item: String, indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.configureCell(item: item, indexPath: indexPath)
-        cell.textLabel?.text = item
+        let cell = super.configureCell(item: item, indexPath: indexPath) as! TopicCell
+        cell.label.text = item
         return cell
     }
     
