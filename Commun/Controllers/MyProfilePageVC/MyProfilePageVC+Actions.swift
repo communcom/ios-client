@@ -74,42 +74,23 @@ extension MyProfilePageVC {
         }
         
         // If updating
-        let pickerVC = SinglePhotoPickerVC()
-       
-        pickerVC.completion = { image in
-            let coverEditVC = MyProfileEditCoverVC()
-            coverEditVC.modalPresentationStyle = .fullScreen
-            coverEditVC.joinedDateString = self.viewModel.profile.value?.registration?.time
-            coverEditVC.updateWithImage(image)
-            coverEditVC.completion = {image in
-                coverEditVC.dismiss(animated: true, completion: {
-                    pickerVC.dismiss(animated: true, completion: nil)
+        showCoverImagePicker(joinedDateString: self.viewModel.profile.value?.registration?.time) { (image) in
+            self.coverImageView.image = image
+            self.coverImageView.showLoading(cover: false, spinnerColor: .appWhiteColor)
+            RestAPIManager.instance.uploadImage(image)
+                .flatMap { url -> Single<String> in
+                    BlockchainManager.instance.updateProfile(params: ["cover_url": url]).andThen(.just(url))
+                }
+                .subscribe(onSuccess: { [weak self] (url) in
+                    self?.coverImageView.hideLoading()
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: url)
+                }, onError: { [weak self] (error) in
+                    self?.coverImageView.hideLoading()
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: originImageUrl)
+                    self?.showError(error)
                 })
-                self.coverImageView.image = image
-                self.coverImageView.showLoading(cover: false, spinnerColor: .appWhiteColor)
-                
-                guard let image = image else {return}
-                RestAPIManager.instance.uploadImage(image)
-                    .flatMap { url -> Single<String> in
-                        BlockchainManager.instance.updateProfile(params: ["cover_url": url]).andThen(.just(url))
-                    }
-                    .subscribe(onSuccess: { [weak self] (url) in
-                        self?.coverImageView.hideLoading()
-                        ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: url)
-                    }, onError: { [weak self] (error) in
-                        self?.coverImageView.hideLoading()
-                        ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: originImageUrl)
-                        self?.showError(error)
-                    })
-                    .disposed(by: self.disposeBag)
-            }
-            
-            let nc = SwipeNavigationController(rootViewController: coverEditVC)
-            pickerVC.present(nc, animated: true, completion: nil)
+                .disposed(by: self.disposeBag)
         }
-        
-        pickerVC.modalPresentationStyle = .fullScreen
-        self.present(pickerVC, animated: true, completion: nil)
     }
     
     func onUpdateAvatar(delete: Bool = false) {

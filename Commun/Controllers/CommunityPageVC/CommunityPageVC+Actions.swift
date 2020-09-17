@@ -98,7 +98,7 @@ extension CommunityPageVC {
         }
     }
     
-    @objc func manageCommunityButtonDidTouch() {
+    @objc func showCommunityControlPanel() {
         guard let profile = viewModel.profile.value else {return}
         
         let headerView = CMMetaView(forAutoLayout: ())
@@ -131,6 +131,7 @@ extension CommunityPageVC {
                 handle: {
                     self.openProposalsVC()
                 },
+                bottomMargin: 16,
                 showNextButton: true
             )
             let stackView = action.view.subviews.first as! UIStackView
@@ -139,7 +140,22 @@ extension CommunityPageVC {
             return action
         }()
         
-        showCMActionSheet(headerView: headerView, actions: [reportAction, proposalAction])
+        let settingAction = CMActionSheet.Action.iconFirst(
+            title: "settings".localized().uppercaseFirst,
+            iconName: "profile_options_settings",
+            handle: {
+                self.manageCommunityDidTouch()
+            },
+            showNextButton: true
+        )
+        
+        showCMActionSheet(headerView: headerView, actions: [reportAction, proposalAction, settingAction])
+    }
+    
+    @objc func manageCommunityDidTouch() {
+        guard let community = self.viewModel.profile.value else {return}
+        let vc = EditCommunityVC(community: community)
+        self.show(vc, sender: nil)
     }
     
     @objc func proposalsButtonDidTouch() {

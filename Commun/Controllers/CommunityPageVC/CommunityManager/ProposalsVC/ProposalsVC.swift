@@ -58,6 +58,11 @@ class ProposalsVC: ListViewController<ResponseAPIContentGetProposal, ProposalCel
 //        }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.reload(clearResult: false)
+    }
+    
 //    override func viewWillSetUpTableView() {
 //        super.viewWillSetUpTableView()
 //        view.addSubview(horizontalTabBar.padding(UIEdgeInsets(horizontal: 0, vertical: 16)))

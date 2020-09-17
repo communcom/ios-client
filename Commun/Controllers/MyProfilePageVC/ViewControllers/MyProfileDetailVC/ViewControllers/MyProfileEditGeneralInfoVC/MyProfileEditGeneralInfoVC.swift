@@ -132,26 +132,9 @@ class MyProfileEditGeneralInfoVC: MyProfileDetailFlowVC {
     }
     
     @objc private func chooseCoverButtonDidTouch() {
-        let pickerVC = SinglePhotoPickerVC()
-        
-        pickerVC.completion = { image in
-            let coverEditVC = MyProfileEditCoverVC()
-            coverEditVC.modalPresentationStyle = .fullScreen
-            coverEditVC.joinedDateString = self.profile?.registration?.time
-            coverEditVC.updateWithImage(image)
-            coverEditVC.completion = {image in
-                coverEditVC.dismiss(animated: true, completion: {
-                    pickerVC.dismiss(animated: true, completion: nil)
-                })
-                self.coverImageView.image = image
-            }
-            
-            let nc = SwipeNavigationController(rootViewController: coverEditVC)
-            pickerVC.present(nc, animated: true, completion: nil)
+        showCoverImagePicker(joinedDateString: self.profile?.registration?.time) { (image) in
+            self.coverImageView.image = image
         }
-        
-        pickerVC.modalPresentationStyle = .fullScreen
-        self.present(pickerVC, animated: true, completion: nil)
     }
     
     @objc private func saveButtonDidTouch() {

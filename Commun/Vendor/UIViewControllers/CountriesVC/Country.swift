@@ -12,6 +12,10 @@ import Foundation
 struct Language: Decodable {
     let code: String
     let name: String?
+    
+    static var supported: [Language] {
+        Country.getAll().compactMap {$0.language}
+    }
 }
 
 struct Country: Decodable {

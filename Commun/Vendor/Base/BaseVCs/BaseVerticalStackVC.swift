@@ -10,6 +10,7 @@ import Foundation
 
 class BaseVerticalStackVC: BaseViewController {
     // MARK: - Properties
+    var stackViewPadding: UIEdgeInsets {UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)}
     var scrollViewTopConstraint: NSLayoutConstraint?
     var stackViewTopConstraint: NSLayoutConstraint?
     
@@ -48,8 +49,8 @@ class BaseVerticalStackVC: BaseViewController {
     func viewWillSetUpStackView() {}
     func setUpStackView() {
         scrollView.contentView.addSubview(stackView)
-        stackViewTopConstraint = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10), excludingEdge: .top)
+        stackViewTopConstraint = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: stackViewPadding.top)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: stackViewPadding.left, bottom: stackViewPadding.bottom, right: stackViewPadding.right), excludingEdge: .top)
     }
     
     func setUpArrangedSubviews() {

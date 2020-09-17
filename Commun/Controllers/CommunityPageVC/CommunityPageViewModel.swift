@@ -246,6 +246,4 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                     .disposed(by: self.disposeBag)
             })
     }
-    
-    
 }

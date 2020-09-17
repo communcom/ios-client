@@ -537,4 +537,28 @@ extension UIViewController {
         
         return components.url?.absoluteString ?? ""
     }
+    
+    func showCoverImagePicker(joinedDateString: String? = nil, completion: ((UIImage) -> Void)?) {
+        let pickerVC = SinglePhotoPickerVC()
+        
+        pickerVC.completion = { image in
+            let coverEditVC = MyProfileEditCoverVC()
+            coverEditVC.modalPresentationStyle = .fullScreen
+            coverEditVC.joinedDateString = joinedDateString
+            coverEditVC.updateWithImage(image)
+            coverEditVC.completion = {image in
+                coverEditVC.dismiss(animated: true, completion: {
+                    pickerVC.dismiss(animated: true, completion: nil)
+                })
+                guard let image = image else {return}
+                completion?(image)
+            }
+            
+            let nc = SwipeNavigationController(rootViewController: coverEditVC)
+            pickerVC.present(nc, animated: true, completion: nil)
+        }
+        
+        pickerVC.modalPresentationStyle = .fullScreen
+        self.present(pickerVC, animated: true, completion: nil)
+    }
 }

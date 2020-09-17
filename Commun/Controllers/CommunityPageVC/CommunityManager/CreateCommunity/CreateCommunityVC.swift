@@ -190,9 +190,9 @@ class CreateCommunityVC: CreateCommunityFlowVC {
                 var flagImageNamed = ""
                 switch country.language?.code {
                 case "en":
-                    flagImageNamed = "american-flag"
+                    flagImageNamed = "flag.en"
                 case "ru":
-                    flagImageNamed = "russian-flag"
+                    flagImageNamed = "flag.ru"
                 default:
                     return
                 }
