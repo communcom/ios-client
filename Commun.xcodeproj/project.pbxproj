@@ -203,6 +203,7 @@
 		BC2F4C7825130A1E009B1971 /* TopicsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C7725130A1E009B1971 /* TopicsVC.swift */; };
 		BC2F4C7A25130F63009B1971 /* CMTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C7925130F63009B1971 /* CMTableViewController.swift */; };
 		BC2F4C7C25131226009B1971 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C7B25131226009B1971 /* TopicCell.swift */; };
+		BC2F4C8325134E90009B1971 /* TagListView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C8225134E90009B1971 /* TagListView+Extension.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC31D1C12457D094000F5BE5 /* DonationUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */; };
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
@@ -803,6 +804,7 @@
 		BC2F4C7725130A1E009B1971 /* TopicsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsVC.swift; sourceTree = "<group>"; };
 		BC2F4C7925130F63009B1971 /* CMTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTableViewController.swift; sourceTree = "<group>"; };
 		BC2F4C7B25131226009B1971 /* TopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
+		BC2F4C8225134E90009B1971 /* TagListView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagListView+Extension.swift"; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationUsersView.swift; sourceTree = "<group>"; };
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
@@ -1648,6 +1650,7 @@
 				3B6CB731234331830097B2A1 /* Array+Extensions.swift */,
 				BCA971252360883D00AE37E1 /* Double+Extensions.swift */,
 				BCDEE78B23F28D4400DD3EB3 /* Int+Extensions.swift */,
+				BC2F4C8225134E90009B1971 /* TagListView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3975,6 +3978,7 @@
 				BCACA372250242A6004D8DC1 /* ChangingRootVCAnimator.swift in Sources */,
 				AC6A7CBA23FC4C9A004CA486 /* DeviceScreen.swift in Sources */,
 				BCD01A9723FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift in Sources */,
+				BC2F4C8325134E90009B1971 /* TagListView+Extension.swift in Sources */,
 				BC5A348C2429C0DA001C5054 /* Country.swift in Sources */,
 				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				BC8F814523E27ECE0024C04A /* WalletTableHeaderView.swift in Sources */,

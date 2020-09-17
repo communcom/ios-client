@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import TagListView
 
 class EditCommunityVC: BaseVerticalStackVC {
     var originalCommunity: ResponseAPIContentGetCommunity
@@ -107,23 +108,25 @@ class EditCommunityVC: BaseVerticalStackVC {
         
         stackView.setCustomSpacing(16, after: languageView)
         
+        // separator
+        let separator3 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
+        stackView.addArrangedSubview(separator3)
+        separator3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
         // topics
         let topicHeaderView = sectionHeaderView(title: "topics".localized().uppercaseFirst, action: #selector(topicButtonDidTouch))
         stackView.addArrangedSubview(topicHeaderView)
         topicHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
-//        let languageView = CMLanguageView(forAutoLayout: ())
-//        languageView.setUp(code: originalCommunity.language)
-//        
-//        stackView.addArrangedSubview(languageView)
-//        languageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
-//        
-//        stackView.setCustomSpacing(16, after: languageView)
+        let tagListView = TagListView.default(tags: ["test", "teste2", "tasdfji","test", "teste2", "tasdfji","test", "teste2", "tasdfji","test", "teste2", "tasdfji"])
+        stackView.addArrangedSubview(tagListView)
+        tagListView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
+        stackView.setCustomSpacing(16, after: tagListView)
         
         // separator
-        let separator3 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
-        stackView.addArrangedSubview(separator3)
-        separator3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        let separator4 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
+        stackView.addArrangedSubview(separator4)
+        separator4.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // rules
         let rulesHeaderView = sectionHeaderView(title: "rules".localized().uppercaseFirst, action: #selector(rulesButtonDidTouch))
