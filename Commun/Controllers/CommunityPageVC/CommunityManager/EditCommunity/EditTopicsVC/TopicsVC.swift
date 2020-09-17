@@ -146,7 +146,7 @@ class TopicsVC: CMTableViewController<String, TopicCell>, UITableViewDelegate {
 
         // 3. Grab the value from the text field, and print it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-            guard let text = alert?.textFields?[0].text else {return} // Force unwrapping because we know it exists.
+            guard let text = alert?.textFields?[0].text?.trimmed, !text.isEmpty else {return}
             completion(text)
         }))
 
