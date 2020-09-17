@@ -13,7 +13,7 @@ extension String: ListItemType {
     public func newUpdatedItem(from item: String) -> String? {item}
 }
 
-class TopicsVC: CMTableViewController<String, TopicCell> {
+class TopicsVC: CMTableViewController<String, TopicCell>, UITableViewDelegate {
     // MARK: - Properties
     let communityCode: String
     let communityIssuer: String
@@ -51,6 +51,70 @@ class TopicsVC: CMTableViewController<String, TopicCell> {
         view.addSubview(footerView)
         footerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10))
         tableView.tableFooterView = view
+        
+        dataSource.canEditRowAtIndexPath = {_, _ in
+            true
+        }
+        
+        dataSource.canMoveRowAtIndexPath = {_, _ in
+            true
+        }
+        
+        tableView.setEditing(true, animated: true)
+        tableView.allowsSelectionDuringEditing = true
+        
+    }
+    
+    override func bind() {
+        super.bind()
+//        tableView.rx.setDelegate(self)
+//            .disposed(by: disposeBag)
+        
+        tableView.rx.itemDeleted
+            .subscribe(onNext: { (indexPath) in
+                var items = self.itemsRelay.value
+                items.remove(at: indexPath.row)
+                self.itemsRelay.accept(items)
+            })
+            .disposed(by: disposeBag)
+        
+        tableView.rx.itemMoved
+            .subscribe(onNext: { event in
+                var items = self.itemsRelay.value
+                let item = items[event.sourceIndex.row]
+                items.remove(at: event.sourceIndex.row)
+                items.insert(item, at: event.destinationIndex.row)
+                self.itemsRelay.accept(items)
+            })
+            .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(onNext: { (indexPath) in
+                var items = self.itemsRelay.value
+                guard let item = items[safe: indexPath.row]
+                    else {
+                        return
+                }
+                
+                //1. Create the alert controller.
+                let alert = UIAlertController(title: "edit topic".localized().uppercaseFirst, message: "enter topic name".localized().uppercaseFirst, preferredStyle: .alert)
+
+                //2. Add the text field. You can configure it however you need.
+                alert.addTextField { (textField) in
+                    textField.text = item
+                }
+
+                // 3. Grab the value from the text field, and print it when the user clicks OK.
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+                    guard let text = alert?.textFields?[0].text else {return} // Force unwrapping because we know it exists.
+                    items[indexPath.row] = text
+                    self.itemsRelay.accept(items)
+                }))
+
+                // 4. Present the alert.
+                self.present(alert, animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func configureCell(item: String, indexPath: IndexPath) -> UITableViewCell {
@@ -62,4 +126,12 @@ class TopicsVC: CMTableViewController<String, TopicCell> {
     @objc func addTopicButtonDidTouch() {
         
     }
+    
+//    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+//        .none
+//    }
+//
+//    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+//        false
+//    }
 }

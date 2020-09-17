@@ -27,6 +27,8 @@ class TopicCell: MyTableViewCell {
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 10))
         
         stackView.addArrangedSubview(label)
-        stackView.addArrangedSubview(optionButton)
+//        stackView.addArrangedSubview(optionButton)
+        
+        optionButton.isUserInteractionEnabled = false
     }
 }
