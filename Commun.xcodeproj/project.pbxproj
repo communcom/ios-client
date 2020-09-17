@@ -200,6 +200,8 @@
 		BC2F4C5A25109E23009B1971 /* CommunityRuleEditableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */; };
 		BC2F4C5D2510B32E009B1971 /* EditRuleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */; };
 		BC2F4C672511CBCC009B1971 /* CMLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */; };
+		BC2F4C7825130A1E009B1971 /* TopicsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C7725130A1E009B1971 /* TopicsVC.swift */; };
+		BC2F4C7A25130F63009B1971 /* CMTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C7925130F63009B1971 /* CMTableViewController.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC31D1C12457D094000F5BE5 /* DonationUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */; };
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
@@ -797,6 +799,8 @@
 		BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRuleEditableCell.swift; sourceTree = "<group>"; };
 		BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRuleVC.swift; sourceTree = "<group>"; };
 		BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguageView.swift; sourceTree = "<group>"; };
+		BC2F4C7725130A1E009B1971 /* TopicsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsVC.swift; sourceTree = "<group>"; };
+		BC2F4C7925130F63009B1971 /* CMTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTableViewController.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationUsersView.swift; sourceTree = "<group>"; };
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
@@ -1907,6 +1911,7 @@
 				BCE0AE112419EC58009CE0F8 /* BaseVerticalStackVC.swift */,
 				BC22BBD8236C27C000F40658 /* VerticalActionsVC.swift */,
 				BCB4A4CB23701A80005EDAAD /* SubsViewController */,
+				BC2F4C7925130F63009B1971 /* CMTableViewController.swift */,
 			);
 			path = BaseVCs;
 			sourceTree = "<group>";
@@ -1956,6 +1961,14 @@
 				BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */,
 			);
 			path = EditRuleVCs;
+			sourceTree = "<group>";
+		};
+		BC2F4C74251309A9009B1971 /* EditTopicsVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC2F4C7725130A1E009B1971 /* TopicsVC.swift */,
+			);
+			path = EditTopicsVC;
 			sourceTree = "<group>";
 		};
 		BC31BA53235EBD6A0007D89A /* ProfileVC */ = {
@@ -2438,6 +2451,7 @@
 			children = (
 				BC8C1741250F50A100795859 /* EditCommunityVC.swift */,
 				BC2F4C5B2510B31C009B1971 /* EditRuleVCs */,
+				BC2F4C74251309A9009B1971 /* EditTopicsVC */,
 			);
 			path = EditCommunity;
 			sourceTree = "<group>";
@@ -3754,6 +3768,7 @@
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
 				BCF74A62236180B900B91089 /* SubscribersViewModel.swift in Sources */,
 				BCAF5B20241B433400C157B5 /* ViewTag.swift in Sources */,
+				BC2F4C7A25130F63009B1971 /* CMTableViewController.swift in Sources */,
 				3B8DDF68234B388500B213F0 /* UITextView+PureLayout.swift in Sources */,
 				BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */,
 				ACE812D924238283001D9AE2 /* SocialLoginManager.swift in Sources */,
@@ -3834,6 +3849,7 @@
 				BC9FD2F724909A26001AAF2C /* SearchableBalancesVC.swift in Sources */,
 				BC3AF38723FBEC9000528EEB /* DiscoveryPostsVC.swift in Sources */,
 				ACE812D724238215001D9AE2 /* GoogleLoginManager.swift in Sources */,
+				BC2F4C7825130A1E009B1971 /* TopicsVC.swift in Sources */,
 				575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */,
 				BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */,
 				BCF39152235FF7F900A9D1ED /* CommentsListFetcher.swift in Sources */,

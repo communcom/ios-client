@@ -94,7 +94,7 @@ class EditCommunityVC: BaseVerticalStackVC {
         stackView.addArrangedSubview(separator2)
         separator2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
-        // description
+        // language
         let languageHeaderView = sectionHeaderView(title: "language".localized().uppercaseFirst, action: #selector(languageButtonDidTouch))
         stackView.addArrangedSubview(languageHeaderView)
         languageHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
@@ -106,6 +106,19 @@ class EditCommunityVC: BaseVerticalStackVC {
         languageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
         
         stackView.setCustomSpacing(16, after: languageView)
+        
+        // topics
+        let topicHeaderView = sectionHeaderView(title: "topics".localized().uppercaseFirst, action: #selector(topicButtonDidTouch))
+        stackView.addArrangedSubview(topicHeaderView)
+        topicHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+//        let languageView = CMLanguageView(forAutoLayout: ())
+//        languageView.setUp(code: originalCommunity.language)
+//        
+//        stackView.addArrangedSubview(languageView)
+//        languageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
+//        
+//        stackView.setCustomSpacing(16, after: languageView)
         
         // separator
         let separator3 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
@@ -239,6 +252,12 @@ class EditCommunityVC: BaseVerticalStackVC {
         }
         
         present(nav, animated: true, completion: nil)
+    }
+    
+    @objc func topicButtonDidTouch() {
+        guard let issuer = originalCommunity.issuer else {return}
+        let vc = TopicsVC(communityCode: originalCommunity.communityId, communityIssuer: issuer, topics: ["test", "test2", "test3"])
+        show(vc, sender: nil)
     }
     
     @objc func rulesButtonDidTouch() {
