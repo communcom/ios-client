@@ -98,7 +98,7 @@ extension CommunityPageVC {
         }
     }
     
-    @objc func manageCommunityButtonDidTouch() {
+    @objc func showCommunityControlPanel() {
         guard let profile = viewModel.profile.value else {return}
         
         let headerView = CMMetaView(forAutoLayout: ())
@@ -144,14 +144,18 @@ extension CommunityPageVC {
             title: "settings".localized().uppercaseFirst,
             iconName: "profile_options_settings",
             handle: {
-                guard let community = self.viewModel.profile.value else {return}
-                let vc = EditCommunityVC(community: community)
-                self.show(vc, sender: nil)
+                self.manageCommunityDidTouch()
             },
             showNextButton: true
         )
         
         showCMActionSheet(headerView: headerView, actions: [reportAction, proposalAction, settingAction])
+    }
+    
+    @objc func manageCommunityDidTouch() {
+        guard let community = self.viewModel.profile.value else {return}
+        let vc = EditCommunityVC(community: community)
+        self.show(vc, sender: nil)
     }
     
     @objc func proposalsButtonDidTouch() {

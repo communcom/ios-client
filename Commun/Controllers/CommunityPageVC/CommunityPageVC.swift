@@ -97,7 +97,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     
     lazy var manageCommunityBarButton: UIButton = {
         let button = UIButton.settings(tintColor: .white)
-        button.addTarget(self, action: #selector(manageCommunityButtonDidTouch), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showCommunityControlPanel), for: .touchUpInside)
         return button
     }()
     
@@ -191,7 +191,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         if community?.isLeader == true {
             headerView.manageCommunityButtonsView.proposalsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(proposalsButtonDidTouch)))
             headerView.manageCommunityButtonsView.reportsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(reportsButtonDidTouch)))
-            headerView.manageCommunityButtonsView.manageCommunityButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(manageCommunityButtonDidTouch)))
+            headerView.manageCommunityButtonsView.manageCommunityButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(manageCommunityDidTouch)))
         }
         
         // become a leader

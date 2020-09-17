@@ -24,7 +24,6 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     lazy var manageCommunityButtonsView: ManageCommunityButtonsView = {
         let view = ManageCommunityButtonsView(forAutoLayout: ())
         view.manageCommunityButton.isUserInteractionEnabled = true
-        view.manageCommunityButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(manageCommunityButtonDidTouch)))
         return view
     }()
     lazy var becomeALeaderButton: CommunButton = {
@@ -181,11 +180,6 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         guard let community = community else {return}
         let vc = CommunityMembersVC(community: community, selectedSegmentedItem: .friends)
         parentViewController?.show(vc, sender: nil)
-    }
-    
-    @objc func manageCommunityButtonDidTouch() {
-        guard let vc = parentViewController as? CommunityPageVC else {return}
-        vc.manageCommunityButtonDidTouch()
     }
     
     override func statsLabelDidTouchAtIndex(_ index: Int) {
