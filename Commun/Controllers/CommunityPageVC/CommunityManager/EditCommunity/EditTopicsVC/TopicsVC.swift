@@ -96,23 +96,10 @@ class TopicsVC: CMTableViewController<String, TopicCell>, UITableViewDelegate {
                         return
                 }
                 
-                //1. Create the alert controller.
-                let alert = UIAlertController(title: "edit topic".localized().uppercaseFirst, message: "enter topic name".localized().uppercaseFirst, preferredStyle: .alert)
-
-                //2. Add the text field. You can configure it however you need.
-                alert.addTextField { (textField) in
-                    textField.text = item
-                }
-
-                // 3. Grab the value from the text field, and print it when the user clicks OK.
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-                    guard let text = alert?.textFields?[0].text else {return} // Force unwrapping because we know it exists.
-                    items[indexPath.row] = text
+                self.openEditor(originalTopic: item) { (newItem) in
+                    items[indexPath.row] = newItem
                     self.itemsRelay.accept(items)
-                }))
-
-                // 4. Present the alert.
-                self.present(alert, animated: true, completion: nil)
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -124,7 +111,30 @@ class TopicsVC: CMTableViewController<String, TopicCell>, UITableViewDelegate {
     }
     
     @objc func addTopicButtonDidTouch() {
-        
+        openEditor { (newTopic) in
+            var items = self.itemsRelay.value
+            items.append(newTopic)
+            self.itemsRelay.accept(items)
+        }
+    }
+    
+    private func openEditor(originalTopic: String? = nil, completion: @escaping ((String) -> Void)) {
+        //1. Create the alert controller.
+        let alert = UIAlertController(title: "edit topic".localized().uppercaseFirst, message: "enter topic name".localized().uppercaseFirst, preferredStyle: .alert)
+
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextField { (textField) in
+            textField.text = originalTopic
+        }
+
+        // 3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            guard let text = alert?.textFields?[0].text else {return} // Force unwrapping because we know it exists.
+            completion(text)
+        }))
+
+        // 4. Present the alert.
+        self.present(alert, animated: true, completion: nil)
     }
     
 //    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
