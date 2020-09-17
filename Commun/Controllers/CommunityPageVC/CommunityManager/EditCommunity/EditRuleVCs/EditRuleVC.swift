@@ -144,8 +144,8 @@ class EditRuleVC: BaseVerticalStackVC {
         backCompletion {
             if self.isEditMode {
                 guard var rule = self.originalRule else {return}
-                rule.text = self.ruleNameTextField.text ?? ""
-                rule.title = self.descriptionTextView.text
+                rule.title = self.ruleNameTextField.text ?? ""
+                rule.text = self.descriptionTextView.text
                 self.updateRuleHandler?(rule)
             } else {
                 self.newRuleHandler?(ResponseAPIContentGetCommunityRule.with(title: self.ruleNameTextField.text ?? "", text: self.descriptionTextView.text))
