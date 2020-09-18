@@ -99,7 +99,8 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         let contentChanged = !(cmt1?.attachments.count == cmt2?.attachments.count &&
         (try? cmt1?.document?.jsonString()) == (try? cmt2?.document?.jsonString()))
         let showDonationsButtonChanged = cmt1?.showDonationButtons != cmt2?.showDonationButtons
-        return contentChanged || showDonationsButtonChanged
+        let isExpandedChanged = cmt1?.isExpanded != cmt2?.isExpanded
+        return contentChanged || showDonationsButtonChanged || isExpandedChanged
     }
     
     override func updateItem(_ updatedItem: ResponseAPIContentGetComment) {

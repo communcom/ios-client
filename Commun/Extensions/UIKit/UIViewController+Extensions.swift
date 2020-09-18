@@ -270,6 +270,66 @@ extension UIViewController {
         show(vc, sender: nil)
     }
     
+    func handleUrlString(urlString: String) {
+        // Wallet link
+        if urlString.starts(with: "communwallet://") {
+            let symbol = urlString.replacingOccurrences(of: "communwallet://", with: "")
+            guard symbol.isEmpty == false else {return}
+            if symbol == "CMN" {
+                let cmnWallet = CommunWalletVC()
+                show(cmnWallet, sender: self)
+            } else {
+                let otherWallet = OtherBalancesWalletVC(symbol: symbol)
+                show(otherWallet, sender: self)
+            }
+            return
+        }
+        
+        // commun.com
+        if urlString.starts(with: URL.appURL) {
+            let path = urlString.replacingOccurrences(of: URL.appURL + "/", with: "").components(separatedBy: "/")
+            if path.count == 1 {
+                if path[0].starts(with: "@") {
+                    // user's profile
+                    let username = String(path[0].dropFirst())
+                    showProfileWithUserId(nil, username: username)
+                    return
+                } else if path[0].starts(with: "#"),
+                    let hashtag = path[0].replacingOccurrences(of: "#", with: "").removingPercentEncoding?.lowercased()
+                {
+                    // hashtag
+                    let vc = SearchablePostsVC(keyword: "#" + hashtag)
+                    self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
+                    self.show(vc, sender: self)
+                    return
+                } else if !path[0].isEmpty {
+                    // community
+                    let alias = path[0]
+                    showCommunityWithCommunityAlias(alias)
+                    return
+                }
+            } else if path.count == 3 {
+                let communityAlias = path[0]
+                let username = String(path[1].dropFirst())
+                let permlink = path[2]
+                
+                let postVC = PostPageVC(username: username, permlink: permlink, communityAlias: communityAlias)
+                show(postVC, sender: nil)
+                return
+            }
+        }
+        
+        var urlString = urlString
+        if !urlString.starts(with: "http") && !urlString.starts(with: "https") {
+            urlString = "http://" + urlString
+        }
+
+        if let url = URL(string: urlString) {
+            let safariVC = SFSafariViewController(url: url)
+            present(safariVC, animated: true, completion: nil)
+        }
+    }
+    
     func handleUrl(url: URL) {
         // Wallet link
         let symbol = Array(url.path.components(separatedBy: "/"))
@@ -304,7 +364,7 @@ extension UIViewController {
                     showCommunityWithCommunityAlias(alias)
                     return
                 } else if url.absoluteString.starts(with: URL.appURL + "/#"),
-                    let hashtag = url.absoluteString.components(separatedBy: "#").last
+                    let hashtag = url.absoluteString.components(separatedBy: "#").last?.removingPercentEncoding?.lowercased()
                 {
                     // hashtag
                     let vc = SearchablePostsVC(keyword: "#" + hashtag)

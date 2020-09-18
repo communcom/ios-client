@@ -127,7 +127,7 @@ extension ResponseAPIContentBlock {
             let link = child.string
             child.insert(NSAttributedString(string: "#"), at: 0)
             var attr = currentAttributes
-            attr[.link] = "\(URL.appURL)/#\(link)"
+            attr[.link] = "\(URL.appURL)/#\(link.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? link)"
             child.addAttributes(attr, range: NSRange(location: 0, length: child.length))
         case "mention":
             let link = child.string

@@ -12,7 +12,7 @@ extension CommentsViewController {
     @objc func handleLongPressOnTableView(_ gesture: UILongPressGestureRecognizer) {
         let point = gesture.location(in: tableView)
         guard let indexPath = tableView.indexPathForRow(at: point),
-            let comment = commentAtIndexPath(indexPath),
+            let comment = itemAtIndexPath(indexPath),
             let currentCell = tableView.cellForRow(at: indexPath) as? CommentCell
         else {return}
         

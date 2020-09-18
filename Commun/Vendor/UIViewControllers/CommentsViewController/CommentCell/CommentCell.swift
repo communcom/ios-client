@@ -19,7 +19,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     
     // MARK: - Properties
     var comment: ResponseAPIContentGetComment?
-    var expanded = false
     weak var delegate: CommentCellDelegate?
     var textViewToEmbedConstraint: NSLayoutConstraint?
     var showIndentForChildComment = true
@@ -307,7 +306,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         }
         
         // If text is not so long or expanded
-        if content.string.count < maxCharactersForReduction || expanded {
+        if content.string.count < maxCharactersForReduction || (comment?.isExpanded == true) {
             mutableAS.append(content)
             contentTextView.attributedText = mutableAS
             return

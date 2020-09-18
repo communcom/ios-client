@@ -21,7 +21,6 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     
     // MARK: - Properties
     class var authorizationRequired: Bool {true}
-    lazy var expandedComments = [ResponseAPIContentGetComment]()
     var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
         return viewModel
     }
@@ -58,7 +57,6 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     
     override func configureCell(with comment: ResponseAPIContentGetComment, indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-        cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
         cell.setUp(with: comment)
         cell.delegate = self
         return cell
@@ -119,6 +117,15 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
         let title = "no comments"
         let description = "comments not found"
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
+    }
+    
+    override func itemAtIndexPath(_ indexPath: IndexPath) -> ResponseAPIContentGetComment? {
+        // root comment
+        if indexPath.row == 0 {
+            return viewModel.items.value[safe: indexPath.section]
+        }
+        
+        return viewModel.items.value[safe: indexPath.section]?.children?[safe: indexPath.row + 1]
     }
     
     // MARK: - Actions
