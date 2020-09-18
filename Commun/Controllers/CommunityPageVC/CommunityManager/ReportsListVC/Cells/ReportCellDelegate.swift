@@ -22,35 +22,34 @@ extension ReportCellDelegate where Self: BaseViewController {
         
         if let proposal = report.proposal {
             // accept / refuse proposal
-            
-            let originIsApproved = proposal.isApproved ?? false
             // change state
             report.isPerformingAction = true
-            report.proposal?.isApproved = !originIsApproved
-            var currentProposalCount = report.proposal?.approvesCount ?? 0
-            if currentProposalCount == 0 && originIsApproved {
+            report.proposal?.isApproved = !(proposal.isApproved ?? false)
+            var currentProposalCount = proposal.approvesCount ?? 0
+            if currentProposalCount == 0 && (proposal.isApproved == true) {
                 // prevent negative value
                 currentProposalCount = 1
             }
             
-            report.proposal?.approvesCount = originIsApproved ? currentProposalCount - 1 : currentProposalCount + 1
+            report.proposal?.approvesCount = (proposal.isApproved == true) ? currentProposalCount - 1 : currentProposalCount + 1
             report.notifyChanged()
             
-            proposal.toggleAccept()
+            let request: Single<String>
+            if proposal.isApproved == true {
+                request = BlockchainManager.instance.unapproveProposal(proposal.proposalId)
+            } else {
+                request = BlockchainManager.instance.approveProposal(proposal.proposalId)
+            }
+            
+            request
                 .subscribe(onSuccess: { (proposal) in
-                    report.proposal = proposal
                     report.isPerformingAction = false
                     report.notifyChanged()
                 }) { (error) in
                     self.showError(error)
                     
-                    report.proposal?.isApproved = originIsApproved
-                    var currentProposalCount = report.proposal?.approvesCount ?? 0
-                    if currentProposalCount == 0 && originIsApproved {
-                        // prevent negative value
-                        currentProposalCount = 1
-                    }
-                    report.proposal?.approvesCount = originIsApproved ? currentProposalCount + 1 : currentProposalCount - 1
+                    // reverse
+                    report.proposal = proposal
                     report.isPerformingAction = false
                     report.notifyChanged()
                 }
