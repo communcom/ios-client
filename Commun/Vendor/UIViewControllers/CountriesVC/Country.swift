@@ -7,15 +7,19 @@
 //
 
 import Foundation
+import RxDataSources
 
 // MARK: - Nested type
-struct Language: Decodable {
+struct Language: Decodable, IdentifiableType, Equatable {
     let code: String
-    let name: String?
+    let name: String
+    let isSupportedInterfaceLanguage: Bool?
+    var isCurrentInterfaceLanguage: Bool?
     
     static var supported: [Language] {
         Country.getAll().compactMap {$0.language}
     }
+    var identity: String {code}
 }
 
 struct Country: Decodable {

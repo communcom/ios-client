@@ -33,14 +33,14 @@ class LanguageCell: MyTableViewCell {
         stackView.addArrangedSubviews([flagImageView, nameLabel, checkMark])
     }
     
-    func setUp(with language: SelectLanguageVC.Language) {
-        flagImageView.image = UIImage(named: language.imageName)
+    func setUp(with language: Language) {
+        flagImageView.image = UIImage(named: "flag.\(language.code)")
         let localizedName = (language.name + " language").localized().uppercaseFirst
         nameLabel.attributedText = NSMutableAttributedString()
             .text(language.name.uppercaseFirst, size: 15, weight: .semibold)
             .text("\n")
             .text(localizedName, size: 12, weight: .medium, color: .appGrayColor)
             .withParagraphStyle(lineSpacing: 3)
-        checkMark.isHidden = !language.isSelected
+        checkMark.isHidden = !(language.isCurrentInterfaceLanguage ?? false)
     }
 }

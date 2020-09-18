@@ -1218,7 +1218,8 @@
         "emoji": "🇷🇺",
         "language": {
             "code": "ru",
-            "name": "Русский язык"
+            "name": "russian",
+            "isSupportedInterfaceLanguage": true
         }
     },
     {
@@ -1607,7 +1608,8 @@
         "emoji": "🇺🇸",
         "language": {
             "code": "en",
-            "name": "English"
+            "name": "english",
+            "isSupportedInterfaceLanguage": true
         }
     },
     {

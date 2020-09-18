@@ -181,7 +181,7 @@
 		BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */; };
 		BC22BBCC236C0E0300F40658 /* UIStackView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */; };
 		BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCE236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift */; };
-		BC22BBD2236C213D00F40658 /* SelectLanguageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD1236C213D00F40658 /* SelectLanguageVC.swift */; };
+		BC22BBD2236C213D00F40658 /* SelectInterfaceLanguageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD1236C213D00F40658 /* SelectInterfaceLanguageVC.swift */; };
 		BC22BBD6236C26EF00F40658 /* NotificationsSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD5236C26EF00F40658 /* NotificationsSettingsVC.swift */; };
 		BC22BBD9236C27C000F40658 /* VerticalActionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD8236C27C000F40658 /* VerticalActionsVC.swift */; };
 		BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBDA236C2A7F00F40658 /* NotificationSettingsViewModel.swift */; };
@@ -778,7 +778,7 @@
 		BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentHuggingScrollView.swift; sourceTree = "<group>"; };
 		BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+PureLayout.swift"; sourceTree = "<group>"; };
 		BC22BBCE236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfileSettingsVC+Actions.swift"; sourceTree = "<group>"; };
-		BC22BBD1236C213D00F40658 /* SelectLanguageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLanguageVC.swift; sourceTree = "<group>"; };
+		BC22BBD1236C213D00F40658 /* SelectInterfaceLanguageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInterfaceLanguageVC.swift; sourceTree = "<group>"; };
 		BC22BBD5236C26EF00F40658 /* NotificationsSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSettingsVC.swift; sourceTree = "<group>"; };
 		BC22BBD8236C27C000F40658 /* VerticalActionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalActionsVC.swift; sourceTree = "<group>"; };
 		BC22BBDA236C2A7F00F40658 /* NotificationSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -1890,7 +1890,7 @@
 		BC22BBD0236C212100F40658 /* SelectLanguageVC */ = {
 			isa = PBXGroup;
 			children = (
-				BC22BBD1236C213D00F40658 /* SelectLanguageVC.swift */,
+				BC22BBD1236C213D00F40658 /* SelectInterfaceLanguageVC.swift */,
 				BCB6475F244D5A8800C94B84 /* LanguageCell.swift */,
 			);
 			path = SelectLanguageVC;
@@ -3897,7 +3897,7 @@
 				BC4AD66123B1BB9D008546A4 /* TransferHistoryFilterVC.swift in Sources */,
 				BC4692F9239640AE0064A38B /* LeaderFollowCollectionCell.swift in Sources */,
 				3B61AC3422E1CA8A00F608AF /* LAContext+Extensions.swift in Sources */,
-				BC22BBD2236C213D00F40658 /* SelectLanguageVC.swift in Sources */,
+				BC22BBD2236C213D00F40658 /* SelectInterfaceLanguageVC.swift in Sources */,
 				BC2260B624D8C88400A82D8D /* RequestsManager.swift in Sources */,
 				BC4F9343240E60AD00BB935F /* UserProfilePageVC+UITableViewDelegate.swift in Sources */,
 				BCD01A0423F65231003B0E1E /* UINavigationController+Extensions.swift in Sources */,

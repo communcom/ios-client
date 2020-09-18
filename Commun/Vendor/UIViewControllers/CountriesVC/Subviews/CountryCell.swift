@@ -38,9 +38,15 @@ class CountryCell: UITableViewCell {
     
     func setUpLanguage(_ country: Country) {
         flagLabel.text = country.emoji
+        var text: String?
+        
+        if let language = country.language {
+            text = (language.name + " language").localized().uppercaseFirst
+        }
+        
         countryLabel.attributedString = NSMutableAttributedString()
             .text(country.name, size: 15, weight: .medium)
             .text("\n")
-            .text(country.language?.name ?? country.language?.code ?? "", size: 12, weight: .semibold, color: .appGrayColor)
+            .text(text ?? country.language?.code ?? "", size: 12, weight: .semibold, color: .appGrayColor)
     }
 }
