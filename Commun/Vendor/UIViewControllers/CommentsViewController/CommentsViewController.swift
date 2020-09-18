@@ -121,6 +121,15 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
     }
     
+    override func itemAtIndexPath(_ indexPath: IndexPath) -> ResponseAPIContentGetComment? {
+        // root comment
+        if indexPath.row == 0 {
+            return viewModel.items.value[safe: indexPath.section]
+        }
+        
+        return viewModel.items.value[safe: indexPath.section]?.children?[safe: indexPath.row + 1]
+    }
+    
     // MARK: - Actions
     func editComment(_ comment: ResponseAPIContentGetComment) {
         // for overriding

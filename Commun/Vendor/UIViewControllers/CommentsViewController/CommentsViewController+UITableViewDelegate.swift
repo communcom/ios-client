@@ -9,30 +9,21 @@
 import Foundation
 
 extension CommentsViewController: UITableViewDelegate {
-    func commentAtIndexPath(_ indexPath: IndexPath) -> ResponseAPIContentGetComment? {
-        // root comment
-        if indexPath.row == 0 {
-            return viewModel.items.value[safe: indexPath.section]
-        }
-        
-        return viewModel.items.value[safe: indexPath.section]?.children?[safe: indexPath.row + 1]
-    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let comment = commentAtIndexPath(indexPath),
+        guard let comment = itemAtIndexPath(indexPath),
             let height = viewModel.rowHeights[comment.identity]
         else {return UITableView.automaticDimension}
         return height
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let comment = commentAtIndexPath(indexPath)
+        guard let comment = itemAtIndexPath(indexPath)
         else {return 88}
         return viewModel.rowHeights[comment.identity] ?? 88
     }
 
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard var comment = commentAtIndexPath(indexPath)
+        guard var comment = itemAtIndexPath(indexPath)
         else {return}
         viewModel.rowHeights[comment.identity] = cell.bounds.height
         
