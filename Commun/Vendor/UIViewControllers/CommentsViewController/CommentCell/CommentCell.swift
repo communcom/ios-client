@@ -70,6 +70,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         replyButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return replyButton
     }()
+    lazy var separator = UILabel.with(text: " • ", textSize: 13, weight: .bold, textColor: .appGrayColor)
     lazy var donateButton: UIButton = {
         let button = UIButton(label: "donate".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
         button.addTarget(self, action: #selector(donateButtonDidTouch), for: .touchUpInside)
@@ -123,7 +124,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         stackView.autoPinEdge(.leading, to: .leading, of: contentTextView)
         stackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
         
-        let separator = UILabel.with(text: " • ", textSize: 13, weight: .bold, textColor: .appGrayColor)
         stackView.addArrangedSubviews([
             voteContainerView,
             timeLabel,
@@ -276,6 +276,16 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         
         // Donation
         donationImageView.isHidden = comment.donationsCount == 0
+        
+        
+        // if current user is the author
+        if comment.author?.userId == Config.currentUser?.id {
+            donateButton.isHidden = true
+            separator.isHidden = true
+        } else {
+            donateButton.isHidden = false
+            separator.isHidden = false
+        }
     }
     
     func setText() {
