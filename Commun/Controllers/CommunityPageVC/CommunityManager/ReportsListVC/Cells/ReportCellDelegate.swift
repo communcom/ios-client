@@ -8,9 +8,10 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 protocol ReportCellDelegate: class {
-    var items: [ResponseAPIContentGetReport] {get}
+    var viewModel: ListViewModel<ResponseAPIContentGetReport> {get}
     func buttonProposalDidTouch(forItemWithIdentity identity: ResponseAPIContentGetReport.Identity)
     func buttonBanDidTouch(forItemWithIdentity identity: ResponseAPIContentGetReport.Identity)
     func communityIssuer(forCommunityId id: String) -> String?
@@ -18,7 +19,7 @@ protocol ReportCellDelegate: class {
 
 extension ReportCellDelegate where Self: BaseViewController {
     func buttonProposalDidTouch(forItemWithIdentity identity: ResponseAPIContentGetReport.Identity) {
-        guard var report = items.first(where: {$0.identity == identity}) else {return}
+        guard var report = viewModel.items.value.first(where: {$0.identity == identity}) else {return}
         
         if let proposal = report.proposal {
             // accept / refuse proposal
@@ -64,7 +65,7 @@ extension ReportCellDelegate where Self: BaseViewController {
             
             // change state immediately, reverse if fall
             report.isPerformingAction = true
-            let proposal = ResponseAPIContentGetProposal.placeholder(proposalId: proposalId, isApproved: true, approvesCount: 1, approvesNeed: 3)
+            let proposal = ResponseAPIContentGetProposal.placeholder(proposalId: proposalId, isApproved: false, approvesCount: 0, approvesNeed: viewModel.items.value.first(where: {$0.proposal?.approvesNeed != nil})?.proposal?.approvesNeed ?? 3)
             report.proposal = proposal
             report.notifyChanged()
             
@@ -83,17 +84,21 @@ extension ReportCellDelegate where Self: BaseViewController {
                     report.notifyChanged()
                 }) { (error) in
                     self.showError(error)
+                    guard let index = self.viewModel.items.value.firstIndex(where: {$0.identity == report.identity}) else {return}
+                    var report = self.viewModel.items.value[index]
                     report.isPerformingAction = false
                     // reverse
                     report.proposal = nil
-                    report.notifyChanged()
+                    var newItems = self.viewModel.items.value
+                    newItems[index] = report
+                    self.viewModel.items.accept(newItems)
                 }
                 .disposed(by: self.disposeBag)
         }
     }
     
     func buttonBanDidTouch(forItemWithIdentity identity: ResponseAPIContentGetReport.Identity) {
-        guard var report = items.first(where: {$0.identity == identity}),
+        guard var report = viewModel.items.value.first(where: {$0.identity == identity}),
             let proposal = report.proposal,
             let proposer = proposal.proposer?.userId
         else {return}
