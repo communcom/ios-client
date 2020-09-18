@@ -10,7 +10,6 @@ import Foundation
 
 protocol CommentCellDelegate: class {
 //    var replyingComment: ResponseAPIContentGetComment? {get set}
-    var expandedComments: [ResponseAPIContentGetComment] {get set}
     var tableView: UITableView {get set}
     var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {get}
     func cell(_ cell: CommentCell, didTapUpVoteForComment comment: ResponseAPIContentGetComment)
@@ -27,14 +26,9 @@ protocol CommentCellDelegate: class {
 
 extension CommentCellDelegate where Self: BaseViewController {
     func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment) {
-        guard let indexPath = tableView.indexPath(for: cell) else {
-            return
-        }
-        if !expandedComments.contains(where: {$0.identity == comment.identity}) {
-            expandedComments.append(comment)
-        }
-        commentsListViewModel.rowHeights[comment.identity] = nil
-        tableView.reloadRows(at: [indexPath], with: .fade)
+        var comment = comment
+        comment.isExpanded = !(comment.isExpanded ?? false)
+        comment.notifyChanged()
     }
     
     func cell(_ cell: CommentCell, didTapOnUserName userName: String) {

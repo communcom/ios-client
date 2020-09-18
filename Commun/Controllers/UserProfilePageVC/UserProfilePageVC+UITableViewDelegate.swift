@@ -9,21 +9,6 @@
 import Foundation
 
 extension UserProfilePageVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let item = viewModel.items.value[safe: indexPath.row] else {
-            return UITableView.automaticDimension
-        }
-        
-        switch item {
-        case let post as ResponseAPIContentGetPost:
-            return (viewModel as! UserProfilePageViewModel).postsVM.rowHeights[post.identity] ?? UITableView.automaticDimension
-        case let comment as ResponseAPIContentGetComment:
-            return (viewModel as! UserProfilePageViewModel).commentsVM.rowHeights[comment.identity] ?? UITableView.automaticDimension
-        default:
-            return UITableView.automaticDimension
-        }
-    }
-    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let item = viewModel.items.value[safe: indexPath.row] else {
             return UITableView.automaticDimension
@@ -32,8 +17,6 @@ extension UserProfilePageVC: UITableViewDelegate {
         switch item {
         case let post as ResponseAPIContentGetPost:
             return (viewModel as! UserProfilePageViewModel).postsVM.rowHeights[post.identity] ?? 200
-        case let comment as ResponseAPIContentGetComment:
-            return (viewModel as! UserProfilePageViewModel).commentsVM.rowHeights[comment.identity] ?? 88
         default:
             return UITableView.automaticDimension
         }

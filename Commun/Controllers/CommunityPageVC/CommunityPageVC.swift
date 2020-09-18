@@ -491,23 +491,6 @@ extension CommunityPageVC: UITableViewDelegate {
     }
     
     // MARK: - rowHeight caching
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let item = viewModel.items.value[safe: indexPath.row] else {
-            return UITableView.automaticDimension
-        }
-        
-        switch item {
-        case let post as ResponseAPIContentGetPost:
-            return (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] ?? UITableView.automaticDimension
-//        case let leader as ResponseAPIContentGetLeader:
-//            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? UITableView.automaticDimension
-        case let rule as ResponseAPIContentGetCommunityRule:
-            return UITableView.automaticDimension
-        default:
-            return UITableView.automaticDimension
-        }
-    }
-    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let item = viewModel.items.value[safe: indexPath.row] else {
             return UITableView.automaticDimension

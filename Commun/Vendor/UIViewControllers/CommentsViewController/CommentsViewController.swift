@@ -21,7 +21,6 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     
     // MARK: - Properties
     class var authorizationRequired: Bool {true}
-    lazy var expandedComments = [ResponseAPIContentGetComment]()
     var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
         return viewModel
     }
@@ -58,7 +57,6 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     
     override func configureCell(with comment: ResponseAPIContentGetComment, indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-        cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
         cell.setUp(with: comment)
         cell.delegate = self
         return cell
