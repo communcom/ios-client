@@ -59,10 +59,8 @@ class BasicPostCellTextView: UITextView {
     }
     
     @objc func contentTextViewDidTouch(_ gesture: UITapGestureRecognizer) {
-        if let string = urlString(at: gesture.location(in: self)),
-            let url = URL(string: string)
-        {
-            parentViewController?.handleUrl(url: url)
+        if let string = urlString(at: gesture.location(in: self)) {
+            parentViewController?.handleUrlString(urlString: string)
         }
     }
 }
