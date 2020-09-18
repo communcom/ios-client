@@ -51,7 +51,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     lazy var languageFlagImageView = UIImageView.circle(size: 32)
     lazy var languageDetailLabel = UILabel.with(textSize: 15, numberOfLines: 2)
     
-    let countryRelay = BehaviorRelay<Country?>(value: nil)
+    let languageRelay = BehaviorRelay<Language?>(value: nil)
     var didSetAvatar = false
     var createdCommunities: [ResponseAPIContentGetCommunity]?
     
@@ -170,37 +170,28 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         Observable.combineLatest(
             communityNameTextField.rx.text.orEmpty,
             descriptionTextView.rx.text.orEmpty,
-            countryRelay
+            languageRelay
         )
-            .map({ (name, description, country) -> Bool in
-                (!name.isEmpty) && (description.count <= self.descriptionLimit) && (country?.language?.code != nil)
+            .map({ (name, description, language) -> Bool in
+                (!name.isEmpty) && (description.count <= self.descriptionLimit) && (language != nil)
             })
             .bind(to: continueButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        countryRelay
-            .subscribe(onNext: { (country) in
-                guard let country = country else {
+        languageRelay
+            .subscribe(onNext: { (language) in
+                guard let language = language else {
                     self.languageFlagImageView.isHidden = true
                     self.languageDetailLabel.text = "language".localized().uppercaseFirst
                     self.languageDetailLabel.textColor = .appGrayColor
                     return
                 }
                 self.languageFlagImageView.isHidden = false
-                var flagImageNamed = ""
-                switch country.language?.code {
-                case "en":
-                    flagImageNamed = "flag.en"
-                case "ru":
-                    flagImageNamed = "flag.ru"
-                default:
-                    return
-                }
-                self.languageFlagImageView.image = UIImage(named: flagImageNamed)
+                self.languageFlagImageView.image = UIImage(named: "flag.\(language.code)")
                 self.languageDetailLabel.attributedText = NSMutableAttributedString()
-                    .text(country.name, size: 15, weight: .medium)
+                    .text(language.name.uppercaseFirst, size: 15, weight: .medium)
                     .text("\n")
-                    .text(country.language?.name ?? country.language?.code ?? "", size: 12, weight: .medium, color: .appGrayColor)
+                    .text((language.name + " language").localized().uppercaseFirst, size: 12, weight: .medium, color: .appGrayColor)
                     
             })
             .disposed(by: disposeBag)
@@ -230,7 +221,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         view.endEditing(true)
         
         guard let name = communityNameTextField.text,
-            let language = countryRelay.value?.language?.code
+            let language = languageRelay.value?.code
         else {return}
         let description = self.descriptionTextView.text ?? ""
         
@@ -328,19 +319,13 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             self.view.endEditing(true)
         }
         
-        let vc = LanguagesVC()
-        let nav = UINavigationController(rootViewController: vc)
-        
-        vc.selectionHandler = {country in
-            if country.available {
-                nav.dismiss(animated: true, completion: nil)
-                self.countryRelay.accept(country)
-            } else {
-                self.showAlert(title: "sorry".uppercaseFirst.localized(), message: "but we don’t support your region yet".uppercaseFirst.localized())
-            }
+        let vc = CMLanguagesVC()
+        vc.languageDidSelect = { language in
+            vc.navigationController?.dismiss(animated: true, completion: nil)
+            self.languageRelay.accept(language)
         }
-        
-        present(nav, animated: true, completion: nil)
+        let navVC = SwipeNavigationController(rootViewController: vc)
+        present(navVC, animated: true, completion: nil)
     }
     
     @objc func endEditing() {

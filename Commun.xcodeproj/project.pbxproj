@@ -200,6 +200,7 @@
 		BC2F4C5A25109E23009B1971 /* CommunityRuleEditableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */; };
 		BC2F4C5D2510B32E009B1971 /* EditRuleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */; };
 		BC2F4C672511CBCC009B1971 /* CMLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */; };
+		BC2F4C8F2514BE2E009B1971 /* CMLanguagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC31D1C12457D094000F5BE5 /* DonationUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */; };
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
@@ -364,7 +365,6 @@
 		BC8C172A250624EE00795859 /* CreateCommunityCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C1729250624ED00795859 /* CreateCommunityCompletedVC.swift */; };
 		BC8C172E250779A600795859 /* UserProfileAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C172D250779A600795859 /* UserProfileAboutCell.swift */; };
 		BC8C17322507806000795859 /* UserProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C17312507806000795859 /* UserProfileInfoView.swift */; };
-		BC8C17342508995B00795859 /* LanguagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C17332508995B00795859 /* LanguagesVC.swift */; };
 		BC8C1742250F50A100795859 /* EditCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C1741250F50A100795859 /* EditCommunityVC.swift */; };
 		BC8F814023E27ECE0024C04A /* WalletHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F811A23E27ECE0024C04A /* WalletHeaderView.swift */; };
 		BC8F814123E27ECE0024C04A /* GradientProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F811B23E27ECE0024C04A /* GradientProgressBar.swift */; };
@@ -797,6 +797,7 @@
 		BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRuleEditableCell.swift; sourceTree = "<group>"; };
 		BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRuleVC.swift; sourceTree = "<group>"; };
 		BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguageView.swift; sourceTree = "<group>"; };
+		BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguagesVC.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC31D1C02457D094000F5BE5 /* DonationUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationUsersView.swift; sourceTree = "<group>"; };
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
@@ -961,7 +962,6 @@
 		BC8C1729250624ED00795859 /* CreateCommunityCompletedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityCompletedVC.swift; sourceTree = "<group>"; };
 		BC8C172D250779A600795859 /* UserProfileAboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAboutCell.swift; sourceTree = "<group>"; };
 		BC8C17312507806000795859 /* UserProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileInfoView.swift; sourceTree = "<group>"; };
-		BC8C17332508995B00795859 /* LanguagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesVC.swift; sourceTree = "<group>"; };
 		BC8C1741250F50A100795859 /* EditCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommunityVC.swift; sourceTree = "<group>"; };
 		BC8F811A23E27ECE0024C04A /* WalletHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletHeaderView.swift; sourceTree = "<group>"; };
 		BC8F811B23E27ECE0024C04A /* GradientProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientProgressBar.swift; sourceTree = "<group>"; };
@@ -1462,6 +1462,7 @@
 				BC067E592436EAE900D770AC /* TransactionInfoVC.swift */,
 				BCAFEC94243EC237003A1DC4 /* TransactionCompletedVC.swift */,
 				BCEFA643249217DF00971E77 /* DonationsVC */,
+				BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */,
 			);
 			path = UIViewControllers;
 			sourceTree = "<group>";
@@ -2277,7 +2278,6 @@
 				BC5A348A2429C06C001C5054 /* Subviews */,
 				BC5A34842429BDB5001C5054 /* CountriesVC.swift */,
 				BC5A348B2429C0DA001C5054 /* Country.swift */,
-				BC8C17332508995B00795859 /* LanguagesVC.swift */,
 			);
 			path = CountriesVC;
 			sourceTree = "<group>";
@@ -3665,7 +3665,6 @@
 				BCC0692924E50134001419D0 /* CMPostView.swift in Sources */,
 				AC5B0E1C24B4956800C67786 /* AppleLoginManager.swift in Sources */,
 				AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */,
-				BC8C17342508995B00795859 /* LanguagesVC.swift in Sources */,
 				BCCE669C2429B505004F47DC /* SingUpWithPhoneVC+Actions.swift in Sources */,
 				BC65FD4224514514006F0846 /* CommunWalletVC+Delegates+Datasources.swift in Sources */,
 				BC8F815323E27ECE0024C04A /* BuyCommunVC.swift in Sources */,
@@ -3922,6 +3921,7 @@
 				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,
 				BC923E182431AB2600B28413 /* VerifyEmailVC.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,
+				BC2F4C8F2514BE2E009B1971 /* CMLanguagesVC.swift in Sources */,
 				BC8C17262506197E00795859 /* CreateCommunityVC.swift in Sources */,
 				BCB08D6724B4759500EA2BDB /* NonAuthVCType.swift in Sources */,
 				BCCE0AA82367EB5900A183AA /* MyCollectionViewCell.swift in Sources */,
