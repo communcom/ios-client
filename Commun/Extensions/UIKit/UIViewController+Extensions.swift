@@ -304,7 +304,7 @@ extension UIViewController {
                     showCommunityWithCommunityAlias(alias)
                     return
                 } else if url.absoluteString.starts(with: URL.appURL + "/#"),
-                    let hashtag = url.absoluteString.components(separatedBy: "#").last
+                    let hashtag = url.absoluteString.components(separatedBy: "#").last?.removingPercentEncoding?.lowercased()
                 {
                     // hashtag
                     let vc = SearchablePostsVC(keyword: "#" + hashtag)
