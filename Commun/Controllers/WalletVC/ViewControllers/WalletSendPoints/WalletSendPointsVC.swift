@@ -412,6 +412,11 @@ class WalletSendPointsVC: BaseViewController {
         sellerNameLabelForNavBar.text = sellBalance.name
         sellerAmountLabel.text = sellBalance.amount == 0 ? "0" : Double(sellBalance.amount).currencyValueFormatted
         sellerAmountLabelForNavBar.text = sellBalance.amount == 0 ? "0" : Double(sellBalance.amount).currencyValueFormatted
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.sendPointsButton.isDisabled = (CGFloat(self.pointsTextField.text?.float() ?? 0.0) > sellBalance.amount) && self.chooseFriendButton.isSelected
+            self.updateAlertView()
+        }
     }
     
     private func updateBuyerInfo() {
@@ -465,7 +470,8 @@ class WalletSendPointsVC: BaseViewController {
         return false
     }
     
-    func updateAlertView(amount: CGFloat) {
+    func updateAlertView(amount: CGFloat? = nil) {
+        let amount = amount ?? CGFloat(pointsTextField.text?.float() ?? 0.0)
         if amount <= dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount {
             handleAmountValid()
         } else {
@@ -485,7 +491,7 @@ class WalletSendPointsVC: BaseViewController {
     }
     
     func programmaticallyChangeAmount(to amount: CGFloat) {
-        pointsTextField.text = "\(amount)"
+        pointsTextField.text = String(Double(amount).currencyValueFormatted)
         pointsTextField.sendActions(for: .editingChanged)
         updateAlertView(amount: amount)
     }
