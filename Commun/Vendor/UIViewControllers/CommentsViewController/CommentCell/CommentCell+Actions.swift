@@ -89,9 +89,12 @@ extension CommentCell {
     }
     
     @objc func donateButtonDidTouch() {
-        guard var comment = comment else {return}
-        comment.showDonationButtons = true
-        comment.notifyChanged()
+        guard let symbol = comment?.community?.communityId,
+            let comment = comment,
+            let user = comment.author
+        else {return}
+        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: comment)
+        parentViewController?.show(donateVC, sender: nil)
     }
     
     @objc func donationImageViewDidTouch() {

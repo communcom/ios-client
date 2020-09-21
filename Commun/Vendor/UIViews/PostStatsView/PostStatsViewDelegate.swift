@@ -16,9 +16,13 @@ protocol PostStatsViewDelegate: class {
 
 extension PostStatsViewDelegate {
     func postStatsViewDonationButtonDidTouch(_ postStatsView: PostStatsView) {
-        var post = self.post
-        post?.showDonationButtons = true
-        post?.notifyChanged()
+        guard let vc = (self as? BaseViewController) ?? (self as? UIView)?.parentViewController,
+            let symbol = post?.community?.communityId,
+            let post = post,
+            let user = post.author
+        else {return}
+        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: post)
+        vc.show(donateVC, sender: nil)
     }
     
     func postStatsViewDonatorsDidTouch(_ postStatsView: PostStatsView) {

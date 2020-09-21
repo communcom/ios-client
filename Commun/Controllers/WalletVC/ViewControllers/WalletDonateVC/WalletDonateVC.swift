@@ -37,7 +37,7 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
     }()
     
     // MARK: - Initilizers
-    init(selectedBalanceSymbol symbol: String, user: ResponseAPIContentGetProfile, message: T, amount: Double?) {
+    init(selectedBalanceSymbol symbol: String, user: ResponseAPIContentGetProfile, message: T, amount: Double? = nil) {
         self.initialAmount = amount
         self.message = message
         super.init(selectedBalanceSymbol: symbol, user: user)
