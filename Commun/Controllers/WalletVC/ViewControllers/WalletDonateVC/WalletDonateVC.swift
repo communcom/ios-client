@@ -135,8 +135,7 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
                 self.dataModel.loadBalances { [weak self] success in
                     if success {
                         self?.balancesDidFinishLoading()
-                        
-                        
+                        self?.pointsTextField.sendActions(for: .editingChanged)
                     }
                 }
                 self.navigationController?.popToVC(type: Self.self)
@@ -149,7 +148,7 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
                 self.dataModel.loadBalances { [weak self] success in
                     if success {
                         self?.balancesDidFinishLoading()
-                        self?.updateAlertView()
+                        self?.pointsTextField.sendActions(for: .editingChanged)
                     }
                 }
                 self.navigationController?.popToVC(type: Self.self)

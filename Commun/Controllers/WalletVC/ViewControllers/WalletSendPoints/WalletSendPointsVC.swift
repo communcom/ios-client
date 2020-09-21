@@ -480,12 +480,12 @@ class WalletSendPointsVC: BaseViewController {
     }
     
     func handleAmountValid() {
-        amountBorderView.layer.borderColor = UIColor.appLightGrayColor.cgColor
+        amountBorderView.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
         alertLabel.isHidden = true
     }
     
     func handleInsufficientFunds() {
-        amountBorderView.layer.borderColor = UIColor.appRedColor.cgColor
+        amountBorderView.borderColor = .appRedColor
         alertLabel.isHidden = false
         alertLabel.text = "Insufficient funds: \(dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount) \(dataModel.transaction.symbol.sell)"
     }
