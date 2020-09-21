@@ -277,7 +277,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         // Donation
         donationImageView.isHidden = comment.donationsCount == 0
         
-        
         // if current user is the author
         if comment.author?.userId == Config.currentUser?.id {
             donateButton.isHidden = true
