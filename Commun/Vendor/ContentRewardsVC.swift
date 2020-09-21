@@ -70,6 +70,11 @@ class ContentRewardsVC<T: ResponseAPIContentMessageType>: DonationsVC {
             .text("donations".localized().uppercaseFirst, size: 12, weight: .medium, color: .appGrayColor)
         
         donateButton.addTarget(self, action: #selector(donateButtonDidTouch), for: .touchUpInside)
+        
+        if content.author?.userId == Config.currentUser?.id {
+            donateButton.isHidden = true
+            donateButtonHandler = nil
+        }
     }
     
     private func setUpHeaderView() -> UIView {

@@ -76,9 +76,7 @@ class DonationsVC: BaseViewController {
             .map {$0.count == 0}
             .subscribe(onNext: { (isEmpty) in
                 if isEmpty {
-                    self.tableView.addEmptyPlaceholderFooterView(emoji: "🎁", title: "no donations".localized().uppercaseFirst, description: "that post haven’t had any donations yet".localized().uppercaseFirst, buttonLabel: "donate".localized().uppercaseFirst) {
-                        self.donateButtonHandler?()
-                    }
+                    self.tableView.addEmptyPlaceholderFooterView(emoji: "🎁", title: "no donations".localized().uppercaseFirst, description: "that post haven’t had any donations yet".localized().uppercaseFirst, buttonLabel: self.donateButtonHandler != nil ? "donate".localized().uppercaseFirst: nil, buttonAction: self.donateButtonHandler)
                 } else {
                     self.tableView.tableFooterView = UIView()
                 }
