@@ -87,20 +87,4 @@ extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
             post?.notifyChanged()
         }
     }
-    
-    func headerView(_ headerView: PostHeaderView, donationUsersViewDidTouch donationUsersView: DonationUsersView) {
-        guard let donations = post?.donations else {return}
-        let vc = CommentRewardsVC(donations: donations)
-        vc.modelSelected = {donation in
-            vc.dismiss(animated: true) {
-                self.showProfileWithUserId(donation.sender.userId)
-            }
-        }
-
-        let navigation = SwipeNavigationController(rootViewController: vc)
-        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-        navigation.modalPresentationStyle = .custom
-        navigation.transitioningDelegate = vc
-        present(navigation, animated: true, completion: nil)
-    }
 }
