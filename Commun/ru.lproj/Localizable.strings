@@ -316,6 +316,7 @@
 "no connection" = "нет соединения";
 "no currencies" = "нет валют";
 "no description" = "нет описания";
+"no donations" = "нет пожертвований";
 "no friend found" = "друг не найден";
 "no friends" = "нет друзей";
 "no internet connection" = "нет подключения к Интернету";
@@ -352,6 +353,7 @@
 "open iOS Settings" = "открыть настройки iOS";
 "optional" = "необязательный";
 "options" = "параметры";
+"other" = "еще";
 "outcome" = "исходящие";
 "override current work and add a new article" = "переопределить текущую работу и добавить новую статью";
 "owned" = "принадлежит";
@@ -495,6 +497,7 @@
 "this user is on your blacklist" = "пользователь находится в Вашем черном списке";
 "This user is not allowed to require bandwidth" = "Вы заблокированы пользователем";
 "this version of the application is out of" = "данная версия приложения устарела.\nПожалуйста, обновите эту версию, чтобы продолжить использование приложения.";
+"that post haven’t had any donations yet" = "этот пост еще не имеет пожертвований";
 "title and content must not be empty" = "заголовок и содержание не должны быть пустыми";
 "title placeholder" = "заголовок";
 "to" = "на";

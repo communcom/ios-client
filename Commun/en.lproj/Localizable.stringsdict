@@ -240,5 +240,19 @@
 			<string>donations</string>
 		</dict>
 	</dict>
+	<key>others-count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@others@</string>
+		<key>others</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>others</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

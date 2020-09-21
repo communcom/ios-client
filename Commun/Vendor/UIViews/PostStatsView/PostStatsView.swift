@@ -65,6 +65,7 @@ class PostStatsView: MyView {
         
         return stackView
     }()
+    lazy var donationsViewWrapper: UIView = donationsView.padding(UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
     
     // Number of views
     lazy var viewsCountLabel = self.createDescriptionLabel()
@@ -130,7 +131,7 @@ class PostStatsView: MyView {
         stackView.autoPinEdgesToSuperviewEdges()
         
         stackView.addArrangedSubviews([
-            donationsView.padding(UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)),
+            donationsViewWrapper,
             .spacer(height: 2, backgroundColor: .appLightGrayColor),
             actionsViewWrapper.padding(UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16))
         ])
@@ -166,7 +167,14 @@ class PostStatsView: MyView {
         }
         donatorsLabel.text = donatorsText
         
-        donateButton.isHidden = post.author?.userId == Config.currentUser?.id
+        donationsViewWrapper.isHidden = false
+        donateButton.isHidden = false
+        if post.author?.userId == Config.currentUser?.id {
+            donateButton.isHidden = true
+            if post.donationsCount == 0 {
+                donationsViewWrapper.isHidden = true
+            }
+        }
     }
     
     func fillShareCountButton(_ fill: Bool = true) {

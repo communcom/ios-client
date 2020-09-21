@@ -326,6 +326,7 @@
 "no connection" = "no connection";
 "no currencies" = "no currencies";
 "no description" = "no description";
+"no donations" = "no donations";
 "no friend found" = "no friend found";
 "no friends" = "no friends";
 "no internet connection" = "no internet connection";
@@ -362,6 +363,7 @@
 "open iOS Settings" = "open iOS Settings";
 "optional" = "optional";
 "options" = "options";
+"other" = "other";
 "outcome" = "outcome";
 "override current work and add a new article" = "override current work and add a new article";
 "owned" = "owned";
@@ -505,6 +507,7 @@
 "there is an error occurs" = "there is an error occurs";
 "there is no currency available" = "there is no currency available";
 "this app is not authorized to use Back Camera" = "this app is not authorized to use Back Camera.\nPlease enable it in Settings";
+"that post haven’t had any donations yet" = "that post haven’t had any donations yet";
 "send post"                                     =   "post";
 "send report"                                   =   "report";
 "social network"                                =   "social network";
