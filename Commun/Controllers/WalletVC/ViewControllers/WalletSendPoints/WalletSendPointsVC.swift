@@ -412,11 +412,6 @@ class WalletSendPointsVC: BaseViewController {
         sellerNameLabelForNavBar.text = sellBalance.name
         sellerAmountLabel.text = sellBalance.amount == 0 ? "0" : Double(sellBalance.amount).currencyValueFormatted
         sellerAmountLabelForNavBar.text = sellBalance.amount == 0 ? "0" : Double(sellBalance.amount).currencyValueFormatted
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.sendPointsButton.isDisabled = (CGFloat(self.pointsTextField.text?.float() ?? 0.0) > sellBalance.amount) && self.chooseFriendButton.isSelected
-            self.updateAlertView()
-        }
     }
     
     private func updateBuyerInfo() {

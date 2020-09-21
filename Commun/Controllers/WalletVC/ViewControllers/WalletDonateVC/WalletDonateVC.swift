@@ -136,6 +136,13 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
                     if success {
                         self?.balancesDidFinishLoading()
                         self?.pointsTextField.sendActions(for: .editingChanged)
+                        
+                        guard let strongSelf = self else {return}
+                        let sellBalance = strongSelf.dataModel.getBalance(bySymbol: strongSelf.dataModel.transaction.symbol.sell)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            strongSelf.sendPointsButton.isDisabled = (CGFloat(strongSelf.pointsTextField.text?.float() ?? 0.0) > sellBalance.amount) && strongSelf.chooseFriendButton.isSelected
+                            strongSelf.updateAlertView()
+                        }
                     }
                 }
                 self.navigationController?.popToVC(type: Self.self)
@@ -149,6 +156,13 @@ class WalletDonateVC<T: ResponseAPIContentMessageType>: WalletSendPointsVC {
                     if success {
                         self?.balancesDidFinishLoading()
                         self?.pointsTextField.sendActions(for: .editingChanged)
+                        
+                        guard let strongSelf = self else {return}
+                        let sellBalance = strongSelf.dataModel.getBalance(bySymbol: strongSelf.dataModel.transaction.symbol.sell)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            strongSelf.sendPointsButton.isDisabled = (CGFloat(strongSelf.pointsTextField.text?.float() ?? 0.0) > sellBalance.amount) && strongSelf.chooseFriendButton.isSelected
+                            strongSelf.updateAlertView()
+                        }
                     }
                 }
                 self.navigationController?.popToVC(type: Self.self)
