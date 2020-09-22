@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CMSendPointsVC: BaseViewController, UITextFieldDelegate {
+class CMConverterVC: BaseViewController, UITextFieldDelegate {
     // MARK: - Properties
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .appWhiteColor)}
@@ -221,7 +221,21 @@ class CMSendPointsVC: BaseViewController, UITextFieldDelegate {
     }
 }
 
-class CMSendPointsVCTest: CMSendPointsVC {
+class CMSendPointsVCTest: CMConverterVC {
+    lazy var buyLogoImageView = MyAvatarImageView(size: 40)
+    lazy var buyNameLabel = UILabel.with(textSize: 15, weight: .medium, numberOfLines: 2, textAlignment: .left)
+    lazy var buyBalanceLabel = UILabel.with(textSize: 15, weight: .medium, numberOfLines: 2, textAlignment: .right)
+    
+    lazy var convertContainer = UIStackView(axis: .horizontal, spacing: 10)
+    lazy var convertSellLabel = UILabel.with(text: "Sell", textSize: 12, weight: .medium, textColor: .appGrayColor)
+    lazy var leftTextField = createTextField()
+    lazy var convertBuyLabel = UILabel.with(text: "Buy", textSize: 12, weight: .medium, textColor: .appGrayColor)
+    lazy var rightTextField: UITextField = {
+        let textField = createTextField()
+        textField.isEnabled = false
+        return textField
+    }()
+    
     var historyItem: ResponseAPIWalletGetTransferHistoryItem?
     override func setUp() {
         super.setUp()
@@ -231,10 +245,9 @@ class CMSendPointsVCTest: CMSendPointsVC {
         
         let communLogo = UIView.transparentCommunLogo(size: 50)
         topStackView.insertArrangedSubview(communLogo, at: 0)
+        topStackView.setCustomSpacing(20, after: communLogo)
         
-        stackView.addArrangedSubview(createTextField())
-        
-        let convertLogoView: UIView = {
+        let changeModeButton: UIView = {
             let view = UIView(width: 40, height: 40, backgroundColor: .appMainColor, cornerRadius: 20)
             view.borderWidth = 2
             view.borderColor = .white
@@ -249,9 +262,30 @@ class CMSendPointsVCTest: CMSendPointsVC {
             return view
         }()
         
-        view.addSubview(convertLogoView)
-        convertLogoView.autoPinEdge(.bottom, to: .top, of: whiteView, withOffset: 20)
-        convertLogoView.autoAlignAxis(toSuperviewAxis: .vertical)
+        view.addSubview(changeModeButton)
+        changeModeButton.autoPinEdge(.bottom, to: .top, of: whiteView, withOffset: 20)
+        changeModeButton.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        // buy container
+        let buyContainer: UIView = {
+            let view = UIView(cornerRadius: 10)
+            view.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
+            view.borderWidth = 1
+            
+//            view.isUserInteractionEnabled = true
+//            view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dropdownButtonDidTouch)))
+            let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+            view.addSubview(stackView)
+            stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
+            
+            let dropdownButton = UIButton.circleGray(imageName: "drop-down")
+            dropdownButton.isUserInteractionEnabled = false
+            
+            stackView.addArrangedSubviews([buyLogoImageView, buyNameLabel, buyBalanceLabel, dropdownButton])
+            return view
+        }()
+        
+        stackView.addArrangedSubview(buyContainer)
     }
     
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

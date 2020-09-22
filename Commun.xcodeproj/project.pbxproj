@@ -200,7 +200,7 @@
 		BC2F4C5D2510B32E009B1971 /* EditRuleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */; };
 		BC2F4C672511CBCC009B1971 /* CMLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */; };
 		BC2F4C8F2514BE2E009B1971 /* CMLanguagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */; };
-		BC2F4CAB2519A19C009B1971 /* CMSendPointsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CAA2519A19C009B1971 /* CMSendPointsVC.swift */; };
+		BC2F4CAB2519A19C009B1971 /* CMConverterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CAA2519A19C009B1971 /* CMConverterVC.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
 		BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */; };
@@ -796,7 +796,7 @@
 		BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRuleVC.swift; sourceTree = "<group>"; };
 		BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguageView.swift; sourceTree = "<group>"; };
 		BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguagesVC.swift; sourceTree = "<group>"; };
-		BC2F4CAA2519A19C009B1971 /* CMSendPointsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSendPointsVC.swift; sourceTree = "<group>"; };
+		BC2F4CAA2519A19C009B1971 /* CMConverterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMConverterVC.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
 		BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordVC.swift; sourceTree = "<group>"; };
@@ -1461,7 +1461,7 @@
 				BCAFEC94243EC237003A1DC4 /* TransactionCompletedVC.swift */,
 				BCEFA643249217DF00971E77 /* DonationsVC */,
 				BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */,
-				BC2F4CAA2519A19C009B1971 /* CMSendPointsVC.swift */,
+				BC2F4CAA2519A19C009B1971 /* CMConverterVC.swift */,
 			);
 			path = UIViewControllers;
 			sourceTree = "<group>";
@@ -3790,7 +3790,7 @@
 				BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */,
 				BC4692DF2394B4130064A38B /* CommentCellDelegate.swift in Sources */,
 				BC9066EB23A9D9EC000F9A3B /* BalancesListFetcher.swift in Sources */,
-				BC2F4CAB2519A19C009B1971 /* CMSendPointsVC.swift in Sources */,
+				BC2F4CAB2519A19C009B1971 /* CMConverterVC.swift in Sources */,
 				3B3C8B902347876000D8BADB /* ArticleEditorTextView+Attachment.swift in Sources */,
 				BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */,
 				BC3E0D3F24B5642500C5F368 /* NonAuthTabBarVC.swift in Sources */,
