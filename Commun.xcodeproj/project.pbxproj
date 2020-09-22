@@ -201,6 +201,9 @@
 		BC2F4C672511CBCC009B1971 /* CMLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */; };
 		BC2F4C8F2514BE2E009B1971 /* CMLanguagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */; };
 		BC2F4CAB2519A19C009B1971 /* CMConverterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CAA2519A19C009B1971 /* CMConverterVC.swift */; };
+		BC2F4CB42519BD2D009B1971 /* CMConvertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CB32519BD2D009B1971 /* CMConvertVC.swift */; };
+		BC2F4CB92519BD83009B1971 /* CMBuyCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CB82519BD83009B1971 /* CMBuyCommunVC.swift */; };
+		BC2F4CBB2519C056009B1971 /* CMSellCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
 		BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */; };
@@ -797,6 +800,9 @@
 		BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguageView.swift; sourceTree = "<group>"; };
 		BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguagesVC.swift; sourceTree = "<group>"; };
 		BC2F4CAA2519A19C009B1971 /* CMConverterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMConverterVC.swift; sourceTree = "<group>"; };
+		BC2F4CB32519BD2D009B1971 /* CMConvertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMConvertVC.swift; sourceTree = "<group>"; };
+		BC2F4CB82519BD83009B1971 /* CMBuyCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMBuyCommunVC.swift; sourceTree = "<group>"; };
+		BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSellCommunVC.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
 		BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordVC.swift; sourceTree = "<group>"; };
@@ -1462,6 +1468,7 @@
 				BCEFA643249217DF00971E77 /* DonationsVC */,
 				BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */,
 				BC2F4CAA2519A19C009B1971 /* CMConverterVC.swift */,
+				BC2F4CB72519BD6F009B1971 /* CMConvertVCs */,
 			);
 			path = UIViewControllers;
 			sourceTree = "<group>";
@@ -1955,6 +1962,16 @@
 				BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */,
 			);
 			path = EditRuleVCs;
+			sourceTree = "<group>";
+		};
+		BC2F4CB72519BD6F009B1971 /* CMConvertVCs */ = {
+			isa = PBXGroup;
+			children = (
+				BC2F4CB32519BD2D009B1971 /* CMConvertVC.swift */,
+				BC2F4CB82519BD83009B1971 /* CMBuyCommunVC.swift */,
+				BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */,
+			);
+			path = CMConvertVCs;
 			sourceTree = "<group>";
 		};
 		BC31BA53235EBD6A0007D89A /* ProfileVC */ = {
@@ -3528,6 +3545,7 @@
 				BC40D02A24E5561A00F48243 /* ArticleCardView.swift in Sources */,
 				BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */,
 				BC597A6E238BC7C200103F4F /* PostsFilterVC.swift in Sources */,
+				BC2F4CB42519BD2D009B1971 /* CMConvertVC.swift in Sources */,
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,
 				AC2CCB792412962D00C2DFD4 /* BoardingVC.swift in Sources */,
 				BC18FA2123D54E26005DC7E3 /* CurrencyCell.swift in Sources */,
@@ -3709,6 +3727,7 @@
 				BCC0692224E4F8D8001419D0 /* ProposalsViewModel.swift in Sources */,
 				BCCE66902428A9B8004F47DC /* SignUpWithPhoneVC.swift in Sources */,
 				3B3C8B8F2347876000D8BADB /* ArticleEditorTextView+Utilities.swift in Sources */,
+				BC2F4CB92519BD83009B1971 /* CMBuyCommunVC.swift in Sources */,
 				BCD845FF24E685F4005404CD /* ReportsListVC.swift in Sources */,
 				BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */,
 				BC69F7D1236FD1690097F870 /* NotificationSettingsView.swift in Sources */,
@@ -3927,6 +3946,7 @@
 				3B289B9A2346E6D800598407 /* UILabel+PureLayout.swift in Sources */,
 				BC2704172501DE260042A29B /* ContentRewardsVC.swift in Sources */,
 				BCF0D261249877420094B6EB /* BaseViewController+Extensions.swift in Sources */,
+				BC2F4CBB2519C056009B1971 /* CMSellCommunVC.swift in Sources */,
 				BC529142237941920022EC7F /* CommentTextView.swift in Sources */,
 				BC3694F523698FEE00B2E078 /* EditorVC+Actions.swift in Sources */,
 				BCDD53E824C69265007BE222 /* NonAuthCommunitiesVC.swift in Sources */,
