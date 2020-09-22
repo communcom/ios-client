@@ -520,7 +520,7 @@ extension CommunityPageVC: UITableViewDelegate {
             // record post view
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 if tableView.isCellVisible(indexPath: indexPath) &&
-                    (cell as! PostCell).post?.identity == post.identity &&
+                    (cell as? PostCell)?.postIdentity == post.identity &&
                     !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity)
                 {
                     post.markAsViewed().disposed(by: self.disposeBag)
