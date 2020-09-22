@@ -135,13 +135,9 @@ class WalletBuyCommunVC: WalletConvertVC {
             .disposed(by: disposeBag)
     }
     
-    override func bindRate() {
-        viewModel.rate
-            .subscribe(onNext: {[weak self] (value) in
-                self?.rateLabel.attributedText = NSMutableAttributedString()
-                    .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) \(self?.currentBalance?.symbol ?? "") = 10 CMN", size: 12, weight: .medium)
-            })
-            .disposed(by: disposeBag)
+    override func setUpRate() {
+        rateLabel.attributedText = NSMutableAttributedString()
+            .text("rate".localized().uppercaseFirst + ": \(viewModel.rate.value.currencyValueFormatted) \(currentBalance?.symbol ?? "") = 10 CMN", size: 12, weight: .medium)
     }
     
     override func getBuyPrice() {
