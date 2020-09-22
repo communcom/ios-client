@@ -46,21 +46,18 @@ extension WalletConvertVC {
                     }
                     
                     self?.convertButton.isDisabled = true
-//                    self?.convertButton.isEnabled = false
                 
                 case .finished:
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
                     
                     self?.convertButton.isDisabled = !(self?.shouldEnableConvertButton() ?? false)
-//                    self?.convertButton.isEnabled = self?.shouldEnableConvertButton() ?? false
                 
                 case .error:
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
                     
                     self?.convertButton.isDisabled = true
-//                    self?.convertButton.isEnabled = false
                 }
             })
             .disposed(by: disposeBag)

@@ -207,40 +207,6 @@ class WalletConvertVC: BaseViewController {
         // sell price
         bindSellPrice()
         
-        // price loading state
-        viewModel.priceLoadingState
-            .skip(1)
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] (state) in
-                switch state {
-                case .loading:
-                    if !(self?.rightTextField.isFirstResponder ?? false) {
-                        self?.rightTextField.hideLoader()
-                        self?.rightTextField.showLoader()
-                    }
-                    
-                    if !(self?.leftTextField.isFirstResponder ?? false) {
-                        self?.leftTextField.hideLoader()
-                        self?.leftTextField.showLoader()
-                    }
-                    
-                    self?.convertButton.isDisabled = true
-                
-                case .finished:
-                    self?.rightTextField.hideLoader()
-                    self?.leftTextField.hideLoader()
-                    
-                    self?.convertButton.isDisabled = !(self?.shouldEnableConvertButton() ?? false)
-                
-                case .error:
-                    self?.rightTextField.hideLoader()
-                    self?.leftTextField.hideLoader()
-                    
-                    self?.convertButton.isDisabled = true
-                }
-            })
-            .disposed(by: disposeBag)
-        
         // errorLabel
         viewModel.errorSubject
             .subscribe(onNext: {[weak self] (error) in
@@ -259,14 +225,9 @@ class WalletConvertVC: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.rate
-            .subscribe(onNext: { [weak self] _ in
-                self?.bindRate()
-            })
-            .disposed(by: disposeBag)
+        bindRate()
         
         bindScrollView()
-
     }
     
     func bindBuyPrice() {
@@ -277,7 +238,15 @@ class WalletConvertVC: BaseViewController {
         fatalError("Must override")
     }
     
-    func bindRate() {
+    private func bindRate() {
+        viewModel.rate
+            .subscribe(onNext: { [weak self] _ in
+                self?.setUpRate()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func setUpRate() {
         
     }
     
