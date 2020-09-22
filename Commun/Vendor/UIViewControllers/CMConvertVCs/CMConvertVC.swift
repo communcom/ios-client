@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CMConvertVC: CMConverterVC {
+class CMConvertVC: CMTransferVC {
     // MARK: - Properties
     var historyItem: ResponseAPIWalletGetTransferHistoryItem?
     let viewModel = WalletConvertViewModel()
@@ -279,12 +279,15 @@ class CMConvertVC: CMConverterVC {
                 switch error {
                 case .other(let error):
                     self?.errorLabel.text = "Error: " + error.localizedDescription
+                    self?.errorLabel.isHidden = false
                 
                 case .insufficientFunds:
                     self?.errorLabel.text = "Error: Insufficient funds"
+                    self?.errorLabel.isHidden = false
                 
                 default:
                     self?.errorLabel.text = nil
+                    self?.errorLabel.isHidden = true
                 }
             })
             .disposed(by: disposeBag)
@@ -382,5 +385,3 @@ class CMConvertVC: CMConverterVC {
         return super.textField(textField, shouldChangeCharactersIn: range, replacementString: string)
     }
 }
-
-

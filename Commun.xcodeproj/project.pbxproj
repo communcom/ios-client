@@ -200,7 +200,7 @@
 		BC2F4C5D2510B32E009B1971 /* EditRuleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */; };
 		BC2F4C672511CBCC009B1971 /* CMLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */; };
 		BC2F4C8F2514BE2E009B1971 /* CMLanguagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */; };
-		BC2F4CAB2519A19C009B1971 /* CMConverterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CAA2519A19C009B1971 /* CMConverterVC.swift */; };
+		BC2F4CAB2519A19C009B1971 /* CMTransferVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CAA2519A19C009B1971 /* CMTransferVC.swift */; };
 		BC2F4CB42519BD2D009B1971 /* CMConvertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CB32519BD2D009B1971 /* CMConvertVC.swift */; };
 		BC2F4CB92519BD83009B1971 /* CMBuyCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CB82519BD83009B1971 /* CMBuyCommunVC.swift */; };
 		BC2F4CBB2519C056009B1971 /* CMSellCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */; };
@@ -799,7 +799,7 @@
 		BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRuleVC.swift; sourceTree = "<group>"; };
 		BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguageView.swift; sourceTree = "<group>"; };
 		BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguagesVC.swift; sourceTree = "<group>"; };
-		BC2F4CAA2519A19C009B1971 /* CMConverterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMConverterVC.swift; sourceTree = "<group>"; };
+		BC2F4CAA2519A19C009B1971 /* CMTransferVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTransferVC.swift; sourceTree = "<group>"; };
 		BC2F4CB32519BD2D009B1971 /* CMConvertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMConvertVC.swift; sourceTree = "<group>"; };
 		BC2F4CB82519BD83009B1971 /* CMBuyCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMBuyCommunVC.swift; sourceTree = "<group>"; };
 		BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSellCommunVC.swift; sourceTree = "<group>"; };
@@ -1467,7 +1467,7 @@
 				BCAFEC94243EC237003A1DC4 /* TransactionCompletedVC.swift */,
 				BCEFA643249217DF00971E77 /* DonationsVC */,
 				BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */,
-				BC2F4CAA2519A19C009B1971 /* CMConverterVC.swift */,
+				BC2F4CAA2519A19C009B1971 /* CMTransferVC.swift */,
 				BC2F4CB72519BD6F009B1971 /* CMConvertVCs */,
 			);
 			path = UIViewControllers;
@@ -3809,7 +3809,7 @@
 				BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */,
 				BC4692DF2394B4130064A38B /* CommentCellDelegate.swift in Sources */,
 				BC9066EB23A9D9EC000F9A3B /* BalancesListFetcher.swift in Sources */,
-				BC2F4CAB2519A19C009B1971 /* CMConverterVC.swift in Sources */,
+				BC2F4CAB2519A19C009B1971 /* CMTransferVC.swift in Sources */,
 				3B3C8B902347876000D8BADB /* ArticleEditorTextView+Attachment.swift in Sources */,
 				BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */,
 				BC3E0D3F24B5642500C5F368 /* NonAuthTabBarVC.swift in Sources */,

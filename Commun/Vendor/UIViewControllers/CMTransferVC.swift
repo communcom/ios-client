@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class CMConverterVC: BaseViewController, UITextFieldDelegate {
+class CMTransferVC: BaseViewController, UITextFieldDelegate {
     // MARK: - Properties
     override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .appWhiteColor)}
@@ -221,5 +221,3 @@ class CMConverterVC: BaseViewController, UITextFieldDelegate {
         return isANumber
     }
 }
-
-

@@ -14,16 +14,15 @@ class CMBuyCommunVC: CMConvertVC {
     
     override func setUp() {
         super.setUp()
-        // remove dropdown
-        if let buyContainer = stackView.arrangedSubviews.first(where: {$0 is UIStackView}) as? UIStackView {
-            buyContainer.removeArrangedSubview(buyContainer.arrangedSubviews.last!)
-        }
         
         // add carousel
         topStackView.insertArrangedSubview(walletCarouselWrapper, at: 0)
         topStackView.setCustomSpacing(20, after: walletCarouselWrapper)
         
-        buyNameLabel.text = "Commun"
+        buyNameLabel.attributedText = NSMutableAttributedString()
+            .text("buy".localized().uppercaseFirst, size: 12, color: .appGrayColor)
+            .text("\n")
+            .text("Commun", size: 15, weight: .semibold)
         buyLogoImageView.image = UIImage(named: "tux")
         convertBuyLabel.text = "buy".localized().uppercaseFirst + " Commun"
         
@@ -39,7 +38,10 @@ class CMBuyCommunVC: CMConvertVC {
         
         guard let balance = communBalance else {return}
         
-        buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
+        buyBalanceLabel.attributedText = NSMutableAttributedString()
+            .text("balance".localized().uppercaseFirst, size: 12, color: .appGrayColor)
+            .text("\n")
+            .text(balance.balanceValue.currencyValueFormatted, size: 15, weight: .semibold)
     }
     
     override func setUpCurrentBalance() {
@@ -47,14 +49,8 @@ class CMBuyCommunVC: CMConvertVC {
         
         guard let balance = currentBalance else { return }
         
-        balanceNameLabel.attributedText = NSMutableAttributedString()
-            .text("buy".localized().uppercaseFirst, size: 12, color: .appGrayColor)
-            .text("\n")
-            .text(balance.name ?? balance.symbol, size: 15, weight: .semibold)
-        valueLabel.attributedText = NSMutableAttributedString()
-            .text("balance".localized().uppercaseFirst, size: 12, color: .appGrayColor)
-            .text("\n")
-            .text(balance.balanceValue.currencyValueFormatted, size: 15, weight: .semibold)
+        balanceNameLabel.text = balance.name
+        valueLabel.text = balance.balanceValue.currencyValueFormatted
         convertSellLabel.text = "sell".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
     }
     
