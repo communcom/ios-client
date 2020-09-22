@@ -20,20 +20,14 @@ class WalletConvertVC: BaseViewController {
     var currentSymbol: String?
    
     var currentBalance: ResponseAPIWalletGetBalance? {
-        didSet {
-            setUpCurrentBalance()
-        }
+        didSet { setUpCurrentBalance() }
     }
     
     var communBalance: ResponseAPIWalletGetBalance? {
-        didSet {
-            setUpCommunBalance()
-        }
+        didSet { setUpCommunBalance() }
     }
     
-    var topColor: UIColor {
-        .appMainColor
-    }
+    var topColor: UIColor { .appMainColor }
     
     var historyItem: ResponseAPIWalletGetTransferHistoryItem?
     
