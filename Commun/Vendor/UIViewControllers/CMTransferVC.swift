@@ -15,6 +15,7 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .appWhiteColor)}
     override var shouldHideTabBar: Bool {true}
     var topColor: UIColor { .appMainColor }
+    var titleText: String { "convert".localized().uppercaseFirst }
     
     // MARK: - Subviews
     lazy var scrollView: ContentHuggingScrollView = {
@@ -154,7 +155,7 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
             .map {$0.y}
             .subscribe(onNext: { (offsetY) in
                     
-                let titleLabel = UILabel.with(text: "convert".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .white, numberOfLines: 2, textAlignment: .center)
+                let titleLabel = UILabel.with(text: self.titleText, textSize: 15, weight: .semibold, textColor: .white, numberOfLines: 2, textAlignment: .center)
                 
                 if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 6) {
                     if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 33) {
@@ -219,5 +220,13 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
         }
         
         return isANumber
+    }
+    
+    // MARK: - View builder
+    func borderedView() -> UIView {
+        let view = UIView(cornerRadius: 10)
+        view.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
+        view.borderWidth = 1
+        return view
     }
 }

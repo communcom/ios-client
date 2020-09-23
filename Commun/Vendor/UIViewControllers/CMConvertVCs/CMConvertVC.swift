@@ -293,14 +293,6 @@ class CMConvertVC: CMTransferVC {
             .disposed(by: disposeBag)
     }
     
-    // MARK: - View builder
-    private func borderedView() -> UIView {
-        let view = UIView(cornerRadius: 10)
-        view.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
-        view.borderWidth = 1
-        return view
-    }
-    
     // MARK: - Helpers
     func shouldEnableConvertButton() -> Bool {
         fatalError("Must override")
