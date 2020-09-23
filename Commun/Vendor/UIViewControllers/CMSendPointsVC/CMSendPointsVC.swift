@@ -7,24 +7,11 @@
 //
 
 import Foundation
-import RxCocoa
-
-class SendPointsViewModel: BaseViewModel {
-    lazy var balancesVM = BalancesViewModel.ofCurrentUser
-    let selectedBalance = BehaviorRelay<ResponseAPIWalletGetBalance?>(value: nil)
-    let selectedReceiver = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
-    
-    var balances: [ResponseAPIWalletGetBalance] { balancesVM.items.value }
-    
-    func selectBalanceAtIndex(index: Int) {
-        selectedBalance.accept(balancesVM.items.value[safe: index])
-    }
-}
 
 class CMSendPointsVC: CMTransferVC {
     // MARK: - Properties
     override var titleText: String { "send points".localized().uppercaseFirst }
-    let viewModel = SendPointsViewModel()
+    let viewModel = CMSendPointsViewModel()
     
     // MARK: - Subviews
     lazy var walletCarouselWrapper = WalletCarouselWrapper(height: 50)

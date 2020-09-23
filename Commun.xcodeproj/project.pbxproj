@@ -205,6 +205,7 @@
 		BC2F4CB92519BD83009B1971 /* CMBuyCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CB82519BD83009B1971 /* CMBuyCommunVC.swift */; };
 		BC2F4CBB2519C056009B1971 /* CMSellCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */; };
 		BC2F4CBF251AF699009B1971 /* CMSendPointsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CBE251AF699009B1971 /* CMSendPointsVC.swift */; };
+		BC2F4CC4251B03AB009B1971 /* CMSendPointsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CC3251B03AB009B1971 /* CMSendPointsViewModel.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
 		BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */; };
@@ -805,6 +806,7 @@
 		BC2F4CB82519BD83009B1971 /* CMBuyCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMBuyCommunVC.swift; sourceTree = "<group>"; };
 		BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSellCommunVC.swift; sourceTree = "<group>"; };
 		BC2F4CBE251AF699009B1971 /* CMSendPointsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSendPointsVC.swift; sourceTree = "<group>"; };
+		BC2F4CC3251B03AB009B1971 /* CMSendPointsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSendPointsViewModel.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
 		BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordVC.swift; sourceTree = "<group>"; };
@@ -1981,6 +1983,7 @@
 			isa = PBXGroup;
 			children = (
 				BC2F4CBE251AF699009B1971 /* CMSendPointsVC.swift */,
+				BC2F4CC3251B03AB009B1971 /* CMSendPointsViewModel.swift */,
 			);
 			path = CMSendPointsVC;
 			sourceTree = "<group>";
@@ -3771,6 +3774,7 @@
 				BC469306239677E00064A38B /* MyProfilePageVC+Binding.swift in Sources */,
 				BC6908BA240CC0A100A1F7EC /* UISearchBar+Extensions.swift in Sources */,
 				BC06A9A323E7FC03000B690E /* SearchViewModel.swift in Sources */,
+				BC2F4CC4251B03AB009B1971 /* CMSendPointsViewModel.swift in Sources */,
 				BC561E85238B9989004C53EB /* ReportVC+Presentation.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */,
