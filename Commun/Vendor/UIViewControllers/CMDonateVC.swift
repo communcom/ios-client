@@ -69,6 +69,10 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
         alertLabel.isHidden = true
     }
     
+    override func setUpToolbar() {
+        // do nothing
+    }
+    
     override func setUp(loading: Bool = false) {
         if loading {
             alertView.showLoader()

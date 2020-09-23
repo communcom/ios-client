@@ -9,7 +9,7 @@
 import UIKit
 
 class CMToolbarView: UIView {
-    static let inset: CGFloat = .adaptive(width: 20.0)
+    static let inset: CGFloat = 16
     static let titles: [CGFloat] = [1000, 10000, 100000, 1000000]
     
     // MARK: - Properties
@@ -35,11 +35,11 @@ class CMToolbarView: UIView {
         for (index, title) in titles.enumerated() {
             let actionButton = UIButton(
                 width: .adaptive(width: 69.0 + CGFloat(7 * index)),
-                height: .adaptive(height: 30.0),
+                height: 30,
                 label: "+\(title.formattedWithSeparator)",
                 labelFont: .systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold),
-                backgroundColor: UIColor(hexString: "#ffffff", transparency: 0.1),
-                textColor: .appWhiteColor,
+                backgroundColor: UIColor.white.withAlphaComponent(0.1),
+                textColor: .white,
                 cornerRadius: .adaptive(width: 10.0)
             )
             
@@ -70,23 +70,24 @@ class CMToolbarView: UIView {
         // Add label
         let addLabel = UILabel.with(
             text: "add".localized().uppercaseFirst + ":",
-            textSize: .adaptive(width: 12.0),
+            textSize: 12,
             weight: .bold,
-            textColor: .appWhiteColor
+            textColor: .white
         )
 
         addSubview(addLabel)
-        addLabel.autoPinTopAndLeadingToSuperView(inset: .adaptive(height: 19.0), xInset: .adaptive(width: 15.0))
+        addLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        addLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         scrollView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         stackView.widthAnchor.constraint(greaterThanOrEqualTo: scrollView.widthAnchor, constant: -CMToolbarView.inset * 2).isActive = true
-
+        
         addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: .adaptive(height: 10.0),
-                                                                   left: .adaptive(width: 59.0),
-                                                                   bottom: .adaptive(height: 10.0),
-                                                                   right: 0.0))
+        scrollView.autoPinEdge(.leading, to: .trailing, of: addLabel, withOffset: 10)
+        scrollView.autoSetDimension(.height, toSize: 30)
+        scrollView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        scrollView.autoPinEdge(toSuperviewEdge: .trailing)
     }
     
     private func setGradientBackground() {

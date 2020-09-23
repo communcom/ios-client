@@ -59,6 +59,8 @@ class CMSendPointsVC: CMTransferVC {
     }()
     lazy var alertLabel = UILabel.with(textSize: 12, weight: .bold, textColor: .appRedColor, numberOfLines: 0)
     
+    let pointsToolbar = CMToolbarView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 375.0), height: 50)))
+    
     // MARK: - Initializers
     init(selectedBalanceSymbol: String? = nil, receiver: ResponseAPIContentGetProfile? = nil, history: ResponseAPIWalletGetTransferHistoryItem? = nil) {
         super.init(nibName: nil, bundle: nil)
@@ -110,6 +112,8 @@ class CMSendPointsVC: CMTransferVC {
         }()
         
         stackView.addArrangedSubviews([receiverContainer, amountContainer, alertLabel])
+        
+        setUpToolbar()
     }
     
     override func bind() {
@@ -221,6 +225,14 @@ class CMSendPointsVC: CMTransferVC {
     }
     
     // MARK: - View modifiers
+    func setUpToolbar() {
+        amountTextField.inputAccessoryView = pointsToolbar
+        pointsToolbar.addCompletion = { value in
+            let enteredAmount = value + CGFloat(self.enteredAmount)
+            self.programmaticallyChangeAmount(to: enteredAmount)
+        }
+    }
+    
     func setUp(balances: [ResponseAPIWalletGetBalance]) {
         self.walletCarouselWrapper.balances = balances
         self.walletCarouselWrapper.currentIndex = balances.firstIndex(where: {$0.symbol == self.viewModel.selectedBalance.value?.symbol}) ?? 0
@@ -377,7 +389,7 @@ class CMSendPointsVC: CMTransferVC {
     }
     
     func programmaticallyChangeAmount(to amount: CGFloat) {
-        amountTextField.text = String(Double(amount).currencyValueFormatted)
+        amountTextField.text = String(Double(amount))
         amountTextField.sendActions(for: .editingChanged)
     }
     
