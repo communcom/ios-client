@@ -75,8 +75,8 @@ extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
             let post = post,
             let user = post.author
         else {return}
-
-        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: post, amount: amount)
+        
+        let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: post, amount: amount)
         show(donateVC, sender: nil)
     }
     

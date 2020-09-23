@@ -21,7 +21,7 @@ extension PostStatsViewDelegate {
             let post = post,
             let user = post.author
         else {return}
-        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: post)
+        let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: post)
         vc.show(donateVC, sender: nil)
     }
     

@@ -232,7 +232,7 @@ class PostCell: MyTableViewCell, ListItemCellType, PostStatsViewDelegate, PostMe
         else {return}
         let amount = donationView.amounts[safe: sender.tag]?.double
         
-        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: post, amount: amount)
+        let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: post, amount: amount)
         parentViewController?.show(donateVC, sender: nil)
     }
 }

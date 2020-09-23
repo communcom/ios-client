@@ -27,7 +27,7 @@ class RewardsExplanationVC: BaseViewController {
                 guard let symbol = self.post.community?.communityId,
                     let user = self.post.author
                 else {return}
-                let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: self.post)
+                let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: self.post)
                 UIApplication.topViewController()?.show(donateVC, sender: nil)
             }
         }

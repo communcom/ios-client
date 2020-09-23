@@ -62,6 +62,8 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
         alertLabel.removeFromSuperview()
         
         stackView.addArrangedSubview(alertView)
+        
+        alertView.addArrangedSubview(alertLabel)
         alertView.addArrangedSubviews(suggestedAmountButtons)
         alertView.addArrangedSubview(buyButton)
         alertView.addArrangedSubview(spacer)
@@ -101,11 +103,13 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
             .subscribe(onNext: { (error) in
                 switch error {
                 case .insufficientFunds:
+                    self.alertLabel.isHidden = false
                     self.suggestedAmountButtons.forEach {$0.isHidden = true}
                     self.buyButton.isHidden = false
                     self.spacer.isHidden = true
                     self.alertLabel.text = "you don't have enough points for donation".localized().uppercaseFirst
                 default:
+                    self.alertLabel.isHidden = true
                     self.suggestedAmountButtons.forEach {$0.isHidden = false}
                     self.buyButton.isHidden = true
                     self.spacer.isHidden = false
