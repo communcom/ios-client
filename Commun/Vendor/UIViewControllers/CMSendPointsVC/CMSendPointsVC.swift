@@ -41,7 +41,22 @@ class CMSendPointsVC: CMTransferVC {
         
         return view
     }()
-    lazy var amountTextField = createTextField()
+    lazy var amountTextField: UITextField = {
+        let textField = createTextField()
+        
+        let clearButton: UIButton = {
+            let btnView = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+            btnView.setImage(UIImage(named: "icon-cancel-grey-cyrcle-default"), for: .normal)
+            btnView.imageEdgeInsets = .zero
+            btnView.addTarget(self, action: #selector(clearButtonTapped(_:)), for: .touchUpInside)
+            return btnView
+        }()
+        
+        textField.rightView = clearButton
+        textField.rightViewMode = .whileEditing
+        
+        return textField
+    }()
     lazy var alertLabel = UILabel.with(textSize: 12, weight: .bold, textColor: .appRedColor, numberOfLines: 0)
     
     // MARK: - Initializers
@@ -185,7 +200,6 @@ class CMSendPointsVC: CMTransferVC {
                 self.configureActionButton()
             })
             .disposed(by: disposeBag)
-            
     }
     
     func configureActionButton() {
@@ -276,7 +290,6 @@ class CMSendPointsVC: CMTransferVC {
     }
     
     // MARK: - Actions
-    // MARK: - Actions
     @objc func pointsListButtonDidTouch() {
         let vc = createChooseBalancesVC()
         
@@ -333,11 +346,20 @@ class CMSendPointsVC: CMTransferVC {
     }
     
     func transactionDidComplete(transaction: Transaction) {
+        var transaction = transaction
+        if transaction.amount > 0 {
+            transaction.amount = -transaction.amount
+        }
         let completedVC = TransactionCompletedVC(transaction: transaction)
         show(completedVC, sender: nil)
     }
     
     // MARK: - Helpers
+    @objc func clearButtonTapped(_ sender: UIButton) {
+        amountTextField.changeTextNotify(nil)
+        view.endEditing(true)
+    }
+    
     func prepareTransaction() -> Transaction? {
         guard let selectedBalance = viewModel.selectedBalance.value,
             let receiver = viewModel.selectedReceiver.value
