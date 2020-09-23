@@ -32,6 +32,7 @@ class CMSendPointsViewModel: BaseViewModel {
     let selectedBalance = BehaviorRelay<ResponseAPIWalletGetBalance?>(value: nil)
     let selectedReceiver = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
     let error = BehaviorRelay<Error?>(value: nil)
+    var memo = ""
     
     // MARK: - Getters
     var balances: [ResponseAPIWalletGetBalance] { balancesVM.items.value }

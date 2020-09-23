@@ -13,8 +13,11 @@ class CMSendPointsVC: CMTransferVC {
     // MARK: - Properties
     override var titleText: String { "send points".localized().uppercaseFirst }
     let viewModel = CMSendPointsViewModel()
+    
     var burningPercentage: CGFloat { viewModel.selectedBalance.value?.symbol != "CMN" ? 0.1: 0 }
     var enteredAmount: Double { amountTextField.text?.toDouble() ?? 0 }
+    var memo: String { viewModel.memo }
+    var actionName: String { "send" }
     
     // MARK: - Subviews
     lazy var walletCarouselWrapper = WalletCarouselWrapper(height: 50)
@@ -42,9 +45,14 @@ class CMSendPointsVC: CMTransferVC {
     lazy var alertLabel = UILabel.with(textSize: 12, weight: .bold, textColor: .appRedColor, numberOfLines: 0)
     
     // MARK: - Initializers
-    init(selectedBalanceSymbol: String? = nil, receiver: ResponseAPIContentGetProfile? = nil) {
+    init(selectedBalanceSymbol: String? = nil, receiver: ResponseAPIContentGetProfile? = nil, history: ResponseAPIWalletGetTransferHistoryItem? = nil) {
         super.init(nibName: nil, bundle: nil)
         defer {
+            if let history = history {
+                let amount = CGFloat(history.quantityValue)
+                amountTextField.text = Double(amount).currencyValueFormatted
+            }
+            
             viewModel.selectedReceiver.accept(receiver)
             viewModel.balancesVM.items.filter {!$0.isEmpty}.take(1).asSingle()
                 .subscribe(onSuccess: { (_) in
@@ -168,6 +176,34 @@ class CMSendPointsVC: CMTransferVC {
                 self.actionButton.isDisabled = !canSend
             })
             .disposed(by: disposeBag)
+        
+        Observable.combineLatest(
+            viewModel.selectedBalance,
+            amountTextField.rx.text.orEmpty
+        )
+            .subscribe(onNext: { _ in
+                self.configureActionButton()
+            })
+            .disposed(by: disposeBag)
+            
+    }
+    
+    func configureActionButton() {
+        // configure send button
+        let symbol = viewModel.selectedBalance.value?.symbol ?? "points".localized().uppercaseFirst
+        let title = NSMutableAttributedString()
+            .text(actionName.localized().uppercaseFirst + ": " + enteredAmount.currencyValueFormatted + " " + symbol, size: 15, weight: .bold, color: .white)
+        
+        if burningPercentage > 0 {
+            title
+                .text("\n")
+                .text(String(format: "%.1f%% %@", burningPercentage, "will be burned".localized() + " 🔥"), size: 12, weight: .semibold, color: .white)
+                .withParagraphStyle(alignment: .center, paragraphSpacingBefore: 1, paragraphSpacing: 1)
+        }
+        
+        actionButton.setAttributedTitle(title, for: .normal)
+        actionButton.titleLabel?.lineBreakMode = .byWordWrapping
+        actionButton.titleLabel?.numberOfLines = 0
     }
     
     // MARK: - View modifiers
@@ -251,7 +287,50 @@ class CMSendPointsVC: CMTransferVC {
     }
     
     override func actionButtonDidTouch() {
-        guard checkValues() else {return}
-        // TODO: - Send points
+        guard checkValues(),
+            let transaction = self.prepareTransaction(),
+            let friendId = transaction.friend?.id
+        else {return}
+        
+        let confirmPasscodeVC = ConfirmPasscodeVC()
+        present(confirmPasscodeVC, animated: true, completion: nil)
+        
+        confirmPasscodeVC.completion = {
+            // passcode confirmed
+            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.viewModel.selectedBalance.value?.symbol ?? "")")
+
+            BlockchainManager.instance.transferPoints(to: friendId, number: Double(transaction.amount), currency: transaction.symbol.sell, memo: self.memo)
+                .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
+                .subscribe(onCompleted: { [weak self] in
+                    guard let strongSelf = self else { return }
+                    strongSelf.showCheck(transaction: transaction)
+                }) { [weak self] error in
+                    guard let strongSelf = self else { return }
+                    
+                    strongSelf.hideHud()
+                    strongSelf.showError(error)
+            }
+            .disposed(by: self.disposeBag)
+        }
+    }
+    
+    func showCheck(transaction: Transaction) {
+        let completedVC = TransactionCompletedVC(transaction: transaction)
+        show(completedVC, sender: nil)
+    }
+    
+    // MARK: - Helpers
+    func prepareTransaction() -> Transaction? {
+        guard let selectedBalance = viewModel.selectedBalance.value,
+            let receiver = viewModel.selectedReceiver.value
+        else {return nil}
+        var transaction = Transaction(
+            amount: CGFloat(enteredAmount),
+            symbol: Symbol(sell: selectedBalance.symbol, buy: selectedBalance.symbol),
+            operationDate: Date()
+        )
+        transaction.createFriend(from: receiver)
+        
+        return transaction
     }
 }
