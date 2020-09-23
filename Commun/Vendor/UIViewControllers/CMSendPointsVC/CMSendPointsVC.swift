@@ -232,9 +232,8 @@ class CMSendPointsVC: CMTransferVC {
     }
     
     func setUp(balances: [ResponseAPIWalletGetBalance]) {
-        guard balances.count > 0,
-            let index = balances.firstIndex(where: {$0.symbol == self.viewModel.selectedSymbol.value})
-        else {return}
+        guard balances.count > 0 else {return}
+        let index = balances.firstIndex(where: {$0.symbol == self.viewModel.selectedSymbol.value}) ?? 0
         self.walletCarouselWrapper.balances = balances
         self.walletCarouselWrapper.currentIndex = index
         self.walletCarouselWrapper.reloadData()
