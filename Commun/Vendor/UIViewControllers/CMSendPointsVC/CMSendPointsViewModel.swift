@@ -12,10 +12,13 @@ import RxCocoa
 class CMSendPointsViewModel: BaseViewModel {
     // MARK: - Nested type
     enum Error: LocalizedError {
+        case loadingBalanceError(Swift.Error?)
         case insufficientFunds
         case other(Swift.Error)
         var errorDescription: String? {
             switch self {
+            case .loadingBalanceError(let error):
+                return error?.localizedDescription
             case .insufficientFunds:
                 return "insufficient funds".localized().uppercaseFirst
             case .other(let error):
@@ -55,5 +58,21 @@ class CMSendPointsViewModel: BaseViewModel {
     
     func selectBalanceAtIndex(index: Int) {
         selectedBalance.accept(balancesVM.items.value[safe: index])
+    }
+    
+    @discardableResult
+    func check(amount: Double) -> Bool {
+        guard let balance = selectedBalance.value?.balanceValue else {
+            error.accept(.loadingBalanceError(nil))
+            return false
+        }
+        
+        if amount > balance {
+            error.accept(.insufficientFunds)
+            return false
+        }
+        
+        error.accept(nil)
+        return amount > 0 && selectedReceiver.value != nil
     }
 }

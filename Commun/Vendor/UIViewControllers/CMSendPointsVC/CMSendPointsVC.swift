@@ -7,11 +7,14 @@
 //
 
 import Foundation
+import RxSwift
 
 class CMSendPointsVC: CMTransferVC {
     // MARK: - Properties
     override var titleText: String { "send points".localized().uppercaseFirst }
     let viewModel = CMSendPointsViewModel()
+    var burningPercentage: CGFloat { viewModel.selectedBalance.value?.symbol != "CMN" ? 0.1: 0 }
+    var enteredAmount: Double { amountTextField.text?.toDouble() ?? 0 }
     
     // MARK: - Subviews
     lazy var walletCarouselWrapper = WalletCarouselWrapper(height: 50)
@@ -92,6 +95,7 @@ class CMSendPointsVC: CMTransferVC {
         bindBalances()
         bindReceiver()
         bindError()
+        bindTextField()
     }
     
     func bindState() {
@@ -144,11 +148,24 @@ class CMSendPointsVC: CMTransferVC {
             .subscribe(onNext: { (error) in
                 if let error = error {
                     self.alertLabel.text = error.errorDescription
-                    self.amountContainer.borderColor = .appRedColor
+                    self.amountContainer.borderColor = error.errorDescription != nil ? .appRedColor : self.defaultBorderColor
                 } else {
                     self.alertLabel.text = nil
                     self.amountContainer.borderColor = self.defaultBorderColor
                 }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func bindTextField() {
+        Observable<Void>.merge(
+            viewModel.selectedBalance.map {_ in ()},
+            amountTextField.rx.text.orEmpty.map {_ in ()},
+            viewModel.selectedReceiver.map {_ in ()}
+        )
+            .subscribe(onNext: { _ in
+                let canSend = self.viewModel.check(amount: self.enteredAmount)
+                self.actionButton.isDisabled = !canSend
             })
             .disposed(by: disposeBag)
     }
@@ -202,6 +219,26 @@ class CMSendPointsVC: CMTransferVC {
         }
     }
     
+    // MARK: - Validation
+    func checkValues() -> Bool {
+        if let error = viewModel.error.value?.errorDescription {
+            self.hintView?.display(inPosition: actionButton.frame.origin, withType: .error(error), completion: {})
+            return false
+        }
+        
+        if enteredAmount == 0 {
+            self.hintView?.display(inPosition: actionButton.frame.origin, withType: .enterAmount, completion: {})
+            return false
+        }
+        
+        if viewModel.selectedReceiver.value == nil {
+            self.hintView?.display(inPosition: actionButton.frame.origin, withType: .chooseFriend, completion: {})
+            return false
+        }
+        
+        return viewModel.check(amount: enteredAmount)
+    }
+    
     // MARK: - Actions
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
         let friendsListVC = SendPointListVC()
@@ -211,5 +248,10 @@ class CMSendPointsVC: CMTransferVC {
         
         let nc = SwipeNavigationController(rootViewController: friendsListVC)
         present(nc, animated: true, completion: nil)
+    }
+    
+    override func actionButtonDidTouch() {
+        guard checkValues() else {return}
+        // TODO: - Send points
     }
 }
