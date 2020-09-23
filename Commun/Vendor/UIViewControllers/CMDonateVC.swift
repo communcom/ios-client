@@ -77,10 +77,9 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
     
     override func setUp(loading: Bool = false) {
         super.setUp(loading: loading)
+        alertView.hideLoader()
         if loading {
             alertView.showLoader()
-        } else {
-            alertView.hideLoader()
         }
     }
     
@@ -128,13 +127,12 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
     @objc func buyButtonDidTouch() {
         dismissKeyboard()
         
-        if let symbol = viewModel.selectedBalance.value?.symbol,
+        if let symbol = viewModel.selectedBalance?.symbol,
             symbol != Config.defaultSymbol
         {
             // Sell CMN
             let vc = GetPointsVC(balances: viewModel.balances, symbol: symbol)
             vc.backButtonHandler = {
-                self.viewModel.reload()
                 self.navigationController?.popToVC(type: Self.self)
             }
             self.show(vc, sender: nil)
@@ -142,7 +140,6 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
             // Buy CMN
             let vc = GetCMNVC(balances: viewModel.balances, symbol: viewModel.balances.first(where: {$0.balanceValue > 0 && $0.symbol != "CMN"})?.symbol)
             vc.backButtonHandler = {
-                self.viewModel.reload()
                 self.navigationController?.popToVC(type: Self.self)
             }
             self.show(vc, sender: nil)
@@ -173,10 +170,10 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
             })
             .disposed(by: disposeBag)
         
-        var transaction = transaction
-        if transaction.amount > 0 {
-            transaction.amount = -transaction.amount
-        }
+        super.transactionDidComplete(transaction: transaction)
+    }
+    
+    override func showCheck(transaction: Transaction) {
         let completedVC = WalletDonateCompletedVC(transaction: transaction)
         completedVC.backButtonHandler = {
             completedVC.backCompletion {

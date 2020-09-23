@@ -217,11 +217,7 @@ class WalletBuyCommunVC: WalletConvertVC {
                 return RestAPIManager.instance.waitForTransactionWith(id: transactionId)
             })
             .subscribe(onCompleted: {
-                balance.isWaitingForTransaction = false
-                balance.notifyChanged()
-                
-                communBalance.isWaitingForTransaction = false
-                communBalance.notifyChanged()
+                self.viewModel.reload()
             }) { [weak self] (error) in
                 self?.hideHud()
                 self?.showError(error)

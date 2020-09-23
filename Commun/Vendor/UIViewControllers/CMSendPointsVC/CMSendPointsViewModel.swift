@@ -29,43 +29,23 @@ class CMSendPointsViewModel: BaseViewModel {
     
     // MARK: - Properties
     lazy var balancesVM = BalancesViewModel.ofCurrentUser
-    let selectedBalance = BehaviorRelay<ResponseAPIWalletGetBalance?>(value: nil)
+    let selectedSymbol = BehaviorRelay<String?>(value: nil)
     let selectedReceiver = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
     let error = BehaviorRelay<Error?>(value: nil)
     var memo = ""
     
     // MARK: - Getters
     var balances: [ResponseAPIWalletGetBalance] { balancesVM.items.value }
+    var selectedBalance: ResponseAPIWalletGetBalance? { balances.first(where: {$0.symbol == selectedSymbol.value}) }
     
     // MARK: - Methods
-    override init() {
-        super.init()
-        defer {
-            bind()
-        }
-    }
-    
     func reload(clearResult: Bool = false) {
         balancesVM.reload(clearResult: clearResult)
     }
     
-    func bind() {
-        balancesVM.items
-            .subscribe(onNext: { [weak self] (balances) in
-                if let balance = balances.first(where: {$0.symbol == self?.selectedBalance.value?.symbol}) {
-                    self?.selectedBalance.accept(balance)
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func selectBalanceAtIndex(index: Int) {
-        selectedBalance.accept(balancesVM.items.value[safe: index])
-    }
-    
     @discardableResult
     func check(amount: Double) -> Bool {
-        guard let balance = selectedBalance.value?.balanceValue else {
+        guard let balance = selectedBalance?.balanceValue else {
             error.accept(.loadingBalanceError(nil))
             return false
         }

@@ -14,7 +14,7 @@ class CMSendPointsVC: CMTransferVC {
     override var titleText: String { "send points".localized().uppercaseFirst }
     let viewModel = CMSendPointsViewModel()
     
-    var burningPercentage: CGFloat { viewModel.selectedBalance.value?.symbol != "CMN" ? 0.1: 0 }
+    var burningPercentage: CGFloat { viewModel.selectedBalance?.symbol != "CMN" ? 0.1: 0 }
     var enteredAmount: Double { amountTextField.text?.toDouble() ?? 0 }
     var memo: String { viewModel.memo }
     var actionName: String { "send" }
@@ -71,11 +71,7 @@ class CMSendPointsVC: CMTransferVC {
             }
             
             viewModel.selectedReceiver.accept(receiver)
-            viewModel.balancesVM.items.filter {!$0.isEmpty}.take(1).asSingle()
-                .subscribe(onSuccess: { (_) in
-                    self.viewModel.selectedBalance.accept(self.viewModel.balances.first(where: {$0.symbol == selectedBalanceSymbol}))
-                })
-                .disposed(by: disposeBag)
+            viewModel.selectedSymbol.accept(selectedBalanceSymbol)
         }
     }
     
@@ -93,7 +89,9 @@ class CMSendPointsVC: CMTransferVC {
         setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(pointsListButtonDidTouch))
         
         walletCarouselWrapper.scrollingHandler = { index in
-            self.viewModel.selectBalanceAtIndex(index: index)
+            if let balanceSymbol = self.viewModel.balances[safe: index]?.symbol {
+                self.viewModel.selectedSymbol.accept(balanceSymbol)
+            }
         }
         
         // add receiver container
@@ -129,8 +127,8 @@ class CMSendPointsVC: CMTransferVC {
         viewModel.balancesVM.state
             .subscribe(onNext: {[weak self] state in
                 switch state {
-                case .loading(let isLoading):
-                    self?.setUp(loading: isLoading)
+                case .loading:
+                    self?.setUp(loading: true)
                 
                 case .listEnded, .listEmpty:
                     self?.setUp(loading: false)
@@ -155,9 +153,9 @@ class CMSendPointsVC: CMTransferVC {
             })
             .disposed(by: disposeBag)
         
-        viewModel.selectedBalance
-            .subscribe(onNext: { (balance) in
-                self.setUp(selectedBalance: balance)
+        viewModel.selectedSymbol
+            .subscribe(onNext: { _ in
+                self.setUp(selectedBalance: self.viewModel.selectedBalance)
             })
             .disposed(by: disposeBag)
     }
@@ -186,7 +184,7 @@ class CMSendPointsVC: CMTransferVC {
     
     func bindTextField() {
         Observable<Void>.merge(
-            viewModel.selectedBalance.map {_ in ()},
+            viewModel.selectedSymbol.map {_ in ()},
             amountTextField.rx.text.orEmpty.map {_ in ()},
             viewModel.selectedReceiver.map {_ in ()}
         )
@@ -197,7 +195,7 @@ class CMSendPointsVC: CMTransferVC {
             .disposed(by: disposeBag)
         
         Observable.combineLatest(
-            viewModel.selectedBalance,
+            viewModel.selectedSymbol,
             amountTextField.rx.text.orEmpty
         )
             .subscribe(onNext: { _ in
@@ -208,7 +206,7 @@ class CMSendPointsVC: CMTransferVC {
     
     func configureActionButton() {
         // configure send button
-        let symbol = viewModel.selectedBalance.value?.symbol ?? "points".localized().uppercaseFirst
+        let symbol = viewModel.selectedSymbol.value ?? "points".localized().uppercaseFirst
         let title = NSMutableAttributedString()
             .text(actionName.localized().uppercaseFirst + ": " + enteredAmount.currencyValueFormatted + " " + symbol, size: 15, weight: .bold, color: .white)
         
@@ -234,8 +232,11 @@ class CMSendPointsVC: CMTransferVC {
     }
     
     func setUp(balances: [ResponseAPIWalletGetBalance]) {
+        guard balances.count > 0,
+            let index = balances.firstIndex(where: {$0.symbol == self.viewModel.selectedSymbol.value})
+        else {return}
         self.walletCarouselWrapper.balances = balances
-        self.walletCarouselWrapper.currentIndex = balances.firstIndex(where: {$0.symbol == self.viewModel.selectedBalance.value?.symbol}) ?? 0
+        self.walletCarouselWrapper.currentIndex = index
         self.walletCarouselWrapper.reloadData()
     }
     
@@ -262,6 +263,14 @@ class CMSendPointsVC: CMTransferVC {
     }
     
     func setUp(loading: Bool = false) {
+        walletCarouselWrapper.hideLoader()
+        balanceNameLabel.hideLoader()
+        valueLabel.hideLoader()
+        receiverAvatarImageView.hideLoader()
+        receiverNameLabel.hideLoader()
+        greenTick.hideLoader()
+        amountTextField.hideLoader()
+        
         if loading {
             walletCarouselWrapper.showLoader()
             balanceNameLabel.showLoader()
@@ -270,14 +279,6 @@ class CMSendPointsVC: CMTransferVC {
             receiverNameLabel.showLoader()
             greenTick.showLoader()
             amountTextField.showLoader()
-        } else {
-            walletCarouselWrapper.hideLoader()
-            balanceNameLabel.hideLoader()
-            valueLabel.hideLoader()
-            receiverAvatarImageView.hideLoader()
-            receiverNameLabel.hideLoader()
-            greenTick.hideLoader()
-            amountTextField.hideLoader()
         }
     }
     
@@ -338,7 +339,7 @@ class CMSendPointsVC: CMTransferVC {
         
         confirmPasscodeVC.completion = {
             // passcode confirmed
-            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.viewModel.selectedBalance.value?.symbol ?? "")")
+            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.viewModel.selectedSymbol.value ?? "")")
 
             BlockchainManager.instance.transferPoints(to: friendId, number: Double(transaction.amount), currency: transaction.symbol.sell, memo: self.memo)
                 .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
@@ -358,10 +359,15 @@ class CMSendPointsVC: CMTransferVC {
     }
     
     func transactionDidComplete(transaction: Transaction) {
+        viewModel.balancesVM.reload()
         var transaction = transaction
         if transaction.amount > 0 {
             transaction.amount = -transaction.amount
         }
+        showCheck(transaction: transaction)
+    }
+    
+    func showCheck(transaction: Transaction) {
         let completedVC = TransactionCompletedVC(transaction: transaction)
         show(completedVC, sender: nil)
     }
@@ -375,7 +381,7 @@ class CMSendPointsVC: CMTransferVC {
     }
     
     func prepareTransaction() -> Transaction? {
-        guard let selectedBalance = viewModel.selectedBalance.value,
+        guard let selectedBalance = viewModel.selectedBalance,
             let receiver = viewModel.selectedReceiver.value
         else {return nil}
         var transaction = Transaction(
