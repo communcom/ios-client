@@ -15,13 +15,12 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.normal(translucent: true, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), textColor: .appWhiteColor)}
     override var shouldHideTabBar: Bool {true}
     var topColor: UIColor { .appMainColor }
+    var titleText: String { "convert".localized().uppercaseFirst }
+    var defaultBorderColor: UIColor { #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white) }
     
     // MARK: - Subviews
     lazy var scrollView: ContentHuggingScrollView = {
         let scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
-        scrollView.contentView.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        scrollView.contentView.addGestureRecognizer(tap)
         return scrollView
     }()
     lazy var topStackView: UIStackView = {
@@ -30,8 +29,8 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
         stackView.setCustomSpacing(5, after: balanceNameLabel)
         return stackView
     }()
-    lazy var balanceNameLabel = UILabel.with(textSize: 17, weight: .semibold, textColor: .white)
-    lazy var valueLabel = UILabel.with(textSize: 30, weight: .semibold, textColor: .white)
+    lazy var balanceNameLabel = UILabel.with(text: "CMN", textSize: 17, weight: .semibold, textColor: .white)
+    lazy var valueLabel = UILabel.with(text: "0.0000", textSize: 30, weight: .semibold, textColor: .white)
     lazy var whiteView = UIView(backgroundColor: .appWhiteColor)
     lazy var stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     
@@ -58,6 +57,10 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
         let topView = UIView(backgroundColor: topColor)
         view.addSubview(topView)
         topView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        
+        view.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
         
         // scroll view
         view.addSubview(scrollView)
@@ -154,7 +157,7 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
             .map {$0.y}
             .subscribe(onNext: { (offsetY) in
                     
-                let titleLabel = UILabel.with(text: "convert".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .white, numberOfLines: 2, textAlignment: .center)
+                let titleLabel = UILabel.with(text: self.titleText, textSize: 15, weight: .semibold, textColor: .white, numberOfLines: 2, textAlignment: .center)
                 
                 if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 6) {
                     if offsetY >= self.view.safeAreaInsets.top + CGFloat.adaptive(height: 33) {
@@ -219,5 +222,13 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
         }
         
         return isANumber
+    }
+    
+    // MARK: - View builder
+    func borderedView() -> UIView {
+        let view = UIView(cornerRadius: 10)
+        view.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
+        view.borderWidth = 1
+        return view
     }
 }

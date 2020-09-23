@@ -93,7 +93,8 @@ extension CommentCell {
             let comment = comment,
             let user = comment.author
         else {return}
-        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: comment)
+        
+        let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: comment)
         parentViewController?.show(donateVC, sender: nil)
     }
     

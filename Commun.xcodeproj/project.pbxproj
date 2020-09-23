@@ -204,6 +204,9 @@
 		BC2F4CB42519BD2D009B1971 /* CMConvertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CB32519BD2D009B1971 /* CMConvertVC.swift */; };
 		BC2F4CB92519BD83009B1971 /* CMBuyCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CB82519BD83009B1971 /* CMBuyCommunVC.swift */; };
 		BC2F4CBB2519C056009B1971 /* CMSellCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */; };
+		BC2F4CBF251AF699009B1971 /* CMSendPointsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CBE251AF699009B1971 /* CMSendPointsVC.swift */; };
+		BC2F4CC4251B03AB009B1971 /* CMSendPointsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CC3251B03AB009B1971 /* CMSendPointsViewModel.swift */; };
+		BC2F4CC7251B2D8C009B1971 /* CMDonateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CC6251B2D8C009B1971 /* CMDonateVC.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
 		BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */; };
@@ -523,7 +526,6 @@
 		BCEFA63E2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json in Resources */ = {isa = PBXBuildFile; fileRef = BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */; };
 		BCEFA6422492149900971E77 /* DonationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA6412492149900971E77 /* DonationsVC.swift */; };
 		BCEFA645249217F700971E77 /* DonatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFA644249217F700971E77 /* DonatorCell.swift */; };
-		BCF0D25B24971FA70094B6EB /* WalletDonateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF0D25A24971FA70094B6EB /* WalletDonateVC.swift */; };
 		BCF0D261249877420094B6EB /* BaseViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF0D260249877420094B6EB /* BaseViewController+Extensions.swift */; };
 		BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */; };
 		BCF1B3FC23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF1B3FB23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift */; };
@@ -803,6 +805,9 @@
 		BC2F4CB32519BD2D009B1971 /* CMConvertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMConvertVC.swift; sourceTree = "<group>"; };
 		BC2F4CB82519BD83009B1971 /* CMBuyCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMBuyCommunVC.swift; sourceTree = "<group>"; };
 		BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSellCommunVC.swift; sourceTree = "<group>"; };
+		BC2F4CBE251AF699009B1971 /* CMSendPointsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSendPointsVC.swift; sourceTree = "<group>"; };
+		BC2F4CC3251B03AB009B1971 /* CMSendPointsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSendPointsViewModel.swift; sourceTree = "<group>"; };
+		BC2F4CC6251B2D8C009B1971 /* CMDonateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMDonateVC.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
 		BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordVC.swift; sourceTree = "<group>"; };
@@ -1122,7 +1127,6 @@
 		BCEFA63D2491DFDB00971E77 /* ResponseAPIWalletGetDonationsBulk.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIWalletGetDonationsBulk.json; sourceTree = "<group>"; };
 		BCEFA6412492149900971E77 /* DonationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationsVC.swift; sourceTree = "<group>"; };
 		BCEFA644249217F700971E77 /* DonatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonatorCell.swift; sourceTree = "<group>"; };
-		BCF0D25A24971FA70094B6EB /* WalletDonateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDonateVC.swift; sourceTree = "<group>"; };
 		BCF0D260249877420094B6EB /* BaseViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseViewController+Extensions.swift"; sourceTree = "<group>"; };
 		BCF1B3F723A7302B00EB6FC8 /* CommentsViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+Actions.swift"; sourceTree = "<group>"; };
 		BCF1B3FB23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
@@ -1468,6 +1472,8 @@
 				BCEFA643249217DF00971E77 /* DonationsVC */,
 				BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */,
 				BC2F4CAA2519A19C009B1971 /* CMTransferVC.swift */,
+				BC2F4CC6251B2D8C009B1971 /* CMDonateVC.swift */,
+				BC2F4CC2251AF71E009B1971 /* CMSendPointsVC */,
 				BC2F4CB72519BD6F009B1971 /* CMConvertVCs */,
 			);
 			path = UIViewControllers;
@@ -1972,6 +1978,15 @@
 				BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */,
 			);
 			path = CMConvertVCs;
+			sourceTree = "<group>";
+		};
+		BC2F4CC2251AF71E009B1971 /* CMSendPointsVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC2F4CBE251AF699009B1971 /* CMSendPointsVC.swift */,
+				BC2F4CC3251B03AB009B1971 /* CMSendPointsViewModel.swift */,
+			);
+			path = CMSendPointsVC;
 			sourceTree = "<group>";
 		};
 		BC31BA53235EBD6A0007D89A /* ProfileVC */ = {
@@ -3089,7 +3104,6 @@
 		BCF0D25724971F6D0094B6EB /* WalletDonateVC */ = {
 			isa = PBXGroup;
 			children = (
-				BCF0D25A24971FA70094B6EB /* WalletDonateVC.swift */,
 				BC1DF1AA2499C97D00CCA135 /* WalletDonateCompletedVC.swift */,
 			);
 			path = WalletDonateVC;
@@ -3604,6 +3618,7 @@
 				BC9A1F2324D276BD007BDB3A /* LinkTextField.swift in Sources */,
 				BC4071AA23CF09B2000027A3 /* NotificationsPageViewModel.swift in Sources */,
 				3B6CB732234331830097B2A1 /* Array+Extensions.swift in Sources */,
+				BC2F4CBF251AF699009B1971 /* CMSendPointsVC.swift in Sources */,
 				BC2260C424DBB8EF00A82D8D /* GetPointsVC.swift in Sources */,
 				BC40D02C24E57C8800F48243 /* ProposalContentViews.swift in Sources */,
 				3B289B9E2346EB0400598407 /* UIView+PureLayout.swift in Sources */,
@@ -3759,6 +3774,7 @@
 				BC469306239677E00064A38B /* MyProfilePageVC+Binding.swift in Sources */,
 				BC6908BA240CC0A100A1F7EC /* UISearchBar+Extensions.swift in Sources */,
 				BC06A9A323E7FC03000B690E /* SearchViewModel.swift in Sources */,
+				BC2F4CC4251B03AB009B1971 /* CMSendPointsViewModel.swift in Sources */,
 				BC561E85238B9989004C53EB /* ReportVC+Presentation.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */,
@@ -3796,6 +3812,7 @@
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
 				BC65FD4924514AD4006F0846 /* FlexibleHeightPresentationController.swift in Sources */,
 				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
+				BC2F4CC7251B2D8C009B1971 /* CMDonateVC.swift in Sources */,
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
 				BC8481FA24581FB20099C7C5 /* DonationView.swift in Sources */,
@@ -3902,7 +3919,6 @@
 				BC8F814023E27ECE0024C04A /* WalletHeaderView.swift in Sources */,
 				BC8F814C23E27ECE0024C04A /* CMToolbarView.swift in Sources */,
 				3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */,
-				BCF0D25B24971FA70094B6EB /* WalletDonateVC.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B3C8B9C2347928D00D8BADB /* PostEditorVC+Layout.swift in Sources */,
 				BC769EEC249B466500BA37E5 /* CMSearchBar.swift in Sources */,

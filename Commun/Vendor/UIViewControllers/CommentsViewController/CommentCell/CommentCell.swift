@@ -354,7 +354,7 @@ extension CommentCell: DonationViewDelegate {
         else {return}
         let amount = donationView.amounts[safe: sender.tag]?.double
         
-        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: comment, amount: amount)
+        let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: comment, amount: amount)
         parentViewController?.show(donateVC, sender: nil)
     }
     
