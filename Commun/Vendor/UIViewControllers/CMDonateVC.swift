@@ -15,6 +15,7 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
     }
     
     // MARK: - Properties
+    override var titleText: String { "donate".localized().uppercaseFirst }
     override var actionName: String {"donate"}
     var message: T
     
@@ -141,5 +142,36 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
     @objc func amountButtonDidTouch(_ button: UIButton) {
         guard let amount = (button as? AmountButton)?.amount else {return}
         programmaticallyChangeAmount(to: amount)
+    }
+    
+    // MARK: - Helpers
+    override func createChooseBalancesVC() -> BalancesVC {
+        BalancesVC(showEmptyBalances: false) { (balance) in
+            self.handleBalanceChosen(balance)
+        }
+    }
+    
+    override func transactionDidComplete(transaction: Transaction) {
+        RestAPIManager.instance.getDonationsBulk(posts: [RequestAPIContentId(responseAPI: message.contentId)])
+            .map {$0.items}
+            .subscribe(onSuccess: { donations in
+                guard let donation = donations.first(where: {$0.contentId == self.message.contentId}) else {return}
+                self.message.donations = donation
+                self.message.showDonationButtons = false
+                self.message.notifyChanged()
+            })
+            .disposed(by: disposeBag)
+        
+        var transaction = transaction
+        if transaction.amount > 0 {
+            transaction.amount = -transaction.amount
+        }
+        let completedVC = WalletDonateCompletedVC(transaction: transaction)
+        completedVC.backButtonHandler = {
+            completedVC.backCompletion {
+                self.back()
+            }
+        }
+        show(completedVC, sender: nil)
     }
 }

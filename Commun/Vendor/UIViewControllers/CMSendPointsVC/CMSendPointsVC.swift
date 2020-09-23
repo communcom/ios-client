@@ -73,7 +73,7 @@ class CMSendPointsVC: CMTransferVC {
         topStackView.insertArrangedSubview(walletCarouselWrapper, at: 0)
         topStackView.setCustomSpacing(20, after: walletCarouselWrapper)
         
-        setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(chooseRecipientViewTapped))
+        setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(pointsListButtonDidTouch))
         
         walletCarouselWrapper.scrollingHandler = { index in
             self.viewModel.selectBalanceAtIndex(index: index)
@@ -276,6 +276,20 @@ class CMSendPointsVC: CMTransferVC {
     }
     
     // MARK: - Actions
+    // MARK: - Actions
+    @objc func pointsListButtonDidTouch() {
+        let vc = createChooseBalancesVC()
+        
+        let nc = SwipeNavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
+    }
+    
+    func createChooseBalancesVC() -> BalancesVC {
+        BalancesVC { balance in
+            self.handleBalanceChosen(balance)
+        }
+    }
+    
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
         let friendsListVC = SendPointListVC()
         friendsListVC.completion = { user in
@@ -307,7 +321,7 @@ class CMSendPointsVC: CMTransferVC {
                     guard let strongSelf = self else { return }
                     
                     strongSelf.hideHud()
-                    strongSelf.showCheck(transaction: transaction)
+                    strongSelf.transactionDidComplete(transaction: transaction)
                 }) { [weak self] error in
                     guard let strongSelf = self else { return }
                     
@@ -318,7 +332,7 @@ class CMSendPointsVC: CMTransferVC {
         }
     }
     
-    func showCheck(transaction: Transaction) {
+    func transactionDidComplete(transaction: Transaction) {
         let completedVC = TransactionCompletedVC(transaction: transaction)
         show(completedVC, sender: nil)
     }
@@ -341,5 +355,10 @@ class CMSendPointsVC: CMTransferVC {
     func programmaticallyChangeAmount(to amount: CGFloat) {
         amountTextField.text = String(Double(amount).currencyValueFormatted)
         amountTextField.sendActions(for: .editingChanged)
+    }
+    
+    func handleBalanceChosen(_ balance: ResponseAPIWalletGetBalance) {
+        guard let index = viewModel.balances.firstIndex(where: { $0.symbol == balance.symbol }) else { return }
+        walletCarouselWrapper.scrollTo(itemAtIndex: index)
     }
 }
