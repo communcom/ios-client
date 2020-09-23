@@ -76,6 +76,7 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
     }
     
     override func setUp(loading: Bool = false) {
+        super.setUp(loading: loading)
         if loading {
             alertView.showLoader()
         } else {
@@ -125,6 +126,8 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
     }
     
     @objc func buyButtonDidTouch() {
+        dismissKeyboard()
+        
         if let symbol = viewModel.selectedBalance.value?.symbol,
             symbol != Config.defaultSymbol
         {

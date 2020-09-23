@@ -384,7 +384,6 @@
 		BC8F814A23E27ECE0024C04A /* SendPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F812A23E27ECE0024C04A /* SendPointsModel.swift */; };
 		BC8F814B23E27ECE0024C04A /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F812B23E27ECE0024C04A /* Transaction.swift */; };
 		BC8F814C23E27ECE0024C04A /* CMToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F812D23E27ECE0024C04A /* CMToolbarView.swift */; };
-		BC8F814D23E27ECE0024C04A /* WalletSendPointsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F812E23E27ECE0024C04A /* WalletSendPointsVC.swift */; };
 		BC8F814E23E27ECE0024C04A /* ConfirmPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F813123E27ECE0024C04A /* ConfirmPasscodeVC.swift */; };
 		BC8F815123E27ECE0024C04A /* SendPointListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F813423E27ECE0024C04A /* SendPointListVC.swift */; };
 		BC8F815223E27ECE0024C04A /* BuyCommunSelectCurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F813723E27ECE0024C04A /* BuyCommunSelectCurrencyVC.swift */; };
@@ -985,7 +984,6 @@
 		BC8F812A23E27ECE0024C04A /* SendPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPointsModel.swift; sourceTree = "<group>"; };
 		BC8F812B23E27ECE0024C04A /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		BC8F812D23E27ECE0024C04A /* CMToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMToolbarView.swift; sourceTree = "<group>"; };
-		BC8F812E23E27ECE0024C04A /* WalletSendPointsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletSendPointsVC.swift; sourceTree = "<group>"; };
 		BC8F813123E27ECE0024C04A /* ConfirmPasscodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeVC.swift; sourceTree = "<group>"; };
 		BC8F813423E27ECE0024C04A /* SendPointListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPointListVC.swift; sourceTree = "<group>"; };
 		BC8F813723E27ECE0024C04A /* BuyCommunSelectCurrencyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyCommunSelectCurrencyVC.swift; sourceTree = "<group>"; };
@@ -2553,7 +2551,6 @@
 			children = (
 				BC8F812923E27ECE0024C04A /* Models */,
 				BC8F812C23E27ECE0024C04A /* Subviews */,
-				BC8F812E23E27ECE0024C04A /* WalletSendPointsVC.swift */,
 				BC8F812F23E27ECE0024C04A /* TransactionCompleted */,
 			);
 			path = WalletSendPoints;
@@ -3711,7 +3708,6 @@
 				BC8481FE245826D40099C7C5 /* CMLabel.swift in Sources */,
 				3B25E5C4234C6E4E005BD1B8 /* BasicEditorVC+Link.swift in Sources */,
 				BCA9712B2361306700AE37E1 /* MyView.swift in Sources */,
-				BC8F814D23E27ECE0024C04A /* WalletSendPointsVC.swift in Sources */,
 				3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */,
 				BCCC33E823751686004E46EF /* CommentCell.swift in Sources */,
 				BC4692D5239130A50064A38B /* PostCellDelegate.swift in Sources */,

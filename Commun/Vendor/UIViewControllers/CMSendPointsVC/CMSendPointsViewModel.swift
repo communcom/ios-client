@@ -52,7 +52,9 @@ class CMSendPointsViewModel: BaseViewModel {
     func bind() {
         balancesVM.items
             .subscribe(onNext: { [weak self] (balances) in
-                self?.selectedBalance.accept(balances.first(where: {$0.symbol == self?.selectedBalance.value?.symbol}))
+                if let balance = balances.first(where: {$0.symbol == self?.selectedBalance.value?.symbol}) {
+                    self?.selectedBalance.accept(balance)
+                }
             })
             .disposed(by: disposeBag)
     }
