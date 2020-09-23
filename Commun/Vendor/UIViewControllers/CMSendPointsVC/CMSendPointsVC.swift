@@ -356,10 +356,10 @@ class CMSendPointsVC: CMTransferVC {
     
     // MARK: - Helpers
     @objc func clearButtonTapped(_ sender: UIButton) {
-        amountTextField.changeTextNotify(nil)
         if amountTextField.text?.isEmpty == true {
             view.endEditing(true)
         }
+        amountTextField.changeTextNotify(nil)
     }
     
     func prepareTransaction() -> Transaction? {
