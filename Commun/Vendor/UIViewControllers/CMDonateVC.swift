@@ -76,6 +76,7 @@ class CMDonateVC<T: ResponseAPIContentMessageType>: CMSendPointsVC {
     }
     
     override func setUp(loading: Bool = false) {
+        super.setUp(loading: loading)
         if loading {
             alertView.showLoader()
         } else {

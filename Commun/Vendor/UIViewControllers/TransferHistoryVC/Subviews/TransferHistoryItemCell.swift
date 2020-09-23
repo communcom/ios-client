@@ -143,7 +143,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             iconImageView.image = UIImage(named: "tux")
         case "donation":
             let isReceiver = Config.currentUser?.id == item.receiver.userId
-            var profile: ResponseAPIWalletGetTransferHistoryProfile?
+            var profile: ResponseAPIContentGetProfile?
             if isReceiver {
                 profile = item.sender
             } else {
