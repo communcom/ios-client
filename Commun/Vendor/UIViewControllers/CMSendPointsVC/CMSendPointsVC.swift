@@ -67,7 +67,7 @@ class CMSendPointsVC: CMTransferVC {
         defer {
             if let history = history {
                 let amount = CGFloat(history.quantityValue)
-                amountTextField.text = Double(amount).currencyValueFormatted
+                amountTextField.text = String(Double(amount))
             }
             
             viewModel.selectedReceiver.accept(receiver)
