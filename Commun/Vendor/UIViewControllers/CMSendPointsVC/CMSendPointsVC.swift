@@ -96,21 +96,13 @@ class CMSendPointsVC: CMTransferVC {
     func bindBalances() {
         viewModel.balancesVM.items
             .subscribe(onNext: { (balances) in
-                self.walletCarouselWrapper.balances = balances
-                self.walletCarouselWrapper.currentIndex = balances.firstIndex(where: {$0.symbol == self.viewModel.selectedBalance.value?.symbol}) ?? 0
-                self.walletCarouselWrapper.reloadData()
+                self.setUp(balances: balances)
             })
             .disposed(by: disposeBag)
         
         viewModel.selectedBalance
             .subscribe(onNext: { (balance) in
-                if let balance = balance {
-                    self.balanceNameLabel.text = balance.name ?? balance.symbol
-                    self.valueLabel.text = balance.balanceValue.currencyValueFormatted
-                } else {
-                    self.balanceNameLabel.text = nil
-                    self.valueLabel.text = nil
-                }
+                self.setUp(selectedBalance: balance)
             })
             .disposed(by: disposeBag)
     }
@@ -118,15 +110,36 @@ class CMSendPointsVC: CMTransferVC {
     func bindReceiver() {
         viewModel.selectedReceiver
             .subscribe(onNext: { (receiver) in
-                if let receiver = receiver {
-                    self.receiverAvatarImageView.setAvatar(urlString: receiver.avatarUrl)
-                    self.receiverNameLabel.text = receiver.username ?? receiver.userId
-                } else {
-                    self.receiverAvatarImageView.image = UIImage(named: "empty-avatar")
-                    self.receiverNameLabel.text = nil
-                }
+                self.setUp(receiver: receiver)
             })
             .disposed(by: disposeBag)
+    }
+    
+    // MARK: - View modifiers
+    func setUp(balances: [ResponseAPIWalletGetBalance]) {
+        self.walletCarouselWrapper.balances = balances
+        self.walletCarouselWrapper.currentIndex = balances.firstIndex(where: {$0.symbol == self.viewModel.selectedBalance.value?.symbol}) ?? 0
+        self.walletCarouselWrapper.reloadData()
+    }
+    
+    func setUp(selectedBalance balance: ResponseAPIWalletGetBalance?) {
+        if let balance = balance {
+            self.balanceNameLabel.text = balance.name ?? balance.symbol
+            self.valueLabel.text = balance.balanceValue.currencyValueFormatted
+        } else {
+            self.balanceNameLabel.text = nil
+            self.valueLabel.text = nil
+        }
+    }
+    
+    func setUp(receiver: ResponseAPIContentGetProfile?) {
+        if let receiver = receiver {
+            self.receiverAvatarImageView.setAvatar(urlString: receiver.avatarUrl)
+            self.receiverNameLabel.text = receiver.username ?? receiver.userId
+        } else {
+            self.receiverAvatarImageView.image = UIImage(named: "empty-avatar")
+            self.receiverNameLabel.text = nil
+        }
     }
     
     // MARK: - Actions
