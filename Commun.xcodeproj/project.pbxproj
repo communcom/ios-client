@@ -206,6 +206,7 @@
 		BC2F4CBB2519C056009B1971 /* CMSellCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */; };
 		BC2F4CBF251AF699009B1971 /* CMSendPointsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CBE251AF699009B1971 /* CMSendPointsVC.swift */; };
 		BC2F4CC4251B03AB009B1971 /* CMSendPointsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CC3251B03AB009B1971 /* CMSendPointsViewModel.swift */; };
+		BC2F4CC7251B2D8C009B1971 /* CMDonateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CC6251B2D8C009B1971 /* CMDonateVC.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
 		BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */; };
@@ -807,6 +808,7 @@
 		BC2F4CBA2519C056009B1971 /* CMSellCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSellCommunVC.swift; sourceTree = "<group>"; };
 		BC2F4CBE251AF699009B1971 /* CMSendPointsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSendPointsVC.swift; sourceTree = "<group>"; };
 		BC2F4CC3251B03AB009B1971 /* CMSendPointsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSendPointsViewModel.swift; sourceTree = "<group>"; };
+		BC2F4CC6251B2D8C009B1971 /* CMDonateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMDonateVC.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
 		BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordVC.swift; sourceTree = "<group>"; };
@@ -1472,6 +1474,7 @@
 				BCEFA643249217DF00971E77 /* DonationsVC */,
 				BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */,
 				BC2F4CAA2519A19C009B1971 /* CMTransferVC.swift */,
+				BC2F4CC6251B2D8C009B1971 /* CMDonateVC.swift */,
 				BC2F4CC2251AF71E009B1971 /* CMSendPointsVC */,
 				BC2F4CB72519BD6F009B1971 /* CMConvertVCs */,
 			);
@@ -3812,6 +3815,7 @@
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
 				BC65FD4924514AD4006F0846 /* FlexibleHeightPresentationController.swift in Sources */,
 				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
+				BC2F4CC7251B2D8C009B1971 /* CMDonateVC.swift in Sources */,
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
 				BC8481FA24581FB20099C7C5 /* DonationView.swift in Sources */,

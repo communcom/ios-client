@@ -292,6 +292,8 @@ class CMSendPointsVC: CMTransferVC {
             let friendId = transaction.friend?.id
         else {return}
         
+        dismissKeyboard()
+        
         let confirmPasscodeVC = ConfirmPasscodeVC()
         present(confirmPasscodeVC, animated: true, completion: nil)
         
@@ -303,6 +305,8 @@ class CMSendPointsVC: CMTransferVC {
                 .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
                 .subscribe(onCompleted: { [weak self] in
                     guard let strongSelf = self else { return }
+                    
+                    strongSelf.hideHud()
                     strongSelf.showCheck(transaction: transaction)
                 }) { [weak self] error in
                     guard let strongSelf = self else { return }
@@ -332,5 +336,10 @@ class CMSendPointsVC: CMTransferVC {
         transaction.createFriend(from: receiver)
         
         return transaction
+    }
+    
+    func programmaticallyChangeAmount(to amount: CGFloat) {
+        amountTextField.text = String(Double(amount).currencyValueFormatted)
+        amountTextField.sendActions(for: .editingChanged)
     }
 }
