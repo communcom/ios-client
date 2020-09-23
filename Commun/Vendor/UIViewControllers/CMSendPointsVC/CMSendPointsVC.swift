@@ -16,7 +16,7 @@ class CMSendPointsVC: CMTransferVC {
     // MARK: - Subviews
     lazy var walletCarouselWrapper = WalletCarouselWrapper(height: 50)
     lazy var receiverAvatarImageView = MyAvatarImageView(size: 40)
-    lazy var receiverNameLabel = UILabel.with(textSize: 15, weight: .semibold)
+    lazy var receiverNameLabel = UILabel.with(text: "receiver", textSize: 15, weight: .semibold)
     lazy var greenTick: UIButton = {
         let button = UIButton.circle(size: 24, backgroundColor: .clear, tintColor: .appWhiteColor, imageName: "icon-select-user-grey-cyrcle-default", imageEdgeInsets: .zero)
         button.setImage(UIImage(named: "icon-select-user-green-cyrcle-selected"), for: .selected)
@@ -89,8 +89,32 @@ class CMSendPointsVC: CMTransferVC {
     
     override func bind() {
         super.bind()
+        bindState()
         bindBalances()
         bindReceiver()
+    }
+    
+    func bindState() {
+        viewModel.balancesVM.state
+            .subscribe(onNext: {[weak self] state in
+                switch state {
+                case .loading(let isLoading):
+                    self?.setUp(loading: isLoading)
+                
+                case .listEnded, .listEmpty:
+                    self?.setUp(loading: false)
+                
+                case .error(let error):
+                    self?.view.showErrorView(retryAction: {
+                        self?.view.hideErrorView()
+                        self?.viewModel.reload()
+                    })
+                    #if !APPSTORE
+                        self?.showAlert(title: "Error", message: "\(error)")
+                    #endif
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindBalances() {
@@ -127,8 +151,8 @@ class CMSendPointsVC: CMTransferVC {
             self.balanceNameLabel.text = balance.name ?? balance.symbol
             self.valueLabel.text = balance.balanceValue.currencyValueFormatted
         } else {
-            self.balanceNameLabel.text = nil
-            self.valueLabel.text = nil
+            self.balanceNameLabel.text = "Balance"
+            self.valueLabel.text = "0.0000"
         }
     }
     
@@ -139,8 +163,28 @@ class CMSendPointsVC: CMTransferVC {
             self.greenTick.isSelected = true
         } else {
             self.receiverAvatarImageView.image = UIImage(named: "empty-avatar")
-            self.receiverNameLabel.text = nil
+            self.receiverNameLabel.text = " ".localized().uppercaseFirst
             self.greenTick.isSelected = false
+        }
+    }
+    
+    func setUp(loading: Bool = false) {
+        if loading {
+            walletCarouselWrapper.showLoader()
+            balanceNameLabel.showLoader()
+            valueLabel.showLoader()
+            receiverAvatarImageView.showLoader()
+            receiverNameLabel.showLoader()
+            greenTick.showLoader()
+            amountTextField.showLoader()
+        } else {
+            walletCarouselWrapper.hideLoader()
+            balanceNameLabel.hideLoader()
+            valueLabel.hideLoader()
+            receiverAvatarImageView.hideLoader()
+            receiverNameLabel.hideLoader()
+            greenTick.hideLoader()
+            amountTextField.hideLoader()
         }
     }
     

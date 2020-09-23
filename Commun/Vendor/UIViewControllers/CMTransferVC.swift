@@ -31,8 +31,8 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
         stackView.setCustomSpacing(5, after: balanceNameLabel)
         return stackView
     }()
-    lazy var balanceNameLabel = UILabel.with(textSize: 17, weight: .semibold, textColor: .white)
-    lazy var valueLabel = UILabel.with(textSize: 30, weight: .semibold, textColor: .white)
+    lazy var balanceNameLabel = UILabel.with(text: "CMN", textSize: 17, weight: .semibold, textColor: .white)
+    lazy var valueLabel = UILabel.with(text: "0.0000", textSize: 30, weight: .semibold, textColor: .white)
     lazy var whiteView = UIView(backgroundColor: .appWhiteColor)
     lazy var stackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fill)
     
