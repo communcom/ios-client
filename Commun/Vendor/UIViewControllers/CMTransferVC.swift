@@ -20,9 +20,6 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
     // MARK: - Subviews
     lazy var scrollView: ContentHuggingScrollView = {
         let scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
-        scrollView.contentView.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        scrollView.contentView.addGestureRecognizer(tap)
         return scrollView
     }()
     lazy var topStackView: UIStackView = {
@@ -59,6 +56,10 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
         let topView = UIView(backgroundColor: topColor)
         view.addSubview(topView)
         topView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        
+        view.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
         
         // scroll view
         view.addSubview(scrollView)
