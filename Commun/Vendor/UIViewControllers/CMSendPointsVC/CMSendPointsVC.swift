@@ -30,7 +30,7 @@ class CMSendPointsVC: CMTransferVC {
         super.init(nibName: nil, bundle: nil)
         defer {
             viewModel.selectedReceiver.accept(receiver)
-            viewModel.balancesVM.state.filter {$0 == .listEnded}.take(1).asSingle()
+            viewModel.balancesVM.items.filter {!$0.isEmpty}.take(1).asSingle()
                 .subscribe(onSuccess: { (_) in
                     self.viewModel.selectedBalance.accept(self.viewModel.balances.first(where: {$0.symbol == selectedBalanceSymbol}))
                 })
@@ -136,9 +136,11 @@ class CMSendPointsVC: CMTransferVC {
         if let receiver = receiver {
             self.receiverAvatarImageView.setAvatar(urlString: receiver.avatarUrl)
             self.receiverNameLabel.text = receiver.username ?? receiver.userId
+            self.greenTick.isSelected = true
         } else {
             self.receiverAvatarImageView.image = UIImage(named: "empty-avatar")
             self.receiverNameLabel.text = nil
+            self.greenTick.isSelected = false
         }
     }
     
