@@ -10,12 +10,30 @@ import Foundation
 import RxCocoa
 
 class CMSendPointsViewModel: BaseViewModel {
+    // MARK: - Nested type
+    enum Error: LocalizedError {
+        case insufficientFunds
+        case other(Swift.Error)
+        var errorDescription: String? {
+            switch self {
+            case .insufficientFunds:
+                return "insufficient funds".localized().uppercaseFirst
+            case .other(let error):
+                return error.localizedDescription
+            }
+        }
+    }
+    
+    // MARK: - Properties
     lazy var balancesVM = BalancesViewModel.ofCurrentUser
     let selectedBalance = BehaviorRelay<ResponseAPIWalletGetBalance?>(value: nil)
     let selectedReceiver = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
+    let error = BehaviorRelay<Error?>(value: nil)
     
+    // MARK: - Getters
     var balances: [ResponseAPIWalletGetBalance] { balancesVM.items.value }
     
+    // MARK: - Methods
     override init() {
         super.init()
         defer {

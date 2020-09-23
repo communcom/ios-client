@@ -16,6 +16,7 @@ class CMTransferVC: BaseViewController, UITextFieldDelegate {
     override var shouldHideTabBar: Bool {true}
     var topColor: UIColor { .appMainColor }
     var titleText: String { "convert".localized().uppercaseFirst }
+    var defaultBorderColor: UIColor { #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white) }
     
     // MARK: - Subviews
     lazy var scrollView: ContentHuggingScrollView = {

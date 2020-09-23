@@ -23,7 +23,20 @@ class CMSendPointsVC: CMTransferVC {
         button.setContentHuggingPriority(.required, for: .horizontal)
         return button
     }()
+    lazy var amountContainer: UIView = {
+        let view = borderedView()
+        
+        let stackView = UIStackView(axis: .vertical, spacing: 8, alignment: .fill, distribution: .fill)
+        view.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
+        
+        let amountLabel = UILabel.with(text: "amount".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .appGrayColor)
+        stackView.addArrangedSubviews([amountLabel, amountTextField])
+        
+        return view
+    }()
     lazy var amountTextField = createTextField()
+    lazy var alertLabel = UILabel.with(textSize: 12, weight: .bold, textColor: .appRedColor, numberOfLines: 0)
     
     // MARK: - Initializers
     init(selectedBalanceSymbol: String? = nil, receiver: ResponseAPIContentGetProfile? = nil) {
@@ -70,21 +83,7 @@ class CMSendPointsVC: CMTransferVC {
             return view
         }()
         
-        // add amountContainer
-        let amountContainer: UIView = {
-            let view = borderedView()
-            
-            let stackView = UIStackView(axis: .vertical, spacing: 8, alignment: .fill, distribution: .fill)
-            view.addSubview(stackView)
-            stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
-            
-            let amountLabel = UILabel.with(text: "amount".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .appGrayColor)
-            stackView.addArrangedSubviews([amountLabel, amountTextField])
-            
-            return view
-        }()
-        
-        stackView.addArrangedSubviews([receiverContainer, amountContainer])
+        stackView.addArrangedSubviews([receiverContainer, amountContainer, alertLabel])
     }
     
     override func bind() {
@@ -92,6 +91,7 @@ class CMSendPointsVC: CMTransferVC {
         bindState()
         bindBalances()
         bindReceiver()
+        bindError()
     }
     
     func bindState() {
@@ -135,6 +135,20 @@ class CMSendPointsVC: CMTransferVC {
         viewModel.selectedReceiver
             .subscribe(onNext: { (receiver) in
                 self.setUp(receiver: receiver)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func bindError() {
+        viewModel.error
+            .subscribe(onNext: { (error) in
+                if let error = error {
+                    self.alertLabel.text = error.errorDescription
+                    self.amountContainer.borderColor = .appRedColor
+                } else {
+                    self.alertLabel.text = nil
+                    self.amountContainer.borderColor = self.defaultBorderColor
+                }
             })
             .disposed(by: disposeBag)
     }
