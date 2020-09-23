@@ -7,16 +7,24 @@
 //
 
 import Foundation
+import RxCocoa
 
 class SendPointsViewModel: BaseViewModel {
     lazy var balancesVM = BalancesViewModel.ofCurrentUser
+    let selectedBalance = BehaviorRelay<ResponseAPIWalletGetBalance?>(value: nil)
+    let selectedReceiver = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
+    
+    var balances: [ResponseAPIWalletGetBalance] { balancesVM.items.value }
+    
+    func selectBalanceAtIndex(index: Int) {
+        selectedBalance.accept(balancesVM.items.value[safe: index])
+    }
 }
 
 class CMSendPointsVC: CMTransferVC {
     // MARK: - Properties
     override var titleText: String { "send points".localized().uppercaseFirst }
     let viewModel = SendPointsViewModel()
-    var balancesVM: BalancesViewModel {viewModel.balancesVM}
     
     // MARK: - Subviews
     lazy var walletCarouselWrapper = WalletCarouselWrapper(height: 50)
@@ -30,6 +38,23 @@ class CMSendPointsVC: CMTransferVC {
     }()
     lazy var amountTextField = createTextField()
     
+    // MARK: - Initializers
+    init(selectedBalanceSymbol: String? = nil, receiver: ResponseAPIContentGetProfile? = nil) {
+        super.init(nibName: nil, bundle: nil)
+        defer {
+            viewModel.selectedReceiver.accept(receiver)
+            viewModel.balancesVM.state.filter {$0 == .listEnded}.take(1).asSingle()
+                .subscribe(onSuccess: { (_) in
+                    self.viewModel.selectedBalance.accept(self.viewModel.balances.first(where: {$0.symbol == selectedBalanceSymbol}))
+                })
+                .disposed(by: disposeBag)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
@@ -40,7 +65,7 @@ class CMSendPointsVC: CMTransferVC {
         setRightBarButton(imageName: "wallet-right-bar-button", tintColor: .white, action: #selector(chooseRecipientViewTapped))
         
         walletCarouselWrapper.scrollingHandler = { index in
-            // TODO: - scrolling handler
+            self.viewModel.selectBalanceAtIndex(index: index)
         }
         
         // add receiver container
@@ -73,17 +98,55 @@ class CMSendPointsVC: CMTransferVC {
         }()
         
         stackView.addArrangedSubviews([receiverContainer, amountContainer])
+    }
+    
+    override func bind() {
+        super.bind()
+        bindBalances()
+        bindReceiver()
+    }
+    
+    func bindBalances() {
+        viewModel.balancesVM.items
+            .subscribe(onNext: { (balances) in
+                self.walletCarouselWrapper.balances = balances
+                self.walletCarouselWrapper.currentIndex = balances.firstIndex(where: {$0.symbol == self.viewModel.selectedBalance.value?.symbol}) ?? 0
+                self.walletCarouselWrapper.reloadData()
+            })
+            .disposed(by: disposeBag)
         
-        // test
-        balanceNameLabel.text = "Commun"
-        valueLabel.text = "6.1243"
+        viewModel.selectedBalance
+            .subscribe(onNext: { (balance) in
+                if let balance = balance {
+                    self.balanceNameLabel.text = balance.name ?? balance.symbol
+                    self.valueLabel.text = balance.balanceValue.currencyValueFormatted
+                } else {
+                    self.balanceNameLabel.text = nil
+                    self.valueLabel.text = nil
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func bindReceiver() {
+        viewModel.selectedReceiver
+            .subscribe(onNext: { (receiver) in
+                if let receiver = receiver {
+                    self.receiverAvatarImageView.setAvatar(urlString: receiver.avatarUrl)
+                    self.receiverNameLabel.text = receiver.username ?? receiver.userId
+                } else {
+                    self.receiverAvatarImageView.image = UIImage(named: "empty-avatar")
+                    self.receiverNameLabel.text = nil
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Actions
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
         let friendsListVC = SendPointListVC()
         friendsListVC.completion = { user in
-            // TODO: - Choose recipient
+            self.viewModel.selectedReceiver.accept(user)
         }
         
         let nc = SwipeNavigationController(rootViewController: friendsListVC)
