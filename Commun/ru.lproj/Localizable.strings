@@ -249,6 +249,7 @@
 "income" = "входящие";
 "incorrect username or password" = "неверный логин или пароль";
 "info" = "информация";
+"insufficient funds" = "недостаточно средств";
 "interface language" = "язык интерфейса";
 "interesting first" = "сначала интересные";
 "invalid email address" = "неправильный адрес электронной почты";

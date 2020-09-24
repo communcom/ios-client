@@ -256,6 +256,7 @@
 "income" = "income";
 "incorrect username or password" = "incorrect username or password";
 "info" = "info";
+"insufficient funds" = "insufficient funds";
 "interface language" = "interface language";
 "interesting first" = "interesting first";
 "invalid email address" = "invalid email address";

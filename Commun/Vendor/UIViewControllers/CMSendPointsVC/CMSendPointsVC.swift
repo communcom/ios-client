@@ -175,7 +175,7 @@ class CMSendPointsVC: CMTransferVC {
                     self.alertLabel.text = error.errorDescription
                     self.amountContainer.borderColor = error.errorDescription != nil ? .appRedColor : self.defaultBorderColor
                 } else {
-                    self.alertLabel.text = nil
+                    self.alertLabel.text = " "
                     self.amountContainer.borderColor = self.defaultBorderColor
                 }
             })
