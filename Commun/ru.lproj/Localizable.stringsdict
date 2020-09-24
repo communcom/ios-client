@@ -420,18 +420,8 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>zero</key>
-			<string>других</string>
-			<key>one</key>
-			<string>другой</string>
-			<key>two</key>
-			<string>других</string>
-			<key>few</key>
-			<string>других</string>
-			<key>many</key>
-			<string>других</string>
 			<key>other</key>
-			<string>других</string>
+			<string>ещё %d</string>
 		</dict>
 	</dict>
 </dict>
