@@ -30,7 +30,7 @@ extension ResponseAPIContentGetProposal {
         if originIsApproved {
             request = BlockchainManager.instance.unapproveProposal(proposal.proposalId)
         } else {
-            request = BlockchainManager.instance.approveProposal(proposal.proposalId)
+            request = BlockchainManager.instance.approveProposal(proposal.proposalId, proposer: proposal.proposer?.userId ?? "")
         }
         
         return request
