@@ -10,6 +10,7 @@ import Foundation
 import RxCocoa
 
 class CreateCommmunityFirstStepVC: BaseVerticalStackVC {
+    override var shouldHandleKeyboard: Bool { false }
     let descriptionLimit = 500
     
     lazy var coverImageView = UIImageView(cornerRadius: 10, contentMode: .scaleAspectFill)

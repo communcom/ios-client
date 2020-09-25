@@ -94,7 +94,9 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         }()
         view.addSubview(bottomView)
         bottomView.autoPinEdge(.top, to: .bottom, of: containerView)
-        bottomView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
+        bottomView.autoPinEdge(toSuperviewSafeArea: .leading)
+        bottomView.autoPinEdge(toSuperviewSafeArea: .trailing)
+        bottomView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard()
         
         // dismiss keyboard
         view.isUserInteractionEnabled = true

@@ -10,6 +10,7 @@ import Foundation
 
 class BaseVerticalStackVC: BaseViewController {
     // MARK: - Properties
+    var shouldHandleKeyboard: Bool {true}
     var stackViewPadding: UIEdgeInsets {UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)}
     var scrollViewTopConstraint: NSLayoutConstraint?
     var stackViewTopConstraint: NSLayoutConstraint?
@@ -46,7 +47,11 @@ class BaseVerticalStackVC: BaseViewController {
         scrollViewTopConstraint = scrollView.autoPinEdge(toSuperviewEdge: .top)
         scrollView.autoPinEdge(toSuperviewEdge: .leading)
         scrollView.autoPinEdge(toSuperviewEdge: .trailing)
-        scrollView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard()
+        if shouldHandleKeyboard {
+            scrollView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard()
+        } else {
+            scrollView.autoPinEdge(toSuperviewSafeArea: .bottom)
+        }
     }
     
     func viewDidSetUpScrollView() {}
