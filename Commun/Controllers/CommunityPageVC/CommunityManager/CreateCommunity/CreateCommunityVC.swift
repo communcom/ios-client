@@ -11,6 +11,10 @@ import RxSwift
 import RxCocoa
 
 class CreateCommunityVC: CreateCommunityFlowVC {
+    override func fittingSizeInContainer(safeAreaFrame: CGRect) -> CGFloat {
+        safeAreaFrame.height
+    }
+    
     let descriptionLimit = 500
     // save transaction id in case of non-completed creating community process
     var savedTransactionId: [String: String]? {
