@@ -9,7 +9,11 @@
 import Foundation
 
 final class MyProfileHeaderView: UserProfileHeaderView {
-    lazy var changeAvatarButton: UIButton = .changeAvatarButton
+    lazy var changeAvatarButton: UIButton = {
+        let button = UIButton.changeAvatarButton
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: -24, left: -24, bottom: 0, right: 0)
+        return button
+    }()
 
     lazy var addBioButton = UIButton(height: 35,
                                      label: String(format: "%@ %@", "add".localized().uppercaseFirst, "bio".localized()),

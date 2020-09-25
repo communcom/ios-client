@@ -26,11 +26,11 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         .image(.placeholder)
         .whRatio(335/150)
     lazy var changeCoverButton = UIButton.changeCoverButton
-        .onTap(#selector(chooseCoverButtonDidTouch))
+        .onTap(self, action: #selector(chooseCoverButtonDidTouch))
     lazy var avatarImageView = MyAvatarImageView(size: 80)
         .border(width: 2, color: .appWhiteColor)
     lazy var changeAvatarButton = UIButton.changeAvatarButton
-        .onTap(#selector(chooseAvatarButtonDidTouch))
+        .onTap(self, action: #selector(chooseAvatarButtonDidTouch))
     
     lazy var communityNameTextField: UITextField = {
         let tf = UITextField()
@@ -99,8 +99,9 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         imagesWrapper.addSubview(coverImageView)
         coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
-        coverImageView.addSubview(changeCoverButton)
-        changeCoverButton.autoPinBottomAndTrailingToSuperView(inset: 10)
+        imagesWrapper.addSubview(changeCoverButton)
+        changeCoverButton.autoPinEdge(.bottom, to: .bottom, of: coverImageView, withOffset: -10)
+        changeCoverButton.autoPinEdge(.trailing, to: .trailing, of: coverImageView, withOffset: -10)
         
         imagesWrapper.addSubview(avatarImageView)
         avatarImageView.autoPinEdge(.top, to: .bottom, of: coverImageView, withOffset: -40)

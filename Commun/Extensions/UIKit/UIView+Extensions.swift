@@ -220,12 +220,12 @@ extension UIView {
     }
     
     @discardableResult
-    func onTap(_ action: Selector) -> Self {
-        if let button = self as? UIButton {
-            button.addTarget(parentViewController, action: action, for: .touchUpInside)
+    func onTap(_ target: Any?, action: Selector) -> Self {
+        if self is UIButton {
+            (self as? UIButton)?.addTarget(target, action: action, for: .touchUpInside)
             return self
         }
-        let tap = UITapGestureRecognizer(target: parentViewController, action: action)
+        let tap = UITapGestureRecognizer(target: target, action: action)
         addGestureRecognizer(tap)
         isUserInteractionEnabled = true
         return self

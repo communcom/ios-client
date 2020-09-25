@@ -13,7 +13,11 @@ class MyProfilePageVC: UserProfilePageVC {
     var shouldHideBackButton = true
     
     // MARK: - Subviews
-    lazy var changeCoverButton: UIButton = .changeCoverButton
+    lazy var changeCoverButton: UIButton = {
+        let button = UIButton.changeCoverButton
+        button.touchAreaEdgeInsets = UIEdgeInsets(inset: -10)
+        return button
+    }()
     
     // MARK: - Initializers
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
