@@ -140,6 +140,12 @@ extension UIImageView {
             completion?(error, image)
         }
     }
+    
+    @discardableResult
+    func image(_ image: UIImage) -> Self {
+        self.image = image
+        return self
+    }
 }
 
 extension Reactive where Base: UIImageView {

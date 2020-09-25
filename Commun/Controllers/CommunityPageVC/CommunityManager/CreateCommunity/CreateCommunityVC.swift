@@ -22,15 +22,16 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         }
     }
     
-    lazy var avatarImageView: MyAvatarImageView = {
-        let imageView = MyAvatarImageView(size: 120)
-        return imageView
-    }()
-    lazy var changeAvatarButton: UIButton = {
-        let button = UIButton.circle(size: 44, backgroundColor: .clear, imageName: "profile-edit-change-image")
-        button.addTarget(self, action: #selector(chooseAvatarButtonDidTouch), for: .touchUpInside)
-        return button
-    }()
+    lazy var coverImageView = UIImageView(cornerRadius: 10, contentMode: .scaleAspectFill)
+        .image(.placeholder)
+        .whRatio(335/150)
+    lazy var changeCoverButton = UIButton.changeCoverButton
+        .onTap(#selector(chooseCoverButtonDidTouch))
+    lazy var avatarImageView = MyAvatarImageView(size: 80)
+        .border(width: 2, color: .appWhiteColor)
+    lazy var changeAvatarButton = UIButton.changeAvatarButton
+        .onTap(#selector(chooseAvatarButtonDidTouch))
+    
     lazy var communityNameTextField: UITextField = {
         let tf = UITextField()
         tf.borderStyle = .none
@@ -53,6 +54,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     
     let languageRelay = BehaviorRelay<Language?>(value: nil)
     var didSetAvatar = false
+    var didSetCover = false
     var createdCommunities: [ResponseAPIContentGetCommunity]?
     
     override func viewDidLoad() {
@@ -91,13 +93,21 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     override func setUp() {
         super.setUp()
         continueButton.setTitle("create community".localized().uppercaseFirst, for: .normal)
-        stackView.alignment = .center
         
         // image wrappers
-        let avatarWrapper = UIView(forAutoLayout: ())
-        avatarWrapper.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges()
-        avatarWrapper.addSubview(changeAvatarButton)
+        let imagesWrapper = UIView(forAutoLayout: ())
+        imagesWrapper.addSubview(coverImageView)
+        coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        
+        coverImageView.addSubview(changeCoverButton)
+        changeCoverButton.autoPinBottomAndTrailingToSuperView(inset: 10)
+        
+        imagesWrapper.addSubview(avatarImageView)
+        avatarImageView.autoPinEdge(.top, to: .bottom, of: coverImageView, withOffset: -40)
+        avatarImageView.autoAlignAxis(toSuperviewAxis: .vertical)
+        avatarImageView.autoPinEdge(toSuperviewEdge: .bottom)
+        
+        imagesWrapper.addSubview(changeAvatarButton)
         changeAvatarButton.autoPinEdge(.trailing, to: .trailing, of: avatarImageView)
         changeAvatarButton.autoPinEdge(.bottom, to: .bottom, of: avatarImageView)
         
@@ -138,16 +148,12 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             return view
         }()
         
-        stackView.addArrangedSubview(avatarWrapper)
+        stackView.addArrangedSubview(imagesWrapper)
         stackView.addArrangedSubview(communityNameField)
         stackView.addArrangedSubview(descriptionField)
         stackView.addArrangedSubview(languageField)
         
-        communityNameField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
-        descriptionField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
-        languageField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
-        
-        stackView.setCustomSpacing(56, after: avatarWrapper)
+        stackView.setCustomSpacing(56, after: imagesWrapper)
         stackView.setCustomSpacing(16, after: communityNameField)
         stackView.setCustomSpacing(16, after: descriptionField)
         
@@ -234,13 +240,26 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             single = startCommunityCreation(communityId: uncompletedCreatingCommunity.communityId)
         } else {
             single = RestAPIManager.instance.createNewCommunity(name: name)
-                .flatMap { result -> Single<(ResponseAPICommunityCreateNewCommunity, String)> in
-                    if !self.didSetAvatar || self.avatarImageView.image == nil { return .just((result, "")) }
-                    return RestAPIManager.instance.uploadImage(self.avatarImageView.image!)
-                        .map {(result, $0)}
+                .flatMap { result -> Single<(ResponseAPICommunityCreateNewCommunity, String, String)> in
+                    var singles = [Single<String>]()
+                    
+                    if !self.didSetAvatar || self.avatarImageView.image == nil {
+                        singles.append(.just(""))
+                    } else {
+                        singles.append(RestAPIManager.instance.uploadImage(self.avatarImageView.image!))
+                    }
+                    
+                    if !self.didSetCover || self.coverImageView.image == nil {
+                        singles.append(.just(""))
+                    } else {
+                        singles.append(RestAPIManager.instance.uploadImage(self.coverImageView.image!))
+                    }
+                    
+                    return Single.zip(singles)
+                        .map {(result, $0[0], $0[1])}
                 }
-                .flatMap { (result, imageUrl) in
-                    return RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: imageUrl)
+                .flatMap { (result, avatarUrl, coverUrl) in
+                    return RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: avatarUrl, coverUrl: coverUrl)
                         .map {_ in result.community.communityId}
                 }
                 .flatMap {communityId in
@@ -297,6 +316,13 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     func handleCommunityCreationError(error: Error) {
         self.hideHud()
         self.showError(error)
+    }
+    
+    @objc func chooseCoverButtonDidTouch() {
+        showCoverImagePicker { (image) in
+            self.coverImageView.image = image
+            self.didSetCover = true
+        }
     }
     
     @objc func chooseAvatarButtonDidTouch() {

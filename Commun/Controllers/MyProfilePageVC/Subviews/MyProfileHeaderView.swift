@@ -9,15 +9,7 @@
 import Foundation
 
 final class MyProfileHeaderView: UserProfileHeaderView {
-    lazy var changeAvatarButton: UIButton = {
-        let button = UIButton(width: 20, height: 20, backgroundColor: .appLightGrayColor, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
-        button.tintColor = .appGrayColor
-        button.setImage(UIImage(named: "photo_solid")!, for: .normal)
-        button.borderColor = UIColor.appWhiteColor.inDarkMode(.appLightGrayColor)
-        button.borderWidth = 2
-        button.touchAreaEdgeInsets = UIEdgeInsets(top: -24, left: -24, bottom: 0, right: 0)
-        return button
-    }()
+    lazy var changeAvatarButton: UIButton = .changeAvatarButton
 
     lazy var addBioButton = UIButton(height: 35,
                                      label: String(format: "%@ %@", "add".localized().uppercaseFirst, "bio".localized()),
