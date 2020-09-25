@@ -244,4 +244,14 @@ extension UIView {
             .isActive = true
         return self
     }
+    
+    func fittingHeight(targetWidth: CGFloat) -> CGFloat {
+        let fittingSize = CGSize(
+            width: targetWidth,
+            height: UIView.layoutFittingCompressedSize.height
+        )
+        return systemLayoutSizeFitting(fittingSize, withHorizontalFittingPriority: .required,
+                                verticalFittingPriority: .defaultLow)
+            .height
+    }
 }

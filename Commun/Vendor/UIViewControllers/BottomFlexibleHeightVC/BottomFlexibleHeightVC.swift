@@ -12,27 +12,23 @@ import UIKit
 class BottomFlexibleHeightVC: BaseViewController, UIViewControllerTransitioningDelegate {
     // MARK: - Nested type
     class PresentationController: FlexibleHeightPresentationController {
-        override func calculateFittingHeightOfPresentedView(fittingSize: CGSize) -> CGFloat {
+        override func calculateFittingHeightOfPresentedView(targetWidth: CGFloat) -> CGFloat {
             let vc = presentedViewController as! BottomFlexibleHeightVC
-            var height: CGFloat = 0
-            
-            // calculate header
-            height += vc.headerStackViewEdgeInsets.top + vc.headerStackViewEdgeInsets.bottom
-            
-            let targetWidth = safeAreaFrame!.width
-            let fittingSize = CGSize(
-                width: targetWidth - vc.headerStackViewEdgeInsets.left - vc.headerStackViewEdgeInsets.right,
-                height: UIView.layoutFittingCompressedSize.height
-            )
-            
-            height += calculateFittingHeight(of: vc.headerStackView, fittingSize: fittingSize)
-            
-            height += vc.scrollView.contentView.systemLayoutSizeFitting(
-                fittingSize, withHorizontalFittingPriority: .required,
-                verticalFittingPriority: .defaultLow).height
-
-            return height + vc.headerStackViewEdgeInsets.bottom
+            return vc.fittingSizeInContainer(safeAreaFrame: safeAreaFrame!, targetWidth: targetWidth)
         }
+    }
+    
+    func fittingSizeInContainer(safeAreaFrame: CGRect, targetWidth: CGFloat) -> CGFloat {
+        var height: CGFloat = 0
+        
+        // calculate header
+        height += headerStackViewEdgeInsets.top + headerStackViewEdgeInsets.bottom
+        
+        height += headerStackView.fittingHeight(targetWidth: safeAreaFrame.width - headerStackViewEdgeInsets.left - headerStackViewEdgeInsets.right)
+        
+        height += scrollView.contentView.fittingHeight(targetWidth: safeAreaFrame.width)
+
+        return height
     }
     
     init() {
