@@ -31,7 +31,7 @@ class BottomFlexibleHeightVC: BaseViewController, UIViewControllerTransitioningD
                 fittingSize, withHorizontalFittingPriority: .required,
                 verticalFittingPriority: .defaultLow).height
 
-            return height
+            return height + vc.headerStackViewEdgeInsets.bottom
         }
     }
     
