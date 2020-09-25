@@ -108,7 +108,7 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC {
         stackView.addArrangedSubview(descriptionField)
         stackView.addArrangedSubview(languageField)
         
-        stackView.setCustomSpacing(56, after: imagesWrapper)
+        stackView.setCustomSpacing(30, after: imagesWrapper)
         stackView.setCustomSpacing(16, after: communityNameField)
         stackView.setCustomSpacing(16, after: descriptionField)
     }

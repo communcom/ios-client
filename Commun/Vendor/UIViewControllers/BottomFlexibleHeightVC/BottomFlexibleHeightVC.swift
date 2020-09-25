@@ -53,8 +53,8 @@ class BottomFlexibleHeightVC: BaseViewController, UIViewControllerTransitioningD
     
     var headerStackViewEdgeInsets: UIEdgeInsets { UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func setUp() {
+        super.setUp()
         // set up header
         headerStackView.addArrangedSubviews([.spacer(), closeButton])
         view.addSubview(headerStackView)

@@ -30,9 +30,9 @@ class ContentHuggingScrollView: UIScrollView {
         addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
         if scrollableAxis == .vertical {
-            contentView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+            contentView.widthAnchor.constraint(equalTo: widthAnchor, constant: -(contentInset.left + contentInset.right) ).isActive = true
         } else {
-            contentView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+            contentView.heightAnchor.constraint(equalTo: heightAnchor, constant: -(contentInset.top + contentInset.bottom)).isActive = true
         }
     }
 }

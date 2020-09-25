@@ -18,7 +18,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     lazy var pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     lazy var bottomStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .equalCentering)
-    lazy var backButton = UIButton(width: 100, height: 50, label: "back".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .appGrayColor, textColor: .appMainColor, cornerRadius: 25)
+    lazy var backButton = UIButton(width: 100, height: 50, label: "back".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1), textColor: .appMainColor, cornerRadius: 25)
     lazy var pageControl = CMPageControll(numberOfPages: viewControllers.count)
     
     // save transaction id in case of non-completed creating community process
@@ -76,29 +76,39 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         continueButton.removeFromSuperview()
         stackView.autoPinEdge(toSuperviewEdge: .bottom)
         
+        // remove scrollView and add containerView
+        scrollView.removeFromSuperview()
+        
+        view.addSubview(containerView)
+        containerView.autoPinEdge(.top, to: .bottom, of: headerStackView, withOffset: headerStackViewEdgeInsets.bottom)
+        containerView.autoPinEdge(toSuperviewEdge: .leading)
+        containerView.autoPinEdge(toSuperviewEdge: .trailing)
+        
+        // bottom stackView
+        let bottomView: UIView = {
+            let bottomView = UIView(backgroundColor: view.backgroundColor)
+            bottomView.addSubview(bottomStackView)
+            bottomStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10))
+            bottomStackView.addArrangedSubviews([backButton, pageControl, continueButton])
+            return bottomView
+        }()
+        view.addSubview(bottomView)
+        bottomView.autoPinEdge(.top, to: .bottom, of: containerView)
+        bottomView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
+        
+        // dismiss keyboard
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
+        
         // add pageVC
         addChild(pageVC)
-        containerView.addSubview(pageVC.view)
         pageVC.view.configureForAutoLayout()
+        containerView.addSubview(pageVC.view)
         pageVC.view.autoPinEdgesToSuperviewEdges()
         pageVC.didMove(toParent: self)
         
-        // add contentView
-        stackView.addArrangedSubview(containerView)
-        
-        // bottom stackView
-        let bottomView = UIView(height: 120, backgroundColor: view.backgroundColor)
-        bottomView.addSubview(bottomStackView)
-        bottomStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10))
-        bottomStackView.addArrangedSubviews([backButton, pageControl, continueButton])
-        
-        view.addSubview(bottomView)
-        bottomView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
-        
-//        kickOff()
-        
-        view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
+        // kick off first screen
+        pageVC.setViewControllers([firstStepVC], direction: .forward, animated: true, completion: nil)
     }
     
     override func continueButtonDidTouch() {
