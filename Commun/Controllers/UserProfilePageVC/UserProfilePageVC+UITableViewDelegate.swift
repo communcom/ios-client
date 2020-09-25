@@ -29,13 +29,12 @@ extension UserProfilePageVC: UITableViewDelegate {
         
         switch item {
         case var post as ResponseAPIContentGetPost:
-            guard let cell = cell as? PostCell, cell.postIdentity == post.identity else {return}
             (viewModel as! UserProfilePageViewModel).postsVM.rowHeights[post.identity] = cell.bounds.height
             
             // record post view
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 if tableView.isCellVisible(indexPath: indexPath) &&
-                    cell.postIdentity == post.identity &&
+                    (cell as? PostCell)?.postIdentity == post.identity &&
                     !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity)
                 {
                     post.markAsViewed().disposed(by: self.disposeBag)

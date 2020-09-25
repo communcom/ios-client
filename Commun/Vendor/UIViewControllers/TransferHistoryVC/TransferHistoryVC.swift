@@ -141,8 +141,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
         completedVC.completionRepeat = { [weak self] in
             guard let strongSelf = self else { return }
             
-            let walletSendPointsVC = WalletSendPointsVC(selectedBalanceSymbol: transaction.symbol.sell, user: nil)
-            walletSendPointsVC.dataModel.transaction = transaction
+            let walletSendPointsVC = CMSendPointsVC(selectedBalanceSymbol: transaction.symbol.sell, receiver: selectedItem.receiver, history: selectedItem)
             
             if let communWalletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {
                 strongSelf.navigationController?.popToViewController(communWalletVC, animated: false)
@@ -150,7 +149,6 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                 switch selectedItem.meta.actionType {
                 case "transfer":
                     communWalletVC.show(walletSendPointsVC, sender: nil)
-                    walletSendPointsVC.updateSendInfoByHistory()
                     
                 case "convert":
                     communWalletVC.routeToConvertScene(withTransacion: transaction)

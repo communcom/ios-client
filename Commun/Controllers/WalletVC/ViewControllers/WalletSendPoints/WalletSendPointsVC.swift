@@ -259,7 +259,7 @@ class WalletSendPointsVC: BaseViewController {
         // user view
         userView.layer.cornerRadius = 10
         userView.layer.borderWidth = 1
-        userView.layer.borderColor = UIColor.appLightGrayColor.cgColor
+        userView.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
 
         whiteView.addSubview(userView)
         userView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 15, bottom: 0, right: 15), excludingEdge: .bottom)
@@ -282,7 +282,7 @@ class WalletSendPointsVC: BaseViewController {
         let amountView = UIView(height: 70)
         amountView.layer.cornerRadius = 10
         amountView.layer.borderWidth = 1
-        amountView.layer.borderColor = UIColor.appLightGrayColor.cgColor
+        amountView.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
         amountBorderView = amountView
 
         whiteView.addSubview(amountView)
@@ -361,7 +361,7 @@ class WalletSendPointsVC: BaseViewController {
     
     private func setup(borderedView: UIView) {
         borderedView.translatesAutoresizingMaskIntoConstraints = false
-        borderedView.layer.borderColor = UIColor.appLightGrayColor.cgColor
+        borderedView.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
         borderedView.layer.borderWidth = 1.0
         borderedView.clipsToBounds = true
     }
@@ -465,7 +465,8 @@ class WalletSendPointsVC: BaseViewController {
         return false
     }
     
-    func updateAlertView(amount: CGFloat) {
+    func updateAlertView(amount: CGFloat? = nil) {
+        let amount = amount ?? CGFloat(pointsTextField.text?.float() ?? 0.0)
         if amount <= dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount {
             handleAmountValid()
         } else {
@@ -474,18 +475,18 @@ class WalletSendPointsVC: BaseViewController {
     }
     
     func handleAmountValid() {
-        amountBorderView.layer.borderColor = UIColor.appLightGrayColor.cgColor
+        amountBorderView.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
         alertLabel.isHidden = true
     }
     
     func handleInsufficientFunds() {
-        amountBorderView.layer.borderColor = UIColor.appRedColor.cgColor
+        amountBorderView.borderColor = .appRedColor
         alertLabel.isHidden = false
         alertLabel.text = "Insufficient funds: \(dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell).amount) \(dataModel.transaction.symbol.sell)"
     }
     
     func programmaticallyChangeAmount(to amount: CGFloat) {
-        pointsTextField.text = "\(amount)"
+        pointsTextField.text = String(Double(amount).currencyValueFormatted)
         pointsTextField.sendActions(for: .editingChanged)
         updateAlertView(amount: amount)
     }

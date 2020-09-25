@@ -22,7 +22,7 @@ class CMLanguageView: MyView {
     
     func setUp(with language: Language) {
         flagImageView.image = UIImage.init(named: "flag.\(language.code)")
-        languageName.text = language.name
+        languageName.text = (language.name + " language").localized().uppercaseFirst
     }
     
     func setUp(code: String?) {

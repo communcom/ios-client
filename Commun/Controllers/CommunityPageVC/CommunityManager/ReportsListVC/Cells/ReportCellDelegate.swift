@@ -39,7 +39,7 @@ extension ReportCellDelegate where Self: BaseViewController {
             if proposal.isApproved == true {
                 request = BlockchainManager.instance.unapproveProposal(proposal.proposalId)
             } else {
-                request = BlockchainManager.instance.approveProposal(proposal.proposalId)
+                request = BlockchainManager.instance.approveProposal(proposal.proposalId, proposer: proposal.proposer?.userId ?? "")
             }
             
             request

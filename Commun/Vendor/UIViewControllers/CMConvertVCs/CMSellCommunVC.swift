@@ -1,31 +1,27 @@
 //
-//  WalletSellCommunVC.swift
+//  CMSellCommunVC.swift
 //  Commun
 //
-//  Created by Chung Tran on 12/25/19.
-//  Copyright © 2019 Commun Limited. All rights reserved.
+//  Created by Chung Tran on 9/22/20.
+//  Copyright © 2020 Commun Limited. All rights reserved.
 //
 
 import Foundation
 import RxSwift
 
-class WalletSellCommunVC: WalletConvertVC {
-    // MARK: - Properties
-//    override var topColor: UIColor {
-//        .appMainColorDarkBlack
-//    }
-    
-    // MARK: - Methods
+class CMSellCommunVC: CMConvertVC {
     override func setUp() {
         super.setUp()
-        
         balanceNameLabel.text = "Commun"
         convertSellLabel.text = "sell".localized().uppercaseFirst + " Commun"
+        
+        let communLogo = UIView.transparentCommunLogo(size: 50)
+        topStackView.insertArrangedSubview(communLogo, at: 0)
+        topStackView.setCustomSpacing(20, after: communLogo)
     }
     
     override func setUpCommunBalance() {
         super.setUpCommunBalance()
-        
         guard let balance = communBalance else {return}
         
         valueLabel.text = balance.balanceValue.currencyValueFormatted
@@ -33,12 +29,17 @@ class WalletSellCommunVC: WalletConvertVC {
     
     override func setUpCurrentBalance() {
         super.setUpCurrentBalance()
-        
         guard let balance = currentBalance else {return}
         
         buyLogoImageView.setAvatar(urlString: balance.logo)
-        buyNameLabel.text = balance.name ?? balance.symbol
-        buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
+        buyNameLabel.attributedText = NSMutableAttributedString()
+            .text("buy".localized().uppercaseFirst, size: 12, color: .appGrayColor)
+            .text("\n")
+            .text(balance.name ?? balance.symbol, size: 15, weight: .semibold)
+        buyBalanceLabel.attributedText = NSMutableAttributedString()
+            .text("balance".localized().uppercaseFirst, size: 12, color: .appGrayColor)
+            .text("\n")
+            .text(balance.balanceValue.currencyValueFormatted, size: 15, weight: .semibold)
         convertBuyLabel.text = "buy".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
     }
     
@@ -62,41 +63,10 @@ class WalletSellCommunVC: WalletConvertVC {
         convertButton.isDisabled = !shouldEnableConvertButton()
     }
     
-    override func layoutCarousel() {
-        let communLogo = UIView.transparentCommunLogo(size: 50)
-        scrollView.contentView.addSubview(communLogo)
-        communLogo.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
-        communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
-        
-        balanceNameLabel.autoPinEdge(.top, to: .bottom, of: communLogo, withOffset: 20)
-    }
-    
-    override func layoutBuyContainer() {
-        super.layoutBuyContainer()
-        buyContainer.isUserInteractionEnabled = true
-        buyContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dropdownButtonDidTouch)))
-    }
-    
-    override func layoutTrailingOfBuyContainer() {
-        let dropdownButton = UIButton.circleGray(imageName: "drop-down")
-        dropdownButton.isUserInteractionEnabled = false
-        buyContainer.addSubview(dropdownButton)
-        dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        dropdownButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        dropdownButton.autoPinEdge(.leading, to: .trailing, of: buyBalanceLabel, withOffset: 10)
-    }
-    
-    override func shouldEnableConvertButton() -> Bool {
-        guard let sellAmount = NumberFormatter().number(from: self.leftTextField.text ?? "0")?.doubleValue else { return false }
-        guard let communBalance = self.communBalance else { return false }
-        guard sellAmount > 0 else { return false }
-        
-        if sellAmount > communBalance.balanceValue {
-            viewModel.errorSubject.accept(.insufficientFunds)
-            return false
-        }
-        
-        return true
+    override func setUpRate() {
+        super.setUpRate()
+        rateLabel.attributedText = NSMutableAttributedString()
+            .text("rate".localized().uppercaseFirst + ": 10 CMN = \(viewModel.rate.value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
     }
     
     // MARK: - Binding
@@ -149,18 +119,18 @@ class WalletSellCommunVC: WalletConvertVC {
             .disposed(by: disposeBag)
     }
     
-    override func setUpRate() {
-        rateLabel.attributedText = NSMutableAttributedString()
-            .text("rate".localized().uppercaseFirst + ": 10 CMN = \(viewModel.rate.value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
-    }
-    
-    // MARK: - Actions
-    @objc func dropdownButtonDidTouch() {
-        let vc = BalancesVC(canChooseCommun: false) { (balance) in
-            self.currentBalance = balance
+    // MARK: - Helpers
+    override func shouldEnableConvertButton() -> Bool {
+        guard let sellAmount = NumberFormatter().number(from: self.leftTextField.text ?? "0")?.doubleValue else { return false }
+        guard let communBalance = self.communBalance else { return false }
+        guard sellAmount > 0 else { return false }
+        
+        if sellAmount > communBalance.balanceValue {
+            viewModel.errorSubject.accept(.insufficientFunds)
+            return false
         }
-        let nc = SwipeNavigationController(rootViewController: vc)
-        present(nc, animated: true, completion: nil)
+        
+        return true
     }
     
     override func getBuyPrice() {
@@ -179,10 +149,11 @@ class WalletSellCommunVC: WalletConvertVC {
         viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
     
-    override func convertButtonDidTouch() {
+    // MARK: - Actions
+    override func actionButtonDidTouch() {
         guard checkValues() else { return }
         
-        super.convertButtonDidTouch()
+        super.actionButtonDidTouch()
         
         guard var balance = currentBalance,
             var communBalance = communBalance,
@@ -222,7 +193,11 @@ class WalletSellCommunVC: WalletConvertVC {
                 return RestAPIManager.instance.waitForTransactionWith(id: transactionId)
             })
             .subscribe(onCompleted: {
-                self.viewModel.reload()
+                balance.isWaitingForTransaction = false
+                balance.notifyChanged()
+                
+                communBalance.isWaitingForTransaction = false
+                communBalance.notifyChanged()
             }) { [weak self] (error) in
                 self?.hideHud()
                 self?.showError(error)

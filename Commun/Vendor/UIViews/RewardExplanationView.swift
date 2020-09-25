@@ -24,9 +24,11 @@ class RewardsExplanationVC: BaseViewController {
         
         vc.donateButtonHandler = {
             vc.dismiss(animated: true) {
-                var post = self.post
-                post.showDonationButtons = true
-                post.notifyChanged()
+                guard let symbol = self.post.community?.communityId,
+                    let user = self.post.author
+                else {return}
+                let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: self.post)
+                UIApplication.topViewController()?.show(donateVC, sender: nil)
             }
         }
         return vc

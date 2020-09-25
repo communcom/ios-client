@@ -22,15 +22,16 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         }
     }
     
-    lazy var avatarImageView: MyAvatarImageView = {
-        let imageView = MyAvatarImageView(size: 120)
-        return imageView
-    }()
-    lazy var changeAvatarButton: UIButton = {
-        let button = UIButton.circle(size: 44, backgroundColor: .clear, imageName: "profile-edit-change-image")
-        button.addTarget(self, action: #selector(chooseAvatarButtonDidTouch), for: .touchUpInside)
-        return button
-    }()
+    lazy var coverImageView = UIImageView(cornerRadius: 10, contentMode: .scaleAspectFill)
+        .image(.placeholder)
+        .whRatio(335/150)
+    lazy var changeCoverButton = UIButton.changeCoverButton
+        .onTap(self, action: #selector(chooseCoverButtonDidTouch))
+    lazy var avatarImageView = MyAvatarImageView(size: 80)
+        .border(width: 2, color: .appWhiteColor)
+    lazy var changeAvatarButton = UIButton.changeAvatarButton
+        .onTap(self, action: #selector(chooseAvatarButtonDidTouch))
+    
     lazy var communityNameTextField: UITextField = {
         let tf = UITextField()
         tf.borderStyle = .none
@@ -51,8 +52,9 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     lazy var languageFlagImageView = UIImageView.circle(size: 32)
     lazy var languageDetailLabel = UILabel.with(textSize: 15, numberOfLines: 2)
     
-    let countryRelay = BehaviorRelay<Country?>(value: nil)
+    let languageRelay = BehaviorRelay<Language?>(value: nil)
     var didSetAvatar = false
+    var didSetCover = false
     var createdCommunities: [ResponseAPIContentGetCommunity]?
     
     override func viewDidLoad() {
@@ -91,13 +93,22 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     override func setUp() {
         super.setUp()
         continueButton.setTitle("create community".localized().uppercaseFirst, for: .normal)
-        stackView.alignment = .center
         
         // image wrappers
-        let avatarWrapper = UIView(forAutoLayout: ())
-        avatarWrapper.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges()
-        avatarWrapper.addSubview(changeAvatarButton)
+        let imagesWrapper = UIView(forAutoLayout: ())
+        imagesWrapper.addSubview(coverImageView)
+        coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        
+        imagesWrapper.addSubview(changeCoverButton)
+        changeCoverButton.autoPinEdge(.bottom, to: .bottom, of: coverImageView, withOffset: -10)
+        changeCoverButton.autoPinEdge(.trailing, to: .trailing, of: coverImageView, withOffset: -10)
+        
+        imagesWrapper.addSubview(avatarImageView)
+        avatarImageView.autoPinEdge(.top, to: .bottom, of: coverImageView, withOffset: -40)
+        avatarImageView.autoAlignAxis(toSuperviewAxis: .vertical)
+        avatarImageView.autoPinEdge(toSuperviewEdge: .bottom)
+        
+        imagesWrapper.addSubview(changeAvatarButton)
         changeAvatarButton.autoPinEdge(.trailing, to: .trailing, of: avatarImageView)
         changeAvatarButton.autoPinEdge(.bottom, to: .bottom, of: avatarImageView)
         
@@ -138,16 +149,12 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             return view
         }()
         
-        stackView.addArrangedSubview(avatarWrapper)
+        stackView.addArrangedSubview(imagesWrapper)
         stackView.addArrangedSubview(communityNameField)
         stackView.addArrangedSubview(descriptionField)
         stackView.addArrangedSubview(languageField)
         
-        communityNameField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
-        descriptionField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
-        languageField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -20).isActive = true
-        
-        stackView.setCustomSpacing(56, after: avatarWrapper)
+        stackView.setCustomSpacing(56, after: imagesWrapper)
         stackView.setCustomSpacing(16, after: communityNameField)
         stackView.setCustomSpacing(16, after: descriptionField)
         
@@ -170,37 +177,28 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         Observable.combineLatest(
             communityNameTextField.rx.text.orEmpty,
             descriptionTextView.rx.text.orEmpty,
-            countryRelay
+            languageRelay
         )
-            .map({ (name, description, country) -> Bool in
-                (!name.isEmpty) && (description.count <= self.descriptionLimit) && (country?.language?.code != nil)
+            .map({ (name, description, language) -> Bool in
+                (!name.isEmpty) && (description.count <= self.descriptionLimit) && (language != nil)
             })
             .bind(to: continueButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        countryRelay
-            .subscribe(onNext: { (country) in
-                guard let country = country else {
+        languageRelay
+            .subscribe(onNext: { (language) in
+                guard let language = language else {
                     self.languageFlagImageView.isHidden = true
                     self.languageDetailLabel.text = "language".localized().uppercaseFirst
                     self.languageDetailLabel.textColor = .appGrayColor
                     return
                 }
                 self.languageFlagImageView.isHidden = false
-                var flagImageNamed = ""
-                switch country.language?.code {
-                case "en":
-                    flagImageNamed = "flag.en"
-                case "ru":
-                    flagImageNamed = "flag.ru"
-                default:
-                    return
-                }
-                self.languageFlagImageView.image = UIImage(named: flagImageNamed)
+                self.languageFlagImageView.image = UIImage(named: "flag.\(language.code)")
                 self.languageDetailLabel.attributedText = NSMutableAttributedString()
-                    .text(country.name, size: 15, weight: .medium)
+                    .text(language.name.uppercaseFirst, size: 15, weight: .medium)
                     .text("\n")
-                    .text(country.language?.name ?? country.language?.code ?? "", size: 12, weight: .medium, color: .appGrayColor)
+                    .text((language.name + " language").localized().uppercaseFirst, size: 12, weight: .medium, color: .appGrayColor)
                     
             })
             .disposed(by: disposeBag)
@@ -230,7 +228,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         view.endEditing(true)
         
         guard let name = communityNameTextField.text,
-            let language = countryRelay.value?.language?.code
+            let language = languageRelay.value?.code
         else {return}
         let description = self.descriptionTextView.text ?? ""
         
@@ -243,13 +241,26 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             single = startCommunityCreation(communityId: uncompletedCreatingCommunity.communityId)
         } else {
             single = RestAPIManager.instance.createNewCommunity(name: name)
-                .flatMap { result -> Single<(ResponseAPICommunityCreateNewCommunity, String)> in
-                    if !self.didSetAvatar || self.avatarImageView.image == nil { return .just((result, "")) }
-                    return RestAPIManager.instance.uploadImage(self.avatarImageView.image!)
-                        .map {(result, $0)}
+                .flatMap { result -> Single<(ResponseAPICommunityCreateNewCommunity, String, String)> in
+                    var singles = [Single<String>]()
+                    
+                    if !self.didSetAvatar || self.avatarImageView.image == nil {
+                        singles.append(.just(""))
+                    } else {
+                        singles.append(RestAPIManager.instance.uploadImage(self.avatarImageView.image!))
+                    }
+                    
+                    if !self.didSetCover || self.coverImageView.image == nil {
+                        singles.append(.just(""))
+                    } else {
+                        singles.append(RestAPIManager.instance.uploadImage(self.coverImageView.image!))
+                    }
+                    
+                    return Single.zip(singles)
+                        .map {(result, $0[0], $0[1])}
                 }
-                .flatMap { (result, imageUrl) in
-                    return RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: imageUrl)
+                .flatMap { (result, avatarUrl, coverUrl) in
+                    return RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: avatarUrl, coverUrl: coverUrl)
                         .map {_ in result.community.communityId}
                 }
                 .flatMap {communityId in
@@ -308,6 +319,13 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         self.showError(error)
     }
     
+    @objc func chooseCoverButtonDidTouch() {
+        showCoverImagePicker { (image) in
+            self.coverImageView.image = image
+            self.didSetCover = true
+        }
+    }
+    
     @objc func chooseAvatarButtonDidTouch() {
         // On updating
         let chooseAvatarVC = ProfileChooseAvatarVC.fromStoryboard("ProfileChooseAvatarVC", withIdentifier: "ProfileChooseAvatarVC")
@@ -328,19 +346,13 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             self.view.endEditing(true)
         }
         
-        let vc = LanguagesVC()
-        let nav = UINavigationController(rootViewController: vc)
-        
-        vc.selectionHandler = {country in
-            if country.available {
-                nav.dismiss(animated: true, completion: nil)
-                self.countryRelay.accept(country)
-            } else {
-                self.showAlert(title: "sorry".uppercaseFirst.localized(), message: "but we don’t support your region yet".uppercaseFirst.localized())
-            }
+        let vc = CMLanguagesVC()
+        vc.languageDidSelect = { language in
+            vc.navigationController?.dismiss(animated: true, completion: nil)
+            self.languageRelay.accept(language)
         }
-        
-        present(nav, animated: true, completion: nil)
+        let navVC = SwipeNavigationController(rootViewController: vc)
+        present(navVC, animated: true, completion: nil)
     }
     
     @objc func endEditing() {

@@ -75,8 +75,8 @@ extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
             let post = post,
             let user = post.author
         else {return}
-
-        let donateVC = WalletDonateVC(selectedBalanceSymbol: symbol, user: user, message: post, amount: amount)
+        
+        let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: post, amount: amount)
         show(donateVC, sender: nil)
     }
     
@@ -86,21 +86,5 @@ extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
             post?.showDonationButtons = false
             post?.notifyChanged()
         }
-    }
-    
-    func headerView(_ headerView: PostHeaderView, donationUsersViewDidTouch donationUsersView: DonationUsersView) {
-        guard let donations = post?.donations else {return}
-        let vc = CommentRewardsVC(donations: donations)
-        vc.modelSelected = {donation in
-            vc.dismiss(animated: true) {
-                self.showProfileWithUserId(donation.sender.userId)
-            }
-        }
-
-        let navigation = SwipeNavigationController(rootViewController: vc)
-        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-        navigation.modalPresentationStyle = .custom
-        navigation.transitioningDelegate = vc
-        present(navigation, animated: true, completion: nil)
     }
 }

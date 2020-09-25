@@ -147,15 +147,12 @@ class PostHeaderView: MyTableHeaderView {
     }
 }
 
-extension PostHeaderView: DonationUsersViewDelegate, DonationViewDelegate {
+extension PostHeaderView: DonationViewDelegate {
     @objc func donationAmountDidTouch(sender: UIButton) {
         let amount = donationView.amounts[safe: sender.tag]?.double
         delegate?.headerViewDonationButtonDidTouch(self, amount: amount)
     }
     
-    func donationUsersViewCloseButtonDidTouch(_ donationUserView: DonationUsersView) {
-        delegate?.headerViewDonationViewCloseButtonDidTouch(donationUserView)
-    }
     func donationViewCloseButtonDidTouch(_ donationView: DonationView) {
         delegate?.headerViewDonationViewCloseButtonDidTouch(donationView)
     }

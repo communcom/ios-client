@@ -218,4 +218,30 @@ extension UIView {
             subview.removeFromSuperview()
         }
     }
+    
+    @discardableResult
+    func onTap(_ target: Any?, action: Selector) -> Self {
+        if self is UIButton {
+            (self as? UIButton)?.addTarget(target, action: action, for: .touchUpInside)
+            return self
+        }
+        let tap = UITapGestureRecognizer(target: target, action: action)
+        addGestureRecognizer(tap)
+        isUserInteractionEnabled = true
+        return self
+    }
+    
+    @discardableResult
+    func border(width: CGFloat, color: UIColor) -> Self {
+        borderWidth = width
+        borderColor = color
+        return self
+    }
+    
+    @discardableResult
+    func whRatio(_ ratio: CGFloat) -> Self {
+        widthAnchor.constraint(equalTo: heightAnchor, multiplier: 335 / 150)
+            .isActive = true
+        return self
+    }
 }

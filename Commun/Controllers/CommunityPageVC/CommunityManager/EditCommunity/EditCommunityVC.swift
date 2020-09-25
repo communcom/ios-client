@@ -231,30 +231,25 @@ class EditCommunityVC: BaseVerticalStackVC {
     }
     
     @objc func languageButtonDidTouch() {
-        let vc = LanguagesVC()
-        let nav = UINavigationController(rootViewController: vc)
-        
-        vc.selectionHandler = {country in
-            if country.available {
-                if country.language?.code == self.originalCommunity.language {return}
-                nav.dismiss(animated: true, completion: nil)
-                self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
-                BlockchainManager.instance.editCommunnity(communityCode: self.originalCommunity.communityId, commnityIssuer: self.originalCommunity.issuer ?? "", language: country.language!.code)
-                    .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
-                    .subscribe(onCompleted: {
-                        self.hideHud()
-                        self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for language changing has been created".localized().uppercaseFirst)
-                    }, onError: {(error) in
-                        self.hideHud()
-                        self.showError(error)
-                    })
-                    .disposed(by: self.disposeBag)
-            } else {
-                self.showAlert(title: "sorry".uppercaseFirst.localized(), message: "but we don’t support your region yet".uppercaseFirst.localized())
-            }
+        let vc = CMLanguagesVC()
+        vc.languageDidSelect = { language in
+            if language.code == self.originalCommunity.language {return}
+            vc.navigationController?.dismiss(animated: true, completion: nil)
+            
+            self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
+            BlockchainManager.instance.editCommunnity(communityCode: self.originalCommunity.communityId, commnityIssuer: self.originalCommunity.issuer ?? "", language: language.code)
+                .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                .subscribe(onCompleted: {
+                    self.hideHud()
+                    self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for language changing has been created".localized().uppercaseFirst)
+                }, onError: {(error) in
+                    self.hideHud()
+                    self.showError(error)
+                })
+                .disposed(by: self.disposeBag)
         }
-        
-        present(nav, animated: true, completion: nil)
+        let navVC = SwipeNavigationController(rootViewController: vc)
+        present(navVC, animated: true, completion: nil)
     }
     
     @objc func topicButtonDidTouch() {

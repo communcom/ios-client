@@ -65,6 +65,7 @@ class PostStatsView: MyView {
         
         return stackView
     }()
+    lazy var donationsViewWrapper: UIView = donationsView.padding(UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
     
     // Number of views
     lazy var viewsCountLabel = self.createDescriptionLabel()
@@ -130,7 +131,7 @@ class PostStatsView: MyView {
         stackView.autoPinEdgesToSuperviewEdges()
         
         stackView.addArrangedSubviews([
-            donationsView.padding(UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)),
+            donationsViewWrapper,
             .spacer(height: 2, backgroundColor: .appLightGrayColor),
             actionsViewWrapper.padding(UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16))
         ])
@@ -153,20 +154,25 @@ class PostStatsView: MyView {
         // donations
         var donatorsText: String?
         if let donators = post.donations?.donators {
-            
-            if donators.count <= 2 {
-                donatorsText = donators.joined(separator: ", ")
-            } else {
-                donatorsText = Array(donators.prefix(2)).joined(separator: ", ") + ", " + "and".localized() + " \(donators.count - 2)" + " " + "others".localized()
+            donatorsText = Array(donators.prefix(2)).joined(separator: ", ")
+            if donators.count > 2 {
+                donatorsText = donatorsText! + " " + "and".localized() + " " + "others-count".localizedPlural(donators.count - 2)
             }
             donationIcon.image = UIImage(named: "coin-reward")
         } else {
-            donatorsText = "Be the first donater ever!"
+            donatorsText = "Be the first donater ever!".localized()
             donationIcon.image = UIImage(named: "cool-emoji")
         }
         donatorsLabel.text = donatorsText
         
-        donateButton.isHidden = post.author?.userId == Config.currentUser?.id
+        donationsViewWrapper.isHidden = false
+        donateButton.isHidden = false
+        if post.author?.userId == Config.currentUser?.id {
+            donateButton.isHidden = true
+            if post.donationsCount == 0 {
+                donationsViewWrapper.isHidden = true
+            }
+        }
     }
     
     func fillShareCountButton(_ fill: Bool = true) {

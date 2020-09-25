@@ -20,7 +20,7 @@ extension MyProfileSettingsVC {
     }
 
     @objc func selectLanguage() {
-        let navVC = SwipeNavigationController(rootViewController: SelectLanguageVC())
+        let navVC = SwipeNavigationController(rootViewController: SelectInterfaceLanguageVC())
         present(navVC, animated: true, completion: nil)
     }
     

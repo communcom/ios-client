@@ -50,7 +50,7 @@ extension ProposalCellDelegate where Self: BaseViewController {
             proposal.notifyChanged()
             
             // accept and apply
-            BlockchainManager.instance.approveProposal(proposal.proposalId)
+            BlockchainManager.instance.approveProposal(proposal.proposalId, proposer: proposer)
                 .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
                 .do(onError: { (_) in
                     proposal.approvesCount = currentProposalCount
