@@ -9,31 +9,31 @@
 import Foundation
 import UIKit
 
-class BottomFlexibleHeightPresentationController: FlexibleHeightPresentationController {
-    override func calculateFittingHeightOfPresentedView(fittingSize: CGSize) -> CGFloat {
-        let vc = presentedViewController as! BottomFlexibleHeightVC
-        var height: CGFloat = 0
-        
-        // calculate header
-        height += vc.headerStackViewEdgeInsets.top + vc.headerStackViewEdgeInsets.bottom
-        
-        let targetWidth = safeAreaFrame!.width
-        let fittingSize = CGSize(
-            width: targetWidth - vc.headerStackViewEdgeInsets.left - vc.headerStackViewEdgeInsets.right,
-            height: UIView.layoutFittingCompressedSize.height
-        )
-        
-        height += calculateFittingHeight(of: vc.headerStackView, fittingSize: fittingSize)
-        
-        height += vc.scrollView.contentView.systemLayoutSizeFitting(
-            fittingSize, withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .defaultLow).height
+class BottomFlexibleHeightVC: BaseViewController, UIViewControllerTransitioningDelegate {
+    // MARK: - Nested type
+    class PresentationController: FlexibleHeightPresentationController {
+        override func calculateFittingHeightOfPresentedView(fittingSize: CGSize) -> CGFloat {
+            let vc = presentedViewController as! BottomFlexibleHeightVC
+            var height: CGFloat = 0
+            
+            // calculate header
+            height += vc.headerStackViewEdgeInsets.top + vc.headerStackViewEdgeInsets.bottom
+            
+            let targetWidth = safeAreaFrame!.width
+            let fittingSize = CGSize(
+                width: targetWidth - vc.headerStackViewEdgeInsets.left - vc.headerStackViewEdgeInsets.right,
+                height: UIView.layoutFittingCompressedSize.height
+            )
+            
+            height += calculateFittingHeight(of: vc.headerStackView, fittingSize: fittingSize)
+            
+            height += vc.scrollView.contentView.systemLayoutSizeFitting(
+                fittingSize, withHorizontalFittingPriority: .required,
+                verticalFittingPriority: .defaultLow).height
 
-        return height
+            return height
+        }
     }
-}
-
-class BottomFlexibleHeightVC: BaseViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -74,12 +74,9 @@ class BottomFlexibleHeightVC: BaseViewController {
     @objc func closeButtonDidTouch(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-}
-
-// MARK: - UIViewControllerTransitioningDelegate
-extension BottomFlexibleHeightVC: UIViewControllerTransitioningDelegate {
+    
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return BottomFlexibleHeightPresentationController(presentedViewController: presented, presenting: presenting)
+        return PresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
 
