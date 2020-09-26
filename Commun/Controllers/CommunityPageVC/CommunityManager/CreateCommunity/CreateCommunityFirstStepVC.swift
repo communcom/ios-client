@@ -9,7 +9,8 @@
 import Foundation
 import RxCocoa
 
-class CreateCommmunityFirstStepVC: BaseVerticalStackVC {
+class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
+    let isDataValid = BehaviorRelay<Bool>(value: false)
     override var shouldHandleKeyboard: Bool { false }
     let descriptionLimit = 500
     

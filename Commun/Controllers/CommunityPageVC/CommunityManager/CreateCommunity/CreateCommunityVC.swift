@@ -10,6 +10,10 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+protocol CreateCommunityVCType: BaseViewController {
+    var isDataValid: BehaviorRelay<Bool> {get}
+}
+
 class CreateCommunityVC: CreateCommunityFlowVC {
     // MARK: - Properties
     // save transaction id in case of non-completed creating community process
@@ -26,8 +30,8 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     
     // MARK: - Child VCs
     lazy var firstStepVC = CreateCommmunityFirstStepVC()
-    lazy var topicsVC = TopicsVC(communityCode: "", communityIssuer: "", topics: ["ad", "ad2", "ad3"])
-    lazy var viewControllers = [firstStepVC, topicsVC]
+    lazy var topicsVC = CreateCommunitySecondStepVC(communityCode: "", communityIssuer: "", topics: ["ad", "ad2", "ad3"])
+    lazy var viewControllers: [CreateCommunityVCType] = [firstStepVC, topicsVC]
     
     // MARK: - Subviews
     lazy var containerView = UIView(forAutoLayout: ())
@@ -117,6 +121,16 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         
         // kick off first screen
         moveToStep(currentPageIndex)
+    }
+    
+    override func bind() {
+        super.bind()
+        Observable.combineLatest(viewControllers.map {$0.isDataValid})
+            .distinctUntilChanged()
+            .map {$0[self.currentPageIndex]}
+            .asDriver(onErrorJustReturn: false)
+            .drive(continueButton.rx.isEnabled)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Page control
