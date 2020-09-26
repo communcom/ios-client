@@ -11,16 +11,7 @@ import RxSwift
 import RxCocoa
 
 class CreateCommunityVC: CreateCommunityFlowVC {
-    lazy var firstStepVC = CreateCommmunityFirstStepVC()
-    lazy var viewControllers = [firstStepVC]
-    
-    lazy var containerView = UIView(forAutoLayout: ())
-    lazy var pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-    
-    lazy var bottomStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .equalCentering)
-    lazy var backButton = UIButton(width: 100, height: 50, label: "back".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1), textColor: .appMainColor, cornerRadius: 25)
-    lazy var pageControl = CMPageControll(numberOfPages: viewControllers.count)
-    
+    // MARK: - Properties
     // save transaction id in case of non-completed creating community process
     var savedTransactionId: [String: String]? {
         get {
@@ -31,6 +22,21 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         }
     }
     var createdCommunities: [ResponseAPIContentGetCommunity]?
+    var currentPageIndex = 0
+    
+    // MARK: - Child VCs
+    lazy var firstStepVC = CreateCommmunityFirstStepVC()
+    lazy var topicsVC = TopicsVC(communityCode: "", communityIssuer: "", topics: ["ad", "ad2", "ad3"])
+    lazy var viewControllers = [firstStepVC, topicsVC]
+    
+    // MARK: - Subviews
+    lazy var containerView = UIView(forAutoLayout: ())
+    lazy var pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+    
+    lazy var bottomStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .equalCentering)
+    lazy var backButton = UIButton(width: 100, height: 50, label: "back".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1), textColor: .appMainColor, cornerRadius: 25)
+        .onTap(self, action: #selector(backButtonDidTouch))
+    lazy var pageControl = CMPageControll(numberOfPages: viewControllers.count)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,10 +116,31 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         pageVC.didMove(toParent: self)
         
         // kick off first screen
-        pageVC.setViewControllers([firstStepVC], direction: .forward, animated: true, completion: nil)
+        moveToStep(currentPageIndex)
+    }
+    
+    // MARK: - Page control
+    func moveToStep(_ index: Int) {
+        guard let vc = viewControllers[safe: index] else { return }
+        pageVC.setViewControllers([vc], direction: index > currentPageIndex ? .forward : .reverse, animated: true, completion: nil)
+        pageControl.selectedIndex = index
+        backButton.alpha = index > 0 ? 1 : 0
+        currentPageIndex = index
+    }
+    
+    // MARK: - Actions
+    @objc func backButtonDidTouch() {
+        moveToStep(currentPageIndex - 1)
     }
     
     override func continueButtonDidTouch() {
+        // next button
+        guard currentPageIndex == viewControllers.count - 1 else {
+            // move to next step
+            moveToStep(currentPageIndex + 1)
+            return
+        }
+        
 //        view.endEditing(true)
 //        
 //        guard let name = firstStepVC.communityNameTextField.text,

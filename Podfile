@@ -68,6 +68,8 @@ def common_pods_commun
   pod 'FBSDKLoginKit', '6.0.0'
   pod 'FBSDKCoreKit', '6.0.0'
   pod 'GoogleSignIn', '5.0.2'
+  
+  pod 'TagListView', '~> 1.0'
 
 end
 

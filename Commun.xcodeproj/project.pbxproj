@@ -199,6 +199,10 @@
 		BC2F4C5A25109E23009B1971 /* CommunityRuleEditableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */; };
 		BC2F4C5D2510B32E009B1971 /* EditRuleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */; };
 		BC2F4C672511CBCC009B1971 /* CMLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */; };
+		BC2F4C7825130A1E009B1971 /* TopicsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C7725130A1E009B1971 /* TopicsVC.swift */; };
+		BC2F4C7A25130F63009B1971 /* CMTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C7925130F63009B1971 /* CMTableViewController.swift */; };
+		BC2F4C7C25131226009B1971 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C7B25131226009B1971 /* TopicCell.swift */; };
+		BC2F4C8325134E90009B1971 /* TagListView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C8225134E90009B1971 /* TagListView+Extension.swift */; };
 		BC2F4C8F2514BE2E009B1971 /* CMLanguagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */; };
 		BC2F4CAB2519A19C009B1971 /* CMTransferVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CAA2519A19C009B1971 /* CMTransferVC.swift */; };
 		BC2F4CB42519BD2D009B1971 /* CMConvertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CB32519BD2D009B1971 /* CMConvertVC.swift */; };
@@ -800,6 +804,10 @@
 		BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRuleEditableCell.swift; sourceTree = "<group>"; };
 		BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRuleVC.swift; sourceTree = "<group>"; };
 		BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguageView.swift; sourceTree = "<group>"; };
+		BC2F4C7725130A1E009B1971 /* TopicsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsVC.swift; sourceTree = "<group>"; };
+		BC2F4C7925130F63009B1971 /* CMTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTableViewController.swift; sourceTree = "<group>"; };
+		BC2F4C7B25131226009B1971 /* TopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
+		BC2F4C8225134E90009B1971 /* TagListView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagListView+Extension.swift"; sourceTree = "<group>"; };
 		BC2F4C8E2514BE2E009B1971 /* CMLanguagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguagesVC.swift; sourceTree = "<group>"; };
 		BC2F4CAA2519A19C009B1971 /* CMTransferVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTransferVC.swift; sourceTree = "<group>"; };
 		BC2F4CB32519BD2D009B1971 /* CMConvertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMConvertVC.swift; sourceTree = "<group>"; };
@@ -1655,6 +1663,7 @@
 				3B6CB731234331830097B2A1 /* Array+Extensions.swift */,
 				BCA971252360883D00AE37E1 /* Double+Extensions.swift */,
 				BCDEE78B23F28D4400DD3EB3 /* Int+Extensions.swift */,
+				BC2F4C8225134E90009B1971 /* TagListView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1919,6 +1928,7 @@
 				BCE0AE112419EC58009CE0F8 /* BaseVerticalStackVC.swift */,
 				BC22BBD8236C27C000F40658 /* VerticalActionsVC.swift */,
 				BCB4A4CB23701A80005EDAAD /* SubsViewController */,
+				BC2F4C7925130F63009B1971 /* CMTableViewController.swift */,
 			);
 			path = BaseVCs;
 			sourceTree = "<group>";
@@ -1970,6 +1980,15 @@
 			path = EditRuleVCs;
 			sourceTree = "<group>";
 		};
+		BC2F4C74251309A9009B1971 /* EditTopicsVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC2F4C7725130A1E009B1971 /* TopicsVC.swift */,
+				BC2F4C7B25131226009B1971 /* TopicCell.swift */,
+			);
+			path = EditTopicsVC;
+            sourceTree = "<group>";
+        };
 		BC2F4CB72519BD6F009B1971 /* CMConvertVCs */ = {
 			isa = PBXGroup;
 			children = (
@@ -2469,6 +2488,7 @@
 			children = (
 				BC8C1741250F50A100795859 /* EditCommunityVC.swift */,
 				BC2F4C5B2510B31C009B1971 /* EditRuleVCs */,
+				BC2F4C74251309A9009B1971 /* EditTopicsVC */,
 			);
 			path = EditCommunity;
 			sourceTree = "<group>";
@@ -3783,6 +3803,7 @@
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
 				BCF74A62236180B900B91089 /* SubscribersViewModel.swift in Sources */,
 				BCAF5B20241B433400C157B5 /* ViewTag.swift in Sources */,
+				BC2F4C7A25130F63009B1971 /* CMTableViewController.swift in Sources */,
 				3B8DDF68234B388500B213F0 /* UITextView+PureLayout.swift in Sources */,
 				BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */,
 				ACE812D924238283001D9AE2 /* SocialLoginManager.swift in Sources */,
@@ -3865,6 +3886,7 @@
 				BC9FD2F724909A26001AAF2C /* SearchableBalancesVC.swift in Sources */,
 				BC3AF38723FBEC9000528EEB /* DiscoveryPostsVC.swift in Sources */,
 				ACE812D724238215001D9AE2 /* GoogleLoginManager.swift in Sources */,
+				BC2F4C7825130A1E009B1971 /* TopicsVC.swift in Sources */,
 				575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */,
 				BCF1B3F823A7302B00EB6FC8 /* CommentsViewController+Actions.swift in Sources */,
 				BCF39152235FF7F900A9D1ED /* CommentsListFetcher.swift in Sources */,
@@ -3988,6 +4010,7 @@
 				BCACA372250242A6004D8DC1 /* ChangingRootVCAnimator.swift in Sources */,
 				AC6A7CBA23FC4C9A004CA486 /* DeviceScreen.swift in Sources */,
 				BCD01A9723FA427F003B0E1E /* PostPageVC+UITextViewDelegate.swift in Sources */,
+				BC2F4C8325134E90009B1971 /* TagListView+Extension.swift in Sources */,
 				BC5A348C2429C0DA001C5054 /* Country.swift in Sources */,
 				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				BC8F814523E27ECE0024C04A /* WalletTableHeaderView.swift in Sources */,
@@ -4012,6 +4035,7 @@
 				BCB08D6024B4682B00EA2BDB /* NonAuthFeedPageVC.swift in Sources */,
 				B10DB96B240FB99B001BD0E4 /* CMFeedbackViewController.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,
+				BC2F4C7C25131226009B1971 /* TopicCell.swift in Sources */,
 				BC8F815423E27ECE0024C04A /* BuyCommunViewModel.swift in Sources */,
 				BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */,
 				3B8DDF54234AD15A00B213F0 /* PostEditorVC+Actions.swift in Sources */,
