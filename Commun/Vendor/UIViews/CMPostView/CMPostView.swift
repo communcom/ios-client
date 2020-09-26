@@ -15,6 +15,14 @@ class CMPostView: MyView {
     lazy var headerView = UIStackView(axis: .horizontal, spacing: 16, alignment: .center, distribution: .fill)
     lazy var metaView = PostMetaView(height: 40.0)
     
+    lazy var headerLabelWrapper: UIView = {
+        let view = UIView(forAutoLayout: ())
+        view.addSubview(headerLabel)
+        headerLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+        return view
+    }()
+    lazy var headerLabel = UILabel.with(textSize: 18, weight: .semibold, numberOfLines: 0)
+    
     lazy var contentTextViewWrapper: UIView = {
         let view = UIView(forAutoLayout: ())
         view.addSubview(contentTextView)
@@ -63,6 +71,7 @@ class CMPostView: MyView {
     func setUpStackView() {
         stackView.addArrangedSubviews([
             headerView,
+            headerLabelWrapper,
             contentTextViewWrapper,
             gridView,
             articleCardViewWrapper
@@ -77,9 +86,17 @@ class CMPostView: MyView {
         contentTextViewWrapper.isHidden = isArticle
         gridView.isHidden = isArticle
         articleCardViewWrapper.isHidden = !isArticle
+        headerLabelWrapper.isHidden = isArticle
         if isArticle {
             articleCardView.setUp(with: post)
         } else {
+            // title
+            if let title = post.title, !title.isEmpty {
+                headerLabel.text = title
+            } else {
+                headerLabelWrapper.isHidden = true
+            }
+            
             let texts = (post.content ?? []).shortAttributedString
             
             if texts.length > 0 {
