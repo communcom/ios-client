@@ -147,14 +147,17 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
             .disposed(by: disposeBag)
         
         Observable.combineLatest(
+            coverImageView.rx.observe(UIImage.self, "image"),
+            avatarImageView.imageView.rx.observe(UIImage.self, "image"),
             communityNameTextField.rx.text.orEmpty,
             descriptionTextView.rx.text.orEmpty,
             languageRelay
         )
-            .map({ (name, description, language) -> Bool in
-                (!name.isEmpty) && (description.count <= self.descriptionLimit) && (language != nil)
+            .map({ (_, _, name, description, language) -> Bool in
+                self.didSetCover && self.didSetAvatar && (!name.isEmpty) && (description.count <= self.descriptionLimit) && (language != nil)
             })
             .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
             .drive(isDataValid)
             .disposed(by: disposeBag)
 
@@ -182,8 +185,8 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
     
     @objc func chooseCoverButtonDidTouch() {
         showCoverImagePicker { (image) in
-            self.coverImageView.image = image
             self.didSetCover = true
+            self.coverImageView.image = image
         }
     }
     
@@ -196,8 +199,8 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
             .filter {$0 != nil}
             .map {$0!}
             .subscribe(onNext: { (image) in
-                self.avatarImageView.image = image
                 self.didSetAvatar = true
+                self.avatarImageView.image = image
             })
             .disposed(by: disposeBag)
     }
