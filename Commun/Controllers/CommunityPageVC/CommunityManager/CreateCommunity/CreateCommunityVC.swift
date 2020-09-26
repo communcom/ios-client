@@ -89,10 +89,12 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         // remove scrollView and add containerView
         scrollView.removeFromSuperview()
         
-        view.addSubview(containerView)
-        containerView.autoPinEdge(.top, to: .bottom, of: headerStackView, withOffset: headerStackViewEdgeInsets.bottom)
-        containerView.autoPinEdge(toSuperviewEdge: .leading)
-        containerView.autoPinEdge(toSuperviewEdge: .trailing)
+        let contentStackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
+        view.addSubview(contentStackView)
+        contentStackView.autoPinEdge(.top, to: .bottom, of: headerStackView, withOffset: headerStackViewEdgeInsets.bottom)
+        contentStackView.autoPinEdge(toSuperviewEdge: .leading)
+        contentStackView.autoPinEdge(toSuperviewEdge: .trailing)
+        contentStackView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard()
         
         // bottom stackView
         let bottomView: UIView = {
@@ -102,11 +104,8 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             bottomStackView.addArrangedSubviews([backButton, pageControl, continueButton])
             return bottomView
         }()
-        view.addSubview(bottomView)
-        bottomView.autoPinEdge(.top, to: .bottom, of: containerView)
-        bottomView.autoPinEdge(toSuperviewSafeArea: .leading)
-        bottomView.autoPinEdge(toSuperviewSafeArea: .trailing)
-        bottomView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard()
+        
+        contentStackView.addArrangedSubviews([containerView, bottomView])
         
         // dismiss keyboard
         view.isUserInteractionEnabled = true
