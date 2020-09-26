@@ -134,6 +134,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     // MARK: - Page control
     func moveToStep(_ index: Int) {
         guard let vc = viewControllers[safe: index] else { return }
+        endEditing()
         pageVC.setViewControllers([vc], direction: index > currentPageIndex ? .forward : .reverse, animated: true, completion: nil)
         pageControl.selectedIndex = index
         backButton.alpha = index > 0 ? 1 : 0
