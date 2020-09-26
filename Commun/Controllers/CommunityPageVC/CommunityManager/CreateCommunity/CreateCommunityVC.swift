@@ -38,7 +38,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     lazy var pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     lazy var bottomStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .equalCentering)
-    lazy var backButton = UIButton(width: 100, height: 50, label: "back".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1), textColor: .appMainColor, cornerRadius: 25)
+    lazy var backButton = UIButton(width: 100, height: 50, label: "back".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: UIColor(hexString: "#E9EEFC")!.inDarkMode(#colorLiteral(red: 0.1215686275, green: 0.1294117647, blue: 0.1568627451, alpha: 1)), textColor: .appMainColor, cornerRadius: 25)
         .onTap(self, action: #selector(backButtonDidTouch))
     lazy var pageControl = CMPageControll(numberOfPages: viewControllers.count)
     
@@ -126,7 +126,6 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     override func bind() {
         super.bind()
         Observable.combineLatest(viewControllers.map {$0.isDataValid})
-            .distinctUntilChanged()
             .map {$0[self.currentPageIndex]}
             .asDriver(onErrorJustReturn: false)
             .drive(continueButton.rx.isEnabled)
@@ -140,6 +139,8 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         pageControl.selectedIndex = index
         backButton.alpha = index > 0 ? 1 : 0
         currentPageIndex = index
+        // refresh validation
+        vc.isDataValid.accept(vc.isDataValid.value)
     }
     
     // MARK: - Actions
