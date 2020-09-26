@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 import RxCocoa
 
 class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
@@ -144,6 +145,19 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
                     
             })
             .disposed(by: disposeBag)
+        
+        Observable.combineLatest(
+            communityNameTextField.rx.text.orEmpty,
+            descriptionTextView.rx.text.orEmpty,
+            languageRelay
+        )
+            .map({ (name, description, language) -> Bool in
+                (!name.isEmpty) && (description.count <= self.descriptionLimit) && (language != nil)
+            })
+            .asDriver(onErrorJustReturn: false)
+            .drive(isDataValid)
+            .disposed(by: disposeBag)
+
     }
     
     private func infoField(title: String, editor: UITextEditor) -> UIView {
