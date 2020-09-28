@@ -62,15 +62,52 @@ class CMTopicCell: MyTableViewCell {
 }
 
 class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
-    let newTopicCellHeight: CGFloat = 60.5 + 16
+    let newTopicCellHeight: CGFloat = 60.5
     var showNewTopicCell: Bool = false { didSet { updateFooterView() } }
     
-    lazy var newTopicCell = CMTopicCell(height: newTopicCellHeight)
-        .configureToUseAsNormalView()
+    // MARK: - Subview
+    lazy var newTopicCellClearButton = UIButton.clearButton.huggingContent(axis: .horizontal)
+        .onTap(self, action: #selector(clearNewTopicButtonDidTouch))
+    lazy var newTopicCellTextField = UITextField.noBorder()
+    lazy var newTopicCell: UIView = {
+        let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
+        view.borderColor = .appLightGrayColor
+        view.borderWidth = 1
+        
+        let hStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+        view.addSubview(hStackView)
+        hStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+        
+        let vStackView: UIStackView = {
+            let stackView = UIStackView(axis: .vertical, spacing: 5, alignment: .fill, distribution: .fill)
+            stackView.addArrangedSubview(UILabel.with(text: "new topic".localized().uppercaseFirst, textSize: 13, weight: .medium, textColor: .appGrayColor))
+            stackView.addArrangedSubview(newTopicCellTextField)
+            return stackView
+        }()
+        
+        hStackView.addArrangedSubviews([vStackView, newTopicCellClearButton])
+        return view
+    }()
     
     override func setUp() {
         super.setUp()
         setUpFooterView()
+    }
+    
+    override func bind() {
+        super.bind()
+        itemsRelay
+            .subscribe(onNext: { (items) in
+                self.updateFooterView()
+                if items.isEmpty {
+                    self.newTopicCellTextField.setPlaceHolderTextColor(.appMainColor)
+                    self.newTopicCellTextField.placeholder = "your first topic here".localized().uppercaseFirst
+                } else {
+                    self.newTopicCellTextField.setPlaceHolderTextColor(.appGrayColor)
+                    self.newTopicCellTextField.placeholder = "Ex: Game".localized().uppercaseFirst
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func configureCell(item: String, indexPath: IndexPath) -> UITableViewCell {
@@ -98,7 +135,19 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
     }
     
     @objc func addTopicButtonDidTouch() {
-        showNewTopicCell.toggle()
+        if showNewTopicCell == true {
+            newTopicCellTextField.becomeFirstResponder()
+            return
+        }
+        showNewTopicCell = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.newTopicCellTextField.becomeFirstResponder()
+        }
+    }
+    
+    @objc func clearNewTopicButtonDidTouch() {
+        newTopicCellTextField.text = nil
+        newTopicCellTextField.resignFirstResponder()
     }
     
     // MARK: - View modifiers
@@ -113,9 +162,9 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
                 .onTap(self, action: #selector(addTopicButtonDidTouch))
         }()
         
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: newTopicCellHeight+55))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: newTopicCellHeight+16+55))
         
-        let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
+        let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fill)
         view.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
@@ -128,7 +177,7 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
         var frame = tableView.tableFooterView!.frame
         var height: CGFloat = 55
         if showNewTopicCell {
-            height += newTopicCellHeight
+            height += newTopicCellHeight + 16
         }
         if height != frame.size.height {
             UIView.animate(withDuration: animated ? 0.3 : 0) {
