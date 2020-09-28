@@ -212,7 +212,7 @@
 		BC2F4CC4251B03AB009B1971 /* CMSendPointsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CC3251B03AB009B1971 /* CMSendPointsViewModel.swift */; };
 		BC2F4CC7251B2D8C009B1971 /* CMDonateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CC6251B2D8C009B1971 /* CMDonateVC.swift */; };
 		BC2F4CEB251DE4F2009B1971 /* CreateCommunityFirstStepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CEA251DE4F2009B1971 /* CreateCommunityFirstStepVC.swift */; };
-		BC2F4CFD251EF144009B1971 /* CreateCommunitySecondStepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CFC251EF144009B1971 /* CreateCommunitySecondStepVC.swift */; };
+		BC2F4CFD251EF144009B1971 /* CreateTopicsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4CFC251EF144009B1971 /* CreateTopicsVC.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC31D1C72457EAE1000F5BE5 /* CMMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */; };
 		BC34B4D3241F1BF700855DE2 /* CreatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */; };
@@ -437,6 +437,8 @@
 		BCA9712B2361306700AE37E1 /* MyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9712A2361306700AE37E1 /* MyView.swift */; };
 		BCAB470424332B8900912D20 /* SetUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB470324332B8900912D20 /* SetUserVC.swift */; };
 		BCAB50972521DCF30028CA68 /* CMTopicsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB50962521DCF30028CA68 /* CMTopicsVC.swift */; };
+		BCAB509B2521E1770028CA68 /* CMRulesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB509A2521E1770028CA68 /* CMRulesVC.swift */; };
+		BCAB509D2521E2150028CA68 /* CreateRulesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB509C2521E2150028CA68 /* CreateRulesVC.swift */; };
 		BCABF1332366D4E2006B05F5 /* ProfileVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1322366D4E2006B05F5 /* ProfileVC+Binding.swift */; };
 		BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1342366D5DC006B05F5 /* ProfileViewModel.swift */; };
 		BCABF1372366DC3D006B05F5 /* UserProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */; };
@@ -820,7 +822,7 @@
 		BC2F4CC3251B03AB009B1971 /* CMSendPointsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSendPointsViewModel.swift; sourceTree = "<group>"; };
 		BC2F4CC6251B2D8C009B1971 /* CMDonateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMDonateVC.swift; sourceTree = "<group>"; };
 		BC2F4CEA251DE4F2009B1971 /* CreateCommunityFirstStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityFirstStepVC.swift; sourceTree = "<group>"; };
-		BC2F4CFC251EF144009B1971 /* CreateCommunitySecondStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunitySecondStepVC.swift; sourceTree = "<group>"; };
+		BC2F4CFC251EF144009B1971 /* CreateTopicsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTopicsVC.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC31D1C62457EAE1000F5BE5 /* CMMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMessageView.swift; sourceTree = "<group>"; };
 		BC34B4D2241F1BF700855DE2 /* CreatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordVC.swift; sourceTree = "<group>"; };
@@ -1045,6 +1047,8 @@
 		BCA9712A2361306700AE37E1 /* MyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyView.swift; sourceTree = "<group>"; };
 		BCAB470324332B8900912D20 /* SetUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUserVC.swift; sourceTree = "<group>"; };
 		BCAB50962521DCF30028CA68 /* CMTopicsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTopicsVC.swift; sourceTree = "<group>"; };
+		BCAB509A2521E1770028CA68 /* CMRulesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMRulesVC.swift; sourceTree = "<group>"; };
+		BCAB509C2521E2150028CA68 /* CreateRulesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRulesVC.swift; sourceTree = "<group>"; };
 		BCABF1322366D4E2006B05F5 /* ProfileVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileVC+Binding.swift"; sourceTree = "<group>"; };
 		BCABF1342366D5DC006B05F5 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePageViewModel.swift; sourceTree = "<group>"; };
@@ -1490,6 +1494,7 @@
 				BC2F4CC2251AF71E009B1971 /* CMSendPointsVC */,
 				BC2F4CB72519BD6F009B1971 /* CMConvertVCs */,
 				BCAB50962521DCF30028CA68 /* CMTopicsVC.swift */,
+				BCAB509A2521E1770028CA68 /* CMRulesVC.swift */,
 			);
 			path = UIViewControllers;
 			sourceTree = "<group>";
@@ -2485,7 +2490,8 @@
 				BC1CF9052505E18500A247E9 /* CreateCommunityGettingStartedVC.swift */,
 				BC8C17252506197E00795859 /* CreateCommunityVC.swift */,
 				BC2F4CEA251DE4F2009B1971 /* CreateCommunityFirstStepVC.swift */,
-				BC2F4CFC251EF144009B1971 /* CreateCommunitySecondStepVC.swift */,
+				BC2F4CFC251EF144009B1971 /* CreateTopicsVC.swift */,
+				BCAB509C2521E2150028CA68 /* CreateRulesVC.swift */,
 				BC8C1729250624ED00795859 /* CreateCommunityCompletedVC.swift */,
 			);
 			path = CreateCommunity;
@@ -3702,6 +3708,7 @@
 				BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */,
 				BC8C1742250F50A100795859 /* EditCommunityVC.swift in Sources */,
 				B1B103F4240E65A200253DE8 /* CMAppLike.swift in Sources */,
+				BCAB509B2521E1770028CA68 /* CMRulesVC.swift in Sources */,
 				AC2CCB762412924C00C2DFD4 /* UIButton+Extensions.swift in Sources */,
 				3BAF69CF226787940055CCEB /* Date+Extensions.swift in Sources */,
 				BC469300239663980064A38B /* ForceUpdateView.swift in Sources */,
@@ -4000,8 +4007,9 @@
 				BCDD53E824C69265007BE222 /* NonAuthCommunitiesVC.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */,
+				BCAB509D2521E2150028CA68 /* CreateRulesVC.swift in Sources */,
 				BC1E865B242C853500CF202F /* MyProfileDetailVC.swift in Sources */,
-				BC2F4CFD251EF144009B1971 /* CreateCommunitySecondStepVC.swift in Sources */,
+				BC2F4CFD251EF144009B1971 /* CreateTopicsVC.swift in Sources */,
 				3B3C8B982347911D00D8BADB /* PostEditorViewModel.swift in Sources */,
 				BCBE4E33252194AE00B0FBC9 /* UIEdgeInsets+Extensions.swift in Sources */,
 				BC4692FB239645C70064A38B /* CommunityLeaderFollowCell.swift in Sources */,

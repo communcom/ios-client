@@ -31,7 +31,8 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     // MARK: - Child VCs
     lazy var firstStepVC = CreateCommmunityFirstStepVC()
     lazy var topicsVC = CreateTopicsVC()
-    lazy var viewControllers: [CreateCommunityVCType] = [firstStepVC, topicsVC]
+    lazy var rulesVC = CreateRulesVC()
+    lazy var viewControllers: [CreateCommunityVCType] = [firstStepVC, topicsVC, rulesVC]
     
     // MARK: - Subviews
     lazy var containerView = UIView(forAutoLayout: ())
@@ -148,14 +149,16 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         vc.isDataValid.accept(vc.isDataValid.value)
         
         // change title
-        var title = "create community".localized().uppercaseFirst
+        var title = "create community"
         switch vc {
         case topicsVC:
-            title = "select community topics".localized().uppercaseFirst
+            title = "select community topics"
+        case rulesVC:
+            title = "add community rules"
         default:
             break
         }
-        titleLabel.text = title
+        titleLabel.text = title.localized().uppercaseFirst
     }
     
     // MARK: - Actions
