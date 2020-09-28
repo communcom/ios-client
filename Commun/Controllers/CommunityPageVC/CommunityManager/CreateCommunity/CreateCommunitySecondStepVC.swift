@@ -218,7 +218,10 @@ class CreateTopicsVC: CMTopicsVC, CreateCommunityVCType {
     
     override func bind() {
         super.bind()
-        
+        itemsRelay.map {!$0.isEmpty}
+            .asDriver(onErrorJustReturn: false)
+            .drive(isDataValid)
+            .disposed(by: disposeBag)
     }
     
     private func setUpHeaderView() {
