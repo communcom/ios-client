@@ -62,25 +62,14 @@ class CMTopicCell: MyTableViewCell {
 }
 
 class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
+    var showNewTopicCell: Bool = false { didSet { updateFooterView() } }
+    
+    let newTopicCell = CMTopicCell(height: 71)
+        .configureToUseAsNormalView()
+    
     override func setUp() {
         super.setUp()
         setUpFooterView()
-    }
-    
-    private func setUpFooterView() {
-        // footerView
-        let footerView: UIView = {
-            let view = UIView(height: 55, backgroundColor: .appWhiteColor, cornerRadius: 10)
-            let label = UILabel.with(text: "+ " + "add new topic".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .appMainColor)
-            view.addSubview(label)
-            label.autoCenterInSuperview()
-            return view
-                .onTap(self, action: #selector(addTopicButtonDidTouch))
-        }()
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 71))
-        view.addSubview(footerView)
-        footerView.autoPinEdgesToSuperviewEdges()
-        tableView.tableFooterView = view
     }
     
     override func configureCell(item: String, indexPath: IndexPath) -> UITableViewCell {
@@ -108,7 +97,47 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
     }
     
     @objc func addTopicButtonDidTouch() {
+        showNewTopicCell.toggle()
+    }
+    
+    // MARK: - View modifiers
+    private func setUpFooterView() {
+        // footerView
+        let addNewTopicButton: UIView = {
+            let view = UIView(height: 55, backgroundColor: .appWhiteColor, cornerRadius: 10)
+            let label = UILabel.with(text: "+ " + "add new topic".localized().uppercaseFirst, textSize: 17, weight: .medium, textColor: .appMainColor)
+            view.addSubview(label)
+            label.autoCenterInSuperview()
+            return view
+                .onTap(self, action: #selector(addTopicButtonDidTouch))
+        }()
         
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 55+16+55))
+        
+        let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
+        view.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
+        
+        stackView.addArrangedSubviews([newTopicCell, addNewTopicButton])
+        tableView.tableFooterView = view
+    }
+    
+    private func updateFooterView(animated: Bool = true) {
+        let showNewTopicCell = self.showNewTopicCell || itemsRelay.value.count == 0
+        var frame = tableView.tableFooterView!.frame
+        var height: CGFloat = 55
+        if showNewTopicCell {
+            height += 16+55
+        }
+        if height != frame.size.height {
+            UIView.animate(withDuration: animated ? 0.3 : 0) {
+                frame.size.height = height
+                let view = self.tableView.tableFooterView!
+                view.frame = frame
+                self.tableView.tableFooterView = view
+                self.newTopicCell.isHidden = !showNewTopicCell
+            }
+        }
     }
 }
 
@@ -140,6 +169,4 @@ class CreateTopicsVC: CMTopicsVC, CreateCommunityVCType {
         ])
         label.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
     }
-    
-    
 }
