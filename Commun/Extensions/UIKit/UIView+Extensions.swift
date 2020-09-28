@@ -245,6 +245,12 @@ extension UIView {
         return self
     }
     
+    @discardableResult
+    func huggingContent(axis: NSLayoutConstraint.Axis) -> Self {
+        setContentHuggingPriority(.required, for: axis)
+        return self
+    }
+    
     func fittingHeight(targetWidth: CGFloat) -> CGFloat {
         let fittingSize = CGSize(
             width: targetWidth,

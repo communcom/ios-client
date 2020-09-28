@@ -8,11 +8,15 @@
 
 import Foundation
 import RxCocoa
+import Action
 
 class CMTopicCell: MyTableViewCell {
+    lazy var clearButton = UIButton.clearButton.huggingContent(axis: .horizontal)
+    lazy var textField = UITextField.noBorder()
     
     override func setUpViews() {
         super.setUpViews()
+        backgroundColor = .clear
         contentView.backgroundColor = .clear
         
         let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
@@ -20,6 +24,19 @@ class CMTopicCell: MyTableViewCell {
         view.borderWidth = 1
         contentView.addSubview(view)
         view.autoPinEdgesToSuperviewEdges(with: .only(.bottom, inset: 16))
+        
+        let hStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+        view.addSubview(hStackView)
+        hStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+        
+        let vStackView: UIStackView = {
+            let stackView = UIStackView(axis: .vertical, spacing: 5, alignment: .fill, distribution: .fill)
+            stackView.addArrangedSubview(UILabel.with(text: "topic name".localized().uppercaseFirst, textSize: 13, weight: .medium, textColor: .appGrayColor))
+            stackView.addArrangedSubview(textField)
+            return stackView
+        }()
+        
+        hStackView.addArrangedSubviews([vStackView, clearButton])
     }
 }
 
