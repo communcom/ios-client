@@ -19,6 +19,7 @@ class CMTopicCell: MyTableViewCell {
     
     override func setUpViews() {
         super.setUpViews()
+        selectionStyle = .none
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         
@@ -54,60 +55,24 @@ class CMTopicCell: MyTableViewCell {
             .disposed(by: disposeBag)
     }
     
-    func setUp(topic: String, clearAction: CocoaAction, editingAction: Action<String, Void>) {
+    func setUp(topic: String, clearAction: CocoaAction, editingAction: Action<String, Void>, placeholder: String = "Ex: Game") {
         textField.text = topic
+        textField.placeholder = placeholder
         clearButton.rx.action = clearAction
         self.editingAction = editingAction
     }
 }
 
 class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
-    let newTopicCellHeight: CGFloat = 60.5
-    var showNewTopicCell: Bool = false { didSet { updateFooterView() } }
-    
-    // MARK: - Subview
-    lazy var newTopicCellClearButton = UIButton.clearButton.huggingContent(axis: .horizontal)
-        .onTap(self, action: #selector(clearNewTopicButtonDidTouch))
-    lazy var newTopicCellTextField = UITextField.noBorder()
-    lazy var newTopicCell: UIView = {
-        let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
-        view.borderColor = .appLightGrayColor
-        view.borderWidth = 1
-        
-        let hStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-        view.addSubview(hStackView)
-        hStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
-        
-        let vStackView: UIStackView = {
-            let stackView = UIStackView(axis: .vertical, spacing: 5, alignment: .fill, distribution: .fill)
-            stackView.addArrangedSubview(UILabel.with(text: "new topic".localized().uppercaseFirst, textSize: 13, weight: .medium, textColor: .appGrayColor))
-            stackView.addArrangedSubview(newTopicCellTextField)
-            return stackView
-        }()
-        
-        hStackView.addArrangedSubviews([vStackView, newTopicCellClearButton])
-        return view
-    }()
     
     override func setUp() {
         super.setUp()
         setUpFooterView()
     }
     
-    override func bind() {
-        super.bind()
-        itemsRelay
-            .subscribe(onNext: { (items) in
-                self.updateFooterView()
-                if items.isEmpty {
-                    self.newTopicCellTextField.setPlaceHolderTextColor(.appMainColor)
-                    self.newTopicCellTextField.placeholder = "your first topic here".localized().uppercaseFirst
-                } else {
-                    self.newTopicCellTextField.setPlaceHolderTextColor(.appGrayColor)
-                    self.newTopicCellTextField.placeholder = "Ex: Game".localized().uppercaseFirst
-                }
-            })
-            .disposed(by: disposeBag)
+    override func mapItemsToSections(_ items: [String]) -> [SectionModel] {
+        let items = items + [""]
+        return super.mapItemsToSections(items)
     }
     
     override func configureCell(item: String, indexPath: IndexPath) -> UITableViewCell {
@@ -115,39 +80,42 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
         cell.setUp(
             topic: item,
             clearAction: CocoaAction {
-                var items = self.itemsRelay.value
-                items.removeAll(item)
-                self.itemsRelay.accept(items)
+                if cell.textField.isFirstResponder {
+                    cell.textField.text = nil
+                    return .just(())
+                }
+                self.remove(item)
                 return .just(())
             },
             editingAction: Action<String, Void> { input in
-                if input == item {return .just(())}
-                
-                var items = self.itemsRelay.value
-                if let index = items.firstIndex(where: {$0 == item}) {
-                    items[index] = input
-                    self.itemsRelay.accept(items)
+                // remove
+                guard !input.isEmpty else {
+                    self.remove(item)
+                    return .just(())
                 }
+                
+                // adding
+                if item == "" {
+                    self.add(input)
+                    return .just(())
+                }
+                
+                // editing
+                self.update(item, with: input)
                 return .just(())
-            }
+            },
+            placeholder: itemsRelay.value.count == 0 ? "your first topic here".localized().uppercaseFirst : "Ex: Game"
         )
         return cell
     }
     
     @objc func addTopicButtonDidTouch() {
-        if showNewTopicCell == true {
-            newTopicCellTextField.becomeFirstResponder()
-            return
-        }
-        showNewTopicCell = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.newTopicCellTextField.becomeFirstResponder()
-        }
+        clearNewTopic()
     }
     
-    @objc func clearNewTopicButtonDidTouch() {
-        newTopicCellTextField.text = nil
-        newTopicCellTextField.resignFirstResponder()
+    private func clearNewTopic() {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: itemsRelay.value.count, section: 0)) as? CMTopicCell else {return}
+        cell.textField.text = nil
     }
     
     // MARK: - View modifiers
@@ -162,31 +130,39 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
                 .onTap(self, action: #selector(addTopicButtonDidTouch))
         }()
         
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: newTopicCellHeight+16+55))
-        
-        let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fill)
-        view.addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges()
-        
-        stackView.addArrangedSubviews([newTopicCell, addNewTopicButton])
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 55))
+        view.addSubview(addNewTopicButton)
+        addNewTopicButton.autoPinEdgesToSuperviewEdges()
         tableView.tableFooterView = view
     }
     
-    private func updateFooterView(animated: Bool = true) {
-        let showNewTopicCell = self.showNewTopicCell || itemsRelay.value.count == 0
-        var frame = tableView.tableFooterView!.frame
-        var height: CGFloat = 55
-        if showNewTopicCell {
-            height += newTopicCellHeight + 16
+    // MARK: - View models
+    func remove(_ item: String) {
+        var items = itemsRelay.value
+        items.removeAll(item)
+        itemsRelay.accept(items)
+    }
+    
+    func update(_ item: String, with input: String) {
+        var items = self.itemsRelay.value
+        if input == item {return}
+        if let index = items.firstIndex(where: {$0 == item}) {
+            items[index] = input
+            items.removeDuplicates()
+            self.itemsRelay.accept(items)
         }
-        if height != frame.size.height {
-            UIView.animate(withDuration: animated ? 0.3 : 0) {
-                frame.size.height = height
-                let view = self.tableView.tableFooterView!
-                view.frame = frame
-                self.tableView.tableFooterView = view
-                self.newTopicCell.isHidden = !showNewTopicCell
-            }
+    }
+    
+    func add(_ item: String) {
+        var items = itemsRelay.value
+        if items.contains(item) {
+            clearNewTopic()
+            return
+        }
+        items.append(item)
+        itemsRelay.accept(items)
+        DispatchQueue.main.async {
+            self.clearNewTopic()
         }
     }
 }
@@ -212,7 +188,7 @@ class CreateTopicsVC: CMTopicsVC, CreateCommunityVCType {
         headerView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0))
         
-        let label = UILabel.with(text: "topics are needed for recomendation service. In that way, for users, interested in your community will by much easier to find itin a list.".localized().uppercaseFirst, textSize: 15, numberOfLines: 0, textAlignment: .center)
+        let label = UILabel.with(text: "topics are needed for recomendation service. In that way, for users who interested in your community, will by much easier to find it in a list.".localized().uppercaseFirst, textSize: 15, numberOfLines: 0, textAlignment: .center)
         stackView.addArrangedSubviews([
             UIImageView(width: 120, height: 120, cornerRadius: 60, imageNamed: "topic-explaination"),
             label
