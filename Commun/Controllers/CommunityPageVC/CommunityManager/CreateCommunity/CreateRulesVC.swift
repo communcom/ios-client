@@ -34,7 +34,7 @@ class CreateRulesVC: CMRulesVC, CreateCommunityVCType {
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
         
         let label = UILabel.with(text: "We’ve added some default rules for your community.\nYou can edit, remove or add new rules for this community.".localized().uppercaseFirst, textSize: 15, numberOfLines: 0, textAlignment: .center)
-        let spacer = UIView.spacer(height: 1, backgroundColor: .appGrayColor)
+        let spacer = UIView.spacer(height: 1, backgroundColor: .e2e6e8)
         stackView.addArrangedSubviews([
             label,
             spacer
