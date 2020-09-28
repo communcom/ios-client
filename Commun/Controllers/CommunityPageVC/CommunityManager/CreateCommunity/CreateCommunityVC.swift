@@ -39,7 +39,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     lazy var pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     lazy var bottomStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .equalCentering)
-    lazy var backButton = UIButton(width: 100, height: 50, label: "back".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: UIColor(hexString: "#E9EEFC")!.inDarkMode(#colorLiteral(red: 0.1215686275, green: 0.1294117647, blue: 0.1568627451, alpha: 1)), textColor: .appMainColor, cornerRadius: 25)
+    lazy var backButton = UIButton(width: 100, height: 50, label: "back".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: UIColor(hexString: "#E9EEFC")!.inDarkMode(#colorLiteral(red: 0.1725490196, green: 0.1843137255, blue: 0.2117647059, alpha: 1)), textColor: .appMainColor, cornerRadius: 25)
         .onTap(self, action: #selector(backButtonDidTouch))
     lazy var pageControl = CMPageControll(numberOfPages: viewControllers.count)
     
