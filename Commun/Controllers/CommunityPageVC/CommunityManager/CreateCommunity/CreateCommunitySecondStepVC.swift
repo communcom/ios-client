@@ -62,9 +62,10 @@ class CMTopicCell: MyTableViewCell {
 }
 
 class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
+    let newTopicCellHeight: CGFloat = 60.5 + 16
     var showNewTopicCell: Bool = false { didSet { updateFooterView() } }
     
-    let newTopicCell = CMTopicCell(height: 71)
+    lazy var newTopicCell = CMTopicCell(height: newTopicCellHeight)
         .configureToUseAsNormalView()
     
     override func setUp() {
@@ -112,7 +113,7 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
                 .onTap(self, action: #selector(addTopicButtonDidTouch))
         }()
         
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 55+16+55))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: newTopicCellHeight+55))
         
         let stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
         view.addSubview(stackView)
@@ -127,7 +128,7 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
         var frame = tableView.tableFooterView!.frame
         var height: CGFloat = 55
         if showNewTopicCell {
-            height += 16+55
+            height += newTopicCellHeight
         }
         if height != frame.size.height {
             UIView.animate(withDuration: animated ? 0.3 : 0) {

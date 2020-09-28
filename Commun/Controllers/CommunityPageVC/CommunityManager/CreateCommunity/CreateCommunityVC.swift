@@ -30,7 +30,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     
     // MARK: - Child VCs
     lazy var firstStepVC = CreateCommmunityFirstStepVC()
-    lazy var topicsVC = CreateTopicsVC(originalItems: ["ad", "ad2", "ad3"])
+    lazy var topicsVC = CreateTopicsVC()
     lazy var viewControllers: [CreateCommunityVCType] = [firstStepVC, topicsVC]
     
     // MARK: - Subviews
