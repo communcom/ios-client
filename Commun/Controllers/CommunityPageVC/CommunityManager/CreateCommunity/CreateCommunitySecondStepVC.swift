@@ -152,7 +152,9 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
     }
     
     @objc func addTopicButtonDidTouch() {
-        clearNewTopic()
+        guard let cell = tableView.cellForRow(at: IndexPath(row: itemsRelay.value.count, section: 0)) as? CMTopicCell else {return}
+        cell.textField.changeTextNotify(nil)
+        cell.textField.becomeFirstResponder()
     }
     
     private func clearNewTopic() {

@@ -155,7 +155,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         default:
             break
         }
-        continueButton.setTitle(title, for: .normal)
+        titleLabel.text = title
     }
     
     // MARK: - Actions
