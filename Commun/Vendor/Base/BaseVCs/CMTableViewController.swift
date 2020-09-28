@@ -15,6 +15,7 @@ class CMTableViewController<T: ListItemType, Cell: UITableViewCell>: BaseViewCon
     let originalItems: [T]
     lazy var itemsRelay = BehaviorRelay<[T]>(value: originalItems)
     var dataSource: RxTableViewSectionedAnimatedDataSource<SectionModel>!
+    var contentInsets: UIEdgeInsets {.zero}
     
     // MARK: - Subviews
     lazy var tableView: UITableView = {
@@ -39,7 +40,7 @@ class CMTableViewController<T: ListItemType, Cell: UITableViewCell>: BaseViewCon
         view.backgroundColor = .appLightGrayColor
         
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewEdges()
+        tableView.autoPinEdgesToSuperviewEdges(with: contentInsets)
         
         dataSource = RxTableViewSectionedAnimatedDataSource<SectionModel>(
             configureCell: { (_, _, indexPath, item) in

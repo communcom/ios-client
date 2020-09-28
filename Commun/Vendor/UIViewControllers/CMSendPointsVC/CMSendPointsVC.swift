@@ -43,15 +43,7 @@ class CMSendPointsVC: CMTransferVC {
     }()
     lazy var amountTextField: UITextField = {
         let textField = createTextField()
-        
-        let clearButton: UIButton = {
-            let btnView = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-            btnView.setImage(UIImage(named: "icon-cancel-grey-cyrcle-default"), for: .normal)
-            btnView.imageEdgeInsets = .zero
-            btnView.addTarget(self, action: #selector(clearButtonTapped(_:)), for: .touchUpInside)
-            return btnView
-        }()
-        
+        let clearButton = UIButton.clearButton.onTap(self, action: #selector(clearButtonTapped(_:)))
         textField.rightView = clearButton
         textField.rightViewMode = .whileEditing
         

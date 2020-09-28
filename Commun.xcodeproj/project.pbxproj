@@ -463,6 +463,7 @@
 		BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */; };
 		BCB64760244D5A8800C94B84 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB6475F244D5A8800C94B84 /* LanguageCell.swift */; };
 		BCB64772244ED65600C94B84 /* SwipeBackNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB64771244ED65600C94B84 /* SwipeBackNavigationController.swift */; };
+		BCBE4E33252194AE00B0FBC9 /* UIEdgeInsets+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE4E32252194AE00B0FBC9 /* UIEdgeInsets+Extensions.swift */; };
 		BCC0690E24E3C91F001419D0 /* CMActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0690D24E3C91F001419D0 /* CMActionSheet.swift */; };
 		BCC0691C24E4F78A001419D0 /* ProposalsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0691B24E4F78A001419D0 /* ProposalsListFetcher.swift */; };
 		BCC0692224E4F8D8001419D0 /* ProposalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0692124E4F8D8001419D0 /* ProposalsViewModel.swift */; };
@@ -1069,6 +1070,7 @@
 		BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsViewController.swift; sourceTree = "<group>"; };
 		BCB6475F244D5A8800C94B84 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
 		BCB64771244ED65600C94B84 /* SwipeBackNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeBackNavigationController.swift; sourceTree = "<group>"; };
+		BCBE4E32252194AE00B0FBC9 /* UIEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
 		BCC0690D24E3C91F001419D0 /* CMActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMActionSheet.swift; sourceTree = "<group>"; };
 		BCC0691B24E4F78A001419D0 /* ProposalsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalsListFetcher.swift; sourceTree = "<group>"; };
 		BCC0692124E4F8D8001419D0 /* ProposalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalsViewModel.swift; sourceTree = "<group>"; };
@@ -2866,6 +2868,7 @@
 				3B3C8B83234779FE00D8BADB /* UIImage+Extensions.swift */,
 				BCB2A6E52355536D00B3582B /* UITableViewCell+Extensions.swift */,
 				BCD3BC8A23AB313E0036C947 /* UIStackView+Extensions.swift */,
+				BCBE4E32252194AE00B0FBC9 /* UIEdgeInsets+Extensions.swift */,
 				BC18FA2623D56325005DC7E3 /* UITextField+Extensions.swift */,
 				BC99B65923E17848004AA74E /* UISearchController+Extensions.swift */,
 				BC6908B9240CC0A100A1F7EC /* UISearchBar+Extensions.swift */,
@@ -3996,6 +3999,7 @@
 				BC1E865B242C853500CF202F /* MyProfileDetailVC.swift in Sources */,
 				BC2F4CFD251EF144009B1971 /* CreateCommunitySecondStepVC.swift in Sources */,
 				3B3C8B982347911D00D8BADB /* PostEditorViewModel.swift in Sources */,
+				BCBE4E33252194AE00B0FBC9 /* UIEdgeInsets+Extensions.swift in Sources */,
 				BC4692FB239645C70064A38B /* CommunityLeaderFollowCell.swift in Sources */,
 				BC44810124ED0B8500A5400B /* ContactTextField.swift in Sources */,
 				BC8F814423E27ECE0024C04A /* CommunWalletHeaderView.swift in Sources */,
