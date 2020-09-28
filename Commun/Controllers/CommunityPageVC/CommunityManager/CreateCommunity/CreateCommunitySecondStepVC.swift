@@ -19,6 +19,7 @@ class CMTopicCell: MyTableViewCell {
     
     lazy var cancelButton = UIButton(height: 35, label: "cancel".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15.0), backgroundColor: .appLightGrayColor, textColor: .appGrayColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0))
     lazy var doneButton = CommunButton.default(height: 35, label: "done".localized().uppercaseFirst, cornerRadius: 35/2, isHuggingContent: true)
+        .onTap(self, action: #selector(doneButtonDidTouch))
     lazy var toolbarView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 55))
         view.backgroundColor = .white
@@ -64,8 +65,7 @@ class CMTopicCell: MyTableViewCell {
         textField.rx.controlEvent([.editingDidEnd])
             .asObservable()
             .subscribe(onNext: {[weak self] _ in
-                guard let newText = self?.textField.text else {return}
-                self?.editingAction?.execute(newText)
+                self?.commitChange()
             })
             .disposed(by: disposeBag)
         
@@ -76,11 +76,27 @@ class CMTopicCell: MyTableViewCell {
             .disposed(by: disposeBag)
     }
     
-    func setUp(topic: String, clearAction: CocoaAction, editingAction: Action<String, Void>, placeholder: String = "Ex: Game") {
+    func setUp(topic: String, clearAction: CocoaAction, editingAction: Action<String, Void>, cancelAction: CocoaAction, placeholder: String = "Ex: Game") {
         textField.text = topic
         textField.placeholder = placeholder
         clearButton.rx.action = clearAction
+        cancelButton.rx.action = cancelAction
         self.editingAction = editingAction
+    }
+    
+    @objc func commitChange() {
+        guard let newText = textField.text else {return}
+        editingAction?.execute(newText)
+    }
+    
+    @objc func doneButtonDidTouch() {
+        commitChange()
+        guard let tableView = (parentViewController as? CMTopicsVC)?.tableView else {return}
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            let lastRow = tableView.numberOfRows(inSection: 0) - 1
+            let indexPath = IndexPath(row: lastRow, section: 0)
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
     }
 }
 
@@ -123,6 +139,11 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
                 
                 // editing
                 self.update(item, with: input)
+                return .just(())
+            },
+            cancelAction: CocoaAction {
+                cell.textField.text = item
+                cell.textField.resignFirstResponder()
                 return .just(())
             },
             placeholder: itemsRelay.value.count == 0 ? "your first topic here".localized().uppercaseFirst : "Ex: Game"
@@ -176,15 +197,12 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
     
     func add(_ item: String) {
         var items = itemsRelay.value
+        clearNewTopic()
         if items.contains(item) {
-            clearNewTopic()
             return
         }
         items.append(item)
         itemsRelay.accept(items)
-        DispatchQueue.main.async {
-            self.clearNewTopic()
-        }
     }
 }
 
