@@ -129,6 +129,13 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             .asDriver(onErrorJustReturn: false)
             .drive(continueButton.rx.isEnabled)
             .disposed(by: disposeBag)
+        
+        UIResponder.keyboardHeightObservable
+            .filter {_ in self.pageVC.viewControllers?.first == self.topicsVC}
+            .map {$0 > 0}
+            .asDriver(onErrorJustReturn: false)
+            .drive(bottomStackView.superview!.rx.isHidden)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Page control
