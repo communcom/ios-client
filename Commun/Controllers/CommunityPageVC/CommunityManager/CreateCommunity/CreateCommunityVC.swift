@@ -77,8 +77,6 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     
     override func setUp() {
         super.setUp()
-        continueButton.setTitle("create community".localized().uppercaseFirst, for: .normal)
-        
         // fix continue button
         continueButton.autoSetDimensions(to: CGSize(width: 100, height: 50))
         continueButton.cornerRadius = 25
@@ -148,6 +146,16 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         currentPageIndex = index
         // refresh validation
         vc.isDataValid.accept(vc.isDataValid.value)
+        
+        // change title
+        var title = "create community".localized().uppercaseFirst
+        switch vc {
+        case topicsVC:
+            title = "select community topics".localized().uppercaseFirst
+        default:
+            break
+        }
+        continueButton.setTitle(title, for: .normal)
     }
     
     // MARK: - Actions
