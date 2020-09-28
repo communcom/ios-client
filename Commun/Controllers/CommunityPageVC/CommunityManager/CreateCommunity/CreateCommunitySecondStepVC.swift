@@ -9,10 +9,13 @@
 import Foundation
 import RxCocoa
 import Action
+import RxSwift
 
 class CMTopicCell: MyTableViewCell {
     lazy var clearButton = UIButton.clearButton.huggingContent(axis: .horizontal)
     lazy var textField = UITextField.noBorder()
+    var editingAction: Action<String, Void>?
+    let disposeBag = DisposeBag()
     
     override func setUpViews() {
         super.setUpViews()
@@ -37,6 +40,24 @@ class CMTopicCell: MyTableViewCell {
         }()
         
         hStackView.addArrangedSubviews([vStackView, clearButton])
+        
+        bind()
+    }
+    
+    func bind() {
+        textField.rx.controlEvent([.editingDidEnd])
+            .asObservable()
+            .subscribe(onNext: {[weak self] _ in
+                guard let newText = self?.textField.text else {return}
+                self?.editingAction?.execute(newText)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func setUp(topic: String, clearAction: CocoaAction, editingAction: Action<String, Void>) {
+        textField.text = topic
+        clearButton.rx.action = clearAction
+        self.editingAction = editingAction
     }
 }
 
@@ -58,8 +79,32 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
         }()
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 71))
         view.addSubview(footerView)
-        footerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0))
+        footerView.autoPinEdgesToSuperviewEdges()
         tableView.tableFooterView = view
+    }
+    
+    override func configureCell(item: String, indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.configureCell(item: item, indexPath: indexPath) as! CMTopicCell
+        cell.setUp(
+            topic: item,
+            clearAction: CocoaAction {
+                var items = self.itemsRelay.value
+                items.removeAll(item)
+                self.itemsRelay.accept(items)
+                return .just(())
+            },
+            editingAction: Action<String, Void> { input in
+                if input == item {return .just(())}
+                
+                var items = self.itemsRelay.value
+                if let index = items.firstIndex(where: {$0 == item}) {
+                    items[index] = input
+                    self.itemsRelay.accept(items)
+                }
+                return .just(())
+            }
+        )
+        return cell
     }
     
     @objc func addTopicButtonDidTouch() {

@@ -26,7 +26,7 @@ class CMTableViewController<T: ListItemType, Cell: UITableViewCell>: BaseViewCon
         return tableView
     }()
     
-    init(originalItems: [T]) {
+    init(originalItems: [T] = []) {
         self.originalItems = originalItems
         super.init(nibName: nil, bundle: nil)
     }
