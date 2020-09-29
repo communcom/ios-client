@@ -219,7 +219,7 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
         present(navVC, animated: true, completion: nil)
     }
     
-    private func uploadImages() -> Single<(avatar: String, cover: String)> {
+    func uploadImages() -> Single<(avatar: String, cover: String)> {
         var singles = [Single<String>]()
         
         if !self.didSetAvatar || self.avatarImageView.image == nil {
@@ -239,23 +239,9 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
     }
     
     func createCommunity() -> Single<ResponseAPIContentGetCommunity> {
-        guard let name = communityNameTextField.text,
-            let language = languageRelay.value?.code
-            else {return .error(CMError.invalidRequest(message: "invalid name or language"))}
-        let description = descriptionTextView.text ?? ""
+        guard let name = communityNameTextField.text
+            else {return .error(CMError.invalidRequest(message: "invalid name"))}
         return RestAPIManager.instance.createNewCommunity(name: name)
-            .flatMap { result in
-                self.uploadImages()
-                    .map {(result, $0)}
-            }
-            .observeOn(MainScheduler.instance)
-            .map {
-                var community = $0.community
-                community.avatarUrl = $1.avatar
-                community.coverUrl = $1.cover
-                community.language = language
-                community.description = description
-                return community
-            }
+            .map {$0.community}
     }
 }

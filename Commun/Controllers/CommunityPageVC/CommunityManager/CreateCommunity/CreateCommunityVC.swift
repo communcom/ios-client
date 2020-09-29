@@ -179,18 +179,20 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             if let vc = viewControllers[safe: currentPageIndex] {
                 switch vc {
                 case firstStepVC:
-                    showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
-                    firstStepVC.createCommunity()
-                        .subscribe(onSuccess: { (community) in
-                            self.hideHud()
-                            self.community = community
-                            self.moveToStep(self.currentPageIndex + 1)
-                        }) { (error) in
-                            self.hideHud()
-                            self.showError(error)
-                        }
-                        .disposed(by: disposeBag)
-                    return
+                    if self.community?.name != firstStepVC.communityNameTextField.text {
+                        showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
+                        firstStepVC.createCommunity()
+                            .subscribe(onSuccess: { (community) in
+                                self.hideHud()
+                                self.community = community
+                                self.moveToStep(self.currentPageIndex + 1)
+                            }) { (error) in
+                                self.hideHud()
+                                self.showError(error)
+                            }
+                            .disposed(by: disposeBag)
+                        return
+                    }
                 case topicsVC:
                     community?.subject = topicsVC.itemsRelay.value.convertToJSON()
                 case rulesVC:
@@ -207,7 +209,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         
         view.endEditing(true)
         
-        guard let community = community else {return}
+        guard var community = community else {return}
         
         showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
         
@@ -217,17 +219,25 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         {
             single = startCommunityCreation(communityId: uncompletedCreatingCommunity.communityId)
         } else {
-            single = RestAPIManager.instance.commmunitySetSettings(
-                name: community.name,
-                description: community.description ?? "",
-                language: community.language ?? "en",
-                communityId: community.communityId,
-                avatarUrl: community.avatarUrl ?? "",
-                coverUrl: community.coverUrl ?? "",
-                subject: community.subject ?? "",
-                rules:  community.rules.convertToJSON()
-            )
-                .map {_ in community.communityId}
+            single = firstStepVC.uploadImages()
+                .observeOn(MainScheduler.instance)
+                .flatMap { urls in
+                    community.avatarUrl = urls.avatar
+                    community.coverUrl = urls.cover
+                    community.description = self.firstStepVC.descriptionTextView.text ?? ""
+                    community.language = self.firstStepVC.languageRelay.value?.code
+                    return RestAPIManager.instance.commmunitySetSettings(
+                        name: community.name,
+                        description: community.description ?? "",
+                        language: community.language ?? "en",
+                        communityId: community.communityId,
+                        avatarUrl: community.avatarUrl ?? "",
+                        coverUrl: community.coverUrl ?? "",
+                        subject: community.subject ?? "",
+                        rules: community.rules.convertToJSON()
+                    )
+                        .map {_ in community.communityId}
+                }
                 .flatMap {communityId in
                     BlockchainManager.instance.transferPoints(to: "communcreate", number: 10000, currency: "CMN", memo: "for community: \(communityId)")
                         .do(onSuccess: {
