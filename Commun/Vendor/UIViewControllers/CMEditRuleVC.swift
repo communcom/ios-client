@@ -68,6 +68,8 @@ class CMEditRuleVC: BaseVerticalStackVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if !customized {
+            let descriptionCount = descriptionTextView.rx.text.orEmpty.map {$0.count}
+            
             if isBeingPresented {
                 scrollView.removeConstraintToSuperView(withAttribute: .top)
                 
@@ -86,17 +88,22 @@ class CMEditRuleVC: BaseVerticalStackVC {
                 scrollView.removeConstraintToSuperView(withAttribute: .bottom)
                 
                 view.addSubview(saveButton)
-                saveButton.autoPinEdge(.top, to: .bottom, of: scrollView)
+                saveButton.autoPinEdge(.top, to: .bottom, of: scrollView, withOffset: 16)
                 saveButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
                 saveButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
                 saveButton.autoPinBottomToSuperViewSafeAreaAvoidKeyboard(inset: 16)
+                
+                Observable.merge(descriptionCount.map {_ in ()}, ruleNameTextField.rx.text.map {_ in ()})
+                    .map {_ in self.contentHasChanged()}
+                    .asDriver(onErrorJustReturn: false)
+                    .drive(saveButton.rx.isEnabled)
+                    .disposed(by: disposeBag)
             } else if isMovingToParent {
                 // showed
                 navigationItem.rightBarButtonItem = saveBarButton
                 setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
                 title = isEditMode ? "edit rule".localized().uppercaseFirst : "add new rule".localized().uppercaseFirst
                 
-                let descriptionCount = descriptionTextView.rx.text.orEmpty.map {$0.count}
                 Observable.merge(descriptionCount.map {_ in ()}, ruleNameTextField.rx.text.map {_ in ()})
                     .map {_ in self.contentHasChanged()}
                     .asDriver(onErrorJustReturn: false)
