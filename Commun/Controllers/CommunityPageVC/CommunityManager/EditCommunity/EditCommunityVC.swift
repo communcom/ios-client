@@ -108,20 +108,20 @@ class EditCommunityVC: BaseVerticalStackVC {
         
         stackView.setCustomSpacing(16, after: languageView)
         
-        // separator
-        let separator3 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
-        stackView.addArrangedSubview(separator3)
-        separator3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+//        // separator
+//        let separator3 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
+//        stackView.addArrangedSubview(separator3)
+//        separator3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // topics
-        let topicHeaderView = sectionHeaderView(title: "topics".localized().uppercaseFirst, action: #selector(topicButtonDidTouch))
-        stackView.addArrangedSubview(topicHeaderView)
-        topicHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        
-        let tagListView = TagListView.default(tags: originalCommunity.getTopics())
-        stackView.addArrangedSubview(tagListView)
-        tagListView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
-        stackView.setCustomSpacing(16, after: tagListView)
+//        let topicHeaderView = sectionHeaderView(title: "topics".localized().uppercaseFirst, action: #selector(topicButtonDidTouch))
+//        stackView.addArrangedSubview(topicHeaderView)
+//        topicHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+//
+//        let tagListView = TagListView.default(tags: originalCommunity.getTopics())
+//        stackView.addArrangedSubview(tagListView)
+//        tagListView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
+//        stackView.setCustomSpacing(16, after: tagListView)
         
         // separator
         let separator4 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
@@ -253,9 +253,9 @@ class EditCommunityVC: BaseVerticalStackVC {
     }
     
     @objc func topicButtonDidTouch() {
-        guard let issuer = originalCommunity.issuer else {return}
-        let vc = TopicsVC(communityCode: originalCommunity.communityId, communityIssuer: issuer, topics: originalCommunity.getTopics())
-        show(vc, sender: nil)
+//        guard let issuer = originalCommunity.issuer else {return}
+//        let vc = TopicsVC(communityCode: originalCommunity.communityId, communityIssuer: issuer, topics: originalCommunity.getTopics())
+//        show(vc, sender: nil)
     }
     
     @objc func rulesButtonDidTouch() {
