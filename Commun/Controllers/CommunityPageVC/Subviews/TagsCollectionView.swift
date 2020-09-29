@@ -14,8 +14,13 @@ class TagsCollectionView: UICollectionView {
         override func setUpViews() {
             super.setUpViews()
             contentView.cornerRadius = 10
-            contentView.backgroundColor = .appWhiteColor
-            contentView.layer.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
+            
+            let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            blurEffectView.frame = contentView.bounds
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            contentView.addSubview(blurEffectView)
+            
             contentView.addSubview(label)
             label.autoAlignAxis(toSuperviewAxis: .horizontal)
             label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -33,6 +38,8 @@ class TagsCollectionView: UICollectionView {
         configureForAutoLayout()
         autoSetDimension(.height, toSize: height)
         register(TagCell.self, forCellWithReuseIdentifier: "TagCell")
+        semanticContentAttribute = .forceRightToLeft
+        contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16)
     }
     
     required init?(coder: NSCoder) {
