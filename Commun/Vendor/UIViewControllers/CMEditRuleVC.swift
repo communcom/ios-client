@@ -46,6 +46,9 @@ class CMEditRuleVC: BaseVerticalStackVC {
         return label
     }()
     
+    lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst, cornerRadius: 25, isHuggingContent: false)
+        .onTap(self, action: #selector(saveButtonDidTouch))
+    
     required init(rule: ResponseAPIContentGetCommunityRule? = nil) {
         self.originalRule = rule
         super.init(nibName: nil, bundle: nil)
@@ -61,23 +64,46 @@ class CMEditRuleVC: BaseVerticalStackVC {
         descriptionTextView.text = originalRule?.text
     }
     
+    private var customized = false
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if isBeingPresented {
-            // presented
-            
-        } else if isMovingToParent {
-            // showed
-            navigationItem.rightBarButtonItem = saveBarButton
-            setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
-            title = isEditMode ? "edit rule".localized().uppercaseFirst : "add new rule".localized().uppercaseFirst
-            
-            let descriptionCount = descriptionTextView.rx.text.orEmpty.map {$0.count}
-            Observable.merge(descriptionCount.map {_ in ()}, ruleNameTextField.rx.text.map {_ in ()})
-                .map {_ in self.contentHasChanged()}
-                .asDriver(onErrorJustReturn: false)
-                .drive(saveBarButton.rx.isEnabled)
-                .disposed(by: disposeBag)
+        if !customized {
+            if isBeingPresented {
+                scrollView.removeConstraintToSuperView(withAttribute: .top)
+                
+                let headerStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+                let titleLabel = UILabel.with(text: (isEditMode ? "edit rule" : "new rule").localized().uppercaseFirst, textSize: 17, weight: .semibold)
+                let closeButton = UIButton.close()
+                    .onTap(self, action: #selector(askForSavingAndGoBack))
+                
+                headerStackView.addArrangedSubviews([titleLabel, .spacer(), closeButton])
+                
+                view.addSubview(headerStackView)
+                headerStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .bottom)
+                headerStackView.autoPinEdge(.bottom, to: .top, of: scrollView, withOffset: -30)
+                
+                // presented
+                scrollView.removeConstraintToSuperView(withAttribute: .bottom)
+                
+                view.addSubview(saveButton)
+                saveButton.autoPinEdge(.top, to: .bottom, of: scrollView)
+                saveButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+                saveButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+                saveButton.autoPinBottomToSuperViewSafeAreaAvoidKeyboard(inset: 16)
+            } else if isMovingToParent {
+                // showed
+                navigationItem.rightBarButtonItem = saveBarButton
+                setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
+                title = isEditMode ? "edit rule".localized().uppercaseFirst : "add new rule".localized().uppercaseFirst
+                
+                let descriptionCount = descriptionTextView.rx.text.orEmpty.map {$0.count}
+                Observable.merge(descriptionCount.map {_ in ()}, ruleNameTextField.rx.text.map {_ in ()})
+                    .map {_ in self.contentHasChanged()}
+                    .asDriver(onErrorJustReturn: false)
+                    .drive(saveBarButton.rx.isEnabled)
+                    .disposed(by: disposeBag)
+            }
+            customized = true
         }
     }
     
