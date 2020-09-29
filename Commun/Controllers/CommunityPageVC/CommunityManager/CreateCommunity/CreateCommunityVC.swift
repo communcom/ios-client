@@ -218,14 +218,14 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             single = startCommunityCreation(communityId: uncompletedCreatingCommunity.communityId)
         } else {
             single = RestAPIManager.instance.commmunitySetSettings(
-                name:           community.name,
-                description:    community.description ?? "",
-                language:       community.language ?? "en",
-                communityId:    community.communityId,
-                avatarUrl:      community.avatarUrl ?? "",
-                coverUrl:       community.coverUrl ?? "",
-                subject:        community.subject ?? "",
-                rules:          community.rules.convertToJSON()
+                name: community.name,
+                description: community.description ?? "",
+                language: community.language ?? "en",
+                communityId: community.communityId,
+                avatarUrl: community.avatarUrl ?? "",
+                coverUrl: community.coverUrl ?? "",
+                subject: community.subject ?? "",
+                rules:  community.rules.convertToJSON()
             )
                 .map {_ in community.communityId}
                 .flatMap {communityId in

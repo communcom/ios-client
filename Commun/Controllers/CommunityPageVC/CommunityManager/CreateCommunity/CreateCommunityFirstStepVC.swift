@@ -244,17 +244,18 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
             else {return .error(CMError.invalidRequest(message: "invalid name or language"))}
         let description = descriptionTextView.text ?? ""
         return RestAPIManager.instance.createNewCommunity(name: name)
-            .flatMap { result -> Single<ResponseAPIContentGetCommunity> in
+            .flatMap { result in
                 self.uploadImages()
-                    .map {
-                        var community = result.community
-                        community.avatarUrl = $0.avatar
-                        community.coverUrl = $0.cover
-                        community.language = language
-                        community.description = description
-                        return community
-                    }
+                    .map {(result, $0)}
             }
-            
+            .observeOn(MainScheduler.instance)
+            .map {
+                var community = $0.community
+                community.avatarUrl = $1.avatar
+                community.coverUrl = $1.cover
+                community.language = language
+                community.description = description
+                return community
+            }
     }
 }
