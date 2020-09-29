@@ -253,9 +253,9 @@ class EditCommunityVC: BaseVerticalStackVC {
     }
     
     @objc func topicButtonDidTouch() {
-//        guard let issuer = originalCommunity.issuer else {return}
-//        let vc = TopicsVC(communityCode: originalCommunity.communityId, communityIssuer: issuer, topics: originalCommunity.getTopics())
-//        show(vc, sender: nil)
+        guard let issuer = originalCommunity.issuer else {return}
+        let vc = TopicsVC(communityCode: originalCommunity.communityId, communityIssuer: issuer, topics: originalCommunity.getTopics())
+        show(vc, sender: nil)
     }
     
     @objc func rulesButtonDidTouch() {
