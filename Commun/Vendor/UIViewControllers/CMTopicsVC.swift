@@ -181,29 +181,8 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
     }
     
     // MARK: - View models
-    func remove(_ item: String) {
-        var items = itemsRelay.value
-        items.removeAll(item)
-        itemsRelay.accept(items)
-    }
-    
-    func update(_ item: String, with input: String) {
-        var items = self.itemsRelay.value
-        if input == item {return}
-        if let index = items.firstIndex(where: {$0 == item}) {
-            items[index] = input
-            items.removeDuplicates()
-            self.itemsRelay.accept(items)
-        }
-    }
-    
-    func add(_ item: String) {
-        var items = itemsRelay.value
+    override func add(_ item: String) {
         clearNewTopic()
-        if items.contains(item) {
-            return
-        }
-        items.append(item)
-        itemsRelay.accept(items)
+        super.add(item)
     }
 }

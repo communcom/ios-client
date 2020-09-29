@@ -89,40 +89,26 @@ class CMRulesVC: CMTableViewController<ResponseAPIContentGetCommunityRule, Commu
         }
         show(vc, sender: nil)
     }
-    
-    func add(_ rule: ResponseAPIContentGetCommunityRule) {
-        
-    }
-    
-    func remove(_ ruleId: String) {
-        
-    }
-    
-    func update(_ rule: ResponseAPIContentGetCommunityRule) {
-        
-    }
 }
 
 extension CMRulesVC: CommunityRuleEditableCellDelegate {
     func communityRuleEditableCellButtonRemoveDidTouch(_ cell: CommunityRuleEditableCell) {
-        guard let row = tableView.indexPath(for: cell)?.row,
-            let id = itemsRelay.value[safe: row]?.id
+        guard let item = itemAtCell(cell)
         else {
             return
         }
-        remove(id)
+        remove(item)
     }
     
     func communityRuleEditableCellButtonEditDidTouch(_ cell: CommunityRuleEditableCell) {
-        guard let row = tableView.indexPath(for: cell)?.row,
-            let rule = itemsRelay.value[safe: row]
+        guard let rule = itemAtCell(cell)
         else {
             return
         }
         
         let vc = EditRuleVC(rule: rule)
-        vc.updateRuleHandler = {rule in
-            self.update(rule)
+        vc.updateRuleHandler = {newRule in
+            self.update(rule, with: newRule)
         }
         show(vc, sender: nil)
     }

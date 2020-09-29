@@ -65,4 +65,38 @@ class CMTableViewController<T: ListItemType, Cell: UITableViewCell>: BaseViewCon
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: Cell.self)) as! Cell
         return cell
     }
+    
+    // MARK: - View model
+    func remove(_ item: T) {
+        var items = itemsRelay.value
+        items.removeAll(where: {$0.identity == item.identity})
+        itemsRelay.accept(items)
+    }
+    
+    func update(_ item: T, with newItem: T) {
+        if newItem == item {return}
+        
+        var items = self.itemsRelay.value
+        if let index = items.firstIndex(where: {$0 == item}) {
+            items[index] = item.newUpdatedItem(from: newItem)!
+            items.removeDuplicates()
+            self.itemsRelay.accept(items)
+        }
+    }
+    
+    func add(_ item: T) {
+        var items = itemsRelay.value
+        if items.contains(where: {$0.identity == item.identity}) {return}
+        items.append(item)
+        itemsRelay.accept(items)
+    }
+    
+    func itemAtIndexPath(_ indexPath: IndexPath) -> T? {
+        return itemsRelay.value[safe: indexPath.row]
+    }
+    
+    func itemAtCell(_ cell: Cell) -> T? {
+        guard let indexPath = tableView.indexPath(for: cell) else {return nil}
+        return itemAtIndexPath(indexPath)
+    }
 }

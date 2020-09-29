@@ -52,12 +52,13 @@ class RulesVC: CMRulesVC {
             .disposed(by: self.disposeBag)
     }
     
-    override func remove(_ ruleId: String) {
+    override func remove(_ rule: ResponseAPIContentGetCommunityRule) {
 //        super.remove(ruleId)
+        guard let id = rule.id else {return}
         showAlert(title: "remove rule".localized().uppercaseFirst, message: "do you really want to remove this rule?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1, completion: { (index) in
             if index == 0 {
                 self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
-                let removeRequest = RequestAPIRule.remove(id: ruleId).convertToJSON()
+                let removeRequest = RequestAPIRule.remove(id: id).convertToJSON()
                 BlockchainManager.instance.editCommunnity(
                     communityCode: self.communityCode,
                     commnityIssuer: self.communityIssuer,
@@ -77,10 +78,10 @@ class RulesVC: CMRulesVC {
         })
     }
     
-    override func update(_ rule: ResponseAPIContentGetCommunityRule) {
+    override func update(_ item: ResponseAPIContentGetCommunityRule, with newItem: ResponseAPIContentGetCommunityRule) {
 //        super.update(rule)
         self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
-        let updateRequest = RequestAPIRule.update(rule: rule).convertToJSON()
+        let updateRequest = RequestAPIRule.update(rule: newItem).convertToJSON()
         BlockchainManager.instance.editCommunnity(
             communityCode: self.communityCode,
             commnityIssuer: self.communityIssuer,
