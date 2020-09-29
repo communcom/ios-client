@@ -118,7 +118,7 @@ class EditCommunityVC: BaseVerticalStackVC {
         stackView.addArrangedSubview(topicHeaderView)
         topicHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
-        let tagListView = TagListView.default(tags: ["test", "teste2", "tasdfji","test", "teste2", "tasdfji","test", "teste2", "tasdfji","test", "teste2", "tasdfji"])
+        let tagListView = TagListView.default(tags: originalCommunity.getTopics())
         stackView.addArrangedSubview(tagListView)
         tagListView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
         stackView.setCustomSpacing(16, after: tagListView)
@@ -254,7 +254,7 @@ class EditCommunityVC: BaseVerticalStackVC {
     
     @objc func topicButtonDidTouch() {
         guard let issuer = originalCommunity.issuer else {return}
-        let vc = TopicsVC(communityCode: originalCommunity.communityId, communityIssuer: issuer, topics: ["test", "test2", "test3"])
+        let vc = TopicsVC(communityCode: originalCommunity.communityId, communityIssuer: issuer, topics: originalCommunity.getTopics())
         show(vc, sender: nil)
     }
     
