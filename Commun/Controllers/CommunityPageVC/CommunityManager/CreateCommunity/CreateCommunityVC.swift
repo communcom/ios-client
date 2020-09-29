@@ -10,12 +10,12 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+protocol CreateCommunityVCType: BaseViewController {
+    var isDataValid: BehaviorRelay<Bool> {get}
+}
+
 class CreateCommunityVC: CreateCommunityFlowVC {
-    override func fittingSizeInContainer(safeAreaFrame: CGRect) -> CGFloat {
-        safeAreaFrame.height
-    }
-    
-    let descriptionLimit = 500
+    // MARK: - Properties
     // save transaction id in case of non-completed creating community process
     var savedTransactionId: [String: String]? {
         get {
@@ -25,216 +25,166 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             UserDefaults.standard.set(newValue, forKey: "CreateCommunityVC.savedTransactionId")
         }
     }
-    
-    lazy var coverImageView = UIImageView(cornerRadius: 10, contentMode: .scaleAspectFill)
-        .image(.placeholder)
-        .whRatio(335/150)
-    lazy var changeCoverButton = UIButton.changeCoverButton
-        .onTap(self, action: #selector(chooseCoverButtonDidTouch))
-    lazy var avatarImageView = MyAvatarImageView(size: 80)
-        .border(width: 2, color: .appWhiteColor)
-    lazy var changeAvatarButton = UIButton.changeAvatarButton
-        .onTap(self, action: #selector(chooseAvatarButtonDidTouch))
-    
-    lazy var communityNameTextField: UITextField = {
-        let tf = UITextField()
-        tf.borderStyle = .none
-        tf.font = .systemFont(ofSize: 17, weight: .semibold)
-        return tf
-    }()
-    lazy var descriptionTextView: UITextView = {
-        let tv = UITextView(forExpandable: ())
-        tv.backgroundColor = .clear
-        tv.font = .systemFont(ofSize: 17, weight: .semibold)
-        tv.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
-        tv.textContainer.lineFragmentPadding = 0
-        return tv
-    }()
-    
-    lazy var textCountLabel = UILabel.with(textSize: 12, textColor: .appWhiteColor, textAlignment: .center)
-    
-    lazy var languageFlagImageView = UIImageView.circle(size: 32)
-    lazy var languageDetailLabel = UILabel.with(textSize: 15, numberOfLines: 2)
-    
-    let languageRelay = BehaviorRelay<Language?>(value: nil)
-    var didSetAvatar = false
-    var didSetCover = false
     var createdCommunities: [ResponseAPIContentGetCommunity]?
+    var currentPageIndex = 0
+    
+    // MARK: - Child VCs
+    lazy var firstStepVC = CreateCommmunityFirstStepVC()
+    lazy var topicsVC = CreateTopicsVC()
+    lazy var rulesVC = CreateRulesVC()
+    lazy var confirmVC = CreateCommunityConfirmVC()
+    lazy var viewControllers: [CreateCommunityVCType] = [firstStepVC, topicsVC, rulesVC, confirmVC]
+    
+    // MARK: - Subviews
+    lazy var containerView = UIView(forAutoLayout: ())
+    lazy var pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+    
+    lazy var bottomStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .equalCentering)
+    lazy var backButton = UIButton(height: 50, label: "back".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: UIColor(hexString: "#E9EEFC")!.inDarkMode(#colorLiteral(red: 0.1725490196, green: 0.1843137255, blue: 0.2117647059, alpha: 1)), textColor: .appMainColor, cornerRadius: 25, contentInsets: UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0))
+        .onTap(self, action: #selector(backButtonDidTouch))
+    lazy var pageControl = CMPageControll(numberOfPages: viewControllers.count)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // retrieving undone community
-        showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
-        RestAPIManager.instance.getCreatedCommunities()
-            .subscribe(onSuccess: { (result) in
-                self.hideHud()
-                self.createdCommunities = result.communities
-                if let community = result.communities?.last(where: {$0.isDone == false || $0.currentStep != "done"}),
-                    let transactionId = self.savedTransactionId?[community.communityId]
-                {
-                    self.showAlert(title: "continue".localized().uppercaseFirst + "?", message: "you haven't finished creating community" + " \"" + community.name + "\".\n" + "would you like to continue creating it?".localized().uppercaseFirst, buttonTitles: ["OK", "create a new one".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
-                        if index == 0 {
-                            self.communityNameTextField.text = community.name
-                            self.avatarImageView.setAvatar(urlString: community.avatarUrl)
-                            self.showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
-                            self.startCommunityCreation(communityId: community.communityId, trxId: transactionId)
-                                .subscribe(onSuccess: { (communityId) in
-                                    self.handleCommunityCreated(communityId: communityId)
-                                }) { (error) in
-                                    self.handleCommunityCreationError(error: error)
-                                }
-                                .disposed(by: self.disposeBag)
-                        }
-                    }
-                }
-            }, onError: {_ in
-                self.hideHud()
-            })
-            .disposed(by: disposeBag)
+//        // retrieving undone community
+//        showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+//        RestAPIManager.instance.getCreatedCommunities()
+//            .subscribe(onSuccess: { (result) in
+//                self.hideHud()
+//                self.createdCommunities = result.communities
+//                if let community = result.communities?.last(where: {$0.isDone == false || $0.currentStep != "done"}),
+//                    let transactionId = self.savedTransactionId?[community.communityId]
+//                {
+//                    self.showAlert(title: "continue".localized().uppercaseFirst + "?", message: "you haven't finished creating community" + " \"" + community.name + "\".\n" + "would you like to continue creating it?".localized().uppercaseFirst, buttonTitles: ["OK", "create a new one".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
+//                        if index == 0 {
+//                            self.firstStepVC.communityNameTextField.text = community.name
+//                            self.firstStepVC.avatarImageView.setAvatar(urlString: community.avatarUrl)
+//                            self.showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
+//                            self.startCommunityCreation(communityId: community.communityId, trxId: transactionId)
+//                                .subscribe(onSuccess: { (communityId) in
+//                                    self.handleCommunityCreated(communityId: communityId)
+//                                }) { (error) in
+//                                    self.handleCommunityCreationError(error: error)
+//                                }
+//                                .disposed(by: self.disposeBag)
+//                        }
+//                    }
+//                }
+//            }, onError: {_ in
+//                self.hideHud()
+//            })
+//            .disposed(by: disposeBag)
     }
     
     override func setUp() {
         super.setUp()
-        continueButton.setTitle("create community".localized().uppercaseFirst, for: .normal)
+        // fix continue button
+        continueButton.cornerRadius = 25
+        continueButton.setTitle("next".localized().uppercaseFirst, for: .normal)
+        continueButton.removeFromSuperview()
+        stackView.autoPinEdge(toSuperviewEdge: .bottom)
         
-        // image wrappers
-        let imagesWrapper = UIView(forAutoLayout: ())
-        imagesWrapper.addSubview(coverImageView)
-        coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        // remove scrollView and add containerView
+        scrollView.removeFromSuperview()
         
-        imagesWrapper.addSubview(changeCoverButton)
-        changeCoverButton.autoPinEdge(.bottom, to: .bottom, of: coverImageView, withOffset: -10)
-        changeCoverButton.autoPinEdge(.trailing, to: .trailing, of: coverImageView, withOffset: -10)
+        let contentStackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
+        view.addSubview(contentStackView)
+        contentStackView.autoPinEdge(.top, to: .bottom, of: headerStackView, withOffset: headerStackViewEdgeInsets.bottom)
+        contentStackView.autoPinEdge(toSuperviewEdge: .leading)
+        contentStackView.autoPinEdge(toSuperviewEdge: .trailing)
+        contentStackView.autoPinBottomToSuperViewSafeAreaAvoidKeyboard()
         
-        imagesWrapper.addSubview(avatarImageView)
-        avatarImageView.autoPinEdge(.top, to: .bottom, of: coverImageView, withOffset: -40)
-        avatarImageView.autoAlignAxis(toSuperviewAxis: .vertical)
-        avatarImageView.autoPinEdge(toSuperviewEdge: .bottom)
-        
-        imagesWrapper.addSubview(changeAvatarButton)
-        changeAvatarButton.autoPinEdge(.trailing, to: .trailing, of: avatarImageView)
-        changeAvatarButton.autoPinEdge(.bottom, to: .bottom, of: avatarImageView)
-        
-        // name
-        let communityNameField = infoField(title: "community name".localized().uppercaseFirst, editor: communityNameTextField)
-        
-        // bio
-        let descriptionField = infoField(title: "description".localized().uppercaseFirst + " (" + "optional".localized().uppercaseFirst + ")", editor: descriptionTextView)
-        
-        let textCountLabelWrapper: UIView = {
-            let view = UIView(height: 24, backgroundColor: .appBlackColor, cornerRadius: 12)
-            view.addSubview(textCountLabel)
-            textCountLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-            textCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 8)
-            textCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 8)
-            return view
+        // bottom stackView
+        let bottomView: UIView = {
+            let bottomView = UIView(backgroundColor: view.backgroundColor)
+            bottomView.addSubview(bottomStackView)
+            bottomStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10))
+            bottomStackView.addArrangedSubviews([backButton, pageControl, continueButton])
+            return bottomView
         }()
         
-        descriptionField.addSubview(textCountLabelWrapper)
-        textCountLabelWrapper.autoPinBottomAndTrailingToSuperView(inset: 10, xInset: 16)
+        contentStackView.addArrangedSubviews([containerView, bottomView])
         
-        let languageField: UIView = {
-            let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
-            let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-            let nextButton = UIButton.circleGray(imageName: "cell-arrow", imageEdgeInsets: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
-            nextButton.isUserInteractionEnabled = false
-            
-            stackView.addArrangedSubview(languageFlagImageView)
-            stackView.addArrangedSubview(languageDetailLabel)
-            stackView.addArrangedSubview(nextButton)
-            
-            view.addSubview(stackView)
-            stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
-            
-            view.isUserInteractionEnabled = true
-            view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(languageFieldDidTouch)))
-            
-            return view
-        }()
-        
-        stackView.addArrangedSubview(imagesWrapper)
-        stackView.addArrangedSubview(communityNameField)
-        stackView.addArrangedSubview(descriptionField)
-        stackView.addArrangedSubview(languageField)
-        
-        stackView.setCustomSpacing(56, after: imagesWrapper)
-        stackView.setCustomSpacing(16, after: communityNameField)
-        stackView.setCustomSpacing(16, after: descriptionField)
-        
+        // dismiss keyboard
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
+        
+        // add pageVC
+        addChild(pageVC)
+        pageVC.view.configureForAutoLayout()
+        containerView.addSubview(pageVC.view)
+        pageVC.view.autoPinEdgesToSuperviewEdges()
+        pageVC.didMove(toParent: self)
+        
+        // kick off first screen
+        moveToStep(currentPageIndex)
     }
     
     override func bind() {
         super.bind()
-        // description count
-        descriptionTextView.rx.text.orEmpty
-            .map {$0.count}
-            .subscribe(onNext: { (count) in
-                self.textCountLabel.text = "\(count)/\(self.descriptionLimit)"
-                self.textCountLabel.superview?.backgroundColor = count > self.descriptionLimit ? .appRedColor : .appBlackColor
-                self.textCountLabel.textColor = count > self.descriptionLimit ? .white : .appWhiteColor
-            })
+        Observable.combineLatest(viewControllers.map {$0.isDataValid})
+            .map {$0[self.currentPageIndex]}
+            .asDriver(onErrorJustReturn: false)
+            .drive(continueButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(
-            communityNameTextField.rx.text.orEmpty,
-            descriptionTextView.rx.text.orEmpty,
-            languageRelay
-        )
-            .map({ (name, description, language) -> Bool in
-                (!name.isEmpty) && (description.count <= self.descriptionLimit) && (language != nil)
-            })
-            .bind(to: continueButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        
-        languageRelay
-            .subscribe(onNext: { (language) in
-                guard let language = language else {
-                    self.languageFlagImageView.isHidden = true
-                    self.languageDetailLabel.text = "language".localized().uppercaseFirst
-                    self.languageDetailLabel.textColor = .appGrayColor
-                    return
-                }
-                self.languageFlagImageView.isHidden = false
-                self.languageFlagImageView.image = UIImage(named: "flag.\(language.code)")
-                self.languageDetailLabel.attributedText = NSMutableAttributedString()
-                    .text(language.name.uppercaseFirst, size: 15, weight: .medium)
-                    .text("\n")
-                    .text((language.name + " language").localized().uppercaseFirst, size: 12, weight: .medium, color: .appGrayColor)
-                    
-            })
+        UIResponder.keyboardHeightObservable
+            .filter {_ in self.pageVC.viewControllers?.first == self.topicsVC}
+            .map {$0 > 0}
+            .asDriver(onErrorJustReturn: false)
+            .drive(bottomStackView.superview!.rx.isHidden)
             .disposed(by: disposeBag)
     }
     
-    private func infoField(title: String, editor: UITextEditor) -> UIView {
-        let stackView = UIStackView(axis: .vertical, spacing: 8, alignment: .leading, distribution: .fill)
-        let titleLabel = UILabel.with(text: title, textSize: 12, weight: .medium, textColor: .appGrayColor)
+    // MARK: - Page control
+    func moveToStep(_ index: Int) {
+        guard let vc = viewControllers[safe: index] else { return }
+        endEditing()
+        pageVC.setViewControllers([vc], direction: index > currentPageIndex ? .forward : .reverse, animated: true, completion: nil)
+        pageControl.selectedIndex = index
+        backButton.alpha = index > 0 ? 1 : 0
+        currentPageIndex = index
+        // refresh validation
+        vc.isDataValid.accept(vc.isDataValid.value)
         
-        stackView.addArrangedSubviews([titleLabel, editor])
-        editor.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32)
-            .isActive = true
-        
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 7, trailing: 16)
-        
-        let field = UIView(cornerRadius: 10)
-        field.backgroundColor = .appWhiteColor
-        field.borderColor = .appLightGrayColor
-        field.borderWidth = 1
-        field.addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges()
-        return field
+        // change title
+        var title = "create community"
+        var continueTitle = "next"
+        switch vc {
+        case topicsVC:
+            title = "select community topics"
+        case rulesVC:
+            title = "add community rules"
+        case confirmVC:
+            title = "important information"
+            continueTitle = "create"
+        default:
+            break
+        }
+        titleLabel.text = title.localized().uppercaseFirst
+        continueButton.setTitle(continueTitle.localized().uppercaseFirst, for: .normal)
+    }
+    
+    // MARK: - Actions
+    @objc func backButtonDidTouch() {
+        moveToStep(currentPageIndex - 1)
     }
     
     override func continueButtonDidTouch() {
+        // next button
+        guard currentPageIndex == viewControllers.count - 1 else {
+            // move to next step
+            moveToStep(currentPageIndex + 1)
+            return
+        }
+        
         view.endEditing(true)
         
-        guard let name = communityNameTextField.text,
-            let language = languageRelay.value?.code
+        guard let name = firstStepVC.communityNameTextField.text,
+            let language = firstStepVC.languageRelay.value?.code
         else {return}
-        let description = self.descriptionTextView.text ?? ""
+        let description = firstStepVC.descriptionTextView.text ?? ""
         
         showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
         
@@ -245,26 +195,12 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             single = startCommunityCreation(communityId: uncompletedCreatingCommunity.communityId)
         } else {
             single = RestAPIManager.instance.createNewCommunity(name: name)
-                .flatMap { result -> Single<(ResponseAPICommunityCreateNewCommunity, String, String)> in
-                    var singles = [Single<String>]()
-                    
-                    if !self.didSetAvatar || self.avatarImageView.image == nil {
-                        singles.append(.just(""))
-                    } else {
-                        singles.append(RestAPIManager.instance.uploadImage(self.avatarImageView.image!))
-                    }
-                    
-                    if !self.didSetCover || self.coverImageView.image == nil {
-                        singles.append(.just(""))
-                    } else {
-                        singles.append(RestAPIManager.instance.uploadImage(self.coverImageView.image!))
-                    }
-                    
-                    return Single.zip(singles)
-                        .map {(result, $0[0], $0[1])}
+                .flatMap { result in
+                    self.firstStepVC.uploadImages()
+                        .map {(result, $0.avatar, $0.cover, self.topicsVC.itemsRelay.value.convertToJSON(), self.rulesVC.itemsRelay.value.convertToJSON())}
                 }
-                .flatMap { (result, avatarUrl, coverUrl) in
-                    return RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: avatarUrl, coverUrl: coverUrl)
+                .flatMap { (result, avatarUrl, coverUrl, subject, rules) in
+                    RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: avatarUrl, coverUrl: coverUrl, subject: subject, rules: rules)
                         .map {_ in result.community.communityId}
                 }
                 .flatMap {communityId in
@@ -323,43 +259,11 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         self.showError(error)
     }
     
-    @objc func chooseCoverButtonDidTouch() {
-        showCoverImagePicker { (image) in
-            self.coverImageView.image = image
-            self.didSetCover = true
-        }
-    }
-    
-    @objc func chooseAvatarButtonDidTouch() {
-        // On updating
-        let chooseAvatarVC = ProfileChooseAvatarVC.fromStoryboard("ProfileChooseAvatarVC", withIdentifier: "ProfileChooseAvatarVC")
-        self.present(chooseAvatarVC, animated: true, completion: nil)
-        
-        chooseAvatarVC.viewModel.didSelectImage
-            .filter {$0 != nil}
-            .map {$0!}
-            .subscribe(onNext: { (image) in
-                self.avatarImageView.image = image
-                self.didSetAvatar = true
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    @objc func languageFieldDidTouch() {
-        UIView.performWithoutAnimation {
-            self.view.endEditing(true)
-        }
-        
-        let vc = CMLanguagesVC()
-        vc.languageDidSelect = { language in
-            vc.navigationController?.dismiss(animated: true, completion: nil)
-            self.languageRelay.accept(language)
-        }
-        let navVC = SwipeNavigationController(rootViewController: vc)
-        present(navVC, animated: true, completion: nil)
-    }
-    
     @objc func endEditing() {
         view.endEditing(true)
+    }
+    
+    override func fittingSizeInContainer(safeAreaFrame: CGRect) -> CGFloat {
+        safeAreaFrame.height
     }
 }

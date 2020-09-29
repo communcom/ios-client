@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import TagListView
 
 class EditCommunityVC: BaseVerticalStackVC {
     var originalCommunity: ResponseAPIContentGetCommunity
@@ -94,7 +95,7 @@ class EditCommunityVC: BaseVerticalStackVC {
         stackView.addArrangedSubview(separator2)
         separator2.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
-        // description
+        // language
         let languageHeaderView = sectionHeaderView(title: "language".localized().uppercaseFirst, action: #selector(languageButtonDidTouch))
         stackView.addArrangedSubview(languageHeaderView)
         languageHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
@@ -111,6 +112,21 @@ class EditCommunityVC: BaseVerticalStackVC {
         let separator3 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
         stackView.addArrangedSubview(separator3)
         separator3.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        // topics
+        let topicHeaderView = sectionHeaderView(title: "topics".localized().uppercaseFirst, action: #selector(topicButtonDidTouch))
+        stackView.addArrangedSubview(topicHeaderView)
+        topicHeaderView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        let tagListView = TagListView.default(tags: originalCommunity.getTopics())
+        stackView.addArrangedSubview(tagListView)
+        tagListView.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -32).isActive = true
+        stackView.setCustomSpacing(16, after: tagListView)
+        
+        // separator
+        let separator4 = UIView.spacer(height: 2, backgroundColor: .appLightGrayColor)
+        stackView.addArrangedSubview(separator4)
+        separator4.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         // rules
         let rulesHeaderView = sectionHeaderView(title: "rules".localized().uppercaseFirst, action: #selector(rulesButtonDidTouch))
@@ -234,6 +250,12 @@ class EditCommunityVC: BaseVerticalStackVC {
         }
         let navVC = SwipeNavigationController(rootViewController: vc)
         present(navVC, animated: true, completion: nil)
+    }
+    
+    @objc func topicButtonDidTouch() {
+        guard let issuer = originalCommunity.issuer else {return}
+        let vc = TopicsVC(communityCode: originalCommunity.communityId, communityIssuer: issuer, topics: originalCommunity.getTopics())
+        show(vc, sender: nil)
     }
     
     @objc func rulesButtonDidTouch() {

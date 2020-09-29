@@ -37,4 +37,19 @@ extension UITextField {
         self.text = text
         sendActions(for: .valueChanged)
     }
+    
+    static func noBorder(backgroundColor: UIColor = .clear, placeholder: String? = nil, fontSize: CGFloat = 15, fontWeight: UIFont.Weight = .semibold, keyboardType: UIKeyboardType? = nil) -> UITextField {
+        let textField = UITextField(backgroundColor: backgroundColor)
+        if let placeholder = placeholder {
+            textField.placeholder = placeholder
+        }
+        
+        textField.borderStyle = .none
+        textField.font = .systemFont(ofSize: fontSize, weight: fontWeight)
+        textField.setPlaceHolderTextColor(.appGrayColor)
+        if let keyboardType = keyboardType {
+            textField.keyboardType = keyboardType
+        }
+        return textField
+    }
 }

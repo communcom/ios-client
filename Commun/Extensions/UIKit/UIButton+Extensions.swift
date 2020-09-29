@@ -56,4 +56,11 @@ extension UIButton {
         button.borderWidth = 2
         return button
     }
+    
+    static var clearButton: UIButton {
+        let btnView = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        btnView.setImage(UIImage(named: "icon-cancel-grey-cyrcle-default"), for: .normal)
+        btnView.imageEdgeInsets = .zero
+        return btnView
+    }
 }

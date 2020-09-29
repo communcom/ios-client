@@ -93,4 +93,9 @@ extension UIColor {
         }
         return self
     }
+    
+    // MARK: - Others
+    static var e2e6e8: UIColor {
+        UIColor(hexString: "#e2e6e8")!.inDarkMode(.white)
+    }
 }

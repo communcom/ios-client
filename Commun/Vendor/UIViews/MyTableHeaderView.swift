@@ -18,12 +18,16 @@ class MyTableHeaderView: MyView {
     }
     
     // MARK: - Initializers
-    convenience init(tableView: UITableView) {
-        self.init(frame: .zero)
+    init(tableView: UITableView) {
         self.tableView = tableView
+        super.init(frame: .zero)
         defer {
             setUpTableHeaderView()
         }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func setUpTableHeaderView() {

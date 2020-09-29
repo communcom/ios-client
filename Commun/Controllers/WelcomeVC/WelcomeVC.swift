@@ -18,7 +18,7 @@ class WelcomeVC: BaseViewController {
     
     // MARK: - Subviews
     lazy var topSignInButton = UIButton(label: "sign in".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appBlackColor)
-    lazy var pageControl = CMPageControll(numberOfPages: 3)
+    lazy var pageControl = CMPageControll(numberOfPages: numberOfPages)
     lazy var containerView = UIView(forAutoLayout: ())
     lazy var buttonStackView = UIStackView(axis: .vertical, spacing: 10, alignment: .fill, distribution: .fillEqually)
     
