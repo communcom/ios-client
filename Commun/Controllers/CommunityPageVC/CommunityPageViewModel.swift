@@ -153,22 +153,22 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
             })
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(
-            profile,
-            leadsVM.items
-        )
-            .subscribe(onNext: { (community, leaders) in
-                // if regLeader was not called
-                if let communityId = community?.communityId,
-                    ResponseAPIContentGetProfile.current?.createdCommunities?.contains(where: {$0.communityId == communityId}) == true,
-                    !leaders.contains(where: {$0.userId == Config.currentUser?.id})
-                {
-                    self.regLeader(communityId: communityId)
-                        .subscribe()
-                        .disposed(by: self.disposeBag)
-                }
-            })
-            .disposed(by: disposeBag)
+//        Observable.combineLatest(
+//            profile,
+//            leadsVM.items
+//        )
+//            .subscribe(onNext: { (community, leaders) in
+//                // if regLeader was not called
+//                if let communityId = community?.communityId,
+//                    ResponseAPIContentGetProfile.current?.createdCommunities?.contains(where: {$0.communityId == communityId}) == true,
+//                    !leaders.contains(where: {$0.userId == Config.currentUser?.id})
+//                {
+//                    self.regLeader(communityId: communityId)
+//                        .subscribe()
+//                        .disposed(by: self.disposeBag)
+//                }
+//            })
+//            .disposed(by: disposeBag)
         
         // Rule changed (ex: isExpanded)
         ResponseAPIContentGetCommunityRule

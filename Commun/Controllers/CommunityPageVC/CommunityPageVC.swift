@@ -101,6 +101,12 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         return button
     }()
     
+    lazy var tagsCollectionView: TagsCollectionView = {
+        let collectionView = TagsCollectionView(height: 32)
+        collectionView.delegate = self
+        return collectionView
+    }()
+    
     // MARK: - Initializers
     init(communityId: String) {
         self.communityId = communityId
@@ -123,6 +129,14 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     }
     
     // MARK: - Methods
+    override func setUp() {
+        super.setUp()
+        view.addSubview(tagsCollectionView)
+        tagsCollectionView.autoPinEdge(toSuperviewEdge: .trailing)
+        tagsCollectionView.autoPinEdge(toSuperviewEdge: .leading)
+        tagsCollectionView.autoPinEdge(.bottom, to: .top, of: headerView, withOffset: -10)
+    }
+    
     override func setUpTableView() -> UITableView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.configureForAutoLayout()
@@ -143,6 +157,14 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         
         // forward delegate
         tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        // topic
+        viewModel.profile
+            .map {$0?.getTopics() ?? []}
+            .bind(to: tagsCollectionView.rx.items(cellIdentifier: "TagCell", cellType: TagsCollectionView.TagCell.self)) { indexPath, topic, cell in
+                cell.label.text = topic
+            }
             .disposed(by: disposeBag)
     }
     
@@ -402,7 +424,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
 }
 
 // MARK: - UITableViewDelegate
-extension CommunityPageVC: UITableViewDelegate {
+extension CommunityPageVC: UITableViewDelegate, UICollectionViewDelegateFlowLayout {
     // MARK: - Sorting
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let viewModel = self.viewModel as! CommunityPageViewModel
@@ -549,5 +571,9 @@ extension CommunityPageVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         UIView(frame: .zero)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 130, height: 32)
     }
 }
