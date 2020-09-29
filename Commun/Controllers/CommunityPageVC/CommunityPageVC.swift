@@ -131,7 +131,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        view.addSubview(tagsCollectionView)
+        view.insertSubview(tagsCollectionView, belowSubview: customNavigationBar)
         tagsCollectionView.autoPinEdge(toSuperviewEdge: .trailing)
         tagsCollectionView.autoPinEdge(toSuperviewEdge: .leading)
         tagsCollectionView.autoPinEdge(.bottom, to: .top, of: headerView, withOffset: -10)
@@ -162,7 +162,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         // topic
         viewModel.profile
             .map {$0?.getTopics() ?? []}
-            .bind(to: tagsCollectionView.rx.items(cellIdentifier: "TagCell", cellType: TagsCollectionView.TagCell.self)) { indexPath, topic, cell in
+            .bind(to: tagsCollectionView.rx.items(cellIdentifier: "TagCell", cellType: TagsCollectionView.TagCell.self)) { _, topic, cell in
                 cell.label.text = topic
             }
             .disposed(by: disposeBag)
@@ -574,6 +574,10 @@ extension CommunityPageVC: UITableViewDelegate, UICollectionViewDelegateFlowLayo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 130, height: 32)
+        if collectionView == tagsCollectionView, let topic = viewModel.profile.value?.getTopics()[safe: indexPath.row] {
+            let size = (topic as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 12, weight: .bold)])
+            return CGSize(width: size.width + 16 + 16, height: 32)
+        }
+        return .zero
     }
 }
