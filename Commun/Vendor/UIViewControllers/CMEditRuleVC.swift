@@ -81,7 +81,7 @@ class CMEditRuleVC: BaseVerticalStackVC {
                 headerStackView.addArrangedSubviews([titleLabel, .spacer(), closeButton])
                 
                 view.addSubview(headerStackView)
-                headerStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .bottom)
+                headerStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 30, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
                 headerStackView.autoPinEdge(.bottom, to: .top, of: scrollView, withOffset: -30)
                 
                 // presented

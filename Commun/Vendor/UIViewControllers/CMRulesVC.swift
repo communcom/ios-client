@@ -89,6 +89,12 @@ class CMRulesVC: CMTableViewController<ResponseAPIContentGetCommunityRule, Commu
         }
         show(vc, sender: nil)
     }
+    
+    override func remove(_ item: ResponseAPIContentGetCommunityRule) {
+        super.remove(item)
+        // reload index
+        tableView.reloadData()
+    }
 }
 
 extension CMRulesVC: CommunityRuleEditableCellDelegate {
