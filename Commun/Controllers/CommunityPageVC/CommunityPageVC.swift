@@ -576,7 +576,7 @@ extension CommunityPageVC: UITableViewDelegate, UICollectionViewDelegateFlowLayo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == tagsCollectionView, let topic = viewModel.profile.value?.getTopics().reversed()[safe: indexPath.row] {
             let size = (topic as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 12, weight: .bold)])
-            return CGSize(width: size.width + 16 + 16, height: 32)
+            return CGSize(width: size.width + 16 + 20, height: 32)
         }
         return .zero
     }
