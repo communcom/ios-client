@@ -142,7 +142,7 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
                     .text(language.name.uppercaseFirst, size: 15, weight: .medium)
                     .text("\n")
                     .text((language.name + " language").localized().uppercaseFirst, size: 12, weight: .medium, color: .appGrayColor)
-                    
+                
             })
             .disposed(by: disposeBag)
         
@@ -160,7 +160,7 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
             .distinctUntilChanged()
             .drive(isDataValid)
             .disposed(by: disposeBag)
-
+        
     }
     
     private func infoField(title: String, editor: UITextEditor) -> UIView {
@@ -219,7 +219,7 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
         present(navVC, animated: true, completion: nil)
     }
     
-    func uploadImages() -> Single<(avatar: String, cover: String)> {
+    private func uploadImages() -> Single<(avatar: String, cover: String)> {
         var singles = [Single<String>]()
         
         if !self.didSetAvatar || self.avatarImageView.image == nil {
@@ -236,5 +236,25 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
         
         return Single.zip(singles)
             .map {(avatar: $0[0], cover: $0[1])}
+    }
+    
+    func createCommunity() -> Single<ResponseAPIContentGetCommunity> {
+        guard let name = communityNameTextField.text,
+            let language = languageRelay.value?.code
+            else {return .error(CMError.invalidRequest(message: "invalid name or language"))}
+        let description = descriptionTextView.text ?? ""
+        return RestAPIManager.instance.createNewCommunity(name: name)
+            .flatMap { result -> Single<ResponseAPIContentGetCommunity> in
+                self.uploadImages()
+                    .map {
+                        var community = result.community
+                        community.avatarUrl = $0.avatar
+                        community.coverUrl = $0.cover
+                        community.language = language
+                        community.description = description
+                        return community
+                    }
+            }
+            
     }
 }
