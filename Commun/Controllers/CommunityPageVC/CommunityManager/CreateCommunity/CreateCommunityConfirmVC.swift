@@ -26,13 +26,13 @@ class CreateCommunityConfirmVC: BaseVerticalStackVC, CreateCommunityVCType {
         let label = UILabel.with(textSize: 15, numberOfLines: 0, textAlignment: .center)
         
         label.attributedText = NSMutableAttributedString()
-            .text("after pressing “Create community” button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings. If you want to make changes — go back and do it before saving.".localized().uppercaseFirst, size: 15)
+            .text("after pressing “Create community” button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving.".localized().uppercaseFirst, size: 15)
             
         let spacer = UIView.spacer(height: 2, backgroundColor: .e2e6e8)
         
         let checkBoxStackView: UIStackView = {
             let stackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .top, distribution: .fill)
-            let label = UILabel.with(text: "i understand that after saving of all changes in current community I’ll need at least 3 leaders in  current community to make changes next time.".localized().uppercaseFirst, textSize: 15, numberOfLines: 0)
+            let label = UILabel.with(text: "i understand that after saving of all changes in current community, I’ll need at least 3 leaders in  current community to make changes next time.".localized().uppercaseFirst, textSize: 15, numberOfLines: 0)
             stackView.addArrangedSubviews([checkBox, label])
             return stackView
         }()

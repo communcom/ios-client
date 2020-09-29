@@ -40,7 +40,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     lazy var pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     lazy var bottomStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .equalCentering)
-    lazy var backButton = UIButton(width: 100, height: 50, label: "back".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: UIColor(hexString: "#E9EEFC")!.inDarkMode(#colorLiteral(red: 0.1725490196, green: 0.1843137255, blue: 0.2117647059, alpha: 1)), textColor: .appMainColor, cornerRadius: 25)
+    lazy var backButton = UIButton(height: 50, label: "back".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: UIColor(hexString: "#E9EEFC")!.inDarkMode(#colorLiteral(red: 0.1725490196, green: 0.1843137255, blue: 0.2117647059, alpha: 1)), textColor: .appMainColor, cornerRadius: 25, contentInsets: UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0))
         .onTap(self, action: #selector(backButtonDidTouch))
     lazy var pageControl = CMPageControll(numberOfPages: viewControllers.count)
     
@@ -80,7 +80,6 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     override func setUp() {
         super.setUp()
         // fix continue button
-        continueButton.autoSetDimensions(to: CGSize(width: 100, height: 50))
         continueButton.cornerRadius = 25
         continueButton.setTitle("next".localized().uppercaseFirst, for: .normal)
         continueButton.removeFromSuperview()
@@ -151,15 +150,20 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         
         // change title
         var title = "create community"
+        var continueTitle = "next"
         switch vc {
         case topicsVC:
             title = "select community topics"
         case rulesVC:
             title = "add community rules"
+        case confirmVC:
+            title = "important information"
+            continueTitle = "create"
         default:
             break
         }
         titleLabel.text = title.localized().uppercaseFirst
+        continueButton.setTitle(continueTitle.localized().uppercaseFirst, for: .normal)
     }
     
     // MARK: - Actions
