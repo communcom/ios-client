@@ -47,34 +47,34 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // retrieving undone community
-        showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
-        RestAPIManager.instance.getCreatedCommunities()
-            .subscribe(onSuccess: { (result) in
-                self.hideHud()
-                self.createdCommunities = result.communities
-                if let community = result.communities?.last(where: {$0.isDone == false || $0.currentStep != "done"}),
-                    let transactionId = self.savedTransactionId?[community.communityId]
-                {
-                    self.showAlert(title: "continue".localized().uppercaseFirst + "?", message: "you haven't finished creating community" + " \"" + community.name + "\".\n" + "would you like to continue creating it?".localized().uppercaseFirst, buttonTitles: ["OK", "create a new one".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
-                        if index == 0 {
-                            self.firstStepVC.communityNameTextField.text = community.name
-                            self.firstStepVC.avatarImageView.setAvatar(urlString: community.avatarUrl)
-                            self.showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
-                            self.startCommunityCreation(communityId: community.communityId, trxId: transactionId)
-                                .subscribe(onSuccess: { (communityId) in
-                                    self.handleCommunityCreated(communityId: communityId)
-                                }) { (error) in
-                                    self.handleCommunityCreationError(error: error)
-                                }
-                                .disposed(by: self.disposeBag)
-                        }
-                    }
-                }
-            }, onError: {_ in
-                self.hideHud()
-            })
-            .disposed(by: disposeBag)
+//        // retrieving undone community
+//        showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+//        RestAPIManager.instance.getCreatedCommunities()
+//            .subscribe(onSuccess: { (result) in
+//                self.hideHud()
+//                self.createdCommunities = result.communities
+//                if let community = result.communities?.last(where: {$0.isDone == false || $0.currentStep != "done"}),
+//                    let transactionId = self.savedTransactionId?[community.communityId]
+//                {
+//                    self.showAlert(title: "continue".localized().uppercaseFirst + "?", message: "you haven't finished creating community" + " \"" + community.name + "\".\n" + "would you like to continue creating it?".localized().uppercaseFirst, buttonTitles: ["OK", "create a new one".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
+//                        if index == 0 {
+//                            self.firstStepVC.communityNameTextField.text = community.name
+//                            self.firstStepVC.avatarImageView.setAvatar(urlString: community.avatarUrl)
+//                            self.showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
+//                            self.startCommunityCreation(communityId: community.communityId, trxId: transactionId)
+//                                .subscribe(onSuccess: { (communityId) in
+//                                    self.handleCommunityCreated(communityId: communityId)
+//                                }) { (error) in
+//                                    self.handleCommunityCreationError(error: error)
+//                                }
+//                                .disposed(by: self.disposeBag)
+//                        }
+//                    }
+//                }
+//            }, onError: {_ in
+//                self.hideHud()
+//            })
+//            .disposed(by: disposeBag)
     }
     
     override func setUp() {
@@ -179,64 +179,50 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             return
         }
         
-//        view.endEditing(true)
-//        
-//        guard let name = firstStepVC.communityNameTextField.text,
-//            let language = languageRelay.value?.code
-//        else {return}
-//        let description = self.descriptionTextView.text ?? ""
-//        
-//        showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
-//        
-//        let single: Single<String>
-//        if let uncompletedCreatingCommunity = createdCommunities?.first(where: {$0.name == name}),
-//            uncompletedCreatingCommunity.currentStep != "done"
-//        {
-//            single = startCommunityCreation(communityId: uncompletedCreatingCommunity.communityId)
-//        } else {
-//            single = RestAPIManager.instance.createNewCommunity(name: name)
-//                .flatMap { result -> Single<(ResponseAPICommunityCreateNewCommunity, String, String)> in
-//                    var singles = [Single<String>]()
-//                    
-//                    if !self.didSetAvatar || self.avatarImageView.image == nil {
-//                        singles.append(.just(""))
-//                    } else {
-//                        singles.append(RestAPIManager.instance.uploadImage(self.avatarImageView.image!))
-//                    }
-//                    
-//                    if !self.didSetCover || self.coverImageView.image == nil {
-//                        singles.append(.just(""))
-//                    } else {
-//                        singles.append(RestAPIManager.instance.uploadImage(self.coverImageView.image!))
-//                    }
-//                    
-//                    return Single.zip(singles)
-//                        .map {(result, $0[0], $0[1])}
-//                }
-//                .flatMap { (result, avatarUrl, coverUrl) in
-//                    return RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: avatarUrl, coverUrl: coverUrl)
-//                        .map {_ in result.community.communityId}
-//                }
-//                .flatMap {communityId in
-//                    BlockchainManager.instance.transferPoints(to: "communcreate", number: 10000, currency: "CMN", memo: "for community: \(communityId)")
-//                        .do(onSuccess: {
-//                            if self.savedTransactionId == nil {self.savedTransactionId = [String: String]()}
-//                            self.savedTransactionId?[communityId] = $0
-//                        })
-//                        .flatMap {RestAPIManager.instance.waitForTransactionWith(id: $0).andThen(Single<(String, String)>.just((communityId, $0)))}
-//                }
-//                .flatMap { (communityId, trxId) in
-//                    self.startCommunityCreation(communityId: communityId, trxId: trxId)
-//                }
-//        }
-//            
-//        single
-//            .subscribe(onSuccess: { communityId in
-//                self.handleCommunityCreated(communityId: communityId)
-//            }) { (error) in
-//                self.handleCommunityCreationError(error: error)
-//            }
-//            .disposed(by: disposeBag)
+        view.endEditing(true)
+        
+        guard let name = firstStepVC.communityNameTextField.text,
+            let language = firstStepVC.languageRelay.value?.code
+        else {return}
+        let description = firstStepVC.descriptionTextView.text ?? ""
+        
+        showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
+        
+        let single: Single<String>
+        if let uncompletedCreatingCommunity = createdCommunities?.first(where: {$0.name == name}),
+            uncompletedCreatingCommunity.currentStep != "done"
+        {
+            single = startCommunityCreation(communityId: uncompletedCreatingCommunity.communityId)
+        } else {
+            single = RestAPIManager.instance.createNewCommunity(name: name)
+                .flatMap { result in
+                    self.firstStepVC.uploadImages()
+                        .map {(result, $0.avatar, $0.cover, self.topicsVC.itemsRelay.value.convertToJSON(), self.rulesVC.itemsRelay.value.convertToJSON())}
+                }
+                .flatMap { (result, avatarUrl, coverUrl, subject, rules) in
+                    RestAPIManager.instance.commmunitySetSettings(name: name, description: description, language: language, communityId: result.community.communityId, avatarUrl: avatarUrl, coverUrl: coverUrl, subject: subject, rules: rules)
+                        .map {_ in result.community.communityId}
+                }
+                .flatMap {communityId in
+                    BlockchainManager.instance.transferPoints(to: "communcreate", number: 10000, currency: "CMN", memo: "for community: \(communityId)")
+                        .do(onSuccess: {
+                            if self.savedTransactionId == nil {self.savedTransactionId = [String: String]()}
+                            self.savedTransactionId?[communityId] = $0
+                        })
+                        .flatMap {RestAPIManager.instance.waitForTransactionWith(id: $0).andThen(Single<(String, String)>.just((communityId, $0)))}
+                }
+                .flatMap { (communityId, trxId) in
+                    self.startCommunityCreation(communityId: communityId, trxId: trxId)
+                }
+        }
+            
+        single
+            .subscribe(onSuccess: { communityId in
+                self.handleCommunityCreated(communityId: communityId)
+            }) { (error) in
+                self.handleCommunityCreationError(error: error)
+            }
+            .disposed(by: disposeBag)
     }
     
     func startCommunityCreation(communityId: String, trxId: String? = nil) -> Single<String> {

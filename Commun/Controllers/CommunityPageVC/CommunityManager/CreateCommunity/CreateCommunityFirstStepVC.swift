@@ -218,4 +218,23 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
         let navVC = SwipeNavigationController(rootViewController: vc)
         present(navVC, animated: true, completion: nil)
     }
+    
+    func uploadImages() -> Single<(avatar: String, cover: String)> {
+        var singles = [Single<String>]()
+        
+        if !self.didSetAvatar || self.avatarImageView.image == nil {
+            singles.append(.just(""))
+        } else {
+            singles.append(RestAPIManager.instance.uploadImage(self.avatarImageView.image!))
+        }
+        
+        if !self.didSetCover || self.coverImageView.image == nil {
+            singles.append(.just(""))
+        } else {
+            singles.append(RestAPIManager.instance.uploadImage(self.coverImageView.image!))
+        }
+        
+        return Single.zip(singles)
+            .map {(avatar: $0[0], cover: $0[1])}
+    }
 }
