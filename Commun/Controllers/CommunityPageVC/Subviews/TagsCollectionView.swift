@@ -22,9 +22,9 @@ class TagsCollectionView: UICollectionView {
             contentView.addSubview(blurEffectView)
             
             contentView.addSubview(label)
-            label.autoAlignAxis(toSuperviewAxis: .horizontal)
-            label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-            label.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+            label.autoCenterInSuperview()
+            label.widthAnchor.constraint(lessThanOrEqualTo: contentView.widthAnchor, constant: -8)
+                .isActive = true
         }
     }
     

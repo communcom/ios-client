@@ -161,7 +161,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         
         // topic
         viewModel.profile
-            .map {$0?.getTopics().reversed() ?? []}
+            .map {$0?.getTopics() ?? []}
             .bind(to: tagsCollectionView.rx.items(cellIdentifier: "TagCell", cellType: TagsCollectionView.TagCell.self)) { _, topic, cell in
                 cell.label.text = topic
             }
@@ -574,9 +574,9 @@ extension CommunityPageVC: UITableViewDelegate, UICollectionViewDelegateFlowLayo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == tagsCollectionView, let topic = viewModel.profile.value?.getTopics().reversed()[safe: indexPath.row] {
+        if collectionView == tagsCollectionView, let topic = viewModel.profile.value?.getTopics()[safe: indexPath.row] {
             let size = (topic as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 12, weight: .bold)])
-            return CGSize(width: size.width + 16 + 20, height: 32)
+            return CGSize(width: size.width + 16 + 16, height: 32)
         }
         return .zero
     }
