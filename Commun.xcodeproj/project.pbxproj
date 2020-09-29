@@ -197,7 +197,6 @@
 		BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */; };
 		BC2F4C5625109C37009B1971 /* RulesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5525109C37009B1971 /* RulesVC.swift */; };
 		BC2F4C5A25109E23009B1971 /* CommunityRuleEditableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */; };
-		BC2F4C5D2510B32E009B1971 /* EditRuleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */; };
 		BC2F4C672511CBCC009B1971 /* CMLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */; };
 		BC2F4C7825130A1E009B1971 /* TopicsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C7725130A1E009B1971 /* TopicsVC.swift */; };
 		BC2F4C7A25130F63009B1971 /* CMTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2F4C7925130F63009B1971 /* CMTableViewController.swift */; };
@@ -439,6 +438,7 @@
 		BCAB50972521DCF30028CA68 /* CMTopicsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB50962521DCF30028CA68 /* CMTopicsVC.swift */; };
 		BCAB509B2521E1770028CA68 /* CMRulesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB509A2521E1770028CA68 /* CMRulesVC.swift */; };
 		BCAB509D2521E2150028CA68 /* CreateRulesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB509C2521E2150028CA68 /* CreateRulesVC.swift */; };
+		BCAB50A02522E7270028CA68 /* CMEditRuleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB509F2522E7270028CA68 /* CMEditRuleVC.swift */; };
 		BCABF1332366D4E2006B05F5 /* ProfileVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1322366D4E2006B05F5 /* ProfileVC+Binding.swift */; };
 		BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1342366D5DC006B05F5 /* ProfileViewModel.swift */; };
 		BCABF1372366DC3D006B05F5 /* UserProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */; };
@@ -807,7 +807,6 @@
 		BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC2F4C5525109C37009B1971 /* RulesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesVC.swift; sourceTree = "<group>"; };
 		BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRuleEditableCell.swift; sourceTree = "<group>"; };
-		BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRuleVC.swift; sourceTree = "<group>"; };
 		BC2F4C662511CBCC009B1971 /* CMLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLanguageView.swift; sourceTree = "<group>"; };
 		BC2F4C7725130A1E009B1971 /* TopicsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsVC.swift; sourceTree = "<group>"; };
 		BC2F4C7925130F63009B1971 /* CMTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTableViewController.swift; sourceTree = "<group>"; };
@@ -1049,6 +1048,7 @@
 		BCAB50962521DCF30028CA68 /* CMTopicsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTopicsVC.swift; sourceTree = "<group>"; };
 		BCAB509A2521E1770028CA68 /* CMRulesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMRulesVC.swift; sourceTree = "<group>"; };
 		BCAB509C2521E2150028CA68 /* CreateRulesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRulesVC.swift; sourceTree = "<group>"; };
+		BCAB509F2522E7270028CA68 /* CMEditRuleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMEditRuleVC.swift; sourceTree = "<group>"; };
 		BCABF1322366D4E2006B05F5 /* ProfileVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileVC+Binding.swift"; sourceTree = "<group>"; };
 		BCABF1342366D5DC006B05F5 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePageViewModel.swift; sourceTree = "<group>"; };
@@ -1495,6 +1495,7 @@
 				BC2F4CB72519BD6F009B1971 /* CMConvertVCs */,
 				BCAB50962521DCF30028CA68 /* CMTopicsVC.swift */,
 				BCAB509A2521E1770028CA68 /* CMRulesVC.swift */,
+				BCAB509F2522E7270028CA68 /* CMEditRuleVC.swift */,
 			);
 			path = UIViewControllers;
 			sourceTree = "<group>";
@@ -1986,7 +1987,6 @@
 			isa = PBXGroup;
 			children = (
 				BC2F4C5525109C37009B1971 /* RulesVC.swift */,
-				BC2F4C5C2510B32E009B1971 /* EditRuleVC.swift */,
 				BC2F4C5925109E23009B1971 /* CommunityRuleEditableCell.swift */,
 			);
 			path = EditRuleVCs;
@@ -3570,7 +3570,6 @@
 				3BEC38EC230FED2B00662374 /* TextAttachment.swift in Sources */,
 				3B3C8B862347866D00D8BADB /* ContentTextView+Utilities.swift in Sources */,
 				BC2F4C5A25109E23009B1971 /* CommunityRuleEditableCell.swift in Sources */,
-				BC2F4C5D2510B32E009B1971 /* EditRuleVC.swift in Sources */,
 				BC9A1F2524D29FC1007BDB3A /* LinkCell.swift in Sources */,
 				BC3824FD24F504CC00DF80DB /* ResponseAPIContentGetProposal+Extensions.swift in Sources */,
 				BC74F503237957790018DB8E /* CommentsVC+CommentCellDelegate.swift in Sources */,
@@ -3940,6 +3939,7 @@
 				3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				BCABF1372366DC3D006B05F5 /* UserProfilePageViewModel.swift in Sources */,
 				BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */,
+				BCAB50A02522E7270028CA68 /* CMEditRuleVC.swift in Sources */,
 				BCD6E36D24C987C2007653E2 /* MyProfileEditGeneralInfoVC+Layout.swift in Sources */,
 				BC4F0A2C240900B9002C4F06 /* SearchablePostsVC.swift in Sources */,
 				BCE0AE122419EC58009CE0F8 /* BaseVerticalStackVC.swift in Sources */,

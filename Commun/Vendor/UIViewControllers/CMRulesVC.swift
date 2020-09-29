@@ -83,7 +83,7 @@ class CMRulesVC: CMTableViewController<ResponseAPIContentGetCommunityRule, Commu
     
     // MARK: - Actions
     @objc func addRuleButtonDidTouch() {
-        let vc = EditRuleVC()
+        let vc = CMEditRuleVC()
         vc.newRuleHandler = {rule in
             self.add(rule)
         }
@@ -106,7 +106,7 @@ extension CMRulesVC: CommunityRuleEditableCellDelegate {
             return
         }
         
-        let vc = EditRuleVC(rule: rule)
+        let vc = CMEditRuleVC(rule: rule)
         vc.updateRuleHandler = {newRule in
             self.update(rule, with: newRule)
         }

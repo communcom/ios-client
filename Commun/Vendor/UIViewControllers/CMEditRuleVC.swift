@@ -1,22 +1,22 @@
 //
-//  EditRuleVC.swift
+//  CMEditRuleVC.swift
 //  Commun
 //
-//  Created by Chung Tran on 9/15/20.
+//  Created by Chung Tran on 9/29/20.
 //  Copyright © 2020 Commun Limited. All rights reserved.
 //
 
 import Foundation
 import RxSwift
 
-class EditRuleVC: BaseVerticalStackVC {
+class CMEditRuleVC: BaseVerticalStackVC {
     let descriptionLimit = 250
     let originalRule: ResponseAPIContentGetCommunityRule?
     var isEditMode: Bool { originalRule != nil }
     var updateRuleHandler: ((ResponseAPIContentGetCommunityRule) -> Void)?
     var newRuleHandler: ((ResponseAPIContentGetCommunityRule) -> Void)?
     
-    lazy var saveButton: UIBarButtonItem = {
+    lazy var saveBarButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "save".localized().uppercaseFirst, style: .done, target: self, action: #selector(saveButtonDidTouch))
         button.isEnabled = false
         button.tintColor = .appBlackColor
@@ -46,7 +46,7 @@ class EditRuleVC: BaseVerticalStackVC {
         return label
     }()
     
-    init(rule: ResponseAPIContentGetCommunityRule? = nil) {
+    required init(rule: ResponseAPIContentGetCommunityRule? = nil) {
         self.originalRule = rule
         super.init(nibName: nil, bundle: nil)
     }
@@ -61,15 +61,29 @@ class EditRuleVC: BaseVerticalStackVC {
         descriptionTextView.text = originalRule?.text
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isBeingPresented {
+            // presented
+            
+        } else if isMovingToParent {
+            // showed
+            navigationItem.rightBarButtonItem = saveBarButton
+            setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
+            title = isEditMode ? "edit rule".localized().uppercaseFirst : "add new rule".localized().uppercaseFirst
+            
+            let descriptionCount = descriptionTextView.rx.text.orEmpty.map {$0.count}
+            Observable.merge(descriptionCount.map {_ in ()}, ruleNameTextField.rx.text.map {_ in ()})
+                .map {_ in self.contentHasChanged()}
+                .asDriver(onErrorJustReturn: false)
+                .drive(saveBarButton.rx.isEnabled)
+                .disposed(by: disposeBag)
+        }
+    }
+    
     override func setUp() {
         super.setUp()
         view.backgroundColor = .appLightGrayColor
-        
-        navigationItem.rightBarButtonItem = saveButton
-        
-        setLeftBarButton(imageName: "icon-back-bar-button-black-default", tintColor: .appBlackColor, action: #selector(askForSavingAndGoBack))
-        
-        title = isEditMode ? "edit rule".localized().uppercaseFirst : "add new rule".localized().uppercaseFirst
         
         stackView.spacing = 10
         stackView.addArrangedSubview(field(title: "rule name".localized().uppercaseFirst, editor: ruleNameTextField))
@@ -103,12 +117,6 @@ class EditRuleVC: BaseVerticalStackVC {
                 self.descriptionCountLabel.textColor = color
             })
             .disposed(by: disposeBag)
-        
-        Observable.merge(descriptionCount.map {_ in ()}, ruleNameTextField.rx.text.map {_ in ()})
-            .map {_ in self.contentHasChanged()}
-            .asDriver(onErrorJustReturn: false)
-            .drive(saveButton.rx.isEnabled)
-            .disposed(by: disposeBag)
     }
     
     private func field(title: String, editor: UITextEditor) -> UIView {
@@ -129,7 +137,7 @@ class EditRuleVC: BaseVerticalStackVC {
     }
     
     // MARK: - Helpers
-    private func contentHasChanged() -> Bool {
+    func contentHasChanged() -> Bool {
         if ruleNameTextField.text?.isEmpty == false {
             if descriptionTextView.text.count > descriptionLimit {return false}
             if !isEditMode {return true}
