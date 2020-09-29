@@ -161,7 +161,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         
         // topic
         viewModel.profile
-            .map {$0?.getTopics() ?? []}
+            .map {$0?.getTopics().reversed() ?? []}
             .bind(to: tagsCollectionView.rx.items(cellIdentifier: "TagCell", cellType: TagsCollectionView.TagCell.self)) { _, topic, cell in
                 cell.label.text = topic
             }
