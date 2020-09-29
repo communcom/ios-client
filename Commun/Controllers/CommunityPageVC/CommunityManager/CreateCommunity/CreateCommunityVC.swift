@@ -32,7 +32,8 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     lazy var firstStepVC = CreateCommmunityFirstStepVC()
     lazy var topicsVC = CreateTopicsVC()
     lazy var rulesVC = CreateRulesVC()
-    lazy var viewControllers: [CreateCommunityVCType] = [firstStepVC, topicsVC, rulesVC]
+    lazy var confirmVC = CreateCommunityConfirmVC()
+    lazy var viewControllers: [CreateCommunityVCType] = [firstStepVC, topicsVC, rulesVC, confirmVC]
     
     // MARK: - Subviews
     lazy var containerView = UIView(forAutoLayout: ())

@@ -439,6 +439,7 @@
 		BCAB509B2521E1770028CA68 /* CMRulesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB509A2521E1770028CA68 /* CMRulesVC.swift */; };
 		BCAB509D2521E2150028CA68 /* CreateRulesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB509C2521E2150028CA68 /* CreateRulesVC.swift */; };
 		BCAB50A02522E7270028CA68 /* CMEditRuleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB509F2522E7270028CA68 /* CMEditRuleVC.swift */; };
+		BCAB50A42522F3DB0028CA68 /* CreateCommunityConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAB50A32522F3DB0028CA68 /* CreateCommunityConfirmVC.swift */; };
 		BCABF1332366D4E2006B05F5 /* ProfileVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1322366D4E2006B05F5 /* ProfileVC+Binding.swift */; };
 		BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1342366D5DC006B05F5 /* ProfileViewModel.swift */; };
 		BCABF1372366DC3D006B05F5 /* UserProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */; };
@@ -1049,6 +1050,7 @@
 		BCAB509A2521E1770028CA68 /* CMRulesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMRulesVC.swift; sourceTree = "<group>"; };
 		BCAB509C2521E2150028CA68 /* CreateRulesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRulesVC.swift; sourceTree = "<group>"; };
 		BCAB509F2522E7270028CA68 /* CMEditRuleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMEditRuleVC.swift; sourceTree = "<group>"; };
+		BCAB50A32522F3DB0028CA68 /* CreateCommunityConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityConfirmVC.swift; sourceTree = "<group>"; };
 		BCABF1322366D4E2006B05F5 /* ProfileVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileVC+Binding.swift"; sourceTree = "<group>"; };
 		BCABF1342366D5DC006B05F5 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePageViewModel.swift; sourceTree = "<group>"; };
@@ -2492,6 +2494,7 @@
 				BC2F4CEA251DE4F2009B1971 /* CreateCommunityFirstStepVC.swift */,
 				BC2F4CFC251EF144009B1971 /* CreateTopicsVC.swift */,
 				BCAB509C2521E2150028CA68 /* CreateRulesVC.swift */,
+				BCAB50A32522F3DB0028CA68 /* CreateCommunityConfirmVC.swift */,
 				BC8C1729250624ED00795859 /* CreateCommunityCompletedVC.swift */,
 			);
 			path = CreateCommunity;
@@ -3673,6 +3676,7 @@
 				BC2704152501D92D0042A29B /* PostStatsViewDelegate.swift in Sources */,
 				BC08E8C0240388EF00436A5C /* PNAlertView.swift in Sources */,
 				3B8DDF58234AEA9600B213F0 /* ContentTextView+Draft.swift in Sources */,
+				BCAB50A42522F3DB0028CA68 /* CreateCommunityConfirmVC.swift in Sources */,
 				BC4AD65C23B1BA01008546A4 /* BottomMenuPresentationController.swift in Sources */,
 				3B3C8B7C23472BF000D8BADB /* EditorToolbarItem.swift in Sources */,
 				BC8F814823E27ECE0024C04A /* WalletCarouselWrapper.swift in Sources */,
