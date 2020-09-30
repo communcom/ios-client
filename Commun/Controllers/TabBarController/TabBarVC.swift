@@ -27,9 +27,19 @@ class TabBarVC: UITabBarController {
     let disposeBag = DisposeBag()
     
     // MARK: - Subviews
-    private lazy var tabBarContainerView = UIView(backgroundColor: .appWhiteColor)
-    private lazy var shadowView = UIView(height: tabBarHeight)
-    lazy var tabBarStackView = UIStackView(forAutoLayout: ())
+    private lazy var customTabbar: CMBottomToolBar = {
+        let mainView: UIView = {
+            let mainView = UIView(backgroundColor: .appWhiteColor)
+            mainView.addSubview(tabBarStackView)
+            tabBarStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0, left: 0.0, bottom: UIDevice.safeAreaInsets.bottom, right: 0.0))
+            return mainView
+        }()
+        
+        let toolbar = CMBottomToolBar(mainView: mainView, cornerRadius: 20)
+        toolbar.autoSetDimension(.height, toSize: tabBarHeight)
+        return toolbar
+    }()
+    lazy var tabBarStackView = UIStackView(axis: .horizontal, spacing: 0, alignment: .center, distribution: .fillEqually)
     
     // Notification
     private lazy var notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
@@ -73,11 +83,11 @@ class TabBarVC: UITabBarController {
     
     func setTabBarHiden(_ hide: Bool) {
         if hide {
-            shadowView.isHidden = true
-            shadowView.heightConstraint?.constant = 0
+            customTabbar.isHidden = true
+            customTabbar.heightConstraint?.constant = 0
         } else {
-            shadowView.isHidden = false
-            shadowView.heightConstraint?.constant = tabBarHeight
+            customTabbar.isHidden = false
+            customTabbar.heightConstraint?.constant = tabBarHeight
         }
     }
     
@@ -101,29 +111,14 @@ class TabBarVC: UITabBarController {
         tabBar.isHidden = true
         
         // shadow
-        view.addSubview(shadowView)
-        shadowView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        shadowView.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: -6), opacity: 0.08)
-        
-        // tabBarContainerView
-        shadowView.addSubview(tabBarContainerView)
-        tabBarContainerView.autoPinEdgesToSuperviewEdges()
-        
-        // tabBarStackView
-        tabBarContainerView.addSubview(tabBarStackView)
-        tabBarStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0, left: 0.0, bottom: UIDevice.safeAreaInsets.bottom, right: 0.0))
-        tabBarStackView.axis = .horizontal
-        tabBarStackView.alignment = .center
-        tabBarStackView.distribution = .fillEqually
-        tabBarStackView.spacing = 0
-        
+        view.addSubview(customTabbar)
+        customTabbar.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // https://stackoverflow.com/questions/39578530/since-xcode-8-and-ios10-views-are-not-sized-properly-on-viewdidlayoutsubviews
-        shadowView.layoutIfNeeded()
-        tabBarContainerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        customTabbar.layoutIfNeeded()
     }
     
     private func configTabs() {
