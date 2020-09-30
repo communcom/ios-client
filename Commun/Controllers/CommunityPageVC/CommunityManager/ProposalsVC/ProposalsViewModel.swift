@@ -32,4 +32,9 @@ class ProposalsViewModel: ListViewModel<ResponseAPIContentGetProposal> {
             })
             .disposed(by: disposeBag)
     }
+    
+    override func deleteItem(_ deletedItem: ResponseAPIContentGetProposal) {
+        (fetcher as! ProposalsListFetcher).proposalsCount -= 1
+        super.deleteItem(deletedItem)
+    }
 }
