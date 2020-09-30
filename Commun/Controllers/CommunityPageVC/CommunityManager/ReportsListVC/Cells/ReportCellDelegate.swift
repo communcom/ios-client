@@ -58,8 +58,9 @@ extension ReportCellDelegate where Self: BaseViewController {
         } else {
             // create ban proposal
             
-            guard let communityId = report.post?.contentId.communityId,
-                let permlink = report.post?.contentId.permlink, let autor = report.post?.author?.userId
+            guard let communityId = report.post?.contentId.communityId ?? report.comment?.contentId.communityId,
+                let permlink = report.post?.contentId.permlink ?? report.comment?.contentId.permlink,
+                let autor = report.post?.author?.userId ?? report.comment?.author?.userId
             else {return}
             let proposalId = BlockchainManager.instance.generateRandomProposalId()
             
