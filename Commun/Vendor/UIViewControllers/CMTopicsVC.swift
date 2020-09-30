@@ -21,16 +21,11 @@ class CMTopicCell: MyTableViewCell {
     lazy var doneButton = CommunButton.default(height: 35, label: "done".localized().uppercaseFirst, cornerRadius: 35/2, isHuggingContent: true)
         .onTap(self, action: #selector(doneButtonDidTouch))
     
-    lazy var toolbar: CMBottomToolBar = {
-        let mainView: UIView = {
-            let view = UIView(height: 55, backgroundColor: .appWhiteColor)
-            let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .fill, distribution: .equalSpacing)
-            view.addSubview(stackView)
-            stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
-            stackView.addArrangedSubviews([cancelButton, doneButton])
-            return view
-        }()
-        let toolbar = CMBottomToolBar(mainView: mainView, cornerRadius: 16)
+    lazy var toolbar: CMBottomToolbar = {
+        let toolbar = CMBottomToolbar(height: 55, cornerRadius: 16, contentInset: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+        toolbar.stackView.distribution = .equalSpacing
+        toolbar.stackView.alignment = .fill
+        toolbar.stackView.addArrangedSubviews([cancelButton, doneButton])
         return toolbar
     }()
     

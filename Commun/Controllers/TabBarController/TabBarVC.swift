@@ -14,6 +14,19 @@ import NotificationView
 public let tabBarHeight: CGFloat = 60 + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
 
 class TabBarVC: UITabBarController {
+    // MARK: - Nested type
+    class Tabbar: CMBottomToolbar {
+        override func commonInit() {
+            super.commonInit()
+            stackView.spacing = 0
+            stackView.distribution = .fillEqually
+        }
+        
+        override func pinStackView() {
+            stackView.autoPinEdgesToSuperviewSafeArea(with: contentInset)
+        }
+    }
+    
     // MARK: - Constants
     let feedTabIndex = 0
     let discoveryTabIndex = 1
@@ -27,19 +40,7 @@ class TabBarVC: UITabBarController {
     let disposeBag = DisposeBag()
     
     // MARK: - Subviews
-    private lazy var customTabbar: CMBottomToolBar = {
-        let mainView: UIView = {
-            let mainView = UIView(backgroundColor: .appWhiteColor)
-            mainView.addSubview(tabBarStackView)
-            tabBarStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0, left: 0.0, bottom: UIDevice.safeAreaInsets.bottom, right: 0.0))
-            return mainView
-        }()
-        
-        let toolbar = CMBottomToolBar(mainView: mainView, cornerRadius: 20)
-        toolbar.autoSetDimension(.height, toSize: tabBarHeight)
-        return toolbar
-    }()
-    lazy var tabBarStackView = UIStackView(axis: .horizontal, spacing: 0, alignment: .center, distribution: .fillEqually)
+    private lazy var customTabbar = Tabbar(height: tabBarHeight, cornerRadius: 20)
     
     // Notification
     private lazy var notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
@@ -150,7 +151,7 @@ class TabBarVC: UITabBarController {
         // Set up controllers
         viewControllers = [feedNC, discoveryNC, /* wallet,*/ notificationsNC, profileNC]
         
-        tabBarStackView.addArrangedSubviews([
+        customTabbar.stackView.addArrangedSubviews([
             feedItem,
             discoveryItem,
             tabBarItemAdd,
@@ -242,7 +243,7 @@ class TabBarVC: UITabBarController {
         selectedIndex = index
         
         // change tabs' color
-        let items = tabBarStackView.arrangedSubviews.filter {$0.tag != (viewControllers?.count ?? 0) + 1}
+        let items = customTabbar.stackView.arrangedSubviews.filter {$0.tag != (viewControllers?.count ?? 0) + 1}
         let selectedItem = items.first {$0.tag == selectedIndex}
         let unselectedItems = items.filter {$0.tag != selectedIndex}
         selectedItem?.tintColor = selectedColor
@@ -321,9 +322,7 @@ class TabBarVC: UITabBarController {
                             let basicEditorScene = BasicEditorVC(shareExtensionData: data, chooseCommunityAfterLoading: true)
                             self.present(basicEditorScene, animated: true, completion: nil)
                         })
-                    }
-                    
-                    else {
+                    } else {
                         presentedVC.showAlert(title: "open editor".localized().uppercaseFirst, message: "close this screen and open editor".localized().uppercaseFirst + "?", buttonTitles: ["OK".localized(), "Cancel".localized()], highlightedButtonIndex: 0) { (index) in
                             if index == 0 {
                                 presentedVC.dismiss(animated: true) {
