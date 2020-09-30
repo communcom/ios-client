@@ -20,16 +20,24 @@ class CMTopicCell: MyTableViewCell {
     lazy var cancelButton = UIButton(height: 35, label: "cancel".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15.0), backgroundColor: .appLightGrayColor, textColor: .appGrayColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0))
     lazy var doneButton = CommunButton.default(height: 35, label: "done".localized().uppercaseFirst, cornerRadius: 35/2, isHuggingContent: true)
         .onTap(self, action: #selector(doneButtonDidTouch))
-    lazy var toolbarView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 55))
-        view.backgroundColor = .white
-        
-        let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .fill, distribution: .equalSpacing)
-        view.addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
-        stackView.addArrangedSubviews([cancelButton, doneButton])
-        return view
+    
+    lazy var toolbar: CMBottomToolBar = {
+        let mainView: UIView = {
+            let view = UIView(height: 55, backgroundColor: .appWhiteColor)
+            let stackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .fill, distribution: .equalSpacing)
+            view.addSubview(stackView)
+            stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+            stackView.addArrangedSubviews([cancelButton, doneButton])
+            return view
+        }()
+        let toolbar = CMBottomToolBar(mainView: mainView, cornerRadius: 16)
+        return toolbar
     }()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        toolbar.layoutIfNeeded()
+    }
     
     override func setUpViews() {
         super.setUpViews()
@@ -56,7 +64,8 @@ class CMTopicCell: MyTableViewCell {
         
         hStackView.addArrangedSubviews([vStackView, clearButton])
         
-        textField.inputAccessoryView = toolbarView
+        // toolbar
+        textField.inputAccessoryView = toolbar
         
         bind()
     }
