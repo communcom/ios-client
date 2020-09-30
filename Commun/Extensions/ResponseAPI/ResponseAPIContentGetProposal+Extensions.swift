@@ -28,7 +28,7 @@ extension ResponseAPIContentGetProposal {
         
         let request: Single<String>
         if originIsApproved {
-            request = BlockchainManager.instance.unapproveProposal(proposal.proposalId)
+            request = BlockchainManager.instance.unapproveProposal(proposal.proposalId, proposer: proposal.proposer?.userId ?? "")
         } else {
             request = BlockchainManager.instance.approveProposal(proposal.proposalId, proposer: proposal.proposer?.userId ?? "")
         }
