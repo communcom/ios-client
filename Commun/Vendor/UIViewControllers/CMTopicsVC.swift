@@ -20,7 +20,7 @@ class CMTopicCell: MyTableViewCell, UITextFieldDelegate {
 
     lazy var view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     lazy var cancelButton = UIButton(height: 35, label: "cancel".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15.0), backgroundColor: .appLightGrayColor, textColor: .appGrayColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0))
-    lazy var doneButton = CommunButton.default(height: 35, label: "next".localized().uppercaseFirst, cornerRadius: 35/2, isHuggingContent: true)
+    lazy var doneButton = CommunButton.default(height: 35, label: "add".localized().uppercaseFirst, cornerRadius: 35/2, isHuggingContent: true)
         .onTap(self, action: #selector(doneButtonDidTouch))
     
     lazy var toolbar: CMBottomToolbar = {
