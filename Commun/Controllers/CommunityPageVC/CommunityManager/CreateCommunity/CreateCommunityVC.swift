@@ -184,7 +184,21 @@ class CreateCommunityVC: CreateCommunityFlowVC {
                         .subscribe(onSuccess: { (community) in
                             self.hideHud()
                             self.community = community
-                            self.moveToStep(self.currentPageIndex + 1)
+                            if community.currentStep == "openGalleryBalance" {
+                                // Community creation has already started, cannot change settings
+                                self.showAlert(title: "continue".localized().uppercaseFirst, message: "Community creation has already started, cannot change settings".localized().uppercaseFirst + ".", buttonTitles: ["OK"], highlightedButtonIndex: 0) { (_) in
+                                    self.openBalanceAndStartCreation(communityId: community.communityId)
+                                        .subscribe(onSuccess: { communityId in
+                                            self.handleCommunityCreated(communityId: communityId)
+                                        }) { (error) in
+                                            self.handleCommunityCreationError(error: error)
+                                        }
+                                        .disposed(by: self.disposeBag)
+                                }
+                                return
+                            } else {
+                                self.moveToStep(self.currentPageIndex + 1)
+                            }
                         }) { (error) in
                             self.hideHud()
                             self.showError(error)
@@ -236,17 +250,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
                     )
                         .map {_ in community.communityId}
                 }
-                .flatMap {communityId in
-                    BlockchainManager.instance.transferPoints(to: "communcreate", number: 10000, currency: "CMN", memo: "for community: \(communityId)")
-                        .do(onSuccess: {
-                            if self.savedTransactionId == nil {self.savedTransactionId = [String: String]()}
-                            self.savedTransactionId?[communityId] = $0
-                        })
-                        .flatMap {RestAPIManager.instance.waitForTransactionWith(id: $0).andThen(Single<(String, String)>.just((communityId, $0)))}
-                }
-                .flatMap { (communityId, trxId) in
-                    self.startCommunityCreation(communityId: communityId, trxId: trxId)
-                }
+                .flatMap { self.openBalanceAndStartCreation(communityId: $0) }
         }
             
         single
@@ -256,6 +260,16 @@ class CreateCommunityVC: CreateCommunityFlowVC {
                 self.handleCommunityCreationError(error: error)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func openBalanceAndStartCreation(communityId: String) -> Single<String> {
+        BlockchainManager.instance.transferPoints(to: "communcreate", number: 10000, currency: "CMN", memo: "for community: \(communityId)")
+            .do(onSuccess: {
+                if self.savedTransactionId == nil {self.savedTransactionId = [String: String]()}
+                self.savedTransactionId?[communityId] = $0
+            })
+            .flatMap {RestAPIManager.instance.waitForTransactionWith(id: $0).andThen(Single<String>.just($0))}
+            .flatMap {self.startCommunityCreation(communityId: communityId, trxId: $0)}
     }
     
     func startCommunityCreation(communityId: String, trxId: String? = nil) -> Single<String> {
