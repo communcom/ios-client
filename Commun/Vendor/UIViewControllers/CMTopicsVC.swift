@@ -83,12 +83,13 @@ class CMTopicCell: MyTableViewCell, UITextFieldDelegate {
             .disposed(by: disposeBag)
         
         let isTextFieldEmpty = textField.rx.text.orEmpty
-            .map {!$0.isEmpty}
+            .map {$0.isEmpty}
             .share()
             .asDriver(onErrorJustReturn: false)
             .distinctUntilChanged()
             
         isTextFieldEmpty
+            .map {!$0}
             .drive(doneButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
