@@ -155,10 +155,10 @@ extension BaseViewController {
             return
         }
         BlockchainManager.instance.triggerFollow(community: community)
-            .subscribe { [weak self] (error) in
+            .subscribe(onError: { [weak self] (error) in
                 self?.showError(error)
-        }
-        .disposed(by: self.disposeBag)
+            })
+            .disposed(by: self.disposeBag)
     }
     
     private func actionInfo(isSubscribed: Bool) -> (title: String, icon: String) {

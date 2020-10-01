@@ -36,9 +36,9 @@ extension LeaderCellDelegate where Self: BaseViewController & HasLeadersVM {
                 if index == 0 {
                     if leader.identity == votedLeader?.identity {
                         BlockchainManager.instance.toggleVoteLeader(leader: leader)
-                            .subscribe { (error) in
+                            .subscribe(onError: { (error) in
                                 UIApplication.topViewController()?.showError(error)
-                            }
+                            })
                             .disposed(by: self.disposeBag)
                         return
                     }
@@ -56,17 +56,17 @@ extension LeaderCellDelegate where Self: BaseViewController & HasLeadersVM {
                             leader.notifyChanged()
                         })
                         .andThen(BlockchainManager.instance.toggleVoteLeader(leader: leader))
-                        .subscribe { (error) in
+                        .subscribe(onError:{ (error) in
                             UIApplication.topViewController()?.showError(error)
-                        }
+                        })
                         .disposed(by: self.disposeBag)
                 }
             }
         } else {
             BlockchainManager.instance.toggleVoteLeader(leader: leader)
-                .subscribe { (error) in
+                .subscribe(onError: { (error) in
                     UIApplication.topViewController()?.showError(error)
-                }
+                })
                 .disposed(by: disposeBag)
         }
     }
@@ -79,9 +79,9 @@ extension LeaderCellDelegate where Self: BaseViewController & HasLeadersVM {
         }
         
         BlockchainManager.instance.triggerFollow(user: leader)
-            .subscribe { (error) in
+            .subscribe(onError: { (error) in
                 UIApplication.topViewController()?.showError(error)
-            }
+            })
             .disposed(by: disposeBag)
     }
 }

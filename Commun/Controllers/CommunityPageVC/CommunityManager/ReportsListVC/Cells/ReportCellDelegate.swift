@@ -66,7 +66,7 @@ extension ReportCellDelegate where Self: BaseViewController {
             
             // change state immediately, reverse if fall
             report.isPerformingAction = true
-            let proposal = ResponseAPIContentGetProposal.placeholder(proposalId: proposalId, isApproved: false, approvesCount: 0, approvesNeed: viewModel.items.value.first(where: {$0.proposal?.approvesNeed != nil})?.proposal?.approvesNeed ?? 3)
+            let proposal = ResponseAPIContentGetProposal.placeholder(proposer: ResponseAPIContentGetProfile.current, proposalId: proposalId, isApproved: false, approvesCount: 0, approvesNeed: viewModel.items.value.first(where: {$0.proposal?.approvesNeed != nil})?.proposal?.approvesNeed ?? 3)
             report.proposal = proposal
             report.notifyChanged()
             
@@ -83,6 +83,7 @@ extension ReportCellDelegate where Self: BaseViewController {
                 .subscribe(onCompleted: {
                     report.isPerformingAction = false
                     report.notifyChanged()
+                    self.buttonProposalDidTouch(forItemWithIdentity: identity)
                 }) { (error) in
                     self.showError(error)
                     guard let index = self.viewModel.items.value.firstIndex(where: {$0.identity == report.identity}) else {return}

@@ -141,9 +141,9 @@ extension CommentCellDelegate where Self: BaseViewController {
         }
         
         comment.upVote()
-            .subscribe { (error) in
+            .subscribe(onError: { (error) in
                 UIApplication.topViewController()?.showError(error)
-            }
+            })
             .disposed(by: self.disposeBag)
     }
     
@@ -156,9 +156,9 @@ extension CommentCellDelegate where Self: BaseViewController {
         }
         
         comment.downVote()
-            .subscribe { (error) in
+            .subscribe (onError:{ (error) in
                 UIApplication.topViewController()?.showError(error)
-            }
+            })
             .disposed(by: self.disposeBag)
     }
     
