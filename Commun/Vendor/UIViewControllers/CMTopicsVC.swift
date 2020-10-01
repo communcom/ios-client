@@ -82,18 +82,25 @@ class CMTopicCell: MyTableViewCell, UITextFieldDelegate {
             })
             .disposed(by: disposeBag)
         
-        textField.rx.text.orEmpty
-            .map {!$0.isEmpty}
-            .asDriver(onErrorJustReturn: false)
+        let isTextFieldEmpty = textField.rx.text.orEmpty
+            .map {$0.isEmpty}
             .distinctUntilChanged()
+            .share()
+            .asDriver(onErrorJustReturn: false)
+            
+        isTextFieldEmpty.map {!$0}
             .drive(doneButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        isTextFieldEmpty
+            .drive(clearButton.rx.isHidden)
             .disposed(by: disposeBag)
             
         textField.delegate = self
     }
     
     func setUp(topic: String, clearAction: CocoaAction, editingAction: Action<String, Void>, cancelAction: CocoaAction, placeholder: String = "Ex: Game") {
-        textField.text = topic
+        textField.changeTextNotify(topic)
         textField.placeholder = placeholder
         clearButton.rx.action = clearAction
         cancelButton.rx.action = cancelAction
