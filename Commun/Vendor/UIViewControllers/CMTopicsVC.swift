@@ -10,6 +10,7 @@ import Foundation
 import RxCocoa
 import Action
 import RxSwift
+import RxDataSources
 
 class CMTopicCell: MyTableViewCell, UITextFieldDelegate {
     lazy var clearButton = UIButton.clearButton.huggingContent(axis: .horizontal)
@@ -81,13 +82,20 @@ class CMTopicCell: MyTableViewCell, UITextFieldDelegate {
             })
             .disposed(by: disposeBag)
         
-        textField.rx.text.orEmpty
+        let isTextFieldEmpty = textField.rx.text.orEmpty
             .map {!$0.isEmpty}
+            .share()
             .asDriver(onErrorJustReturn: false)
             .distinctUntilChanged()
+            
+        isTextFieldEmpty
             .drive(doneButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
+        isTextFieldEmpty
+            .drive(clearButton.rx.isHidden)
+            .disposed(by: disposeBag)
+            
         textField.delegate = self
     }
     
@@ -149,7 +157,8 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
     
     override func setUp() {
         super.setUp()
-        setUpFooterView()
+//        setUpFooterView()
+        dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .none)
     }
     
     override func mapItemsToSections(_ items: [String]) -> [SectionModel] {
