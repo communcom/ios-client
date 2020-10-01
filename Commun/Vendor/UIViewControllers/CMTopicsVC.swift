@@ -82,19 +82,11 @@ class CMTopicCell: MyTableViewCell, UITextFieldDelegate {
             })
             .disposed(by: disposeBag)
         
-        let isTextFieldEmpty = textField.rx.text.orEmpty
-            .map {$0.isEmpty}
-            .share()
+        textField.rx.text.orEmpty
+            .map {!$0.isEmpty}
             .asDriver(onErrorJustReturn: false)
             .distinctUntilChanged()
-            
-        isTextFieldEmpty
-            .map {!$0}
             .drive(doneButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        
-        isTextFieldEmpty
-            .drive(clearButton.rx.isHidden)
             .disposed(by: disposeBag)
             
         textField.delegate = self
