@@ -14,6 +14,7 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
     let isDataValid = BehaviorRelay<Bool>(value: false)
     override var shouldHandleKeyboard: Bool { false }
     let descriptionLimit = 500
+    var createdCommunities = [ResponseAPIContentGetCommunity]()
     
     lazy var coverImageView = UIImageView(cornerRadius: 10, contentMode: .scaleAspectFill)
         .image(.placeholder)
@@ -241,7 +242,38 @@ class CreateCommmunityFirstStepVC: BaseVerticalStackVC, CreateCommunityVCType {
     func createCommunity() -> Single<ResponseAPIContentGetCommunity> {
         guard let name = communityNameTextField.text
             else {return .error(CMError.invalidRequest(message: "invalid name"))}
+        if let community = createdCommunities.first(where: {$0.name == name}) {
+            if community.isBeingCreated {
+                return .just(community)
+            }
+            return .error(CMError.other(message: "Community already exists"))
+        }
         return RestAPIManager.instance.createNewCommunity(name: name)
             .map {$0.community}
+            .do(onSuccess: { (community) in
+                var community = community
+                community.isDone = false
+                community.currentStep = "settingUp"
+                self.createdCommunities.removeAll(where: {$0.name == name})
+                self.createdCommunities.append(community)
+            })
+            .catchError { (error) in
+                switch (error as? CMError)?.message {
+                case "Community already exists":
+                    return RestAPIManager.instance.getCreatedCommunities()
+                        .map {$0.communities ?? []}
+                        .map { communities in
+                            self.createdCommunities = communities
+                            if let community = communities.first(where: {$0.name == name}),
+                                community.isBeingCreated
+                            {
+                                return community
+                            }
+                            throw error
+                        }
+                default:
+                    throw error
+                }
+            }
     }
 }

@@ -179,20 +179,18 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             if let vc = viewControllers[safe: currentPageIndex] {
                 switch vc {
                 case firstStepVC:
-                    if self.community?.name != firstStepVC.communityNameTextField.text {
-                        showIndetermineHudWithMessage("creating community".localized().uppercaseFirst)
-                        firstStepVC.createCommunity()
-                            .subscribe(onSuccess: { (community) in
-                                self.hideHud()
-                                self.community = community
-                                self.moveToStep(self.currentPageIndex + 1)
-                            }) { (error) in
-                                self.hideHud()
-                                self.showError(error)
-                            }
-                            .disposed(by: disposeBag)
-                        return
-                    }
+                    showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
+                    firstStepVC.createCommunity()
+                        .subscribe(onSuccess: { (community) in
+                            self.hideHud()
+                            self.community = community
+                            self.moveToStep(self.currentPageIndex + 1)
+                        }) { (error) in
+                            self.hideHud()
+                            self.showError(error)
+                        }
+                        .disposed(by: disposeBag)
+                    return
                 case topicsVC:
                     community?.subject = topicsVC.itemsRelay.value.convertToJSON()
                 case rulesVC:
