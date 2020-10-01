@@ -16,7 +16,8 @@ class CMTopicCell: MyTableViewCell {
     lazy var textField = UITextField.noBorder()
     var editingAction: Action<String, Void>?
     let disposeBag = DisposeBag()
-    
+
+    lazy var view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
     lazy var cancelButton = UIButton(height: 35, label: "cancel".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15.0), backgroundColor: .appLightGrayColor, textColor: .appGrayColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0))
     lazy var doneButton = CommunButton.default(height: 35, label: "done".localized().uppercaseFirst, cornerRadius: 35/2, isHuggingContent: true)
         .onTap(self, action: #selector(doneButtonDidTouch))
@@ -40,7 +41,6 @@ class CMTopicCell: MyTableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         
-        let view = UIView(backgroundColor: .appWhiteColor, cornerRadius: 10)
         view.borderColor = .appLightGrayColor
         view.borderWidth = 1
         contentView.addSubview(view)
@@ -66,9 +66,17 @@ class CMTopicCell: MyTableViewCell {
     }
     
     func bind() {
+        textField.rx.controlEvent([.editingDidBegin])
+            .asObservable()
+            .subscribe(onNext: {[weak self] (_) in
+                self?.view.borderColor = .appMainColor
+            })
+            .disposed(by: disposeBag)
+        
         textField.rx.controlEvent([.editingDidEnd])
             .asObservable()
             .subscribe(onNext: {[weak self] _ in
+                self?.view.borderColor = .appLightGrayColor
                 self?.commitChange()
             })
             .disposed(by: disposeBag)
@@ -91,6 +99,7 @@ class CMTopicCell: MyTableViewCell {
     @objc func commitChange() {
         guard let newText = textField.text else {return}
         editingAction?.execute(newText)
+        textField.placeholder = "Ex: Game"
     }
     
     @objc func doneButtonDidTouch() {
@@ -150,7 +159,7 @@ class CMTopicsVC: CMTableViewController<String, CMTopicCell> {
                 cell.textField.resignFirstResponder()
                 return .just(())
             },
-            placeholder: itemsRelay.value.count == 0 ? "your first topic here".localized().uppercaseFirst : "Ex: Game"
+            placeholder: indexPath.row == 0 ? "your first topic here".localized().uppercaseFirst : "Ex: Game"
         )
         return cell
     }
