@@ -11,7 +11,7 @@ import RxCocoa
 import Action
 import RxSwift
 
-class CMTopicCell: MyTableViewCell {
+class CMTopicCell: MyTableViewCell, UITextFieldDelegate {
     lazy var clearButton = UIButton.clearButton.huggingContent(axis: .horizontal)
     lazy var textField = UITextField.noBorder()
     var editingAction: Action<String, Void>?
@@ -84,8 +84,11 @@ class CMTopicCell: MyTableViewCell {
         textField.rx.text.orEmpty
             .map {!$0.isEmpty}
             .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
             .drive(doneButton.rx.isEnabled)
             .disposed(by: disposeBag)
+        
+        textField.delegate = self
     }
     
     func setUp(topic: String, clearAction: CocoaAction, editingAction: Action<String, Void>, cancelAction: CocoaAction, placeholder: String = "Ex: Game") {
@@ -97,7 +100,7 @@ class CMTopicCell: MyTableViewCell {
     }
     
     @objc func commitChange() {
-        guard let newText = textField.text else {return}
+        guard let newText = textField.text?.removingTrailingSpaces() else {return}
         editingAction?.execute(newText)
         textField.placeholder = "Ex: Game"
     }
@@ -110,6 +113,35 @@ class CMTopicCell: MyTableViewCell {
             let indexPath = IndexPath(row: lastRow, section: 0)
             tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let newText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else {
+            return false
+        }
+        var trimmedNewText = newText.removingLeadingSpaces()
+        while trimmedNewText.contains("  ") {
+            trimmedNewText = trimmedNewText.replacingOccurrences(of: "  ", with: " ")
+        }
+        
+        // Get invalid characters
+        var validChars = NSCharacterSet.alphanumerics
+        validChars.insert(charactersIn: " ")
+        let invalidChars = validChars.inverted
+
+        // Make new string with invalid characters trimmed
+        let newString = trimmedNewText.trimmingCharacters(in: invalidChars)
+
+        if newString.count < trimmedNewText.count {
+            textField.changeTextNotify(newString)
+            return false
+        }
+        
+        if trimmedNewText != newText {
+            textField.changeTextNotify(trimmedNewText)
+            return false
+        }
+        return true
     }
 }
 

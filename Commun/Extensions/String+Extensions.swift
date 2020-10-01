@@ -129,6 +129,20 @@ extension String {
         label.sizeToFit()
         return label.frame.height
     }
+    
+    func removingLeadingSpaces() -> String {
+        guard let index = firstIndex(where: { !CharacterSet(charactersIn: String($0)).isSubset(of: .whitespaces) }) else {
+            return ""
+        }
+        return String(self[index...])
+    }
+    
+    func removingTrailingSpaces() -> String {
+        guard let index = lastIndex(where: { !CharacterSet(charactersIn: String($0)).isSubset(of: .whitespaces) }) else {
+            return ""
+        }
+        return String(self[...index])
+    }
 }
 
 extension StringProtocol {
