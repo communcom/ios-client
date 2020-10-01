@@ -180,7 +180,7 @@ extension UIViewController {
                 showProfileWithUserId(id)
             }
         
-        case "upvote", "reply", "mention", "donation":
+        case "upvote", "reply", "mention", "donation", "banPost", "banComment":
             switch item.entityType {
             case "post":
                 if let userId = item.post?.contentId.userId,
@@ -204,7 +204,7 @@ extension UIViewController {
                 break
             }
         
-        case "transfer":
+        case "transfer", "voteLeader":
             if item.from?.username == nil {
                 if let id = item.community?.communityId {
                     showCommunityWithCommunityId(id)

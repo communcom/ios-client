@@ -146,6 +146,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType, UITextViewDelegate {
             iconImageView.image = UIImage(named: "notifications-page-reply")
         case "reward":
             avatarUrl = item.community?.avatarUrl
+            iconImageView.isHidden = true
         case "transfer":
             avatarUrl = item.from?.avatarUrl
             if item.from?.username == nil {
@@ -159,9 +160,16 @@ class NotificationCell: MyTableViewCell, ListItemCellType, UITextViewDelegate {
             }
         case "referralRegistrationBonus", "referralPurchaseBonus":
             avatarUrl = item.from?.avatarUrl
+            iconImageView.isHidden = true
         case "donation":
             avatarUrl = item.from?.avatarUrl
             iconImageView.setAvatar(urlString: item.community?.avatarUrl)
+        case "voteLeader":
+            avatarUrl = item.community?.avatarUrl
+            iconImageView.image = UIImage(named: "notifications-page-vote-leader")
+        case "banPost", "banComment":
+            avatarUrl = item.community?.avatarUrl
+            iconImageView.isHidden = true
         default:
             iconImageView.isHidden = true
         }

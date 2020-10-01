@@ -10,7 +10,7 @@ import Foundation
 import Localize_Swift
 
 extension ResponseAPIGetNotificationItem {
-    static var supportedTypes: [String] = ["subscribe", "reply", "mention", "upvote", "reward", "transfer", "referralRegistrationBonus", "referralPurchaseBonus", "donation"]
+    static var supportedTypes: [String] = ["subscribe", "reply", "mention", "upvote", "reward", "transfer", "referralRegistrationBonus", "referralPurchaseBonus", "donation", "voteLeader", "banPost", "banComment"]
     
     var attributedContent: NSAttributedString {
         let aStr = NSMutableAttributedString()
@@ -93,6 +93,17 @@ extension ResponseAPIGetNotificationItem {
                     .normal("\"")
                     .normal(" ")
                     .text("\(amount ?? "0") \(community?.name ?? pointType ?? "points")", weight: .medium, color: .appMainColor)
+            case "voteLeader":
+                aStr.normal("Вы стали лидером общества")
+                    .normal(" ")
+                    .normal(community?.name ?? community?.communityId ?? "")
+            case "banPost", "banComment":
+                aStr.normal("Ваш")
+                    .normal(" ")
+                    .normal("\(entityType ?? "post")".localized())
+                    .normal("был заблокирован")
+                    .normal(": \"")
+                    .normal((comment?.shortText ?? post?.shortText ?? "") + "...\"")
             default:
                 aStr.normal("you've got a new notification".localized().uppercaseFirst)
             }
@@ -176,6 +187,19 @@ extension ResponseAPIGetNotificationItem {
                     .normal("\"")
                     .normal(" with ")
                     .text("\(amount ?? "0") \(community?.name ?? pointType ?? "points")", weight: .medium, color: .appMainColor)
+                
+            case "voteLeader":
+                aStr.normal("You became a leader in")
+                    .normal(" ")
+                    .normal(community?.name ?? community?.communityId ?? "")
+                
+            case "banPost", "banComment":
+                aStr.normal("Your")
+                    .normal(" ")
+                    .normal("\(entityType ?? "post")".localized())
+                    .normal("has been banned")
+                    .normal(": \"")
+                    .normal((comment?.shortText ?? post?.shortText ?? "") + "...\"")
             default:
                 aStr.normal("you've got a new notification".localized().uppercaseFirst)
             }
