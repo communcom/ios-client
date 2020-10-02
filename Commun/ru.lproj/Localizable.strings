@@ -1,3 +1,4 @@
+"3 votes from community leaders" = "3 голоса от лидеров сообщества";
 "Be the first donater ever!" = "Сделайте донат первым!";
 "do you really want to delete this comment" = "ты действительно хочешь удалить этот комментарий";
 "THPinViewController_delete_title" = "Удалить";
@@ -627,7 +628,7 @@
 "email" = "почту";
 "a moment ago" = "сейчас";
 "How do I get rewards for my posts?" = "Как получить вознаграждение за свои посты?";
-"after pressing “Create community” button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving." = "После нажатия кнопки \"Создать сообщество\", токены будут списаны с Вашего кошелька. В дальнейшем Вам понадобится по крайней мере 3 голоса от лидеров сообщества, чтобы сделать любые изменения в его настройках.\nЕсли Вы хотите внести правки - вернитесь и сделайте их до сохранением.";
+"after pressing \"Create community\" button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving." = "После нажатия кнопки \"Создать сообщество\", токены будут списаны с Вашего кошелька. В дальнейшем Вам понадобится по крайней мере 3 голоса от лидеров сообщества, чтобы сделать любые изменения в его настройках.\nЕсли Вы хотите внести правки - вернитесь и сделайте их до сохранением.";
 "After you publish the post, community members will have 48 hours to like or dislike it. If your post reaches the Top 10 posts of the day, you will be rewarded." = "После публикации поста у участников сообщества есть 48 часов для лайков и дизлайков. Если пост попадет в топ-10 дня, Вы получите награду за него.";
 "mentioned you in a" = "упомянул Вас";
 "liked your" = "понравился Ваш";

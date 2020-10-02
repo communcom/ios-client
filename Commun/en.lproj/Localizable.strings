@@ -1,3 +1,4 @@
+"3 votes from community leaders" = "3 votes from community leaders";
 "Be the first donater ever!" = "Be the first donater ever!";
 "do you really want to delete this comment" = "do you really want to delete this comment";
 "THPinViewController_delete_title" = "Delete";
@@ -52,7 +53,7 @@
 "add to default contacts" = "add to default contacts";
 "after confirmation, we'll generate for" = "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.";
 "after creating a community" = "after creating a community";
-"after pressing “Create community” button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving." = "after pressing “Create community” button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving.";
+"after pressing \"Create community\" button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving." = "after pressing \"Create community\" button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving.";
 "ago" = "ago";
 "all" = "all";
 "all-in-one" = "All-in-One";
