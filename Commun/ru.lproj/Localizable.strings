@@ -45,6 +45,7 @@
 "add article" = "добавить статью";
 "add link" = "добавить ссылку";
 "add rules" = "добавить правило";
+"add new rule" = "добавить новое правило";
 "adding referralId" = "добавление реферального кода";
 "add to default contacts" = "добавить в список предпочтительных способов связи";
 "after confirmation, we'll generate for" = "после подтверждения мы сгенерируем для Вас криптографический пароль из 52 символов. Мы предлагаем Вам скопировать пароль или скачать файл PDF с ним. Мы не храним мастер-пароли и не имеем возможности их восстановить. \n\nМы настоятельно рекомендуем сохранить пароль и сделать его копию.";
@@ -243,8 +244,10 @@
 "home" = "домой";
 "i saved it" = "я уже сохранил";
 "i want to use Master Password" = "Я хочу использовать мастер-пароль";
+"i understand that after saving of all changes in current community, I’ll need at least 3 leaders in  current community to make changes next time." = "я понимаю, что после сохранения мне понадобится как минимум 3 лидера в текущем сообществе, чтобы внести изменения в следующий раз.";
 "identify yourself!" = "идентифицировать себя!";
 "if someone is in immediate danger" = "если кто-то находится в непосредственной опасности, позвоните в местную аварийную службу. Не ждите.";
+"important information" = "важная информация";
 "in top" = "в топе";
 "income" = "входящие";
 "incorrect username or password" = "неверный логин или пароль";
@@ -305,6 +308,7 @@
 "new avatar" = "новая аватарка";
 "new cover" = "новая обложка";
 "new language" = "новый язык";
+"new rule" = "новое правило";
 "newest first" = "от новых к старым";
 "next" = "далее";
 "no" = "нет";
@@ -434,6 +438,7 @@
 "rewards for comment" = "награды за комментарии";
 "rewards for like" = "награды за лайки";
 "right after you authorize on the Website" = "сразу после авторизации на сайте\nМы удвоим Ваши бонусные поинты";
+"rule name" = "имя правила";
 "rules" = "правила";
 "rules not found" = "правила не найдены";
 "save" = "сохранить";
@@ -445,6 +450,7 @@
 "Search" = "Поиск";
 "see" = "показать";
 "select a link to add to text" = "выберите ссылку для добавления в текст";
+"select community topics" = "выбрать темы сообщества";
 "select country placeholder" = "выберите страну";
 "select user" = "выберите пользователя";
 "sell" = "продать";
@@ -487,6 +493,7 @@
 "the presence of two \"dot\" characters in a row is not valid" = "нельзя использовать в имени пользователя более одной точки подряд";
 "the purchase is made by" = "покупка производится через";
 "the user name may contain a \"dot\" character" = "имя пользователя может содержать точку";
+"the rule name should be about community rules. After adding or editing, it will be automatically sent to voting" = "название правила должно относиться к правилам сообщества. После добавления или редактирования оно будет автоматически отправлено на голосование";
 "there is an error occurs" = "произошла ошибка";
 "there is no currency available" = "нет доступной валюты";
 "this app is not authorized to use Back Camera" = "приложение не имеет права использовать камеру.\nПожалуйста, включите камеру в настройках";
@@ -507,6 +514,8 @@
 "today" = "сегодня";
 "token" = "токен";
 "tokens" = "токены";
+"topic name" = "имя темы";
+"topics are needed for recomendation service. In that way, for users who interested in your community, will by much easier to find it in a list." = "темы важны для рекомендаций. Пользователи, заинтересованные в Вашем сообществе, смогут быстрее и проще найти его в списке.";
 "total balance Commun" = "общий остаток Commun";
 "transaction completed" = "транзакция завершена";
 "transfer" = "перевод";
@@ -551,6 +560,7 @@
 "warning" = "предупреждение";
 "was burned" = "был сожжен";
 "was turned off" = "был выключен";
+"we’ve added some default rules for your community.\nYou can edit, remove or add new rules for this community." = "мы добавили несколько правил по умолчанию. Вы можете редактировать, удалять или добавлять новые правила для Вашего сообщества.";
 "we have flagged this post for investigation" = "Спасибо, Ваша жалоба будет рассмотрена модераторами.";
 "we're sorry that you've had this experience" = "нам жаль, что у Вас был такой опыт";
 "welcome" = "добро пожаловать";
@@ -603,6 +613,7 @@
 "you've unblocked" = "Вы разблокировали";
 "you've unhidden" = "Вы раскрыли";
 "your email address" = "электронная почта";
+"your first topic here" = "введите тему";
 "your referrals" = "Ваши рефералы";
 "your socializing" = "Ваше общение";
 "my Feed" = "моя лента";
@@ -616,6 +627,7 @@
 "email" = "почту";
 "a moment ago" = "сейчас";
 "How do I get rewards for my posts?" = "Как получить вознаграждение за свои посты?";
+"after pressing “Create community” button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving." = "После нажатия кнопки \"Создать сообщество\", токены будут списаны с Вашего кошелька. В дальнейшем Вам понадобится по крайней мере 3 голоса от лидеров сообщества, чтобы сделать любые изменения в его настройках.\nЕсли Вы хотите внести правки - вернитесь и сделайте их до сохранением.";
 "After you publish the post, community members will have 48 hours to like or dislike it. If your post reaches the Top 10 posts of the day, you will be rewarded." = "После публикации поста у участников сообщества есть 48 часов для лайков и дизлайков. Если пост попадет в топ-10 дня, Вы получите награду за него.";
 "mentioned you in a" = "упомянул Вас";
 "liked your" = "понравился Ваш";
@@ -631,6 +643,7 @@
 "Username may contain only one dot in a row" = "Имя пользователя может содержать только одну точку подряд";
 "Username may contain only one dot or one dash in a row" = "Имя пользователя может содержать только одну точку или одно тире подряд";
 "Username should end with a letter or a digit" = "Имя пользователя должно заканчиваться буквой или цифрой";
+"add community rules" = "добавить правила сообщества";
 "add contact" = "добавить контакт";
 "code expires in" = "срок действия кода";
 "confirmation" = "подтверждение";

@@ -43,13 +43,16 @@
 "add a description for your image" = "add a description for your image";
 "add age limit 18+ (coming soon)" = "add age limit 18+ (coming soon)";
 "add article" = "add article";
+"add community rules" = "add community rules";
 "add contact" = "add contact";
 "add link" = "add link";
+"add new rule" = "add new rule";
 "add rules" = "add rule";
 "adding referralId" = "adding referralId";
 "add to default contacts" = "add to default contacts";
 "after confirmation, we'll generate for" = "after confirmation, we'll generate for you a 52-character crypto password.\nWe suggest you copy this password or download a PDF file with it.\nWe do not keep Master Passwords and have no opportunity to restore them.\n\nWe strongly recommend you to save your password and make its copy.";
 "after creating a community" = "after creating a community";
+"after pressing “Create community” button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving." = "after pressing “Create community” button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving.";
 "ago" = "ago";
 "all" = "all";
 "all-in-one" = "All-in-One";
@@ -250,8 +253,10 @@
 "home" = "home";
 "i saved it" = "i saved it";
 "i want to use Master Password" = "i want to use Master Password";
+"i understand that after saving of all changes in current community, I’ll need at least 3 leaders in  current community to make changes next time." = "i understand that after saving of all changes in current community, I’ll need at least 3 leaders in  current community to make changes next time.";
 "identify yourself!" = "identify yourself!";
 "if someone is in immediate danger" = "if someone is in immediate danger, call local emergency services. Don't wait.";
+"important information" = "important information";
 "in top" = "top";
 "income" = "income";
 "incorrect username or password" = "incorrect username or password";
@@ -315,6 +320,7 @@
 "new avatar" = "new avatar";
 "new cover" = "new cover";
 "new language" = "new language";
+"new rule" = "new rule";
 "newest first" = "newest first";
 "next" = "next";
 "no" = "no";
@@ -447,6 +453,7 @@
 "remove from favourite"                         =   "remove from favourite";
 "reply to comment"                              =   "reply to comment";
 "referral"                                      =   "referral";
+"rule name" = "rule name";
 "rules" = "rules";
 "rules not found" = "rules not found";
 "save" = "save";
@@ -460,6 +467,7 @@
 "Search" = "Search";
 "see" = "see";
 "select a link to add to text" = "select a link to add to text";
+"select community topics" = "select community topics";
 "select country placeholder" = "select country";
 "select user" = "select user";
 "sell" = "sell";
@@ -505,6 +513,7 @@
 "the presence of two \"dot\" characters in a row is not valid" = "the presence of two \"dot\" characters in a row is not valid";
 "the purchase is made by" = "the purchase is made by";
 "the user name may contain a \"dot\" character" = "the user name may contain a \"dot\" character";
+"the rule name should be about community rules. After adding or editing, it will be automatically sent to voting" = "the rule name should be about community rules. After adding or editing, it will be automatically sent to voting";
 "there is an error occurs" = "there is an error occurs";
 "there is no currency available" = "there is no currency available";
 "this app is not authorized to use Back Camera" = "this app is not authorized to use Back Camera.\nPlease enable it in Settings";
@@ -532,6 +541,8 @@
 "today" = "today";
 "token" = "token";
 "tokens" = "tokens";
+"topic name" = "topic name";
+"topics are needed for recomendation service. In that way, for users who interested in your community, will by much easier to find it in a list." = "topics are needed for recomendation service. In that way, for users who interested in your community, will by much easier to find it in a list.";
 "total balance Commun" = "total balance Commun";
 "transaction completed" = "transaction completed";
 "transfer" = "transfer";
@@ -576,6 +587,7 @@
 "warning" = "warning";
 "was burned" = "was burned";
 "was turned off" = "was turned off";
+"we’ve added some default rules for your community.\nYou can edit, remove or add new rules for this community." = "we’ve added some default rules for your community.\nYou can edit, remove or add new rules for this community.";
 "we have flagged this post for investigation" = "we have flagged this post for investigation. Thank you for being with us";
 "we're sorry that you've had this experience" = "we're sorry that you've had this experience";
 "website" = "website";
@@ -630,6 +642,7 @@
 "you've unblocked" = "you've unblocked";
 "you've unhidden" = "you've unhidden";
 "your email address" = "your email address";
+"your first topic here" = "your first topic here";
 "your phone number" = "your phone number";
 "your referrals" = "your referrals";
 "your socializing" = "your socializing";
