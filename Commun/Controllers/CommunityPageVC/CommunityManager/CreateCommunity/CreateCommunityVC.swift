@@ -136,6 +136,14 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             .asDriver(onErrorJustReturn: false)
             .drive(bottomStackView.superview!.rx.isHidden)
             .disposed(by: disposeBag)
+        
+        firstStepVC.languageRelay
+            .map {$0?.code ?? "en"}
+            .subscribe { (code) in
+                self.rulesVC.languageCode = code
+            }
+            .disposed(by: disposeBag)
+
     }
     
     // MARK: - Page control
