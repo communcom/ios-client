@@ -46,6 +46,7 @@ class CreateCommunityGettingStartedVC: CreateCommunityFlowVC {
     lazy var communValueLabel = UILabel.with(textSize: 13, numberOfLines: 0)
     lazy var buyButton: UIButton = {
         let button = UIButton(height: 35, label: "+ \("buy".localized().uppercaseFirst)", backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16))
+        button.isHidden = true
         button.setContentHuggingPriority(.required, for: .horizontal)
         return button
     }()

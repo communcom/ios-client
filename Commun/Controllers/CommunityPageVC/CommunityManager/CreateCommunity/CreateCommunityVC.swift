@@ -34,7 +34,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
     lazy var topicsVC = CreateTopicsVC()
     lazy var rulesVC = CreateRulesVC()
     lazy var confirmVC = CreateCommunityConfirmVC()
-    lazy var viewControllers: [CreateCommunityVCType] = [firstStepVC, topicsVC, rulesVC, confirmVC]
+    lazy var viewControllers: [CreateCommunityVCType] = [firstStepVC, rulesVC, confirmVC]
     
     // MARK: - Subviews
     lazy var containerView = UIView(forAutoLayout: ())
@@ -136,14 +136,12 @@ class CreateCommunityVC: CreateCommunityFlowVC {
             .asDriver(onErrorJustReturn: false)
             .drive(bottomStackView.superview!.rx.isHidden)
             .disposed(by: disposeBag)
-        
+
         firstStepVC.languageRelay
             .map {$0?.code ?? "en"}
-            .subscribe { (code) in
+            .subscribe(onNext: { (code) in
                 self.rulesVC.languageCode = code
-            }
-            .disposed(by: disposeBag)
-
+            }).disposed(by: disposeBag)
     }
     
     // MARK: - Page control

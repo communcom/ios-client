@@ -94,7 +94,7 @@ extension ResponseAPIGetNotificationItem {
                     .normal(" ")
                     .text("\(amount ?? "0") \(community?.name ?? pointType ?? "points")", weight: .medium, color: .appMainColor)
             case "voteLeader":
-                aStr.normal("Вы стали лидером общества")
+                aStr.normal("Вы стали лидером сообщества")
                     .normal(" ")
                     .normal(community?.name ?? community?.communityId ?? "")
             case "banPost", "banComment":
