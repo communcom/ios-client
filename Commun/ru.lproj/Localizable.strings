@@ -281,7 +281,7 @@
 "loading post" = "загрузка сообщения";
 "login placeholder" = "имя пользователя";
 "logout" = "выйти";
-"manage community" = "управлять сообщество";
+"manage community" = "управление сообществом";
 "master password" = "мастер-пароль";
 "master password attention note" = "мы не храним мастер-пароли и не имеем возможности их восстановить.";
 "members" = "участников";
@@ -343,7 +343,7 @@
 "not found" = "не найдено";
 "notification" = "уведомление";
 "notifications" = "уведомления";
-"now you became a leader in your community to make some changes and vote for them!" = "Вы стали лидером в Вашем сообществе чтобы сделать изменения и голосовать за них!";
+"now you became a leader in your community to make some changes and vote for them!" = "Вы стали лидером в Вашем сообществе и можете вносить изменения и голосовать за них!";
 "old avatar" = "старая аватарка";
 "old cover" = "старая обложка";
 "old language" = "старый язык";
@@ -396,6 +396,7 @@
 "proposal for avatar changing has been created" = "предложение по смене аватарки создано";
 "proposal for cover changing has been created" = "предложение по смене обложки создано";
 "proposal for description changing has been created" = "предложение по смене описания создано";
+"proposal for language changing has been created" = "предложение по смене языка создано";
 "proposal for rules changing has been created" = "предложение по смене правил создано";
 "proposals" = "предложения";
 "propose to ban" = "предложить бан";
@@ -628,7 +629,7 @@
 "email" = "почту";
 "a moment ago" = "сейчас";
 "How do I get rewards for my posts?" = "Как получить вознаграждение за свои посты?";
-"after pressing \"Create community\" button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving." = "После нажатия кнопки \"Создать сообщество\", токены будут списаны с Вашего кошелька. В дальнейшем Вам понадобится по крайней мере 3 голоса от лидеров сообщества, чтобы сделать любые изменения в его настройках.\nЕсли Вы хотите внести правки - вернитесь и сделайте их до сохранением.";
+"after pressing \"Create community\" button below, tokens will be debited from your wallet and next time you will need at least 3 votes from community leaders to make any changes in community settings.\nIf you want to make changes now — go back and do it before saving." = "После нажатия кнопки \"Создать сообщество\", токены будут списаны с Вашего кошелька. В дальнейшем Вам понадобится по крайней мере 3 голоса от лидеров сообщества, чтобы сделать любые изменения в его настройках.\nЕсли Вы хотите внести правки - вернитесь и сделайте их до сохранения.";
 "After you publish the post, community members will have 48 hours to like or dislike it. If your post reaches the Top 10 posts of the day, you will be rewarded." = "После публикации поста у участников сообщества есть 48 часов для лайков и дизлайков. Если пост попадет в топ-10 дня, Вы получите награду за него.";
 "mentioned you in a" = "упомянул Вас";
 "liked your" = "понравился Ваш";
