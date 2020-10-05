@@ -110,9 +110,15 @@ extension CommentCell {
         
         vc.donateButtonHandler = {
             vc.dismiss(animated: true) {
-                var comment = comment
-                comment.showDonationButtons = true
-                comment.notifyChanged()
+//                var comment = comment
+//                comment.showDonationButtons = true
+//                comment.notifyChanged()
+                guard let symbol = comment.community?.communityId,
+                    let user = comment.author
+                else {return}
+
+                let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: comment)
+                self.parentViewController?.show(donateVC, sender: nil)
             }
         }
         
