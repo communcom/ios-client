@@ -80,11 +80,17 @@ class CMBottomSheet: BottomFlexibleHeightVC {
     var panGestureRecognizer: UIPanGestureRecognizer?
     var interactor: SwipeDownInteractor?
     
+    var backgroundColor: UIColor = .appLightGrayColor {
+        didSet { view.backgroundColor = backgroundColor }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         interactor = SwipeDownInteractor()
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         view.addGestureRecognizer(panGestureRecognizer!)
+        
+        view.backgroundColor = backgroundColor
     }
     
     @objc func panGestureAction(_ sender: UIPanGestureRecognizer) {
