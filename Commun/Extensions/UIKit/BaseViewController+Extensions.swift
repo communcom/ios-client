@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 import SafariServices
 
 extension BaseViewController {
@@ -88,7 +89,13 @@ extension BaseViewController {
                         self.showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
                         RestAPIManager.instance.getCommunity(id: community.communityId)
                             .map {$0.issuer}
-                            .flatMap {BlockchainManager.instance.createBanProposal(communityCode: community.communityId, commnityIssuer: $0 ?? "", permlink: post.contentId.permlink, author: post.author!.userId)}
+                            .flatMap {
+                                let proposalId = BlockchainManager.instance.generateRandomProposalId()
+                                return BlockchainManager.instance.createBanProposal(proposalId: proposalId, communityCode: community.communityId, commnityIssuer: $0 ?? "", permlink: post.contentId.permlink, author: post.author!.userId)
+                                    .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                                    .andThen(Single<String>.just(proposalId))
+                            }
+                            .flatMap {BlockchainManager.instance.approveProposal($0, proposer: ResponseAPIContentGetProfile.current?.userId ?? "")}
                             .subscribe(onSuccess: {_ in
                                 self.hideHud()
                                 self.showDone("proposal for post banning has been created".localized().uppercaseFirst)
