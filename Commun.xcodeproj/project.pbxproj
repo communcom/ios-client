@@ -371,6 +371,7 @@
 		BC8481FA24581FB20099C7C5 /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8481F924581FB20099C7C5 /* DonationView.swift */; };
 		BC8481FE245826D40099C7C5 /* CMLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8481FD245826D40099C7C5 /* CMLabel.swift */; };
 		BC84820624595CEE0099C7C5 /* CMWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC84820524595CEE0099C7C5 /* CMWalletView.swift */; };
+		BC8AA9CD252C117E00FA63F9 /* CommunityMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8AA9CC252C117E00FA63F9 /* CommunityMemberCell.swift */; };
 		BC8C17262506197E00795859 /* CreateCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C17252506197E00795859 /* CreateCommunityVC.swift */; };
 		BC8C172A250624EE00795859 /* CreateCommunityCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C1729250624ED00795859 /* CreateCommunityCompletedVC.swift */; };
 		BC8C172E250779A600795859 /* UserProfileAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C172D250779A600795859 /* UserProfileAboutCell.swift */; };
@@ -984,6 +985,7 @@
 		BC8481F924581FB20099C7C5 /* DonationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationView.swift; sourceTree = "<group>"; };
 		BC8481FD245826D40099C7C5 /* CMLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLabel.swift; sourceTree = "<group>"; };
 		BC84820524595CEE0099C7C5 /* CMWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMWalletView.swift; sourceTree = "<group>"; };
+		BC8AA9CC252C117E00FA63F9 /* CommunityMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMemberCell.swift; sourceTree = "<group>"; };
 		BC8C17252506197E00795859 /* CreateCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityVC.swift; sourceTree = "<group>"; };
 		BC8C1729250624ED00795859 /* CreateCommunityCompletedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityCompletedVC.swift; sourceTree = "<group>"; };
 		BC8C172D250779A600795859 /* UserProfileAboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAboutCell.swift; sourceTree = "<group>"; };
@@ -3039,6 +3041,7 @@
 				BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */,
 				BC4692F8239640AE0064A38B /* LeaderFollowCollectionCell.swift */,
 				BC4692FA239645C70064A38B /* CommunityLeaderFollowCell.swift */,
+				BC8AA9CC252C117E00FA63F9 /* CommunityMemberCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -3677,6 +3680,7 @@
 				BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */,
 				BC22BBD9236C27C000F40658 /* VerticalActionsVC.swift in Sources */,
 				BC619B1823726C180005BB94 /* CommunityCell.swift in Sources */,
+				BC8AA9CD252C117E00FA63F9 /* CommunityMemberCell.swift in Sources */,
 				BC3AF38323FBE58D00528EEB /* DiscoveryCommunitiesVC.swift in Sources */,
 				BC3824F624F3A58200DF80DB /* CMActionSheet.Action+Builders.swift in Sources */,
 				BC2704152501D92D0042A29B /* PostStatsViewDelegate.swift in Sources */,
