@@ -14,6 +14,7 @@ class CMBanUserBottomSheet: CMBottomSheet {
     }
     
     let communityId: String
+    let communityIssuer: String
     let banningUser: ResponseAPIContentGetProfile
     var reasons: ([BlockchainManager.ReportReason], String?)? {
         didSet {
@@ -49,8 +50,9 @@ class CMBanUserBottomSheet: CMBottomSheet {
     }()
     lazy var banReasonLabel = UILabel.with(textSize: 15, weight: .semibold, numberOfLines: 0)
     
-    init(banningUser: ResponseAPIContentGetProfile, communityId: String) {
+    init(banningUser: ResponseAPIContentGetProfile, communityId: String, communityIssuer: String) {
         self.communityId = communityId
+        self.communityIssuer = communityIssuer
         self.banningUser = banningUser
         super.init()
     }
@@ -128,8 +130,8 @@ class CMBanUserBottomSheet: CMBottomSheet {
             return
         }
         showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
-        BlockchainManager.instance.banUser(communityId, accountName: banningUser.userId, reason: reasons.0.inlineString(otherReason: reasons.1, shouldNormalize: true))
-            .subscribe { (_) in
+        BlockchainManager.instance.banUser(communityId, commnityIssuer: communityIssuer, accountName: banningUser.userId, reason: reasons.0.inlineString(otherReason: reasons.1, shouldNormalize: true))
+            .subscribe{ (_) in
                 self.hideHud()
                 self.backCompletion {
                     self.showDone("proposal for user banning has been created".localized().uppercaseFirst)
