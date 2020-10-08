@@ -223,6 +223,6 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
     }
     
     func banUser(_ user: ResponseAPIContentGetProfile) {
-        present(CMBanUserBottomSheet(banningUser: user), animated: true, completion: nil)
+        present(CMBanUserBottomSheet(banningUser: user, communityId: viewModel.community.communityId), animated: true, completion: nil)
     }
 }

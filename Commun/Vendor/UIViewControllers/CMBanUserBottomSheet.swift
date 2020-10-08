@@ -13,6 +13,7 @@ class CMBanUserBottomSheet: CMBottomSheet {
         super.fittingHeightInContainer(safeAreaFrame: safeAreaFrame) + 100
     }
     
+    let communityId: String
     let banningUser: ResponseAPIContentGetProfile
     var reasons: ([BlockchainManager.ReportReason], String?)? {
         didSet {
@@ -48,7 +49,8 @@ class CMBanUserBottomSheet: CMBottomSheet {
     }()
     lazy var banReasonLabel = UILabel.with(textSize: 15, weight: .semibold, numberOfLines: 0)
     
-    init(banningUser: ResponseAPIContentGetProfile) {
+    init(banningUser: ResponseAPIContentGetProfile, communityId: String) {
+        self.communityId = communityId
         self.banningUser = banningUser
         super.init()
     }
@@ -125,7 +127,21 @@ class CMBanUserBottomSheet: CMBottomSheet {
             showAlert(title: "no reason".localized().uppercaseFirst, message: "you must choose at least 1 reason to ban this user".localized().uppercaseFirst)
             return
         }
-        
+        showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
+        BlockchainManager.instance.banUser(communityId, accountName: banningUser.userId, reason: reasons.0.inlineString(otherReason: reasons.1, shouldNormalize: true))
+            .subscribe { (_) in
+                self.hideHud()
+                self.backCompletion {
+                    self.showDone("proposal for user banning has been created".localized().uppercaseFirst)
+                    // TODO: mark user as banned
+                }
+                
+            } onError: { (error) in
+                self.hideHud()
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
+
     }
     
     @objc func noButtonDidTouch() {
