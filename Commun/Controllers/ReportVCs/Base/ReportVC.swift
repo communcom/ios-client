@@ -110,7 +110,7 @@ class ReportVC: VerticalActionsVC {
         sendButton.isDisabled = !actions.any(matching: { $0.isSelected == true })
         
         // other reason
-        if index == actions.count - 1 {
+        if index == actions.count - 1, actions[index].isSelected {
             // open vc for entering text
             let vc = ReportOtherVC(initialValue: self.otherReason)
             
