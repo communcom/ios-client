@@ -14,11 +14,15 @@ class CMBanUserBottomSheet: CMBottomSheet {
     }
     
     let banningUser: ResponseAPIContentGetProfile
-    var reason: String? {
+    var reasons: ([BlockchainManager.ReportReason], String?)? {
         didSet {
-            chooseReasonButton.isHidden = reason != nil
-            banReasonView.isHidden = reason == nil
-            banReasonLabel.text = reason
+            var isEmpty = true
+            if let reasons = reasons {
+                isEmpty = reasons.0.isEmpty && (reasons.1?.isEmpty != false)
+            }
+            chooseReasonButton.isHidden = !isEmpty
+            banReasonView.isHidden = isEmpty
+            banReasonLabel.text = reasons?.0.inlineString(otherReason: reasons?.1)
         }
     }
     
@@ -40,7 +44,7 @@ class CMBanUserBottomSheet: CMBottomSheet {
         view.innerStackView?.addArrangedSubview(UILabel.with(text: "ban reason".localized().uppercaseFirst, textSize: 13, weight: .medium, textColor: .appGrayColor))
         view.innerStackView?.addArrangedSubview(banReasonLabel)
         view.isHidden = true
-        return view
+        return view.onTap(self, action: #selector(selectReasonButtonDidTouch))
     }()
     lazy var banReasonLabel = UILabel.with(textSize: 15, weight: .semibold, numberOfLines: 0)
     
@@ -107,11 +111,8 @@ class CMBanUserBottomSheet: CMBottomSheet {
     }
     
     @objc func selectReasonButtonDidTouch() {
-        let vc = UserReportVC(user: banningUser)
-        vc.completion = { (reasons, otherReason) in
-            let reasonCombined = reasons.inlineString(otherReason: otherReason)
-            self.reason = reasonCombined
-        }
+        let vc = UserReportVC(user: banningUser, initialValue: reasons)
+        vc.completion = { self.reasons = $0 }
         let nc = SwipeNavigationController(rootViewController: vc)
         
         nc.modalPresentationStyle = .custom
@@ -120,7 +121,7 @@ class CMBanUserBottomSheet: CMBottomSheet {
     }
     
     @objc func yesButtonDidTouch() {
-        guard let reason = reason else {
+        guard let reasons = reasons else {
             showAlert(title: "no reason".localized().uppercaseFirst, message: "you must choose at least 1 reason to ban this user".localized().uppercaseFirst)
             return
         }
@@ -134,12 +135,12 @@ class CMBanUserBottomSheet: CMBottomSheet {
 
 class UserReportVC: ReportVC {
     let user: ResponseAPIContentGetProfile
-    var completion: ((_ reason: [BlockchainManager.ReportReason], _ otherReason: String?) -> Void)?
+    var completion: ((([BlockchainManager.ReportReason], String?)) -> Void)?
     
     // MARK: - Initializers
-    init(user: ResponseAPIContentGetProfile) {
+    init(user: ResponseAPIContentGetProfile, initialValue: ([BlockchainManager.ReportReason], String?)? = nil) {
         self.user = user
-        super.init()
+        super.init(choosedReasons: initialValue?.0 ?? [], choosedOtherReason: initialValue?.1)
     }
     
     required init?(coder: NSCoder) {
@@ -153,7 +154,7 @@ class UserReportVC: ReportVC {
             return
         }
         dismiss(animated: true) {
-            self.completion?(self.choosedReasons, self.otherReason?.trimmed.replacingOccurrences(of: "\n", with: " "))
+            self.completion?((self.choosedReasons, self.otherReason?.trimmed.replacingOccurrences(of: "\n", with: " ")))
         }
     }
 }

@@ -23,10 +23,24 @@ class ReportVC: VerticalActionsVC {
     var otherReason: String?
     
     // MARK: - Initializers
-    init() {
-        super.init(actions: BlockchainManager.ReportReason.allCases.map({ (reason) -> Action in
+    init(choosedReasons: [BlockchainManager.ReportReason] = [], choosedOtherReason: String? = nil ) {
+        var actions = BlockchainManager.ReportReason.allCases.map({ (reason) -> Action in
             Action(title: reason.rawValue, icon: nil)
-        }))
+        })
+        
+        for i in 0..<actions.count where choosedReasons.contains(where: {$0.rawValue == actions[i].title})
+        {
+            actions[i].isSelected = true
+        }
+        
+        if let otherReason = choosedOtherReason,
+           let otherActionIndex = actions.firstIndex(where: {$0.title == BlockchainManager.ReportReason.other.rawValue})
+        {
+            actions[otherActionIndex].isActive = true
+            self.otherReason = otherReason
+        }
+        
+        super.init(actions: actions)
     }
     
     required init?(coder: NSCoder) {
@@ -96,9 +110,9 @@ class ReportVC: VerticalActionsVC {
         sendButton.isDisabled = !actions.any(matching: { $0.isSelected == true })
         
         // other reason
-        if index == actions.count - 1, actions[index].isSelected {
+        if index == actions.count - 1 {
             // open vc for entering text
-            let vc = ReportOtherVC()
+            let vc = ReportOtherVC(initialValue: self.otherReason)
             
             vc.completion = { otherReason in
                 vc.back()
