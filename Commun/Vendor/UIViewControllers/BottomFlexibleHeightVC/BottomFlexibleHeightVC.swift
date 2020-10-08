@@ -14,11 +14,11 @@ class BottomFlexibleHeightVC: BaseViewController, UIViewControllerTransitioningD
     class PresentationController: FlexibleHeightPresentationController {
         override func calculateFittingHeightOfPresentedView(targetWidth: CGFloat) -> CGFloat {
             let vc = presentedViewController as! BottomFlexibleHeightVC
-            return vc.fittingSizeInContainer(safeAreaFrame: safeAreaFrame!)
+            return vc.fittingHeightInContainer(safeAreaFrame: safeAreaFrame!)
         }
     }
     
-    func fittingSizeInContainer(safeAreaFrame: CGRect) -> CGFloat {
+    func fittingHeightInContainer(safeAreaFrame: CGRect) -> CGFloat {
         var height: CGFloat = 0
         
         // calculate header
