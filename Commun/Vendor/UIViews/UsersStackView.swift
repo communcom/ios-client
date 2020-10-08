@@ -87,10 +87,8 @@ class UsersStackView: MyView {
     /// Mocking method
     func setNumberOfAvatars(i: Int) {
         // remove all labels
-        for subview in subviews {
-            if subview is UILabel {
-                subview.removeFromSuperview()
-            }
+        for subview in subviews where subview is UILabel {
+            subview.removeFromSuperview()
         }
         
         // remove stacks

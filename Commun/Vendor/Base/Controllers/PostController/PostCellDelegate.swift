@@ -36,9 +36,9 @@ extension PostCellDelegate where Self: BaseViewController {
         
         // Upvote and show donations buttons
         post.upVote()
-            .subscribe { (error) in
+            .subscribe(onError: { (error) in
                 self.showError(error)
-            }
+            })
             .disposed(by: self.disposeBag)
     }
     
@@ -54,9 +54,9 @@ extension PostCellDelegate where Self: BaseViewController {
         }
         
         post.downVote()
-            .subscribe { (error) in
+            .subscribe(onError: { (error) in
                 self.showError(error)
-            }
+            })
             .disposed(by: self.disposeBag)
     }
     

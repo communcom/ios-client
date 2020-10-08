@@ -66,7 +66,8 @@ extension ReportCellDelegate where Self: BaseViewController {
             
             // change state immediately, reverse if fall
             report.isPerformingAction = true
-            let proposal = ResponseAPIContentGetProposal.placeholder(proposer: ResponseAPIContentGetProfile.current, proposalId: proposalId, isApproved: false, approvesCount: 0, approvesNeed: viewModel.items.value.first(where: {$0.proposal?.approvesNeed != nil})?.proposal?.approvesNeed ?? 3)
+            let proposal = ResponseAPIContentGetProposal.placeholder(proposer: ResponseAPIContentGetProfile.current, proposalId: proposalId, isApproved: true, approvesCount: 1, approvesNeed: viewModel.items.value.first(where: {$0.proposal?.approvesNeed != nil})?.proposal?.approvesNeed ?? 3)
+            
             report.proposal = proposal
             report.notifyChanged()
             
@@ -79,11 +80,10 @@ extension ReportCellDelegate where Self: BaseViewController {
             }
             
             request.flatMap {BlockchainManager.instance.createBanProposal(proposalId: proposalId, communityCode: communityId, commnityIssuer: $0, permlink: permlink, author: autor)}
-                .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
+                .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0.0)})
                 .subscribe(onCompleted: {
                     report.isPerformingAction = false
                     report.notifyChanged()
-                    self.buttonProposalDidTouch(forItemWithIdentity: identity)
                 }) { (error) in
                     self.showError(error)
                     guard let index = self.viewModel.items.value.firstIndex(where: {$0.identity == report.identity}) else {return}
