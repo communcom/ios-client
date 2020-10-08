@@ -124,6 +124,11 @@ class CMBottomSheet: BottomFlexibleHeightVC {
             break
         }
     }
+    
+    func disableSwipeDownToDismiss() {
+        guard let gesture = panGestureRecognizer else {return}
+        view.removeGestureRecognizer(gesture)
+    }
 }
 
 extension CMBottomSheet {

@@ -263,7 +263,7 @@ extension UIView {
     
     static func withStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat? = nil, alignment: UIStackView.Alignment = .center, distribution: UIStackView.Distribution = .fillEqually, padding: UIEdgeInsets = .init(inset: 16)) -> UIView {
         let view = UIView(forAutoLayout: ())
-        let stackView = UIStackView(axis: axis, spacing: 10, alignment: .center, distribution: .fill)
+        let stackView = UIStackView(axis: axis, spacing: spacing, alignment: alignment, distribution: distribution)
         view.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
         return view

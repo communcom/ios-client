@@ -102,6 +102,8 @@ class CMBanUserBottomSheet: CMBottomSheet {
         stackView.setCustomSpacing(16, after: label)
         stackView.setCustomSpacing(30, after: userWrapper)
         stackView.setCustomSpacing(10, after: yesButton)
+        
+        disableSwipeDownToDismiss()
     }
     
     @objc func selectReasonButtonDidTouch() {
