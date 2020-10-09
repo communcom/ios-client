@@ -70,6 +70,8 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
             typePlainText = "\(item.change?.subType ?? "change") \(item.change?.type ?? "")"
         case "banPost":
             typePlainText = "ban \(item.contentType ?? "post")"
+        case "banUser":
+            typePlainText = "ban \(item.contentType ?? "user")"
         default:
             typePlainText = item.type ?? ""
         }
@@ -95,8 +97,10 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
         switch item.type {
         case "setInfo":
             setInfo(item)
-        case "banPost":
-            setMessage(item: item)
+        case "banPost", "banComment":
+            setBanMessage(item: item)
+        case "banUser":
+            setBanUser(item: item)
         default:
             mainView.isHidden = true
         }
@@ -139,7 +143,7 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
         }
     }
     
-    func setMessage(item: ResponseAPIContentGetProposal?) {
+    func setBanMessage(item: ResponseAPIContentGetProposal?) {
         let postView = addViewToMainView(type: CMPostView.self)
         postView.headerView.isHidden = true
         if let post = item?.post {
@@ -154,6 +158,11 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
             mainView.addSubview(label)
             label.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: 32, vertical: 0))
         }
+    }
+    
+    func setBanUser(item: ResponseAPIContentGetProposal?) {
+        let userView = addViewToMainView(type: BanUserProposalView.self)
+        userView.setUp(user: item?.data?.account?.profile, reasons: item?.data?.getReasonArray() ?? [])
     }
     
     private func setInfo(_ item: ResponseAPIContentGetProposal?) {

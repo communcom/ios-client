@@ -424,5 +424,29 @@
 			<string>ещё %d</string>
 		</dict>
 	</dict>
+	<key>reports-count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@reports@</string>
+		<key>reports</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>жалоб</string>
+			<key>one</key>
+			<string>жалоба</string>
+			<key>two</key>
+			<string>жалобы</string>
+			<key>few</key>
+			<string>жалобы</string>
+			<key>many</key>
+			<string>жалоб</string>
+			<key>other</key>
+			<string>жалобы</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

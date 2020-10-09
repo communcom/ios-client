@@ -8,15 +8,22 @@
 
 import Foundation
 
-class DescriptionProposalView: MyView {
-    // MARK: - Subviews
+class ProposalView: MyView {
     lazy var stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fill)
-    lazy var contentLabel = UILabel.with(textSize: 15, numberOfLines: 0)
     
     override func commonInit() {
         super.commonInit()
         addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
+    }
+}
+
+class DescriptionProposalView: ProposalView {
+    // MARK: - Subviews
+    lazy var contentLabel = UILabel.with(textSize: 15, numberOfLines: 0)
+    
+    override func commonInit() {
+        super.commonInit()
         stackView.addArrangedSubviews([
             contentLabel
         ])
@@ -92,16 +99,15 @@ class RuleProposalView: DescriptionProposalView {
     }
 }
 
-class AvatarProposalView: MyView {
+class AvatarProposalView: ProposalView {
     lazy var oldAvatarImageView = MyAvatarImageView(size: 80)
     lazy var newAvatarImageView = MyAvatarImageView(size: 80)
     
     override func commonInit() {
         super.commonInit()
         
-        let stackView = UIStackView(axis: .horizontal, spacing: 16, alignment: .fill, distribution: .fillEqually)
-        addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
         
         let oldAvatarContainerView: UIView = createContainerView(title: "old avatar", imageView: oldAvatarImageView)
         let newAvatarContainerView: UIView = createContainerView(title: "new avatar", imageView: newAvatarImageView, titleColor: .appMainColor)
@@ -132,7 +138,7 @@ class AvatarProposalView: MyView {
     }
 }
 
-class CoverProposalView: MyView {
+class CoverProposalView: ProposalView {
     lazy var coverPreviewImageView: UIImageView = {
         let imageView = UIImageView(cornerRadius: 10)
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 345 / 150).isActive = true
@@ -153,9 +159,6 @@ class CoverProposalView: MyView {
     
     override func commonInit() {
         super.commonInit()
-        let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fill)
-        addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges()
         
         let oldCoverContainerView: UIView = createContainerView(title: "old cover", imageView: oldCoverImageView)
         let newCoverContainerView: UIView = createContainerView(title: "new cover", imageView: newCoverImageView, titleColor: .appMainColor)
@@ -187,15 +190,12 @@ class CoverProposalView: MyView {
     }
 }
 
-class LanguageProposalView: MyView {
+class LanguageProposalView: ProposalView {
     lazy var newLanguageView = CMLanguageView(forAutoLayout: ())
     lazy var oldLanguageView = CMLanguageView(forAutoLayout: ())
     
     override func commonInit() {
         super.commonInit()
-        let stackView = UIStackView(axis: .vertical, spacing: 16, alignment: .fill, distribution: .fill)
-        addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges()
         
         let newLanguageLabel = UILabel.with(text: "new language".localized().uppercaseFirst, textSize: 15, weight: .semibold)
         let oldLanguageLabel = UILabel.with(text: "old language".localized().uppercaseFirst, textSize: 15, weight: .semibold)
@@ -218,5 +218,28 @@ class LanguageProposalView: MyView {
         }
         newLanguageView.setUp(with: newLanguage)
         oldLanguageView.setUp(with: oldLanguage)
+    }
+}
+
+class BanUserProposalView: ProposalView {
+    lazy var userView = SubscribersCell(forAutoLayout: ())
+        .configureToUseAsNormalView()
+    lazy var reasonLabel = UILabel.with(textSize: 15, numberOfLines: 0)
+    
+    override func commonInit() {
+        super.commonInit()
+        stackView.addArrangedSubview(userView)
+        stackView.addArrangedSubview(reasonLabel.padding(UIEdgeInsets(horizontal: 32, vertical: 0)))
+    }
+    
+    func setUp(user: ResponseAPIContentGetProfile?, reasons: [String]) {
+        guard let user = user else {return}
+        userView.setUp(with: user)
+        userView.actionButton.isHidden = true
+        let reasons = reasons.map {$0.uppercaseFirst.localized()}
+        reasonLabel.attributedText = NSMutableAttributedString()
+            .text("reports-count".localizedPlural(reasons.count) + ": ", size: 15, weight: .medium)
+            .text(reasons.joined(separator: ", "), size: 15, weight: .medium, color: .appMainColor)
+        reasonLabel.isHidden = reasons.count == 0
     }
 }

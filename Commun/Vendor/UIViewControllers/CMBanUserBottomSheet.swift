@@ -130,7 +130,8 @@ class CMBanUserBottomSheet: CMBottomSheet {
             return
         }
         showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
-        BlockchainManager.instance.banUser(communityId, commnityIssuer: communityIssuer, accountName: banningUser.userId, reason: reasons.0.inlineString(otherReason: reasons.1, shouldNormalize: true))
+        let reasonString = "[" + reasons.0.inlineString(otherReason: reasons.1, shouldNormalize: true) + "]"
+        BlockchainManager.instance.banUser(communityId, commnityIssuer: communityIssuer, accountName: banningUser.userId, reason: reasonString)
             .subscribe{ (_) in
                 self.hideHud()
                 self.backCompletion {
