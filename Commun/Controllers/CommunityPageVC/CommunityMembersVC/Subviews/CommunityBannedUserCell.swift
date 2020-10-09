@@ -10,7 +10,15 @@ import Foundation
 import Action
 
 class CommunityBannedUserCell: SubscribersCell {
-    lazy var unBanButton = UIButton(label: "unban".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
+    class UnbanButton: UIButton {
+        override var isEnabled: Bool {
+            didSet {
+                alpha = isEnabled ? 1: 0.5
+            }
+        }
+    }
+    
+    lazy var unBanButton = UnbanButton(label: "unban".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
         .huggingContent(axis: .horizontal)
     override func setUpViews() {
         super.setUpViews()
