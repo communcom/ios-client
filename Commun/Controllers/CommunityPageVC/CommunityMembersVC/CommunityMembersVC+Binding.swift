@@ -122,12 +122,19 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityBannedUserCell") as! CommunityBannedUserCell
                     cell.setUp(with: user)
                     let unBanAction = CocoaAction {
-                        BlockchainManager.instance.unbanUser(self.viewModel.community.communityId, commnityIssuer: self.viewModel.community.issuer ?? "", accountName: user.userId, reason: "")
+                        if user.isUnBanProposalCreated == true {
+                            self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "you've already created proposal for unbanning this user".localized().uppercaseFirst)
+                            return .just(())
+                        }
+                        return BlockchainManager.instance.unbanUser(self.viewModel.community.communityId, commnityIssuer: self.viewModel.community.issuer ?? "", accountName: user.userId, reason: "")
                             .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
                             .do(onError: { (error) in
                                 self.showError(error)
                             }, onCompleted: {
                                 self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for user unbanning has been created".localized().uppercaseFirst)
+                                var user = user
+                                user.isUnBanProposalCreated = true
+                                user.notifyChanged()
                             })
                             .andThen(.just(()))
                     }

@@ -129,6 +129,10 @@ class CMBanUserBottomSheet: CMBottomSheet {
             showAlert(title: "no reason".localized().uppercaseFirst, message: "you must choose at least 1 reason to ban this user".localized().uppercaseFirst)
             return
         }
+        if user.isBanProposalCreated == true {
+            self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "you've already created proposal for banning this user".localized().uppercaseFirst)
+            return .just(())
+        }
         showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
         let reasonString = "[" + reasons.0.inlineString(otherReason: reasons.1, shouldNormalize: true) + "]"
         BlockchainManager.instance.banUser(communityId, commnityIssuer: communityIssuer, accountName: banningUser.userId, reason: reasonString)
@@ -136,6 +140,9 @@ class CMBanUserBottomSheet: CMBottomSheet {
                 self.hideHud()
                 self.backCompletion {
                     self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for user banning has been created".localized().uppercaseFirst)
+                    var user = self.banningUser
+                    user.isBanProposalCreated = true
+                    user.notifyChanged()
                 }
                 
             } onError: { (error) in
