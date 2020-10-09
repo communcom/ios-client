@@ -138,11 +138,11 @@ class CMBanUserBottomSheet: CMBottomSheet {
         BlockchainManager.instance.banUser(communityId, commnityIssuer: communityIssuer, accountName: banningUser.userId, reason: reasonString)
             .subscribe{ (_) in
                 self.hideHud()
-                self.backCompletion {
-                    self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for user banning has been created".localized().uppercaseFirst)
+                self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for user banning has been created".localized().uppercaseFirst) { _ in
                     var user = self.banningUser
                     user.isBanProposalCreated = true
                     user.notifyChanged()
+                    self.back()
                 }
                 
             } onError: { (error) in

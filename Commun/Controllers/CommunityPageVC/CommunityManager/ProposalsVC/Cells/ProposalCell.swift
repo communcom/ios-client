@@ -72,6 +72,8 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
             typePlainText = "ban \(item.contentType ?? "post")"
         case "banUser":
             typePlainText = "ban \(item.contentType ?? "user")"
+        case "unbanUser":
+            typePlainText = "unban \(item.contentType ?? "user")"
         default:
             typePlainText = item.type ?? ""
         }
@@ -101,6 +103,8 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
             setBanMessage(item: item)
         case "banUser":
             setBanUser(item: item)
+        case "unbanUser":
+            setUnBanUser(item: item)
         default:
             mainView.isHidden = true
         }
@@ -162,6 +166,11 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
     
     func setBanUser(item: ResponseAPIContentGetProposal?) {
         let userView = addViewToMainView(type: BanUserProposalView.self)
+        userView.setUp(user: item?.data?.account?.profile, reasons: item?.data?.getReasonArray() ?? [])
+    }
+    
+    func setUnBanUser(item: ResponseAPIContentGetProposal?) {
+        let userView = addViewToMainView(type: UnBanUserProposalView.self)
         userView.setUp(user: item?.data?.account?.profile, reasons: item?.data?.getReasonArray() ?? [])
     }
     

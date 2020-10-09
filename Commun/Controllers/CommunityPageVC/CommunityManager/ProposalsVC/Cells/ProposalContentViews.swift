@@ -228,6 +228,7 @@ class BanUserProposalView: ProposalView {
     
     override func commonInit() {
         super.commonInit()
+        userView.separator.isHidden = true
         stackView.addArrangedSubview(userView)
         stackView.addArrangedSubview(reasonLabel.padding(UIEdgeInsets(horizontal: 32, vertical: 0)))
     }
@@ -241,5 +242,12 @@ class BanUserProposalView: ProposalView {
             .text("reports-count".localizedPlural(reasons.count).uppercaseFirst + ": ", size: 15, weight: .medium)
             .text(reasons.joined(separator: ", "), size: 15, weight: .medium, color: .appMainColor)
         reasonLabel.isHidden = reasons.count == 0
+    }
+}
+
+class UnBanUserProposalView: BanUserProposalView {
+    override func setUp(user: ResponseAPIContentGetProfile?, reasons: [String]) {
+        super.setUp(user: user, reasons: reasons)
+        reasonLabel.superview?.isHidden = true
     }
 }
