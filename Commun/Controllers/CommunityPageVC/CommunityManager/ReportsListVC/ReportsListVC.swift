@@ -142,7 +142,7 @@ extension ReportsListVC: UITableViewDelegate {
                     report.comment?.reports?.items = items
                     report.notifyChanged()
                 }
-            }, onError: {error in
+            }, onError: {_ in
                 report.downloadingReports = false
                 report.notifyChanged()
                 // TODO: - Handle error

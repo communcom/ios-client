@@ -34,7 +34,7 @@ class CMLabel: UILabel {
     }
 
     override func textRect(forBounds bounds: CGRect,
-                               limitedToNumberOfLines n: Int) -> CGRect
+                           limitedToNumberOfLines n: Int) -> CGRect
     {
         var ctr = super.textRect(forBounds: bounds, limitedToNumberOfLines: n)
         

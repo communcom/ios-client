@@ -220,5 +220,3 @@ class LanguageProposalView: MyView {
         oldLanguageView.setUp(with: oldLanguage)
     }
 }
-
-

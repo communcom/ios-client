@@ -24,9 +24,13 @@ extension CMActionSheet.Action {
         if let iconTintColor = iconTintColor {
             iconImageView.tintColor = iconTintColor
         }
-        if !showIcon { stackView.addArrangedSubviews( [label]) }
-        else if showIconFirst { stackView.addArrangedSubviews( [iconImageView, label]) }
-        else {stackView.addArrangedSubviews([label, iconImageView])}
+        if !showIcon {
+            stackView.addArrangedSubviews( [label])
+        } else if showIconFirst {
+            stackView.addArrangedSubviews( [iconImageView, label])
+        } else {
+            stackView.addArrangedSubviews([label, iconImageView])
+        }
         
         if showNextButton {
             let nextButton = UIButton.circleGray(imageName: "cell-arrow", imageEdgeInsets: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))

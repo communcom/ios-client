@@ -26,10 +26,6 @@ extension UIView {
 
         layer.addSublayer(shapeLayer)
     }
-
-    public func copyView() -> UIView? {
-        NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as? UIView
-    }
     
     func showErrorView(title: String? = nil, subtitle: String? = nil, retryButtonTitle: String? = nil, retryAction: (() -> Void)?) {
         // setup new errorView

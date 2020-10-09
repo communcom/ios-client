@@ -76,8 +76,6 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
         return RestAPIManager.instance.getBuyPrice(symbol: communityId ?? communityAlias?.uppercased() ?? "CMN", quantity: "1 CMN", authorizationRequired: authorizationRequired)
     }
 
-    
-    
     override func bind() {
         super.bind()
         

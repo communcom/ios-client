@@ -39,7 +39,7 @@ class CMTappableLabel: UILabel {
 
         // Configure NSTextStorage and apply the layout manager
         let textStorage = NSTextStorage(attributedString: attributedText)
-        textStorage.addAttribute(NSAttributedString.Key.font, value: font!, range: NSMakeRange(0, attributedText.length))
+        textStorage.addAttribute(NSAttributedString.Key.font, value: font!, range: NSRange(location: 0, length: attributedText.length))
         textStorage.addLayoutManager(layoutManager)
 
         // get the tapped character location

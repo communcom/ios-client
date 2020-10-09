@@ -29,7 +29,6 @@ class NonAuthCommunityPageVC: CommunityPageVC, NonAuthVCType {
             let postPageVC = NonAuthPostPageVC(post: post)
             self.show(postPageVC, sender: nil)
         case is CommunityLeaderCell:
-            // TODO: - Tap a leaderCell
             break
         default:
             break

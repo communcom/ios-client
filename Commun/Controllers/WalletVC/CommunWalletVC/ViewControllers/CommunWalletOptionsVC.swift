@@ -98,10 +98,7 @@ class CommunWalletOptionsVC: BaseViewController {
         backgroundView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         
-        stackView.addArrangedSubviews([
-            hideEmptyView,
-//            viewInExplorerView
-        ])
+        stackView.addArrangedSubview(hideEmptyView)
     }
     
     @objc func backWithAction() {

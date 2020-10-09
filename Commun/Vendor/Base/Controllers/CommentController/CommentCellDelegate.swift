@@ -36,7 +36,7 @@ extension CommentCellDelegate where Self: BaseViewController {
     }
     
     func cell(_ cell: CommentCell, didTapOnTag tag: String) {
-        //TODO: open tag
+        // open tag
     }
     
     func cell(_ cell: CommentCell, didTapMoreActionFor comment: ResponseAPIContentGetComment) {
@@ -156,7 +156,7 @@ extension CommentCellDelegate where Self: BaseViewController {
         }
         
         comment.downVote()
-            .subscribe (onError:{ (error) in
+            .subscribe(onError: { (error) in
                 UIApplication.topViewController()?.showError(error)
             })
             .disposed(by: self.disposeBag)

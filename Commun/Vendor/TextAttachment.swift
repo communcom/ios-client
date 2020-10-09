@@ -128,7 +128,7 @@ extension TextAttachment: Codable {
         try container.encode(size, forKey: .size)
         
         if let localImage = localImage {
-            let imageData = NSKeyedArchiver.archivedData(withRootObject: localImage)
+            let imageData = try NSKeyedArchiver.archivedData(withRootObject: localImage, requiringSecureCoding: false)
             try container.encode(imageData, forKey: .localImage)
         }
     }
@@ -141,7 +141,7 @@ extension TextAttachment: Codable {
         
         var localImage: UIImage?
         if let data = try? values.decode(Data.self, forKey: .localImage),
-            let image = NSKeyedUnarchiver.unarchiveObject(with: data) as? UIImage {
+           let image = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? UIImage {
             localImage = image
         }
         

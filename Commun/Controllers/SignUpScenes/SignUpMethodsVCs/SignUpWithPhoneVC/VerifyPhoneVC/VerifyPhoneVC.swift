@@ -121,7 +121,8 @@ class VerifyPhoneVC: BaseVerifyVC {
     
     override func verify() {
         guard pinCodeInputView.text.count == numberOfDigits,
-            let _ = UInt64(code) else {
+            UInt64(code) != nil
+        else {
                 return
         }
         super.verify()

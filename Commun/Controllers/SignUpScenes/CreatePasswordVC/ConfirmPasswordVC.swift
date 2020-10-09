@@ -80,7 +80,6 @@ class ConfirmPasswordVC: CreatePasswordVC {
             .disposed(by: self.disposeBag)
     }
 
-    // TODO: Create common func
     var backupAlert: UIAlertController?
     private func savePasswordToIcloud() {
         guard let userName = Config.currentUser?.name

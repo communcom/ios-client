@@ -265,7 +265,7 @@ class CommentForm: MyView {
                    return
                 }
 
-                let matches = detect.matches(in: text, options: .reportCompletion, range: NSMakeRange(0, text.count))
+                let matches = detect.matches(in: text, options: .reportCompletion, range: NSRange(location: 0, length: text.count))
 
                 if let url = matches.first?.url {
                     // for normal Image

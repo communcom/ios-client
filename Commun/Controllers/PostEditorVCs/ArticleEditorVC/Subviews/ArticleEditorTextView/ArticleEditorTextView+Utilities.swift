@@ -109,20 +109,6 @@ extension ArticleEditorTextView {
             addAttachmentAtSelectedRange(attachment)
             return
         }
-        
-        // TODO: Paste html
-//        if let html = pasteBoard.items.last?["public.html"] as? String {
-//            let htmlData = NSString(string: html).data(using: String.Encoding.unicode.rawValue)
-//            let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
-//                NSAttributedString.DocumentType.html]
-//            if let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
-//                                                                  options: options,
-//                                                                  documentAttributes: nil) {
-//                attributedString.addAttribute(.font, value: defaultFont, range: NSMakeRange(0, attributedString.length))
-//                textStorage.replaceCharacters(in: selectedRange, with: attributedString)
-//                return
-//            }
-//        }
 
         super.paste(sender)
     }
