@@ -238,7 +238,7 @@ class BanUserProposalView: ProposalView {
         userView.actionButton.isHidden = true
         let reasons = reasons.map {$0.uppercaseFirst.localized()}
         reasonLabel.attributedText = NSMutableAttributedString()
-            .text("reports-count".localizedPlural(reasons.count) + ": ", size: 15, weight: .medium)
+            .text("reports-count".localizedPlural(reasons.count).uppercaseFirst + ": ", size: 15, weight: .medium)
             .text(reasons.joined(separator: ", "), size: 15, weight: .medium, color: .appMainColor)
         reasonLabel.isHidden = reasons.count == 0
     }
