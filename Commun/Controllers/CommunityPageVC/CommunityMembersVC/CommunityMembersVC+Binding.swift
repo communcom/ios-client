@@ -21,6 +21,8 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     return .leaders
                 case 2:
                     return .friends
+                case 3:
+                    return .banned
                 default:
                     fatalError("not found selected index")
                 }
@@ -115,6 +117,32 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     }
                     
                     return cell
+                    
+                case .bannedUser(let user):
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityBannedUserCell") as! CommunityBannedUserCell
+                    cell.setUp(with: user)
+                    let unBanAction = CocoaAction {
+                        BlockchainManager.instance.unbanUser(self.viewModel.community.communityId, commnityIssuer: self.viewModel.community.issuer ?? "", accountName: user.userId, reason: "")
+                            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                            .do(onError: { (error) in
+                                self.showError(error)
+                            }, onCompleted: {
+                                self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for user unbanning has been created".localized().uppercaseFirst)
+                            })
+                            .andThen(.just(()))
+                    }
+                    cell.setUpUnBanAction(unBanAction)
+                    cell.roundedCorner = []
+                    
+                    if indexPath.row == 0 {
+                        cell.roundedCorner.insert([.topLeft, .topRight])
+                    }
+                    
+                    if indexPath.row == self.viewModel.items.value.count - 1 {
+                        cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+                    }
+                    
+                    return cell
                 }
             }
         )
@@ -137,6 +165,9 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                         return .leader(item)
                     }
                     if let item = item as? ResponseAPIContentGetProfile {
+                        if self.viewModel.segmentedItem.value == .banned {
+                            return .bannedUser(item)
+                        }
                         return .subscriber(item)
                     }
                     return nil
@@ -177,6 +208,8 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     self.showProfileWithUserId(profile.userId)
                 case .leader(let leader):
                     self.showProfileWithUserId(leader.userId)
+                default:
+                    break
                 }
             })
             .disposed(by: disposeBag)

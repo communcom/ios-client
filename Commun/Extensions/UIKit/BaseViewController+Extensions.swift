@@ -95,7 +95,7 @@ extension BaseViewController {
                             .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0.0)}
                             .subscribe(onCompleted: {
                                 self.hideHud()
-                                self.showDone("proposal for post banning has been created".localized().uppercaseFirst)
+                                self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for post banning has been created".localized().uppercaseFirst)
                             }, onError: {error in
                                 self.hideHud()
                                 self.showError(error)

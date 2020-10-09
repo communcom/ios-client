@@ -15,6 +15,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     enum CustomElementType: IdentifiableType, Equatable {
         case subscriber(ResponseAPIContentGetProfile)
         case leader(ResponseAPIContentGetLeader)
+        case bannedUser(ResponseAPIContentGetProfile)
         
         var identity: String {
             switch self {
@@ -22,6 +23,8 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
                 return "subscriber/" + subscriber.identity
             case .leader(let leader):
                 return "leader/" + leader.identity
+            case .bannedUser(let user):
+                return "bannedUser/" + user.identity
             }
         }
     }
@@ -91,6 +94,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         
         tableView.backgroundColor = .appLightGrayColor
         tableView.register(CommunityMemberCell.self, forCellReuseIdentifier: "CommunityMemberCell")
+        tableView.register(CommunityBannedUserCell.self, forCellReuseIdentifier: "CommunityBannedUserCell")
         tableView.register(CommunityLeaderFollowCell.self, forCellReuseIdentifier: "CommunityLeaderFollowCell")
         
         tableView.separatorStyle = .none
@@ -140,6 +144,9 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         case .friends:
             title = "no friends"
             description = "friends not found"
+        case .banned:
+            title = "no banned users"
+            description = "banned users not found"
         }
         
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)

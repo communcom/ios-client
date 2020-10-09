@@ -360,6 +360,9 @@
 		BC7540092424B2CD000616B5 /* AttentionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7540082424B2CD000616B5 /* AttentionView.swift */; };
 		BC769EEC249B466500BA37E5 /* CMSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC769EEB249B466500BA37E5 /* CMSearchBar.swift */; };
 		BC7A29BB252EB636002D5C73 /* CMBanUserBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7A29BA252EB636002D5C73 /* CMBanUserBottomSheet.swift */; };
+		BC7A310F25301892002D5C73 /* CommunityBannedUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7A310E25301891002D5C73 /* CommunityBannedUserViewModel.swift */; };
+		BC7A311525301A54002D5C73 /* CommunityBannedUsersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7A311425301A4F002D5C73 /* CommunityBannedUsersListFetcher.swift */; };
+		BC7A311925301D5B002D5C73 /* CommunityBannedUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7A311825301D5B002D5C73 /* CommunityBannedUserCell.swift */; };
 		BC7A88FB23FE73C300B8CF6E /* WalletAddFriendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7A88FA23FE73C300B8CF6E /* WalletAddFriendVC.swift */; };
 		BC7B74C424F75E9400913A19 /* ProposalCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7B74C324F75E9400913A19 /* ProposalCellDelegate.swift */; };
 		BC7C8CBD23FF7AC70038DF5E /* WalletAddFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7C8CBC23FF7AC70038DF5E /* WalletAddFriendCell.swift */; };
@@ -975,6 +978,9 @@
 		BC7540082424B2CD000616B5 /* AttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionView.swift; sourceTree = "<group>"; };
 		BC769EEB249B466500BA37E5 /* CMSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchBar.swift; sourceTree = "<group>"; };
 		BC7A29BA252EB636002D5C73 /* CMBanUserBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMBanUserBottomSheet.swift; sourceTree = "<group>"; };
+		BC7A310E25301891002D5C73 /* CommunityBannedUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityBannedUserViewModel.swift; sourceTree = "<group>"; };
+		BC7A311425301A4F002D5C73 /* CommunityBannedUsersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityBannedUsersListFetcher.swift; sourceTree = "<group>"; };
+		BC7A311825301D5B002D5C73 /* CommunityBannedUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityBannedUserCell.swift; sourceTree = "<group>"; };
 		BC7A88FA23FE73C300B8CF6E /* WalletAddFriendVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAddFriendVC.swift; sourceTree = "<group>"; };
 		BC7B74C324F75E9400913A19 /* ProposalCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalCellDelegate.swift; sourceTree = "<group>"; };
 		BC7C8CBC23FF7AC70038DF5E /* WalletAddFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAddFriendCell.swift; sourceTree = "<group>"; };
@@ -2403,6 +2409,7 @@
 			children = (
 				BCD00FB22373C8A4004A3952 /* Subviews */,
 				BC4692EE239615160064A38B /* FriendsViewModel.swift */,
+				BC7A310E25301891002D5C73 /* CommunityBannedUserViewModel.swift */,
 				BC619B1A2372B5760005BB94 /* CommunityMembersViewModel.swift */,
 				BC619B1E2373B5550005BB94 /* CommunityMembersVC.swift */,
 				BCD00FB72373D78D004A3952 /* CommunityMembersVC+Binding.swift */,
@@ -3045,6 +3052,7 @@
 				BC4692F8239640AE0064A38B /* LeaderFollowCollectionCell.swift */,
 				BC4692FA239645C70064A38B /* CommunityLeaderFollowCell.swift */,
 				BC8AA9CC252C117E00FA63F9 /* CommunityMemberCell.swift */,
+				BC7A311825301D5B002D5C73 /* CommunityBannedUserCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -3178,6 +3186,7 @@
 				BC7445D5242B57A9009915EA /* ReferralUsersListFetcher.swift */,
 				BCC0691B24E4F78A001419D0 /* ProposalsListFetcher.swift */,
 				BCC0692A24E50EC7001419D0 /* ReportsListFetcher.swift */,
+				BC7A311425301A4F002D5C73 /* CommunityBannedUsersListFetcher.swift */,
 			);
 			path = Fetchers;
 			sourceTree = "<group>";
@@ -3708,6 +3717,7 @@
 				BCD6E36924C9823E007653E2 /* MyProfileEditGeneralInfoVC.swift in Sources */,
 				3BC613B32342162700075570 /* BottomFlexibleHeightVC.swift in Sources */,
 				BC5A34A4242B0DA3001C5054 /* WelcomeItemVC.swift in Sources */,
+				BC7A311925301D5B002D5C73 /* CommunityBannedUserCell.swift in Sources */,
 				BC6B7653236A74F000A7AF2A /* MyProfileEditBioVC.swift in Sources */,
 				BCAFEC95243EC237003A1DC4 /* TransactionCompletedVC.swift in Sources */,
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
@@ -3745,6 +3755,7 @@
 				B1D7AD5C23A10664007D1A13 /* QRScannerViewController.swift in Sources */,
 				BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
+				BC7A311525301A54002D5C73 /* CommunityBannedUsersListFetcher.swift in Sources */,
 				BCC0692924E50134001419D0 /* CMPostView.swift in Sources */,
 				AC5B0E1C24B4956800C67786 /* AppleLoginManager.swift in Sources */,
 				AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */,
@@ -3819,6 +3830,7 @@
 				BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */,
 				BC597A8C238D09C400103F4F /* FTUECommunitiesViewModel.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashVC.swift in Sources */,
+				BC7A310F25301892002D5C73 /* CommunityBannedUserViewModel.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,
 				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,
 				BCDEE7A123F4E99300DD3EB3 /* DiscoveryVC.swift in Sources */,

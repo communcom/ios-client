@@ -135,8 +135,7 @@ class CMBanUserBottomSheet: CMBottomSheet {
             .subscribe{ (_) in
                 self.hideHud()
                 self.backCompletion {
-                    self.showDone("proposal for user banning has been created".localized().uppercaseFirst)
-                    // TODO: mark user as banned
+                    self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for user banning has been created".localized().uppercaseFirst)
                 }
                 
             } onError: { (error) in
