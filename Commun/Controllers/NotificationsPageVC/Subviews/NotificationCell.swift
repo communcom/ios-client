@@ -119,7 +119,6 @@ class NotificationCell: MyTableViewCell, ListItemCellType, UITextViewDelegate {
             
         case "subscribe":
             iconImageView.isHidden = true
-            // TODO: - follow ?? unfollow
 //            contentView.addSubview(actionButton)
 //            actionButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
 //            actionButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)

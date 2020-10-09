@@ -56,7 +56,7 @@ extension LeaderCellDelegate where Self: BaseViewController & HasLeadersVM {
                             leader.notifyChanged()
                         })
                         .andThen(BlockchainManager.instance.toggleVoteLeader(leader: leader))
-                        .subscribe(onError:{ (error) in
+                        .subscribe(onError: { (error) in
                             UIApplication.topViewController()?.showError(error)
                         })
                         .disposed(by: self.disposeBag)

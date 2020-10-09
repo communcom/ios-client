@@ -90,7 +90,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         tableView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
         
         tableView.backgroundColor = .appLightGrayColor
-        tableView.register(SubscribersCell.self, forCellReuseIdentifier: "SubscribersCell")
+        tableView.register(CommunityMemberCell.self, forCellReuseIdentifier: "CommunityMemberCell")
         tableView.register(CommunityLeaderFollowCell.self, forCellReuseIdentifier: "CommunityLeaderFollowCell")
         
         tableView.separatorStyle = .none

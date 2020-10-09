@@ -68,7 +68,6 @@ extension PostEditorVC {
 //                self.appendTool(.setColor)
 //                self.appendTool(.addLink)
 //                self.appendTool(.clearFormatting)
-                //TODO: change color
                 self.contentTextViewCountLabel.isHidden = false
             })
             .disposed(by: disposeBag)

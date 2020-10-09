@@ -40,7 +40,7 @@ extension UIImageView {
         }
     }
     
-    static func circle(size: CGFloat, backgroundColor: UIColor? = nil , imageName: String? = nil) -> UIImageView {
+    static func circle(size: CGFloat, backgroundColor: UIColor? = nil, imageName: String? = nil) -> UIImageView {
         let imageView = UIImageView(forAutoLayout: ())
         imageView.autoSetDimensions(to: CGSize(width: size, height: size))
         if let backgroundColor = backgroundColor {

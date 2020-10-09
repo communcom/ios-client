@@ -26,11 +26,9 @@ class LinkResponsiveTextView: UITextView {
         
         // find the character that's been tapped
         let characterIndex = self.layoutManager.characterIndex(for: location, in: self.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        if characterIndex < self.textStorage.length {
+        if (characterIndex < self.textStorage.length) && (self.textStorage.attribute(NSAttributedString.Key.link, at: characterIndex, effectiveRange: nil) != nil) {
             // if the character is a link, handle the tap as UITextView normally would
-            if (self.textStorage.attribute(NSAttributedString.Key.link, at: characterIndex, effectiveRange: nil) != nil) {
-                return self
-            }
+            return self
         }
         
         // otherwise return nil so the tap goes on to the next receiver

@@ -87,7 +87,6 @@ class BasicEditorVC: PostEditorVC {
     override func setUp() {
         super.setUp()
         
-        //TODO: add Article later
 //        if viewModel.postForEdit == nil {
 //            appendTool(EditorToolbarItem.addArticle)
 //        }

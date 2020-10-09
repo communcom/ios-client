@@ -8,6 +8,7 @@
 
 import Foundation
 import RxDataSources
+import Action
 
 extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
     func bindSegmentedControl() {
@@ -72,8 +73,19 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
             configureCell: { (_, tableView, indexPath, element) -> UITableViewCell in
                 switch element {
                 case .subscriber(let subscriber):
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscribersCell") as! SubscribersCell
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityMemberCell") as! CommunityMemberCell
                     cell.setUp(with: subscriber)
+                    if self.viewModel.community.isLeader == true && Config.currentUser?.id != subscriber.userId {
+                        cell.optionButton.rx.action = CocoaAction {
+                            self.manageUser(subscriber)
+                            return .just(())
+                        }
+                        cell.optionButton.isHidden = false
+                    } else {
+                        cell.optionButton.rx.action = nil
+                        cell.optionButton.isHidden = true
+                    }
+                    
                     cell.delegate = self
                     
                     cell.roundedCorner = []
@@ -194,5 +206,24 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 130, height: 166)
+    }
+    
+    // MARK: - Manage user
+    func manageUser(_ user: ResponseAPIContentGetProfile) {
+        showCMActionSheet(title: "manage user".localized().uppercaseFirst, titleFont: .boldSystemFont(ofSize: 17), titleAlignment: .left, actions: [
+            .default(
+                title: "ban user".localized().uppercaseFirst,
+                iconName: "report",
+                tintColor: .appRedColor,
+                handle: {
+                    self.banUser(user)
+                }
+            )
+        ])
+    }
+    
+    func banUser(_ user: ResponseAPIContentGetProfile) {
+        guard let issuer = viewModel.community.issuer else {return}
+        present(CMBanUserBottomSheet(banningUser: user, communityId: viewModel.community.communityId, communityIssuer: issuer), animated: true, completion: nil)
     }
 }

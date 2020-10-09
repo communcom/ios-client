@@ -16,6 +16,15 @@ class ReportOtherVC: BaseViewController {
     var completion: ((String) -> Void)?
     var cancelCompletion: (() -> Void)?
     
+    init(initialValue: String? = nil) {
+        super.init(nibName: nil, bundle: nil)
+        textView.text = initialValue
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()

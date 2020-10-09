@@ -322,7 +322,6 @@ extension PostEditorVC {
     
     // MARK: - Add link
     func addAgeLimit() {
-        // TODO: Change func
         showAlert(title: "info".localized().uppercaseFirst, message: "add age limit 18+ (coming soon)".localized().uppercaseFirst, buttonTitles: ["OK".localized()], highlightedButtonIndex: 0)
     }
     

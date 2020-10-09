@@ -118,9 +118,13 @@ class TransferHistoryFilterVC: BottomMenuVC {
         }
         
         var transferType = "all"
-        if typeSegmentedControl.selectedIndexes.isEmpty { transferType = "none" }
-        else if typeSegmentedControl.selectedIndexes == [0] { transferType = "transfer" }
-        else if typeSegmentedControl.selectedIndexes == [1] { transferType = "convert" }
+        if typeSegmentedControl.selectedIndexes.isEmpty {
+            transferType = "none"
+        } else if typeSegmentedControl.selectedIndexes == [0] {
+            transferType = "transfer"
+        } else if typeSegmentedControl.selectedIndexes == [1] {
+            transferType = "convert"
+        }
         
         var rewards = "none"
         var claim = "none"
@@ -137,9 +141,13 @@ class TransferHistoryFilterVC: BottomMenuVC {
         }
         
         var holdType = "all"
-        if holdTypeSegmentedControl.selectedIndexes.isEmpty { holdType = "none" }
-        else if holdTypeSegmentedControl.selectedIndexes == [0] { holdType = "like" }
-        else if holdTypeSegmentedControl.selectedIndexes == [1] { holdType = "dislike" }
+        if holdTypeSegmentedControl.selectedIndexes.isEmpty {
+            holdType = "none"
+        } else if holdTypeSegmentedControl.selectedIndexes == [0] {
+            holdType = "like"
+        } else if holdTypeSegmentedControl.selectedIndexes == [1] {
+            holdType = "dislike"
+        }
         
         let filter = TransferHistoryListFetcher.Filter(userId: originFilter.userId, direction: direction, transferType: transferType, rewards: rewards, donation: donation, claim: claim, holdType: holdType, symbol: originFilter.symbol)
         

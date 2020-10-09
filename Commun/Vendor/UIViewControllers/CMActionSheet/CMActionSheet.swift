@@ -30,11 +30,6 @@ class CMActionSheet: CMBottomSheet {
         var action: Action?
     }
     
-    // MARK: - Properties
-    var backgroundColor: UIColor = .appLightGrayColor {
-        didSet { view.backgroundColor = backgroundColor }
-    }
-    
     // MARK: - Subviews
     var headerView: UIView {
         didSet { configureHeader() }
@@ -58,8 +53,6 @@ class CMActionSheet: CMBottomSheet {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        
-        view.backgroundColor = backgroundColor
         
         configureHeader()
         

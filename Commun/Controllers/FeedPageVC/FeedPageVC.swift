@@ -118,7 +118,7 @@ class FeedPageVC: PostsViewController {
         (viewModel as? FeedPageViewModel)?.claimedPromos
             .filter {$0 != nil}
             .map {$0!}
-            .subscribe(onNext: { (claimedPromos) in
+            .subscribe(onNext: { (_) in
 //                if !claimedPromos.contains("DANK") {
 //                    self.headerView.showPromoBanner()
 //                }

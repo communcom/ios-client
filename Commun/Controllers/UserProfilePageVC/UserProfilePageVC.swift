@@ -276,7 +276,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                     self.confirmBlock()
                 },
                 showNextButton: true
-            ),
+            )
         ]
     }
     

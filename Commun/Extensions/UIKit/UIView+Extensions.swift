@@ -26,10 +26,6 @@ extension UIView {
 
         layer.addSublayer(shapeLayer)
     }
-
-    public func copyView() -> UIView? {
-        NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as? UIView
-    }
     
     func showErrorView(title: String? = nil, subtitle: String? = nil, retryButtonTitle: String? = nil, retryAction: (() -> Void)?) {
         // setup new errorView
@@ -260,4 +256,14 @@ extension UIView {
                                 verticalFittingPriority: .defaultLow)
             .height
     }
+    
+    static func withStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat? = nil, alignment: UIStackView.Alignment = .center, distribution: UIStackView.Distribution = .fillEqually, padding: UIEdgeInsets = .init(inset: 16)) -> UIView {
+        let view = UIView(forAutoLayout: ())
+        let stackView = UIStackView(axis: axis, spacing: spacing, alignment: alignment, distribution: distribution)
+        view.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
+        return view
+    }
+    
+    var innerStackView: UIStackView? {subviews.first as? UIStackView}
 }

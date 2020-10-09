@@ -36,8 +36,7 @@ extension ContentTextView {
             // Modify selectedText's attributes
         else {
             // ignore link
-            textStorage.enumerateAttributes(in: selectedRange, options: []) {
-                (attrs, range, _) in
+            textStorage.enumerateAttributes(in: selectedRange, options: []) { (attrs, range, _) in
                 if attrs[.link] != nil {
                     return
                 }
@@ -72,8 +71,7 @@ extension ContentTextView {
         if selectedRange.length == 0 {
             typingAttributes[.foregroundColor] = color
         } else {
-            textStorage.enumerateAttributes(in: selectedRange, options: []) {
-                (attrs, range, _) in
+            textStorage.enumerateAttributes(in: selectedRange, options: []) { (attrs, range, _) in
                 if attrs[.link] != nil {return}
                 textStorage.addAttribute(.foregroundColor, value: color, range: range)
             }

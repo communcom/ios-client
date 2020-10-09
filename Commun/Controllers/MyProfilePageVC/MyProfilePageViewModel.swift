@@ -22,7 +22,6 @@ class MyProfilePageViewModel: UserProfilePageViewModel {
         }
     }
     
-    
     func bindCurrentProfile() {
         ResponseAPIContentGetProfile.observeCurrentProfile
             .filter {$0 != nil}

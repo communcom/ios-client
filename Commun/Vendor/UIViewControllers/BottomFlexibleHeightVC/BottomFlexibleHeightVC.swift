@@ -14,11 +14,11 @@ class BottomFlexibleHeightVC: BaseViewController, UIViewControllerTransitioningD
     class PresentationController: FlexibleHeightPresentationController {
         override func calculateFittingHeightOfPresentedView(targetWidth: CGFloat) -> CGFloat {
             let vc = presentedViewController as! BottomFlexibleHeightVC
-            return vc.fittingSizeInContainer(safeAreaFrame: safeAreaFrame!)
+            return vc.fittingHeightInContainer(safeAreaFrame: safeAreaFrame!)
         }
     }
     
-    func fittingSizeInContainer(safeAreaFrame: CGRect) -> CGFloat {
+    func fittingHeightInContainer(safeAreaFrame: CGRect) -> CGFloat {
         var height: CGFloat = 0
         
         // calculate header
@@ -80,11 +80,17 @@ class CMBottomSheet: BottomFlexibleHeightVC {
     var panGestureRecognizer: UIPanGestureRecognizer?
     var interactor: SwipeDownInteractor?
     
+    var backgroundColor: UIColor = .appLightGrayColor {
+        didSet { view.backgroundColor = backgroundColor }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         interactor = SwipeDownInteractor()
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         view.addGestureRecognizer(panGestureRecognizer!)
+        
+        view.backgroundColor = backgroundColor
     }
     
     @objc func panGestureAction(_ sender: UIPanGestureRecognizer) {
@@ -117,6 +123,11 @@ class CMBottomSheet: BottomFlexibleHeightVC {
         default:
             break
         }
+    }
+    
+    func disableSwipeDownToDismiss() {
+        guard let gesture = panGestureRecognizer else {return}
+        view.removeGestureRecognizer(gesture)
     }
 }
 

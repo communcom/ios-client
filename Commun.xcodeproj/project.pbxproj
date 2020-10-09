@@ -359,6 +359,7 @@
 		BC753FF624235A9E000616B5 /* FeedPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC753FF524235A9E000616B5 /* FeedPageViewModel.swift */; };
 		BC7540092424B2CD000616B5 /* AttentionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7540082424B2CD000616B5 /* AttentionView.swift */; };
 		BC769EEC249B466500BA37E5 /* CMSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC769EEB249B466500BA37E5 /* CMSearchBar.swift */; };
+		BC7A29BB252EB636002D5C73 /* CMBanUserBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7A29BA252EB636002D5C73 /* CMBanUserBottomSheet.swift */; };
 		BC7A88FB23FE73C300B8CF6E /* WalletAddFriendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7A88FA23FE73C300B8CF6E /* WalletAddFriendVC.swift */; };
 		BC7B74C424F75E9400913A19 /* ProposalCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7B74C324F75E9400913A19 /* ProposalCellDelegate.swift */; };
 		BC7C8CBD23FF7AC70038DF5E /* WalletAddFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7C8CBC23FF7AC70038DF5E /* WalletAddFriendCell.swift */; };
@@ -371,6 +372,7 @@
 		BC8481FA24581FB20099C7C5 /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8481F924581FB20099C7C5 /* DonationView.swift */; };
 		BC8481FE245826D40099C7C5 /* CMLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8481FD245826D40099C7C5 /* CMLabel.swift */; };
 		BC84820624595CEE0099C7C5 /* CMWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC84820524595CEE0099C7C5 /* CMWalletView.swift */; };
+		BC8AA9CD252C117E00FA63F9 /* CommunityMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8AA9CC252C117E00FA63F9 /* CommunityMemberCell.swift */; };
 		BC8C17262506197E00795859 /* CreateCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C17252506197E00795859 /* CreateCommunityVC.swift */; };
 		BC8C172A250624EE00795859 /* CreateCommunityCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C1729250624ED00795859 /* CreateCommunityCompletedVC.swift */; };
 		BC8C172E250779A600795859 /* UserProfileAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C172D250779A600795859 /* UserProfileAboutCell.swift */; };
@@ -972,6 +974,7 @@
 		BC753FF524235A9E000616B5 /* FeedPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageViewModel.swift; sourceTree = "<group>"; };
 		BC7540082424B2CD000616B5 /* AttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionView.swift; sourceTree = "<group>"; };
 		BC769EEB249B466500BA37E5 /* CMSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchBar.swift; sourceTree = "<group>"; };
+		BC7A29BA252EB636002D5C73 /* CMBanUserBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMBanUserBottomSheet.swift; sourceTree = "<group>"; };
 		BC7A88FA23FE73C300B8CF6E /* WalletAddFriendVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAddFriendVC.swift; sourceTree = "<group>"; };
 		BC7B74C324F75E9400913A19 /* ProposalCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalCellDelegate.swift; sourceTree = "<group>"; };
 		BC7C8CBC23FF7AC70038DF5E /* WalletAddFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAddFriendCell.swift; sourceTree = "<group>"; };
@@ -984,6 +987,7 @@
 		BC8481F924581FB20099C7C5 /* DonationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationView.swift; sourceTree = "<group>"; };
 		BC8481FD245826D40099C7C5 /* CMLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLabel.swift; sourceTree = "<group>"; };
 		BC84820524595CEE0099C7C5 /* CMWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMWalletView.swift; sourceTree = "<group>"; };
+		BC8AA9CC252C117E00FA63F9 /* CommunityMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMemberCell.swift; sourceTree = "<group>"; };
 		BC8C17252506197E00795859 /* CreateCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityVC.swift; sourceTree = "<group>"; };
 		BC8C1729250624ED00795859 /* CreateCommunityCompletedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityCompletedVC.swift; sourceTree = "<group>"; };
 		BC8C172D250779A600795859 /* UserProfileAboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAboutCell.swift; sourceTree = "<group>"; };
@@ -1502,6 +1506,7 @@
 				BCAB50962521DCF30028CA68 /* CMTopicsVC.swift */,
 				BCAB509A2521E1770028CA68 /* CMRulesVC.swift */,
 				BCAB509F2522E7270028CA68 /* CMEditRuleVC.swift */,
+				BC7A29BA252EB636002D5C73 /* CMBanUserBottomSheet.swift */,
 			);
 			path = UIViewControllers;
 			sourceTree = "<group>";
@@ -3039,6 +3044,7 @@
 				BCD00FB52373D280004A3952 /* CommunityMembersHeaderView.swift */,
 				BC4692F8239640AE0064A38B /* LeaderFollowCollectionCell.swift */,
 				BC4692FA239645C70064A38B /* CommunityLeaderFollowCell.swift */,
+				BC8AA9CC252C117E00FA63F9 /* CommunityMemberCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -3260,7 +3266,7 @@
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Latest;
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Commun Limited";
 				TargetAttributes = {
 					3BEA224022B3DA9C00FF42DA = {
@@ -3677,6 +3683,7 @@
 				BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */,
 				BC22BBD9236C27C000F40658 /* VerticalActionsVC.swift in Sources */,
 				BC619B1823726C180005BB94 /* CommunityCell.swift in Sources */,
+				BC8AA9CD252C117E00FA63F9 /* CommunityMemberCell.swift in Sources */,
 				BC3AF38323FBE58D00528EEB /* DiscoveryCommunitiesVC.swift in Sources */,
 				BC3824F624F3A58200DF80DB /* CMActionSheet.Action+Builders.swift in Sources */,
 				BC2704152501D92D0042A29B /* PostStatsViewDelegate.swift in Sources */,
@@ -4047,6 +4054,7 @@
 				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				BC8F814523E27ECE0024C04A /* WalletTableHeaderView.swift in Sources */,
 				BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */,
+				BC7A29BB252EB636002D5C73 /* CMBanUserBottomSheet.swift in Sources */,
 				BCEFA6422492149900971E77 /* DonationsVC.swift in Sources */,
 				BC93656624E24FF300438012 /* CMHorizontalTabBar.swift in Sources */,
 				BCB64772244ED65600C94B84 /* SwipeBackNavigationController.swift in Sources */,
@@ -4160,7 +4168,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				INFOPLIST_FILE = CommunTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4182,7 +4190,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				INFOPLIST_FILE = CommunTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4225,6 +4233,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -4250,7 +4259,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -4290,6 +4299,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -4310,7 +4320,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -4340,7 +4350,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Commun/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4375,7 +4385,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Commun/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4398,6 +4408,7 @@
 				CODE_SIGN_ENTITLEMENTS = CommunShare/CommunShare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 35;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -4429,6 +4440,7 @@
 				CODE_SIGN_ENTITLEMENTS = CommunShare/CommunShare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",

@@ -316,7 +316,7 @@ class CreateCommunityVC: CreateCommunityFlowVC {
         view.endEditing(true)
     }
     
-    override func fittingSizeInContainer(safeAreaFrame: CGRect) -> CGFloat {
+    override func fittingHeightInContainer(safeAreaFrame: CGRect) -> CGFloat {
         safeAreaFrame.height
     }
 }

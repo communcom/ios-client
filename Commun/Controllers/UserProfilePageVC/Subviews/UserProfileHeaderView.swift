@@ -281,8 +281,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
                 } else {
                     UIApplication.shared.openURL(appURL as URL)
                 }
-            }
-            else {
+            } else {
                 //redirect to safari because the user doesn't have Telegram
                 if #available(iOS 10.0, *) {
                     UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)

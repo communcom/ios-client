@@ -171,7 +171,6 @@ extension ResponseAPIContentBlock {
                 child.append(NSAttributedString(string: "\r", attributes: currentAttributes))
             }
         case "attachments":
-            //TODO: attachments
             break
         default:
             child.addAttributes(currentAttributes, range: NSRange(location: 0, length: child.length))
