@@ -18,7 +18,7 @@ PODS:
     - Fabric (~> 1.10.2)
   - CryptoSwift (1.3.0)
   - Differentiator (3.1.0)
-  - eosswift (1.5.8):
+  - eosswift (1.5.9):
     - BigInt (~> 3.1.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
@@ -314,7 +314,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   eosswift:
-    :commit: a1d1642483d076aa3572e9d91b92b7a4faabdd54
+    :commit: f4f3964183ce9e11aefe352558e3200246d62518
     :git: "git@github.com:communcom/eos-swift.git"
   GoloCrypto:
     :commit: 49dc0567b352fe5685f6bdd4acc6f2f268555c8f
@@ -347,11 +347,11 @@ SPEC CHECKSUMS:
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   CircularCarousel: 6248f5892c018fc2d115d4d5186be91d46bacbea
-  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   CryptoSwift: 1283821600233bdbeb96d7b389c3288c3bf77211
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
-  eosswift: 38cfa3c8130681214536f51d015dbe3a1f90ce26
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  eosswift: 92cd742ce09c6785da8b3339f7225c1f0120a58f
+  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
   FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
   Firebase: 458d109512200d1aca2e1b9b6cf7d68a869a4a46
