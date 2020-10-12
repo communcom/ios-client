@@ -81,6 +81,10 @@ class ProposalsVC: ListViewController<ResponseAPIContentGetProposal, ProposalCel
             .disposed(by: disposeBag)
     }
     
+    override func mapItems(items: [ResponseAPIContentGetProposal]) -> [AnimatableSectionModel<String, ResponseAPIContentGetProposal>] {
+        super.mapItems(items: items.filter {$0.isDeleted != true})
+    }
+    
     override func handleListEmpty() {
         let title = "no proposals"
         let description = "no proposals found"

@@ -21,6 +21,8 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
         button.addTarget(self, action: #selector(applyButtonDidTouch), for: .touchUpInside)
         return button
     }()
+    lazy var optionButton = UIButton.option()
+        .onTap(self, action: #selector(optionButtonDidTouch))
     
     override func setUpViews() {
         super.setUpViews()
@@ -43,7 +45,9 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
     override func setUpStackView() {
         super.setUpStackView()
         stackView.insertArrangedSubview(actionTypeLabel.padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)), at: 0)
-        stackView.insertArrangedSubview(metaView.padding(UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)), at: 0)
+        let topStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
+        topStackView.addArrangedSubviews([metaView, optionButton])
+        stackView.insertArrangedSubview(topStackView.padding(UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)), at: 0)
     }
     
     override func layoutSubviews() {
@@ -60,6 +64,9 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
         if item.contentType != "post" {
             metaView.setUp(with: item.community, author: item.proposer, creationTime: item.blockTime!)
         }
+        
+        // option button
+        optionButton.isHidden = item.proposer?.userId != Config.currentUser?.id
         
         var actionColor: UIColor = .appBlackColor
         var typePlainText = ""
@@ -221,5 +228,10 @@ class ProposalCell: CommunityManageCell, ListItemCellType {
         applyButton.animate {
             self.delegate?.buttonApplyDidTouch(forItemWithIdentity: identity)
         }
+    }
+    
+    @objc func optionButtonDidTouch() {
+        guard let identity = itemIdentity else {return}
+        self.delegate?.buttonOptionDidTouch(forItemWithIdentity: identity)
     }
 }

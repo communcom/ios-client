@@ -13,6 +13,7 @@ protocol ProposalCellDelegate: class {
     var items: [ResponseAPIContentGetProposal] {get}
     func buttonAcceptDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity)
     func buttonApplyDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity)
+    func buttonOptionDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity)
 }
 
 extension ProposalCellDelegate where Self: BaseViewController {
@@ -33,6 +34,41 @@ extension ProposalCellDelegate where Self: BaseViewController {
         }
     }
     
+    func buttonOptionDidTouch(forItemWithIdentity identity: ResponseAPIContentGetProposal.Identity) {
+        guard var proposal = items.first(where: {$0.identity == identity}), let proposer = proposal.proposer?.userId else {return}
+        showCMActionSheet(title: "manage proposal".localized().uppercaseFirst, actions: [
+            .default(
+                title: "remove".localized().uppercaseFirst,
+                showIcon: false,
+                tintColor: .appRedColor,
+                handle: {
+                    self.showAlert(
+                        title: "delete".localized().uppercaseFirst,
+                        message: "do you really want to cancel this proposal".localized().uppercaseFirst + "?",
+                        buttonTitles: [
+                            "yes".localized().uppercaseFirst,
+                            "no".localized().uppercaseFirst],
+                        highlightedButtonIndex: 1) { (index) in
+                            if index == 0 {
+                                proposal.isDeleted = true
+                                proposal.notifyChanged()
+                                BlockchainManager.instance.cancelProposal(proposal.proposalId, proposer: proposer)
+                                    .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
+                                    .subscribe(onCompleted: {
+                                        proposal.notifyDeleted()
+                                    }, onError: { (error) in
+                                        proposal.isDeleted = false
+                                        proposal.notifyChanged()
+                                        self.showError(error)
+                                    })
+                                    .disposed(by: self.disposeBag)
+                            }
+                        }
+                }
+            )
+        ])
+    }
+
     private func acceptAndApply(proposalIdentity: ResponseAPIContentGetProposal.Identity) {
         guard var proposal = items.first(where: {$0.identity == proposalIdentity}),
             let proposer = proposal.proposer?.userId,
