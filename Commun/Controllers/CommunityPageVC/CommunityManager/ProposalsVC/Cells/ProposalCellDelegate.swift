@@ -56,10 +56,10 @@ extension ProposalCellDelegate where Self: BaseViewController {
                                     .flatMapCompletable({RestAPIManager.instance.waitForTransactionWith(id: $0)})
                                     .subscribe(onCompleted: {
                                         proposal.notifyDeleted()
-                                    }, onError: { (error) in
+                                    }, onError: {[weak self] (error) in
                                         proposal.isDeleted = false
                                         proposal.notifyChanged()
-                                        self.showError(error)
+                                        self?.showError(error)
                                     })
                                     .disposed(by: self.disposeBag)
                             }
