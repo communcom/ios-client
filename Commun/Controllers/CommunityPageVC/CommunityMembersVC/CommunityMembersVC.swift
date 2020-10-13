@@ -38,7 +38,9 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     // MARK: - Subviews
     lazy var topTabBar = CMTopTabBar(
         height: 35,
-        labels: CommunityMembersViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
+        labels: CommunityMembersViewModel.SegmentedItem.allCases
+            .filter {viewModel.community.isLeader == true ? true: $0 != .banned}
+            .map {$0.rawValue.localized().uppercaseFirst},
         selectedIndex: selectedSegmentedItem.index,
         contentInset: UIEdgeInsets(horizontal: 32, vertical: 0)
     )
