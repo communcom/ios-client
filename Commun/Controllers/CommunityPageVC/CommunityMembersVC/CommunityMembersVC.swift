@@ -39,7 +39,9 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     lazy var topTabBar = CMTopTabBar(
         height: 35,
         labels: CommunityMembersViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
-        selectedIndex: selectedSegmentedItem.index)
+        selectedIndex: selectedSegmentedItem.index,
+        contentInset: UIEdgeInsets(horizontal: 32, vertical: 0)
+    )
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(forAutoLayout: ())
@@ -83,8 +85,8 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         
         topBarContainerView.addSubview(topTabBar)
-        topTabBar.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        topTabBar.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        topTabBar.autoPinEdge(toSuperviewEdge: .leading)
+        topTabBar.autoPinEdge(toSuperviewEdge: .trailing)
         topTabBar.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         // tableView

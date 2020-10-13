@@ -252,7 +252,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
     func manageUser(_ user: ResponseAPIContentGetProfile) {
         showCMActionSheet(title: "manage user".localized().uppercaseFirst, titleFont: .boldSystemFont(ofSize: 17), titleAlignment: .left, actions: [
             .default(
-                title: "ban user".localized().uppercaseFirst,
+                title: "do ban user".localized().uppercaseFirst,
                 iconName: "report",
                 tintColor: .appRedColor,
                 handle: {

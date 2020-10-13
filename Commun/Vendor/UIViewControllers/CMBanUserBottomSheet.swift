@@ -43,7 +43,7 @@ class CMBanUserBottomSheet: CMBottomSheet {
     
     lazy var banReasonView: UIView = {
         let view = UIView.withStackView(axis: .vertical, spacing: 5, alignment: .fill, distribution: .fill)
-        view.innerStackView?.addArrangedSubview(UILabel.with(text: "ban reason".localized().uppercaseFirst, textSize: 13, weight: .medium, textColor: .appGrayColor))
+        view.innerStackView?.addArrangedSubview(UILabel.with(text: "ban reasons".localized().uppercaseFirst, textSize: 13, weight: .medium, textColor: .appGrayColor))
         view.innerStackView?.addArrangedSubview(banReasonLabel)
         view.isHidden = true
         return view.onTap(self, action: #selector(selectReasonButtonDidTouch))

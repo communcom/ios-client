@@ -65,6 +65,7 @@
 "and" = "and";
 "archiving" = "archiving";
 "are you sure you want to take the vote back?" = "are you sure you want to take the vote back?";
+"are you sure want to ban this user?" = "are you sure want to ban this user?";
 "attachments" = "attachments";
 "attention" = "attention";
 "authorize on web" = "authorize on web";
@@ -76,7 +77,10 @@
 "ban action" = "ban";
 "ban post" = "ban post";
 "ban user" = "ban user";
+"do ban user" = "ban user";
 "ban comment" = "ban comment";
+"ban reasons" = "ban reasons";
+"banned users" = "banned";
 "be" = "be";
 "binance Exchange provides cryptocurrency" = "Binance Exchange provides cryptocurrency trading for fintech and blockchain enthusiasts";
 "bio" = "bio";
@@ -118,6 +122,7 @@
 "choose communities of interest and" = "choose communities of interest and";
 "choose community in which you want" = "choose community in which you want to create a post";
 "choose from gallery" = "choose from gallery";
+"choose your ban reason" = "choose your ban reason";
 "claim" = "claim";
 "clear all" = "clear all";
 "clear formatting" = "clear formatting";
@@ -296,6 +301,7 @@
 "manage community" = "manage community";
 "master password" = "master password";
 "master password attention note" = "we do not keep master passwords and have no opportunity to restore them.";
+"manage user" = "manage user";
 "members" = "members";
 "members not found" = "members not found";
 "mention" = "mention";
@@ -412,6 +418,8 @@
 "proposal for description changing has been created" = "proposal for description changing has been created";
 "proposal for language changing has been created" = "proposal for language changing has been created";
 "proposal for rules changing has been created" = "proposal for rules changing has been created";
+"proposal for user unbanning has been created" = "proposal for user unbanning has been created";
+"proposal for user banning has been created" = "proposal for user banning has been created";
 "proposals" = "proposals";
 "propose to ban" = "propose to ban";
 "preferrable" = "preferrable";
@@ -556,6 +564,7 @@
 "turn on" = "turn on";
 "type" = "type";
 "unauthorized" = "unauthorized";
+"unban" = "unban";
 "unban user" = "unban user";
 "unblock" = "unblock";
 "unblock and follow" = "unblock and follow";
@@ -616,6 +625,7 @@
 "wrong code" = "wrong code";
 "wrong phone number" = "wrong phone number";
 "yes" = "yes";
+"yes, propose to ban" = "yes, propose to ban";
 "yes, you get rewards for likes as well" = "yes, you get rewards for likes as well, and they have more value than you think! By upvoting posts you let it be successful and rewarded.";
 "yesterday" = "yesterday";
 "yet" = "yet";

@@ -62,6 +62,7 @@
 "and" = "и";
 "archiving" = "архивирование";
 "are you sure you want to take the vote back?" = "Вы уверены, что хотите вернуть голос?";
+"are you sure want to ban this user?" = "Вы уверены, что хотите забанить этого пользователя?";
 "attachments" = "вложения";
 "attention" = "внимание";
 "authorize on web" = "авторизуйтесь на сайте";
@@ -73,7 +74,10 @@
 "ban action" = "забанить";
 "ban post" = "бан поста";
 "ban user" = "бан пользователя";
+"do ban user" = "забанить пользователя";
 "ban comment" = "бан комментария";
+"ban reasons" = "причины для бана";
+"banned users" = "забаненные";
 "be" = "получайте";
 "binance Exchange provides cryptocurrency" = "Binance Exchange обеспечивает торговлю криптовалютой для пользователей";
 "bio" = "описание";
@@ -115,6 +119,7 @@
 "choose communities of interest and" = "выбирайте сообщества по интересам и";
 "choose community in which you want" = "выберите сообщество, в котором Вы хотите создать пост";
 "choose from gallery" = "выбрать из галереи";
+"choose your ban reason" = "выбрать причину для бана";
 "claim" = "клейм";
 "clear all" = "очистить все";
 "clear formatting" = "очистить форматирование";
@@ -286,6 +291,7 @@
 "manage community" = "управление сообществом";
 "master password" = "мастер-пароль";
 "master password attention note" = "мы не храним мастер-пароли и не имеем возможности их восстановить.";
+"manage user" = "управление пользователем";
 "members" = "участников";
 "members not found" = "участники не найдены";
 "mention" = "упоминание";
@@ -315,6 +321,7 @@
 "newest first" = "от новых к старым";
 "next" = "далее";
 "no" = "нет";
+"no, keep user" = "нет, оставить пользователя";
 "no balances" = "нет баланса";
 "no blocked communities found" = "Черный список пуст";
 "no blocked users found" = "Черный список пуст";
@@ -400,6 +407,8 @@
 "proposal for description changing has been created" = "предложение по смене описания создано";
 "proposal for language changing has been created" = "предложение по смене языка создано";
 "proposal for rules changing has been created" = "предложение по смене правил создано";
+"proposal for user unbanning has been created" = "предложение по разбану пользователя создано";
+"proposal for user banning has been created" = "предложение по бану пользователя создано";
 "proposals" = "предложения";
 "propose to ban" = "предложить бан";
 "preferrable" = "предпочтительный";
@@ -529,6 +538,7 @@
 "turn on" = "включить";
 "type" = "тип";
 "unauthorized" = "неавторизованный";
+"unban" = "разбанить";
 "unban user" = "разбан пользователя";
 "unblock" = "разблокировать";
 "unblock and follow" = "разблокировать и подписаться";
@@ -588,6 +598,7 @@
 "wrong code" = "неправильный код";
 "wrong phone number" = "неправильный номер телефона";
 "yes" = "да";
+"yes, propose to ban" = "да, предложить бан";
 "yes, you get rewards for likes as well" = "Да, за лайки тоже дают награды! И они куда ценнее, чем можно подумать. Голосуйте за посты, которые нравятся, чтобы они вышли в топ.";
 "yesterday" = "вчера";
 "yet" = "пока что";

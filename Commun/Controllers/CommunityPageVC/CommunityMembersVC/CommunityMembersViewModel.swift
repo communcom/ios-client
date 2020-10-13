@@ -17,7 +17,7 @@ class CommunityMembersViewModel: BaseViewModel {
         case all        = "all"
         case leaders    = "leaders"
         case friends    = "friends"
-        case banned     = "banned"
+        case banned     = "banned users"
         
         static var allCases: [SegmentedItem] {
             return [.all, .leaders, .friends, .banned]
