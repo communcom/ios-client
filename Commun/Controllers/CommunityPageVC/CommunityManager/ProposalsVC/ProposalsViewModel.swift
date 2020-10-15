@@ -34,7 +34,13 @@ class ProposalsViewModel: ListViewModel<ResponseAPIContentGetProposal> {
     }
     
     override func deleteItem(_ deletedItem: ResponseAPIContentGetProposal) {
-        (fetcher as! ProposalsListFetcher).proposalsCount -= 1
+        let fetcher = self.fetcher as! ProposalsListFetcher
+        let beforeDeletionItemsCount = items.value.count
         super.deleteItem(deletedItem)
+        let afterDeletionItemsCount = items.value.count
+        let change = beforeDeletionItemsCount - afterDeletionItemsCount
+        if fetcher.proposalsCount > 0 + change {
+            fetcher.proposalsCount -= UInt64(change)
+        }
     }
 }
