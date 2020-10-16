@@ -15,9 +15,12 @@ class TransferHistoryListFetcher: ListFetcher<ResponseAPIWalletGetTransferHistor
     struct Filter: FilterType {
         var userId: String? = Config.currentUser?.id
         var direction: String = "all"
-        var transferType: String?
+        var transferType: String? = "all"
+        var rewards: String? = "all"
+        var donation: String? = "all"
+        var claim: String? = "all"
+        var holdType: String? = "all"
         var symbol: String?
-        var rewards: String?
     }
     
     var filter: Filter
@@ -29,7 +32,7 @@ class TransferHistoryListFetcher: ListFetcher<ResponseAPIWalletGetTransferHistor
     }
     
     override var request: Single<[ResponseAPIWalletGetTransferHistoryItem]> {
-        RestAPIManager.instance.getTransferHistory(userId: filter.userId, direction: filter.direction, transferType: filter.transferType, symbol: filter.symbol, reward: filter.rewards, offset: offset, limit: limit)
+        RestAPIManager.instance.getTransferHistory(userId: filter.userId, direction: filter.direction, transferType: filter.transferType, symbol: filter.symbol, reward: filter.rewards, donation: filter.donation, claim: filter.claim, holdType: filter.holdType, offset: offset, limit: limit)
             .map {$0.items}
 //        ResponseAPIWalletGetTransferHistory.singleWithMockData()
 //            .map {$0.items}

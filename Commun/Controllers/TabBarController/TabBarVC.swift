@@ -14,6 +14,19 @@ import NotificationView
 public let tabBarHeight: CGFloat = 60 + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
 
 class TabBarVC: UITabBarController {
+    // MARK: - Nested type
+    class Tabbar: CMBottomToolbar {
+        override func commonInit() {
+            super.commonInit()
+            stackView.spacing = 0
+            stackView.distribution = .fillEqually
+        }
+        
+        override func pinStackView() {
+            stackView.autoPinEdgesToSuperviewSafeArea(with: contentInset)
+        }
+    }
+    
     // MARK: - Constants
     let feedTabIndex = 0
     let discoveryTabIndex = 1
@@ -27,9 +40,7 @@ class TabBarVC: UITabBarController {
     let disposeBag = DisposeBag()
     
     // MARK: - Subviews
-    private lazy var tabBarContainerView = UIView(backgroundColor: .appWhiteColor)
-    private lazy var shadowView = UIView(height: tabBarHeight)
-    lazy var tabBarStackView = UIStackView(forAutoLayout: ())
+    private lazy var customTabbar = Tabbar(height: tabBarHeight, cornerRadius: 20)
     
     // Notification
     private lazy var notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
@@ -52,15 +63,32 @@ class TabBarVC: UITabBarController {
         
         // bind view model
         bind()
+        
+        // show post
+        let post = RequestsManager.shared.pendingRequests.compactMap { request -> ResponseAPIContentGetPost? in
+            switch request {
+            case .newComment(let post, _, _):
+                return post
+            case .replyToComment(_, let post, _, _):
+                return post
+            default:
+                return nil
+            }
+        }.first
+        
+        if let post = post {
+            let vc = PostPageVC(post: post)
+            selectedViewController?.show(vc, sender: self)
+        }
     }
     
     func setTabBarHiden(_ hide: Bool) {
         if hide {
-            shadowView.isHidden = true
-            shadowView.heightConstraint?.constant = 0
+            customTabbar.isHidden = true
+            customTabbar.heightConstraint?.constant = 0
         } else {
-            shadowView.isHidden = false
-            shadowView.heightConstraint?.constant = tabBarHeight
+            customTabbar.isHidden = false
+            customTabbar.heightConstraint?.constant = tabBarHeight
         }
     }
     
@@ -84,52 +112,37 @@ class TabBarVC: UITabBarController {
         tabBar.isHidden = true
         
         // shadow
-        view.addSubview(shadowView)
-        shadowView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        shadowView.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: -6), opacity: 0.08)
-        
-        // tabBarContainerView
-        shadowView.addSubview(tabBarContainerView)
-        tabBarContainerView.autoPinEdgesToSuperviewEdges()
-        
-        // tabBarStackView
-        tabBarContainerView.addSubview(tabBarStackView)
-        tabBarStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0, left: 0.0, bottom: UIDevice.safeAreaInsets.bottom, right: 0.0))
-        tabBarStackView.axis = .horizontal
-        tabBarStackView.alignment = .center
-        tabBarStackView.distribution = .fillEqually
-        tabBarStackView.spacing = 0
-        
+        view.addSubview(customTabbar)
+        customTabbar.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // https://stackoverflow.com/questions/39578530/since-xcode-8-and-ios10-views-are-not-sized-properly-on-viewdidlayoutsubviews
-        shadowView.layoutIfNeeded()
-        tabBarContainerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        customTabbar.layoutIfNeeded()
     }
     
     private func configTabs() {
         // Feed Tab
-        let feed = FeedPageVC()
+        let feed = createViewController(index: feedTabIndex)
         let feedNC = SwipeNavigationController(rootViewController: feed, tabBarVC: self)
         let feedItem = buttonTabBarItem(image: UIImage(named: "feed")!, tag: feedTabIndex)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
-        let discoveryVC = DiscoveryVC()
+        let discoveryVC = createViewController(index: discoveryTabIndex)
         let discoveryNC = SwipeNavigationController(rootViewController: discoveryVC, tabBarVC: self)
         let discoveryItem = buttonTabBarItem(image: UIImage(named: "tabbar-discovery-icon")!, tag: discoveryTabIndex)
         discoveryVC.accessibilityLabel = "TabBarDiscoveryTabBarItem"
         
         // Notifications Tab
-        let notifications = NotificationsPageVC()
+        let notifications = createViewController(index: notificationTabIndex)
         let notificationsNC = SwipeNavigationController(rootViewController: notifications, tabBarVC: self)
         notificationsNC.navigationBar.prefersLargeTitles = true
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
 
         // Profile Tab
-        let profile = MyProfilePageVC()
+        let profile = createViewController(index: profileTabIndex)
         let profileNC = SwipeNavigationController(rootViewController: profile, tabBarVC: self)
         let profileItem = buttonTabBarItem(image: UIImage(named: "tabbar-profile")!, tag: profileTabIndex)
         profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
@@ -138,7 +151,7 @@ class TabBarVC: UITabBarController {
         // Set up controllers
         viewControllers = [feedNC, discoveryNC, /* wallet,*/ notificationsNC, profileNC]
         
-        tabBarStackView.addArrangedSubviews([
+        customTabbar.stackView.addArrangedSubviews([
             feedItem,
             discoveryItem,
             tabBarItemAdd,
@@ -148,6 +161,21 @@ class TabBarVC: UITabBarController {
                 
         // highlight first
         feedItem.tintColor = selectedColor
+    }
+    
+    func createViewController(index: Int) -> BaseViewController {
+        switch index {
+        case feedTabIndex:
+            return FeedPageVC()
+        case discoveryTabIndex:
+            return DiscoveryVC()
+        case notificationTabIndex:
+            return NotificationsPageVC()
+        case profileTabIndex:
+            return MyProfilePageVC()
+        default:
+            fatalError()
+        }
     }
     
     private func buttonTabBarItem(image: UIImage, tag: Int) -> UIButton {
@@ -215,7 +243,7 @@ class TabBarVC: UITabBarController {
         selectedIndex = index
         
         // change tabs' color
-        let items = tabBarStackView.arrangedSubviews.filter {$0.tag != (viewControllers?.count ?? 0) + 1}
+        let items = customTabbar.stackView.arrangedSubviews.filter {$0.tag != (viewControllers?.count ?? 0) + 1}
         let selectedItem = items.first {$0.tag == selectedIndex}
         let unselectedItems = items.filter {$0.tag != selectedIndex}
         selectedItem?.tintColor = selectedColor
@@ -260,6 +288,7 @@ class TabBarVC: UITabBarController {
         appDelegate.notificationTappedRelay
             .skipWhile {$0 == .empty}
             .subscribe(onNext: { (item) in
+                if UIApplication.topViewController() is CreateCommunityVC {return}
                 self.selectedViewController?.navigateWithNotificationItem(item)
             })
             .disposed(by: disposeBag)
@@ -293,9 +322,7 @@ class TabBarVC: UITabBarController {
                             let basicEditorScene = BasicEditorVC(shareExtensionData: data, chooseCommunityAfterLoading: true)
                             self.present(basicEditorScene, animated: true, completion: nil)
                         })
-                    }
-                    
-                    else {
+                    } else {
                         presentedVC.showAlert(title: "open editor".localized().uppercaseFirst, message: "close this screen and open editor".localized().uppercaseFirst + "?", buttonTitles: ["OK".localized(), "Cancel".localized()], highlightedButtonIndex: 0) { (index) in
                             if index == 0 {
                                 presentedVC.dismiss(animated: true) {
@@ -351,7 +378,9 @@ class TabBarVC: UITabBarController {
             } else {
                 // community
                 let alias = path[0]
-                self.selectedViewController?.showCommunityWithCommunityAlias(alias)
+                if !alias.isEmpty {
+                    self.selectedViewController?.showCommunityWithCommunityAlias(alias)
+                }
             }
         } else {
             let communityAlias = path[0]

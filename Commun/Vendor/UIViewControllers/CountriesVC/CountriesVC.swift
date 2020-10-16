@@ -54,14 +54,24 @@ class CountriesVC: BaseViewController, UISearchResultsUpdating {
     override func bind() {
         super.bind()
         countries
-            .bind(to: tableView.rx.items(cellIdentifier: "CountryCell")) { (_, model, cell) in
-                (cell as! CountryCell).setupCountry(model)
+            .map {self.mapItems($0)}
+            .bind(to: tableView.rx.items(cellIdentifier: "CountryCell")) { (index, model, cell) in
+                self.configureCell(index: index, model: model, cell: cell)
             }
             .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(Country.self)
             .subscribe(onNext: selectionHandler)
             .disposed(by: disposeBag)
+    }
+    
+    func mapItems(_ countries: [Country]) -> [Country] {
+        countries
+    }
+    
+    func configureCell(index: Int, model: Country, cell: UITableViewCell) {
+        let cell = cell as! CountryCell
+        cell.setupCountry(model)
     }
     
     // MARK: - SearchResultUpdating

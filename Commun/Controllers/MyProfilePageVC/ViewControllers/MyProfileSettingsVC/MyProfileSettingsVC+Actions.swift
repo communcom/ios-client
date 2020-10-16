@@ -9,24 +9,28 @@
 import Foundation
 
 extension MyProfileSettingsVC {
-    @objc func actionViewDidTouch(_ tap: CommunActionSheet.Action.TapGesture) {
+    @objc func actionViewDidTouch(_ tap: CMActionSheet.TapGesture) {
         guard let action = tap.action else {return}
         action.handle?()
     }
     
     @objc func showEditProfile() {
-        let profileEditVC = MyProfileEditVC()
+        let profileEditVC = MyProfileDetailVC()
         navigationController?.pushViewController(profileEditVC)
     }
 
     @objc func selectLanguage() {
-        let navVC = SwipeNavigationController(rootViewController: SelectLanguageVC())
+        let navVC = SwipeNavigationController(rootViewController: SelectInterfaceLanguageVC())
         present(navVC, animated: true, completion: nil)
     }
     
     @objc func showNotificationSettings() {
         let navVC = SwipeNavigationController(rootViewController: NotificationsSettingsVC())
         present(navVC, animated: true, completion: nil)
+    }
+    
+    @objc func showPassword() {
+        show(PasswordsVC(), sender: nil)
     }
     
     @objc func logout() {

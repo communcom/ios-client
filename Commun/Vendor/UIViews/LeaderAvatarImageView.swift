@@ -51,11 +51,11 @@ class LeaderAvatarImageView: MyAvatarImageView {
                 percentLayers.append(percentLayer)
             } else {
                 // separate
-                let percentLayer1 = arcLayer(withColor: .appMainColor, startAngle: startAngle, endAngle: angle)
-                percentLayers.append(percentLayer1)
-                
                 let percentLayer2 = arcLayer(withColor: #colorLiteral(red: 0.9137254902, green: 0.9176470588, blue: 0.937254902, alpha: 1), startAngle: angle, endAngle: endAngle)
                 percentLayers.append(percentLayer2)
+                
+                let percentLayer1 = arcLayer(withColor: .appMainColor, startAngle: startAngle, endAngle: angle)
+                percentLayers.append(percentLayer1)
             }
         }
         

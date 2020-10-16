@@ -29,10 +29,6 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
         self.seeAllHandler = seeAllHandler
         let vm = DiscoveryAllViewModel()
         super.init(viewModel: vm)
-        
-        defer {
-            showShadowWhenScrollUp = false
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +39,7 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
     override func setUp() {
         super.setUp()
         refreshControl.subviews.first?.bounds.origin.y = -15
+        showShadowWhenScrollUp = false
     }
 
     override func setUpTableView() {
@@ -134,8 +131,8 @@ class DiscoveryAllVC: SubsViewController<ResponseAPIContentSearchItem, Subscribe
             viewModel.items.filter {_ in !viewModel.isQueryEmpty}.asObservable()
         )
             .map {items -> [ListSection] in
-                let communities = items.filter {$0.communityValue != nil && $0.communityValue?.isSubscribed == true}
-                let followers = items.filter {$0.profileValue != nil && $0.profileValue?.isSubscribed == true}
+                let communities = items.filter {$0.communityValue != nil}
+                let followers = items.filter {$0.profileValue != nil}
                 let posts = items.filter {$0.postValue != nil}
                 var sections = [ListSection]()
                 if !communities.isEmpty {

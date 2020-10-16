@@ -91,14 +91,4 @@ extension BasicEditorVC {
             })
             .disposed(by: disposeBag)
     }
-    
-    override func bindCommunity() {
-        super.bindCommunity()
-        viewModel.community
-            .filter {$0 != nil}
-            .subscribe(onNext: { _ in
-                self.contentTextView.becomeFirstResponder()
-            })
-            .disposed(by: disposeBag)
-    }
 }

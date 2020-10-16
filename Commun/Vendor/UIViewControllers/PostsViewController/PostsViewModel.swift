@@ -33,21 +33,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     }
     
     override func shouldUpdateHeightForItem(_ item: ResponseAPIContentGetPost?, withUpdatedItem updatedItem: ResponseAPIContentGetPost?) -> Bool {
-        if let item = item, let updatedItem = updatedItem {
-            if item.document != updatedItem.document {
-                return true
-            }
-            if item.topExplanation != updatedItem.topExplanation {
-                return true
-            }
-            if item.bottomExplanation != updatedItem.bottomExplanation {
-                return true
-            }
-            if item.attachments != updatedItem.attachments {
-                return true
-            }
-        }
-        return false
+        item?.shouldUpdateHeightForPostWithUpdatedPost(updatedItem) ?? false
     }
     
     override func fetchNext(forceRetry: Bool = false) {
@@ -82,6 +68,14 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
                 
                 (self.fetcher as! PostsListFetcher).filter = filter
                 self.fetchNext()
+            })
+            .disposed(by: disposeBag)
+        
+        PostsListFetcher.Filter.Language.observable
+            .skip(1)
+            .distinctUntilChanged()
+            .subscribe(onNext: { language in
+                self.filter.accept(self.filter.value.newFilter(allowedLanguages: [language.rawValue]))
             })
             .disposed(by: disposeBag)
     }
@@ -252,11 +246,12 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
 
     func changeFilter(
         type: FeedTypeMode? = nil,
-        sortBy: FeedSortMode? = nil,
+        sortBy: SortBy? = nil,
         timeframe: FeedTimeFrameMode? = nil,
-        searchKey: String? = nil
+        searchKey: String? = nil,
+        allowedLanguages: [String]? = nil
     ) {
-        let newFilter = filter.value.newFilter(type: type, sortBy: sortBy, timeframe: timeframe, searchKey: searchKey)
+        let newFilter = filter.value.newFilter(type: type, sortBy: sortBy, timeframe: timeframe, searchKey: searchKey, allowedLanguages: allowedLanguages)
         if newFilter != filter.value {
             filter.accept(newFilter)
         }

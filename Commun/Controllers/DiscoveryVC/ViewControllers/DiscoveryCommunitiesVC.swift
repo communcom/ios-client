@@ -17,20 +17,14 @@ class DiscoveryCommunitiesVC: CommunitiesVC {
         return viewModel.mergedState
     }
     
-    init(prefetch: Bool) {
-        super.init(type: .all, prefetch: prefetch)
-        defer {
-            showShadowWhenScrollUp = false
-        }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    convenience init(prefetch: Bool) {
+        self.init(type: .all, prefetch: prefetch)
     }
 
     override func setUp() {
         super.setUp()
         refreshControl.subviews.first?.bounds.origin.y = 15
+        showShadowWhenScrollUp = false
     }
     
     override func bindItems() {

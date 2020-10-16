@@ -13,7 +13,6 @@ class MyProfileSettingsVC: BaseViewController {
     // MARK: - Properties
 
     // MARK: - Subviews
-    lazy var backButton = UIButton.back(tintColor: .appBlackColor, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
     lazy var scrollView = ContentHuggingScrollView(scrollableAxis: .vertical)
     var stackView: UIStackView!
 
@@ -21,7 +20,7 @@ class MyProfileSettingsVC: BaseViewController {
         let view = UIView(height: 80, backgroundColor: .appWhiteColor, cornerRadius: 10)
 
         let avatarImage = MyAvatarImageView(size: 50)
-        avatarImage.setToCurrentUserAvatar()
+        avatarImage.observeCurrentUserAvatar().disposed(by: disposeBag)
         view.addSubview(avatarImage)
         avatarImage.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         avatarImage.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -36,18 +35,15 @@ class MyProfileSettingsVC: BaseViewController {
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImage, withOffset: 10)
 
-//        let button = UIButton.circleGray(imageName: "next-arrow")
-//        button.isUserInteractionEnabled = false
-//        view.addSubview(button)
-//        button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-//        button.autoAlignAxis(toSuperviewAxis: .horizontal)
-//        button.autoPinEdge(.leading, to: .trailing, of: userLabel, withOffset: 10)
+        let button = UIButton.nextArrow()
+        button.isUserInteractionEnabled = false
+        view.addSubview(button)
+        button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        button.autoAlignAxis(toSuperviewAxis: .horizontal)
+        button.autoPinEdge(.leading, to: .trailing, of: userLabel, withOffset: 10)
 
         view.isUserInteractionEnabled = true
-        let tap = CommunActionSheet.Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
-        tap.action = CommunActionSheet.Action(title: "profileEdit", icon: UIImage(named: "profile_options_notifications"), handle: {
-//            self.showEditProfile()
-        })
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showEditProfile))
 
         view.addGestureRecognizer(tap)
 
@@ -60,8 +56,7 @@ class MyProfileSettingsVC: BaseViewController {
         title = "settings".localized().uppercaseFirst
 
         // backButton
-        setLeftNavBarButton(with: backButton)
-        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        setLeftNavBarButtonForGoingBack()
 
         // scrollView
         view.addSubview(scrollView)
@@ -72,15 +67,27 @@ class MyProfileSettingsVC: BaseViewController {
 
         // add actions
         stackView = stackViewWithActions(actions: [
-            CommunActionSheet.Action(title: "notifications".localized().uppercaseFirst, icon: UIImage(named: "profile_options_notifications"), handle: {
-                self.showNotificationSettings()
-            }),
-            CommunActionSheet.Action(title: "interface language".localized().uppercaseFirst, icon: UIImage(named: "profile_options_interface_language"), handle: {
-                self.selectLanguage()
-            }),
-//            CommunActionSheet.Action(title: "password".localized().uppercaseFirst, icon: UIImage(named: "profile_options_password"), handle: {
-//
-//            })
+            .iconFirst(
+                title: "notifications".localized().uppercaseFirst,
+                textWeight: .regular,
+                iconName: "profile_options_notifications",
+                handle: { self.showNotificationSettings() },
+                showNextButton: true
+            ),
+            .iconFirst(
+                title: "interface language".localized().uppercaseFirst,
+                textWeight: .regular,
+                iconName: "profile_options_interface_language",
+                handle: { self.selectLanguage() },
+                showNextButton: true
+            ),
+            .iconFirst(
+                title: "password".localized().uppercaseFirst,
+                textWeight: .regular,
+                iconName: "profile_options_password",
+                handle: { self.showPassword() },
+                showNextButton: true
+            )
         ])
 
         scrollView.contentView.addSubview(stackView)
@@ -116,37 +123,17 @@ class MyProfileSettingsVC: BaseViewController {
         }
     }
 
-    func stackViewWithActions(actions: [CommunActionSheet.Action]) -> UIStackView {
-        let stackView = UIStackView(axis: .vertical, spacing: 2)
+    func stackViewWithActions(actions: [CMActionSheet.Action]) -> UIStackView {
+        let stackView = UIStackView(axis: .vertical, spacing: 2, alignment: .fill, distribution: .fill)
         
         for action in actions {
-            let actionView = UIView(height: 65, backgroundColor: .appWhiteColor)
+            let actionView = action.view
             actionView.isUserInteractionEnabled = true
-            let tap = CommunActionSheet.Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
+            let tap = CMActionSheet.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
             tap.action = action
             actionView.addGestureRecognizer(tap)
 
-            let imageView = UIImageView(width: 35, height: 35)
-            imageView.image = action.icon
-            actionView.addSubview(imageView)
-            imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-
-            let label = UILabel.with(text: action.title, textSize: 17)
-            actionView.addSubview(label)
-            label.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
-            label.autoAlignAxis(toSuperviewAxis: .horizontal)
-
-            let button = UIButton.circleGray(imageName: "next-arrow")
-            button.isUserInteractionEnabled = false
-            actionView.addSubview(button)
-            button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-            button.autoAlignAxis(toSuperviewAxis: .horizontal)
-            button.autoPinEdge(.leading, to: .trailing, of: label, withOffset: 10)
-
             stackView.addArrangedSubview(actionView)
-            actionView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
-                .isActive = true
         }
         return stackView
     }

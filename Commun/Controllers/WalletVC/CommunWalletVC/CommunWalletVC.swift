@@ -86,7 +86,7 @@ class CommunWalletVC: TransferHistoryVC {
     
     func setUpNavBarItems() {
         self.setNavBarBackButton(tintColor: .white)
-//        self.setRightBarButton(imageName: "icon-post-cell-more-center-default", tintColor: .white, action: #selector(optionButtonDidTouch))
+        self.setRightBarButton(imageName: "icon-post-cell-more-center-default", tintColor: .white, action: #selector(optionButtonDidTouch))
     }
     
     // MARK: - Custom Functions
@@ -207,11 +207,7 @@ class CommunWalletVC: TransferHistoryVC {
         
         Observable.combineLatest(balancesVM.items, (viewModel as! WalletViewModel).hideEmptyPointsRelay)
             .map { (items, shouldHideEmpty) -> [ResponseAPIWalletGetBalance] in
-                var items = items
-                if shouldHideEmpty {
-                    items = items.filter {$0.symbol == "CMN" || $0.balanceValue > 0}
-                }
-                return items
+                return items.hidenEmptyBalances(hide: shouldHideEmpty).sortedByBalanceValue()
             }
             .do(onNext: {self.tableHeaderView.setMyPointHidden($0.count == 0)})
             .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in
@@ -355,7 +351,7 @@ class CommunWalletVC: TransferHistoryVC {
     private func routeToSendPointsScene(withUser user: ResponseAPIContentGetProfile? = nil) {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
 
-        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
+        let walletSendPointsVC = CMSendPointsVC(selectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, receiver: user)
         show(walletSendPointsVC, sender: nil)
         
         hideHud()
@@ -387,7 +383,7 @@ class CommunWalletVC: TransferHistoryVC {
     }
     
     @objc func myPointsSeeAllDidTouch() {
-        let vc = MyPointsSeeAllBalancesVC { balance in
+        let vc = SearchableBalancesVC(showEmptyBalances: !UserDefaults.standard.bool(forKey: CommunWalletOptionsVC.hideEmptyPointsKey)) { balance in
             self.openOtherBalancesWalletVC(withSelectedBalance: balance)
         }
         

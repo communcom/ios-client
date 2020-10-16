@@ -9,7 +9,7 @@
 import UIKit
 import CyberSwift
 
-class GridView: UIView {
+class GridView: MyView {
     // MARK: - Properties
     var padding: CGFloat = 0.5
     var views = [UIView]()
@@ -18,17 +18,8 @@ class GridView: UIView {
     var isPostDetail = false
     
     // MARK: - Initializers
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-    
-    func commonInit() {
+    override func commonInit() {
+        super.commonInit()
         backgroundColor = .appWhiteColor
     }
     
@@ -41,7 +32,7 @@ class GridView: UIView {
             embedView = view
             embedView?.layer.masksToBounds = true
             addSubview(view)
-            view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
+            view.autoPinEdgesToSuperviewEdges()
         }
     }
     

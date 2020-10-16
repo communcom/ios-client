@@ -9,12 +9,13 @@
 import UIKit
 import RxSwift
 
-class PostCell: MyTableViewCell, ListItemCellType {
+class PostCell: MyTableViewCell, ListItemCellType, PostStatsViewDelegate, PostMetaViewDelegate {
     // MARK: - Properties
-    var post: ResponseAPIContentGetPost?
     weak var delegate: PostCellDelegate?
     var topViewHeightConstraint: NSLayoutConstraint?
     var bottomViewHeigthConstraint: NSLayoutConstraint?
+    var postIdentity: ResponseAPIContentGetPost.Identity?
+    var post: ResponseAPIContentGetPost? {delegate?.posts.first(where: {$0.identity == postIdentity})}
     
     // MARK: - Subviews
     lazy var topView = UIView(backgroundColor: .appLightGrayColor)
@@ -33,7 +34,10 @@ class PostCell: MyTableViewCell, ListItemCellType {
 
     lazy var bottomView = UIView(backgroundColor: .appLightGrayColor)
     
+    lazy var donationView = DonationView()
+    
     // MARK: - Layout
+    
     override func setUpViews() {
         super.setUpViews()
         
@@ -51,6 +55,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         contentView.addSubview(metaView)
         metaView.autoPinEdge(.top, to: .bottom, of: topView, withOffset: .adaptive(height: 16))
         metaView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16))
+        metaView.delegate = self
 
         // moreAction buttons
         contentView.addSubview(moreActionButton)
@@ -61,8 +66,8 @@ class PostCell: MyTableViewCell, ListItemCellType {
         
         // postStatsView
         contentView.addSubview(postStatsView)
-        postStatsView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16))
-        postStatsView.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 16))
+        postStatsView.autoPinEdge(toSuperviewEdge: .leading)
+        postStatsView.autoPinEdge(toSuperviewEdge: .trailing)
 
         // separator
         contentView.addSubview(bottomView)
@@ -79,6 +84,22 @@ class PostCell: MyTableViewCell, ListItemCellType {
         postStatsView.voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
         postStatsView.voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
         postStatsView.commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
+        postStatsView.delegate = self
+        
+        // donation buttons
+        contentView.addSubview(donationView)
+        donationView.autoAlignAxis(toSuperviewAxis: .vertical)
+        donationView.autoPinEdge(.bottom, to: .top, of: postStatsView, withOffset: -4)
+        donationView.delegate = self
+        
+        donationView.senderView = postStatsView.voteContainerView.likeCountLabel
+        
+        for (i, button) in donationView.amountButtons.enumerated() {
+            button.tag = i
+            button.addTarget(self, action: #selector(donationAmountDidTouch(sender:)), for: .touchUpInside)
+        }
+        donationView.otherButton.tag = donationView.amountButtons.count
+        donationView.otherButton.addTarget(self, action: #selector(donationAmountDidTouch(sender:)), for: .touchUpInside)
     }
     
     func layoutContent() {
@@ -87,12 +108,19 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     // MARK: - Methods
     func setUp(with post: ResponseAPIContentGetPost) {
-        self.post = post
+        postIdentity = post.identity
         metaView.setUp(post: post)
         postStatsView.setUp(with: post)
         
         setTopViewWithExplanation(post.topExplanation)
         setBottomViewWithExplanation(post.bottomExplanation)
+        
+        donationView.isHidden = true
+        if post.showDonationButtons == true,
+            post.author?.userId != Config.currentUser?.id
+        {
+            donationView.isHidden = false
+        }
     }
     
     private func setTopViewWithExplanation(_ explanation: ResponseAPIContentGetPost.TopExplanationType?)
@@ -195,5 +223,24 @@ class PostCell: MyTableViewCell, ListItemCellType {
             post?.bottomExplanation = .hidden
             post?.notifyChanged()
         }
+    }
+    
+    @objc func donationAmountDidTouch(sender: UIButton) {
+        guard let symbol = post?.community?.communityId,
+            let post = post,
+            let user = post.author
+        else {return}
+        let amount = donationView.amounts[safe: sender.tag]?.double
+        
+        let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: post, amount: amount)
+        parentViewController?.show(donateVC, sender: nil)
+    }
+}
+
+extension PostCell: DonationViewDelegate {
+    func donationViewCloseButtonDidTouch(_ donationView: DonationView) {
+        var post = self.post
+        post?.showDonationButtons = false
+        post?.notifyChanged()
     }
 }

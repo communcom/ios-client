@@ -10,6 +10,10 @@ import UIKit
 import CyberSwift
 
 class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCell>, PostCellDelegate {
+    // MARK: - Properties
+    var posts: [ResponseAPIContentGetPost] {viewModel.items.value}
+    
+    // MARK: - Initializers
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(type: .subscriptions, sortBy: .time, userId: Config.currentUser?.id), prefetch: Bool = true) {
         let viewModel = PostsViewModel(filter: filter, prefetch: prefetch)
         super.init(viewModel: viewModel)
@@ -109,32 +113,38 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
 }
 
 extension PostsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let post = viewModel.items.value[safe: indexPath.row],
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let post = itemAtIndexPath(indexPath),
             let height = viewModel.rowHeights[post.identity]
         else {return UITableView.automaticDimension}
         return height
     }
 
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let post = viewModel.items.value[safe: indexPath.row]
-        else {return 200}
-        return viewModel.rowHeights[post.identity] ?? 200
-    }
-
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let post = viewModel.items.value[safe: indexPath.row]
+        guard let post = itemAtIndexPath(indexPath)
         else {return}
-        viewModel.rowHeights[post.identity] = cell.bounds.height
         
         // record post view
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             if tableView.isCellVisible(indexPath: indexPath) &&
-                (cell as! PostCell).post?.identity == post.identity &&
+                self.itemAtIndexPath(indexPath)?.identity == post.identity &&
                 !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity)
             {
                 post.markAsViewed().disposed(by: self.disposeBag)
             }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard var post = itemAtIndexPath(indexPath) else {return}
+        
+        // cache height
+        viewModel.rowHeights[post.identity] = cell.bounds.height
+        
+        // hide donation buttons when cell was removed
+        if !tableView.isCellVisible(indexPath: indexPath), post.showDonationButtons == true {
+            post.showDonationButtons = false
+            post.notifyChanged()
         }
     }
 }

@@ -40,5 +40,27 @@ extension UIButton {
 
         return hitFrame.contains(point)
     }
-
+    
+    static var changeCoverButton: UIButton {
+        let button = UIButton(width: 24, height: 24, backgroundColor: UIColor.black.withAlphaComponent(0.3), cornerRadius: 12, contentInsets: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6))
+        button.tintColor = .white
+        button.setImage(UIImage(named: "photo_solid")!, for: .normal)
+        return button
+    }
+    
+    static var changeAvatarButton: UIButton {
+        let button = UIButton(width: 20, height: 20, backgroundColor: .appLightGrayColor, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
+        button.tintColor = .appGrayColor
+        button.setImage(UIImage(named: "photo_solid")!, for: .normal)
+        button.borderColor = UIColor.appWhiteColor.inDarkMode(.appLightGrayColor)
+        button.borderWidth = 2
+        return button
+    }
+    
+    static var clearButton: UIButton {
+        let btnView = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        btnView.setImage(UIImage(named: "icon-cancel-grey-cyrcle-default"), for: .normal)
+        btnView.imageEdgeInsets = .zero
+        return btnView
+    }
 }

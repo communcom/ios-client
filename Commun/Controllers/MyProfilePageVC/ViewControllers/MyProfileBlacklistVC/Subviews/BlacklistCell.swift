@@ -98,7 +98,7 @@ class BlacklistCell: SubsItemCell, ListItemCellType {
         case .user(let user):
             avatarImageView.setAvatar(urlString: user.avatarUrl)
             let attributedText = NSMutableAttributedString()
-                .text(user.username, size: 15, weight: .semibold)
+                .text(user.username ?? "", size: 15, weight: .semibold)
             contentLabel.attributedText = attributedText
             actionButton.isEnabled = !(user.isBeingUnblocked ?? false)
             actionButton.setTitle((user.isInBlacklist ?? true) ? "unblock".localized().uppercaseFirst : "reblock".localized().uppercaseFirst, for: .normal)

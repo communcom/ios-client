@@ -19,6 +19,8 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
                     return .posts
                 case 1:
                     return .comments
+                case 2:
+                    return .about
                 default:
                     fatalError("not found selected index")
                 }

@@ -26,12 +26,12 @@ extension CommentCell {
         if characterIndex < myTextView.textStorage.length {
 
             // print the character index
-            print("character index: \(characterIndex)")
+//            print("character index: \(characterIndex)")
 
             // print the character at the index
-            let myRange = NSRange(location: characterIndex, length: 1)
-            let substring = (myTextView.attributedText.string as NSString).substring(with: myRange)
-            print("character at index: \(substring)")
+//            let myRange = NSRange(location: characterIndex, length: 1)
+//            let substring = (myTextView.attributedText.string as NSString).substring(with: myRange)
+//            print("character at index: \(substring)")
 
             // check if the tap location has a certain attribute
             let attributeName = NSAttributedString.Key.link
@@ -47,14 +47,6 @@ extension CommentCell {
                     parentViewController?.handleUrl(url: url)
                 }
                 
-                return
-            }
-            
-            // username handler
-            let detectedRange = NSRange(location: 0, length: characterIndex + 1)
-            let posibleUsername = (myTextView.attributedText.string as NSString).substring(with: detectedRange)
-            if !posibleUsername.contains(" ") {
-                openProfile()
                 return
             }
             
@@ -75,10 +67,6 @@ extension CommentCell {
     
     @objc func upVoteButtonDidTouch() {
         guard let comment = comment else {return}
-        if comment.contentId.userId == Config.currentUser?.id {
-            parentViewController?.showAlert(title: "error".localized().uppercaseFirst, message: "can't cancel vote on own publication".localized().uppercaseFirst)
-            return
-        }
         voteContainerView.animateUpVote {
             self.delegate?.cell(self, didTapUpVoteForComment: comment)
         }
@@ -98,6 +86,46 @@ extension CommentCell {
     @objc func replyButtonDidTouch() {
         guard let comment = comment else {return}
         delegate?.cell(self, didTapReplyButtonForComment: comment)
+    }
+    
+    @objc func donateButtonDidTouch() {
+        guard let symbol = comment?.community?.communityId,
+            let comment = comment,
+            let user = comment.author
+        else {return}
+        
+        let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: comment)
+        parentViewController?.show(donateVC, sender: nil)
+    }
+    
+    @objc func donationImageViewDidTouch() {
+        guard let comment = comment else {return}
+        
+        let vc = ContentRewardsVC(content: comment)
+        vc.modelSelected = {donation in
+            vc.dismiss(animated: true) {
+                self.parentViewController?.showProfileWithUserId(donation.sender.userId)
+            }
+        }
+        
+        vc.donateButtonHandler = {
+            vc.dismiss(animated: true) {
+//                var comment = comment
+//                comment.showDonationButtons = true
+//                comment.notifyChanged()
+                guard let symbol = comment.community?.communityId,
+                    let user = comment.author
+                else {return}
+
+                let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: comment)
+                self.parentViewController?.show(donateVC, sender: nil)
+            }
+        }
+        
+        vc.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = vc
+        parentViewController?.present(vc, animated: true, completion: nil)
     }
     
     @objc func retrySendingCommentDidTouch(gestureRecognizer: UITapGestureRecognizer) {

@@ -9,6 +9,11 @@
 import Foundation
 import RxSwift
 
+class DiscoverySearchBarStackView: UIStackView {
+    override var intrinsicContentSize: CGSize {
+        return UIView.layoutFittingExpandedSize
+    }
+}
 class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     
     // MARK: - Properties
@@ -50,7 +55,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
     lazy var topBarContainerView: UIView = {
         let view = UIView(backgroundColor: .appWhiteColor)
         view.addSubview(topTabBar)
-        topTabBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
+        topTabBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 5, left: 0, bottom: 10, right: 0))
         return view
     }()
     
@@ -63,7 +68,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
             "posts".localized().uppercaseFirst
         ],
         selectedIndex: 0,
-        contentInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        contentInset: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     )
     
     lazy var contentView = UIView(forAutoLayout: ())
@@ -72,6 +77,19 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         get {searchController.searchBar}
         set {}
     }
+    
+    lazy var searchBarContainerView: DiscoverySearchBarStackView = {
+        let stackView = DiscoverySearchBarStackView(axis: .horizontal, spacing: 8, alignment: .fill, distribution: .fill)
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubviews([searchBar, plusButton])
+        return stackView
+    }()
+    
+    lazy var plusButton: UIButton = {
+        let button = UIButton.circle(size: 35, backgroundColor: .clear, imageName: "add-community")
+        button.addTarget(self, action: #selector(plusButtonDidTouch), for: .touchUpInside)
+        return button
+    }()
     
     // MARK: - Methods
     override func viewWillAppear(_ animated: Bool) {
@@ -104,11 +122,14 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         contentView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
         setTopBarHidden(false)
+        
+        searchBarContainerView.layoutIfNeeded()
+        plusButton.isHidden = true
     }
     
     func layoutSearchBar() {
         self.definesPresentationContext = true
-        self.navigationItem.titleView = searchBar
+        self.navigationItem.titleView = searchBarContainerView
     }
     
     private func setTopBarHidden(_ hidden: Bool, animated: Bool = false) {
@@ -124,7 +145,7 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
                 // top tabBar
                 view.addSubview(topBarContainerView)
                 topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
-                topTabBar.scrollView.contentOffset.x = -16
+                topTabBar.scrollView.contentOffset.x = -10
                 
                 contentViewTopConstraint?.isActive = false
                 contentViewTopConstraint = contentView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
@@ -148,12 +169,16 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
                 if self.currentChildVC != self.suggestionsVC {
                     self.activeSearch()
                 }
+                self.plusButton.isHidden = true
+                self.searchBarContainerView.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
         
         searchController.searchBar.rx.cancelButtonClicked
             .subscribe(onNext: { (_) in
                 self.searchWasCancelled = true
+                self.plusButton.isHidden = self.topTabBar.selectedIndex.value != 1
+                self.searchBarContainerView.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
         
@@ -162,6 +187,8 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
                 if self.searchWasCancelled {
                     self.cancelSearch()
                 }
+                self.plusButton.isHidden = self.topTabBar.selectedIndex.value != 1
+                self.searchBarContainerView.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
         
@@ -170,6 +197,11 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
             .distinctUntilChanged()
             .subscribe(onNext: { (index) in
                 self.showChildVCWithIndex(index)
+                UIView.animate(withDuration: 0.3) {
+                    self.searchBarContainerView.layoutIfNeeded()
+                    self.plusButton.isHidden = index != 1
+                    self.searchBarContainerView.layoutIfNeeded()
+                }
             })
             .disposed(by: disposeBag)
         
@@ -249,11 +281,6 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
         }
     }
     
-    private func addSubview(_ subView: UIView, toView parentView: UIView) {
-        parentView.addSubview(subView)
-        subView.autoPinEdgesToSuperviewEdges()
-    }
-    
     // MARK: - Search manager
     private func search(_ keyword: String?) {
         tableView?.scrollToTop()
@@ -299,6 +326,10 @@ class DiscoveryVC: BaseViewController, SearchableViewControllerType {
             self.usersVC.searchBarDidCancelSearching()
             self.postsVC.searchBarDidCancelSearching()
 //        }
+    }
+    
+    @objc func plusButtonDidTouch() {
+        present(CreateCommunityGettingStartedVC(), animated: true, completion: nil)
     }
 }
 

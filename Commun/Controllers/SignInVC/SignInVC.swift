@@ -157,7 +157,7 @@ class SignInVC: BaseViewController {
     }
     
     func validate(cred: LoginCredential) -> Bool {
-        return cred.login.count > 3 && cred.key.count >= AuthManager.minPasswordLength
+        return cred.login.count >= 3 && cred.key.count >= AuthManager.minPasswordLength
     }
     
     // MARK: - Actions
@@ -185,6 +185,10 @@ class SignInVC: BaseViewController {
             }, onError: { [weak self] (error) in
                 AnalyticsManger.shared.signInStatus(success: false)
                 self?.configure(signingIn: false)
+                var error = error
+                if error.cmError.message.uppercaseFirst == "Not found" || error.cmError.message.uppercaseFirst == "Public key verification failed - access denied" {
+                    error = CMError.other(message: "incorrect username or password")
+                }
                 self?.showError(error)
             })
             .disposed(by: disposeBag)

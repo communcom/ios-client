@@ -15,6 +15,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     enum CustomElementType: IdentifiableType, Equatable {
         case subscriber(ResponseAPIContentGetProfile)
         case leader(ResponseAPIContentGetLeader)
+        case bannedUser(ResponseAPIContentGetProfile)
         
         var identity: String {
             switch self {
@@ -22,6 +23,8 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
                 return "subscriber/" + subscriber.identity
             case .leader(let leader):
                 return "leader/" + leader.identity
+            case .bannedUser(let user):
+                return "bannedUser/" + user.identity
             }
         }
     }
@@ -35,8 +38,12 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     // MARK: - Subviews
     lazy var topTabBar = CMTopTabBar(
         height: 35,
-        labels: CommunityMembersViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
-        selectedIndex: selectedSegmentedItem.index)
+        labels: CommunityMembersViewModel.SegmentedItem.allCases
+            .filter {viewModel.community.isLeader == true ? true: $0 != .banned}
+            .map {$0.rawValue.localized().uppercaseFirst},
+        selectedIndex: selectedSegmentedItem.index,
+        contentInset: UIEdgeInsets(horizontal: 32, vertical: 0)
+    )
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(forAutoLayout: ())
@@ -80,8 +87,8 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         
         topBarContainerView.addSubview(topTabBar)
-        topTabBar.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        topTabBar.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        topTabBar.autoPinEdge(toSuperviewEdge: .leading)
+        topTabBar.autoPinEdge(toSuperviewEdge: .trailing)
         topTabBar.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         // tableView
@@ -90,7 +97,8 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         tableView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
         
         tableView.backgroundColor = .appLightGrayColor
-        tableView.register(SubscribersCell.self, forCellReuseIdentifier: "SubscribersCell")
+        tableView.register(CommunityMemberCell.self, forCellReuseIdentifier: "CommunityMemberCell")
+        tableView.register(CommunityBannedUserCell.self, forCellReuseIdentifier: "CommunityBannedUserCell")
         tableView.register(CommunityLeaderFollowCell.self, forCellReuseIdentifier: "CommunityLeaderFollowCell")
         
         tableView.separatorStyle = .none
@@ -140,6 +148,9 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         case .friends:
             title = "no friends"
             description = "friends not found"
+        case .banned:
+            title = "no banned users"
+            description = "banned users not found"
         }
         
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)

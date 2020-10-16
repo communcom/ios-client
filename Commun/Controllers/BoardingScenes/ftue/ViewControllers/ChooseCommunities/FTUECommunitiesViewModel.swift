@@ -10,6 +10,15 @@ import Foundation
 import RxCocoa
 
 class FTUECommunitiesViewModel: CommunitiesViewModel {
+    override func createSearchVM() -> SearchViewModel {
+        let fetcher = SearchListFetcher()
+        fetcher.limit = 20
+        fetcher.searchType = .entitySearch
+        fetcher.entitySearchEntity = .communities
+        fetcher.authorizationRequired = false
+        return SearchViewModel(fetcher: fetcher)
+    }
+    
     let chosenCommunities = BehaviorRelay<[ResponseAPIContentGetCommunity]>(value: [])
     
     init() {

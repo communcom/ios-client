@@ -26,8 +26,37 @@ extension PostEditorVC {
     func bindSendPostButton() {
         // Verification
         contentCombined
-            .map {_ in self.isContentValid}
+            .map {_ in self.canSendPost}
             .bind(to: actionButton.rx.isDisabled)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindTitleTextView() {
+        titleTextView.rx.didBeginEditing
+            .subscribe(onNext: {_ in
+                self.titleTextViewCountLabel.isHidden = false
+            })
+            .disposed(by: disposeBag)
+        
+        titleTextView.rx.didEndEditing
+            .subscribe(onNext: {_ in
+                self.titleTextViewCountLabel.isHidden =
+                    self.titleTextViewCountLabel.textColor != .red
+            })
+            .disposed(by: disposeBag)
+        
+        titleTextView.rx.text.orEmpty
+            .subscribe(onNext: {text in
+                self.titleTextViewCountLabel.text = "\(text.utf8.count)/\(self.titleBytesLimit)"
+            })
+            .disposed(by: disposeBag)
+        
+        titleTextView.rx.text.orEmpty
+            .map {$0.utf8.count > self.titleBytesLimit ? UIColor.red : UIColor.appGrayColor}
+            .distinctUntilChanged()
+            .subscribe(onNext: {color in
+                self.titleTextViewCountLabel.textColor = color
+            })
             .disposed(by: disposeBag)
     }
     
@@ -39,7 +68,6 @@ extension PostEditorVC {
 //                self.appendTool(.setColor)
 //                self.appendTool(.addLink)
 //                self.appendTool(.clearFormatting)
-                //TODO: change color
                 self.contentTextViewCountLabel.isHidden = false
             })
             .disposed(by: disposeBag)
@@ -92,6 +120,15 @@ extension PostEditorVC {
     }
     
     @objc func bindCommunity() {
+        viewModel.community
+            .filter {$0 != nil}
+            .subscribe(onNext: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.titleTextView.becomeFirstResponder()
+                }
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.community
             .subscribe(onNext: { (community) in
                 self.youWillPostInLabel.isHidden = false

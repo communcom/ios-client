@@ -67,7 +67,7 @@ class ConfirmPasswordVC: CreatePasswordVC {
         })
     }
 
-    private func sendData() {
+    func sendData() {
         self.showIndetermineHudWithMessage("saving to blockchain")
         RestAPIManager.instance.toBlockChain(password: currentPassword)
             .subscribe(onCompleted: {
@@ -80,7 +80,6 @@ class ConfirmPasswordVC: CreatePasswordVC {
             .disposed(by: self.disposeBag)
     }
 
-    // TODO: Create common func
     var backupAlert: UIAlertController?
     private func savePasswordToIcloud() {
         guard let userName = Config.currentUser?.name
@@ -88,12 +87,7 @@ class ConfirmPasswordVC: CreatePasswordVC {
             return
         }
 
-        var domain = "dev.commun.com"
-        #if APPSTORE
-            domain = "commun.com"
-        #endif
-
-        SecAddSharedWebCredential(domain as CFString, userName as CFString, currentPassword as CFString) { [weak self] (error) in
+        SecAddSharedWebCredential(URL.appDomain as CFString, userName as CFString, currentPassword as CFString) { [weak self] (error) in
             DispatchQueue.main.async {
                 if error != nil {
                     self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password".localized().uppercaseFirst, message: "You need to enable Keychain, then".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in

@@ -53,7 +53,8 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
     func setUp(with item: ResponseAPIWalletGetTransferHistoryItem) {
         self.item = item
 
-        var username: String
+        var title: String
+        var subtitle: NSMutableAttributedString?
         var memo: NSAttributedString
         
         var pointName = item.point.name ?? item.symbol
@@ -64,12 +65,12 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             var avatarUrl: String?
             if item.meta.direction == "send" {
                 avatarUrl = item.receiver.avatarUrl
-                username = item.receiver.username ?? item.receiver.userId
+                title = item.receiver.username ?? item.receiver.userId
                 memo = NSMutableAttributedString()
                     .semibold("-\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold))
             } else {
                 avatarUrl = item.sender.avatarUrl
-                username = item.sender.username ?? item.sender.userId
+                title = item.sender.username ?? item.sender.userId
                 memo = NSMutableAttributedString()
                     .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .appGreenColor)
             }
@@ -80,7 +81,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             iconImageView.image = UIImage(named: "tux")
             
         case "convert":
-            username = "refill".localized().uppercaseFirst
+            title = "refill".localized().uppercaseFirst
             if item.meta.transferType == "token" {
                 memo = NSMutableAttributedString()
                     .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .appGreenColor)
@@ -95,69 +96,100 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 avatarImageView.image = UIImage(named: "tux")
             }
         case "reward":
-            username = item.point.name ?? ""
+            title = item.point.name ?? ""
             memo = NSMutableAttributedString()
                 .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .appGreenColor)
             
             avatarImageView.setAvatar(urlString: item.point.logo)
             iconImageView.isHidden = true
         case "hold":
-            username = item.meta.holdType?.localized().uppercaseFirst ?? ""
+            title = item.meta.holdType?.localized().uppercaseFirst ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
+                .semibold("\(item.quantityValue.currencyValueFormatted) \(pointName)")
             
             avatarImageView.image = UIImage(named: "wallet-like")
             iconImageView.isHidden = true
         case "unhold":
-            username = item.point.name ?? ""
+            title = item.point.name ?? ""
             memo = NSMutableAttributedString()
                 .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .appGreenColor)
             
             avatarImageView.setAvatar(urlString: item.point.logo)
             iconImageView.isHidden = true
         case "referralRegisterBonus":
-            username = item.sender.username ?? item.sender.userId
+            title = item.sender.username ?? item.sender.userId
+            subtitle = NSMutableAttributedString()
+                .semibold("you received a referral bonus for the registration of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
+                .semibold(" ")
+                .semibold(item.referral?.username ?? item.referral?.userId ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appMainColor)
             memo = NSMutableAttributedString()
                 .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
             avatarImageView.image = UIImage(named: "notifications-page-referral")
             iconImageView.isHidden = false
             iconImageView.image = UIImage(named: "tux")
         case "referralPurchaseBonus":
-            username = item.sender.username ?? item.sender.userId
-            memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
-            avatarImageView.image = UIImage(named: "notifications-page-referral")
-            iconImageView.isHidden = false
-            iconImageView.image = UIImage(named: "tux")
-        default:
-            username = ""
-            memo = NSMutableAttributedString()
-            avatarImageView.image = UIImage(named: "empty-avatar")
-            iconImageView.isHidden = true
-        }
-        
-        let content = NSMutableAttributedString()
-            .semibold(username)
-        
-        content
-            .normal("\n")
-            
-        if item.meta.actionType == "referralRegisterBonus" {
-            content
-                .semibold("you received a referral bonus for the registration of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
-                .semibold(" ")
-                .semibold(item.referral?.username ?? item.referral?.userId ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appMainColor)
-        } else if item.meta.actionType == "referralPurchaseBonus" {
-            content
+            title = item.sender.username ?? item.sender.userId
+            subtitle = NSMutableAttributedString()
                 .semibold("you received a referral bounty - 5% of".localized().uppercaseFirst, font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
                 .semibold(" ")
                 .semibold(item.referral?.username ?? item.referral?.userId ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appMainColor)
                 .semibold("'s", font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
                 .semibold(" ")
                 .semibold("purchase".localized(), font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
-        } else {
-            content
-                .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
+            memo = NSMutableAttributedString()
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
+            avatarImageView.image = UIImage(named: "notifications-page-referral")
+            iconImageView.isHidden = false
+            iconImageView.image = UIImage(named: "tux")
+        case "donation":
+            let isReceiver = Config.currentUser?.id == item.receiver.userId
+            var profile: ResponseAPIContentGetProfile?
+            if isReceiver {
+                profile = item.sender
+            } else {
+                profile = item.receiver
+            }
+            
+            title = profile?.username ?? profile?.userId ?? "A user"
+            
+            if isReceiver {
+                memo = NSMutableAttributedString()
+                    .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
+            } else {
+                memo = NSMutableAttributedString()
+                    .semibold("-\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold))
+            }
+            avatarImageView.setAvatar(urlString: profile?.avatarUrl)
+            iconImageView.isHidden = false
+            if let logo = item.point.logo, let url = URL(string: logo) {
+                iconImageView.sd_setImage(with: url, completed: nil)
+            } else {
+                iconImageView.image = UIImage(named: "tux")
+            }
+        case "claim":
+            title = "leader reward".localized().uppercaseFirst
+            memo = NSMutableAttributedString()
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", color: .appGreenColor)
+            
+            avatarImageView.setAvatar(urlString: item.point.logo)
+            iconImageView.isHidden = true
+        default:
+            title = ""
+            memo = NSMutableAttributedString()
+            avatarImageView.image = UIImage(named: "empty-avatar")
+            iconImageView.isHidden = true
+        }
+        
+        let content = NSMutableAttributedString()
+            .semibold(title)
+        
+        if item.meta.actionType != "claim" {
+            content.normal("\n")
+            if let subtitle = subtitle {
+                content.append(subtitle)
+            } else {
+                content.semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .appGrayColor)
+            }
         }
     
         contentLabel.attributedText = content

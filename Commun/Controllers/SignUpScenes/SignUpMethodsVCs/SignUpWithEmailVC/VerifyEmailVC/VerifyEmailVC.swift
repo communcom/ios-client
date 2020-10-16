@@ -92,7 +92,7 @@ class VerifyEmailVC: BaseVerifyVC {
     
     override var verificationCompletable: Completable {
         return RestAPIManager.instance.verifyEmail(code: code).flatMapToCompletable()
-            .do(onError: { (error) in
+            .do(onError: { (_) in
                 AnalyticsManger.shared.emailCodeEntered(answer: false)
             }, onCompleted: {
                 AnalyticsManger.shared.emailCodeEntered(answer: true)

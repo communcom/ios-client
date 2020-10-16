@@ -62,9 +62,8 @@ class TransferHistorySegmentedControl: MyView {
         guard selectedIndex >= 0, selectedIndex < labels.count else {return}
         // reset state
         for (index, view) in stackView.arrangedSubviews.enumerated() {
-            // TODO: Animation
             view.backgroundColor = (index == selectedIndex) ? .appMainColor : .clear
-            (view as! UILabel).textColor = (index == selectedIndex) ? .appWhiteColor : .appGrayColor
+            (view as! UILabel).textColor = (index == selectedIndex) ? .white : .appGrayColor
         }
     }
     

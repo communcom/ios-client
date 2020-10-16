@@ -17,7 +17,7 @@ class SplashVC: BaseViewController {
     
     override func setUp() {
         super.setUp()
-        view.backgroundColor = .appMainColor
+        view.backgroundColor = UIColor.appMainColor.inDarkMode(.black)
         
         view.addSubview(slashImageView)
         slashImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -28,6 +28,7 @@ class SplashVC: BaseViewController {
         zoomAnim.toValue = 1.2
         zoomAnim.duration = 0.8
         zoomAnim.repeatCount = .infinity
+        zoomAnim.isRemovedOnCompletion = false
         zoomAnim.autoreverses = true
         slashImageView.layer.add(zoomAnim, forKey: "Loading")
         // Do any additional setup after loading the view.
@@ -51,19 +52,6 @@ class SplashVC: BaseViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(5)) {
                 UIApplication.shared.open(URL(string: "commun://createPost")!)
             }
-        }
-    }
-    
-    func animateSplash(_ completion: @escaping () -> Void) {
-        slashImageView.layer.removeAnimation(forKey: "Loading")
-        UIView.animate(withDuration: 0.3, animations: {
-            self.slashImageView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-        }) { (_) in
-            UIView.animate(withDuration: 0.3, animations: {
-                self.slashImageView.transform = CGAffineTransform(scaleX: 30, y: 30)
-            }, completion: { _ in
-                completion()
-            })
         }
     }
     

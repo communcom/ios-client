@@ -15,6 +15,7 @@ class SingleEntitySearchVC: ListViewController<ResponseAPIContentSearchItem, Sub
         get {searchController.searchBar}
         set {}
     }
+    var posts: [ResponseAPIContentGetPost] {viewModel.items.value.compactMap {$0.postValue}}
     
     // MARK: - Initializers
     init(entityType: SearchEntityType) {

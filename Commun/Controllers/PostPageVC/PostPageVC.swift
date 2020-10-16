@@ -11,7 +11,7 @@ import RxSwift
 import CyberSwift
 import RxDataSources
 
-class PostPageVC: CommentsViewController {
+class PostPageVC: CommentsViewController, PostMetaViewDelegate {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
     override var shouldHideTabBar: Bool {true}
     
@@ -26,7 +26,8 @@ class PostPageVC: CommentsViewController {
     lazy var postHeaderView = PostHeaderView(tableView: tableView)
 
     lazy var shadowView = UIView(forAutoLayout: ())
-    lazy var commentForm = CommentForm(backgroundColor: .appWhiteColor)
+    lazy var commentForm = createCommentForm()
+    func createCommentForm() -> CommentForm {CommentForm(backgroundColor: .appWhiteColor)}
     
     // MARK: - Properties
     var startContentOffsetY: CGFloat = 0.0
@@ -36,12 +37,12 @@ class PostPageVC: CommentsViewController {
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
-        let viewModel = PostPageViewModel(post: post)
+        let viewModel = PostPageViewModel(post: post, authorizationRequired: Self.authorizationRequired)
         super.init(viewModel: viewModel)
     }
     
     init(userId: String? = nil, username: String? = nil, permlink: String, communityId: String? = nil, communityAlias: String? = nil) {
-        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias)
+        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias, authorizationRequired: Self.authorizationRequired)
         super.init(viewModel: viewModel)
     }
     
@@ -59,6 +60,17 @@ class PostPageVC: CommentsViewController {
         startContentOffsetY = tableView.contentOffset.y
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if isMovingFromParent, var post = post {
+            if post.showDonationButtons == true {
+                post.showDonationButtons = false
+                post.notifyChanged()
+            }
+        }
+    }
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
@@ -67,6 +79,7 @@ class PostPageVC: CommentsViewController {
         view.addSubview(navigationBar)
         navigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
+        navigationBar.postMetaView.delegate = self
         
         // top white view
         let topView = UIView(backgroundColor: .appWhiteColor)
@@ -80,6 +93,7 @@ class PostPageVC: CommentsViewController {
         
         // postView
         postHeaderView.delegate = self
+        postHeaderView.postStatsView.delegate = self
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form

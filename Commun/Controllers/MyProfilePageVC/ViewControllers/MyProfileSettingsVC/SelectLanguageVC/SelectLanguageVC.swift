@@ -11,21 +11,9 @@ import RxDataSources
 import RxCocoa
 import Localize_Swift
 
-class SelectLanguageVC: BaseViewController {
-    // MARK: - Nested type
-    struct Language: IdentifiableType, Equatable {
-        let code: String
-        let name: String
-        let imageName: String
-        var isSelected: Bool = false
-        var identity: String {code}
-    }
-    
+class SelectInterfaceLanguageVC: BaseViewController {
     // MARK: - Properties
-    let supportedLanguages: [Language] = [
-        Language(code: "en", name: "english", imageName: "american-flag"),
-        Language(code: "ru", name: "russian", imageName: "russian-flag")
-    ]
+    let supportedLanguages = Language.supported.filter {$0.isSupportedInterfaceLanguage == true}
     
     // MARK: - Subviews
     let closeButton = UIButton.close()
@@ -54,7 +42,7 @@ class SelectLanguageVC: BaseViewController {
     private func chooseCurrentLanguage() {
         let langs: [Language] = languages.value.map { lang in
             var lang = lang
-            lang.isSelected = lang.code == Localize.currentLanguage()
+            lang.isCurrentInterfaceLanguage = lang.code == Localize.currentLanguage()
             return lang
         }
         languages.accept(langs)
@@ -87,7 +75,7 @@ class SelectLanguageVC: BaseViewController {
         
         tableView.rx.modelSelected(Language.self)
             .subscribe(onNext: { (language) in
-                if language.isSelected {return}
+                if language.isCurrentInterfaceLanguage == true {return}
                 self.showActionSheet(
                     title: "would you like to change the application's language to".localized().uppercaseFirst + " " + (language.name + " language").localized().uppercaseFirst + "?",
                     actions: [

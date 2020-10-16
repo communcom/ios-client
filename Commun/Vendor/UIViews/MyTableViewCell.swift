@@ -48,4 +48,12 @@ class MyTableViewCell: UITableViewCell {
     func roundCorners() {
         roundCorners(roundedCorner, radius: 10)
     }
+    
+    @discardableResult
+    func configureToUseAsNormalView() -> Self {
+        setUpViews()
+        contentView.configureForAutoLayout()
+        contentView.autoPinEdgesToSuperviewEdges()
+        return self
+    }
 }

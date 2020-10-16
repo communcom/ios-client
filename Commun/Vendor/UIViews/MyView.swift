@@ -8,7 +8,26 @@
 
 import Foundation
 
+extension UIView {
+    @objc func padding(_ inset: UIEdgeInsets) -> UIView {
+        let view = UIView(forAutoLayout: ())
+        view.addSubview(self)
+        autoPinEdgesToSuperviewEdges(with: inset)
+        return view
+    }
+}
+
 class MyView: UIView {
+    private var _paddingView: UIView?
+    var paddingView: UIView {
+        _paddingView ?? self
+    }
+    override func padding(_ inset: UIEdgeInsets) -> UIView {
+        let view = super.padding(inset)
+        _paddingView = view
+        return view
+    }
+    
     // MARK: - Class Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)

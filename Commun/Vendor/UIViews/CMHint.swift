@@ -10,7 +10,7 @@ import UIKit
 
 class CMHint: UIView {
     // MARK: - Properties
-    enum HintType {
+    enum HintType: Equatable {
         case enterText
         case enterAmount
         case enterTextPhoto

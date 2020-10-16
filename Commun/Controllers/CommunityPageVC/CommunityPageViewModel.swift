@@ -38,29 +38,34 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     }
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
-    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(type: .community, sortBy: .time, timeframe: .all, communityId: communityId, communityAlias: communityAlias))
-    lazy var leadsVM = LeadersViewModel(communityId: communityId, communityAlias: communityAlias)
+    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(authorizationRequired: authorizationRequired, type: .community, sortBy: .time, timeframe: .all, communityId: communityId, communityAlias: communityAlias))
+    lazy var leadsVM = LeadersViewModel(communityId: communityId, communityAlias: communityAlias, authorizationRequired: authorizationRequired)
     
     lazy var aboutSubject = PublishSubject<String?>()
     lazy var rules = BehaviorRelay<[ResponseAPIContentGetCommunityRule]>(value: [])
     
+    lazy var proposalsVM = ProposalsViewModel()
+    lazy var reportsVM = ReportsViewModel()
+    
     // MARK: - Initializers
-    init(communityId: String?) {
-        super.init(profileId: communityId)
+    init(communityId: String?, authorizationRequired: Bool = true) {
+        super.init(profileId: communityId, authorizationRequired: authorizationRequired)
+        leadsVM.fetchNext()
     }
     
-    init(communityAlias: String) {
+    init(communityAlias: String, authorizationRequired: Bool = true) {
         self.communityAlias = communityAlias
-        super.init(profileId: nil)
+        super.init(profileId: nil, authorizationRequired: authorizationRequired)
+        leadsVM.fetchNext()
     }
     
     // MARK: - Methods
     override var loadProfileRequest: Single<ResponseAPIContentGetCommunity> {
         if let alias = communityAlias {
-            return RestAPIManager.instance.getCommunity(alias: alias)
+            return RestAPIManager.instance.getCommunity(alias: alias, authorizationRequired: authorizationRequired)
         }
        
-        return RestAPIManager.instance.getCommunity(id: communityId ?? "")
+        return RestAPIManager.instance.getCommunity(id: communityId ?? "", authorizationRequired: authorizationRequired)
     }
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {
@@ -68,7 +73,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     }
     
     var walletGetBuyPriceRequest: Single<ResponseAPIWalletGetPrice> {
-        return RestAPIManager.instance.getBuyPrice(symbol: communityId ?? communityAlias?.uppercased() ?? "CMN", quantity: "1 CMN")
+        return RestAPIManager.instance.getBuyPrice(symbol: communityId ?? communityAlias?.uppercased() ?? "CMN", quantity: "1 CMN", authorizationRequired: authorizationRequired)
     }
 
     override func bind() {
@@ -133,6 +138,36 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
             .bind(to: rules)
             .disposed(by: disposeBag)
         
+        profile
+            .filter {$0?.isLeader ?? false}
+            .subscribe(onNext: { community in
+                (self.proposalsVM.fetcher as! ProposalsListFetcher).communityIds = [community!.communityId]
+                (self.reportsVM.fetcher as! ReportsListFetcher).communityIds = [community!.communityId]
+                if let id = community?.communityId, let issuer = community?.issuer {
+                    self.reportsVM.issuers[id] = issuer
+                }
+                self.proposalsVM.reload(clearResult: true)
+                self.reportsVM.reload(clearResult: true)
+            })
+            .disposed(by: disposeBag)
+        
+//        Observable.combineLatest(
+//            profile,
+//            leadsVM.items
+//        )
+//            .subscribe(onNext: { (community, leaders) in
+//                // if regLeader was not called
+//                if let communityId = community?.communityId,
+//                    ResponseAPIContentGetProfile.current?.createdCommunities?.contains(where: {$0.communityId == communityId}) == true,
+//                    !leaders.contains(where: {$0.userId == Config.currentUser?.id})
+//                {
+//                    self.regLeader(communityId: communityId)
+//                        .subscribe()
+//                        .disposed(by: self.disposeBag)
+//                }
+//            })
+//            .disposed(by: disposeBag)
+        
         // Rule changed (ex: isExpanded)
         ResponseAPIContentGetCommunityRule
             .observeItemChanged()
@@ -148,11 +183,31 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                 }
             })
             .disposed(by: disposeBag)
+        
+        // Update friends when user follow someone
+        ResponseAPIContentGetProfile.observeProfileFollowed()
+            .filter {profile in
+                self.community.value?.friends?.contains(where: {$0.identity == profile.identity}) == false
+            }
+            .subscribe(onNext: { [weak self] (followedProfile) in
+                guard let strongSelf = self,
+                    var community = strongSelf.community.value
+                else {return}
+                community.friends?.append(followedProfile)
+                strongSelf.community.accept(community)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func reload() {
-        postsVM.fetcher.reset()
-        leadsVM.fetcher.reset()
+        switch segmentedItem.value {
+        case .posts:
+            postsVM.reload()
+        case .leads:
+            leadsVM.reload()
+        default:
+            break
+        }
         super.reload()
     }
     
@@ -166,5 +221,27 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
         default:
             return
         }
+    }
+    
+    func regLeader(communityId: String) -> Completable {
+        BlockchainManager.instance.regLeader(communityId: communityId)
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+            .do(onCompleted: {
+                self.reload()
+                if self.segmentedItem.value != .leads {
+                    self.leadsVM.reload(clearResult: true)
+                }
+                
+                BlockchainManager.instance.voteLeader(communityId: communityId, leader: Config.currentUser?.id ?? "")
+                    .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+                    .subscribe(onCompleted: {
+                        if var leader = self.leadsVM.items.value.first(where: {$0.userId == Config.currentUser?.id})
+                        {
+                            leader.isVoted = true
+                            leader.notifyChanged()
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
+            })
     }
 }

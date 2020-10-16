@@ -13,6 +13,7 @@ class BasicEditorTextView: ContentTextView {
     override var defaultTypingAttributes: [NSAttributedString.Key: Any] {
         var attrs = super.defaultTypingAttributes
         attrs[.font] = UIFont.systemFont(ofSize: 17)
+        attrs[.foregroundColor] = UIColor.appBlackColor
         return attrs
     }
     

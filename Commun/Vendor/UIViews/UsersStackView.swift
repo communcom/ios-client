@@ -12,6 +12,11 @@ import CyberSwift
 class UsersStackView: MyView {
     // MARK: - Properties
     let maxNumberOfAvatars = 3
+    var textColor = UIColor.appBlackColor {
+        didSet {
+            label.textColor = textColor
+        }
+    }
     
     // MARK: - Subviews
     lazy var avatarsStackView: UIStackView = {
@@ -37,10 +42,8 @@ class UsersStackView: MyView {
     // MARK: - Methods
     func setUp(with friends: [ResponseAPIContentGetProfile]) {
         // remove all labels
-        for subview in subviews {
-            if subview is UILabel {
-                subview.removeFromSuperview()
-            }
+        for subview in subviews where subview is UILabel {
+            subview.removeFromSuperview()
         }
         
         // remove stacks
@@ -58,7 +61,7 @@ class UsersStackView: MyView {
                 avatarsStackView.addArrangedSubview(imageView)
                 imageView.setAvatar(urlString: friend.avatarUrl)
             }
-            text = "\(friends.count)"
+            text = "\(friends.count.kmFormatted)"
         } else {
             for i in 0..<maxNumberOfAvatars {
                 let imageView = MyAvatarImageView(size: 34)
@@ -68,7 +71,7 @@ class UsersStackView: MyView {
                 avatarsStackView.addArrangedSubview(imageView)
                 imageView.setAvatar(urlString: friends[i].avatarUrl)
             }
-            text = "+\((friends.count - 3).kmFormatted)"
+            text = "+\((friends.count - maxNumberOfAvatars).kmFormatted)"
         }
         
         label.text = text
@@ -82,10 +85,8 @@ class UsersStackView: MyView {
     /// Mocking method
     func setNumberOfAvatars(i: Int) {
         // remove all labels
-        for subview in subviews {
-            if subview is UILabel {
-                subview.removeFromSuperview()
-            }
+        for subview in subviews where subview is UILabel {
+            subview.removeFromSuperview()
         }
         
         // remove stacks

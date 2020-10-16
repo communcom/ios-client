@@ -10,15 +10,15 @@ import Foundation
 
 extension UserProfilePageVC {
     func cell(_ cell: CommentCell, didTapDeleteForComment comment: ResponseAPIContentGetComment) {
-        //TODO: delete comment
+        
     }
     
     func cell(_ cell: CommentCell, didTapEditForComment comment: ResponseAPIContentGetComment) {
-        //TODO: edit comment
+        
     }
     
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
-        //TODO: replying
+        
 //        replyingComment = comment
     }
     

@@ -8,6 +8,7 @@
 
 import Foundation
 import RxCocoa
+import RxSwift
 
 class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     var filter: BehaviorRelay<CommentsListFetcher.Filter>!
@@ -95,8 +96,11 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     }
     
     override func shouldUpdateHeightForItem(_ cmt1: ResponseAPIContentGetComment?, withUpdatedItem cmt2: ResponseAPIContentGetComment?) -> Bool {
-        !(cmt1?.attachments.count == cmt2?.attachments.count &&
+        let contentChanged = !(cmt1?.attachments.count == cmt2?.attachments.count &&
         (try? cmt1?.document?.jsonString()) == (try? cmt2?.document?.jsonString()))
+        let showDonationsButtonChanged = cmt1?.showDonationButtons != cmt2?.showDonationButtons
+        let isExpandedChanged = cmt1?.isExpanded != cmt2?.isExpanded
+        return contentChanged || showDonationsButtonChanged || isExpandedChanged
     }
     
     override func updateItem(_ updatedItem: ResponseAPIContentGetComment) {
@@ -156,5 +160,28 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
                 fetcher.items.accept(items)
             }
         }
+    }
+    
+    func getRepliesForComment(_ comment: ResponseAPIContentGetComment, inPost post: ResponseAPIContentGetPost, offset: UInt, limit: UInt) -> Completable {
+        (fetcher as! CommentsListFetcher).requestRepliesForComment(comment.contentId, inPost: post.contentId, offset: offset, limit: limit)
+            .do(onSuccess: { [weak self] (children) in
+                guard let strongSelf = self else {return}
+            
+                // modify data
+                var comments = strongSelf.items.value
+                
+                if let currentCommentIndex = comments.firstIndex(where: {$0.identity == comment.identity}) {
+                    var newChildren = comments[currentCommentIndex].children ?? []
+                    newChildren.joinUnique(children)
+                    newChildren = newChildren.sortedByTimeDesc
+                    comments[currentCommentIndex].children = newChildren
+                }
+                
+                strongSelf.items.accept(comments)
+                
+                // load donations
+                (strongSelf.fetcher as! CommentsListFetcher).loadDonations(forComments: children)
+            })
+            .flatMapToCompletable()
     }
 }

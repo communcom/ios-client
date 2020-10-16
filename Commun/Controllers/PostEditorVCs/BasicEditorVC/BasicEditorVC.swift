@@ -48,40 +48,18 @@ class BasicEditorVC: PostEditorVC {
     override var contentCombined: Observable<Void> {
         Observable.merge(
             super.contentCombined,
-            contentTextView.rx.text.orEmpty.map {_ in ()},
             (viewModel as! BasicEditorViewModel).attachment.map {_ in ()}
         )
     }
     
     override var isContentValid: Bool {
-        hintType = nil
-        
-        let content = contentTextView.text.trimmed
-        
-        // content are not empty
-        let textIsNotEmpty = !content.isEmpty
-        if !textIsNotEmpty {hintType = .enterTextPhoto}
-        
-        // content inside limit
-        let textInsideLimit = (content.count <= contentLettersLimit)
-        
-        if !textInsideLimit {
-            hintType = .error(String(format: "%@ %i %@", "content must less than".localized().uppercaseFirst, contentLettersLimit, "characters".localized()))
-        }
-        
-        // compare content
-        let textChanged = (contentTextView.attributedText != contentTextView.originalAttributedString) || (originalAttachment != _viewModel.attachment.value)
-        if !textChanged {hintType = .error("content wasn't changed".localized().uppercaseFirst)}
-        
-        // content valid
-        let isTextValid = textIsNotEmpty && textInsideLimit && textChanged
-        
+        let isTextValid = super.isContentValid
         // text empty, but attachment exists
-        let attachmentWithEmptyText = !textIsNotEmpty && ((viewModel as! BasicEditorViewModel).attachment.value != nil)
-        if !isTextValid && attachmentWithEmptyText {hintType = nil}
+        let title = titleTextView.text.trimmed
+        let attachmentWithEmptyText = contentTextView.text.trimmed.isEmpty && ((viewModel as! BasicEditorViewModel).attachment.value != nil) && (!title.isEmpty && title.count >= self.titleMinLettersLimit && title.utf8.count <= self.titleBytesLimit)
         
-        // accept attachment without text or valid text
-        return super.isContentValid && (isTextValid || attachmentWithEmptyText)
+        if !isTextValid && attachmentWithEmptyText && hintType != .chooseCommunity {hintType = nil}
+        return isTextValid || attachmentWithEmptyText
     }
     
     var _viewModel = BasicEditorViewModel()
@@ -109,7 +87,6 @@ class BasicEditorVC: PostEditorVC {
     override func setUp() {
         super.setUp()
         
-        //TODO: add Article later
 //        if viewModel.postForEdit == nil {
 //            appendTool(EditorToolbarItem.addArticle)
 //        }

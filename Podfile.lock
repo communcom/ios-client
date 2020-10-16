@@ -18,7 +18,7 @@ PODS:
     - Fabric (~> 1.10.2)
   - CryptoSwift (1.3.0)
   - Differentiator (3.1.0)
-  - eosswift (1.5.4):
+  - eosswift (1.5.9):
     - BigInt (~> 3.1.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
@@ -179,6 +179,7 @@ PODS:
   - SwiftLint (0.38.0)
   - SwiftyGif (5.2.0)
   - SwiftyJSON (4.3.0)
+  - TagListView (1.4.0)
   - THPinViewController (1.2.13)
   - TLPhotoPicker (2.0.7)
   - "UITextView+Placeholder (1.3.3)"
@@ -228,6 +229,7 @@ DEPENDENCIES:
   - SwiftLint
   - SwiftyGif (from `https://github.com/communcom/SwiftyGif.git`)
   - SwiftyJSON (~> 4.0)
+  - TagListView (~> 1.0)
   - THPinViewController (from `https://github.com/communcom/THPinViewController.git`, branch `commun`)
   - TLPhotoPicker
   - "UITextView+Placeholder"
@@ -287,6 +289,7 @@ SPEC REPOS:
     - Starscream
     - SwiftLint
     - SwiftyJSON
+    - TagListView
     - TLPhotoPicker
     - "UITextView+Placeholder"
 
@@ -311,7 +314,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   eosswift:
-    :commit: 7de311a4c27c2b514f82f71a4aeed5c2fcae5082
+    :commit: f4f3964183ce9e11aefe352558e3200246d62518
     :git: "git@github.com:communcom/eos-swift.git"
   GoloCrypto:
     :commit: 49dc0567b352fe5685f6bdd4acc6f2f268555c8f
@@ -320,7 +323,7 @@ CHECKOUT OPTIONS:
     :commit: 95677cce9b659e3368bc3c355bbecaedefce9ad2
     :git: https://github.com/communcom/ImageViewer.swift.git
   ListPlaceholder:
-    :commit: e83aceaae06df5a0afb8d39b11fe5f9ea4719423
+    :commit: f8c1c98e97eb5bc33cee53132ed7e1a45e3848cf
     :git: https://github.com/communcom/ListPlaceholder.git
   SubviewAttachingTextView:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
@@ -332,7 +335,7 @@ CHECKOUT OPTIONS:
     :commit: dad6a37be372a3f61068d516348157794d58d857
     :git: https://github.com/communcom/SwiftyGif.git
   THPinViewController:
-    :commit: 8cd12b424d5369c7648ec4f2737cddbe40223a09
+    :commit: 32005e34b20a9da65d43527bce4a9e4a1f9b6a4c
     :git: https://github.com/communcom/THPinViewController.git
 
 SPEC CHECKSUMS:
@@ -347,7 +350,7 @@ SPEC CHECKSUMS:
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CryptoSwift: 1283821600233bdbeb96d7b389c3288c3bf77211
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
-  eosswift: 3e1af4e3f7d5d5f255647e68eb869b08061777f5
+  eosswift: 92cd742ce09c6785da8b3339f7225c1f0120a58f
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
   FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
@@ -396,10 +399,11 @@ SPEC CHECKSUMS:
   SwiftLint: 4105f061f9812b214568b736dab580ab2c73a582
   SwiftyGif: b85c6b33a9411859d9e1db998b6a8214aea942df
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
+  TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
   THPinViewController: 58e856a9c46776c96a99d49320d3890e93b9dd19
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 3d55d4b7ad02d684f5addcf2c1f60e3a9c8efd04
+PODFILE CHECKSUM: 95c40fed67c0850e1684a2890317b70bfb2c8bb7
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.0.rc.1

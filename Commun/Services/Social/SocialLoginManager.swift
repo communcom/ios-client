@@ -14,6 +14,7 @@ import RxSwift
 enum SocialNetwork: String, CaseIterable {
     case facebook
     case google
+    case apple
 }
 
 protocol SocialLoginManager {

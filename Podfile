@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '11.0'
+platform :ios, '12.0'
 use_frameworks!
 
 # ignore all warnings from all pods
@@ -68,6 +68,8 @@ def common_pods_commun
   pod 'FBSDKLoginKit', '6.0.0'
   pod 'FBSDKCoreKit', '6.0.0'
   pod 'GoogleSignIn', '5.0.2'
+  
+  pod 'TagListView', '~> 1.0'
 
 end
 
@@ -105,6 +107,10 @@ target 'Commun' do
         target.build_configurations.each do |config|
           config.build_settings['SWIFT_VERSION'] = '5'
         end
+      end
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+        config.build_settings['CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER'] = 'NO'
       end
     end
   end

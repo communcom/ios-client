@@ -9,16 +9,21 @@
 import Foundation
 import RxSwift
 
+protocol FeedPageHeaderViewDelegate: class {
+    func feedPageHeaderViewDidTouchWhatsNew(_ headerView: FeedPageHeaderView)
+    func feedPageHeaderViewDidTouchImageButton(_ headerView: FeedPageHeaderView)
+}
+
 class FeedPageHeaderView: MyTableHeaderView {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     var postingViewBottomConstraint: NSLayoutConstraint?
+    weak var delegate: FeedPageHeaderViewDelegate?
     
     // MARK: - Subviews
     lazy var postingView = UIView(backgroundColor: .appWhiteColor)
-        lazy var avatarImageView = MyAvatarImageView(size: 40.0)
-   
-        lazy var openEditorWithPhotoImageView: UIImageView = {
+    lazy var avatarImageView = MyAvatarImageView(size: 40.0)
+    lazy var openEditorWithPhotoImageView: UIImageView = {
         let iv = UIImageView(width: 24, height: 24, imageNamed: "editor-open-photo")
         iv.tintColor = .appGrayColor
         return iv
@@ -103,21 +108,10 @@ class FeedPageHeaderView: MyTableHeaderView {
     
     // MARK: - Actions
     @objc func postButtonDidTouch(_ sender: Any) {
-        openEditor()
+        delegate?.feedPageHeaderViewDidTouchWhatsNew(self)
     }
     
     @objc func photoButtonDidTouch(_ sender: Any) {
-        openEditor { (editorVC) in
-            editorVC.addImage()
-        }
+        delegate?.feedPageHeaderViewDidTouchImageButton(self)
     }
-    
-    func openEditor(completion: ((BasicEditorVC) -> Void)? = nil) {
-        let editorVC = BasicEditorVC(chooseCommunityAfterLoading: completion == nil)
-        
-        parentViewController?.present(editorVC, animated: true, completion: {
-            completion?(editorVC)
-        })
-    }
-
 }

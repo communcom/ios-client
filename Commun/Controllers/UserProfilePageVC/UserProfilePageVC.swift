@@ -11,14 +11,11 @@ import CyberSwift
 import RxDataSources
 
 class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelegate, CommentCellDelegate {
-    var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
-        (viewModel as! UserProfilePageViewModel).commentsVM
-    }
-    
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
         case post(ResponseAPIContentGetPost)
         case comment(ResponseAPIContentGetComment)
+        case about(ResponseAPIContentGetProfile)
         
         var identity: String {
             switch self {
@@ -26,6 +23,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                 return post.identity
             case .comment(let comment):
                 return comment.identity
+            case .about(let profile):
+                return profile.identity
             }
         }
     }
@@ -33,11 +32,16 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     // MARK: - Properties
     let userId: String?
     var username: String?
-
-    lazy var expandedComments = [ResponseAPIContentGetComment]()
     
-        override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
-        UserProfilePageViewModel(userId: userId, username: username)
+    override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
+        UserProfilePageViewModel(userId: userId, username: username, authorizationRequired: authorizationRequired)
+    }
+    var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
+        (viewModel as! UserProfilePageViewModel).commentsVM
+    }
+    var posts: [ResponseAPIContentGetPost] {
+        let viewModel = self.viewModel as! UserProfilePageViewModel
+        return viewModel.postsVM.items.value
     }
     
     // MARK: - Subviews
@@ -98,6 +102,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         
         // Register new cell type
         tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
+        tableView.register(UserProfileAboutCell.self, forCellReuseIdentifier: "AboutCell")
         
         // title
         username = profile.username
@@ -125,6 +130,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         
         case .comments:
             tableView.addNotificationsLoadingFooterView()
+            
+        case .about:
+            tableView.tableFooterView = UIView()
         }
     }
     
@@ -134,24 +142,19 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     
     override func handleListEmpty() {
         var title = "empty"
-        var description = "not found"
         
         switch (viewModel as! UserProfilePageViewModel).segmentedItem.value {
         case .posts:
-            title = String(format: "%@ %@", "no".localized().uppercaseFirst, "posts".localized().uppercaseFirst)
-            description = String(format: "%@ %@ %@", "you haven’t created any".localized().uppercaseFirst, "posts".localized(), "yet".localized())
-
-            tableView.addEmptyPlaceholderFooterView(title: title, description: description, buttonLabel: String(format: "%@ %@", "create".localized().uppercaseFirst, "post".localized())) {
-                if let tabBarVC = self.tabBarController as? TabBarVC {
-                    tabBarVC.buttonAddTapped()
-                }
-            }
+            title = "no posts".localized().uppercaseFirst
+            tableView.addEmptyPlaceholderFooterView(title: title)
 
         case .comments:
-            title = String(format: "%@ %@", "no".localized().uppercaseFirst, "comments".localized().uppercaseFirst)
-            description = String(format: "%@ %@ %@", "you haven’t written any".localized().uppercaseFirst, "comments".localized(), "yet".localized())
-
-            tableView.addEmptyPlaceholderFooterView(title: title, description: description)
+            title = "no comments".localized().uppercaseFirst
+            tableView.addEmptyPlaceholderFooterView(title: title)
+            
+        case .about:
+            title = "no info".localized().uppercaseFirst
+            tableView.addEmptyPlaceholderFooterView(title: title)
         }
     }
     
@@ -176,10 +179,14 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                     }
                 case .comment(let comment):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                    cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
                     cell.showIndentForChildComment = false
                     cell.setUp(with: comment)
                     cell.delegate = self
+                    return cell
+                case .about(let profile):
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "AboutCell") as! UserProfileAboutCell
+                    cell.setUp(with: profile)
+//                    cell.delegate = self
                     return cell
                 }
                 return UITableViewCell()
@@ -196,6 +203,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
                     }
                     if let item = item as? ResponseAPIContentGetComment {
                         return .comment(item)
+                    }
+                    if let item = item as? ResponseAPIContentGetProfile {
+                        return .about(item)
                     }
                     return nil
                 }
@@ -239,58 +249,51 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
         guard let profile = viewModel.profile.value else { return }
         
-        let headerView = UIView(height: 40)
+        let headerView = CMMetaView(forAutoLayout: ())
+        headerView.avatarImageView.setAvatar(urlString: profile.avatarUrl)
+        headerView.titleLabel.text = profile.personal?.fullName ?? profile.username
+        headerView.subtitleLabel.text = "@\(profile.username ?? profile.userId)"
+        headerView.subtitleLabel.textColor = .appMainColor
         
-        let avatarImageView = MyAvatarImageView(size: 40)
-        
-        avatarImageView
-            .observeCurrentUserAvatar()
-            .disposed(by: disposeBag)
-       
-        headerView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-        
-        let userNameLabel = UILabel.with(text: profile.username, textSize: 15, weight: .semibold)
-        headerView.addSubview(userNameLabel)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .top)
-        userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
-
-        let userIdLabel = UILabel.with(text: "@\(profile.userId)", textSize: 12, weight: .medium, textColor: .appMainColor)
-        headerView.addSubview(userIdLabel)
-        userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
-        userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        showCommunActionSheet(headerView: headerView, actions: [
-            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
-                                     icon: UIImage(named: "icon-share-circle-white"),
-                                     style: .share,
-                                     marginTop: 0,
-                                     handle: {
-                                        ShareHelper.share(urlString: self.shareWith(name: profile.username, userID: profile.userId))
-            }),
-            CommunActionSheet.Action(title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst,
-                                     icon: UIImage(named: "profile_options_blacklist"),
-                                     style: .profile,
-                                     marginTop: 15,
-                                     handle: {
-                                        self.showAlert(
-                                            title: profile.isInBlacklist == true ? "unblock user".localized().uppercaseFirst: "block user".localized().uppercaseFirst,
-                                            message: "do you really want to".localized().uppercaseFirst + " " + (profile.isInBlacklist == true ? "unblock".localized(): "block".localized()) + " \(self.viewModel.profile.value?.username ?? "this user")" + "?",
-                                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
-                                            highlightedButtonIndex: 1) { (index) in
-                                                if index != 0 { return }
-                                                
-                                                if profile.isInBlacklist == true {
-                                                    self.unblockUser()
-                                                } else {
-                                                    self.blockUser()
-                                                }
-                                        }
-            })
-        ]) {
-            
+        showCMActionSheet(headerView: headerView, actions: actionsForMoreButton())
+    }
+    
+    func actionsForMoreButton() -> [CMActionSheet.Action] {
+        guard let profile = viewModel.profile.value else { return []}
+        return [
+            .iconFirst(
+                title: "share".localized().uppercaseFirst,
+                iconName: "icon-share-circle-white",
+                handle: {
+                    ShareHelper.share(urlString: self.shareWith(name: profile.username ?? "", userID: profile.userId))
+                },
+                bottomMargin: 15
+            ),
+            .iconFirst(
+                title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst,
+                iconName: "profile_options_blacklist",
+                handle: {
+                    self.confirmBlock()
+                },
+                showNextButton: true
+            )
+        ]
+    }
+    
+    func confirmBlock() {
+        guard let profile = viewModel.profile.value else { return }
+        self.showAlert(
+            title: profile.isInBlacklist == true ? "unblock user".localized().uppercaseFirst: "block user".localized().uppercaseFirst,
+            message: "do you really want to".localized().uppercaseFirst + " " + (profile.isInBlacklist == true ? "unblock".localized(): "block".localized()) + " \(self.viewModel.profile.value?.username ?? "this user")" + "?",
+            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
+            highlightedButtonIndex: 1) { (index) in
+                if index != 0 { return }
+                
+                if profile.isInBlacklist == true {
+                    self.unblockUser()
+                } else {
+                    self.blockUser()
+                }
         }
     }
 }

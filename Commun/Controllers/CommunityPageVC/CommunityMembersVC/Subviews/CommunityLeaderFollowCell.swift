@@ -48,7 +48,7 @@ class CommunityLeaderFollowCell: MyTableViewCell {
         
         // username label
         let attributedText = NSMutableAttributedString()
-            .text(leader.username, size: 15, weight: .semibold)
+            .text(leader.username ?? "", size: 15, weight: .semibold)
             .text("\n")
             .text(leader.rating.kmFormatted() + " " + "points".localized().uppercaseFirst + " • ", size: 12, weight: .medium, color: .appGrayColor)
             .text("\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)%", size: 12, weight: .medium, color: .appMainColor)

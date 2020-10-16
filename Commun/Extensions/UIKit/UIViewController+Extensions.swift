@@ -27,11 +27,9 @@ extension UIViewController {
     }
         
     var hintView: CMHint? {
-        get {
-            let hintViewInstance = CMHint(type: .enterText, isTabbarHidden: tabBarController?.tabBar.isHidden ?? true)
-            view.addSubview(hintViewInstance)
-            return hintViewInstance
-        }
+        let hintViewInstance = CMHint(type: .enterText, isTabbarHidden: tabBarController?.tabBar.isHidden ?? true)
+        view.addSubview(hintViewInstance)
+        return hintViewInstance
     }
 
     // MARK: - Custom Functions
@@ -54,21 +52,20 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showCommunActionSheet(headerView: UIView? = nil,
-                               title: String? = nil,
-                               titleFont: UIFont = .systemFont(ofSize: 15, weight: .semibold),
-                               titleAlignment: NSTextAlignment = .left,
-                               actions: [CommunActionSheet.Action],
-                               completion: (() -> Void)? = nil) {
-
-        let actionSheet = CommunActionSheet()
-        actionSheet.title = title
-        actionSheet.headerView = headerView
-        actionSheet.actions = actions
-        actionSheet.titleFont = titleFont
-        actionSheet.textAlignment = titleAlignment
-        
+    @discardableResult
+    func showCMActionSheet(headerView: UIView? = nil,
+                           title: String? = nil,
+                           titleFont: UIFont? = nil,
+                           titleAlignment: NSTextAlignment? = nil,
+                           actions: [CMActionSheet.Action],
+                           completion: (() -> Void)? = nil) -> CMActionSheet {
+        let actionSheet = CMActionSheet(headerView: headerView, title: title, actions: actions)
+        if let label = actionSheet.headerView as? UILabel {
+            if let font = titleFont { label.font = font }
+            if let alignment = titleAlignment { label.textAlignment = alignment }
+        }
         present(actionSheet, animated: true, completion: completion)
+        return actionSheet
     }
     
     func showGeneralError() {
@@ -89,13 +86,13 @@ extension UIViewController {
     
     func showError(_ error: Error, showPleaseTryAgain: Bool = false, additionalMessage: String? = nil, completion: (() -> Void)? = nil) {
         let message = error.localizedDescription
-        showErrorWithLocalizedMessage(message + (showPleaseTryAgain ? (".\n" + "please try again later".localized().uppercaseFirst + "!"): "") + (additionalMessage ?? ""), completion: completion)
+        showErrorWithMessage(message + (showPleaseTryAgain ? (".\n" + "please try again later".localized().uppercaseFirst + "!"): "") + (additionalMessage ?? ""), completion: completion)
     }
     
     func hideHud() {
         let vc = tabBarController ?? navigationController ?? parent ?? self
         
-        MBProgressHUD.hide(for: vc.view, animated: false)
+        MBProgressHUD.hide(for: UIApplication.shared.keyWindow ?? vc.view, animated: false)
     }
     
     func showIndetermineHudWithMessage(_ message: String?) {
@@ -105,7 +102,7 @@ extension UIViewController {
         hideHud()
         
         // show new hud
-        let hud = MBProgressHUD.showAdded(to: vc.view, animated: false)
+        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow ?? vc.view, animated: false)
         hud.mode = MBProgressHUDMode.indeterminate
         hud.isUserInteractionEnabled = true
         hud.label.text = message
@@ -118,7 +115,7 @@ extension UIViewController {
         hideHud()
         
         // show new hud
-        let hud = MBProgressHUD.showAdded(to: vc.view, animated: false)
+        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow ?? vc.view, animated: false)
         hud.mode = .customView
         let image = UIImage(named: "checkmark-large")
         let imageView = UIImageView(image: image)
@@ -145,6 +142,12 @@ extension UIViewController {
 //            profileVC.view.shake()
 //            return
 //        }
+        
+        if self is NonAuthVCType {
+            let profileVC = NonAuthUserProfilePageVC(userId: userId, username: username)
+            show(profileVC, sender: nil)
+            return
+        }
         
         // Open other user's profile
         if userId != Config.currentUser?.id && username != Config.currentUser?.name {
@@ -177,7 +180,7 @@ extension UIViewController {
                 showProfileWithUserId(id)
             }
         
-        case "upvote", "reply", "mention":
+        case "upvote", "reply", "mention", "donation", "banPost", "banComment":
             switch item.entityType {
             case "post":
                 if let userId = item.post?.contentId.userId,
@@ -201,7 +204,7 @@ extension UIViewController {
                 break
             }
         
-        case "transfer":
+        case "transfer", "voteLeader":
             if item.from?.username == nil {
                 if let id = item.community?.communityId {
                     showCommunityWithCommunityId(id)
@@ -224,6 +227,12 @@ extension UIViewController {
     }
     
     func showCommunityWithCommunityId(_ id: String) {
+        if self is NonAuthVCType {
+            let profileVC = NonAuthCommunityPageVC(communityId: id)
+            show(profileVC, sender: nil)
+            return
+        }
+        
         if let vc = self as? CommunityPageVC, vc.communityId == id {
             vc.view.shake()
             return
@@ -234,6 +243,12 @@ extension UIViewController {
     }
     
     func showCommunityWithCommunityAlias(_ alias: String) {
+        if self is NonAuthVCType {
+            let profileVC = NonAuthCommunityPageVC(communityAlias: alias)
+            show(profileVC, sender: nil)
+            return
+        }
+        
         if let vc = self as? CommunityPageVC, vc.communityAlias == alias {
             vc.view.shake()
             return
@@ -253,6 +268,66 @@ extension UIViewController {
         }
                 
         show(vc, sender: nil)
+    }
+    
+    func handleUrlString(urlString: String) {
+        // Wallet link
+        if urlString.starts(with: "communwallet://") {
+            let symbol = urlString.replacingOccurrences(of: "communwallet://", with: "")
+            guard symbol.isEmpty == false else {return}
+            if symbol == "CMN" {
+                let cmnWallet = CommunWalletVC()
+                show(cmnWallet, sender: self)
+            } else {
+                let otherWallet = OtherBalancesWalletVC(symbol: symbol)
+                show(otherWallet, sender: self)
+            }
+            return
+        }
+        
+        // commun.com
+        if urlString.starts(with: URL.appURL) {
+            let path = urlString.replacingOccurrences(of: URL.appURL + "/", with: "").components(separatedBy: "/")
+            if path.count == 1 {
+                if path[0].starts(with: "@") {
+                    // user's profile
+                    let username = String(path[0].dropFirst())
+                    showProfileWithUserId(nil, username: username)
+                    return
+                } else if path[0].starts(with: "#"),
+                    let hashtag = path[0].replacingOccurrences(of: "#", with: "").removingPercentEncoding?.lowercased()
+                {
+                    // hashtag
+                    let vc = SearchablePostsVC(keyword: "#" + hashtag)
+                    self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
+                    self.show(vc, sender: self)
+                    return
+                } else if !path[0].isEmpty {
+                    // community
+                    let alias = path[0]
+                    showCommunityWithCommunityAlias(alias)
+                    return
+                }
+            } else if path.count == 3 {
+                let communityAlias = path[0]
+                let username = String(path[1].dropFirst())
+                let permlink = path[2]
+                
+                let postVC = PostPageVC(username: username, permlink: permlink, communityAlias: communityAlias)
+                show(postVC, sender: nil)
+                return
+            }
+        }
+        
+        var urlString = urlString
+        if !urlString.starts(with: "http") && !urlString.starts(with: "https") {
+            urlString = "http://" + urlString
+        }
+
+        if let url = URL(string: urlString) {
+            let safariVC = SFSafariViewController(url: url)
+            present(safariVC, animated: true, completion: nil)
+        }
     }
     
     func handleUrl(url: URL) {
@@ -289,7 +364,7 @@ extension UIViewController {
                     showCommunityWithCommunityAlias(alias)
                     return
                 } else if url.absoluteString.starts(with: URL.appURL + "/#"),
-                    let hashtag = url.absoluteString.components(separatedBy: "#").last
+                    let hashtag = url.absoluteString.components(separatedBy: "#").last?.removingPercentEncoding?.lowercased()
                 {
                     // hashtag
                     let vc = SearchablePostsVC(keyword: "#" + hashtag)
@@ -405,8 +480,8 @@ extension UIViewController {
         self.navigationItem.leftBarButtonItem = newBackButton
     }
     
-    func showCardWithView(_ view: UIView) {
-        let cardVC = CardViewController(contentView: view)
+    func showCardWithView(_ view: UIView, backgroundColor: UIColor = .appWhiteColor) {
+        let cardVC = CardViewController(contentView: view, backgroundColor: backgroundColor)
         self.present(cardVC, animated: true, completion: nil)
     }
     
@@ -515,14 +590,35 @@ extension UIViewController {
 
         components.scheme = "https"
         
-        components.host = "dev.commun.com"
-        #if APPSTORE
-            components.host = "commun.com"
-        #endif
+        components.host = URL.appDomain
 
         components.path = (isCommunity ? "/" : "/@") + name.lowercased()
         components.queryItems = [queryItemInvite]
         
         return components.url?.absoluteString ?? ""
+    }
+    
+    func showCoverImagePicker(joinedDateString: String? = nil, completion: ((UIImage) -> Void)?) {
+        let pickerVC = SinglePhotoPickerVC()
+        
+        pickerVC.completion = { image in
+            let coverEditVC = MyProfileEditCoverVC()
+            coverEditVC.modalPresentationStyle = .fullScreen
+            coverEditVC.joinedDateString = joinedDateString
+            coverEditVC.updateWithImage(image)
+            coverEditVC.completion = {image in
+                coverEditVC.dismiss(animated: true, completion: {
+                    pickerVC.dismiss(animated: true, completion: nil)
+                })
+                guard let image = image else {return}
+                completion?(image)
+            }
+            
+            let nc = SwipeNavigationController(rootViewController: coverEditVC)
+            pickerVC.present(nc, animated: true, completion: nil)
+        }
+        
+        pickerVC.modalPresentationStyle = .fullScreen
+        self.present(pickerVC, animated: true, completion: nil)
     }
 }

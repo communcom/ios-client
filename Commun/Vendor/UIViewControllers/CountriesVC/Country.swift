@@ -7,14 +7,28 @@
 //
 
 import Foundation
+import RxDataSources
 
 // MARK: - Nested type
+struct Language: Decodable, IdentifiableType, Equatable {
+    let code: String
+    let name: String
+    let isSupportedInterfaceLanguage: Bool?
+    var isCurrentInterfaceLanguage: Bool?
+    
+    static var supported: [Language] {
+        Country.getAll().compactMap {$0.language}
+    }
+    var identity: String {code}
+}
+
 struct Country: Decodable {
     let code: String
     let name: String
     let countryCode: String
     let available: Bool
     let emoji: String
+    let language: Language?
     
     static func getAll() -> [Country] {
         let data = try! Data(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "countries", ofType: "json")!), options: .mappedIfSafe)

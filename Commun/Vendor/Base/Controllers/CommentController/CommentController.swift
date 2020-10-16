@@ -50,9 +50,9 @@ extension CommentController {
         // animate
         voteContainerView.animateUpVote {
             BlockchainManager.instance.upvoteMessage(comment)
-                .subscribe { (error) in
+                .subscribe(onError: { (error) in
                     UIApplication.topViewController()?.showError(error)
-                }
+                })
                 .disposed(by: self.disposeBag)
         }
     }
@@ -66,9 +66,9 @@ extension CommentController {
         // animate
         voteContainerView.animateDownVote {
             BlockchainManager.instance.downvoteMessage(comment)
-                .subscribe { (error) in
+                .subscribe(onError: { (error) in
                     UIApplication.topViewController()?.showError(error)
-                }
+                })
                 .disposed(by: self.disposeBag)
         }
     }

@@ -57,14 +57,15 @@ class CMFeedbackViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         view.addGestureRecognizer(tap)
 
-        self.textView.rx.didChange
+        let change = self.textView.rx.didChange
             .map { self.textView.text }
             .filter { $0 != nil }
             .map { $0! }
-            .subscribe(onNext: { text in
-                self.sendButton.isDisabled = text.count == 0 || text == "\n"
-            })
-            .disposed(by: self.disposeBag)
+
+        // FIX ERROR: The compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+        change.subscribe(onNext: { text in
+            self.sendButton.isDisabled = text.count == 0 || text == "\n"
+        }).disposed(by: self.disposeBag)
     }
     
     private func setUp() {

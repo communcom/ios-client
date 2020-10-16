@@ -14,20 +14,23 @@ class ProfileHeaderView: MyTableHeaderView {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     let statsSeparator = " • "
+    var authorizationRequired: Bool = true
     
     // MARK: - Subviews
     lazy var stackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
     
     lazy var headerStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
     lazy var avatarImageView = MyAvatarImageView(size: 50)
-    lazy var headerLabel = UILabel.with(numberOfLines: 0)
+    lazy var headerLabel = UILabel.with(text: "username", numberOfLines: 0)
     lazy var followButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
     
-    lazy var descriptionLabel = UILabel.with(textSize: 14, numberOfLines: 0)
+    lazy var descriptionLabel = UILabel.with(text: "description", textSize: 14, numberOfLines: 0)
 
     lazy var statsStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .center, distribution: .fill)
-    lazy var statsLabel = UILabel.with(numberOfLines: 0)
+    lazy var statsLabel = CMTappableLabel.with(text: "followers and following", numberOfLines: 0)
     lazy var usersStackView = UsersStackView(height: 34)
+    
+    lazy var bottomStackView = UIStackView(axis: .vertical, spacing: 0, alignment: .fill, distribution: .fill)
     
     lazy var segmentedControl: CMSegmentedControl = {
         let segmentedControl = CMSegmentedControl(height: 46, backgroundColor: .clear)
@@ -54,20 +57,21 @@ class ProfileHeaderView: MyTableHeaderView {
         headerStackView.setCustomSpacing(4, after: headerLabel)
         statsStackView.addArrangedSubviews([statsLabel, usersStackView])
         
-        addSubview(segmentedControl)
-        segmentedControl.autoPinEdge(.top, to: .bottom, of: stackView)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
+        addSubview(bottomStackView)
+        bottomStackView.autoPinEdge(.top, to: .bottom, of: stackView)
+        bottomStackView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
-        addSubview(bottomSeparator)
-        bottomSeparator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        bottomSeparator.autoPinEdge(.top, to: .bottom, of: segmentedControl)
+        bottomStackView.addArrangedSubviews([
+            segmentedControl,
+            bottomSeparator
+        ])
         
         followButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(statsLabelDidTouch(_:)))
-        statsLabel.isUserInteractionEnabled = true
-        statsLabel.addGestureRecognizer(tap)
+        statsLabel.onCharacterTapped = {(_, index) in
+            self.statsLabelDidTouchAtIndex(index)
+        }
+        statsLabel.makeTappable()
     }
     
     override func reassignTableHeaderView() {
@@ -80,7 +84,7 @@ class ProfileHeaderView: MyTableHeaderView {
         
     }
     
-    @objc func statsLabelDidTouch(_ gesture: UITapGestureRecognizer) {
+    func statsLabelDidTouchAtIndex(_ index: Int) {
         
     }
 }

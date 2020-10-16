@@ -50,19 +50,6 @@ extension String {
         }
     }
     
-    func isImageType() -> Bool {
-        // image formats which you want to check
-        let imageFormats = ["jpg", "png", "gif"]
-        
-        if URL(string: self) != nil  {
-            let extensi = (self as NSString).pathExtension
-            
-            return imageFormats.contains(extensi)
-        }
-        
-        return false
-    }
-    
     func matches(_ regex: String) -> Bool {
         return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
     }
@@ -141,6 +128,20 @@ extension String {
         label.text = self
         label.sizeToFit()
         return label.frame.height
+    }
+    
+    func removingLeadingSpaces() -> String {
+        guard let index = firstIndex(where: { !CharacterSet(charactersIn: String($0)).isSubset(of: .whitespaces) }) else {
+            return ""
+        }
+        return String(self[index...])
+    }
+    
+    func removingTrailingSpaces() -> String {
+        guard let index = lastIndex(where: { !CharacterSet(charactersIn: String($0)).isSubset(of: .whitespaces) }) else {
+            return ""
+        }
+        return String(self[...index])
     }
 }
 

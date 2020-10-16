@@ -11,7 +11,7 @@ import RxSwift
 
 class CommentTextView: ContentTextView {
     override var defaultTypingAttributes: [NSAttributedString.Key: Any] {
-        return [.font: UIFont.systemFont(ofSize: 14)]
+        return [.font: UIFont.systemFont(ofSize: 14), .foregroundColor: UIColor.appBlackColor]
     }
     
     override func commonInit() {

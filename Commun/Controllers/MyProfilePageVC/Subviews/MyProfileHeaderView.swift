@@ -10,11 +10,7 @@ import Foundation
 
 final class MyProfileHeaderView: UserProfileHeaderView {
     lazy var changeAvatarButton: UIButton = {
-        let button = UIButton(width: 20, height: 20, backgroundColor: .appLightGrayColor, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
-        button.tintColor = .appGrayColor
-        button.setImage(UIImage(named: "photo_solid")!, for: .normal)
-        button.borderColor = UIColor.colorSupportDarkMode(defaultColor: .appWhiteColor, darkColor: .appLightGrayColor)
-        button.borderWidth = 2
+        let button = UIButton.changeAvatarButton
         button.touchAreaEdgeInsets = UIEdgeInsets(top: -24, left: -24, bottom: 0, right: 0)
         return button
     }()
@@ -51,8 +47,8 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     }
     
     override func setUpStackView() {
-        followButton.removeFromSuperview()
         super.setUpStackView()
+        buttonStackView.isHidden = true
         
         setUpWalletView()
         
@@ -67,6 +63,8 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         super.setUp(with: profile)
         communitiesLabel.attributedText = NSMutableAttributedString()
             .text("communities".localized().uppercaseFirst  + " " + "(\(profile.subscriptions?.communitiesCount ?? 0))", size: 20, weight: .bold)
+        
+        statsLabel.isHidden = followersCount == 0 && followingsCount == 0
     }
     
     func setUpWalletView(withError: Bool = false) {

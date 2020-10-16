@@ -25,7 +25,8 @@ extension PostEditorVC {
     }
     
     @objc var hasDraft: Bool {
-        return contentTextView.hasDraft || UserDefaults.standard.dictionaryRepresentation().keys.contains(communityDraftKey)
+        return contentTextView.hasDraft || UserDefaults.standard.dictionaryRepresentation().keys.contains(communityDraftKey) ||
+            UserDefaults.standard.dictionaryRepresentation().keys.contains(titleDraft)
     }
     
     @objc func getDraft() {
@@ -34,6 +35,9 @@ extension PostEditorVC {
             let loadedCommunity = try? JSONDecoder().decode(ResponseAPIContentGetCommunity.self, from: savedCommunity) {
             viewModel.community.accept(loadedCommunity)
         }
+        
+        // retrieve title
+        titleTextView.text = UserDefaults.standard.string(forKey: titleDraft)
         
         // retrieve content
         contentTextView.getDraft {
@@ -45,7 +49,7 @@ extension PostEditorVC {
     }
     
     @objc func shouldSaveDraft() -> Bool {
-        viewModel.postForEdit == nil && !contentTextView.text.trimmed.isEmpty
+        viewModel.postForEdit == nil && (!contentTextView.text.trimmed.isEmpty || !titleTextView.text.trimmed.isEmpty)
     }
     
     @objc func saveDraft() {
@@ -53,13 +57,23 @@ extension PostEditorVC {
         DispatchQueue.main.sync {
             shouldSave = self.shouldSaveDraft()
         }
-        guard let community = viewModel.community.value,
-            shouldSave else {return}
+        guard shouldSave else {return}
         
         // save community
-        if let encoded = try? JSONEncoder().encode(community) {
+        if let community = viewModel.community.value, let encoded = try? JSONEncoder().encode(community) {
             UserDefaults.standard.set(encoded, forKey: communityDraftKey)
         }
+        
+        // save title
+        var aText: String?
+        if Thread.isMainThread {
+            aText = titleTextView.text
+        } else {
+            DispatchQueue.main.sync {
+                aText = titleTextView.text
+            }
+        }
+        UserDefaults.standard.set(aText, forKey: titleDraft)
         
         // save content
         contentTextView.saveDraft()
@@ -68,6 +82,7 @@ extension PostEditorVC {
     @objc func removeDraft() {
         contentTextView.removeDraft()
         UserDefaults.standard.removeObject(forKey: communityDraftKey)
+        UserDefaults.standard.removeObject(forKey: titleDraft)
         UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
     }
 }

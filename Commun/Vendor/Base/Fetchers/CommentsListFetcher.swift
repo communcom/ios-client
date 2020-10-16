@@ -31,6 +31,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         var communityId: String?
         var parentComment: ResponseAPIContentId?
         var resolveNestedComments: Bool = false
+        var authorizationRequired: Bool = true
         
         func newFilter(
             withSortBy sortBy: CommentSortMode? = nil,
@@ -77,6 +78,8 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     init(filter: Filter, shouldGroupComments: Bool) {
         self.filter = filter
         self.shouldGroupComments = shouldGroupComments
+        super.init()
+        self.limit = 30
     }
         
     override var request: Single<[ResponseAPIContentGetComment]> {
@@ -86,40 +89,44 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         //        return ResponseAPIContentGetComments.singleWithMockData()
         //            .map {$0.items!}
                 
-                switch filter.type {
-                case .post:
-                    // get post's comment
-                    result = RestAPIManager.instance.loadPostComments(
-                        sortBy: filter.sortBy,
-                        offset: offset,
-                        limit: 30,
-                        userId: filter.userId,
-                        permlink: filter.permlink ?? "",
-                        communityId: filter.communityId
-                    )
-                
-                case .user:
-                    result = RestAPIManager.instance.loadUserComments(
-                        sortBy: filter.sortBy,
-                        offset: offset,
-                        limit: 30,
-                        userId: filter.userId)
-                    maxNestedLevel = 0
+        switch filter.type {
+        case .post:
+            // get post's comment
+            result = RestAPIManager.instance.loadPostComments(
+                sortBy: filter.sortBy,
+                offset: offset,
+                limit: limit,
+                userId: filter.userId,
+                permlink: filter.permlink ?? "",
+                communityId: filter.communityId,
+                authorizationRequired: filter.authorizationRequired
+            )
+        
+        case .user:
+            result = RestAPIManager.instance.loadUserComments(
+                sortBy: filter.sortBy,
+                offset: offset,
+                limit: limit,
+                userId: filter.userId,
+                authorizationRequired: filter.authorizationRequired
+            )
+            maxNestedLevel = 0
 
-                case .replies:
-                    result = RestAPIManager.instance.loadPostComments(
-                        sortBy: filter.sortBy,
-                        offset: offset,
-                        limit: 30,
-                        permlink: filter.permlink ?? "",
-                        communityId: filter.communityId,
-                        parentCommentUserId: filter.parentComment?.userId,
-                        parentCommentPermlink: filter.parentComment?.permlink
-                    )
-                }
-                
-                return result
-                    .map {$0.items ?? []}
+        case .replies:
+            result = RestAPIManager.instance.loadPostComments(
+                sortBy: filter.sortBy,
+                offset: offset,
+                limit: limit,
+                permlink: filter.permlink ?? "",
+                communityId: filter.communityId,
+                parentCommentUserId: filter.parentComment?.userId,
+                parentCommentPermlink: filter.parentComment?.permlink,
+                authorizationRequired: filter.authorizationRequired
+            )
+        }
+        
+        return result
+            .map {$0.items ?? []}
     }
     
     override func join(newItems items: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
@@ -129,6 +136,53 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
             newList = groupComments(newList)
         }
         return newList
+    }
+    
+    override func handleNewData(_ items: [ResponseAPIContentGetComment]) {
+        super.handleNewData(items)
+        loadDonations(forComments: items)
+        sendPendingRequest()
+    }
+    
+    // MARK: - Replies
+    func requestRepliesForComment(_ comment: ResponseAPIContentId, inPost post: ResponseAPIContentId, offset: UInt, limit: UInt) -> Single<[ResponseAPIContentGetComment]>
+    {
+        RequestsManager.shared.pendingRequests.forEach {request in
+            switch request {
+            case .replyToComment(let parentComment, let post, let block, let uploadingImage):
+                guard isCurrentPost(post),
+                    parentComment.contentId == comment,
+                    let communCode = post.community?.communityId else
+                {return}
+                
+                let authorId = parentComment.contentId.userId
+                let parentCommentPermlink = parentComment.contentId.permlink
+                
+                BlockchainManager.instance.createMessage(
+                    isComment: true,
+                    parentPost: post,
+                    isReplying: true,
+                    parentComment: parentComment,
+                    communCode: communCode,
+                    parentAuthor: authorId,
+                    parentPermlink: parentCommentPermlink,
+                    block: block,
+                    uploadingImage: uploadingImage
+                ).subscribe().disposed(by: disposeBag)
+                RequestsManager.shared.pendingRequests.removeAll(request)
+            default:
+                return
+            }
+        }
+        
+        return RestAPIManager.instance.getRepliesForComment(
+            forPost: post,
+            parentComment: comment,
+            offset: offset,
+            limit: limit,
+            authorizationRequired: filter.authorizationRequired
+        )
+            .map {$0.items ?? []}
     }
     
     // MARK: - for grouping comments
@@ -144,7 +198,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         return flat(result)
     }
     
-    func flat(_ array: [GroupedComment]) -> [ResponseAPIContentGetComment] {
+    private func flat(_ array: [GroupedComment]) -> [ResponseAPIContentGetComment] {
         var myArray = [ResponseAPIContentGetComment]()
         for element in array {
             myArray.append(element.comment)
@@ -156,7 +210,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         return myArray
     }
 
-    func getChildForComment(_ comment: ResponseAPIContentGetComment, in source: [ResponseAPIContentGetComment]) -> [GroupedComment] {
+    private func getChildForComment(_ comment: ResponseAPIContentGetComment, in source: [ResponseAPIContentGetComment]) -> [GroupedComment] {
         var result = [GroupedComment]()
 
         // filter child
@@ -175,5 +229,87 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         }
 
         return result
+    }
+    
+    // MARK: - Donations
+    func loadDonations(forComments comments: [ResponseAPIContentGetComment]) {
+        if comments.count > 0 {
+            let splitedComments = comments.prefix(20)
+            
+            let contentIds = splitedComments.map { RequestAPIContentId(responseAPI: $0.contentId) }
+            RestAPIManager.instance.getDonationsBulk(posts: contentIds)
+                .map {$0.items}
+                .subscribe(onSuccess: { donations in
+                    self.showDonations(donations)
+                })
+                .disposed(by: disposeBag)
+            
+            if comments.count > 20 {
+                loadDonations(forComments: Array(comments.suffix(from: 20)))
+            }
+        }
+    }
+    
+    private func showDonations(_ donations: [ResponseAPIWalletGetDonationsBulkItem]) {
+        for var comment in items.value {
+            if let donations = donations.first(where: {$0.contentId.userId == comment.contentId.userId && $0.contentId.permlink == comment.contentId.permlink && $0.contentId.communityId == comment.contentId.communityId})
+            {
+                comment.donations = donations
+                comment.notifyChanged()
+            }
+            if let children = comment.children
+            {
+                // find in children
+                for var child in children {
+                    if let donations = donations.first(where: {$0.contentId.userId == child.contentId.userId && $0.contentId.permlink == child.contentId.permlink && $0.contentId.communityId == child.contentId.communityId})
+                    {
+                        child.donations = donations
+                        child.notifyChanged()
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Send pending request
+    private func sendPendingRequest() {
+        // like or dislike
+        var completedRequests = [RequestsManager.Request]()
+        RequestsManager.shared.pendingRequests.forEach {request in
+            switch request {
+            case .toggleLikeComment(let comment, let dislike):
+                let operation = dislike ? comment.downVote() : comment.upVote()
+                operation.subscribe().disposed(by: disposeBag)
+                completedRequests.append(request)
+            case .newComment(let post, let block, let uploadingImage):
+                if isCurrentPost(post),
+                    let communCode = post.community?.communityId,
+                    let authorId = post.author?.userId
+                {
+                    let postPermlink = post.contentId.permlink
+                    BlockchainManager.instance.createMessage(
+                        isComment: true,
+                        parentPost: post,
+                        communCode: communCode,
+                        parentAuthor: authorId,
+                        parentPermlink: postPermlink,
+                        block: block,
+                        uploadingImage: uploadingImage
+                    ).subscribe().disposed(by: disposeBag)
+                    completedRequests.append(request)
+                }
+                return
+            default:
+                return
+            }
+        }
+        
+        completedRequests.forEach {RequestsManager.shared.pendingRequests.removeAll($0)}
+    }
+    
+    private func isCurrentPost(_ post: ResponseAPIContentGetPost) -> Bool {
+        post.contentId.userId == filter.userId &&
+        post.contentId.communityId == filter.communityId &&
+        post.contentId.permlink == filter.permlink
     }
 }

@@ -17,21 +17,13 @@ class CommunityMembersViewModel: BaseViewModel {
         case all        = "all"
         case leaders    = "leaders"
         case friends    = "friends"
+        case banned     = "banned users"
         
         static var allCases: [SegmentedItem] {
-            return [.all, .leaders, .friends]
+            return [.all, .leaders, .friends, .banned]
         }
         
-        var index: Int {
-            switch self {
-            case .all:
-                return 0
-            case .leaders:
-                return 1
-            case .friends:
-                return 2
-            }
-        }
+        var index: Int { Self.allCases.firstIndex(of: self)! }
     }
     
     // MARK: - Input
@@ -44,6 +36,7 @@ class CommunityMembersViewModel: BaseViewModel {
     lazy var leadersVM      = LeadersViewModel(communityId: community.communityId)
     lazy var friendsVM      = FriendsViewModel(friends: community.friends ?? [])
     lazy var subscribersVM  = SubscribersViewModel(communityId: community.communityId)
+    lazy var bannedUsersVM  = CommunityBannedUserViewModel(communityId: community.communityId)
     let items = BehaviorRelay<[Any]>(value: [])
     
     // MARK: - Initialzers
@@ -74,7 +67,8 @@ class CommunityMembersViewModel: BaseViewModel {
         // Loading state
         Observable.merge(
             leadersVM.state.asObservable().filter {_ in self.segmentedItem.value == .leaders},
-            subscribersVM.state.asObservable().filter {_ in self.segmentedItem.value == .all}
+            subscribersVM.state.asObservable().filter {_ in self.segmentedItem.value == .all},
+            bannedUsersVM.state.asObservable().filter {_ in self.segmentedItem.value == .banned}
         )
             .distinctUntilChanged()
             .bind(to: listLoadingState)
@@ -92,8 +86,9 @@ class CommunityMembersViewModel: BaseViewModel {
             .filter {_ in
                 self.segmentedItem.value == .friends
             }
+        let bannedUsers = bannedUsersVM.items.map {$0 as [Any]}.skip(1)
         
-        Observable.merge(leaders, subscribers, friends)
+        Observable.merge(leaders, subscribers, friends, bannedUsers)
             .skip(1)
             .asDriver(onErrorJustReturn: [])
             .drive(items)
@@ -119,6 +114,10 @@ class CommunityMembersViewModel: BaseViewModel {
             friendsVM.accept([])
             listLoadingState.accept(.listEmpty)
         }
+        
+        if segmentedItem.value == .banned {
+            bannedUsersVM.reload()
+        }
     }
     
     func fetchNext(forceRetry: Bool = false) {
@@ -129,6 +128,8 @@ class CommunityMembersViewModel: BaseViewModel {
             leadersVM.fetchNext(forceRetry: forceRetry)
         case .friends:
             return
+        case .banned:
+            bannedUsersVM.fetchNext(forceRetry: forceRetry)
         }
     }
 }

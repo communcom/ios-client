@@ -15,12 +15,30 @@ class TransferHistoryFilterVC: BottomMenuVC {
     var completion: ((TransferHistoryListFetcher.Filter) -> Void)?
     
     // MARK: - Subviews
-    lazy var segmentedControl = TransferHistorySegmentedControl(height: 60 * Config.heightRatio)
-    lazy var typeSegmentedControl = TransferHistoryTopTabBar(height: 35, labels: ["transfer".localized().uppercaseFirst, "convert".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
+    lazy var segmentedControl: TransferHistorySegmentedControl = {
+        let smControl = TransferHistorySegmentedControl(height: 60 * Config.heightRatio)
+        smControl.labels = ["all".localized().uppercaseFirst, "income".localized().uppercaseFirst, "outcome".localized().uppercaseFirst]
+        return smControl
+    }()
     
-    // TODO: - Uncomment when filter by rewards is ready
-//    lazy var rewardsSegmentedControl = TransferHistoryTopTabBar(height: 50, labels: ["post".localized().uppercaseFirst, "like".localized().uppercaseFirst, "comment".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
-    lazy var rewardsSegmentedControl = CMTopTabBar(height: 35, labels: ["all".localized().uppercaseFirst, "none".localized().uppercaseFirst], selectedIndex: 0, spacing: 20 * Config.widthRatio)
+    lazy var typeSegmentedControl: CMHorizontalTabBar = {
+        let sc = CMHorizontalTabBar(height: 35, isMultipleSelectionEnabled: true)
+        sc.labels = ["transfer".localized().uppercaseFirst, "convert type".localized().uppercaseFirst]
+        return sc
+    }()
+    
+    lazy var rewardsSegmentedControl: CMHorizontalTabBar = {
+        let sc = CMHorizontalTabBar(height: 35, isMultipleSelectionEnabled: true)
+        sc.labels = ["rewards".localized().uppercaseFirst, "claim".localized().uppercaseFirst, "donations type".localized().uppercaseFirst]
+        sc.canChooseNone = true
+        return sc
+    }()
+    
+    lazy var holdTypeSegmentedControl: CMHorizontalTabBar = {
+        let sc = CMHorizontalTabBar(height: 35, isMultipleSelectionEnabled: true)
+        sc.labels = ["like".localized().uppercaseFirst, "dislike".localized().uppercaseFirst]
+        return sc
+    }()
     
     // MARK: - Initializers
     init(filter: TransferHistoryListFetcher.Filter) {
@@ -37,52 +55,51 @@ class TransferHistoryFilterVC: BottomMenuVC {
         super.setUp()
         title = "filter".localized().uppercaseFirst
         
-        segmentedControl.labels = ["all".localized().uppercaseFirst, "income".localized().uppercaseFirst, "outcome".localized().uppercaseFirst]
+        // add stackViews
+        let stackView = UIStackView(axis: .vertical, alignment: .leading, distribution: .fill)
+        view.addSubview(stackView)
+        stackView.autoPinEdge(.top, to: .bottom, of: closeButton, withOffset: 24 * Config.heightRatio)
+        stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
+        stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
+        stackView.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16)
         
-        view.addSubview(segmentedControl)
-        segmentedControl.autoPinEdge(.top, to: .bottom, of: closeButton, withOffset: 24 * Config.heightRatio)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        segmentedControl.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
-        
-        // type
+        // add subviews
         let typeLabel = UILabel.with(text: "type".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appGrayColor)
-        view.addSubview(typeLabel)
-        typeLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        typeLabel.autoPinEdge(.top, to: .bottom, of: segmentedControl, withOffset: 30 * Config.heightRatio)
-        
-        view.addSubview(typeSegmentedControl)
-        typeSegmentedControl.autoPinEdge(.top, to: .bottom, of: typeLabel, withOffset: 20 * Config.heightRatio)
-        typeSegmentedControl.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        typeSegmentedControl.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
-        
-        // reward
         let rewardsLabel = UILabel.with(text: "rewards".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appGrayColor)
-        view.addSubview(rewardsLabel)
-        rewardsLabel.autoPinEdge(.top, to: .bottom, of: typeSegmentedControl, withOffset: 30 * Config.heightRatio)
-        rewardsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        
-        view.addSubview(rewardsSegmentedControl)
-        rewardsSegmentedControl.autoPinEdge(.top, to: .bottom, of: rewardsLabel, withOffset: 20 * Config.heightRatio)
-        rewardsSegmentedControl.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        rewardsSegmentedControl.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
-        
-        // save
+        let likeDislikeLabel = UILabel.with(text: "like".localized().uppercaseFirst + "/" + "dislike".localized().uppercaseFirst, textSize: 15, weight: .semibold, textColor: .appGrayColor)
         let saveButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save".localized().uppercaseFirst, isHuggingContent: false)
-        view.addSubview(saveButton)
-        saveButton.autoPinEdge(.top, to: .bottom, of: rewardsSegmentedControl, withOffset: 40 * Config.heightRatio)
-        saveButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        saveButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         
-        let cleanAllButton = UIButton(height: 50 * Config.heightRatio, label: "clean all".localized().uppercaseFirst, labelFont: UIFont.systemFont(ofSize: 15, weight: .semibold), backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 50 * Config.heightRatio / 2)
-        view.addSubview(cleanAllButton)
-        cleanAllButton.autoPinEdge(.top, to: .bottom, of: saveButton, withOffset: 10)
-        cleanAllButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)
-        cleanAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
-        cleanAllButton.addTarget(self, action: #selector(reset), for: .touchUpInside)
+        let clearAllButton = UIButton(height: 50 * Config.heightRatio, label: "clear all".localized().uppercaseFirst, labelFont: UIFont.systemFont(ofSize: 15, weight: .semibold), backgroundColor: .appLightGrayColor, textColor: .appMainColor, cornerRadius: 50 * Config.heightRatio / 2)
+        clearAllButton.addTarget(self, action: #selector(reset), for: .touchUpInside)
         
-        // pin bottom
-        cleanAllButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16)
+        stackView.addArrangedSubviews([
+            segmentedControl,
+            typeLabel,
+            typeSegmentedControl,
+            rewardsLabel,
+            rewardsSegmentedControl,
+            likeDislikeLabel,
+            holdTypeSegmentedControl,
+            saveButton,
+            clearAllButton
+        ])
+        
+        segmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        typeSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        rewardsSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        holdTypeSegmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        saveButton.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        clearAllButton.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        
+        stackView.setCustomSpacing(30 * Config.heightRatio, after: segmentedControl)
+        stackView.setCustomSpacing(20 * Config.heightRatio, after: typeLabel)
+        stackView.setCustomSpacing(30 * Config.heightRatio, after: typeSegmentedControl)
+        stackView.setCustomSpacing(20 * Config.heightRatio, after: rewardsLabel)
+        stackView.setCustomSpacing(30 * Config.heightRatio, after: rewardsSegmentedControl)
+        stackView.setCustomSpacing(20 * Config.heightRatio, after: likeDislikeLabel)
+        stackView.setCustomSpacing(40 * Config.heightRatio, after: holdTypeSegmentedControl)
+        stackView.setCustomSpacing(10, after: saveButton)
         
         // assign first value
         setUp(with: originFilter)
@@ -101,26 +118,38 @@ class TransferHistoryFilterVC: BottomMenuVC {
         }
         
         var transferType = "all"
-        switch typeSegmentedControl.selectedIndex.value {
-        case 0:
+        if typeSegmentedControl.selectedIndexes.isEmpty {
+            transferType = "none"
+        } else if typeSegmentedControl.selectedIndexes == [0] {
             transferType = "transfer"
-        case 1:
+        } else if typeSegmentedControl.selectedIndexes == [1] {
             transferType = "convert"
-        default:
-            break
         }
         
-        var rewards: String?
-        switch rewardsSegmentedControl.selectedIndex.value {
-        case 0:
+        var rewards = "none"
+        var claim = "none"
+        var donation = "none"
+        
+        if rewardsSegmentedControl.selectedIndexes.contains(0) {
             rewards = "all"
-        case 1:
-            rewards = "none"
-        default:
-            break
+        }
+        if rewardsSegmentedControl.selectedIndexes.contains(1) {
+            claim = "all"
+        }
+        if rewardsSegmentedControl.selectedIndexes.contains(2) {
+            donation = "all"
         }
         
-        let filter = TransferHistoryListFetcher.Filter(userId: originFilter.userId, direction: direction, transferType: transferType, symbol: originFilter.symbol, rewards: rewards)
+        var holdType = "all"
+        if holdTypeSegmentedControl.selectedIndexes.isEmpty {
+            holdType = "none"
+        } else if holdTypeSegmentedControl.selectedIndexes == [0] {
+            holdType = "like"
+        } else if holdTypeSegmentedControl.selectedIndexes == [1] {
+            holdType = "dislike"
+        }
+        
+        let filter = TransferHistoryListFetcher.Filter(userId: originFilter.userId, direction: direction, transferType: transferType, rewards: rewards, donation: donation, claim: claim, holdType: holdType, symbol: originFilter.symbol)
         
         dismiss(animated: true) {
             self.completion?(filter)
@@ -128,7 +157,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
     }
     
     @objc func reset() {
-        setUp(with: TransferHistoryListFetcher.Filter(userId: originFilter.userId, direction: "all", transferType: nil, symbol: originFilter.symbol, rewards: nil))
+        setUp(with: TransferHistoryListFetcher.Filter(userId: originFilter.userId, symbol: originFilter.symbol))
     }
     
     private func setUp(with filter: TransferHistoryListFetcher.Filter) {
@@ -146,29 +175,33 @@ class TransferHistoryFilterVC: BottomMenuVC {
         
         // filter by transferType
         switch filter.transferType {
-        case "all":
-            typeSegmentedControl.selectedIndex.accept(-1)
+        case "none":
+            typeSegmentedControl.selectedIndexes = []
         case "transfer":
-            typeSegmentedControl.selectedIndex.accept(0)
+            typeSegmentedControl.selectedIndexes = [0]
         case "convert":
-            typeSegmentedControl.selectedIndex.accept(1)
+            typeSegmentedControl.selectedIndexes = [1]
         default:
-            typeSegmentedControl.selectedIndex.accept(-1)
+            typeSegmentedControl.selectedIndexes = [0, 1]
         }
         
         // filter by rewards
-        switch filter.rewards {
-        case "all":
-            rewardsSegmentedControl.selectedIndex.accept(0)
+        var selectedRewards = [Int]()
+        if filter.rewards == "all" {selectedRewards.append(0)}
+        if filter.claim == "all" {selectedRewards.append(1)}
+        if filter.donation == "all" {selectedRewards.append(2)}
+        rewardsSegmentedControl.selectedIndexes = selectedRewards
+        
+        // filter by holdType
+        switch filter.holdType {
         case "none":
-            rewardsSegmentedControl.selectedIndex.accept(1)
-//        case "like":
-//            rewardsSegmentedControl.selectedIndex.accept(1)
-//        case "comment":
-//            rewardsSegmentedControl.selectedIndex.accept(2)
+            holdTypeSegmentedControl.selectedIndexes = []
+        case "like":
+            holdTypeSegmentedControl.selectedIndexes = [0]
+        case "dislike":
+            holdTypeSegmentedControl.selectedIndexes = [1]
         default:
-            rewardsSegmentedControl.selectedIndex.accept(0)
-//            rewardsSegmentedControl.selectedIndex.accept(-1)
+            holdTypeSegmentedControl.selectedIndexes = [0, 1]
         }
     }
 }

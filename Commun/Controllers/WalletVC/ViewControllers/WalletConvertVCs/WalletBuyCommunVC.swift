@@ -135,13 +135,9 @@ class WalletBuyCommunVC: WalletConvertVC {
             .disposed(by: disposeBag)
     }
     
-    override func bindRate() {
-        viewModel.rate
-            .subscribe(onNext: {[weak self] (value) in
-                self?.rateLabel.attributedText = NSMutableAttributedString()
-                    .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) \(self?.currentBalance?.symbol ?? "") = 10 CMN", size: 12, weight: .medium)
-            })
-            .disposed(by: disposeBag)
+    override func setUpRate() {
+        rateLabel.attributedText = NSMutableAttributedString()
+            .text("rate".localized().uppercaseFirst + ": \(viewModel.rate.value.currencyValueFormatted) \(currentBalance?.symbol ?? "") = 10 CMN", size: 12, weight: .medium)
     }
     
     override func getBuyPrice() {
@@ -216,17 +212,12 @@ class WalletBuyCommunVC: WalletConvertVC {
                                               symbol: symbol,
                                               operationDate: Date())
                 
-                let completedVC = TransactionCompletedVC(transaction: transaction)
-                self.show(completedVC, sender: nil)
+                self.showCheck(transaction: transaction)
 
                 return RestAPIManager.instance.waitForTransactionWith(id: transactionId)
             })
             .subscribe(onCompleted: {
-                balance.isWaitingForTransaction = false
-                balance.notifyChanged()
-                
-                communBalance.isWaitingForTransaction = false
-                communBalance.notifyChanged()
+                self.viewModel.reload()
             }) { [weak self] (error) in
                 self?.hideHud()
                 self?.showError(error)

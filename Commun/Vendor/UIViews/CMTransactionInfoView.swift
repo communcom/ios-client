@@ -52,7 +52,7 @@ class CMTransactionInfoView: MyView {
             tintColor: UIColor.appWhiteColor,
             imageName: "icon-checkmark-white",
             imageEdgeInsets: .zero)
-        readyCheckMark.addShadow(ofColor: UIColor.colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.732, green: 0.954, blue: 0.886, alpha: 1), darkColor: .clear), radius: 24.0, offset: CGSize(width: 0.0, height: 8.0), opacity: 1.0)
+        readyCheckMark.addShadow(ofColor: #colorLiteral(red: 0.732, green: 0.954, blue: 0.886, alpha: 1).inDarkMode(.clear), radius: 24.0, offset: CGSize(width: 0.0, height: 8.0), opacity: 1.0)
         
         let transactionCompletedLabel = UILabel.with(text: "transaction completed".localized().uppercaseFirst, textSize: 17, weight: .bold, textAlignment: .center)
         let transactionTimestampLabel = UILabel.with(text: transaction.operationDate.convert(toStringFormat: .transactionCompletedType), textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
@@ -61,9 +61,21 @@ class CMTransactionInfoView: MyView {
         let amount = transaction.amount
         let textColor: UIColor = amount > 0 ? .appGreenColor : .appBlackColor
         let amountLabel = UILabel.with(textSize: 20)
-        amountLabel.attributedString = NSMutableAttributedString()
-            .text((amount > 0 ? "+" : "-") + String(Double(abs(amount)).currencyValueFormatted + " "), size: 20, weight: .semibold, color: textColor)
-            .text(transaction.symbol.buy.fullName, size: 20, color: textColor)
+        
+        var aStr = NSMutableAttributedString()
+        
+        if transaction.history?.meta.holdType == "like" ||
+            transaction.history?.meta.holdType == "dislike"
+        {
+            aStr = aStr.text("❄️ " + String(Double(abs(amount)).currencyValueFormatted + " "), size: 20, weight: .semibold, color: textColor)
+        } else {
+            aStr = aStr
+                .text((amount > 0 ? "+" : "-") + String(Double(abs(amount)).currencyValueFormatted + " "), size: 20, weight: .semibold, color: textColor)
+        }
+        
+        aStr = aStr.text(transaction.symbol.buy.fullName, size: 20, color: textColor)
+        
+        amountLabel.attributedString = aStr
         
         let burnedPercentLabel = UILabel.with(text: String(format: "%.1f%% %@ 🔥", 0.1, "was burned".localized()), textSize: 12, weight: .semibold, textColor: .appGrayColor, textAlignment: .center)
         
@@ -87,6 +99,14 @@ class CMTransactionInfoView: MyView {
             debitedFromLabel,
             blueBottomView
         ])
+        
+        if transaction.history?.meta.holdType == "like" ||
+            transaction.history?.meta.holdType == "dislike"
+        {
+            buyerNameLabel.text = ""
+            buyerBalanceOrFriendIDLabel.text = ""
+        }
+        
         dashLines[0].widthAnchor.constraint(equalTo: stackView.widthAnchor)
             .isActive = true
         dashLines[1].widthAnchor.constraint(equalTo: stackView.widthAnchor)
@@ -110,6 +130,12 @@ class CMTransactionInfoView: MyView {
         stackView.setCustomSpacing(25 * Config.heightRatio, after: buyerBalanceOrFriendIDLabel)
         stackView.setCustomSpacing(25 * Config.heightRatio, after: dashLines[1])
         stackView.setCustomSpacing(16 * Config.heightRatio, after: debitedFromLabel)
+        
+        if transaction.history?.meta.holdType == "like" ||
+            transaction.history?.meta.holdType == "dislike"
+        {
+            burnedPercentLabel.isHidden = true
+        }
     }
     
     override func layoutSubviews() {
@@ -179,8 +205,8 @@ class CMTransactionInfoView: MyView {
             }
 
         default:
-            buyerNameLabel.text = transaction.friend?.name ?? Config.defaultSymbol
-            buyerBalanceOrFriendIDLabel.text = transaction.friend?.id ?? Config.defaultSymbol
+            buyerNameLabel.text = transaction.friend?.name ?? ""
+            buyerBalanceOrFriendIDLabel.text = transaction.friend?.id ?? ""
             buyerAvatarImageView.setAvatar(urlString: transaction.friend?.avatarURL)
         }
         

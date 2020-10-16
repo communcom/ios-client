@@ -36,22 +36,21 @@ extension MyProfilePageVC {
     
     // MARK: - Covers + Avatar
     func openActionSheet(cover: Bool) {
-        showCommunActionSheet(
-            title: String(format: "%@ %@", "change".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
-            titleFont: .systemFont(ofSize: 15, weight: .semibold),
-            titleAlignment: .left,
+        showCMActionSheet(
+            title: "change \(cover ? "cover photo": "avatar")".localized().uppercaseFirst,
             actions: [
-                CommunActionSheet.Action(
+                .default(
                     title: "choose from gallery".localized().uppercaseFirst,
-                    icon: UIImage(named: "photo_solid"),
+                    iconName: "photo_solid",
                     handle: {[unowned self] in
                         cover ? self.onUpdateCover() : self.onUpdateAvatar()
                 }),
-                CommunActionSheet.Action(title: String(format: "%@ %@", "delete current".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
-                                         icon: UIImage(named: "delete"),
-                                         tintColor: .red,
-                                         handle: {[unowned self] in
-                                            cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
+                .default(
+                    title: "remove current \(cover ? "cover photo" : "avatar")".localized().uppercaseFirst,
+                    iconName: "delete",
+                    tintColor: .appRedColor,
+                    handle: {[unowned self] in
+                        cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
                     }
                 )
         ])
@@ -59,20 +58,15 @@ extension MyProfilePageVC {
     
     func onUpdateCover(delete: Bool = false) {
         // Save originalImage for reverse when update failed
-        let originalImage = coverImageView.image
-        let originGif = headerView.avatarImageView.gifImage
+        let originImageUrl = ResponseAPIContentGetProfile.current?.coverUrl
         
         // If deleting
         if delete {
             coverImageView.image = .placeholder
+            ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: "")
             BlockchainManager.instance.updateProfile(params: ["cover_url": ""])
-                .subscribe(onError: {[weak self] error in
-                    if let gif = originGif {
-                        self?.coverImageView.setGifImage(gif)
-                    } else {
-                        self?.coverImageView.image = originalImage
-                    }
-                    
+                .subscribe(onError: {[weak self] (error) in
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: originImageUrl)
                     self?.showError(error)
                 })
                 .disposed(by: disposeBag)
@@ -80,59 +74,36 @@ extension MyProfilePageVC {
         }
         
         // If updating
-        let pickerVC = SinglePhotoPickerVC()
-       
-        pickerVC.completion = { image in
-            let coverEditVC = MyProfileEditCoverVC()
-            coverEditVC.modalPresentationStyle = .fullScreen
-            coverEditVC.joinedDateString = self.viewModel.profile.value?.registration?.time
-            coverEditVC.updateWithImage(image)
-            coverEditVC.completion = {image in
-                coverEditVC.dismiss(animated: true, completion: {
-                    pickerVC.dismiss(animated: true, completion: nil)
+        showCoverImagePicker(joinedDateString: self.viewModel.profile.value?.registration?.time) { (image) in
+            self.coverImageView.image = image
+            self.coverImageView.showLoading(cover: false, spinnerColor: .appWhiteColor)
+            RestAPIManager.instance.uploadImage(image)
+                .flatMap { url -> Single<String> in
+                    BlockchainManager.instance.updateProfile(params: ["cover_url": url]).andThen(.just(url))
+                }
+                .subscribe(onSuccess: { [weak self] (url) in
+                    self?.coverImageView.hideLoading()
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: url)
+                }, onError: { [weak self] (error) in
+                    self?.coverImageView.hideLoading()
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(coverUrl: originImageUrl)
+                    self?.showError(error)
                 })
-                self.coverImageView.image = image
-                self.coverImageView.showLoading(cover: false, spinnerColor: .appWhiteColor)
-                
-                guard let image = image else {return}
-                RestAPIManager.instance.uploadImage(image)
-                    .flatMap { url -> Single<String> in
-                        BlockchainManager.instance.updateProfile(params: ["cover_url": url]).andThen(Single<String>.just(url))
-                    }
-                    .subscribe(onSuccess: { [weak self] (_) in
-                        self?.coverImageView.hideLoading()
-                    }, onError: { [weak self] (error) in
-                        self?.coverImageView.hideLoading()
-                        self?.coverImageView.image = originalImage
-                        self?.showError(error)
-                    })
-                    .disposed(by: self.disposeBag)
-            }
-            
-            let nc = SwipeNavigationController(rootViewController: coverEditVC)
-            pickerVC.present(nc, animated: true, completion: nil)
+                .disposed(by: self.disposeBag)
         }
-        
-        pickerVC.modalPresentationStyle = .fullScreen
-        self.present(pickerVC, animated: true, completion: nil)
     }
     
     func onUpdateAvatar(delete: Bool = false) {
         // Save image for reversing when update failed
-        let originalImage = headerView.avatarImageView.image
-        let originGif = headerView.avatarImageView.gifImage
+        let originImageUrl = ResponseAPIContentGetProfile.current?.avatarUrl
         
         // On deleting
         if delete {
             headerView.avatarImageView.image = UIImage(named: "empty-avatar")
+            ResponseAPIContentGetProfile.updateCurrentUserProfile(avatarUrl: "")
             BlockchainManager.instance.updateProfile(params: ["avatar_url": ""])
                 .subscribe(onError: {[weak self] error in
-                    if let gif = originGif {
-                        self?.headerView.avatarImageView.setGifImage(gif)
-                    } else {
-                        self?.headerView.avatarImageView.image = originalImage
-                    }
-                    
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(avatarUrl: originImageUrl)
                     self?.showError(error)
                 })
                 .disposed(by: disposeBag)
@@ -155,11 +126,12 @@ extension MyProfilePageVC {
             // Save to db
             .flatMap {BlockchainManager.instance.updateProfile(params: ["avatar_url": $0]).andThen(Single<String>.just($0))}
             // Catch error and reverse image
-            .subscribe(onNext: { [weak self] (_) in
+            .subscribe(onNext: { [weak self] (url) in
                 self?.headerView.avatarImageView.hideLoading()
+                ResponseAPIContentGetProfile.updateCurrentUserProfile(avatarUrl: url)
             }, onError: { [weak self] (error) in
                 self?.headerView.avatarImageView.hideLoading()
-                self?.coverImageView.image = originalImage
+                ResponseAPIContentGetProfile.updateCurrentUserProfile(avatarUrl: originImageUrl)
                 self?.showError(error)
             })
             .disposed(by: disposeBag)
@@ -171,22 +143,26 @@ extension MyProfilePageVC {
     }
     
     @objc func bioLabelDidTouch(_ sender: Any) {
-        showCommunActionSheet(
-            title: String(format: "%@ %@", "change".localized().uppercaseFirst, "profile description".localized()),
+        showCMActionSheet(
+            title: "\("change".localized().uppercaseFirst) \("profile description".localized())",
             actions: [
-                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst,
-                                         icon: UIImage(named: "edit"),
-                                         handle: {[unowned self] in
-                                            self.onUpdateBio()
-                }),
-                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst,
-                                         icon: UIImage(named: "delete"),
-                                         tintColor: .red,
-                                         handle: {[unowned self] in
-                                            self.onUpdateBio(delete: true)
+                .default(
+                    title: "edit".localized().uppercaseFirst,
+                    iconName: "edit",
+                    handle: {
+                        self.onUpdateBio()
+                    }
+                ),
+                .default(
+                    title: "delete".localized().uppercaseFirst,
+                    iconName: "delete",
+                    tintColor: .appRedColor,
+                    handle: {
+                        self.onUpdateBio(delete: true)
                     }
                 )
-        ])
+            ]
+        )
     }
     
     func onUpdateBio(new: Bool = false, delete: Bool = false) {
@@ -197,7 +173,9 @@ extension MyProfilePageVC {
         if delete {
             headerView.descriptionLabel.text = nil
             BlockchainManager.instance.updateProfile(params: ["biography": ""])
-                .subscribe(onError: {[weak self] error in
+                .subscribe(onCompleted: {
+                    ResponseAPIContentGetProfile.updateCurrentUserProfile(bio: "")
+                }, onError: {[weak self] error in
                     self?.showError(error)
                     self?.headerView.descriptionLabel.text = originalBio
                 })
@@ -214,11 +192,14 @@ extension MyProfilePageVC {
         self.present(editBioVC, animated: true, completion: nil)
         
         editBioVC.didConfirm
-            .flatMap {bio -> Completable in
+            .flatMap {bio -> Single<String> in
                 self.headerView.descriptionLabel.text = bio
                 return BlockchainManager.instance.updateProfile(params: ["biography": bio])
+                    .andThen(.just(bio))
             }
-            .subscribe(onError: {[weak self] error in
+            .subscribe(onNext: { (bio) in
+                ResponseAPIContentGetProfile.updateCurrentUserProfile(bio: bio)
+            }, onError: {[weak self] (error) in
                 self?.headerView.descriptionLabel.text = originalBio
                 self?.showError(error)
             })

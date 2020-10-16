@@ -26,8 +26,8 @@ class CommentForm: MyView {
         (parentViewController as? PostPageVC)?.post
     }
     
-    private var parentComment: ResponseAPIContentGetComment?
-    private var mode: Mode = .new
+    var parentComment: ResponseAPIContentGetComment?
+    var mode: Mode = .new
     let localImage = BehaviorRelay<UIImage?>(value: nil)
     var url: String?
     
@@ -114,8 +114,8 @@ class CommentForm: MyView {
         
         // mode
         var imageView: UIImageView?
-        if (localImage.value != nil) || (mode == .edit && url != nil) {
-            imageView = MyImageView(width: .adaptive(height: 80), height: .adaptive(height: 80), cornerRadius: .adaptive(height: 15))
+        if (localImage.value != nil) || (mode == .edit && url != nil) || (mode == .new && url != nil && URL.string(url!, isValidURLWithExtension: "gif")) {
+            imageView = MyImageView(width: .adaptive(height: 80), height: .adaptive(height: 80), backgroundColor: .appLightGrayColor, cornerRadius: .adaptive(height: 15))
             imageView?.contentMode = .scaleAspectFill
             addSubview(imageView!)
             constraintTop = imageView!.autoPinEdge(toSuperviewEdge: .top, withInset: .adaptive(height: 10.0))
@@ -245,6 +245,10 @@ class CommentForm: MyView {
                     return true
                 }
                 
+                if self.mode == .new && self.url != nil && URL.string(self.url!, isValidURLWithExtension: "gif") {
+                    return true
+                }
+                
                 return !isTextViewEmpty && isTextChanged
             }
             .subscribe(onNext: { (shouldEnableSendButton) in
@@ -252,14 +256,39 @@ class CommentForm: MyView {
                 self.sendButton.isHidden = !shouldEnableSendButton
                 
                 // Check pasted link
-                if self.textView.text.trimmed.isImageType(), let stringURL = self.textView.text?.trimmed, let url = URL(string: stringURL) {
-                    DispatchQueue.global().async { [weak self] in
-                        if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self?.localImage.accept(image)
-                                self?.textView.text = nil
+                let text = self.textView.text.trimmed
+                let types: NSTextCheckingResult.CheckingType = .link
+
+                let detector = try? NSDataDetector(types: types.rawValue)
+
+                guard let detect = detector else {
+                   return
+                }
+
+                let matches = detect.matches(in: text, options: .reportCompletion, range: NSRange(location: 0, length: text.count))
+
+                if let url = matches.first?.url {
+                    // for normal Image
+                    if URL.string(url.absoluteString, isImageURLIncludeGIF: false) {
+                        DispatchQueue.global().async { [weak self] in
+                            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    self?.localImage.accept(image)
+                                    if let range = (self?.textView.text as NSString?)?.range(of: url.absoluteString) {
+                                        self?.textView.textStorage.deleteCharacters(in: range)
+                                    }
+                                }
                             }
                         }
+                    }
+                    
+                    // for GIF image
+                    if URL.string(url.absoluteString, isValidURLWithExtension: "gif") {
+                        self.url = url.absoluteString
+                        if let range = (self.textView.text as NSString?)?.range(of: url.absoluteString) {
+                            self.textView.textStorage.deleteCharacters(in: range)
+                        }
+                        self.setUp()
                     }
                 }
                 
@@ -268,6 +297,32 @@ class CommentForm: MyView {
                 })
             })
             .disposed(by: disposeBag)
+    }
+    
+    func createRequest(parsedBlock: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
+        //clean
+        var block = parsedBlock
+        block.maxId = nil
+        
+        // send new comment
+        let request: Single<SendPostCompletion>
+        switch self.mode {
+        case .new:
+            request = self.viewModel.sendNewComment(post: self.post, block: block, uploadingImage: self.localImage.value)
+        case .edit:
+            request = self.viewModel.updateComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
+        case .reply:
+            request = self.viewModel.replyToComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
+        }
+        
+        self.textView.text = ""
+        self.mode = .new
+        self.parentComment = nil
+        self.url = nil
+        self.localImage.accept(nil)
+        self.endEditing(true)
+        
+        return request
     }
 }
 
@@ -314,30 +369,7 @@ extension CommentForm {
                 
                 return parsedBlock
             }
-            .flatMap { parsedBlock -> Single<SendPostCompletion> in
-                //clean
-                var block = parsedBlock
-                block.maxId = nil
-                
-                // send new comment
-                let request: Single<SendPostCompletion>
-                switch self.mode {
-                case .new:
-                    request = self.viewModel.sendNewComment(post: self.post, block: block, uploadingImage: self.localImage.value)
-                case .edit:
-                    request = self.viewModel.updateComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
-                case .reply:
-                    request = self.viewModel.replyToComment(self.parentComment!, post: self.post, block: block, uploadingImage: self.localImage.value)
-                }
-                
-                self.textView.text = ""
-                self.mode = .new
-                self.parentComment = nil
-                self.localImage.accept(nil)
-                self.endEditing(true)
-                
-                return request
-            }
+            .flatMap {self.createRequest(parsedBlock: $0)}
             .subscribe(onError: { [weak self] error in
 //                self.setLoading(false)
                 self?.parentViewController?.showError(error)

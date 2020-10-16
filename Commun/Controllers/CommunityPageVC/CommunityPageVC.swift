@@ -43,17 +43,23 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         return viewModel.profile.value
     }
     
+    var price: Double?
+    
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetCommunity> {
         if let alias = communityAlias {
-            return CommunityPageViewModel(communityAlias: alias)
+            return CommunityPageViewModel(communityAlias: alias, authorizationRequired: authorizationRequired)
         }
         
-        return CommunityPageViewModel(communityId: communityId)
+        return CommunityPageViewModel(communityId: communityId, authorizationRequired: authorizationRequired)
     }
     var leadersVM: LeadersViewModel {(viewModel as! CommunityPageViewModel).leadsVM}
+    var posts: [ResponseAPIContentGetPost] {(viewModel as! CommunityPageViewModel).postsVM.items.value}
     
     // MARK: - Subviews
-    lazy var headerView = CommunityHeaderView(tableView: tableView)
+    lazy var headerView = createHeaderView()
+    func createHeaderView() -> CommunityHeaderView {
+        CommunityHeaderView(tableView: tableView)
+    }
     
     override var _headerView: ProfileHeaderView! {
         return headerView
@@ -89,22 +95,48 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         return containerView
     }()
     
+    lazy var manageCommunityBarButton: UIButton = {
+        let button = UIButton.settings(tintColor: .white)
+        button.addTarget(self, action: #selector(showCommunityControlPanel), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var tagsCollectionView: TagsCollectionView = {
+        let collectionView = TagsCollectionView(height: 32)
+        collectionView.delegate = self
+        return collectionView
+    }()
+    
     // MARK: - Initializers
     init(communityId: String) {
         self.communityId = communityId
         super.init(nibName: nil, bundle: nil)
+        commonInit()
     }
     
     init(communityAlias: String) {
         self.communityAlias = communityAlias
         super.init(nibName: nil, bundle: nil)
+        commonInit()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func commonInit() {
+        leadersVM.fetchNext()
+    }
+    
     // MARK: - Methods
+    override func setUp() {
+        super.setUp()
+        view.insertSubview(tagsCollectionView, belowSubview: customNavigationBar)
+        tagsCollectionView.autoPinEdge(toSuperviewEdge: .trailing)
+        tagsCollectionView.autoPinEdge(toSuperviewEdge: .leading)
+        tagsCollectionView.autoPinEdge(.bottom, to: .top, of: headerView, withOffset: -10)
+    }
+    
     override func setUpTableView() -> UITableView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.configureForAutoLayout()
@@ -121,13 +153,27 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
        
         bindSelectedIndex()
         
+        bindCommunityManager()
+        
         // forward delegate
         tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        // topic
+        viewModel.profile
+            .map {$0?.getTopics() ?? []}
+            .bind(to: tagsCollectionView.rx.items(cellIdentifier: "TagCell", cellType: TagsCollectionView.TagCell.self)) { _, topic, cell in
+                cell.label.text = topic
+            }
             .disposed(by: disposeBag)
     }
     
     override func setUp(profile: ResponseAPIContentGetCommunity) {
         super.setUp(profile: profile)
+        
+        if profile.isLeader == true {
+            rightBarButtonsStackView.insertArrangedSubview(manageCommunityBarButton, at: 0)
+        }
        
         // Register new cell type
         tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
@@ -156,11 +202,22 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         
         (viewModel as! CommunityPageViewModel).walletGetBuyPriceRequest
             .subscribe(onSuccess: { (buyPrice) in
+                self.price = buyPrice.priceValue
                 self.headerView.setUp(walletPrice: buyPrice)
             }, onError: { (error) in
                 self.showError(error)
             })
             .disposed(by: disposeBag)
+        
+        // community manager
+        if community?.isLeader == true {
+            headerView.manageCommunityButtonsView.proposalsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(proposalsButtonDidTouch)))
+            headerView.manageCommunityButtonsView.reportsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(reportsButtonDidTouch)))
+            headerView.manageCommunityButtonsView.manageCommunityButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(manageCommunityDidTouch)))
+        }
+        
+        // become a leader
+        headerView.becomeALeaderButton.addTarget(self, action: #selector(becomeALeaderButtonDidTouch), for: .touchUpInside)
     }
        
     override func handleListLoading() {
@@ -315,7 +372,6 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             let postPageVC = PostPageVC(post: post)
             self.show(postPageVC, sender: nil)
         case is CommunityLeaderCell:
-            // TODO: - Tap a leaderCell
             break
         default:
             break
@@ -325,60 +381,50 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
         guard let profile = viewModel.profile.value, let currentUserID = Config.currentUser?.id else {return}
         
-        let headerView = UIView(height: 40)
+        let headerView = CMMetaView(forAutoLayout: ())
+        headerView.avatarImageView.setAvatar(urlString: profile.avatarUrl)
+        headerView.titleLabel.text = profile.name
+        headerView.subtitleLabel.text = profile.communityId
         
-        let avatarImageView = MyAvatarImageView(size: 40)
-        avatarImageView.setAvatar(urlString: profile.avatarUrl)
-        headerView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-                
-        let userNameLabel = UILabel.with(text: profile.name, textSize: 15, weight: .semibold)
-        headerView.addSubview(userNameLabel)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .top)
-        userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
-
-        let userIdLabel = UILabel.with(text: profile.communityId, textSize: 12, textColor: .appMainColor)
-        headerView.addSubview(userIdLabel)
-        userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
-        userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        showCommunActionSheet(headerView: headerView, actions: [
-            CommunActionSheet.Action(title: "share".localized().uppercaseFirst,
-                                     icon: UIImage(named: "share"),
-                                     style: .default,
-                                     marginTop: 0,
-                                     handle: {
-                                        ShareHelper.share(urlString: self.shareWith(name: profile.name, userID: currentUserID, isCommunity: true))
-            }),
-            CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
-                                     icon: UIImage(named: "profile_options_blacklist"),
-                                     tintColor: profile.isInBlacklist == true ? .appBlackColor: .appRedColor,
-                                     marginTop: 10,
-                                     handle: {
-                                        self.showAlert(
-                                            title: (profile.isInBlacklist == true ? "unhide community" : "hide community").localized().uppercaseFirst,
-                                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of" : "do you really want to unhide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
-                                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
-                                            highlightedButtonIndex: 1) { (index) in
-                                                if index != 0 {return}
-                                                if profile.isInBlacklist == true {
-                                                    self.unhideCommunity()
-                                                } else {
-                                                    self.hideCommunity()
-                                                }
-                                        }
-            })
-        ]) {
-            
-        }
+        showCMActionSheet(
+            headerView: headerView,
+            actions: [
+                .default(
+                    title: "share".localized().uppercaseFirst,
+                    iconName: "share",
+                    handle: {
+                        ShareHelper.share(urlString: self.shareWith(name: profile.alias ?? "", userID: currentUserID, isCommunity: true))
+                    }, bottomMargin: 10
+                ),
+                .default(
+                    title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst,
+                    iconName: "profile_options_blacklist",
+                    handle: {
+                        self.showAlert(
+                            title: (profile.isInBlacklist == true ? "unhide community" : "hide community").localized().uppercaseFirst,
+                            message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of" : "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
+                            buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
+                            highlightedButtonIndex: 1) { (index) in
+                                if index != 0 {return}
+                                if profile.isInBlacklist == true {
+                                    self.unhideCommunity()
+                                } else {
+                                    self.hideCommunity()
+                                }
+                        }
+                    })
+            ]
+        )
+    }
+    
+    override func configureNavigationBar() {
+        super.configureNavigationBar()
+        manageCommunityBarButton.tintColor = showNavigationBar ? .appBlackColor: .white
     }
 }
 
-
 // MARK: - UITableViewDelegate
-extension CommunityPageVC: UITableViewDelegate {
+extension CommunityPageVC: UITableViewDelegate, UICollectionViewDelegateFlowLayout {
     // MARK: - Sorting
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let viewModel = self.viewModel as! CommunityPageViewModel
@@ -467,23 +513,6 @@ extension CommunityPageVC: UITableViewDelegate {
     }
     
     // MARK: - rowHeight caching
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let item = viewModel.items.value[safe: indexPath.row] else {
-            return UITableView.automaticDimension
-        }
-        
-        switch item {
-        case let post as ResponseAPIContentGetPost:
-            return (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] ?? UITableView.automaticDimension
-//        case let leader as ResponseAPIContentGetLeader:
-//            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? UITableView.automaticDimension
-        case let rule as ResponseAPIContentGetCommunityRule:
-            return (viewModel as! CommunityPageViewModel).ruleRowHeights[rule.identity] ?? UITableView.automaticDimension
-        default:
-            return UITableView.automaticDimension
-        }
-    }
-    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let item = viewModel.items.value[safe: indexPath.row] else {
             return UITableView.automaticDimension
@@ -501,23 +530,29 @@ extension CommunityPageVC: UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let item = viewModel.items.value[safe: indexPath.row] else {
             return
         }
         
         switch item {
-        case let post as ResponseAPIContentGetPost:
+        case var post as ResponseAPIContentGetPost:
             (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] = cell.bounds.height
             
             // record post view
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 if tableView.isCellVisible(indexPath: indexPath) &&
-                    (cell as! PostCell).post?.identity == post.identity &&
+                    (cell as? PostCell)?.postIdentity == post.identity &&
                     !RestAPIManager.instance.markedAsViewedPosts.contains(post.identity)
                 {
                     post.markAsViewed().disposed(by: self.disposeBag)
                 }
+            }
+            
+            // hide donation buttons when cell was removed
+            if !tableView.isCellVisible(indexPath: indexPath), post.showDonationButtons == true {
+                post.showDonationButtons = false
+                post.notifyChanged()
             }
         case let leader as ResponseAPIContentGetLeader:
             (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] = cell.bounds.height
@@ -536,5 +571,13 @@ extension CommunityPageVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         UIView(frame: .zero)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == tagsCollectionView, let topic = viewModel.profile.value?.getTopics()[safe: indexPath.row] {
+            let size = (topic as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 12, weight: .bold)])
+            return CGSize(width: size.width + 16 + 16, height: 32)
+        }
+        return .zero
     }
 }

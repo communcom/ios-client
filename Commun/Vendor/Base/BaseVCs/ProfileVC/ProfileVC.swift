@@ -9,8 +9,9 @@
 import Foundation
 import RxSwift
 
-class ProfileVC<ProfileType: Decodable>: BaseViewController {
+class ProfileVC<ProfileType: Decodable & Equatable>: BaseViewController {
     override var prefersNavigationBarStype: BaseViewController.NavigationBarStyle {.hidden}
+    var authorizationRequired: Bool {true}
     // MARK: - Constants
     let coverHeight: CGFloat = 200
     let coverVisibleHeight: CGFloat = 150
@@ -44,6 +45,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     lazy var customNavigationBar = UIView(backgroundColor: .clear)
     lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 15))
     lazy var titleLabel = UILabel.with(textSize: 17, weight: .bold, textColor: .clear, textAlignment: .center)
+    lazy var rightBarButtonsStackView = UIStackView(axis: .horizontal, spacing: 4, alignment: .center, distribution: .fill)
     lazy var optionsButton = UIButton.option(tintColor: .white)
     
     lazy var shadowView: UIView = {
@@ -100,6 +102,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         view.addSubview(customNavigationBar)
         customNavigationBar.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
+        rightBarButtonsStackView.addArrangedSubview(optionsButton)
+        
         let barContentView: UIView = {
             let view = UIView(forAutoLayout: ())
             view.addSubview(backButton)
@@ -107,10 +111,10 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             view.addSubview(titleLabel)
             titleLabel.autoPinEdge(.leading, to: .trailing, of: backButton, withOffset: 10)
             titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
-            view.addSubview(optionsButton)
-            optionsButton.autoPinEdge(.leading, to: .trailing, of: titleLabel, withOffset: 10)
-            optionsButton.autoPinEdge(toSuperviewEdge: .trailing)
-            optionsButton.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
+            view.addSubview(rightBarButtonsStackView)
+            rightBarButtonsStackView.autoPinEdge(.leading, to: .trailing, of: titleLabel, withOffset: 10)
+            rightBarButtonsStackView.autoPinEdge(toSuperviewEdge: .trailing)
+            rightBarButtonsStackView.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
             return view
         }()
         customNavigationBar.addSubview(barContentView)
@@ -170,16 +174,24 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
     
     func bindProfile() {
+        let profile = 
         viewModel.profile
             .filter {$0 != nil}
             .map {$0!}
-            .do(onNext: { (_) in
-                self._headerView.selectedIndex.accept(self._headerView.selectedIndex.value)
-            })
+            
+        profile
+            .distinctUntilChanged()
             .subscribe(onNext: { [weak self] (item) in
                 self?.setUp(profile: item)
             })
             .disposed(by: disposeBag)
+        
+        profile.take(1)
+            .subscribe(onNext: { [weak self] _ in
+                self?._headerView.selectedIndex.accept(self?._headerView.selectedIndex.value ?? 0)
+            })
+            .disposed(by: disposeBag)
+            
     }
     
     func setUp(profile: ProfileType) {

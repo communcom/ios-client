@@ -26,10 +26,6 @@ extension UIView {
 
         layer.addSublayer(shapeLayer)
     }
-
-    public func copyView() -> UIView? {
-        NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as? UIView
-    }
     
     func showErrorView(title: String? = nil, subtitle: String? = nil, retryButtonTitle: String? = nil, retryAction: (() -> Void)?) {
         // setup new errorView
@@ -218,4 +214,56 @@ extension UIView {
             subview.removeFromSuperview()
         }
     }
+    
+    @discardableResult
+    func onTap(_ target: Any?, action: Selector) -> Self {
+        if self is UIButton {
+            (self as? UIButton)?.addTarget(target, action: action, for: .touchUpInside)
+            return self
+        }
+        let tap = UITapGestureRecognizer(target: target, action: action)
+        addGestureRecognizer(tap)
+        isUserInteractionEnabled = true
+        return self
+    }
+    
+    @discardableResult
+    func border(width: CGFloat, color: UIColor) -> Self {
+        borderWidth = width
+        borderColor = color
+        return self
+    }
+    
+    @discardableResult
+    func whRatio(_ ratio: CGFloat) -> Self {
+        widthAnchor.constraint(equalTo: heightAnchor, multiplier: 335 / 150)
+            .isActive = true
+        return self
+    }
+    
+    @discardableResult
+    func huggingContent(axis: NSLayoutConstraint.Axis) -> Self {
+        setContentHuggingPriority(.required, for: axis)
+        return self
+    }
+    
+    func fittingHeight(targetWidth: CGFloat) -> CGFloat {
+        let fittingSize = CGSize(
+            width: targetWidth,
+            height: UIView.layoutFittingCompressedSize.height
+        )
+        return systemLayoutSizeFitting(fittingSize, withHorizontalFittingPriority: .required,
+                                verticalFittingPriority: .defaultLow)
+            .height
+    }
+    
+    static func withStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat? = nil, alignment: UIStackView.Alignment = .center, distribution: UIStackView.Distribution = .fillEqually, padding: UIEdgeInsets = .init(inset: 16)) -> UIView {
+        let view = UIView(forAutoLayout: ())
+        let stackView = UIStackView(axis: axis, spacing: spacing, alignment: alignment, distribution: distribution)
+        view.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16))
+        return view
+    }
+    
+    var innerStackView: UIStackView? {subviews.first as? UIStackView}
 }

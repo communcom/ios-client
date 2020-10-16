@@ -9,32 +9,16 @@
 import Foundation
 
 extension CommentsViewController: UITableViewDelegate {
-    func commentAtIndexPath(_ indexPath: IndexPath) -> ResponseAPIContentGetComment? {
-        // root comment
-        if indexPath.row == 0 {
-            return viewModel.items.value[safe: indexPath.section]
-        }
-        
-        return viewModel.items.value[safe: indexPath.section]?.children?[safe: indexPath.row + 1]
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let comment = commentAtIndexPath(indexPath),
-            let height = viewModel.rowHeights[comment.identity]
-        else {return UITableView.automaticDimension}
-        return height
-    }
-
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let comment = commentAtIndexPath(indexPath)
-        else {return 88}
-        return viewModel.rowHeights[comment.identity] ?? 88
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let comment = commentAtIndexPath(indexPath)
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard var comment = itemAtIndexPath(indexPath)
         else {return}
         viewModel.rowHeights[comment.identity] = cell.bounds.height
+        
+        // hide donation buttons when cell was removed
+        if !tableView.isCellVisible(indexPath: indexPath), comment.showDonationButtons == true {
+            comment.showDonationButtons = false
+            comment.notifyChanged()
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -85,31 +69,12 @@ extension CommentsViewController: UITableViewDelegate {
         button.setTitle("loading".localized().uppercaseFirst + "...", for: .normal)
         button.isEnabled = false
         
-        RestAPIManager.instance.getRepliesForComment(forPost: post.contentId,
-                                                     parentComment: comment.contentId,
-                                                     offset: button.offset,
-                                                     limit: button.limit
-        )
-            .map {$0.items}
-            .subscribe(onSuccess: {[weak self] (children) in
-                guard let strongSelf = self else {return}
-                
-                // modify data
-                var comments = strongSelf.viewModel.items.value
-                
-                if let currentCommentIndex = comments.firstIndex(where: {$0.identity == comment.identity}) {
-                    var newChildren = comments[currentCommentIndex].children ?? []
-                    newChildren.joinUnique(children ?? [])
-                    newChildren = newChildren.sortedByTimeDesc
-                    comments[currentCommentIndex].children = newChildren
-                }
-                
-                strongSelf.viewModel.items.accept(comments)
-            }) { [weak self] (error) in
+        (viewModel as! CommentsViewModel).getRepliesForComment(comment, inPost: post, offset: button.offset, limit: button.limit)
+            .subscribe(onError: {[weak self] (error) in
                 self?.showError(error)
                 button.setTitle(originTitle, for: .normal)
                 button.isEnabled = true
-            }
+            })
             .disposed(by: disposeBag)
     }
 }

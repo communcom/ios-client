@@ -79,6 +79,7 @@ class CMWalletView: MyView {
                 .text(title, size: 12 * Config.widthRatio, weight: .semibold, color: .white)
                 .text("\n")
                 .text(balance, size: 20 * Config.widthRatio, weight: .semibold, color: .white)
+            nextButtonLabel.text = "wallet".localized().uppercaseFirst
         } else {
             label.attributedText = NSMutableAttributedString()
                 .text("loading...".localized().uppercaseFirst, size: 17, weight: .medium, color: .white)
@@ -108,7 +109,7 @@ class CMWalletView: MyView {
             gradient.frame = contentView.bounds
             gradient.startPoint = CGPoint(x: 1.0, y: 0.5)
             gradient.endPoint = CGPoint(x: 0, y: 0.5)
-            gradient.colors = [UIColor.appMainColor.cgColor, UIColor.colorSupportDarkMode(defaultColor: UIColor(hexString: "#99A8F8")!, darkColor: .appMainColor).cgColor]
+            gradient.colors = [UIColor.appMainColor.cgColor, UIColor(hexString: "#99A8F8")!.inDarkMode(.appMainColor).cgColor]
             contentView.layer.insertSublayer(gradient, at: 0)
 
             // corner radius

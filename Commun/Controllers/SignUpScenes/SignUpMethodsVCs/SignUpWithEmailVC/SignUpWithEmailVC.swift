@@ -49,6 +49,7 @@ class SignUpWithEmailVC: BaseSignUpMethodVC {
     }
     
     override func nextButtonDidTouch() {
+        guard self.viewModel.isEmailValid(textField.text ?? "") else {return}
         AnalyticsManger.shared.emailEntered()
 
         self.view.endEditing(true)

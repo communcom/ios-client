@@ -100,9 +100,13 @@ extension ResponseAPIContentBlock {
             }
         case "text":
             var attr = currentAttributes
-            if let textColor = attributes?.textColor {
-                attr[.foregroundColor] = UIColor(hexString: textColor)
-            }
+            // TODO: - Enable textColor later in Article Post
+//            if let hexString = attributes?.textColor,
+//                let textColor = UIColor(hexString: hexString),
+//                textColor != .appWhiteColor
+//            {
+//                attr[.foregroundColor] = textColor
+//            }
     
             var symbolicTraits: UIFontDescriptor.SymbolicTraits = []
             if attributes?.style?.contains("bold") == true {
@@ -123,7 +127,7 @@ extension ResponseAPIContentBlock {
             let link = child.string
             child.insert(NSAttributedString(string: "#"), at: 0)
             var attr = currentAttributes
-            attr[.link] = "\(URL.appURL)/#\(link)"
+            attr[.link] = "\(URL.appURL)/#\(link.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? link)"
             child.addAttributes(attr, range: NSRange(location: 0, length: child.length))
         case "mention":
             let link = child.string
@@ -167,7 +171,6 @@ extension ResponseAPIContentBlock {
                 child.append(NSAttributedString(string: "\r", attributes: currentAttributes))
             }
         case "attachments":
-            //TODO: attachments
             break
         default:
             child.addAttributes(currentAttributes, range: NSRange(location: 0, length: child.length))

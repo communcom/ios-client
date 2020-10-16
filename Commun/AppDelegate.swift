@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let notificationTappedRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
     let shareExtensionDataRelay = BehaviorRelay<ShareExtensionData?>(value: nil)
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
-    private var disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
 
     // MARK: - RootVCs
     var splashVC: SplashVC { SplashVC() }
@@ -130,7 +130,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Closing animation
             self.window?.rootViewController = splashVC
         case .registering:
-            self.changeRootVC(welcomeNC)
+            if UserDefaults.standard.bool(forKey: Config.currentUserDidShowWelcomeScreen)
+            {
+                self.changeRootVC(NonAuthTabBarVC())
+            } else {
+                self.changeRootVC(welcomeNC)
+            }
         case .boarding:
             let boardingNC = UINavigationController(rootViewController: boardingSetPasscodeVC)
             self.changeRootVC(boardingNC)
@@ -139,14 +144,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .authorized:
             // create new TabBarVC when user logged out
             if AuthManager.shared.isLoggedOut {
-                tabBarVC = TabBarVC()
                 SubscribersViewModel.ofCurrentUser = SubscribersViewModel(userId: Config.currentUser?.id)
                 SubscriptionsViewModel.ofCurrentUserTypeUser = SubscriptionsViewModel(type: .user)
                 SubscriptionsViewModel.ofCurrentUserTypeCommunity = SubscriptionsViewModel(type: .community)
                 BalancesViewModel.ofCurrentUser = BalancesViewModel()
+                tabBarVC = TabBarVC()
             }
             
-            self.changeRootVC(tabBarVC)
+            changeRootVC(self.tabBarVC)
+            
         case .error(let error):
             switch error {
             case .userNotFound:
@@ -165,13 +171,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
 
-        if let currentVC = window?.rootViewController as? SplashVC {
-            currentVC.animateSplash {
-                self.window?.rootViewController = rootVC
-            }
-        } else {
-            self.window?.rootViewController = rootVC
-        }
+        // window?.rootViewController
+        ChangingRootVCAnimator.shared.changeRootVC(to: rootVC, from: window?.rootViewController)
 
         getConfig { (error) in
             if let error = error {

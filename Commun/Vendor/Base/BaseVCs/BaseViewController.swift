@@ -8,7 +8,6 @@
 
 import UIKit
 import RxSwift
-import SafariServices
 //import SwipeTransition
 
 class BaseViewController: UIViewController {
@@ -88,8 +87,6 @@ class BaseViewController: UIViewController {
         case .embeded:
             break
         }
-        
-        view.superview?.layoutIfNeeded()
     }
     
     // MARK: - Custom Functions
@@ -120,27 +117,6 @@ class BaseViewController: UIViewController {
         vc?.tabBarController?.tabBar.isHidden = true
         if let tabBarVC = vc?.tabBarController as? TabBarVC {
             tabBarVC.setTabBarHiden(value)
-        }
-    }
-    
-    func load(url: String) {
-        if let url = URL(string: url) {
-            let config = SFSafariViewController.Configuration()
-            config.entersReaderIfAvailable = true
-
-            let safariVC = SFSafariViewController(url: url, configuration: config)
-            safariVC.delegate = self
-
-            present(safariVC, animated: true)
-        }
-    }
-}
-
-// MARK: - SFSafariViewControllerDelegate
-extension BaseViewController: SFSafariViewControllerDelegate {
-    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        if !isModal {
-            dismiss(animated: true, completion: nil)
         }
     }
 }

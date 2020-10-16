@@ -88,10 +88,6 @@ extension SignUpRouter where Self: UIViewController {
                     getState()
                     return
                 }
-                
-            case .noConnection:
-                self.showError(error)
-                return
             default:
                 break
             }

@@ -20,20 +20,14 @@ class WalletConvertVC: BaseViewController {
     var currentSymbol: String?
    
     var currentBalance: ResponseAPIWalletGetBalance? {
-        didSet {
-            setUpCurrentBalance()
-        }
+        didSet { setUpCurrentBalance() }
     }
     
     var communBalance: ResponseAPIWalletGetBalance? {
-        didSet {
-            setUpCommunBalance()
-        }
+        didSet { setUpCommunBalance() }
     }
     
-    var topColor: UIColor {
-        .appMainColor
-    }
+    var topColor: UIColor { .appMainColor }
     
     var historyItem: ResponseAPIWalletGetTransferHistoryItem?
     
@@ -44,7 +38,7 @@ class WalletConvertVC: BaseViewController {
     lazy var whiteView = UIView(backgroundColor: .appWhiteColor)
     lazy var buyContainer: UIView = {
         let view = UIView(cornerRadius: 10)
-        view.borderColor = UIColor.colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1), darkColor: .white)
+        view.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
         view.borderWidth = 1
         return view
     }()
@@ -207,40 +201,6 @@ class WalletConvertVC: BaseViewController {
         // sell price
         bindSellPrice()
         
-        // price loading state
-        viewModel.priceLoadingState
-            .skip(1)
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] (state) in
-                switch state {
-                case .loading:
-                    if !(self?.rightTextField.isFirstResponder ?? false) {
-                        self?.rightTextField.hideLoader()
-                        self?.rightTextField.showLoader()
-                    }
-                    
-                    if !(self?.leftTextField.isFirstResponder ?? false) {
-                        self?.leftTextField.hideLoader()
-                        self?.leftTextField.showLoader()
-                    }
-                    
-                    self?.convertButton.isDisabled = true
-                
-                case .finished:
-                    self?.rightTextField.hideLoader()
-                    self?.leftTextField.hideLoader()
-                    
-                    self?.convertButton.isDisabled = !(self?.shouldEnableConvertButton() ?? false)
-                
-                case .error:
-                    self?.rightTextField.hideLoader()
-                    self?.leftTextField.hideLoader()
-                    
-                    self?.convertButton.isDisabled = true
-                }
-            })
-            .disposed(by: disposeBag)
-        
         // errorLabel
         viewModel.errorSubject
             .subscribe(onNext: {[weak self] (error) in
@@ -259,14 +219,9 @@ class WalletConvertVC: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.rate
-            .subscribe(onNext: { [weak self] _ in
-                self?.bindRate()
-            })
-            .disposed(by: disposeBag)
+        bindRate()
         
         bindScrollView()
-
     }
     
     func bindBuyPrice() {
@@ -277,13 +232,26 @@ class WalletConvertVC: BaseViewController {
         fatalError("Must override")
     }
     
-    func bindRate() {
+    private func bindRate() {
+        viewModel.rate
+            .subscribe(onNext: { [weak self] _ in
+                self?.setUpRate()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func setUpRate() {
         
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         whiteView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
+    }
+    
+    func showCheck(transaction: Transaction) {
+        let completedVC = TransactionCompletedVC(transaction: transaction)
+        self.show(completedVC, sender: nil)
     }
     
     // MARK: - Layout
@@ -332,7 +300,7 @@ class WalletConvertVC: BaseViewController {
         
         let firstView: UIView = {
             let view = UIView(cornerRadius: 10)
-            view.borderColor = UIColor.colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1), darkColor: .white)
+            view.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
             view.borderWidth = 1
             return view
         }()
@@ -347,7 +315,7 @@ class WalletConvertVC: BaseViewController {
         
         let secondView: UIView = {
             let view = UIView(cornerRadius: 10)
-            view.borderColor = UIColor.colorSupportDarkMode(defaultColor: #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1), darkColor: .white)
+            view.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1).inDarkMode(.white)
             view.borderWidth = 1
             return view
         }()
@@ -487,6 +455,11 @@ class WalletConvertVC: BaseViewController {
 extension WalletConvertVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         historyItem = nil
+        // if input comma (or dot)
+        if textField.text?.isEmpty == true, string == Locale.current.decimalSeparator {
+            textField.text = "0\(Locale.current.decimalSeparator ?? ".")"
+            return false
+        }
         
         // if deleting
         if string.isEmpty { return true }
@@ -504,7 +477,7 @@ extension WalletConvertVC: UITextFieldDelegate {
         let formatter = NumberFormatter()
         let isANumber = formatter.number(from: updatedText) != nil
         
-        if updatedText.starts(with: "0") && !updatedText.starts(with: "0.") {
+        if updatedText.starts(with: "0") && !updatedText.starts(with: "0\(Locale.current.decimalSeparator ?? ".")") {
             updatedText = currentText.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
             textField.text = updatedText
         }

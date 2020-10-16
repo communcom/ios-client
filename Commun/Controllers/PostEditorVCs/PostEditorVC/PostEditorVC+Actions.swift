@@ -37,6 +37,10 @@ extension PostEditorVC {
     
     // MARK: - Immutable actions
     @objc override func close() {
+        UIView.performWithoutAnimation {
+            self.view.endEditing(true)
+        }
+        
         guard shouldSaveDraft() else {
             removeDraft()
             back()
@@ -216,7 +220,7 @@ extension PostEditorVC {
             self.hintView?.display(inPosition: actionButtonFrame.origin, withType: hintType, andButtonHeight: actionButton.height, completion: {})
         }
         
-        return isContentValid
+        return canSendPost
     }
     
     @objc override func send() {
@@ -318,7 +322,6 @@ extension PostEditorVC {
     
     // MARK: - Add link
     func addAgeLimit() {
-        // TODO: Change func
         showAlert(title: "info".localized().uppercaseFirst, message: "add age limit 18+ (coming soon)".localized().uppercaseFirst, buttonTitles: ["OK".localized()], highlightedButtonIndex: 0)
     }
     
@@ -331,25 +334,38 @@ extension PostEditorVC {
                     var post = post
                     post.bottomExplanation = .shareYourPost
                     
-                    if let items = ((UIApplication.topViewController() as? MyProfilePageVC)?.viewModel as? UserProfilePageViewModel)?.postsVM.items
+                    if let viewModel = ((UIApplication.topViewController() as? MyProfilePageVC)?.viewModel as? UserProfilePageViewModel)?.postsVM
                     {
-                        items.accept([post] + items.value)
+                        if viewModel.state.value == .listEmpty {
+                            viewModel.state.accept(.listEnded)
+                        }
+                        viewModel.items.accept([post] + viewModel.items.value)
                         return
                     }
                     
                     if let communityPageVC = UIApplication.topViewController() as? CommunityPageVC,
-                        let items = (communityPageVC.viewModel as? CommunityPageViewModel)?.postsVM.items,
+                        let viewModel = (communityPageVC.viewModel as? CommunityPageViewModel)?.postsVM,
                         communityPageVC.community?.identity == post.community?.identity
                     {
-                        items.accept([post] + items.value)
+                        if viewModel.state.value == .listEmpty {
+                            viewModel.state.accept(.listEnded)
+                        }
+                        viewModel.items.accept([post] + viewModel.items.value)
                         return
                     }
                     
-                    if let items = (UIApplication.topViewController() as? FeedPageVC)?.viewModel.items,
+                    if let vc = UIApplication.topViewController() as? FeedPageVC,
                         post.community?.communityId != "FEED"
                     {
-                        items.accept([post] + items.value)
-                        (UIApplication.topViewController() as! FeedPageVC).appLiked()
+                        if vc.viewModel.state.value == .listEmpty {
+                            vc.viewModel.state.accept(.listEnded)
+                        }
+                        vc.viewModel.items.accept([post] + vc.viewModel.items.value)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            vc.tableView.scrollToTop()
+                            vc.appLiked()
+                        }
+                        
                         return
                     }
                     

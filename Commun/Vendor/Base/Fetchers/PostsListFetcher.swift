@@ -13,15 +13,40 @@ import RxSwift
 class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     // MARK: - Enums
     struct Filter: FilterType, Codable {
+        enum Language: String, CaseIterable {
+            case all = "all"
+            case english = "en"
+            case russian = "ru"
+            
+            var localizedName: String {
+                switch self {
+                case .all:
+                    return "all".localized()
+                case .english:
+                    return "english language".localized()
+                case .russian:
+                    return "russian language".localized()
+                }
+            }
+            
+            static var observable: Observable<Language> {
+                UserDefaults.standard.rx.observe(String.self, Config.currentUserFeedLanguage)
+                    .map {$0 ?? "all"}
+                    .map {PostsListFetcher.Filter.Language(rawValue: $0) ?? .all}
+            }
+        }
+        
         static let filterKey = "currentUserFeedFilterKey"
+        var authorizationRequired = true
         
         var type: FeedTypeMode
-        var sortBy: FeedSortMode?
+        var sortBy: SortBy?
         var timeframe: FeedTimeFrameMode?
         var searchKey: String?
         var userId: String?
         var communityId: String?
         var communityAlias: String?
+        var language: String = UserDefaults.standard.string(forKey: Config.currentUserFeedLanguage) ?? "all"
         
         func save() throws {
             UserDefaults.standard.set(try JSONEncoder().encode(self), forKey: Filter.filterKey)
@@ -43,12 +68,13 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         
         func newFilter(
             type: FeedTypeMode? = nil,
-            sortBy: FeedSortMode? = nil,
+            sortBy: SortBy? = nil,
             timeframe: FeedTimeFrameMode? = nil,
             searchKey: String? = nil,
             userId: String? = nil,
             communityId: String? = nil,
-            communityAlias: String? = nil
+            communityAlias: String? = nil,
+            allowedLanguages: [String]? = nil
         ) -> Filter {
             var newFilter = self
             if let type = type,
@@ -89,6 +115,13 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
                 newFilter.communityAlias = alias
             }
             
+            if let allowedLanguages = allowedLanguages,
+                allowedLanguages.count > 0,
+                allowedLanguages != [newFilter.language]
+            {
+                newFilter.language = allowedLanguages.first!
+            }
+            
             return newFilter
         }
     }
@@ -103,18 +136,23 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     }
         
     override var request: Single<[ResponseAPIContentGetPost]> {
-        RestAPIManager.instance.getPosts(userId: filter.userId ?? Config.currentUser?.id, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.type, sortBy: filter.sortBy, timeframe: filter.timeframe, limit: limit, offset: offset
+        RestAPIManager.instance.getPosts(userId: filter.userId ?? Config.currentUser?.id, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.type, sortBy: filter.sortBy, timeframe: filter.timeframe, limit: limit, offset: offset, authorizationRequired: filter.authorizationRequired, allowedLanguages: [filter.language]
         )
             .map { $0.items ?? [] }
-            .do(onSuccess: { (posts) in
-                self.loadRewards(fromPosts: posts)
-            })
     }
     
     override func join(newItems items: [ResponseAPIContentGetPost]) -> [ResponseAPIContentGetPost] {
         return super.join(newItems: items).filter { $0.document != nil}
     }
+    
+    override func handleNewData(_ items: [ResponseAPIContentGetPost]) {
+        super.handleNewData(items)
+        loadRewards(fromPosts: items)
+        loadDonations(forPosts: items)
+        sendPendingRequest()
+    }
 
+    // MARK: - Rewards
     private func loadRewards(fromPosts posts: [ResponseAPIContentGetPost]) {
         let contentIds = posts.map { RequestAPIContentId(responseAPI: $0.contentId) }
         
@@ -201,6 +239,59 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         }
         
         // assign value
+        let oldPosts = self.items.value
+        for i in 0..<oldPosts.count {
+            if let updatedPost = posts.first(where: {$0.identity == oldPosts[i].identity}),
+                oldPosts[i].shouldUpdateHeightForPostWithUpdatedPost(updatedPost)
+            {
+                rowHeights[oldPosts[i].identity] = nil
+            }
+        }
         self.items.accept(posts)
+    }
+    
+    // MARK: - Donations
+    private func loadDonations(forPosts posts: [ResponseAPIContentGetPost]) {
+        let contentIds = posts.map { RequestAPIContentId(responseAPI: $0.contentId) }
+        guard contentIds.count > 0 else {return}
+        RestAPIManager.instance.getDonationsBulk(posts: contentIds)
+            .map {$0.items}
+            .subscribe(onSuccess: { donations in
+                self.showDonations(donations)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func showDonations(_ donations: [ResponseAPIWalletGetDonationsBulkItem]) {
+        for var post in items.value {
+            if let donations = donations.first(where: {$0.contentId.userId == post.contentId.userId && $0.contentId.permlink == post.contentId.permlink && $0.contentId.communityId == post.contentId.communityId})
+            {
+                post.donations = donations
+                post.notifyChanged()
+            }
+        }
+    }
+    
+    // MARK: - Send pending request
+    private func sendPendingRequest() {
+        RequestsManager.shared.pendingRequests.forEach {request in
+            switch request {
+            case .toggleLikePost(let post, let dislike):
+                let operation = dislike ? post.downVote() : post.upVote()
+                operation.subscribe().disposed(by: disposeBag)
+            default:
+                return
+            }
+        }
+        
+        RequestsManager.shared.pendingRequests.removeAll(where: {request in
+            switch request {
+            case .toggleLikePost:
+                return true
+            default:
+                return false
+            }
+        })
+        
     }
 }

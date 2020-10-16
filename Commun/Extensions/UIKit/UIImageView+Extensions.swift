@@ -21,15 +21,10 @@ extension UIImageView {
     func setCover(urlString: String?, namePlaceHolder: String = "ProfilePageCover") {
          // Cover image
          if let coverUrlValue = urlString {
-             sd_setImage(with: URL(string: coverUrlValue), placeholderImage: UIImage(named: namePlaceHolder)) { [weak self] (_, error, _, _) in
-                 if error != nil {
-                     // Placeholder image
-                     self?.image = .placeholder
-                 }
-             }
+             sd_setImage(with: URL(string: coverUrlValue), placeholderImage: UIImage(named: namePlaceHolder))
          } else {
              // Placeholder image
-             self.image = .placeholder
+             self.image = UIImage(named: namePlaceHolder)
          }
      }
 
@@ -39,7 +34,8 @@ extension UIImageView {
         else {return}
         if urlString.lowercased().ends(with: ".gif") {
             // add spinnerView
-            let size = (height > 76 ? 60: height-16)
+            var size = (height > 76 ? 60: height-16)
+            if size < 30 {size = 30}
             let spinnerView = ASSpinnerView(width: size, height: size)
             spinnerView.spinnerLineWidth = size/10
             spinnerView.spinnerDuration = 0.3
@@ -144,6 +140,12 @@ extension UIImageView {
             completion?(error, image)
         }
     }
+    
+    @discardableResult
+    func image(_ image: UIImage) -> Self {
+        self.image = image
+        return self
+    }
 }
 
 extension Reactive where Base: UIImageView {
@@ -152,7 +154,6 @@ extension Reactive where Base: UIImageView {
             .distinctUntilChanged()
     }
 }
-
 
 // MARK: - RightNavItemDelegate
 extension UIImageView: RightNavItemDelegate {

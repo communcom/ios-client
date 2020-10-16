@@ -14,6 +14,9 @@ import PureLayout
 class PostEditorVC: EditorVC {
     // MARK: - Constants
     let communityDraftKey = "PostEditorVC.communityDraftKey"
+    let titleDraft = "EditorPageVC.titleDraft"
+    let titleMinLettersLimit = 2
+    let titleBytesLimit = 256
     
     // MARK: - Properties
     var chooseCommunityAfterLoading: Bool
@@ -25,22 +28,57 @@ class PostEditorVC: EditorVC {
     
     /// Condition that define when to start updating send button state
     var contentCombined: Observable<Void> {
-        viewModel.community.map {_ in ()}
+        Observable.merge(
+            viewModel.community.map {_ in ()},
+            titleTextView.rx.text.orEmpty.map {_ in ()},
+            contentTextView.rx.text.orEmpty.map {_ in ()}
+        )
     }
     
     /// Define whenever content is valid to enable send button
     var hintType: CMHint.HintType?
-    var isContentValid: Bool {
+    var canSendPost: Bool {
+        hintType = nil
         let communityChosen = viewModel.community.value != nil
         if !communityChosen {hintType = .chooseCommunity}
-        return communityChosen
+        
+        // reassign result
+        return communityChosen && isContentValid
+    }
+    
+    var isContentValid: Bool {
+        let title = titleTextView.text.trimmed
+        let content = contentTextView.text.trimmed
+        
+        // both title and content are not empty
+        let titleAndContentAreNotEmpty = !title.isEmpty && !content.isEmpty
+        if !titleAndContentAreNotEmpty && hintType == nil {hintType = .error("title and content must not be empty".localized().uppercaseFirst)}
+        
+        // title is not beyond limit
+        let titleIsInsideLimit =
+            (title.count >= self.titleMinLettersLimit) &&
+                (title.utf8.count <= self.titleBytesLimit)
+        if !titleIsInsideLimit && hintType == nil {hintType = .error("title must less than \(titleBytesLimit) characters".localized().uppercaseFirst)}
+        
+        // content inside limit
+        let contentInsideLimit = (content.count <= contentLettersLimit)
+
+        if !contentInsideLimit && hintType == nil {
+            hintType = .error(String(format: "%@ %i %@", "content must less than".localized().uppercaseFirst, contentLettersLimit, "characters".localized()))
+        }
+        
+        // compare content
+        var contentChanged = (title != viewModel.postForEdit?.document?.attributes?.title)
+        contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+        if !contentChanged && hintType == nil {hintType = .error("content wasn't changed".localized().uppercaseFirst)}
+        return titleAndContentAreNotEmpty && titleIsInsideLimit && contentInsideLimit && contentChanged
     }
     
     var viewModel: PostEditorViewModel {
         fatalError("Must override")
     }
     
-    var postTitle: String? { nil }
+    var postTitle: String? { titleTextView.text }
     
     // MARK: - Subviews
     // community
@@ -48,6 +86,17 @@ class PostEditorVC: EditorVC {
     lazy var youWillPostInLabel = UILabel.descriptionLabel("you will post in".localized().uppercaseFirst)
     lazy var communityAvatarImage = MyAvatarImageView(size: 40)
     lazy var communityNameLabel = UILabel.with(text: "hint type choose community".localized().uppercaseFirst, textSize: 15, weight: .semibold, numberOfLines: 0)
+    lazy var titleTextView: UITextView = {
+        let titleTextView = UITextView(forExpandable: ())
+        titleTextView.backgroundColor = .clear
+        titleTextView.textContainerInset = UIEdgeInsets.zero
+        titleTextView.textContainer.lineFragmentPadding = 0
+        titleTextView.typingAttributes = [.font: UIFont.systemFont(ofSize: 21, weight: .bold)]
+        titleTextView.placeholder = "title placeholder".localized().uppercaseFirst
+        titleTextView.delegate = self
+        return titleTextView
+    }() 
+    lazy var titleTextViewCountLabel = UILabel.descriptionLabel("0/256")
     lazy var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     var contentTextView: ContentTextView {
@@ -108,6 +157,9 @@ class PostEditorVC: EditorVC {
         actionButton.backgroundColor = .appMainColor
         actionButton.setTitle("send post".localized().uppercaseFirst, for: .normal)
         
+        // titleTextView
+//        titleTextViewCountLabel.isHidden = true
+        
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         headerLabel.text = (viewModel.postForEdit != nil ? "edit" : "create").localized().uppercaseFirst + " " + "post".localized()
@@ -131,6 +183,8 @@ class PostEditorVC: EditorVC {
         bindContentTextView()
         
         bindCommunity()
+        
+        bindTitleTextView()
     }
     
     override func didSelectTool(_ item: EditorToolbarItem) {
@@ -165,6 +219,7 @@ class PostEditorVC: EditorVC {
     
     // MARK: - action for overriding
     func setUp(with post: ResponseAPIContentGetPost) -> Completable {
+        titleTextView.rx.text.onNext(post.document?.attributes?.title)
         guard let document = post.document,
             let community = post.community
         else {return .empty()}

@@ -14,32 +14,36 @@ import CyberSwift
 class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     // MARK: - Nested type
     enum SegmentioItem: String, CaseIterable {
-        case posts = "posts"
-        case comments = "comments"
+        case posts, comments, about
     }
     
     // MARK: - Objects
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
-    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(type: .byUser, sortBy: .timeDesc, timeframe: .all, userId: profileId), prefetch: profileId != nil)
-    lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(type: .user, userId: profileId), prefetch: profileId != nil, shouldGroupComments: false)
+    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(authorizationRequired: authorizationRequired, type: .byUser, sortBy: .timeDesc, timeframe: .all, userId: profileId), prefetch: profileId != nil)
+    lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(type: .user, userId: profileId, authorizationRequired: authorizationRequired), prefetch: profileId != nil, shouldGroupComments: false)
     lazy var highlightCommunities = BehaviorRelay<[ResponseAPIContentGetCommunity]>(value: [])
+    lazy var showAboutSubject = PublishSubject<Void>()
     
     var username: String?
     
     // MARK: - Initializers
-    init(userId: String? = nil, username: String? = nil) {
+    init(userId: String? = nil, username: String? = nil, authorizationRequired: Bool = true) {
         self.username = username
-        super.init(profileId: userId)
+        super.init(profileId: userId, authorizationRequired: authorizationRequired)
     }
     
     // MARK: - Methods
     override var loadProfileRequest: Single<ResponseAPIContentGetProfile> {
-        RestAPIManager.instance.getProfile(user: profileId ?? username)
+        RestAPIManager.instance.getProfile(user: profileId ?? username, authorizationRequired: authorizationRequired)
     }
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {
-        Observable.merge(postsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .posts}, commentsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .comments})
+        Observable.merge(
+            postsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .posts},
+            commentsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .comments},
+            showAboutSubject.filter {[weak self] _ in self?.segmentedItem.value == .about}.map {_ in .listEnded}
+        )
     }
     
     override func loadProfile() {
@@ -73,20 +77,27 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
                     self.postsVM.reload()
                 case .comments:
                     self.commentsVM.reload()
+                case .about:
+                    self.showAboutSubject.onNext(())
                 }
             })
             .disposed(by: disposeBag)
         
         let posts = postsVM.items.map {$0 as [Any]}.skip(1)
         let comments = commentsVM.items.map { $0 as [Any] }.skip(1)
+        let about = showAboutSubject.map {_ in self.profile.value != nil ? [self.profile.value!] : [] as [Any]}
 
-        Observable.merge(posts, comments)
+        Observable.merge(posts, comments, about)
             .filter { (items) -> Bool in
                 if items is [ResponseAPIContentGetPost] && self.segmentedItem.value == .posts {
                     return true
                 }
                 
                 if items is [ResponseAPIContentGetComment] && self.segmentedItem.value == .comments {
+                    return true
+                }
+                
+                if items is [ResponseAPIContentGetProfile] && self.segmentedItem.value == .about {
                     return true
                 }
                   
@@ -110,8 +121,14 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     }
     
     override func reload() {
-        postsVM.fetcher.reset()
-        commentsVM.fetcher.reset()
+        switch segmentedItem.value {
+        case .posts:
+            postsVM.reload()
+        case .comments:
+            commentsVM.reload()
+        case .about:
+            showAboutSubject.onNext(())
+        }
         super.reload()
     }
     
@@ -121,8 +138,10 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
         switch segmentedItem.value {
         case .posts:
             postsVM.fetchNext(forceRetry: forceRetry)
-        default:
+        case .comments:
             commentsVM.fetchNext(forceRetry: forceRetry)
+        case .about:
+            break
         }
     }
 }

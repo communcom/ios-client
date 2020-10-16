@@ -75,6 +75,6 @@ extension OtherBalancesWalletVC: WalletHeaderViewDelegate {
     func walletHeaderView(_ headerView: WalletHeaderView, currentIndexDidChangeTo index: Int) {
         let currentFilter = (viewModel as! TransferHistoryViewModel).filter.value
         guard let balance = balances[safe: index] else {return}
-        filterChanged(TransferHistoryListFetcher.Filter(userId: currentFilter.userId, direction: currentFilter.direction, transferType: currentFilter.transferType, symbol: balance.symbol, rewards: currentFilter.rewards))
+        filterChanged(TransferHistoryListFetcher.Filter(userId: currentFilter.userId, direction: currentFilter.direction, transferType: currentFilter.transferType, rewards: currentFilter.rewards, donation: currentFilter.donation, claim: currentFilter.claim, holdType: currentFilter.holdType, symbol: balance.symbol))
     }
 }

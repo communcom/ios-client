@@ -63,7 +63,7 @@ class BalanceCell: MyTableViewCell, ListItemCellType {
         
         var secondText = NSMutableAttributedString()
             .text(item.balanceValue.currencyValueFormatted, size: 15, weight: .semibold)
-            .text(" " + "points".localized().uppercaseFirst, size: 15, weight: .semibold)
+            .text(" " + (item.unitType + "s").localized().uppercaseFirst, size: 15, weight: .semibold)
             
         if item.symbol != Config.defaultSymbol {
             secondText = secondText

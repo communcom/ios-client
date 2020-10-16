@@ -8,31 +8,34 @@
 
 import Foundation
 
-extension PostPageVC: PostCellDelegate, PostHeaderViewDelegate {
+extension PostPageVC: PostHeaderViewDelegate, PostStatsViewDelegate {
     // MARK: - Actions
     @objc func openMorePostActions() {
         guard let post = post else {return}
-        menuButtonDidTouch(post: post)
+        showPostMenu(post: post)
     }
     
     @objc func sortButtonDidTouch() {
-        showCommunActionSheet(
+        showCMActionSheet(
             title: "sort by".localized().uppercaseFirst,
             actions: [
-                CommunActionSheet.Action(
+                .default(
                     title: "interesting first".localized().uppercaseFirst,
+                    showIcon: false,
                     handle: {
                         let vm = self.viewModel as! CommentsViewModel
                         vm.changeFilter(sortBy: .popularity)
                     }),
-                CommunActionSheet.Action(
+                .default(
                     title: "newest first".localized().uppercaseFirst,
+                    showIcon: false,
                     handle: {
                         let vm = self.viewModel as! CommentsViewModel
                         vm.changeFilter(sortBy: .timeDesc)
                     }),
-                CommunActionSheet.Action(
+                .default(
                     title: "oldest first".localized().uppercaseFirst,
+                    showIcon: false,
                     handle: {
                         let vm = self.viewModel as! CommentsViewModel
                         vm.changeFilter(sortBy: .time)
@@ -40,14 +43,22 @@ extension PostPageVC: PostCellDelegate, PostHeaderViewDelegate {
             ])
     }
     
-    func headerViewUpVoteButtonDidTouch(_ headerView: PostHeaderView) {
+    @objc func headerViewUpVoteButtonDidTouch(_ headerView: PostHeaderView) {
         guard let post = post else {return}
-        upvoteButtonDidTouch(post: post)
+        post.upVote()
+            .subscribe(onError: { (error) in
+                self.showError(error)
+            })
+            .disposed(by: self.disposeBag)
     }
     
-    func headerViewDownVoteButtonDidTouch(_ headerView: PostHeaderView) {
+    @objc func headerViewDownVoteButtonDidTouch(_ headerView: PostHeaderView) {
         guard let post = post else {return}
-        downvoteButtonDidTouch(post: post)
+        post.downVote()
+            .subscribe(onError: { (error) in
+                self.showError(error)
+            })
+            .disposed(by: self.disposeBag)
     }
     
     func headerViewShareButtonDidTouch(_ headerView: PostHeaderView) {
@@ -57,5 +68,23 @@ extension PostPageVC: PostCellDelegate, PostHeaderViewDelegate {
     
     func headerViewCommentButtonDidTouch(_ headerView: PostHeaderView) {
         tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+    }
+    
+    func headerViewDonationButtonDidTouch(_ headerView: PostHeaderView, amount: Double?) {
+        guard let symbol = post?.community?.communityId,
+            let post = post,
+            let user = post.author
+        else {return}
+        
+        let donateVC = CMDonateVC(selectedBalanceSymbol: symbol, receiver: user, message: post, amount: amount)
+        show(donateVC, sender: nil)
+    }
+    
+    func headerViewDonationViewCloseButtonDidTouch(_ donationView: CMMessageView) {
+        var post = self.post
+        if donationView is DonationView {
+            post?.showDonationButtons = false
+            post?.notifyChanged()
+        }
     }
 }

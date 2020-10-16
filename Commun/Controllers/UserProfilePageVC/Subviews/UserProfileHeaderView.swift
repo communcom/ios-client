@@ -17,8 +17,17 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             showCommunities()
         }
     }
+    var followingsCount: Int { Int((profile?.subscriptions?.usersCount ?? 0)) }
+    var followersCount: Int { Int((profile?.subscribers?.usersCount ?? 0)) }
 
     // MARK: - Subviews
+    lazy var buttonStackView = UIStackView(axis: .horizontal, spacing: 10, alignment: .fill, distribution: .fill)
+    lazy var contactButton: CommunButton = {
+        let button = CommunButton.default(label: "message", isHuggingContent: false)
+        button.addTarget(self, action: #selector(buttonContactDidTouch), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var communitiesView: UIView = {
         let view = UIView(forAutoLayout: ())
         view.layer.masksToBounds = false
@@ -64,13 +73,18 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         segmentedControl.items = [
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
-            CMSegmentedControl.Item(name: "comments".localized().uppercaseFirst)
+            CMSegmentedControl.Item(name: "comments".localized().uppercaseFirst),
+            CMSegmentedControl.Item(name: "about".localized().uppercaseFirst)
         ]
     }
     
     func setUpStackView() {
+        followButton.removeFromSuperview()
+        buttonStackView.addArrangedSubviews([contactButton, followButton])
+        
         stackView.addArrangedSubviews([
             headerStackView,
+            buttonStackView,
             descriptionLabel,
             statsLabel,
             separator1,
@@ -79,6 +93,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         ])
         
         stackView.setCustomSpacing(10, after: headerStackView)
+        stackView.setCustomSpacing(20, after: buttonStackView)
         stackView.setCustomSpacing(16, after: descriptionLabel)
         stackView.setCustomSpacing(25, after: statsLabel)
         stackView.setCustomSpacing(16, after: separator1)
@@ -105,9 +120,14 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         // name
         let attributedText = NSMutableAttributedString()
-            .text(userProfile.username, size: 20, weight: .bold)
+            .text(userProfile.personal?.fullName ?? userProfile.username ?? "", size: 20, weight: .bold)
             .text("\n")
-            .text(Formatter.joinedText(with: userProfile.registration?.time), size: 12, weight: .semibold, color: .appGrayColor)
+        
+        let subtitle = "@\(userProfile.username ?? userProfile.userId)"
+
+        attributedText
+            .text(subtitle, size: 12, weight: .semibold, color: .appMainColor)
+        
         headerLabel.attributedText = attributedText
         
         // bio
@@ -122,9 +142,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         }
         
         // stats
-        let followingsCount: Int = Int((userProfile.subscriptions?.usersCount ?? 0))
-        let followersCount: Int = Int((userProfile.subscribers?.usersCount ?? 0))
-        
         let aStr = NSMutableAttributedString()
             .bold(followersCount.kmFormatted, font: .boldSystemFont(ofSize: 15))
             .bold(" ")
@@ -134,7 +151,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             .bold(" ")
             .bold(String(format: NSLocalizedString("followings-count", comment: ""), followingsCount), font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
         
-        if userProfile.isSubscribed == true {
+        if userProfile.isSubscription == true {
             aStr
                 .bold(statsSeparator, font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
                 .bold("follows you".localized().uppercaseFirst, font: .boldSystemFont(ofSize: 12), color: .appGrayColor)
@@ -145,16 +162,37 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         communitiesLabel.attributedText = NSMutableAttributedString()
             .text("communities".localized().uppercaseFirst, size: 20, weight: .bold)
             .text("\n")
-            .text("\(userProfile.subscriptions?.communitiesCount ?? 0) (\(userProfile.highlightCommunitiesCount ?? 0) " + "mutual".localized().uppercaseFirst + ")", size: 15, weight: .semibold, color: .appGrayColor)
+            .text("\(userProfile.subscriptions?.communitiesCount ?? 0) (\(userProfile.commonCommunitiesCount ?? 0) " + "mutual".localized().uppercaseFirst + ")", size: 15, weight: .semibold, color: .appGrayColor)
 
         if userProfile.userId != Config.currentUser?.id {
             isCommunitiesHidden = !(userProfile.highlightCommunitiesCount ?? 0 > 0)
             followButton.setHightLight(userProfile.isSubscribed == true, highlightedLabel: "following", unHighlightedLabel: "follow")
             followButton.isEnabled = !(profile?.isBeingToggledFollow ?? false)
         }
+        
+        // message button
+        if let defaultContacts = profile?.personal?.defaultContacts,
+            !defaultContacts.isEmpty
+        {
+            followButton.setContentHuggingPriority(.required, for: .horizontal)
+            contactButton.isHidden = false
+            
+            let text = "message".localized().uppercaseFirst
+//            if defaultContacts.count > 0 {
+//                text += "..."
+//            }
+            contactButton.setTitle(text, for: .normal)
+        } else {
+            followButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            contactButton.isHidden = true
+        }
     }
     
     override func joinButtonDidTouch() {
+        if !authorizationRequired {
+            (parentViewController as? NonAuthVCType)?.showAuthVC()
+            return
+        }
         toggleFollow()
     }
     
@@ -165,14 +203,16 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         parentViewController?.present(navigation, animated: true, completion: nil)
     }
     
-    override func statsLabelDidTouch(_ gesture: UITapGestureRecognizer) {
+    override func statsLabelDidTouchAtIndex(_ index: Int) {
+        if !authorizationRequired {
+            (parentViewController as? NonAuthVCType)?.showAuthVC()
+            return
+        }
         guard let text = statsLabel.text,
             let dotIndex = text.index(of: statsSeparator)?.utf16Offset(in: text)
-        else { return }
-        
-        let tappedCharacterIndex = gesture.tappedCharacterIndexInLabel(statsLabel)
-        
-        if tappedCharacterIndex < dotIndex {
+        else {return}
+
+        if index < dotIndex {
             followersDidTouch()
         } else {
             followingDidTouch()
@@ -193,5 +233,64 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         let navigation = SwipeNavigationController(rootViewController: vc)
         navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         self.parentViewController?.present(navigation, animated: true, completion: nil)
+    }
+    
+    @objc func buttonContactDidTouch() {
+        guard let profile = profile,
+            let filledContacts = profile.personal?.messengers?.filledContacts,
+            !filledContacts.isEmpty
+        else {return}
+        let actions = filledContacts.sorted(by: {$0.value.default == true || $1.value.default == false}).map {contact -> CMActionSheet.Action in
+            let action = CMActionSheet.Action.customLayout(height: 63, title: contact.key.rawValue.uppercaseFirst, spacing: 16, iconName: contact.key.rawValue + "-icon", iconSize: 20, showIconFirst: true, showNextButton: true, bottomMargin: 10) {
+                self.openChat(messengerType: contact.key, link: contact.value)
+            }
+            
+            let aString = NSMutableAttributedString()
+                .text(contact.key.rawValue.uppercaseFirst, size: 14, weight: .semibold, color: .appGrayColor)
+            
+            if contact.value.default == true {
+                aString
+                    .text(" (" + "preferrable".localized().uppercaseFirst + ")", size: 14, weight: .semibold, color: .appGrayColor)
+            }
+                
+            if let value = contact.value.value {
+                aString.text("\n")
+                    .text(value, size: 14, weight: .semibold, color: .appMainColor)
+                    .withParagraphStyle(lineSpacing: 5)
+            }
+            
+            action.titleLabel?.numberOfLines = 0
+            action.titleLabel?.attributedText = aString
+            
+            return action
+        }
+        
+        parentViewController?.showCMActionSheet(actions: actions)
+    }
+    
+    private func openChat(messengerType: ResponseAPIContentGetProfilePersonalMessengers.MessengerType, link: ResponseAPIContentGetProfilePersonalLink) {
+        guard let link = link.value else {return}
+        switch messengerType {
+        case .telegram:
+            let screenName =  link
+            let appURL = NSURL(string: "tg://resolve?domain=\(screenName)")!
+            let webURL = NSURL(string: "https://t.me/\(screenName)")!
+            if UIApplication.shared.canOpenURL(appURL as URL) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(appURL as URL)
+                }
+            } else {
+                //redirect to safari because the user doesn't have Telegram
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(webURL as URL)
+                }
+            }
+        default:
+            break
+        }
     }
 }

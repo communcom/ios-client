@@ -101,6 +101,10 @@ extension UIButton {
         }
         return button
     }
+    
+    static func nextArrow() -> UIButton {
+        UIButton.circleGray(imageName: "next-arrow", imageEdgeInsets: UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8))
+    }
 
     static func close(size: CGFloat = 24, imageName: String = "close-x", backgroundColor: UIColor = .appLightGrayColor, tintColor: UIColor = .appGrayColor) -> UIButton {
         let button = UIButton(width: size, height: size, backgroundColor: backgroundColor, cornerRadius: size / 2)
@@ -141,11 +145,11 @@ extension UIButton {
         return button
     }
     
-    static func vote(type: VoteActionType) -> UIButton {
-        let button = UIButton(width: 38)
-        button.imageEdgeInsets = UIEdgeInsets(top: 10.5, left: type == .upvote ? 10 : 18, bottom: 10.5, right: type == .upvote ? 18: 10)
-        button.setImage(UIImage(named: type == .upvote ? "upVote" : "downVote"), for: .normal)
-        button.touchAreaEdgeInsets = UIEdgeInsets(inset: -3)
+    static func settings(tintColor: UIColor = .appBlackColor, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)) -> UIButton {
+        let button = UIButton(width: 40, height: 40, contentInsets: contentInsets)
+        button.tintColor = tintColor
+        button.setImage(UIImage(named: "settings-button"), for: .normal)
+        button.contentEdgeInsets = contentInsets
         return button
     }
 }

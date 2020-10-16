@@ -12,17 +12,23 @@ import RxCocoa
 import RxDataSources
 
 class ListViewModel<T: ListItemType>: BaseViewModel {
-    public typealias ItemIdentifier = String
     
     // MARK: - Properties
     var items: BehaviorRelay<[T]> {
         fetcher.items
     }
     public var state: BehaviorRelay<ListFetcherState> {
-        return fetcher.state
+        fetcher.state
     }
     
-    public lazy var rowHeights = [ItemIdentifier: CGFloat]()
+    public var rowHeights: [ListFetcher<T>.ItemIdentifier: CGFloat] {
+        get {
+            fetcher.rowHeights
+        }
+        set {
+            fetcher.rowHeights = newValue
+        }
+    }
     
     // MARK: - Filter & Fetcher
     public var fetcher: ListFetcher<T>
@@ -56,7 +62,7 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
         guard let index = newItems.firstIndex(where: {$0.identity == updatedItem.identity}) else {return}
         guard let newUpdatedItem = newItems[index].newUpdatedItem(from: updatedItem) else {return}
         if shouldUpdateHeightForItem(newItems[index], withUpdatedItem: newUpdatedItem) {
-            rowHeights.removeValue(forKey: updatedItem.identity as! String)
+            rowHeights.removeValue(forKey: updatedItem.identity)
         }
         newItems[index] = newUpdatedItem
         fetcher.items.accept(newItems)
@@ -68,7 +74,7 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
     
     func deleteItemWithIdentity(_ identity: T.Identity) {
         let newItems = fetcher.items.value.filter {$0.identity != identity}
-        rowHeights.removeValue(forKey: identity as! String)
+        rowHeights.removeValue(forKey: identity)
         fetcher.items.accept(newItems)
     }
     
