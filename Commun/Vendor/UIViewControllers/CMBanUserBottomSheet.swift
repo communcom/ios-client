@@ -135,8 +135,9 @@ class CMBanUserBottomSheet: CMBottomSheet {
         }
         showIndetermineHudWithMessage("creating proposal".localized().uppercaseFirst)
         let reasonString = "[" + reasons.0.inlineString(otherReason: reasons.1, shouldNormalize: true) + "]"
+
         BlockchainManager.instance.banUser(communityId, commnityIssuer: communityIssuer, accountName: banningUser.userId, reason: reasonString)
-            .subscribe{ (_) in
+            .subscribe(onSuccess: { (_) in
                 self.hideHud()
                 self.showAlert(title: "proposal created".localized().uppercaseFirst, message: "proposal for user banning has been created".localized().uppercaseFirst) { _ in
                     var user = self.banningUser
@@ -144,13 +145,11 @@ class CMBanUserBottomSheet: CMBottomSheet {
                     user.notifyChanged()
                     self.back()
                 }
-                
-            } onError: { (error) in
-                self.hideHud()
-                self.showError(error)
-            }
-            .disposed(by: disposeBag)
-
+        }) { (error) in
+            self.hideHud()
+            self.showError(error)
+        }
+        .disposed(by: disposeBag)
     }
     
     @objc func noButtonDidTouch() {

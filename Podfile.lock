@@ -347,11 +347,11 @@ SPEC CHECKSUMS:
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   CircularCarousel: 6248f5892c018fc2d115d4d5186be91d46bacbea
-  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CryptoSwift: 1283821600233bdbeb96d7b389c3288c3bf77211
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   eosswift: 92cd742ce09c6785da8b3339f7225c1f0120a58f
-  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
   FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
   Firebase: 458d109512200d1aca2e1b9b6cf7d68a869a4a46
