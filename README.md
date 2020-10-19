@@ -1,8 +1,8 @@
-#Commun iOS Client
+# Commun iOS Client
 
 Commun is the next generation social network, where users can create interest-based communities and share content, read, watch, rank it within a community of like-minded people.
 
-##Install
+## Install
 
 1. Clone project
 `git clone https://github.com/communcom/commun-ios`
@@ -14,5 +14,5 @@ Commun is the next generation social network, where users can create interest-ba
 4. Run project
 
 
-##License
+## License
 Made available under the MIT License.
